@@ -1,10 +1,8 @@
 ---
-title: "Anthos Service Mesh Security Workshop"
+title: "Anthos Config Management Workshop"
 chapter: true
 weight: 1
 ---
-# Anthos Service Mesh Security Workshop
+# Anthos Config Management Workshop
 
-Welcome to the Anthos Service Mesh Security Workshop!
-
-A labs driven workshop to explore service mesh technology and patterns using [Anthos Service Mesh (ASM)](https://cloud.google.com/anthos/service-mesh).
+Welcome to the Anthos Config Management Workshop!

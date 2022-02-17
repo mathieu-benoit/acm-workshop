@@ -29,7 +29,7 @@ jobs:
           echo "IMAGE_TAG=$shortSha" >> $GITHUB_ENV
           imageBaseName=${{ secrets.CONTAINER_REGISTRY_HOST_NAME }}/${{ secrets.CONTAINER_REGISTRY_PROJECT_ID }}/${{ secrets.CONTAINER_REGISTRY_NAME }}
           echo "IMAGE_BASE_NAME=$imageBaseName" >> $GITHUB_ENV
-          echo "IMAGE_NAME=$imageBaseName/asm-workshop:$shortSha" >> $GITHUB_ENV
+          echo "IMAGE_NAME=$imageBaseName/acm-workshop:$shortSha" >> $GITHUB_ENV
       - name: sign-in to artifact registry
         run: |
           gcloud auth configure-docker ${{ secrets.CONTAINER_REGISTRY_HOST_NAME }} --quiet

@@ -9,8 +9,8 @@ googleAnalytics = 'G-34LNWT3M12'
   home = [ "HTML", "RSS", "JSON"]
 
 [params]
-  editURL = "https://github.com/mathieu-benoit/asm-workshop/edit/main/content/"
-  description = "Anthos Service Mesh Security Workshop"
+  editURL = "https://github.com/mathieu-benoit/acm-workshop/edit/main/content/"
+  description = "Anthos Config Management Workshop"
   author = "Mathieu Benoit"
   showVisitedLinks = true
   disableBreadcrumb = false
