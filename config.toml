@@ -1,0 +1,20 @@
+baseurl = "/"
+languageCode = "en-us"
+defaultContentLanguage = "en"
+theme = "hugo-theme-learn"
+enableRobotsTXT = true
+googleAnalytics = 'G-34LNWT3M12'
+
+[outputs]
+  home = [ "HTML", "RSS", "JSON"]
+
+[params]
+  editURL = "https://github.com/mathieu-benoit/asm-workshop/edit/main/content/"
+  description = "Anthos Service Mesh Security Workshop"
+  author = "Mathieu Benoit"
+  showVisitedLinks = true
+  disableBreadcrumb = false
+  disableNextPrev = false
+  disableLandingPageButton = true
+  disableInlineCopyToClipBoard = true
+  themeVariant = "mine"

@@ -1,0 +1,86 @@
+name: ci
+on:
+  push:
+    branches:
+      - main
+    paths-ignore:
+      - 'README.md'
+      - '.github/dependabot.yml'
+  pull_request:
+env:
+  SEVERITY: CRITICAL
+jobs:
+  job:
+    runs-on: ubuntu-20.04
+    steps:
+      - uses: actions/checkout@v2.4.0
+        with:
+          submodules: true
+      - uses: google-github-actions/auth@v0.4.4
+        with:
+          project_id: ${{ secrets.CONTAINER_REGISTRY_PROJECT_ID }}
+          credentials_json: ${{ secrets.CONTAINER_REGISTRY_PUSH_PRIVATE_KEY }}
+      - uses: google-github-actions/setup-gcloud@v0.3.0
+        with:
+          version: latest
+      - name: prepare environment variables
+        run: |
+          shortSha=`echo ${GITHUB_SHA} | cut -c1-7`
+          echo "IMAGE_TAG=$shortSha" >> $GITHUB_ENV
+          imageBaseName=${{ secrets.CONTAINER_REGISTRY_HOST_NAME }}/${{ secrets.CONTAINER_REGISTRY_PROJECT_ID }}/${{ secrets.CONTAINER_REGISTRY_NAME }}
+          echo "IMAGE_BASE_NAME=$imageBaseName" >> $GITHUB_ENV
+          echo "IMAGE_NAME=$imageBaseName/asm-workshop:$shortSha" >> $GITHUB_ENV
+      - name: sign-in to artifact registry
+        run: |
+          gcloud auth configure-docker ${{ secrets.CONTAINER_REGISTRY_HOST_NAME }} --quiet
+      - name: manage base images
+        run: |
+          # Grab the build base image in our private registry
+          baseImage=$(cat Dockerfile | grep 'FROM alpine')
+          baseImage=($baseImage)
+          docker pull ${baseImage[1]}
+          newImage=$(echo ${baseImage[1]} | sed "s,alpine,${IMAGE_BASE_NAME}/alpine,g")
+          docker tag ${baseImage[1]} $newImage
+          docker push $newImage
+          # Grab the runtime base image in our private registry
+          baseImage=$(cat Dockerfile | grep 'FROM nginxinc')
+          baseImage=($baseImage)
+          docker pull ${baseImage[1]}
+          newImage=$(echo ${baseImage[1]} | sed "s,nginxinc,${IMAGE_BASE_NAME},g")
+          docker tag ${baseImage[1]} $newImage
+          docker push $newImage
+          # Use the base images from our own private registry
+          sed -i "s,FROM alpine,FROM ${IMAGE_BASE_NAME}/alpine,g;s,FROM nginxinc,FROM ${IMAGE_BASE_NAME},g" Dockerfile
+      - name: build container
+        run: |
+          docker build --tag ${IMAGE_NAME} .
+          imageSize=$(printf %.2f "$(($(docker image inspect ${IMAGE_NAME} --format='{{.Size}}') * 10**2 / $(printf '%5.0f\n' 1e6)))e-2")
+          echo "IMAGE_SIZE=$imageSize"
+      - name: dockle
+        run: |
+          docker run -v /var/run/docker.sock:/var/run/docker.sock --rm goodwithtech/dockle:latest --exit-code 1 --exit-level fatal ${IMAGE_NAME}
+      - name: run trivy vulnerability scanner
+        uses: aquasecurity/trivy-action@0.2.0
+        with:
+          image-ref: ${{ env.IMAGE_NAME }}
+          format: 'template'
+          template: '@/contrib/sarif.tpl'
+          output: 'trivy-results.sarif'
+          severity: ${{ env.SEVERITY }}
+      - name: upload trivy scan results to GitHub security tab
+        uses: github/codeql-action/upload-sarif@v1.0.26
+        with:
+          sarif_file: 'trivy-results.sarif'
+      - name: run container locally as a test
+        run: |
+          docker run -d -p 8080:8080 --read-only --cap-drop=ALL --user=1000 ${IMAGE_NAME}
+      - name: gcloud scan
+        run: |
+          gcloud components install local-extract --quiet
+          gcloud artifacts docker images scan ${IMAGE_NAME} --format='value(response.scan)' > scan_id.txt
+          gcloud artifacts docker images list-vulnerabilities $(cat scan_id.txt) --format='table(vulnerability.effectiveSeverity, vulnerability.cvssScore, noteName, vulnerability.packageIssue[0].affectedPackage, vulnerability.packageIssue[0].affectedVersion.name, vulnerability.packageIssue[0].fixedVersion.name)'
+          gcloud artifacts docker images list-vulnerabilities $(cat scan_id.txt) --format='value(vulnerability.effectiveSeverity)' | if grep -Fxq ${{ env.SEVERITY }}; then echo 'Failed vulnerability check' && exit 1; else exit 0; fi
+      - name: push image in container registry
+        if: ${{ github.event_name == 'push' }}
+        run: |
+          docker push ${IMAGE_NAME}
