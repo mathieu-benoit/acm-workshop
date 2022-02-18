@@ -3,7 +3,7 @@ languageCode = "en-us"
 defaultContentLanguage = "en"
 theme = "hugo-theme-learn"
 enableRobotsTXT = true
-googleAnalytics = 'G-34LNWT3M12'
+googleAnalytics = 'G-NJ4GHWP296'
 
 [outputs]
   home = [ "HTML", "RSS", "JSON"]
