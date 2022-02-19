@@ -23,6 +23,9 @@ spec:
     kind: Project
     external: projects/${GKE_PROJECT_ID}
 EOF
+```
+
+```Bash
 cat <<EOF > ~/$WORKSHOP_ORG_DIR_NAME/config-sync/projects/$GKE_PROJECT_ID/service-account-admin.yaml
 apiVersion: iam.cnrm.cloud.google.com/v1beta1
 kind: IAMPolicyMember
@@ -37,6 +40,9 @@ spec:
     kind: Project
     external: projects/${GKE_PROJECT_ID}
 EOF
+```
+
+```Bash
 cat <<EOF > ~/$WORKSHOP_ORG_DIR_NAME/config-sync/projects/$GKE_PROJECT_ID/iam-admin.yaml
 apiVersion: iam.cnrm.cloud.google.com/v1beta1
 kind: IAMPolicyMember
@@ -51,6 +57,9 @@ spec:
     kind: Project
     external: projects/${GKE_PROJECT_ID}
 EOF
+```
+
+```Bash
 cat <<EOF > ~/$WORKSHOP_ORG_DIR_NAME/config-sync/projects/$GKE_PROJECT_ID/service-account-user.yaml
 apiVersion: iam.cnrm.cloud.google.com/v1beta1
 kind: IAMPolicyMember
@@ -65,6 +74,9 @@ spec:
     kind: Project
     external: projects/${GKE_PROJECT_ID}
 EOF
+```
+
+```Bash
 cat <<EOF > ~/$WORKSHOP_ORG_DIR_NAME/config-sync/container-service.yaml
 apiVersion: serviceusage.cnrm.cloud.google.com/v1beta1
 kind: Service
@@ -80,9 +92,19 @@ EOF
 
 _Note: here we are enabling the GCP services APIs from the Org Admin, it allows more control and governance over which GCP services APIs the Platform Admin could use or not. If you want to give more autonomy to the Platform Admin, you could grant the `serviceusage.serviceUsageAdmin` role to the associated service account._
 
+{{< tabs >}}
+{{% tab name="git commit" %}}
 ```Bash
 cd ~/$WORKSHOP_ORG_DIR_NAME/
 git add .
 git commit -m "Setting up GKE rights for project ${GKE_PROJECT_ID}."
 git push
 ```
+{{% /tab %}}
+{{% tab name="kubectl apply" %}}
+```Bash
+cd ~/$WORKSHOP_ORG_DIR_NAME/
+kubectl apply -f .
+```
+{{% /tab %}}
+{{< /tabs >}}

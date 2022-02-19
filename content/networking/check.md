@@ -7,7 +7,7 @@ weight: 3
 
 Here is what you should have at this stage:
 
-`cd ~/$WORKSHOP_ORG_DIR_NAME && git log --oneline`
+By running `cd ~/$WORKSHOP_ORG_DIR_NAME && git log --oneline` you should get:
 ```Plaintext
 495d32e (HEAD -> main, origin/main) Setting up network admin role for ${GKE_PROJECT_ID} sa.
 aff11e5 Setting up gitops for gke config.
@@ -17,13 +17,13 @@ a088c19 Setting up billing api in config controller project.
 571205a Initial commit
 ```
 
-`cd ~/$GKE_PLATFORM_DIR_NAME && git log --oneline`
+By running `cd ~/$GKE_PLATFORM_DIR_NAME && git log --oneline` you should get:
 ```Plaintext
 6627884 (HEAD -> main, origin/main) Setting up network for ${GKE_PROJECT_ID}.
 0eafad8 Initial commit
 ```
 
-`nomos status --contexts $(kubectl config current-context)`
+By running `nomos status --contexts $(kubectl config current-context)` you should get:
 ```Plaintext
 *gke_${GKE_PROJECT_ID}_${GKE_LOCATION}_krmapihost-configcontroller
   --------------------
@@ -53,7 +53,7 @@ a088c19 Setting up billing api in config controller project.
      mabenoit-workshop-gke   computesubnetwork.compute.cnrm.cloud.google.com/gke   Current
 ```
 
-`kubectl get gcp --all-namespaces`
+By running `kubectl get gcp --all-namespaces` you should get:
 ```Plaintext
 NAMESPACE               NAME                                              AGE   READY   STATUS     STATUS AGE
 mabenoit-workshop-gke   computerouter.compute.cnrm.cloud.google.com/gke   36m   True    UpToDate   36m

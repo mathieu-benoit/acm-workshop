@@ -4,5 +4,3 @@ chapter: true
 weight: 2
 ---
 Set up Config Controller.
-
-{{% children showhidden="false" %}}

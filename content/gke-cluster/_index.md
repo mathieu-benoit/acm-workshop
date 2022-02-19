@@ -4,5 +4,3 @@ chapter: true
 weight: 4
 ---
 Set up the GKE cluster.
-
-{{% children showhidden="false" %}}

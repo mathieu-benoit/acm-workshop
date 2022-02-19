@@ -6,18 +6,47 @@ weight: 1
 - Persona: Org Admin
 - Duration: 20 min
 - Objectives:
-  - FIXME
+  - Create a Config Controller instance in its dedicated GCP project
+  - Assign the least privilege GCP roles to the Config Controller's GCP service account
 
-Create the Config Controller's GCP project:
+Define variables:
 ```Bash
 PREFIX=''
 RANDOM_SUFFIX=$(shuf -i 100-999 -n 1)
 CONFIG_CONTROLLER_PROJECT_ID=${PREFIX}workshop-${RANDOM_SUFFIX}
 BILLING_ACCOUNT_ID=FIXME
 ORG_ID=FIXME
-gcloud projects create $CONFIG_CONTROLLER_PROJECT_ID --organization $ORG_ID --name $CONFIG_CONTROLLER_PROJECT_ID
-# FIXME - provide same way but with Folder Id.
-gcloud beta billing projects link $CONFIG_CONTROLLER_PROJECT_ID --billing-account $BILLING_ACCOUNT_ID
+```
+
+Create the Config Controller's GCP project:
+{{< tabs >}}
+{{% tab name="Org level" %}}
+Create this GCP project at the Organization level:
+```Bash
+gcloud projects create $CONFIG_CONTROLLER_PROJECT_ID \
+    --organization $ORG_ID \
+    --name $CONFIG_CONTROLLER_PROJECT_ID
+```
+{{% /tab %}}
+{{% tab name="Folder level" %}}
+Alternatively, you could also create this GCP project at a Folder level:
+```Bash
+FOLDER_ID=FIXME
+gcloud projects create $CONFIG_CONTROLLER_PROJECT_ID \
+    --folder $FOLDER_ID \
+    --name $CONFIG_CONTROLLER_PROJECT_ID
+```
+{{% /tab %}}
+{{< /tabs >}}
+
+Set the Billing account on this GCP project: 
+```
+gcloud beta billing projects link $CONFIG_CONTROLLER_PROJECT_ID \
+    --billing-account $BILLING_ACCOUNT_ID
+```
+
+Set this project as the default project for following `gcloud` commands:
+```
 gcloud config set project $CONFIG_CONTROLLER_PROJECT_ID
 ```
 
@@ -36,6 +65,8 @@ gcloud anthos config controller list \
 gcloud anthos config controller describe $CONFIG_CONTROLLER_NAME \
     --location=$CONFIG_CONTROLLER_LOCATION
 ```
+
+_Note: the provisioning of the Config Controller instance could take around 15-20 min._
 
 Set the proper roles to the Config Controller's service account:
 ```Bash

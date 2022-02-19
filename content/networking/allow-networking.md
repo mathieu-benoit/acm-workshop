@@ -4,7 +4,7 @@ weight: 1
 ---
 
 - Persona: Org Admin
-- Duration: 5 min
+- Duration: 2 min
 - Objectives:
   - FIXME
 
@@ -25,9 +25,19 @@ spec:
 EOF
 ```
 
+{{< tabs >}}
+{{% tab name="git commit" %}}
 ```Bash
 cd ~/$WORKSHOP_ORG_DIR_NAME/
 git add .
 git commit -m "Setting up network admin role for ${GKE_PROJECT_ID} sa."
 git push
 ```
+{{% /tab %}}
+{{% tab name="kubectl apply" %}}
+```Bash
+cd ~/$WORKSHOP_ORG_DIR_NAME/
+kubectl apply -f .
+```
+{{% /tab %}}
+{{< /tabs >}}

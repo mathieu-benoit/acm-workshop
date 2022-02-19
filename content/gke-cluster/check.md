@@ -1,13 +1,13 @@
 ---
 title: "Check"
-weight: 3
+weight: 4
 ---
 
 - Duration: 2 min
 
 Here is what you should have at this stage:
 
-`cd ~/$WORKSHOP_ORG_DIR_NAME && git log --oneline`
+By running `cd ~/$WORKSHOP_ORG_DIR_NAME && git log --oneline` you should get:
 ```Plaintext
 42ebeff (HEAD -> main, origin/main) Setting up GKE rights for project ${GKE_PROJECT_ID}.
 5eb80f5 Container admin role for ${GKE_PROJECT_ID} sa and container service enablement for project ${GKE_PROJECT_ID}.
@@ -20,14 +20,14 @@ a088c19 Setting up billing api in config controller project.
 571205a Initial commit
 ```
 
-`cd ~/$GKE_PLATFORM_DIR_NAME && git log --oneline`
+By running `cd ~/$GKE_PLATFORM_DIR_NAME && git log --oneline` you should get:
 ```Plaintext
 a57e8df (HEAD -> main, origin/main) Create GKE cluster, GKE primary nodepool and associated sa for project ${GKE_PROJECT_ID}.
 6627884 Setting up network for ${GKE_PROJECT_ID}.
 0eafad8 Initial commit
 ```
 
-`nomos status --contexts $(kubectl config current-context)`
+By running `nomos status --contexts $(kubectl config current-context)` you should get:
 ```Plaintext
 *gke_${GKE_PROJECT_ID}_${GKE_LOCATION}_krmapihost-configcontroller
   --------------------
@@ -68,7 +68,7 @@ a57e8df (HEAD -> main, origin/main) Create GKE cluster, GKE primary nodepool and
      mabenoit-workshop-gke   iamserviceaccount.iam.cnrm.cloud.google.com/gke-primary-pool      Current
 ```
 
-`kubectl get gcp --all-namespaces`
+By running `kubectl get gcp --all-namespaces`
 ```Plaintext
 NAMESPACE               NAME                                                 AGE   READY   STATUS     STATUS AGE
 mabenoit-workshop-gke   computerouternat.compute.cnrm.cloud.google.com/gke   12h   True    UpToDate   8h

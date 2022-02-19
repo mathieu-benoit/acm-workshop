@@ -1,6 +1,6 @@
 ---
 title: "Create the GKE cluster"
-weight: 1
+weight: 2
 ---
 
 - Persona: Platform Admin
@@ -74,6 +74,9 @@ metadata:
 spec:
   displayName: gke-primary-pool
 EOF
+```
+
+```Bash
 cat <<EOF > ~/$GKE_PLATFORM_DIR_NAME/config-sync/log-writer-gke-sa.yaml
 apiVersion: iam.cnrm.cloud.google.com/v1beta1
 kind: IAMPolicyMember
@@ -91,6 +94,9 @@ spec:
     external: ${GKE_PROJECT_ID}
   role: roles/logging.logWriter
 EOF
+```
+
+```Bash
 cat <<EOF > ~/$GKE_PLATFORM_DIR_NAME/config-sync/metric-writer-gke-sa.yaml
 apiVersion: iam.cnrm.cloud.google.com/v1beta1
 kind: IAMPolicyMember
@@ -108,6 +114,9 @@ spec:
     external: ${GKE_PROJECT_ID}
   role: roles/monitoring.metricWriter
 EOF
+```
+
+```Bash
 cat <<EOF > ~/$GKE_PLATFORM_DIR_NAME/config-sync/monitoring-viewer-gke-sa.yaml
 apiVersion: iam.cnrm.cloud.google.com/v1beta1
 kind: IAMPolicyMember
@@ -125,6 +134,9 @@ spec:
     external: ${GKE_PROJECT_ID}
   role: roles/monitoring.viewer
 EOF
+```
+
+```Bash
 cat <<EOF > ~/$GKE_PLATFORM_DIR_NAME/config-sync/gke-primary-pool.yaml
 apiVersion: container.cnrm.cloud.google.com/v1beta1
 kind: ContainerNodePool
@@ -154,9 +166,19 @@ spec:
 EOF
 ```
 
+{{< tabs >}}
+{{% tab name="git commit" %}}
 ```Bash
 cd ~/$WORKSHOP_ORG_DIR_NAME/
 git add .
 git commit -m "Create GKE cluster, GKE primary nodepool and associated sa for project ${GKE_PROJECT_ID}."
 git push
 ```
+{{% /tab %}}
+{{% tab name="kubectl apply" %}}
+```Bash
+cd ~/$WORKSHOP_ORG_DIR_NAME/
+kubectl apply -f .
+```
+{{% /tab %}}
+{{< /tabs >}}

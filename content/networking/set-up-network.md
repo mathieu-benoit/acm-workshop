@@ -20,6 +20,9 @@ spec:
   routingMode: REGIONAL
   autoCreateSubnetworks: false
 EOF
+```
+
+```Bash
 cat <<EOF > ~/$GKE_PLATFORM_DIR_NAME/config-sync/subnet.yaml
 apiVersion: compute.cnrm.cloud.google.com/v1beta1
 kind: ComputeSubnetwork
@@ -37,6 +40,9 @@ spec:
   - rangeName: clusterrange
     ipCidrRange: 10.4.0.0/20
 EOF
+```
+
+```Bash
 cat <<EOF > ~/$GKE_PLATFORM_DIR_NAME/config-sync/router.yaml
 apiVersion: compute.cnrm.cloud.google.com/v1beta1
 kind: ComputeRouter
@@ -48,6 +54,9 @@ spec:
     name: gke
   region: ${GKE_LOCATION}
 EOF
+```
+
+```Bash
 cat <<EOF > ~/$GKE_PLATFORM_DIR_NAME/config-sync/router-nat.yaml
 apiVersion: compute.cnrm.cloud.google.com/v1beta1
 kind: ComputeRouterNAT
@@ -68,9 +77,19 @@ spec:
 EOF
 ```
 
+{{< tabs >}}
+{{% tab name="git commit" %}}
 ```Bash
 cd ~/$GKE_PLATFORM_DIR_NAME/
 git add .
 git commit -m "Setting up network for ${GKE_PROJECT_ID}."
 git push
 ```
+{{% /tab %}}
+{{% tab name="kubectl apply" %}}
+```Bash
+cd ~/$GKE_PLATFORM_DIR_NAME/
+kubectl apply -f .
+```
+{{% /tab %}}
+{{< /tabs >}}

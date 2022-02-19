@@ -7,7 +7,7 @@ weight: 3
 
 Here is what you should have at this stage:
 
-`cd ~/$WORKSHOP_ORG_DIR_NAME && git log --oneline`
+By running `cd ~/$WORKSHOP_ORG_DIR_NAME && git log --oneline` you should get:
 ```Plaintext
 aff11e5 (HEAD -> main, origin/main) Setting up gitops for gke config.
 f95bfb9 Setting up gke namespace/project.
@@ -16,12 +16,12 @@ a088c19 Setting up billing api in config controller project.
 571205a Initial commit
 ```
 
-`cd ~/$GKE_PLATFORM_DIR_NAME && git log --oneline`
+By running `cd ~/$GKE_PLATFORM_DIR_NAME && git log --oneline` you should get:
 ```Plaintext
 0eafad8 (HEAD -> main, origin/main) Initial commit
 ```
 
-`nomos status --contexts $(kubectl config current-context)`
+By running `nomos status --contexts $(kubectl config current-context)` you should get:
 ```Plaintext
 *gke_${GKE_PROJECT_ID}_${GKE_LOCATION}_krmapihost-configcontroller
   --------------------
@@ -45,7 +45,7 @@ a088c19 Setting up billing api in config controller project.
   SYNCED                  0eafad8                                                                      
 ```
 
-`kubectl get gcp --all-namespaces`
+By running `kubectl get gcp --all-namespaces` you should get:
 ```Plaintext
 NAMESPACE        NAME                                                                                            AGE   READY   STATUS     STATUS AGE
 config-control   iampartialpolicy.iam.cnrm.cloud.google.com/mabenoit-workshop-gke-sa-workload-identity-binding   47h   True    UpToDate   47h

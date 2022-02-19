@@ -16,5 +16,5 @@ googleAnalytics = 'G-NJ4GHWP296'
   disableBreadcrumb = false
   disableNextPrev = false
   disableLandingPageButton = true
-  disableInlineCopyToClipBoard = true
+  disableInlineCopyToClipBoard = false
   themeVariant = "mine"

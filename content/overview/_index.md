@@ -13,5 +13,3 @@ After the workshop, you will be able to...
 - Org Admin
 - Platform Admin
 - Apps Operator
-
-{{% children showhidden="false" %}}

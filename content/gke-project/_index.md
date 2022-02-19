@@ -4,5 +4,3 @@ chapter: true
 weight: 3
 ---
 Set up the GKE project.
-
-{{% children showhidden="false" %}}

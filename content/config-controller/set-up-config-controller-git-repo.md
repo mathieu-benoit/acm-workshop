@@ -1,12 +1,16 @@
 ---
 title: "Set up Config Controller's Git repo"
-weight: 1
+weight: 2
 ---
 
 - Persona: Org Admin
-- Duration: 10 min
+- Duration: 5 min
 - Objectives:
-  - FIXME
+  - Set up ac Cloud NAT in order to provide Internet access in egress for the Config Controller instance
+  - Enable multi-repository for the Config Controller's Config Sync component
+  - Create a dedicated Organization GitHub repository as the main/root repository of the Config Controller instance
+  - Enable Cloud Billing service API in the Config Controller's GCP project
+  - Commit the associated Kubernetes manifests in the Organization Git repository
 
 Open Config Controller's egress to the Internet (GitHub access):
 ```Bash
@@ -84,9 +88,19 @@ metadata:
 EOF
 ```
 
-Commit the file in Git repository:
+{{< tabs >}}
+{{% tab name="git commit" %}}
 ```Bash
+cd ~/$WORKSHOP_ORG_DIR_NAME/
 git add .
 git commit -m "Setting up billing api in config controller project."
 git push
 ```
+{{% /tab %}}
+{{% tab name="kubectl apply" %}}
+```Bash
+cd ~/$WORKSHOP_ORG_DIR_NAME/
+kubectl apply -f .
+```
+{{% /tab %}}
+{{< /tabs >}}

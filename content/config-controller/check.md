@@ -7,14 +7,14 @@ weight: 3
 
 Here is what you should have at this stage:
 
-`cd ~/$WORKSHOP_ORG_DIR_NAME && git log --oneline`
+By running `cd ~/$WORKSHOP_ORG_DIR_NAME && git log --oneline` you should get:
 ```Plaintext
 a088c19 (HEAD -> main, origin/main) Setting up billing api in config controller project.
 910571c Setting up new namespace repository.
 571205a Initial commit
 ```
 
-`nomos status --contexts $(kubectl config current-context)`
+By running `nomos status --contexts $(kubectl config current-context)` you should get:
 ```Plaintext
 *gke_${GKE_PROJECT_ID}_${GKE_LOCATION}_krmapihost-configcontroller
   --------------------
@@ -26,7 +26,7 @@ a088c19 (HEAD -> main, origin/main) Setting up billing api in config controller 
      config-control          service.serviceusage.cnrm.cloud.google.com/cloudbilling.googleapis.com                                Current
 ```
 
-`kubectl get gcp --all-namespaces`
+By running `kubectl get gcp --all-namespaces` you should get:
 ```Plaintext
 NAMESPACE        NAME                                                                     AGE    READY   STATUS     STATUS AGE
 config-control   service.serviceusage.cnrm.cloud.google.com/cloudbilling.googleapis.com   2d2h   True    UpToDate   2d2h

@@ -12,6 +12,13 @@ weight: 1
 GKE_PROJECT_ID=${PREFIX}workshop-${RANDOM_SUFFIX}
 mkdir ~/$WORKSHOP_ORG_DIR_NAME/config-sync/projects
 mkdir ~/$WORKSHOP_ORG_DIR_NAME/config-sync/projects/$GKE_PROJECT_ID
+```
+
+Create the GCP project:
+{{< tabs >}}
+{{% tab name="Org level" %}}
+At the Organization level:
+```Bash
 cat <<EOF > ~/$WORKSHOP_ORG_DIR_NAME/config-sync/projects/$GKE_PROJECT_ID/project.yaml
 apiVersion: resourcemanager.cnrm.cloud.google.com/v1beta1
 kind: Project
@@ -28,8 +35,33 @@ spec:
     external: "${ORG_ID}"
   resourceID: ${GKE_PROJECT_ID}
 EOF
-# FIXME - alternative with Folder Id
+```
+{{% /tab %}}
+{{% tab name="Folder level" %}}
+At the Folder level:
+```Bash
+cat <<EOF > ~/$WORKSHOP_ORG_DIR_NAME/config-sync/projects/$GKE_PROJECT_ID/project.yaml
+apiVersion: resourcemanager.cnrm.cloud.google.com/v1beta1
+kind: Project
+metadata:
+  annotations:
+    cnrm.cloud.google.com/auto-create-network: "false"
+  name: ${GKE_PROJECT_ID}
+  namespace: config-control
+spec:
+  name: ${GKE_PROJECT_ID}
+  billingAccountRef:
+    external: "${BILLING_ACCOUNT_ID}"
+  folderRef:
+    external: "${FOLDER_ID}"
+  resourceID: ${GKE_PROJECT_ID}
+EOF
+```
+{{% /tab %}}
+{{< /tabs >}}
 
+
+```Bash
 cat <<EOF > ~/$WORKSHOP_ORG_DIR_NAME/config-sync/projects/$GKE_PROJECT_ID/service-account.yaml
 apiVersion: iam.cnrm.cloud.google.com/v1beta1
 kind: IAMServiceAccount
@@ -39,6 +71,9 @@ metadata:
 spec:
   displayName: ${GKE_PROJECT_ID}
 EOF
+```
+
+```Bash
 cat <<EOF > ~/$WORKSHOP_ORG_DIR_NAME/config-sync/projects/$GKE_PROJECT_ID/workload-identity-user.yaml
 apiVersion: iam.cnrm.cloud.google.com/v1beta1
 kind: IAMPartialPolicy
@@ -55,7 +90,9 @@ spec:
       members:
         - member: serviceAccount:${CONFIG_CONTROLLER_PROJECT_ID}.svc.id.goog[cnrm-system/cnrm-controller-manager-${GKE_PROJECT_ID}]
 EOF
+```
 
+```Bash
 cat <<EOF > ~/$WORKSHOP_ORG_DIR_NAME/config-sync/projects/$GKE_PROJECT_ID/namespace.yaml
 apiVersion: v1
 kind: Namespace
@@ -66,6 +103,9 @@ metadata:
     owner: ${GKE_PROJECT_ID}
   name: ${GKE_PROJECT_ID}
 EOF
+```
+
+```Bash
 cat <<EOF > ~/$WORKSHOP_ORG_DIR_NAME/config-sync/projects/$GKE_PROJECT_ID/config-connector-context.yaml
 apiVersion: core.cnrm.cloud.google.com/v1beta1
 kind: ConfigConnectorContext
@@ -75,9 +115,21 @@ metadata:
 spec:
   googleServiceAccount: ${GKE_PROJECT_ID}@${CONFIG_CONTROLLER_PROJECT_ID}.iam.gserviceaccount.com
 EOF
+```
 
+{{< tabs >}}
+{{% tab name="git commit" %}}
+```Bash
 cd ~/$WORKSHOP_ORG_DIR_NAME/
 git add .
 git commit -m "Setting up ${GKE_PROJECT_ID} namespace/project."
 git push
 ```
+{{% /tab %}}
+{{% tab name="kubectl apply" %}}
+```Bash
+cd ~/$WORKSHOP_ORG_DIR_NAME/
+kubectl apply -f .
+```
+{{% /tab %}}
+{{< /tabs >}}

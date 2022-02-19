@@ -16,7 +16,9 @@ cd $GKE_PLATFORM_DIR_NAME
 git pull
 git checkout main
 GKE_PLATFORM_REPO_URL=$(gh repo view --json url --jq .url)
+```
 
+```Bash
 cat <<EOF > ~/$WORKSHOP_ORG_DIR_NAME/config-sync/projects/$GKE_PROJECT_ID/gke-config-repo-sync.yaml
 apiVersion: configsync.gke.io/v1beta1
 kind: RepoSync
@@ -32,7 +34,9 @@ spec:
    dir: "config-sync"
    auth: none
 EOF
+```
 
+```Bash
 cat <<EOF > ~/$WORKSHOP_ORG_DIR_NAME/config-sync/projects/$GKE_PROJECT_ID/gke-config-repo-sync-role-binding.yaml
 apiVersion: rbac.authorization.k8s.io/v1
 kind: RoleBinding
@@ -48,9 +52,21 @@ roleRef:
   name: edit
   apiGroup: rbac.authorization.k8s.io
 EOF
+```
 
-cd ~/$WORKSHOP_ORG_DIR_NAME
+{{< tabs >}}
+{{% tab name="git commit" %}}
+```Bash
+cd ~/$WORKSHOP_ORG_DIR_NAME/
 git add .
 git commit -m "Setting up gitops for ${GKE_PROJECT_ID}'s platform config."
 git push
 ```
+{{% /tab %}}
+{{% tab name="kubectl apply" %}}
+```Bash
+cd ~/$WORKSHOP_ORG_DIR_NAME/
+kubectl apply -f .
+```
+{{% /tab %}}
+{{< /tabs >}}
