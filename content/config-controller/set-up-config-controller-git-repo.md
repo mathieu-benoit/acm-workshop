@@ -70,15 +70,9 @@ spec:
 EOF
 ```
 
-Check that this Git repository setup has been successfully done:
-```Bash
-nomos status --contexts $(kubectl config current-context)
-gcloud alpha anthos config sync repo list --targets config-controller
-```
-
 Create the Cloud Billing service API resource:
 ```Bash
-cat <<EOF > config-sync/cloudbilling-service.yaml
+cat <<EOF > ~/$WORKSHOP_ORG_DIR_NAME/config-sync/cloudbilling-service.yaml
 apiVersion: serviceusage.cnrm.cloud.google.com/v1beta1
 kind: Service
 metadata:
@@ -95,12 +89,4 @@ Commit the file in Git repository:
 git add .
 git commit -m "Setting up billing api in config controller project."
 git push
-```
-
-Check that everything has been deployed successfully:
-```Bash
-kubectl get gcp --all-namespaces
-kubectl get gcpservice -n config-control
-kubectl describe gcpservice cloudbilling.googleapis.com -n config-control
-nomos status --contexts $(kubectl config current-context)
 ```

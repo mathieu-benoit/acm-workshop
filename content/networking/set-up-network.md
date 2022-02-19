@@ -66,10 +66,11 @@ spec:
     sourceIpRangesToNat:
     - ALL_IP_RANGES
 EOF
+```
+
+```Bash
 cd ~/$GKE_PLATFORM_DIR_NAME/
 git add .
 git commit -m "Setting up network for ${GKE_PROJECT_ID}."
 git push
-nomos status --contexts $(kubectl config current-context)
-kubectl get gcp --all-namespaces
 ```

@@ -85,6 +85,4 @@ cd ~/$WORKSHOP_ORG_DIR_NAME/
 git add .
 git commit -m "Setting up GKE rights for project ${GKE_PROJECT_ID}."
 git push
-nomos status --contexts $(kubectl config current-context)
-kubectl get gcp --all-namespaces
 ```

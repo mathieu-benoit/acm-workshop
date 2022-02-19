@@ -38,7 +38,7 @@ gcloud anthos config controller describe $CONFIG_CONTROLLER_NAME \
 ```
 
 Set the proper roles to the Config Controller's service account:
-```
+```Bash
 CONFIG_CONTROLLER_SA="$(kubectl get ConfigConnectorContext \
     -n config-control \
     -o jsonpath='{.items[0].spec.googleServiceAccount}')"

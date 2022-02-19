@@ -23,11 +23,11 @@ spec:
     kind: Project
     external: projects/${GKE_PROJECT_ID}
 EOF
+```
+
+```Bash
 cd ~/$WORKSHOP_ORG_DIR_NAME/
 git add .
 git commit -m "Setting up network admin role for ${GKE_PROJECT_ID} sa."
 git push
-nomos status --contexts $(kubectl config current-context)
-FIXME - alternative tab with kubectl apply -f
-kubectl get gcp --all-namespaces
 ```
