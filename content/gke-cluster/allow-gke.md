@@ -1,0 +1,79 @@
+---
+title: "Allow GKE"
+weight: 1
+---
+
+- Persona: Org Admin
+- Duration: 5 min
+- Objectives:
+  - FIXME
+
+```Bash
+cat <<EOF > ~/$WORKSHOP_ORG_DIR_NAME/config-sync/projects/$GKE_PROJECT_ID/container-admin.yaml
+apiVersion: iam.cnrm.cloud.google.com/v1beta1
+kind: IAMPolicyMember
+metadata:
+  name: container-admin-${GKE_PROJECT_ID}
+  namespace: config-control
+spec:
+  member: serviceAccount:${GKE_PROJECT_ID}@${CONFIG_CONTROLLER_PROJECT_ID}.iam.gserviceaccount.com
+  role: roles/container.admin
+  resourceRef:
+    apiVersion: resourcemanager.cnrm.cloud.google.com/v1beta1
+    kind: Project
+    external: projects/${GKE_PROJECT_ID}
+EOF
+
+cat <<EOF > ~/$WORKSHOP_ORG_DIR_NAME/config-sync/projects/$GKE_PROJECT_ID/service-account-admin.yaml
+apiVersion: iam.cnrm.cloud.google.com/v1beta1
+kind: IAMPolicyMember
+metadata:
+  name: service-account-admin-${GKE_PROJECT_ID}
+  namespace: config-control
+spec:
+  member: serviceAccount:${GKE_PROJECT_ID}@${CONFIG_CONTROLLER_PROJECT_ID}.iam.gserviceaccount.com
+  role: roles/iam.serviceAccountAdmin
+  resourceRef:
+    apiVersion: resourcemanager.cnrm.cloud.google.com/v1beta1
+    kind: Project
+    external: projects/${GKE_PROJECT_ID}
+EOF
+
+cat <<EOF > ~/$WORKSHOP_ORG_DIR_NAME/config-sync/projects/$GKE_PROJECT_ID/service-account-user.yaml
+apiVersion: iam.cnrm.cloud.google.com/v1beta1
+kind: IAMPolicyMember
+metadata:
+  name: service-account-user-${GKE_PROJECT_ID}
+  namespace: config-control
+spec:
+  member: serviceAccount:${GKE_PROJECT_ID}@${CONFIG_CONTROLLER_PROJECT_ID}.iam.gserviceaccount.com
+  role: roles/iam.serviceAccountUser
+  resourceRef:
+    apiVersion: resourcemanager.cnrm.cloud.google.com/v1beta1
+    kind: Project
+    external: projects/${GKE_PROJECT_ID}
+EOF
+
+cat <<EOF > ~/$WORKSHOP_ORG_DIR_NAME/config-sync/container-service.yaml
+apiVersion: serviceusage.cnrm.cloud.google.com/v1beta1
+kind: Service
+metadata:
+  annotations:
+    cnrm.cloud.google.com/project-id: ${GKE_PROJECT_ID}
+    cnrm.cloud.google.com/deletion-policy: "abandon"
+    cnrm.cloud.google.com/disable-dependent-services: "false"
+  name: container.googleapis.com
+  namespace: config-control
+EOF
+```
+
+_Note: here we are enabling the GCP services APIs from the Org Admin, it allows more control and governance over which GCP services APIs the Platform Admin could use or not. If you want to give more autonomy to the Platform Admin, you could grant the `serviceusage.serviceUsageAdmin` role to the associated service account._
+
+```Bash
+cd ~/$WORKSHOP_ORG_DIR_NAME/
+git add .
+git commit -m "Setting up GKE rights for project ${GKE_PROJECT_ID}."
+git push
+nomos status --contexts $(kubectl config current-context)
+kubectl get gcp --all-namespaces
+```
