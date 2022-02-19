@@ -125,7 +125,7 @@ spec:
     external: ${GKE_PROJECT_ID}
   role: roles/monitoring.viewer
 EOF
-cat <<EOF > gke-primary-pool.yaml
+cat <<EOF > ~/$GKE_PLATFORM_DIR_NAME/config-sync/gke-primary-pool.yaml
 apiVersion: container.cnrm.cloud.google.com/v1beta1
 kind: ContainerNodePool
 metadata:
@@ -157,7 +157,7 @@ EOF
 ```Bash
 cd ~/$WORKSHOP_ORG_DIR_NAME/
 git add .
-git commit -m "Setting up GKE rights for project ${GKE_PROJECT_ID}."
+git commit -m "Create GKE cluster, GKE primary nodepool and associated sa for project ${GKE_PROJECT_ID}."
 git push
 nomos status --contexts $(kubectl config current-context)
 kubectl get gcp --all-namespaces
