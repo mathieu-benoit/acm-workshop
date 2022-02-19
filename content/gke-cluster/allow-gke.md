@@ -23,7 +23,6 @@ spec:
     kind: Project
     external: projects/${GKE_PROJECT_ID}
 EOF
-
 cat <<EOF > ~/$WORKSHOP_ORG_DIR_NAME/config-sync/projects/$GKE_PROJECT_ID/service-account-admin.yaml
 apiVersion: iam.cnrm.cloud.google.com/v1beta1
 kind: IAMPolicyMember
@@ -38,7 +37,20 @@ spec:
     kind: Project
     external: projects/${GKE_PROJECT_ID}
 EOF
-
+cat <<EOF > ~/$WORKSHOP_ORG_DIR_NAME/config-sync/projects/$GKE_PROJECT_ID/iam-admin.yaml
+apiVersion: iam.cnrm.cloud.google.com/v1beta1
+kind: IAMPolicyMember
+metadata:
+  name: iam-admin-${GKE_PROJECT_ID}
+  namespace: config-control
+spec:
+  member: serviceAccount:${GKE_PROJECT_ID}@${CONFIG_CONTROLLER_PROJECT_ID}.iam.gserviceaccount.com
+  role: roles/resourcemanager.projectIamAdmin
+  resourceRef:
+    apiVersion: resourcemanager.cnrm.cloud.google.com/v1beta1
+    kind: Project
+    external: projects/${GKE_PROJECT_ID}
+EOF
 cat <<EOF > ~/$WORKSHOP_ORG_DIR_NAME/config-sync/projects/$GKE_PROJECT_ID/service-account-user.yaml
 apiVersion: iam.cnrm.cloud.google.com/v1beta1
 kind: IAMPolicyMember
@@ -53,7 +65,6 @@ spec:
     kind: Project
     external: projects/${GKE_PROJECT_ID}
 EOF
-
 cat <<EOF > ~/$WORKSHOP_ORG_DIR_NAME/config-sync/container-service.yaml
 apiVersion: serviceusage.cnrm.cloud.google.com/v1beta1
 kind: Service
