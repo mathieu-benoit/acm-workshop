@@ -88,7 +88,7 @@ metadata:
 EOF
 ```
 
-{{< tabs >}}
+{{< tabs groupId="commit">}}
 {{% tab name="git commit" %}}
 ```Bash
 cd ~/$WORKSHOP_ORG_DIR_NAME/

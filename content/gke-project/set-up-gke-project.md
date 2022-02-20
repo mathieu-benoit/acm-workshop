@@ -15,7 +15,7 @@ mkdir ~/$WORKSHOP_ORG_DIR_NAME/config-sync/projects/$GKE_PROJECT_ID
 ```
 
 Create the GCP project:
-{{< tabs >}}
+{{< tabs groupId="org-level">}}
 {{% tab name="Org level" %}}
 At the Organization level:
 ```Bash
@@ -117,7 +117,7 @@ spec:
 EOF
 ```
 
-{{< tabs >}}
+{{< tabs groupId="commit">}}
 {{% tab name="git commit" %}}
 ```Bash
 cd ~/$WORKSHOP_ORG_DIR_NAME/

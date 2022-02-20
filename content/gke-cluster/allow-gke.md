@@ -92,7 +92,7 @@ EOF
 
 _Note: here we are enabling the GCP services APIs from the Org Admin, it allows more control and governance over which GCP services APIs the Platform Admin could use or not. If you want to give more autonomy to the Platform Admin, you could grant the `serviceusage.serviceUsageAdmin` role to the associated service account._
 
-{{< tabs >}}
+{{< tabs groupId="commit">}}
 {{% tab name="git commit" %}}
 ```Bash
 cd ~/$WORKSHOP_ORG_DIR_NAME/

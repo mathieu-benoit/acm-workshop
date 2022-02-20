@@ -19,7 +19,7 @@ ORG_ID=FIXME
 ```
 
 Create the Config Controller's GCP project:
-{{< tabs >}}
+{{< tabs groupId="org-level">}}
 {{% tab name="Org level" %}}
 Create this GCP project at the Organization level:
 ```Bash
