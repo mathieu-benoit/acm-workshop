@@ -2,12 +2,12 @@
 title: "Allow GKE"
 weight: 1
 ---
-
 - Persona: Org Admin
 - Duration: 5 min
 - Objectives:
   - FIXME
 
+Define the `container.admin` role for the GKE project's service account:
 ```Bash
 cat <<EOF > ~/$WORKSHOP_ORG_DIR_NAME/config-sync/projects/$GKE_PROJECT_ID/container-admin.yaml
 apiVersion: iam.cnrm.cloud.google.com/v1beta1
@@ -25,6 +25,7 @@ spec:
 EOF
 ```
 
+Define the `iam.serviceAccountAdmin` role for the GKE project's service account:
 ```Bash
 cat <<EOF > ~/$WORKSHOP_ORG_DIR_NAME/config-sync/projects/$GKE_PROJECT_ID/service-account-admin.yaml
 apiVersion: iam.cnrm.cloud.google.com/v1beta1
@@ -42,6 +43,7 @@ spec:
 EOF
 ```
 
+Define the `resourcemanager.projectIamAdmin` role for the GKE project's service account:
 ```Bash
 cat <<EOF > ~/$WORKSHOP_ORG_DIR_NAME/config-sync/projects/$GKE_PROJECT_ID/iam-admin.yaml
 apiVersion: iam.cnrm.cloud.google.com/v1beta1
@@ -59,6 +61,7 @@ spec:
 EOF
 ```
 
+Define the `iam.serviceAccountUser` role for the GKE project's service account:
 ```Bash
 cat <<EOF > ~/$WORKSHOP_ORG_DIR_NAME/config-sync/projects/$GKE_PROJECT_ID/service-account-user.yaml
 apiVersion: iam.cnrm.cloud.google.com/v1beta1
@@ -76,6 +79,7 @@ spec:
 EOF
 ```
 
+Define the GKE API for the GKE project:
 ```Bash
 cat <<EOF > ~/$WORKSHOP_ORG_DIR_NAME/config-sync/container-service.yaml
 apiVersion: serviceusage.cnrm.cloud.google.com/v1beta1
@@ -89,11 +93,14 @@ metadata:
   namespace: config-control
 EOF
 ```
+{{% notice note %}}
+We are enabling the GCP services APIs from the Org Admin, it allows more control and governance over which GCP services APIs the Platform Admin could use or not. If you want to give more autonomy to the Platform Admin, you could grant the `serviceusage.serviceUsageAdmin` role to the associated service account.
+{{% /notice %}}
 
-_Note: here we are enabling the GCP services APIs from the Org Admin, it allows more control and governance over which GCP services APIs the Platform Admin could use or not. If you want to give more autonomy to the Platform Admin, you could grant the `serviceusage.serviceUsageAdmin` role to the associated service account._
-
+Apply and deploy all these Kubernetes manifests:
 {{< tabs groupId="commit">}}
 {{% tab name="git commit" %}}
+Let's deploy them via a GitOps approach:
 ```Bash
 cd ~/$WORKSHOP_ORG_DIR_NAME/
 git add .
@@ -102,6 +109,7 @@ git push
 ```
 {{% /tab %}}
 {{% tab name="kubectl apply" %}}
+Alternatively, you could directly apply them via the Config Controller's Kubernetes Server API:
 ```Bash
 cd ~/$WORKSHOP_ORG_DIR_NAME/
 kubectl apply -f .

@@ -2,7 +2,6 @@
 title: "Check"
 weight: 3
 ---
-
 - Duration: 2 min
 
 Here is what you should have at this stage:

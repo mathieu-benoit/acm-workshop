@@ -2,7 +2,6 @@
 title: "Create Config Controller"
 weight: 1
 ---
-
 - Persona: Org Admin
 - Duration: 20 min
 - Objectives:
@@ -65,8 +64,9 @@ gcloud anthos config controller list \
 gcloud anthos config controller describe $CONFIG_CONTROLLER_NAME \
     --location=$CONFIG_CONTROLLER_LOCATION
 ```
-
-_Note: the provisioning of the Config Controller instance could take around 15-20 min._
+{{% notice note %}}
+The provisioning of the Config Controller instance could take around 15-20 min.
+{{% /notice %}}
 
 Set the proper roles to the Config Controller's service account:
 ```Bash

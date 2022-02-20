@@ -1,13 +1,13 @@
 ---
 title: "Allow GKE Hub"
-weight: 4
+weight: 3
 ---
-
 - Persona: Org Admin
 - Duration: 5 min
 - Objectives:
   - FIXME
 
+Define the `gkehub.admin` role for the GKE project's service account:
 ```Bash
 cat <<EOF > ~/$WORKSHOP_ORG_DIR_NAME/config-sync/projects/$GKE_PROJECT_ID/gke-hub-admin.yaml
 apiVersion: iam.cnrm.cloud.google.com/v1beta1
@@ -25,7 +25,7 @@ spec:
 EOF
 ```
 
-Enable the GKE Hub API in the GKE project:
+Define the GKE Hub API for the GKE project:
 ```Bash
 cat <<EOF > ~/$WORKSHOP_ORG_DIR_NAME/config-sync/projects/$GKE_PROJECT_ID/gke-hub-service.yaml
 apiVersion: serviceusage.cnrm.cloud.google.com/v1beta1
@@ -40,7 +40,7 @@ metadata:
 EOF
 ```
 
-Enable the GKE API in the GKE project:
+Define the GKE API for the GKE project:
 ```Bash
 cat <<EOF > ~/$WORKSHOP_ORG_DIR_NAME/config-sync/projects/$GKE_PROJECT_ID/anthos-configmanagement-service.yaml
 apiVersion: serviceusage.cnrm.cloud.google.com/v1beta1
@@ -55,8 +55,10 @@ metadata:
 EOF
 ```
 
+Apply and deploy all these Kubernetes manifests:
 {{< tabs groupId="commit">}}
 {{% tab name="git commit" %}}
+Let's deploy them via a GitOps approach:
 ```Bash
 cd ~/$WORKSHOP_ORG_DIR_NAME/
 git add .
@@ -65,6 +67,7 @@ git push
 ```
 {{% /tab %}}
 {{% tab name="kubectl apply" %}}
+Alternatively, you could directly apply them via the Config Controller's Kubernetes Server API:
 ```Bash
 cd ~/$WORKSHOP_ORG_DIR_NAME/
 kubectl apply -f .

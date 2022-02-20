@@ -1,12 +1,12 @@
 ---
 title: "Set up GKE configs's Git repo"
-weight: 3
+weight: 4
 ---
-
 - Persona: Platform Admin
 - Duration: 10 min
 - Objectives:
   - FIXME
+
 
 ```Bash
 cat <<EOF > ~/$GKE_PROJECT_DIR_NAME/config-sync/gke-hub-feature-acm.yaml
@@ -22,7 +22,9 @@ spec:
   resourceID: configmanagement
 EOF
 ```
-_Note: The `resourceID` must be `configmanagement` if you want to use Anthos Config Management feature._
+{{% notice note %}}
+The `resourceID` must be `configmanagement` if you want to use Anthos Config Management feature.
+{{% /notice %}}
 
 ```Bash
 cat <<EOF > ~/$GKE_PROJECT_DIR_NAME/config-sync/gke-hub-membership.yaml
@@ -42,6 +44,7 @@ spec:
 EOF
 ```
 
+Create a dedicated GitHub repository where we will commit all the configs, policies, etc. we want to deploy in this GKE cluster:
 ```Bash
 GKE_CONFIGS_DIR_NAME=workshop-gke-configs-repo
 cd ~
@@ -80,11 +83,17 @@ spec:
       referentialRulesEnabled: false
       logDeniesEnabled: true
       templateLibraryInstalled: true
+    version: "1.10.1"
 EOF
 ```
+{{% notice tip %}}
+We explicitly set the Config Management's `version` with the current version. It's a best practice to do this, as you are responsible to manually upgrade this component as [new versions are coming](https://cloud.google.com/anthos-config-management/docs/release-notes). So you will be able to update this file accordingly in order to trigger the upgrade of Config Management with the new version.
+{{% /notice %}}
 
+Apply and deploy all these Kubernetes manifests:
 {{< tabs groupId="commit">}}
 {{% tab name="git commit" %}}
+Let's deploy them via a GitOps approach:
 ```Bash
 cd ~/$GKE_PROJECT_DIR_NAME/
 git add .
@@ -93,6 +102,7 @@ git push
 ```
 {{% /tab %}}
 {{% tab name="kubectl apply" %}}
+Alternatively, you could directly apply them via the Config Controller's Kubernetes Server API:
 ```Bash
 cd ~/$GKE_PROJECT_DIR_NAME/
 kubectl apply -f .

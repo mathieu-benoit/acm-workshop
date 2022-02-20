@@ -2,15 +2,13 @@
 title: "Set up Config Controller's Git repo"
 weight: 2
 ---
-
 - Persona: Org Admin
 - Duration: 5 min
 - Objectives:
-  - Set up ac Cloud NAT in order to provide Internet access in egress for the Config Controller instance
+  - Set up a Cloud NAT in order to provide Internet access in egress for the Config Controller instance
   - Enable multi-repository for the Config Controller's Config Sync component
   - Create a dedicated Organization GitHub repository as the main/root repository of the Config Controller instance
   - Enable Cloud Billing service API in the Config Controller's GCP project
-  - Commit the associated Kubernetes manifests in the Organization Git repository
 
 Open Config Controller's egress to the Internet (GitHub access):
 ```Bash
@@ -27,7 +25,7 @@ gcloud compute routers nats create nat-config \
     --auto-allocate-nat-external-ips
 ```
 
-Enable the multi-repository for the Config Controller's Config Management component:
+Deploy the multi-repository setup for the Config Controller's Config Management component:
 ```Bash
 cat << EOF | kubectl apply -f -
 apiVersion: configmanagement.gke.io/v1
@@ -74,7 +72,7 @@ spec:
 EOF
 ```
 
-Create the Cloud Billing service API resource:
+Define the Cloud Billing service API resource:
 ```Bash
 cat <<EOF > ~/$WORKSHOP_ORG_DIR_NAME/config-sync/cloudbilling-service.yaml
 apiVersion: serviceusage.cnrm.cloud.google.com/v1beta1
@@ -88,8 +86,10 @@ metadata:
 EOF
 ```
 
+Apply and deploy this Cloud Billing service API resource:
 {{< tabs groupId="commit">}}
 {{% tab name="git commit" %}}
+Let's deploy them via a GitOps approach:
 ```Bash
 cd ~/$WORKSHOP_ORG_DIR_NAME/
 git add .
@@ -98,6 +98,7 @@ git push
 ```
 {{% /tab %}}
 {{% tab name="kubectl apply" %}}
+Alternatively, you could directly apply them via the Config Controller's Kubernetes Server API:
 ```Bash
 cd ~/$WORKSHOP_ORG_DIR_NAME/
 kubectl apply -f .

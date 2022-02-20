@@ -2,16 +2,19 @@
 title: "Create the GKE cluster"
 weight: 2
 ---
-
 - Persona: Platform Admin
 - Duration: 5 min
 - Objectives:
   - FIXME
 
-GKE cluster with empty node pool:
+Initialize variables:
 ```Bash
 GKE_PROJECT_NUMBER=$(gcloud projects describe $GKE_PROJECT_ID --format='get(projectNumber)')
 GKE_NAME=gke
+```
+
+Define the GKE cluster with empty node pool:
+```Bash
 cat <<EOF > ~/$GKE_PROJECT_DIR_NAME/config-sync/gke-cluster.yaml
 apiVersion: container.cnrm.cloud.google.com/v1beta1
 kind: ContainerCluster
@@ -66,8 +69,11 @@ spec:
     workloadPool: ${GKE_PROJECT_ID}.svc.id.goog
 EOF
 ```
+{{% notice note %}}
+We are setting our local IP address `masterAuthorizedNetworksConfig` to get access to the GKE Kuberenetes Server API, it's not mandatory, but for the purpose of this workshop, it will allow to run a few `kubectl` commands in order to check what we are doing on this cluster throughout this workshop.
+{{% /notice %}}
 
-GKE cluster's primary node pool:
+Define the GKE primary node pool's service account:
 ```Bash
 cat <<EOF > ~/$GKE_PROJECT_DIR_NAME/config-sync/gke-primary-pool-sa.yaml
 apiVersion: iam.cnrm.cloud.google.com/v1beta1
@@ -80,6 +86,7 @@ spec:
 EOF
 ```
 
+Define the necessary and least privilege roles for the GKE primary node pool's service account:
 ```Bash
 cat <<EOF > ~/$GKE_PROJECT_DIR_NAME/config-sync/log-writer-gke-sa.yaml
 apiVersion: iam.cnrm.cloud.google.com/v1beta1
@@ -99,7 +106,6 @@ spec:
   role: roles/logging.logWriter
 EOF
 ```
-
 ```Bash
 cat <<EOF > ~/$GKE_PROJECT_DIR_NAME/config-sync/metric-writer-gke-sa.yaml
 apiVersion: iam.cnrm.cloud.google.com/v1beta1
@@ -119,7 +125,6 @@ spec:
   role: roles/monitoring.metricWriter
 EOF
 ```
-
 ```Bash
 cat <<EOF > ~/$GKE_PROJECT_DIR_NAME/config-sync/monitoring-viewer-gke-sa.yaml
 apiVersion: iam.cnrm.cloud.google.com/v1beta1
@@ -140,6 +145,7 @@ spec:
 EOF
 ```
 
+Define the GKE primary node pool:
 ```Bash
 cat <<EOF > ~/$GKE_PROJECT_DIR_NAME/config-sync/gke-primary-pool.yaml
 apiVersion: container.cnrm.cloud.google.com/v1beta1
@@ -170,18 +176,21 @@ spec:
 EOF
 ```
 
+Apply and deploy all these Kubernetes manifests:
 {{< tabs groupId="commit">}}
 {{% tab name="git commit" %}}
+Let's deploy them via a GitOps approach:
 ```Bash
-cd ~/$WORKSHOP_ORG_DIR_NAME/
+cd ~/$GKE_PROJECT_DIR_NAME/
 git add .
 git commit -m "Create GKE cluster, GKE primary nodepool and associated sa for project ${GKE_PROJECT_ID}."
 git push
 ```
 {{% /tab %}}
 {{% tab name="kubectl apply" %}}
+Alternatively, you could directly apply them via the Config Controller's Kubernetes Server API:
 ```Bash
-cd ~/$WORKSHOP_ORG_DIR_NAME/
+cd ~/$GKE_PROJECT_DIR_NAME/
 kubectl apply -f .
 ```
 {{% /tab %}}

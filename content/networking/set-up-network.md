@@ -2,7 +2,6 @@
 title: "Set up Network"
 weight: 1
 ---
-
 - Persona: Platform Admin
 - Duration: 15 min
 - Objectives:
@@ -79,6 +78,7 @@ EOF
 
 {{< tabs groupId="commit">}}
 {{% tab name="git commit" %}}
+Let's deploy them via a GitOps approach:
 ```Bash
 cd ~/$GKE_PROJECT_DIR_NAME/
 git add .
@@ -87,6 +87,7 @@ git push
 ```
 {{% /tab %}}
 {{% tab name="kubectl apply" %}}
+Alternatively, you could directly apply them via the Config Controller's Kubernetes Server API:
 ```Bash
 cd ~/$GKE_PROJECT_DIR_NAME/
 kubectl apply -f .
