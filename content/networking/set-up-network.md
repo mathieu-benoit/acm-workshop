@@ -10,7 +10,7 @@ weight: 1
 
 ```Bash
 GKE_LOCATION=us-east4
-cat <<EOF > ~/$GKE_PLATFORM_DIR_NAME/config-sync/vpc.yaml
+cat <<EOF > ~/$GKE_PROJECT_DIR_NAME/config-sync/vpc.yaml
 apiVersion: compute.cnrm.cloud.google.com/v1beta1
 kind: ComputeNetwork
 metadata:
@@ -23,7 +23,7 @@ EOF
 ```
 
 ```Bash
-cat <<EOF > ~/$GKE_PLATFORM_DIR_NAME/config-sync/subnet.yaml
+cat <<EOF > ~/$GKE_PROJECT_DIR_NAME/config-sync/subnet.yaml
 apiVersion: compute.cnrm.cloud.google.com/v1beta1
 kind: ComputeSubnetwork
 metadata:
@@ -43,7 +43,7 @@ EOF
 ```
 
 ```Bash
-cat <<EOF > ~/$GKE_PLATFORM_DIR_NAME/config-sync/router.yaml
+cat <<EOF > ~/$GKE_PROJECT_DIR_NAME/config-sync/router.yaml
 apiVersion: compute.cnrm.cloud.google.com/v1beta1
 kind: ComputeRouter
 metadata:
@@ -57,7 +57,7 @@ EOF
 ```
 
 ```Bash
-cat <<EOF > ~/$GKE_PLATFORM_DIR_NAME/config-sync/router-nat.yaml
+cat <<EOF > ~/$GKE_PROJECT_DIR_NAME/config-sync/router-nat.yaml
 apiVersion: compute.cnrm.cloud.google.com/v1beta1
 kind: ComputeRouterNAT
 metadata:
@@ -80,7 +80,7 @@ EOF
 {{< tabs >}}
 {{% tab name="git commit" %}}
 ```Bash
-cd ~/$GKE_PLATFORM_DIR_NAME/
+cd ~/$GKE_PROJECT_DIR_NAME/
 git add .
 git commit -m "Setting up network for ${GKE_PROJECT_ID}."
 git push
@@ -88,7 +88,7 @@ git push
 {{% /tab %}}
 {{% tab name="kubectl apply" %}}
 ```Bash
-cd ~/$GKE_PLATFORM_DIR_NAME/
+cd ~/$GKE_PROJECT_DIR_NAME/
 kubectl apply -f .
 ```
 {{% /tab %}}

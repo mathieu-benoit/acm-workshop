@@ -17,7 +17,7 @@ a088c19 Setting up billing api in config controller project.
 571205a Initial commit
 ```
 
-By running `cd ~/$GKE_PLATFORM_DIR_NAME && git log --oneline` you should get:
+By running `cd ~/$GKE_PROJECT_DIR_NAME && git log --oneline` you should get:
 ```Plaintext
 6627884 (HEAD -> main, origin/main) Setting up network for ${GKE_PROJECT_ID}.
 0eafad8 Initial commit

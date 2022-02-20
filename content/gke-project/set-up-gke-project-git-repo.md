@@ -9,10 +9,10 @@ weight: 2
   - FIXME
 
 ```Bash
-GKE_PLATFORM_DIR_NAME=workshop-gke-platform-repo
+GKE_PROJECT_DIR_NAME=workshop-gke-project-repo
 cd ~
-gh repo create $GKE_PLATFORM_DIR_NAME --public --clone --template https://github.com/mathieu-benoit/config-sync-template-repo
-cd $GKE_PLATFORM_DIR_NAME
+gh repo create $GKE_PROJECT_DIR_NAME --public --clone --template https://github.com/mathieu-benoit/config-sync-template-repo
+cd $GKE_PROJECT_DIR_NAME
 git pull
 git checkout main
 GKE_PLATFORM_REPO_URL=$(gh repo view --json url --jq .url)

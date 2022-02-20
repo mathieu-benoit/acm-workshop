@@ -11,11 +11,12 @@ weight: 2
 GKE cluster with empty node pool:
 ```Bash
 GKE_PROJECT_NUMBER=$(gcloud projects describe $GKE_PROJECT_ID --format='get(projectNumber)')
-cat <<EOF > ~/$GKE_PLATFORM_DIR_NAME/config-sync/gke-cluster.yaml
+GKE_NAME=gke
+cat <<EOF > ~/$GKE_PROJECT_DIR_NAME/config-sync/gke-cluster.yaml
 apiVersion: container.cnrm.cloud.google.com/v1beta1
 kind: ContainerCluster
 metadata:
-  name: gke
+  name: ${GKE_NAME}
   namespace: ${GKE_PROJECT_ID}
   annotations:
     cnrm.cloud.google.com/remove-default-node-pool: "true"
@@ -42,6 +43,9 @@ spec:
     enableComponents:
       - "SYSTEM_COMPONENTS"
       - "WORKLOADS"
+  masterAuthorizedNetworksConfig:
+    cidrBlocks:
+    - cidrBlock: ${LOCAL_IP_ADDRESS}/32
   monitoringConfig:
     enableComponents:
       - "SYSTEM_COMPONENTS"
@@ -65,7 +69,7 @@ EOF
 
 GKE cluster's primary node pool:
 ```Bash
-cat <<EOF > ~/$GKE_PLATFORM_DIR_NAME/config-sync/gke-primary-pool-sa.yaml
+cat <<EOF > ~/$GKE_PROJECT_DIR_NAME/config-sync/gke-primary-pool-sa.yaml
 apiVersion: iam.cnrm.cloud.google.com/v1beta1
 kind: IAMServiceAccount
 metadata:
@@ -77,7 +81,7 @@ EOF
 ```
 
 ```Bash
-cat <<EOF > ~/$GKE_PLATFORM_DIR_NAME/config-sync/log-writer-gke-sa.yaml
+cat <<EOF > ~/$GKE_PROJECT_DIR_NAME/config-sync/log-writer-gke-sa.yaml
 apiVersion: iam.cnrm.cloud.google.com/v1beta1
 kind: IAMPolicyMember
 metadata:
@@ -97,7 +101,7 @@ EOF
 ```
 
 ```Bash
-cat <<EOF > ~/$GKE_PLATFORM_DIR_NAME/config-sync/metric-writer-gke-sa.yaml
+cat <<EOF > ~/$GKE_PROJECT_DIR_NAME/config-sync/metric-writer-gke-sa.yaml
 apiVersion: iam.cnrm.cloud.google.com/v1beta1
 kind: IAMPolicyMember
 metadata:
@@ -117,7 +121,7 @@ EOF
 ```
 
 ```Bash
-cat <<EOF > ~/$GKE_PLATFORM_DIR_NAME/config-sync/monitoring-viewer-gke-sa.yaml
+cat <<EOF > ~/$GKE_PROJECT_DIR_NAME/config-sync/monitoring-viewer-gke-sa.yaml
 apiVersion: iam.cnrm.cloud.google.com/v1beta1
 kind: IAMPolicyMember
 metadata:
@@ -137,7 +141,7 @@ EOF
 ```
 
 ```Bash
-cat <<EOF > ~/$GKE_PLATFORM_DIR_NAME/config-sync/gke-primary-pool.yaml
+cat <<EOF > ~/$GKE_PROJECT_DIR_NAME/config-sync/gke-primary-pool.yaml
 apiVersion: container.cnrm.cloud.google.com/v1beta1
 kind: ContainerNodePool
 metadata:
@@ -145,7 +149,7 @@ metadata:
   namespace: ${GKE_PROJECT_ID}
 spec:
   clusterRef:
-    name: gke
+    name: ${GKE_NAME}
   initialNodeCount: 1
   location: ${GKE_LOCATION}
   management:
