@@ -24,6 +24,7 @@ spec:
 EOF
 ```
 
+Apply and deploy all these Kubernetes manifests:
 {{< tabs groupId="commit">}}
 {{% tab name="git commit" %}}
 Let's deploy them via a GitOps approach:

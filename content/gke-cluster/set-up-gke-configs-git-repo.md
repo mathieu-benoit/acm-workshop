@@ -7,7 +7,7 @@ weight: 4
 - Objectives:
   - FIXME
 
-
+Define the GKE Hub ACM feature resource:
 ```Bash
 cat <<EOF > ~/$GKE_PROJECT_DIR_NAME/config-sync/gke-hub-feature-acm.yaml
 apiVersion: gkehub.cnrm.cloud.google.com/v1beta1
