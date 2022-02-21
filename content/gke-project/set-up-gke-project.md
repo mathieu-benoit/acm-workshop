@@ -8,7 +8,7 @@ weight: 1
   - FIXME
 
 ```Bash
-GKE_PROJECT_ID=${PREFIX}workshop-${RANDOM_SUFFIX}
+export GKE_PROJECT_ID=${PREFIX}workshop-${RANDOM_SUFFIX}
 mkdir ~/$WORKSHOP_ORG_DIR_NAME/config-sync/projects
 mkdir ~/$WORKSHOP_ORG_DIR_NAME/config-sync/projects/$GKE_PROJECT_ID
 ```

@@ -9,8 +9,8 @@ weight: 2
 
 Initialize variables:
 ```Bash
-GKE_PROJECT_NUMBER=$(gcloud projects describe $GKE_PROJECT_ID --format='get(projectNumber)')
-GKE_NAME=gke
+export GKE_PROJECT_NUMBER=$(gcloud projects describe $GKE_PROJECT_ID --format='get(projectNumber)')
+export GKE_NAME=gke
 ```
 
 Define the GKE cluster with empty node pool:

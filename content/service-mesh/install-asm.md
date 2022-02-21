@@ -43,9 +43,10 @@ gcloud container hub mesh describe --project ${GKE_PROJECT_ID}
 
 Initialize variables:
 ```Bash
-ASM_CHANNEL=rapid # or regular or stable
-ASM_LABEL=asm-managed
-if [ $ASM_CHANNEL = "rapid" ] || [ $ASM_CHANNEL = "stable" ] ; then ASM_VERSION=$ASM_LABEL-$ASM_CHANNEL; else ASM_VERSION=$ASM_LABEL; fi
+export ASM_CHANNEL=rapid # or regular or stable
+export ASM_LABEL=asm-managed
+export ASM_VERSION=$ASM_LABEL
+if [ $ASM_CHANNEL = "rapid" ] || [ $ASM_CHANNEL = "stable" ] ; then ASM_VERSION=$ASM_LABEL-$ASM_CHANNEL; fi
 ```
 
 Create a dedicated `istio-system` folder in the GKE configs's Git repo:

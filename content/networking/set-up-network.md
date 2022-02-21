@@ -8,7 +8,7 @@ weight: 1
   - FIXME
 
 ```Bash
-GKE_LOCATION=us-east4
+export GKE_LOCATION=us-east4
 cat <<EOF > ~/$GKE_PROJECT_DIR_NAME/config-sync/vpc.yaml
 apiVersion: compute.cnrm.cloud.google.com/v1beta1
 kind: ComputeNetwork

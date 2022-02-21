@@ -10,11 +10,11 @@ weight: 1
 
 Define variables:
 ```Bash
-PREFIX=''
-RANDOM_SUFFIX=$(shuf -i 100-999 -n 1)
-CONFIG_CONTROLLER_PROJECT_ID=${PREFIX}workshop-${RANDOM_SUFFIX}
-BILLING_ACCOUNT_ID=FIXME
-ORG_ID=FIXME
+export PREFIX=''
+export RANDOM_SUFFIX=$(shuf -i 100-999 -n 1)
+export CONFIG_CONTROLLER_PROJECT_ID=${PREFIX}workshop-${RANDOM_SUFFIX}
+export BILLING_ACCOUNT_ID=FIXME
+export ORG_ID=FIXME
 ```
 
 Create the Config Controller's GCP project:
@@ -30,7 +30,7 @@ gcloud projects create $CONFIG_CONTROLLER_PROJECT_ID \
 {{% tab name="Folder level" %}}
 Alternatively, you could also create this GCP project at a Folder level:
 ```Bash
-FOLDER_ID=FIXME
+export FOLDER_ID=FIXME
 gcloud projects create $CONFIG_CONTROLLER_PROJECT_ID \
     --folder $FOLDER_ID \
     --name $CONFIG_CONTROLLER_PROJECT_ID
@@ -55,7 +55,7 @@ gcloud services enable krmapihosting.googleapis.com \
     cloudresourcemanager.googleapis.com
 CONFIG_CONTROLLER_NAME=configcontroller
 CONFIG_CONTROLLER_LOCATION=us-east1
-LOCAL_IP_ADDRESS=$(curl ifconfig.co)
+export LOCAL_IP_ADDRESS=$(curl ifconfig.co)
 gcloud anthos config controller create $CONFIG_CONTROLLER_NAME \
     --location=$CONFIG_CONTROLLER_LOCATION \
     --man-block $LOCAL_IP_ADDRESS/32
@@ -70,7 +70,7 @@ The provisioning of the Config Controller instance could take around 15-20 min.
 
 Set the proper roles to the Config Controller's service account:
 ```Bash
-CONFIG_CONTROLLER_SA="$(kubectl get ConfigConnectorContext \
+export CONFIG_CONTROLLER_SA="$(kubectl get ConfigConnectorContext \
     -n config-control \
     -o jsonpath='{.items[0].spec.googleServiceAccount}')"
 gcloud organizations add-iam-policy-binding ${ORG_ID} \

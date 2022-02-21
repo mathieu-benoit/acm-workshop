@@ -48,7 +48,7 @@ kubectl wait --for condition=established crd rootsyncs.configsync.gke.io
 
 Deploy a `RootSync` acting as the main/root Git repository for the Config Controller instance:
 ```Bash
-WORKSHOP_ORG_DIR_NAME=workshop-org-repo
+export WORKSHOP_ORG_DIR_NAME=workshop-org-repo
 cd ~
 gh repo create $WORKSHOP_ORG_DIR_NAME --public --clone --template https://github.com/mathieu-benoit/config-sync-template-repo
 cd $WORKSHOP_ORG_DIR_NAME
