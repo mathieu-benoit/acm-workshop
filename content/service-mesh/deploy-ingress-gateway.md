@@ -253,10 +253,10 @@ spec:
 EOF
 ```
 
-Let's deploy them via a GitOps approach by commiting them in the GKE configs repository:
+Deploy all these Kubernetes manifests via a GitOps approach:
 ```Bash
 cd ~/$GKE_CONFIGS_DIR_NAME/
 git add .
-git commit -m "Deploy the ASM Ingress Gateway in GKE cluster."
+git commit -m "ASM Ingress Gateway in GKE cluster."
 git push
 ```

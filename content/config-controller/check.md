@@ -6,27 +6,31 @@ weight: 3
 
 Here is what you should have at this stage:
 
-By running `cd ~/$WORKSHOP_ORG_DIR_NAME && git log --oneline` you should get:
+If you run:
+```Bash
+cd ~/$WORKSHOP_ORG_DIR_NAME && gh run list
+```
+You should see:
 ```Plaintext
-a088c19 (HEAD -> main, origin/main) Setting up billing api in config controller project.
-910571c Setting up new namespace repository.
-571205a Initial commit
+STATUS  NAME                                       WORKFLOW  BRANCH  EVENT  ID          ELAPSED  AGE
+✓       Billing API in Config Controller project   ci        main    push   1856221804  56s      4d
+✓       Initial commit                             ci        main    push   1856056661  1m11s    4d
 ```
 
-By running `nomos status --contexts $(kubectl config current-context)` you should get:
-```Plaintext
-*gke_${GKE_PROJECT_ID}_${GKE_LOCATION}_krmapihost-configcontroller
-  --------------------
-  <root>   https://github.com/mathieu-benoit/workshop-platform-repo/config-sync@main   
-  SYNCED   a088c19                                                                    
-  Managed resources:
-     NAMESPACE               NAME                                                                                                  STATUS
-                             namespace/config-control                                                                              Current
-     config-control          service.serviceusage.cnrm.cloud.google.com/cloudbilling.googleapis.com                                Current
+If you run:
+```Bash
+gcloud alpha anthos config sync repo describe \
+  --project $CONFIG_CONTROLLER_PROJECT_ID \
+  --managed-resources all \
+  --format="multi(statuses:format=none,managed_resources:format='table[box](group:sort=2,kind,name,namespace:sort=1,status)')"
 ```
-
-By running `kubectl get gcp --all-namespaces` you should get:
+You should see:
 ```Plaintext
-NAMESPACE        NAME                                                                     AGE    READY   STATUS     STATUS AGE
-config-control   service.serviceusage.cnrm.cloud.google.com/cloudbilling.googleapis.com   2d2h   True    UpToDate   2d2h
+getting 1 RepoSync and RootSync from krmapihost-configcontroller
+┌───────────────────────────────────────┬─────────────────────────┬────────────────────────────────────────────────────┬───────────────────────┬──────────┐
+│                 GROUP                 │           KIND          │                        NAME                        │       NAMESPACE       │   STATUS │
+├───────────────────────────────────────┼─────────────────────────┼────────────────────────────────────────────────────┼───────────────────────┼──────────│
+│                                       │ Namespace               │ config-control                                     │                       │ Current  │
+│ serviceusage.cnrm.cloud.google.com    │ Service                 │ cloudbilling.googleapis.com                        │ config-control        │ Current  │
+└───────────────────────────────────────┴─────────────────────────┴────────────────────────────────────────────────────┴───────────────────────┴──────────┘
 ```

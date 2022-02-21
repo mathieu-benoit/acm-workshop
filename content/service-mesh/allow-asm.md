@@ -22,22 +22,10 @@ metadata:
 EOF
 ```
 
-Apply and deploy all these Kubernetes manifests:
-{{< tabs groupId="commit">}}
-{{% tab name="git commit" %}}
-Let's deploy them via a GitOps approach:
+Deploy all these Kubernetes manifests via a GitOps approach:
 ```Bash
 cd ~/$WORKSHOP_ORG_DIR_NAME/
 git add .
-git commit -m "Setting up ASM rights for project ${GKE_PROJECT_ID}."
+git commit -m "ASM rights for GKE project"
 git push
 ```
-{{% /tab %}}
-{{% tab name="kubectl apply" %}}
-Alternatively, you could directly apply them via the Config Controller's Kubernetes Server API:
-```Bash
-cd ~/$WORKSHOP_ORG_DIR_NAME/
-kubectl apply -f .
-```
-{{% /tab %}}
-{{< /tabs >}}

@@ -72,6 +72,10 @@ spec:
 EOF
 ```
 
+{{% notice info %}}
+Since you started this workshop, you have ran 4 `kubectl` commands. For your information, moving forward you won't run any other `kubectl` commands because the design and intent of this workshop is to only deploy any Kubernetes resources via GitOps with Config Sync. You will also use some handy `gcloud` commands when appropriate.
+{{% /notice %}}
+
 Define the Cloud Billing service API resource:
 ```Bash
 cat <<EOF > ~/$WORKSHOP_ORG_DIR_NAME/config-sync/cloudbilling-service.yaml
@@ -86,22 +90,10 @@ metadata:
 EOF
 ```
 
-Apply and deploy this Cloud Billing service API resource:
-{{< tabs groupId="commit">}}
-{{% tab name="git commit" %}}
-Let's deploy them via a GitOps approach:
+Deploy this Cloud Billing service API resource via a GitOps approach:
 ```Bash
 cd ~/$WORKSHOP_ORG_DIR_NAME/
 git add .
-git commit -m "Setting up billing api in config controller project."
+git commit -m "Billing API in Config Controller project"
 git push
 ```
-{{% /tab %}}
-{{% tab name="kubectl apply" %}}
-Alternatively, you could directly apply them via the Config Controller's Kubernetes Server API:
-```Bash
-cd ~/$WORKSHOP_ORG_DIR_NAME/
-kubectl apply -f .
-```
-{{% /tab %}}
-{{< /tabs >}}

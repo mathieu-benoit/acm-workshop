@@ -6,53 +6,50 @@ weight: 3
 
 Here is what you should have at this stage:
 
-By running `cd ~/$WORKSHOP_ORG_DIR_NAME && git log --oneline` you should get:
+If you run:
+```Bash
+cd ~/$WORKSHOP_ORG_DIR_NAME && gh run list
+```
+You should see:
 ```Plaintext
-aff11e5 (HEAD -> main, origin/main) Setting up gitops for gke config.
-f95bfb9 Setting up gke namespace/project.
-a088c19 Setting up billing api in config controller project.
-910571c Setting up new namespace repository.
-571205a Initial commit
+STATUS  NAME                                         WORKFLOW  BRANCH  EVENT  ID          ELAPSED  AGE
+✓       GitOps for GKE project                       ci        main    push   1856916572  58s      4d
+✓       GKE cluster namespace/project                ci        main    push   1856812048  1m4s     4d
+✓       Billing API in Config Controller project     ci        main    push   1856221804  56s      4d
+✓       Initial commit                               ci        main    push   1856056661  1m11s    4d
 ```
 
-By running `cd ~/$GKE_PROJECT_DIR_NAME && git log --oneline` you should get:
+If you run:
+```Bash
+cd ~/$GKE_PROJECT_DIR_NAME && gh run list
+```
+You should see:
 ```Plaintext
-0eafad8 (HEAD -> main, origin/main) Initial commit
+STATUS  NAME                WORKFLOW  BRANCH  EVENT  ID          ELAPSED  AGE
+✓       Initial commit      ci        main    push   1856902085  1m3s     4d
 ```
 
-By running `nomos status --contexts $(kubectl config current-context)` you should get:
-```Plaintext
-*gke_${GKE_PROJECT_ID}_${GKE_LOCATION}_krmapihost-configcontroller
-  --------------------
-  <root>   https://github.com/mathieu-benoit/workshop-platform-repo/config-sync@main   
-  SYNCED   aff11e5                                                                    
-  Managed resources:
-     NAMESPACE               NAME                                                                                                  STATUS
-                             namespace/config-control                                                                              Current
-                             namespace/default                                                                                     Current
-                             namespace/mabenoit-workshop-gke                                                                       Current
-     config-control          iampartialpolicy.iam.cnrm.cloud.google.com/mabenoit-workshop-gke-sa-workload-identity-binding         Current
-     config-control          iampolicymember.iam.cnrm.cloud.google.com/network-admin-mabenoit-workshop-gke                         Current
-     config-control          iamserviceaccount.iam.cnrm.cloud.google.com/mabenoit-workshop-gke                                     Current
-     config-control          project.resourcemanager.cnrm.cloud.google.com/mabenoit-workshop-gke                                   Current
-     config-control          service.serviceusage.cnrm.cloud.google.com/cloudbilling.googleapis.com                                Current
-     mabenoit-workshop-gke   configconnectorcontext.core.cnrm.cloud.google.com/configconnectorcontext.core.cnrm.cloud.google.com   Current
-     mabenoit-workshop-gke   reposync.configsync.gke.io/repo-sync                                                                  Current
-     mabenoit-workshop-gke   rolebinding.rbac.authorization.k8s.io/syncs-repo                                                      Current
-  --------------------
-  mabenoit-workshop-gke   https://github.com/mathieu-benoit/workshop-gke-config-repo/config-sync@main   
-  SYNCED                  0eafad8                                                                      
+If you run:
+```Bash
+gcloud alpha anthos config sync repo describe \
+  --project $CONFIG_CONTROLLER_PROJECT_ID \
+  --managed-resources all \
+  --format="multi(statuses:format=none,managed_resources:format='table[box](group:sort=2,kind,name,namespace:sort=1,status)')"
 ```
-
-By running `kubectl get gcp --all-namespaces` you should get:
+You should see:
 ```Plaintext
-NAMESPACE        NAME                                                                                            AGE   READY   STATUS     STATUS AGE
-config-control   iampartialpolicy.iam.cnrm.cloud.google.com/mabenoit-workshop-gke-sa-workload-identity-binding   47h   True    UpToDate   47h
-NAMESPACE               NAME                                                                                    AGE   READY   STATUS     STATUS AGE
-NAMESPACE               NAME                                                                AGE   READY   STATUS     STATUS AGE
-config-control          iamserviceaccount.iam.cnrm.cloud.google.com/mabenoit-workshop-gke   47h   True    UpToDate   47h
-NAMESPACE        NAME                                                                  AGE   READY   STATUS     STATUS AGE
-config-control   project.resourcemanager.cnrm.cloud.google.com/mabenoit-workshop-gke   47h   True    UpToDate   47h
-NAMESPACE        NAME                                                                     AGE    READY   STATUS     STATUS AGE
-config-control   service.serviceusage.cnrm.cloud.google.com/cloudbilling.googleapis.com   2d2h   True    UpToDate   2d2h
+getting 2 RepoSync and RootSync from krmapihost-configcontroller
+┌───────────────────────────────────────┬─────────────────────────┬────────────────────────────────────────────────────┬───────────────────────┬──────────┐
+│                 GROUP                 │           KIND          │                        NAME                        │       NAMESPACE       │   STATUS │
+├───────────────────────────────────────┼─────────────────────────┼────────────────────────────────────────────────────┼───────────────────────┼──────────│
+│                                       │ Namespace               │ default                                            │                       │ Current  │
+│                                       │ Namespace               │ mabenoit-workshop-gke                              │                       │ Current  │
+│                                       │ Namespace               │ config-control                                     │                       │ Current  │
+│ iam.cnrm.cloud.google.com             │ IAMServiceAccount       │ mabenoit-workshop-gke                              │ config-control        │ Current  │
+│ iam.cnrm.cloud.google.com             │ IAMPartialPolicy        │ mabenoit-workshop-gke-sa-workload-identity-binding │ config-control        │ Current  │
+│ resourcemanager.cnrm.cloud.google.com │ Project                 │ mabenoit-workshop-gke                              │ config-control        │ Current  │
+│ serviceusage.cnrm.cloud.google.com    │ Service                 │ cloudbilling.googleapis.com                        │ config-control        │ Current  │
+│ core.cnrm.cloud.google.com            │ ConfigConnectorContext  │ configconnectorcontext.core.cnrm.cloud.google.com  │ mabenoit-workshop-gke │ Current  │
+│ rbac.authorization.k8s.io             │ RoleBinding             │ syncs-repo                                         │ mabenoit-workshop-gke │ Current  │
+└───────────────────────────────────────┴─────────────────────────┴────────────────────────────────────────────────────┴───────────────────────┴──────────┘
 ```

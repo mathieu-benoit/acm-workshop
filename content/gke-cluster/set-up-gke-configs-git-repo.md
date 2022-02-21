@@ -90,22 +90,10 @@ EOF
 We explicitly set the Config Management's `version` with the current version. It's a best practice to do this, as you are responsible to manually upgrade this component as [new versions are coming](https://cloud.google.com/anthos-config-management/docs/release-notes). So you will be able to update this file accordingly in order to trigger the upgrade of Config Management with the new version.
 {{% /notice %}}
 
-Apply and deploy all these Kubernetes manifests:
-{{< tabs groupId="commit">}}
-{{% tab name="git commit" %}}
-Let's deploy them via a GitOps approach:
+Deploy all these Kubernetes manifests via a GitOps approach:
 ```Bash
 cd ~/$GKE_PROJECT_DIR_NAME/
 git add .
-git commit -m "Set up GKE configs's Git repo"
+git commit -m "GitOps for GKE cluster configs"
 git push
 ```
-{{% /tab %}}
-{{% tab name="kubectl apply" %}}
-Alternatively, you could directly apply them via the Config Controller's Kubernetes Server API:
-```Bash
-cd ~/$GKE_PROJECT_DIR_NAME/
-kubectl apply -f .
-```
-{{% /tab %}}
-{{< /tabs >}}

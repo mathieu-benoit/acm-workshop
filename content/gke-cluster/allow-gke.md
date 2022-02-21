@@ -97,22 +97,10 @@ EOF
 We are enabling the GCP services APIs from the Org Admin, it allows more control and governance over which GCP services APIs the Platform Admin could use or not. If you want to give more autonomy to the Platform Admin, you could grant the `serviceusage.serviceUsageAdmin` role to the associated service account.
 {{% /notice %}}
 
-Apply and deploy all these Kubernetes manifests:
-{{< tabs groupId="commit">}}
-{{% tab name="git commit" %}}
-Let's deploy them via a GitOps approach:
+Deploy all these Kubernetes manifests via a GitOps approach:
 ```Bash
 cd ~/$WORKSHOP_ORG_DIR_NAME/
 git add .
-git commit -m "Setting up GKE rights for project ${GKE_PROJECT_ID}."
+git commit -m "GKE rights for GKE project"
 git push
 ```
-{{% /tab %}}
-{{% tab name="kubectl apply" %}}
-Alternatively, you could directly apply them via the Config Controller's Kubernetes Server API:
-```Bash
-cd ~/$WORKSHOP_ORG_DIR_NAME/
-kubectl apply -f .
-```
-{{% /tab %}}
-{{< /tabs >}}

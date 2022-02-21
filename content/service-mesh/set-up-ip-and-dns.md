@@ -25,25 +25,13 @@ spec:
 EOF
 ```
 
-Apply and deploy Ingress Gateway's public static IP address resource:
-{{< tabs groupId="commit">}}
-{{% tab name="git commit" %}}
-Let's deploy them via a GitOps approach:
+Deploy this public static IP address resource via a GitOps approach:
 ```Bash
-cd ~/$WORKSHOP_ORG_DIR_NAME/
+cd ~/$GKE_PROJECT_DIR_NAME/
 git add .
-git commit -m "Setting up ASM rights for project ${GKE_PROJECT_ID}."
+git commit -m "Ingress Gateway's public static IP address"
 git push
 ```
-{{% /tab %}}
-{{% tab name="kubectl apply" %}}
-Alternatively, you could directly apply them via the Config Controller's Kubernetes Server API:
-```Bash
-cd ~/$WORKSHOP_ORG_DIR_NAME/
-kubectl apply -f .
-```
-{{% /tab %}}
-{{< /tabs >}}
 
 ```Bash
 export INGRESS_GATEWAY_PUBLIC_IP=$(gcloud compute addresses describe $INGRESS_GATEWAY_PUBLIC_IP_NAME --global --project ${GKE_PROJECT_ID} --format "value(address)")
@@ -52,7 +40,7 @@ echo ${INGRESS_GATEWAY_PUBLIC_IP}
 
 ```Bash
 export ONLINE_BOUTIQUE_INGRESS_GATEWAY_HOST_NAME="onlineboutique.endpoints.${GKE_PROJECT_ID}.cloud.goog"
-cat <<EOF > dns-spec.yaml
+cat <<EOF > ~/dns-spec.yaml
 swagger: "2.0"
 info:
   description: "Cloud Endpoints DNS"
@@ -64,13 +52,13 @@ x-google-endpoints:
 - name: "${ONLINE_BOUTIQUE_INGRESS_GATEWAY_HOST_NAME}"
   target: "${INGRESS_GATEWAY_PUBLIC_IP}"
 EOF
-gcloud endpoints services deploy dns-spec.yaml --project ${GKE_PROJECT_ID}
-rm dns-spec.yaml
+gcloud endpoints services deploy ~/dns-spec.yaml --project ${GKE_PROJECT_ID}
+rm ~/dns-spec.yaml
 ```
 
 ```Bash
 export BANK_OF_ANTHOS_INGRESS_GATEWAY_HOST_NAME="bankofanthos.endpoints.${GKE_PROJECT_ID}.cloud.goog"
-cat <<EOF > dns-spec.yaml
+cat <<EOF > ~/dns-spec.yaml
 swagger: "2.0"
 info:
   description: "Cloud Endpoints DNS"
@@ -82,6 +70,6 @@ x-google-endpoints:
 - name: "${BANK_OF_ANTHOS_INGRESS_GATEWAY_HOST_NAME}"
   target: "${INGRESS_GATEWAY_PUBLIC_IP}"
 EOF
-gcloud endpoints services deploy dns-spec.yaml --project ${GKE_PROJECT_ID}
-rm dns-spec.yaml
+gcloud endpoints services deploy ~/dns-spec.yaml --project ${GKE_PROJECT_ID}
+rm ~/dns-spec.yaml
 ```

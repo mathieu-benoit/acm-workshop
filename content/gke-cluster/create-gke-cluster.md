@@ -10,7 +10,6 @@ weight: 2
 Initialize variables:
 ```Bash
 export GKE_PROJECT_NUMBER=$(gcloud projects describe $GKE_PROJECT_ID --format='get(projectNumber)')
-export GKE_NAME=gke
 ```
 
 Define the GKE cluster with empty node pool:
@@ -46,9 +45,6 @@ spec:
     enableComponents:
       - "SYSTEM_COMPONENTS"
       - "WORKLOADS"
-  masterAuthorizedNetworksConfig:
-    cidrBlocks:
-    - cidrBlock: ${LOCAL_IP_ADDRESS}/32
   monitoringConfig:
     enableComponents:
       - "SYSTEM_COMPONENTS"
@@ -69,9 +65,6 @@ spec:
     workloadPool: ${GKE_PROJECT_ID}.svc.id.goog
 EOF
 ```
-{{% notice note %}}
-We are setting our local IP address `masterAuthorizedNetworksConfig` to get access to the GKE Kuberenetes Server API, it's not mandatory, but for the purpose of this workshop, it will allow to run a few `kubectl` commands in order to check what we are doing on this cluster throughout this workshop.
-{{% /notice %}}
 
 Define the GKE primary node pool's service account:
 ```Bash
@@ -176,22 +169,10 @@ spec:
 EOF
 ```
 
-Apply and deploy all these Kubernetes manifests:
-{{< tabs groupId="commit">}}
-{{% tab name="git commit" %}}
-Let's deploy them via a GitOps approach:
+Deploy all these Kubernetes manifests via a GitOps approach:
 ```Bash
 cd ~/$GKE_PROJECT_DIR_NAME/
 git add .
-git commit -m "Create GKE cluster, GKE primary nodepool and associated sa for project ${GKE_PROJECT_ID}."
+git commit -m "GKE cluster, primary nodepool and SA for GKE project"
 git push
 ```
-{{% /tab %}}
-{{% tab name="kubectl apply" %}}
-Alternatively, you could directly apply them via the Config Controller's Kubernetes Server API:
-```Bash
-cd ~/$GKE_PROJECT_DIR_NAME/
-kubectl apply -f .
-```
-{{% /tab %}}
-{{< /tabs >}}

@@ -26,11 +26,11 @@ EOF
 ```
 _Note: The `resourceID` must be `servicemesh` if you want to use Managed Control Plane feature of Anthos Service Mesh._
 
-Let's deploy the GKE Hub ASM feature resource via a GitOps approach:
+Deploy all these Kubernetes manifests via a GitOps approach:
 ```Bash
 cd ~/$GKE_PROJECT_DIR_NAME/
 git add .
-git commit -m "Enable ASM MCP for project ${GKE_PROJECT_ID}."
+git commit -m "ASM MCP for GKE project"
 git push
 ```
 
@@ -97,10 +97,10 @@ spec:
 EOF
 ```
 
-Let's deploy them via a GitOps approach by commiting them in the GKE configs repository:
+Deploy all these Kubernetes manifests via a GitOps approach:
 ```Bash
 cd ~/$GKE_CONFIGS_DIR_NAME/
 git add .
-git commit -m "Install ASM in GKE cluster."
+git commit -m "ASM in GKE cluster"
 git push
 ```
