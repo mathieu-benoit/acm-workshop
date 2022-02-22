@@ -1,6 +1,8 @@
 ---
 title: "GKE cluster"
 chapter: true
-weight: 4
+weight: 5
 ---
 Set up the GKE cluster.
+
+{{% children showhidden="false" %}}

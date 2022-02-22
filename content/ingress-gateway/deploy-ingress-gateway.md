@@ -143,6 +143,23 @@ spec:
     requestPath: /healthz/ready
     port: 15021
     type: HTTP
+  securityPolicy:
+    name: ${SECURITY_POLICY_NAME}
+EOF
+```
+
+```Bash
+cat <<EOF > ~/$GKE_CONFIGS_DIR_NAME/config-sync/$INGRESS_GATEWAY_NAMESPACE/frontend-config.yaml
+apiVersion: networking.gke.io/v1beta1
+kind: FrontendConfig
+metadata:
+  name: ${INGRESS_GATEWAY_NAME}
+  namespace: ${INGRESS_GATEWAY_NAMESPACE}
+spec:
+  sslPolicy: ${SSL_POLICY_NAME}
+  redirectToHttps:
+    enabled: true
+    responseCodeName: MOVED_PERMANENTLY_DEFAULT
 EOF
 ```
 
@@ -214,6 +231,7 @@ metadata:
     kubernetes.io/ingress.global-static-ip-name: "${INGRESS_GATEWAY_PUBLIC_IP_NAME}"
     networking.gke.io/managed-certificates: "onlineboutique,bankofanthos"
     kubernetes.io/ingress.class: "gce"
+    networking.gke.io/v1beta1.FrontendConfig: ${INGRESS_GATEWAY_NAME}
 spec:
   defaultBackend:
     service:

@@ -64,25 +64,6 @@ metadata:
 EOF
 ```
 
-Define optional Mesh configs (`distroless` container image for the proxy and Cloud Tracing):
-```Bash
-cat <<EOF > ~/$GKE_CONFIGS_DIR_NAME/config-sync/istio-system/mesh-configs.yaml
-apiVersion: v1
-data:
-  mesh: |-
-    enableTracing: true
-    defaultConfig:
-      image:
-        imageType: distroless
-      tracing:
-        stackdriver:{}
-kind: ConfigMap
-metadata:
-  name: istio-${ASM_VERSION}
-  namespace: istio-system
-EOF
-```
-
 Define ASM Managed Control Plane configs:
 ```Bash
 cat <<EOF > ~/$GKE_CONFIGS_DIR_NAME/config-sync/istio-system/control-plane-configs.yaml
@@ -101,6 +82,6 @@ Deploy all these Kubernetes manifests via a GitOps approach:
 ```Bash
 cd ~/$GKE_CONFIGS_DIR_NAME/
 git add .
-git commit -m "ASM in GKE cluster"
+git commit -m "ASM MCP for GKE cluster"
 git push
 ```

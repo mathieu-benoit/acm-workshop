@@ -15,7 +15,7 @@ You should see:
 STATUS  NAME                                           WORKFLOW  BRANCH  EVENT  ID          ELAPSED  AGE
 ✓       GKE Hub rights for GKE project                 ci        main    push   1872423084  1m2s     1d
 ✓       GKE rights for GKE project                     ci        main    push   1867720906  1m4s     2d
-✓       Network admin role for GKE SA                  ci        main    push   1865477672  1m13s    3d
+✓       Network rights for GKE project                 ci        main    push   1865477672  1m13s    3d
 ✓       GitOps for GKE project                         ci        main    push   1856916572  58s      4d
 ✓       GKE cluster namespace/project                  ci        main    push   1856812048  1m4s     4d
 ✓       Billing API in Config Controller project       ci        main    push   1856221804  56s      4d

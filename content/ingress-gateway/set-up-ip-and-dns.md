@@ -1,6 +1,6 @@
 ---
 title: "Set up IP address and DNS"
-weight: 3
+weight: 1
 ---
 - Persona: Platform Admin
 - Duration: 10 min

@@ -1,6 +1,6 @@
 ---
 title: "Check"
-weight: 5
+weight: 4
 ---
 - Duration: 5 min
 
@@ -16,7 +16,7 @@ STATUS  NAME                                           WORKFLOW  BRANCH  EVENT  
 ✓       ASM rights for GKE project                     ci        main    push   1878084640  1m13s    14m
 ✓       GKE Hub rights for GKE project                 ci        main    push   1872423084  1m2s     1d
 ✓       GKE rights for GKE project                     ci        main    push   1867720906  1m4s     2d
-✓       Network admin role for GKE SA                  ci        main    push   1865477672  1m13s    3d
+✓       Network rights for GKE project                 ci        main    push   1865477672  1m13s    3d
 ✓       GitOps for GKE project                         ci        main    push   1856916572  58s      4d
 ✓       GKE cluster namespace/project                  ci        main    push   1856812048  1m4s     4d
 ✓       Billing API in Config Controller project       ci        main    push   1856221804  56s      4d
@@ -30,7 +30,6 @@ cd ~/$GKE_PROJECT_DIR_NAME && gh run list
 You should see:
 ```Plaintext
 STATUS  NAME                                                   WORKFLOW  BRANCH  EVENT  ID          ELAPSED  AGE
-*       Ingress Gateway's public static IP address             ci        main    push   1878251710  11s      0m
 ✓       ASM MCP for GKE project                                ci        main    push   1873575037  1m3s     17h
 ✓       GitOps for GKE cluster configs                         ci        main    push   1872389473  57s      1d
 ✓       GKE cluster, primary nodepool and SA for GKE project   ci        main    push   1867725616  1m0s     2d
@@ -45,8 +44,9 @@ cd ~/$GKE_CONFIGS_DIR_NAME && gh run list
 You should see:
 ```Plaintext
 STATUS  NAME                                 WORKFLOW  BRANCH  EVENT  ID          ELAPSED  AGE
-✓       ASM Ingress Gateway in GKE cluster   ci        main    push   1876989926  58s      4m
-✓       ASM in GKE cluster                   ci        main    push   1873631390  1m6s     14h
+✓       mTLS STRICT in GKE cluster           ci        main    push   1879538509  1m1s     3m
+✓       ASM configs in GKE cluster           ci        main    push   1879538479  1m2s     5m
+✓       ASM MCP for GKE cluster              ci        main    push   1873631390  1m6s     14h
 ✓       Initial commit                       ci        main    push   1870893382  56s      1d
 ```
 
@@ -63,20 +63,10 @@ getting 1 RepoSync and RootSync from gke-hub-membership
 ┌───────────────────────────┬──────────────────────┬─────────────────────────┬──────────────┬─────────┐
 │           GROUP           │         KIND         │           NAME          │  NAMESPACE   │  STATUS │
 ├───────────────────────────┼──────────────────────┼─────────────────────────┼──────────────┼─────────┤
-│                           │ Namespace            │ asm-ingress             │              │ Current │
 │                           │ Namespace            │ istio-system            │              │ Current │
-│                           │ Service              │ asm-ingressgateway      │ asm-ingress  │ Current │
-│                           │ ServiceAccount       │ asm-ingressgateway      │ asm-ingress  │ Current │
-│ apps                      │ Deployment           │ asm-ingressgateway      │ asm-ingress  │ Current │
-│ cloud.google.com          │ BackendConfig        │ asm-ingressgateway      │ asm-ingress  │ Current │
-│ networking.gke.io         │ ManagedCertificate   │ bankofanthos            │ asm-ingress  │ Current │
-│ networking.gke.io         │ ManagedCertificate   │ onlineboutique          │ asm-ingress  │ Current │
-│ networking.istio.io       │ Gateway              │ asm-ingressgateway      │ asm-ingress  │ Current │
-│ networking.k8s.io         │ Ingress              │ asm-ingressgateway      │ asm-ingress  │ Current │
-│ rbac.authorization.k8s.io │ Role                 │ asm-ingressgateway      │ asm-ingress  │ Current │
-│ rbac.authorization.k8s.io │ RoleBinding          │ asm-ingressgateway      │ asm-ingress  │ Current │
 │                           │ ConfigMap            │ istio-asm-managed-rapid │ istio-system │ Current │
 │ mesh.cloud.google.com     │ ControlPlaneRevision │ asm-managed-rapid       │ istio-system │ Current │
+| security.istio.io         │ PeerAuthentication   │ default                 │ istio-system │ Current │
 └───────────────────────────┴──────────────────────┴─────────────────────────┴──────────────┴─────────┘
 ```
 
@@ -111,7 +101,6 @@ getting 2 RepoSync and RootSync from krmapihost-configcontroller
 │ serviceusage.cnrm.cloud.google.com    │ Service                 │ mesh.googleapis.com                                │ config-control        │ Current │
 │ serviceusage.cnrm.cloud.google.com    │ Service                 │ container.googleapis.com                           │ config-control        │ Current │
 │ compute.cnrm.cloud.google.com         │ ComputeNetwork          │ gke                                                │ mabenoit-workshop-gke │ Current │
-│ compute.cnrm.cloud.google.com         │ ComputeAddress          │ gke-asm-ingressgateway                             │ mabenoit-workshop-gke │ Current │
 │ compute.cnrm.cloud.google.com         │ ComputeRouter           │ gke                                                │ mabenoit-workshop-gke │ Current │
 │ compute.cnrm.cloud.google.com         │ ComputeRouterNAT        │ gke                                                │ mabenoit-workshop-gke │ Current │
 │ compute.cnrm.cloud.google.com         │ ComputeSubnetwork       │ gke                                                │ mabenoit-workshop-gke │ Current │
@@ -129,15 +118,4 @@ getting 2 RepoSync and RootSync from krmapihost-configcontroller
 │ iam.cnrm.cloud.google.com             │ IAMServiceAccount       │ gke-primary-pool                                   │ mabenoit-workshop-gke │ Current │
 │ rbac.authorization.k8s.io             │ RoleBinding             │ syncs-repo                                         │ mabenoit-workshop-gke │ Current │
 └───────────────────────────────────────┴─────────────────────────┴────────────────────────────────────────────────────┴───────────────────────┴─────────┘
-```
-
-If you run:
-```Bash
-gcloud endpoints services list --project ${GKE_PROJECT_ID}
-```
-You should see:
-```Plaintext
-NAME                                                       TITLE
-bankofanthos.endpoints.mabenoit-workshop-gke.cloud.goog
-onlineboutique.endpoints.mabenoit-workshop-gke.cloud.goog
 ```
