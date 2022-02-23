@@ -1,5 +1,5 @@
 ---
 title: "Release notes"
-weight: 3
+weight: 4
 ---
 Release notes of this workshop.

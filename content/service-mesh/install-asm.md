@@ -24,7 +24,9 @@ spec:
   resourceID: servicemesh
 EOF
 ```
-_Note: The `resourceID` must be `servicemesh` if you want to use Managed Control Plane feature of Anthos Service Mesh._
+{{% notice note %}}
+The `resourceID` must be `servicemesh` if you want to use Managed Control Plane feature of Anthos Service Mesh.
+{{% /notice %}}
 
 Deploy all these Kubernetes manifests via a GitOps approach:
 ```Bash
