@@ -74,11 +74,17 @@ kind: ControlPlaneRevision
 metadata:
   name: "${ASM_VERSION}"
   namespace: istio-system
+  labels:
+    mesh.cloud.google.com/managed-cni-enabled: "true"
 spec:
   type: managed_service
   channel: "${ASM_CHANNEL}"
 EOF
 ```
+
+{{% notice tip %}}
+We are using `mesh.cloud.google.com/managed-cni-enabled: "true"` in order to leverage the Istio CNI has a best practice for security and performance perspectives. It's also mandatory when using the Managed Data Plane feature of ASM.
+{{% /notice %}}
 
 Deploy all these Kubernetes manifests via a GitOps approach:
 ```Bash
