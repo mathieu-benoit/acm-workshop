@@ -76,7 +76,7 @@ EOF
 Since you started this workshop, you have ran 4 `kubectl` commands. For your information, moving forward you won't run any other `kubectl` commands because the design and intent of this workshop is to only deploy any Kubernetes resources via GitOps with Config Sync. You will also use some handy `gcloud` commands when appropriate.
 {{% /notice %}}
 
-Define the Cloud Billing service API resource:
+Define the Cloud Billing API [`Service`](https://cloud.google.com/config-connector/docs/reference/resource-docs/serviceusage/service) resource:
 ```Bash
 cat <<EOF > ~/$WORKSHOP_ORG_DIR_NAME/config-sync/cloudbilling-service.yaml
 apiVersion: serviceusage.cnrm.cloud.google.com/v1beta1

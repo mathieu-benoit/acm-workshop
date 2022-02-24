@@ -7,7 +7,7 @@ weight: 2
 - Objectives:
   - FIXME
 
-Define the Memorystore (redis) API for the GKE project:
+Define the Memorystore (redis) API [`Service`](https://cloud.google.com/config-connector/docs/reference/resource-docs/serviceusage/service) resource for the GKE project:
 ```Bash
 cat <<EOF > ~/$WORKSHOP_ORG_DIR_NAME/config-sync/projects/$GKE_PROJECT_ID/redis-service.yaml
 apiVersion: serviceusage.cnrm.cloud.google.com/v1beta1
@@ -22,6 +22,7 @@ metadata:
 EOF
 ```
 
+Define the `redis.admin` role with an [`IAMPolicyMember`](https://cloud.google.com/config-connector/docs/reference/resource-docs/iam/iampolicymember) for the GKE project's service account:
 ```Bash
 cat <<EOF > ~/$WORKSHOP_ORG_DIR_NAME/config-sync/projects/$GKE_PROJECT_ID/redis-admin.yaml
 apiVersion: iam.cnrm.cloud.google.com/v1beta1

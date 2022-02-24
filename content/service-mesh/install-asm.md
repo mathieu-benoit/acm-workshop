@@ -9,7 +9,7 @@ weight: 2
 
 ## Enable the GKE ASM feature
 
-Define the GKE Hub ASM feature resource:
+Define the ASM [`GKEHubFeature`](https://cloud.google.com/config-connector/docs/reference/resource-docs/gkehub/gkehubfeature) resource:
 ```Bash
 cat <<EOF > ~/$GKE_PROJECT_DIR_NAME/config-sync/gke-hub-feature-asm.yaml
 apiVersion: gkehub.cnrm.cloud.google.com/v1beta1

@@ -7,7 +7,7 @@ weight: 1
 - Objectives:
   - FIXME
 
-Enable the Mesh API in the GKE project:
+Enable the Mesh API [`Service`](https://cloud.google.com/config-connector/docs/reference/resource-docs/serviceusage/service) resource in the GKE project:
 ```Bash
 cat <<EOF > ~/$WORKSHOP_ORG_DIR_NAME/config-sync/projects/$GKE_PROJECT_ID/mesh-service.yaml
 apiVersion: serviceusage.cnrm.cloud.google.com/v1beta1

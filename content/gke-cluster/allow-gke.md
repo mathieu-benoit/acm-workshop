@@ -7,7 +7,7 @@ weight: 1
 - Objectives:
   - FIXME
 
-Define the `container.admin` role for the GKE project's service account:
+Define the `container.admin`, `iam.serviceAccountAdmin`, `resourcemanager.projectIamAdmin` and `iam.serviceAccountUser` role with an [`IAMPolicyMember`](https://cloud.google.com/config-connector/docs/reference/resource-docs/iam/iampolicymember) for the GKE project's service account:
 ```Bash
 cat <<EOF > ~/$WORKSHOP_ORG_DIR_NAME/config-sync/projects/$GKE_PROJECT_ID/container-admin.yaml
 apiVersion: iam.cnrm.cloud.google.com/v1beta1
@@ -23,10 +23,6 @@ spec:
     kind: Project
     external: projects/${GKE_PROJECT_ID}
 EOF
-```
-
-Define the `iam.serviceAccountAdmin` role for the GKE project's service account:
-```Bash
 cat <<EOF > ~/$WORKSHOP_ORG_DIR_NAME/config-sync/projects/$GKE_PROJECT_ID/service-account-admin.yaml
 apiVersion: iam.cnrm.cloud.google.com/v1beta1
 kind: IAMPolicyMember
@@ -41,10 +37,6 @@ spec:
     kind: Project
     external: projects/${GKE_PROJECT_ID}
 EOF
-```
-
-Define the `resourcemanager.projectIamAdmin` role for the GKE project's service account:
-```Bash
 cat <<EOF > ~/$WORKSHOP_ORG_DIR_NAME/config-sync/projects/$GKE_PROJECT_ID/iam-admin.yaml
 apiVersion: iam.cnrm.cloud.google.com/v1beta1
 kind: IAMPolicyMember
@@ -59,10 +51,6 @@ spec:
     kind: Project
     external: projects/${GKE_PROJECT_ID}
 EOF
-```
-
-Define the `iam.serviceAccountUser` role for the GKE project's service account:
-```Bash
 cat <<EOF > ~/$WORKSHOP_ORG_DIR_NAME/config-sync/projects/$GKE_PROJECT_ID/service-account-user.yaml
 apiVersion: iam.cnrm.cloud.google.com/v1beta1
 kind: IAMPolicyMember
@@ -79,7 +67,7 @@ spec:
 EOF
 ```
 
-Define the GKE API for the GKE project:
+Define the GKE API [`Service`](https://cloud.google.com/config-connector/docs/reference/resource-docs/serviceusage/service) resource for the GKE project:
 ```Bash
 cat <<EOF > ~/$WORKSHOP_ORG_DIR_NAME/config-sync/projects/$GKE_PROJECT_ID/container-service.yaml
 apiVersion: serviceusage.cnrm.cloud.google.com/v1beta1

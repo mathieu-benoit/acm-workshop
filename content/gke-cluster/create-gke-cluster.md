@@ -79,7 +79,7 @@ spec:
 EOF
 ```
 
-Define the necessary and least privilege roles for the GKE primary node pool's service account:
+Define the `logging.logWriter`, `monitoring.metricWriter` and `monitoring.viewer` roles with [`IAMPolicyMember`](https://cloud.google.com/config-connector/docs/reference/resource-docs/iam/iampolicymember) for the GKE primary node pool's service account:
 ```Bash
 cat <<EOF > ~/$GKE_PROJECT_DIR_NAME/config-sync/log-writer-gke-sa.yaml
 apiVersion: iam.cnrm.cloud.google.com/v1beta1
@@ -98,8 +98,6 @@ spec:
     external: ${GKE_PROJECT_ID}
   role: roles/logging.logWriter
 EOF
-```
-```Bash
 cat <<EOF > ~/$GKE_PROJECT_DIR_NAME/config-sync/metric-writer-gke-sa.yaml
 apiVersion: iam.cnrm.cloud.google.com/v1beta1
 kind: IAMPolicyMember
@@ -117,8 +115,6 @@ spec:
     external: ${GKE_PROJECT_ID}
   role: roles/monitoring.metricWriter
 EOF
-```
-```Bash
 cat <<EOF > ~/$GKE_PROJECT_DIR_NAME/config-sync/monitoring-viewer-gke-sa.yaml
 apiVersion: iam.cnrm.cloud.google.com/v1beta1
 kind: IAMPolicyMember

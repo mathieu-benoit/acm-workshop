@@ -1,5 +1,5 @@
 ---
-title: "Network Policies"
+title: "Set up Network Policies"
 weight: 5
 ---
 - Persona: Apps Operator

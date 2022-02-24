@@ -7,6 +7,7 @@ weight: 1
 - Objectives:
   - FIXME
 
+Define the `compute.networkAdmin` role with an [`IAMPolicyMember`](https://cloud.google.com/config-connector/docs/reference/resource-docs/iam/iampolicymember) for the GKE project's service account:
 ```Bash
 cat <<EOF > ~/$WORKSHOP_ORG_DIR_NAME/config-sync/projects/$GKE_PROJECT_ID/network-admin.yaml
 apiVersion: iam.cnrm.cloud.google.com/v1beta1

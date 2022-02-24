@@ -7,7 +7,7 @@ weight: 3
 - Objectives:
   - FIXME
 
-Define the `gkehub.admin` role for the GKE project's service account:
+Define the `gkehub.admin` role with an [`IAMPolicyMember`](https://cloud.google.com/config-connector/docs/reference/resource-docs/iam/iampolicymember) for the GKE project's service account:
 ```Bash
 cat <<EOF > ~/$WORKSHOP_ORG_DIR_NAME/config-sync/projects/$GKE_PROJECT_ID/gke-hub-admin.yaml
 apiVersion: iam.cnrm.cloud.google.com/v1beta1
@@ -25,7 +25,7 @@ spec:
 EOF
 ```
 
-Define the GKE Hub API for the GKE project:
+Define the GKE Hub API [`Service`](https://cloud.google.com/config-connector/docs/reference/resource-docs/serviceusage/service) resource for the GKE project:
 ```Bash
 cat <<EOF > ~/$WORKSHOP_ORG_DIR_NAME/config-sync/projects/$GKE_PROJECT_ID/gke-hub-service.yaml
 apiVersion: serviceusage.cnrm.cloud.google.com/v1beta1
@@ -40,7 +40,7 @@ metadata:
 EOF
 ```
 
-Define the GKE API for the GKE project:
+Define the GKE API [`Service`](https://cloud.google.com/config-connector/docs/reference/resource-docs/serviceusage/service) resource for the GKE project:
 ```Bash
 cat <<EOF > ~/$WORKSHOP_ORG_DIR_NAME/config-sync/projects/$GKE_PROJECT_ID/anthos-configmanagement-service.yaml
 apiVersion: serviceusage.cnrm.cloud.google.com/v1beta1

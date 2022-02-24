@@ -1,6 +1,6 @@
 ---
 title: "Check"
-weight: 6
+weight: 7
 ---
 - Duration: 5 min
 
@@ -65,28 +65,67 @@ gcloud alpha anthos config sync repo describe \
 ```
 You should see:
 ```Plaintext
-getting 1 RepoSync and RootSync from gke-hub-membership
+getting 2 RepoSync and RootSync from gke-hub-membership
 ┌───────────────────────────┬──────────────────────┬─────────────────────────┬────────────────┬─────────┐
-│           GROUP           │         KIND         │           NAME          │  NAMESPACE     │  STATUS │
+│           GROUP           │         KIND         │           NAME          │   NAMESPACE    │  STATUS │
 ├───────────────────────────┼──────────────────────┼─────────────────────────┼────────────────┼─────────┤
-│                           │ Namespace            │ asm-ingress             │                │ Current │
 │                           │ Namespace            │ istio-system            │                │ Current │
 │                           │ Namespace            │ onlineboutique          │                │ Current │
-│                           │ Service              │ asm-ingressgateway      │ asm-ingress    │ Current │
+│                           │ Namespace            │ asm-ingress             │                │ Current │
 │                           │ ServiceAccount       │ asm-ingressgateway      │ asm-ingress    │ Current │
+│                           │ Service              │ asm-ingressgateway      │ asm-ingress    │ Current │
 │ apps                      │ Deployment           │ asm-ingressgateway      │ asm-ingress    │ Current │
 │ cloud.google.com          │ BackendConfig        │ asm-ingressgateway      │ asm-ingress    │ Current │
 │ networking.gke.io         │ ManagedCertificate   │ onlineboutique          │ asm-ingress    │ Current │
+│ networking.gke.io         │ FrontendConfig       │ asm-ingressgateway      │ asm-ingress    │ Current │
 │ networking.gke.io         │ ManagedCertificate   │ bankofanthos            │ asm-ingress    │ Current │
 │ networking.istio.io       │ Gateway              │ asm-ingressgateway      │ asm-ingress    │ Current │
 │ networking.k8s.io         │ Ingress              │ asm-ingressgateway      │ asm-ingress    │ Current │
-│ rbac.authorization.k8s.io │ Role                 │ asm-ingressgateway      │ asm-ingress    │ Current │
+│ networking.k8s.io         │ NetworkPolicy        │ asm-ingressgateway      │ asm-ingress    │ Current │
+│ networking.k8s.io         │ NetworkPolicy        │ denyall                 │ asm-ingress    │ Current │
 │ rbac.authorization.k8s.io │ RoleBinding          │ asm-ingressgateway      │ asm-ingress    │ Current │
+│ rbac.authorization.k8s.io │ Role                 │ asm-ingressgateway      │ asm-ingress    │ Current │
 │                           │ ConfigMap            │ istio-asm-managed-rapid │ istio-system   │ Current │
 │ mesh.cloud.google.com     │ ControlPlaneRevision │ asm-managed-rapid       │ istio-system   │ Current │
 │ security.istio.io         │ PeerAuthentication   │ default                 │ istio-system   │ Current │
+│                           │ Service              │ frontend                │ onlineboutique │ Current │
+│                           │ Service              │ shippingservice         │ onlineboutique │ Current │
+│                           │ Service              │ checkoutservice         │ onlineboutique │ Current │
+│                           │ Service              │ cartservice             │ onlineboutique │ Current │
+│                           │ Service              │ productcatalogservice   │ onlineboutique │ Current │
+│                           │ Service              │ adservice               │ onlineboutique │ Current │
+│                           │ Service              │ frontend-external       │ onlineboutique │ Current │
+│                           │ Service              │ currencyservice         │ onlineboutique │ Current │
+│                           │ Service              │ emailservice            │ onlineboutique │ Current │
+│                           │ Service              │ paymentservice          │ onlineboutique │ Current │
+│                           │ Service              │ recommendationservice   │ onlineboutique │ Current │
+│ apps                      │ Deployment           │ emailservice            │ onlineboutique │ Current │
+│ apps                      │ Deployment           │ adservice               │ onlineboutique │ Current │
+│ apps                      │ Deployment           │ cartservice             │ onlineboutique │ Current │
+│ apps                      │ Deployment           │ currencyservice         │ onlineboutique │ Current │
+│ apps                      │ Deployment           │ loadgenerator           │ onlineboutique │ Current │
+│ apps                      │ Deployment           │ shippingservice         │ onlineboutique │ Current │
+│ apps                      │ Deployment           │ checkoutservice         │ onlineboutique │ Current │
+│ apps                      │ Deployment           │ recommendationservice   │ onlineboutique │ Current │
+│ apps                      │ Deployment           │ paymentservice          │ onlineboutique │ Current │
+│ apps                      │ Deployment           │ productcatalogservice   │ onlineboutique │ Current │
+│ apps                      │ Deployment           │ frontend                │ onlineboutique │ Current │
 │ configsync.gke.io         │ RepoSync             │ repo-sync               │ onlineboutique │ Current │
-│ rbac.authorization.k8s.io │ RoleBinding          │ syncs-repo                                         │ mabenoit-workshop-gke │ Current    │
+│ networking.istio.io       │ VirtualService       │ frontend                │ onlineboutique │ Current │
+│ networking.k8s.io         │ NetworkPolicy        │ adservice               │ onlineboutique │ Current │
+│ networking.k8s.io         │ NetworkPolicy        │ checkoutservice         │ onlineboutique │ Current │
+│ networking.k8s.io         │ NetworkPolicy        │ frontend                │ onlineboutique │ Current │
+│ networking.k8s.io         │ NetworkPolicy        │ emailservice            │ onlineboutique │ Current │
+│ networking.k8s.io         │ NetworkPolicy        │ denyall                 │ onlineboutique │ Current │
+│ networking.k8s.io         │ NetworkPolicy        │ paymentservice          │ onlineboutique │ Current │
+│ networking.k8s.io         │ NetworkPolicy        │ currencyservice         │ onlineboutique │ Current │
+│ networking.k8s.io         │ NetworkPolicy        │ recommendationservice   │ onlineboutique │ Current │
+│ networking.k8s.io         │ NetworkPolicy        │ shippingservice         │ onlineboutique │ Current │
+│ networking.k8s.io         │ NetworkPolicy        │ loadgenerator           │ onlineboutique │ Current │
+│ networking.k8s.io         │ NetworkPolicy        │ cartservice             │ onlineboutique │ Current │
+│ networking.k8s.io         │ NetworkPolicy        │ productcatalogservice   │ onlineboutique │ Current │
+│ rbac.authorization.k8s.io │ RoleBinding          │ repo-sync               │ onlineboutique │ Current │
+│ rbac.authorization.k8s.io │ RoleBinding          │ syncs-repo              │ onlineboutique │ Current │
 └───────────────────────────┴──────────────────────┴─────────────────────────┴────────────────┴─────────┘
 ```
 
@@ -103,24 +142,24 @@ getting 2 RepoSync and RootSync from krmapihost-configcontroller
 ┌───────────────────────────────────────┬─────────────────────────┬────────────────────────────────────────────────────┬───────────────────────┬────────────┐
 │                 GROUP                 │           KIND          │                        NAME                        │       NAMESPACE       │   STATUS   │
 ├───────────────────────────────────────┼─────────────────────────┼────────────────────────────────────────────────────┼───────────────────────┼────────────┤
-│                                       │ Namespace               │ default                                            │                       │ Current    │
-│                                       │ Namespace               │ config-control                                     │                       │ Current    │
 │                                       │ Namespace               │ mabenoit-workshop-gke                              │                       │ Current    │
+│                                       │ Namespace               │ config-control                                     │                       │ Current    │
+│                                       │ Namespace               │ default                                            │                       │ Current    │
 │ iam.cnrm.cloud.google.com             │ IAMPolicyMember         │ gke-hub-admin-mabenoit-workshop-gke                │ config-control        │ Current    │
-│ iam.cnrm.cloud.google.com             │ IAMPartialPolicy        │ mabenoit-workshop-gke-sa-workload-identity-binding │ config-control        │ Current    │
-│ iam.cnrm.cloud.google.com             │ IAMPolicyMember         │ security-admin-mabenoit-workshop-gke               │ config-control        │ Current    │
-│ iam.cnrm.cloud.google.com             │ IAMServiceAccount       │ mabenoit-workshop-gke                              │ config-control        │ Current    │
-│ iam.cnrm.cloud.google.com             │ IAMPolicyMember         │ service-account-user-mabenoit-workshop-gke         │ config-control        │ Current    │
 │ iam.cnrm.cloud.google.com             │ IAMPolicyMember         │ service-account-admin-mabenoit-workshop-gke        │ config-control        │ Current    │
-│ iam.cnrm.cloud.google.com             │ IAMPolicyMember         │ iam-admin-mabenoit-workshop-gke                    │ config-control        │ Current    │
+│ iam.cnrm.cloud.google.com             │ IAMServiceAccount       │ mabenoit-workshop-gke                              │ config-control        │ Current    │
 │ iam.cnrm.cloud.google.com             │ IAMPolicyMember         │ container-admin-mabenoit-workshop-gke              │ config-control        │ Current    │
+│ iam.cnrm.cloud.google.com             │ IAMPolicyMember         │ security-admin-mabenoit-workshop-gke               │ config-control        │ Current    │
+│ iam.cnrm.cloud.google.com             │ IAMPolicyMember         │ service-account-user-mabenoit-workshop-gke         │ config-control        │ Current    │
+│ iam.cnrm.cloud.google.com             │ IAMPartialPolicy        │ mabenoit-workshop-gke-sa-workload-identity-binding │ config-control        │ Current    │
 │ iam.cnrm.cloud.google.com             │ IAMPolicyMember         │ network-admin-mabenoit-workshop-gke                │ config-control        │ Current    │
+│ iam.cnrm.cloud.google.com             │ IAMPolicyMember         │ iam-admin-mabenoit-workshop-gke                    │ config-control        │ Current    │
 │ resourcemanager.cnrm.cloud.google.com │ Project                 │ mabenoit-workshop-gke                              │ config-control        │ Current    │
-│ serviceusage.cnrm.cloud.google.com    │ Service                 │ mesh.googleapis.com                                │ config-control        │ Current    │
-│ serviceusage.cnrm.cloud.google.com    │ Service                 │ cloudbilling.googleapis.com                        │ config-control        │ Current    │
-│ serviceusage.cnrm.cloud.google.com    │ Service                 │ container.googleapis.com                           │ config-control        │ Current    │
-│ serviceusage.cnrm.cloud.google.com    │ Service                 │ anthosconfigmanagement.googleapis.com              │ config-control        │ Current    │
 │ serviceusage.cnrm.cloud.google.com    │ Service                 │ gkehub.googleapis.com                              │ config-control        │ Current    │
+│ serviceusage.cnrm.cloud.google.com    │ Service                 │ cloudbilling.googleapis.com                        │ config-control        │ Current    │
+│ serviceusage.cnrm.cloud.google.com    │ Service                 │ anthosconfigmanagement.googleapis.com              │ config-control        │ Current    │
+│ serviceusage.cnrm.cloud.google.com    │ Service                 │ container.googleapis.com                           │ config-control        │ Current    │
+│ serviceusage.cnrm.cloud.google.com    │ Service                 │ mesh.googleapis.com                                │ config-control        │ Current    │
 │ compute.cnrm.cloud.google.com         │ ComputeSubnetwork       │ gke                                                │ mabenoit-workshop-gke │ Current    │
 │ compute.cnrm.cloud.google.com         │ ComputeSSLPolicy        │ gke-asm-ingressgateway                             │ mabenoit-workshop-gke │ Current    │
 │ compute.cnrm.cloud.google.com         │ ComputeSecurityPolicy   │ gke-asm-ingressgateway                             │ mabenoit-workshop-gke │ Current    │
@@ -142,15 +181,4 @@ getting 2 RepoSync and RootSync from krmapihost-configcontroller
 │ iam.cnrm.cloud.google.com             │ IAMPolicyMember         │ metric-writer-gke                                  │ mabenoit-workshop-gke │ Current    │
 │ rbac.authorization.k8s.io             │ RoleBinding             │ syncs-repo                                         │ mabenoit-workshop-gke │ Current    │
 └───────────────────────────────────────┴─────────────────────────┴────────────────────────────────────────────────────┴───────────────────────┴────────────┘
-```
-
-If you run:
-```Bash
-gcloud endpoints services list --project ${GKE_PROJECT_ID}
-```
-You should see:
-```Plaintext
-NAME                                                       TITLE
-bankofanthos.endpoints.mabenoit-workshop-gke.cloud.goog
-onlineboutique.endpoints.mabenoit-workshop-gke.cloud.goog
 ```
