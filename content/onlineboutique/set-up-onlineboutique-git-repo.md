@@ -28,7 +28,7 @@ metadata:
   #  mesh.cloud.google.com/proxy: '{"managed": true}'
   labels:
     name: ${ONLINEBOUTIQUE_NAMESPACE}
-    #istio.io/rev: ${ASM_VERSION}
+    istio.io/rev: ${ASM_VERSION}
 EOF
 ```
 
