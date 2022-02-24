@@ -18,9 +18,12 @@ weight: 2
     1. As Platform Admin, set up GKE configs's Git repo in GKE project
 1. Service Mesh
     1. As Org Admin, allow ASM for GKE project in Config Controller
-    1. As Platform Admin, install ASM in GKE cluster in GKE project
+    1. As Platform Admin, install ASM in GKE cluster
 1. Ingress Gateway
     1. As Platform Admin, set up the Public static IP address and DNS for the Ingress Gateway
     1. As Org Admin, allow Cloud Armor for GKE project in Config Controller
     1. As Platform Admin, set up Cloud Armor in GKE project
-    1. As Platform Admin, deploy the Ingress Gateway linked to Cloud Armor in GKE cluster in GKE project
+    1. As Platform Admin, deploy the Ingress Gateway linked to Cloud Armor in GKE cluster
+1. Online Boutique
+    1. As Platform Admin, set up the Online Boutique apps's Git repo in GKE cluster
+    1. As Apps Operator, deploy the Online Boutique apps

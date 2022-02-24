@@ -11,6 +11,9 @@ Install the required tools:
 - [`kubectl`](https://kubernetes.io/docs/tasks/tools/#kubectl)
 - `git`
 - `gh` (GitHub CLI)
+- `kpt`
+- `curl`
+- `nomos`
 
 You need to have:
 - GCP account with the role `owner` in your Organization in order to deploy the resources needed for this workshop
