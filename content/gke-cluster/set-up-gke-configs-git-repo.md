@@ -80,7 +80,7 @@ spec:
         syncRepo: ${GKE_CONFIG_REPO_URL}
     policyController:
       enabled: true
-      referentialRulesEnabled: false
+      referentialRulesEnabled: true
       logDeniesEnabled: true
       templateLibraryInstalled: true
     version: "1.10.1"

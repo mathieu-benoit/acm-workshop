@@ -37,7 +37,7 @@ spec:
   policyController:
     enabled: true
     logDeniesEnabled: true
-    referentialRulesEnabled: false
+    referentialRulesEnabled: true
     templateLibraryInstalled: true
 EOF
 ```
