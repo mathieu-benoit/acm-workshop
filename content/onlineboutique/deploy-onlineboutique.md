@@ -1,6 +1,6 @@
 ---
 title: "Deploy Online Boutique"
-weight: 2
+weight: 4
 ---
 - Persona: Apps Operator
 - Duration: 5 min
@@ -17,12 +17,13 @@ rm tmp.yaml
 
 Cleanup and update the upstream files:
 ```Bash
-#rm service_redis-cart.yaml
-#rm deployment_redis-cart.yaml
+rm service_redis-cart.yaml
+rm deployment_redis-cart.yaml
 #rm service_frontend-external.yaml
 kpt fn eval . \
   --image gcr.io/kpt-fn/set-namespace:unstable \
   -- namespace=$ONLINEBOUTIQUE_NAMESPACE
+sed -i "s/redis-cart:6379/$REDIS_IP:$REDIS_PORT/g" ~/$ONLINE_BOUTIQUE_DIR_NAME/config-sync/deployment_cartservice.yaml
 ```
 
 ```Bash
