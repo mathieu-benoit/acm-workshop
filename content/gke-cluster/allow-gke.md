@@ -81,7 +81,7 @@ EOF
 
 Define the GKE API for the GKE project:
 ```Bash
-cat <<EOF > ~/$WORKSHOP_ORG_DIR_NAME/config-sync/container-service.yaml
+cat <<EOF > ~/$WORKSHOP_ORG_DIR_NAME/config-sync/projects/$GKE_PROJECT_ID/container-service.yaml
 apiVersion: serviceusage.cnrm.cloud.google.com/v1beta1
 kind: Service
 metadata:
