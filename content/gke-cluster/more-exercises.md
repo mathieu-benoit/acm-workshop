@@ -4,7 +4,7 @@ weight: 6
 ---
 - Duration: 10 min
 
-Do you want more optional exercices? Here you are!
+Do you want more optional exercises? Here you are!
 
 ## Concept of drift
 
@@ -47,4 +47,5 @@ You could rollback this local change if you want:
 ```Bash
 cd ~/$GKE_PROJECT_DIR_NAME
 git checkout ~/$GKE_PROJECT_DIR_NAME/config-sync/gke-cluster.yaml
+kubectl apply -f ~/$GKE_PROJECT_DIR_NAME/config-sync/gke-cluster.yaml
 ```

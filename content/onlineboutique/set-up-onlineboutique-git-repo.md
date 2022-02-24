@@ -83,7 +83,7 @@ EOF
 ```
 
 {{% notice info %}}
-We are using the `cluster-admin` role here, but in the future we will change this with a least privilege approach. It will be something with `edit` role and the the Istio resources like `VirtualService`, etc. leveraged in this workshop.
+We are using the `cluster-admin` role here, but in the future we will change this with a least privilege approach. It will be something with `edit` role and the the Istio resources like `VirtualService`, etc. leveraged in this workshop. See [more information about the user-facing roles here](https://kubernetes.io/docs/reference/access-authn-authz/rbac/#user-facing-roles).
 {{% /notice %}}
 
 Deploy all these Kubernetes manifests via a GitOps approach:
