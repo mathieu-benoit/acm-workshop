@@ -19,7 +19,7 @@ Cleanup and update the upstream files:
 ```Bash
 rm service_redis-cart.yaml
 rm deployment_redis-cart.yaml
-#rm service_frontend-external.yaml
+rm service_frontend-external.yaml
 kpt fn eval . \
   --image gcr.io/kpt-fn/set-namespace:unstable \
   -- namespace=$ONLINEBOUTIQUE_NAMESPACE
