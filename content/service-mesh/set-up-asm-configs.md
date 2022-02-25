@@ -1,5 +1,5 @@
 ---
-title: "Set ASM configs"
+title: "Set up ASM configs"
 weight: 3
 ---
 - Persona: Platform Admin
