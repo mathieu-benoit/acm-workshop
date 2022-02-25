@@ -1,6 +1,6 @@
 ---
 title: "More exercises"
-weight: 6
+weight: 7
 ---
 - Duration: 10 min
 
