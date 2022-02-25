@@ -7,6 +7,7 @@ weight: 5
 - Objectives:
   - FIXME
 
+Define fine granular `NetworkPolicy` resources:
 ```Bash
 cat <<EOF > ~/$ONLINE_BOUTIQUE_DIR_NAME/config-sync/networkpolicy_denyall.yaml
 apiVersion: networking.k8s.io/v1
