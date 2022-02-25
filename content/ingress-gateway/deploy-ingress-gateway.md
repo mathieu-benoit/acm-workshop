@@ -44,6 +44,7 @@ spec:
   selector:
     matchLabels:
       ${INGRESS_GATEWAY_LABEL}
+      app: ${INGRESS_GATEWAY_NAME}
   template:
     metadata:
       annotations:
@@ -184,7 +185,7 @@ spec:
     targetPort: 15021
   - name: http2
     port: 80
-    targetPort: 8081
+    targetPort: 8080
   - name: https
     port: 443
     targetPort: 8443

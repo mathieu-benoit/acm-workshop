@@ -2,7 +2,7 @@
 title: "Set up Network Policies"
 weight: 5
 ---
-- Persona: Apps Operator
+- Persona: Platform Admin
 - Duration: 5 min
 - Objectives:
   - FIXME
