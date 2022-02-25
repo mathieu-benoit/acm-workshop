@@ -27,6 +27,7 @@ weight: 2
     1. As Platform Admin, set up Cloud Armor in GKE project
     1. As Platform Admin, deploy the Ingress Gateway linked to Cloud Armor in GKE cluster
     1. As Platform Admin, set up `NetworkPolicy` resources for the Ingress Gateway namespace in GKE cluster
+    1. As Platform Admin, set up `AuthorizationPolicy` resources for the Ingress Gateway namespace in GKE cluster
 1. Online Boutique
     1. As Platform Admin, set up the Online Boutique apps's Git repo in GKE cluster
     1. As Org Admin, allow Memorystore (redis) for GKE project in Config Controller
