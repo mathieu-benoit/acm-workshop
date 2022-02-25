@@ -53,6 +53,10 @@ roleRef:
 EOF
 ```
 
+{{% notice info %}}
+We are using the `edit` role here, see [more information about the user-facing roles here](https://kubernetes.io/docs/reference/access-authn-authz/rbac/#user-facing-roles).
+{{% /notice %}}
+
 Deploy all these Kubernetes manifests via a GitOps approach:
 ```Bash
 cd ~/$WORKSHOP_ORG_DIR_NAME/
