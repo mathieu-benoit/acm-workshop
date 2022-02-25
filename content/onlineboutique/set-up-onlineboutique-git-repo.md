@@ -32,10 +32,6 @@ metadata:
 EOF
 ```
 
-{{% notice info %}}
-Disabling ASM/Istio injection for now as there is an issue that I need to debug/resolve regarding the `istio-proxy` injection.
-{{% /notice %}}
-
 ```Bash
 export ONLINE_BOUTIQUE_DIR_NAME=workshop-onlineboutique-repo
 cd ~

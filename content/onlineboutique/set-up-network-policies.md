@@ -160,20 +160,19 @@ spec:
   - Ingress
   - Egress
   ingress:
-  - {}
-  #- from:
-  #  - podSelector:
-  #      matchLabels:
-  #        app: loadgenerator
-  #  - namespaceSelector:
-  #      matchLabels:
-  #        name: ${INGRESS_GATEWAY_NAMESPACE}
-  #    podSelector:
-  #      matchLabels:
-  #        app: ${INGRESS_GATEWAY_NAME}
-  #  ports:
-  #   - port: 8080
-  #     protocol: TCP
+  - from:
+    - podSelector:
+        matchLabels:
+          app: loadgenerator
+    - namespaceSelector:
+        matchLabels:
+          name: ${INGRESS_GATEWAY_NAMESPACE}
+      podSelector:
+        matchLabels:
+          app: ${INGRESS_GATEWAY_NAME}
+    ports:
+     - port: 8080
+       protocol: TCP
   egress:
   - {}
 EOF
