@@ -1,5 +1,5 @@
 ---
-title: "More exercises"
+title: "Exercises"
 weight: 7
 ---
 - Duration: 10 min
