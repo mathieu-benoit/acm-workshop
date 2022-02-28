@@ -14,8 +14,7 @@ kind: AuthorizationPolicy
 metadata:
   name: deny-all
   namespace: ${INGRESS_GATEWAY_NAMESPACE}
-spec:
-  {}
+spec: {}
 EOF
 cat <<EOF > ~/$GKE_CONFIGS_DIR_NAME/config-sync/$INGRESS_GATEWAY_NAMESPACE/authorizationpolicy_ingress-gateway.yaml
 apiVersion: security.istio.io/v1beta1
@@ -29,8 +28,8 @@ spec:
       app: ${INGRESS_GATEWAY_NAME}
   rules:
   - to:
-      - operation:
-          ports: ["8080"]
+    - operation:
+        ports: ["8080"]
 EOF
 ```
 

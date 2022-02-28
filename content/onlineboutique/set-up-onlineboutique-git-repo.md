@@ -52,11 +52,11 @@ metadata:
 spec:
   sourceFormat: unstructured
   git:
-   repo: ${ONLINE_BOUTIQUE_REPO_URL}
-   revision: HEAD
-   branch: main
-   dir: "config-sync"
-   auth: none
+    repo: ${ONLINE_BOUTIQUE_REPO_URL}
+    revision: HEAD
+    branch: main
+    dir: "config-sync"
+    auth: none
 EOF
 ```
 

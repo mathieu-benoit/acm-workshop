@@ -78,7 +78,7 @@ spec:
           allowPrivilegeEscalation: false
           capabilities:
             drop:
-              - all
+            - all
           privileged: false
           readOnlyRootFilesystem: true
       securityContext:
@@ -257,8 +257,8 @@ cat <<EOF > ~/$GKE_CONFIGS_DIR_NAME/config-sync/$INGRESS_GATEWAY_NAMESPACE/gatew
 apiVersion: networking.istio.io/v1alpha3
 kind: Gateway
 metadata:
-    name: ${INGRESS_GATEWAY_NAME}
-    namespace: ${INGRESS_GATEWAY_NAMESPACE}
+  name: ${INGRESS_GATEWAY_NAME}
+  namespace: ${INGRESS_GATEWAY_NAMESPACE}
 spec:
   selector:
     ${INGRESS_GATEWAY_LABEL}
