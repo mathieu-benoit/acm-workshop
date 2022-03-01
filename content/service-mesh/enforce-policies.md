@@ -7,13 +7,41 @@ weight: 4
 - Objectives:
   - FIXME
 
+## Automatic sidecar injection
+
+https://cloud.google.com/service-mesh/docs/anthos-service-mesh-proxy-injection
+
+We already defined the `k8srequiredlabels` `ConstraintTemplate` resource in a previous section, we will reuse it here.
+
+Define the `Constraint` resource:
+```Bash
+cat <<EOF > ~/$GKE_CONFIGS_DIR_NAME/config-sync/policies/constraints/automatic-sidecar-injection.yaml
+apiVersion: constraints.gatekeeper.sh/v1beta1
+kind: K8sRequiredLabels
+metadata:
+  name: automatic-sidecar-injection
+spec:
+  enforcementAction: deny
+  match:
+    kinds:
+    - apiGroups:
+      - ""
+      kinds:
+      - Namespace
+  parameters:
+    labels:
+      - allowedRegex: asm-$
+        key: "istio.io/rev"
+EOF
+```
+
 ## Allowed Service port names
 
 https://cloud.google.com/service-mesh/docs/naming-service-ports
 
 Define the `ConstraintTemplate` resource:
 ```Bash
-cat <<EOF > ~/$GKE_CONFIGS_DIR_NAME/config-sync/policies/templates/allowed-service-port-names.yaml
+cat <<EOF > ~/$GKE_CONFIGS_DIR_NAME/config-sync/policies/templates/allowedserviceportname.yaml
 apiVersion: templates.gatekeeper.sh/v1
 kind: ConstraintTemplate
 metadata:
@@ -79,7 +107,7 @@ EOF
 
 Define the `ConstraintTemplate` resource:
 ```Bash
-cat <<EOF > ~/$GKE_CONFIGS_DIR_NAME/config-sync/policies/templates/policy-strict-only.yaml
+cat <<EOF > ~/$GKE_CONFIGS_DIR_NAME/config-sync/policies/templates/policystrictonly.yaml
 apiVersion: templates.gatekeeper.sh/v1
 kind: ConstraintTemplate
 metadata:
@@ -163,7 +191,7 @@ https://istio.io/latest/docs/reference/config/security/authorization-policy/
 
 Define the `ConstraintTemplate` resource:
 ```Bash
-cat <<EOF > ~/$GKE_CONFIGS_DIR_NAME/config-sync/policies/templates/defined-authz-source-principals.yaml
+cat <<EOF > ~/$GKE_CONFIGS_DIR_NAME/config-sync/policies/templates/sourcenotallauthz.yaml
 apiVersion: templates.gatekeeper.sh/v1
 kind: ConstraintTemplate
 metadata:
@@ -231,7 +259,7 @@ https://istio.io/latest/docs/reference/config/networking/destination-rule
 
 Define the `ConstraintTemplate` resource:
 ```Bash
-cat <<EOF > ~/$GKE_CONFIGS_DIR_NAME/config-sync/policies/templates/destination-rule-tls-enabled.yaml
+cat <<EOF > ~/$GKE_CONFIGS_DIR_NAME/config-sync/policies/templates/destinationruletlsenabled.yaml
 apiVersion: templates.gatekeeper.sh/v1
 kind: ConstraintTemplate
 metadata:

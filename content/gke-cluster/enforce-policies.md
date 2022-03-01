@@ -1,5 +1,5 @@
 ---
-title: "Enforce Policies"
+title: "Enforce policies"
 weight: 6
 ---
 - Persona: Platform Admin
@@ -17,7 +17,7 @@ mkdir ~/$GKE_CONFIGS_DIR_NAME/config-sync/policies/templates
 
 Define the `ConstraintTemplate` resource:
 ```Bash
-cat <<EOF > ~/$GKE_CONFIGS_DIR_NAME/config-sync/policies/templates/allowed-container-registries.yaml
+cat <<EOF > ~/$GKE_CONFIGS_DIR_NAME/config-sync/policies/templates/k8sallowedrepos.yaml
 apiVersion: templates.gatekeeper.sh/v1beta1
 kind: ConstraintTemplate
 metadata:
