@@ -82,7 +82,7 @@ spec:
       enabled: true
       referentialRulesEnabled: true
       logDeniesEnabled: true
-      templateLibraryInstalled: true
+      templateLibraryInstalled: false
     version: "1.10.2"
 EOF
 ```
