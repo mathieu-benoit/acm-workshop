@@ -184,7 +184,7 @@ spec:
       # spec.rules[].from[].source.principal does not exist
       violation[{"msg": msg}] {
         p := input.review.object
-        p.apiVersion == "security.istio.io/v1beta1"
+        startswith(p.apiVersion, "security.istio.io/")
         p.kind == "AuthorizationPolicy"
         rule := p.spec.rules[_]
         sources := {i | rule.from[_].source[i]}
@@ -194,7 +194,7 @@ spec:
       # spec.rules[].from[].source.principal is set to '*'
       violation[{"msg": msg}] {
         p := input.review.object
-        p.apiVersion == "security.istio.io/v1beta1"
+        startswith(p.apiVersion, "security.istio.io/")
         p.kind == "AuthorizationPolicy"
         rule := p.spec.rules[_]
         principals := {v | v := rule.from[_].source.principals[_]}
@@ -222,6 +222,70 @@ spec:
       - AuthorizationPolicy
     excludedNamespaces:
       - ${INGRESS_GATEWAY_NAMESPACE}
+EOF
+```
+
+## DestinationRule TLS enabled 
+
+https://istio.io/latest/docs/reference/config/networking/destination-rule
+
+Define the `ConstraintTemplate` resource:
+```Bash
+cat <<EOF > ~/$GKE_CONFIGS_DIR_NAME/config-sync/policies/templates/destination-rule-tls-enabled.yaml
+apiVersion: templates.gatekeeper.sh/v1
+kind: ConstraintTemplate
+metadata:
+  annotations:
+    description: Prohibits disabling TLS for all hosts and host subsets in Istio DestinationRules.
+  name: destinationruletlsenabled
+spec:
+  crd:
+    spec:
+      names:
+        kind: DestinationRuleTLSEnabled
+      validation:
+        legacySchema: true
+        openAPIV3Schema: {}
+  targets:
+  - rego: |
+      package asm.guardrails.destinationruletlsenabled
+      # spec.trafficPolicy.tls.mode == DISABLE
+      violation[{"msg": msg}] {
+        d := input.review.object
+        startswith(d.apiVersion, "networking.istio.io/")
+        d.kind == "DestinationRule"
+        tpl := d.spec.trafficPolicy[_]
+        tpl == {"mode": "DISABLE"}
+        msg := sprintf("spec.trafficPolicy.tls.mode == DISABLE for host(s): %v", [d.spec.host])
+      }
+      # spec.subsets[].trafficPolicy.tls.mode == DISABLE
+      violation[{"msg": msg}] {
+        d := input.review.object
+        startswith(d.apiVersion, "networking.istio.io/")
+        d.kind == "DestinationRule"
+        subset := d.spec.subsets[_]
+        subset.trafficPolicy == {"tls": {"mode": "DISABLE"}}
+        msg := sprintf("subsets[].trafficPolicy.tls.mode == DISABLE for host-subset: %v-%v", [d.spec.host, subset.name])
+      }
+    target: admission.k8s.gatekeeper.sh
+EOF
+```
+
+Define the `Constraint` resource:
+```Bash
+cat <<EOF > ~/$GKE_CONFIGS_DIR_NAME/config-sync/policies/constraints/destination-rule-tls-enabled.yaml
+apiVersion: constraints.gatekeeper.sh/v1beta1
+kind: DestinationRuleTLSEnabled
+metadata:
+  name: destination-rule-tls-enabled
+spec:
+  enforcementAction: deny
+  match:
+    kinds:
+    - apiGroups:
+      - networking.istio.io
+      kinds:
+      - DestinationRule
 EOF
 ```
 
