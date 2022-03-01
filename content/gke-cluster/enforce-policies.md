@@ -98,7 +98,7 @@ spec:
 EOF
 ```
 
-Deploy this Kubernetes manifest via a GitOps approach:
+Deploy these Kubernetes manifests via a GitOps approach:
 ```Bash
 cd ~/$GKE_CONFIGS_DIR_NAME/
 git add .

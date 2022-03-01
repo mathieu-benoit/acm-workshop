@@ -157,7 +157,75 @@ spec:
 EOF
 ```
 
-Deploy this Kubernetes manifest via a GitOps approach:
+## Defined AuthorizationPolicy source principals 
+
+https://istio.io/latest/docs/reference/config/security/authorization-policy/
+
+Define the `ConstraintTemplate` resource:
+```Bash
+cat <<EOF > ~/$GKE_CONFIGS_DIR_NAME/config-sync/policies/templates/defined-authz-source-principals.yaml
+apiVersion: templates.gatekeeper.sh/v1
+kind: ConstraintTemplate
+metadata:
+  annotations:
+    description: Requires that Istio AuthorizationPolicy rules have source principals set to something other than "*".
+  name: sourcenotallauthz
+spec:
+  crd:
+    spec:
+      names:
+        kind: SourceNotAllAuthz
+      validation:
+        legacySchema: true
+        openAPIV3Schema: {}
+  targets:
+  - rego: |
+      package asm.guardrails.sourcenotallauthz
+      # spec.rules[].from[].source.principal does not exist
+      violation[{"msg": msg}] {
+        p := input.review.object
+        p.apiVersion == "security.istio.io/v1beta1"
+        p.kind == "AuthorizationPolicy"
+        rule := p.spec.rules[_]
+        sources := {i | rule.from[_].source[i]}
+        not sources.principals
+        msg := "source.principals does not exist"
+      }
+      # spec.rules[].from[].source.principal is set to '*'
+      violation[{"msg": msg}] {
+        p := input.review.object
+        p.apiVersion == "security.istio.io/v1beta1"
+        p.kind == "AuthorizationPolicy"
+        rule := p.spec.rules[_]
+        principals := {v | v := rule.from[_].source.principals[_]}
+        principals["*"]
+        msg := "source.principals[] cannot be '*'"
+      }
+    target: admission.k8s.gatekeeper.sh
+EOF
+```
+
+Define the `Constraint` resource:
+```Bash
+cat <<EOF > ~/$GKE_CONFIGS_DIR_NAME/config-sync/policies/constraints/defined-authz-source-principals.yaml
+apiVersion: constraints.gatekeeper.sh/v1beta1
+kind: SourceNotAllAuthz
+metadata:
+  name: defined-authz-source-principals
+spec:
+  enforcementAction: deny
+  match:
+    kinds:
+    - apiGroups:
+      - security.istio.io
+      kinds:
+      - AuthorizationPolicy
+    excludedNamespaces:
+      - ${INGRESS_GATEWAY_NAMESPACE}
+EOF
+```
+
+Deploy these Kubernetes manifests via a GitOps approach:
 ```Bash
 cd ~/$GKE_CONFIGS_DIR_NAME/
 git add .
