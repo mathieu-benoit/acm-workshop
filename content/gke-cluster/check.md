@@ -1,6 +1,6 @@
 ---
 title: "Check"
-weight: 6
+weight: 7
 ---
 - Duration: 2 min
 
@@ -91,4 +91,16 @@ getting 2 RepoSync and RootSync from krmapihost-configcontroller
 │ iam.cnrm.cloud.google.com             │ IAMServiceAccount       │ gke-primary-pool                                   │ mabenoit-workshop-gke │ Current  │
 │ rbac.authorization.k8s.io             │ RoleBinding             │ syncs-repo                                         │ mabenoit-workshop-gke │ Current  │
 └───────────────────────────────────────┴─────────────────────────┴────────────────────────────────────────────────────┴───────────────────────┴──────────┘
+```
+
+If you run:
+```Bash
+gcloud alpha anthos config sync repo describe \
+   --project $GKE_PROJECT_ID \
+   --managed-resources all \
+   --format="multi(statuses:format=none,managed_resources:format='table[box](group:sort=2,kind,name,namespace:sort=1,status)')"
+```
+You should see:
+```Plaintext
+FIXME
 ```

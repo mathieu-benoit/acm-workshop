@@ -1,6 +1,6 @@
 ---
 title: "Exercises"
-weight: 7
+weight: 8
 ---
 - Duration: 10 min
 
@@ -29,7 +29,7 @@ But if you re-run this command ~5 min later, you will see that your change is no
 Currently, you can't access the GKE cluster via `kubectl` commands because it's a private cluster, but let's update the GKE cluster resource with this snippet:
 
 ```YAML
-masterAuthorizedNetworksConfig:
+  masterAuthorizedNetworksConfig:
     cidrBlocks:
     - cidrBlock: FIXME_YOUR_LOCAL_IP_ADDRESS/32
       displayName: local
@@ -48,4 +48,43 @@ You could rollback this local change if you want:
 cd ~/$GKE_PROJECT_DIR_NAME
 git checkout ~/$GKE_PROJECT_DIR_NAME/config-sync/gke-cluster.yaml
 kubectl apply -f ~/$GKE_PROJECT_DIR_NAME/config-sync/gke-cluster.yaml
+```
+
+## Validate Policies
+
+Let's create a `Deployment` violating the `allowed-container-registries` `Constraint` we previously created:
+```Bash
+cat <<EOF > ~/$GKE_CONFIGS_DIR_NAME/config-sync/nginx-test.yaml
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: nginx-deployment
+  labels:
+    app: nginx
+spec:
+  replicas: 3
+  selector:
+    matchLabels:
+      app: nginx
+  template:
+    metadata:
+      labels:
+        app: nginx
+    spec:
+      containers:
+      - name: nginx
+        image: nginx:1.14.2
+        ports:
+        - containerPort: 80
+EOF
+```
+
+And now let's evaluate this `Constraint` on the current Kubernetes manifests we have locally:
+```Bash
+kpt fn eval ~/$GKE_CONFIGS_DIR_NAME/config-sync --image=gcr.io/kpt-fn/gatekeeper:v0.2
+```
+
+We could even create a Pull Request to see in action how this violation could be tracked by the default GitHub actions definition:
+```Bash
+FIXME
 ```
