@@ -124,6 +124,10 @@ spec:
       - ""
       kinds:
       - Namespace
+    excludedNamespaces:
+      - cnrm-system
+      - 
+      - istio-system
   parameters:
     labels:
       - key: name
@@ -142,9 +146,9 @@ spec:
   match:
     kinds:
     - apiGroups:
-      - ""
+      - apps
       kinds:
-      - Namespace
+      - Deployment
   parameters:
     labels:
       - key: app
