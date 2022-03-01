@@ -40,8 +40,8 @@ spec:
         matchLabels:
           app: frontend
     ports:
-     - port: 9555
-       protocol: TCP
+    - port: 9555
+      protocol: TCP
   egress:
   - {}
 EOF
@@ -67,8 +67,8 @@ spec:
         matchLabels:
           app: checkoutservice
     ports:
-     - port: 7070
-       protocol: TCP
+    - port: 7070
+      protocol: TCP
   egress:
   - {}
 EOF
@@ -91,8 +91,8 @@ spec:
         matchLabels:
           app: frontend
     ports:
-     - port: 5050
-       protocol: TCP
+    - port: 5050
+      protocol: TCP
   egress:
   - {}
 EOF
@@ -118,8 +118,8 @@ spec:
         matchLabels:
           app: checkoutservice
     ports:
-     - port: 7000
-       protocol: TCP
+    - port: 7000
+      protocol: TCP
   egress:
   - {}
 EOF
@@ -142,8 +142,8 @@ spec:
         matchLabels:
           app: checkoutservice
     ports:
-     - port: 8080
-       protocol: TCP
+    - port: 8080
+      protocol: TCP
   egress:
   - {}
 EOF
@@ -172,8 +172,8 @@ spec:
         matchLabels:
           app: ${INGRESS_GATEWAY_NAME}
     ports:
-     - port: 8080
-       protocol: TCP
+    - port: 8080
+      protocol: TCP
   egress:
   - {}
 EOF
@@ -211,8 +211,8 @@ spec:
         matchLabels:
           app: checkoutservice
     ports:
-     - port: 50051
-       protocol: TCP
+    - port: 50051
+      protocol: TCP
   egress:
   - {}
 EOF
@@ -241,8 +241,8 @@ spec:
         matchLabels:
           app: recommendationservice
     ports:
-     - port: 3550
-       protocol: TCP
+    - port: 3550
+      protocol: TCP
   egress:
   - {}
 EOF
@@ -265,8 +265,8 @@ spec:
         matchLabels:
           app: frontend
     ports:
-     - port: 8080
-       protocol: TCP
+    - port: 8080
+      protocol: TCP
   egress:
   - {}
 EOF
@@ -292,8 +292,8 @@ spec:
         matchLabels:
           app: checkoutservice
     ports:
-     - port: 50051
-       protocol: TCP
+    - port: 50051
+      protocol: TCP
   egress:
   - {}
 EOF

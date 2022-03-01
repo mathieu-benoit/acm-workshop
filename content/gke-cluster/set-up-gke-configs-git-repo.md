@@ -38,9 +38,9 @@ spec:
   authority:
     issuer: https://container.googleapis.com/v1/projects/${GKE_PROJECT_ID}/locations/${GKE_LOCATION}/clusters/${GKE_NAME}
   endpoint:
-      gkeCluster:
-        resourceRef:
-          name: ${GKE_NAME}
+    gkeCluster:
+      resourceRef:
+        name: ${GKE_NAME}
 EOF
 ```
 

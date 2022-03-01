@@ -102,8 +102,7 @@ kind: AuthorizationPolicy
 metadata:
   name: deny-all
   namespace: ${ONLINEBOUTIQUE_NAMESPACE}
-spec:
-  {}
+spec: {}
 EOF
 cat <<EOF > ~/$ONLINE_BOUTIQUE_DIR_NAME/config-sync/authorizationpolicy_adservice.yaml
 apiVersion: security.istio.io/v1beta1
@@ -120,10 +119,10 @@ spec:
     - source:
         principals: ["cluster.local/ns/${ONLINEBOUTIQUE_NAMESPACE}/sa/frontend"]
     to:
-      - operation:
-          paths: ["/hipstershop.AdService/GetAds"]
-          methods: ["POST"]
-          ports: ["9555"]
+    - operation:
+        paths: ["/hipstershop.AdService/GetAds"]
+        methods: ["POST"]
+        ports: ["9555"]
 EOF
 cat <<EOF > ~/$ONLINE_BOUTIQUE_DIR_NAME/config-sync/authorizationpolicy_cartservice.yaml
 apiVersion: security.istio.io/v1beta1
@@ -140,9 +139,10 @@ spec:
     - source:
         principals: ["cluster.local/ns/${ONLINEBOUTIQUE_NAMESPACE}/sa/frontend", "cluster.local/ns/${ONLINEBOUTIQUE_NAMESPACE}/sa/checkoutservice"]
     to:
-      - operation:
-          paths: ["/hipstershop.CartService/AddItem", "/hipstershop.CartService/GetCart", "/hipstershop.CartService/EmptyCart"]
-          methods: ["POST"]
+    - operation:
+        paths: ["/hipstershop.CartService/AddItem", "/hipstershop.CartService/GetCart", "/hipstershop.CartService/EmptyCart"]
+        methods: ["POST"]
+        ports: ["7070"]
 EOF
 cat <<EOF > ~/$ONLINE_BOUTIQUE_DIR_NAME/config-sync/authorizationpolicy_checkoutservice.yaml
 apiVersion: security.istio.io/v1beta1
@@ -159,10 +159,10 @@ spec:
     - source:
         principals: ["cluster.local/ns/${ONLINEBOUTIQUE_NAMESPACE}/sa/frontend"]
     to:
-      - operation:
-          paths: ["/hipstershop.CheckoutService/PlaceOrder"]
-          methods: ["POST"]
-          ports: ["5050"]
+    - operation:
+        paths: ["/hipstershop.CheckoutService/PlaceOrder"]
+        methods: ["POST"]
+        ports: ["5050"]
 EOF
 cat <<EOF > ~/$ONLINE_BOUTIQUE_DIR_NAME/config-sync/authorizationpolicy_currencyservice.yaml
 apiVersion: security.istio.io/v1beta1
@@ -179,10 +179,10 @@ spec:
     - source:
         principals: ["cluster.local/ns/${ONLINEBOUTIQUE_NAMESPACE}/sa/frontend", "cluster.local/ns/${ONLINEBOUTIQUE_NAMESPACE}/sa/checkoutservice"]
     to:
-      - operation:
-          paths: ["/hipstershop.CurrencyService/Convert", "/hipstershop.CurrencyService/GetSupportedCurrencies"]
-          methods: ["POST"]
-          ports: ["7000"]
+    - operation:
+        paths: ["/hipstershop.CurrencyService/Convert", "/hipstershop.CurrencyService/GetSupportedCurrencies"]
+        methods: ["POST"]
+        ports: ["7000"]
 EOF
 cat <<EOF > ~/$ONLINE_BOUTIQUE_DIR_NAME/config-sync/authorizationpolicy_emailservice.yaml
 apiVersion: security.istio.io/v1beta1
@@ -199,10 +199,10 @@ spec:
     - source:
         principals: ["cluster.local/ns/${ONLINEBOUTIQUE_NAMESPACE}/sa/checkoutservice"]
     to:
-      - operation:
-          paths: ["/hipstershop.EmailService/SendOrderConfirmation"]
-          methods: ["POST"]
-          ports: ["8080"]
+    - operation:
+        paths: ["/hipstershop.EmailService/SendOrderConfirmation"]
+        methods: ["POST"]
+        ports: ["8080"]
 EOF
 cat <<EOF > ~/$ONLINE_BOUTIQUE_DIR_NAME/config-sync/authorizationpolicy_frontend.yaml
 apiVersion: security.istio.io/v1beta1
@@ -219,9 +219,9 @@ spec:
     - source:
         principals: ["cluster.local/ns/${ONLINEBOUTIQUE_NAMESPACE}/sa/loadgenerator", "cluster.local/ns/${INGRESS_GATEWAY_NAMESPACE}/sa/${INGRESS_GATEWAY_NAME}"]
     to:
-      - operation:
-          ports: ["8080"]
-          methods: ["GET", "POST"]
+    - operation:
+        ports: ["8080"]
+        methods: ["GET", "POST"]
 EOF
 cat <<EOF > ~/$ONLINE_BOUTIQUE_DIR_NAME/config-sync/authorizationpolicy_paymentservice.yaml
 apiVersion: security.istio.io/v1beta1
@@ -238,10 +238,10 @@ spec:
     - source:
         principals: ["cluster.local/ns/${ONLINEBOUTIQUE_NAMESPACE}/sa/checkoutservice"]
     to:
-      - operation:
-          paths: ["/hipstershop.PaymentService/Charge"]
-          methods: ["POST"]
-          ports: ["50051"]
+    - operation:
+        paths: ["/hipstershop.PaymentService/Charge"]
+        methods: ["POST"]
+        ports: ["50051"]
 EOF
 cat <<EOF > ~/$ONLINE_BOUTIQUE_DIR_NAME/config-sync/authorizationpolicy_productcatalogservice.yaml
 apiVersion: security.istio.io/v1beta1
@@ -258,10 +258,10 @@ spec:
     - source:
         principals: ["cluster.local/ns/${ONLINEBOUTIQUE_NAMESPACE}/sa/frontend", "cluster.local/ns/${ONLINEBOUTIQUE_NAMESPACE}/sa/checkoutservice", "cluster.local/ns/${ONLINEBOUTIQUE_NAMESPACE}/sa/recommendationservice"]
     to:
-      - operation:
-          paths: ["/hipstershop.ProductCatalogService/GetProduct", "/hipstershop.ProductCatalogService/ListProducts"]
-          methods: ["POST"]
-          ports: ["3550"]
+    - operation:
+        paths: ["/hipstershop.ProductCatalogService/GetProduct", "/hipstershop.ProductCatalogService/ListProducts"]
+        methods: ["POST"]
+        ports: ["3550"]
 EOF
 cat <<EOF > ~/$ONLINE_BOUTIQUE_DIR_NAME/config-sync/authorizationpolicy_recommendationservice.yaml
 apiVersion: security.istio.io/v1beta1
@@ -278,10 +278,10 @@ spec:
     - source:
         principals: ["cluster.local/ns/${ONLINEBOUTIQUE_NAMESPACE}/sa/frontend"]
     to:
-      - operation:
-          paths: ["/hipstershop.RecommendationService/ListRecommendations"]
-          methods: ["POST"]
-          ports: ["8080"]
+    - operation:
+        paths: ["/hipstershop.RecommendationService/ListRecommendations"]
+        methods: ["POST"]
+        ports: ["8080"]
 EOF
 cat <<EOF > ~/$ONLINE_BOUTIQUE_DIR_NAME/config-sync/authorizationpolicy_shippingservice.yaml
 apiVersion: security.istio.io/v1beta1
@@ -298,10 +298,10 @@ spec:
     - source:
         principals: ["cluster.local/ns/${ONLINEBOUTIQUE_NAMESPACE}/sa/frontend", "cluster.local/ns/${ONLINEBOUTIQUE_NAMESPACE}/sa/checkoutservice"]
     to:
-      - operation:
-          paths: ["/hipstershop.ShippingService/GetQuote", "/hipstershop.ShippingService/ShipOrder"]
-          methods: ["POST"]
-          ports: ["50051"]
+    - operation:
+        paths: ["/hipstershop.ShippingService/GetQuote", "/hipstershop.ShippingService/ShipOrder"]
+        methods: ["POST"]
+        ports: ["50051"]
 EOF
 ```
 
