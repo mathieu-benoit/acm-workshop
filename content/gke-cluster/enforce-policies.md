@@ -39,8 +39,7 @@ spec:
               items:
                 type: string
   targets:
-    - target: admission.k8s.gatekeeper.sh
-      rego: |
+    - rego: |
         package k8sallowedrepos
         violation[{"msg": msg}] {
           container := input_containers[_]
@@ -66,6 +65,7 @@ spec:
         input_containers[c] {
             c := input.review.object.spec.template.spec.initContainers[_]
         }
+      target: admission.k8s.gatekeeper.sh
 EOF
 ```
 
@@ -102,6 +102,6 @@ Deploy this Kubernetes manifest via a GitOps approach:
 ```Bash
 cd ~/$GKE_CONFIGS_DIR_NAME/
 git add .
-git commit -m "Enforce Policies in GKE cluster"
+git commit -m "Enforce general Policies in GKE cluster"
 git push
 ```

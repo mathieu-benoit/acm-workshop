@@ -47,12 +47,12 @@ You could rollback this local change if you want:
 ```Bash
 cd ~/$GKE_PROJECT_DIR_NAME
 git checkout ~/$GKE_PROJECT_DIR_NAME/config-sync/gke-cluster.yaml
-kubectl apply -f ~/$GKE_PROJECT_DIR_NAME/config-sync/gke-cluster.yaml
+kubectl delete -f ~/$GKE_PROJECT_DIR_NAME/config-sync/gke-cluster.yaml
 ```
 
 ## Validate Policies
 
-Let's create a `Deployment` violating the `allowed-container-registries` `Constraint` we previously created:
+Let's define a `Deployment` violating the `allowed-container-registries` `Constraint` we previously created:
 ```Bash
 cat <<EOF > ~/$GKE_CONFIGS_DIR_NAME/config-sync/nginx-test.yaml
 apiVersion: apps/v1
