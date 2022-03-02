@@ -52,7 +52,7 @@ gh repo create $GKE_CONFIGS_DIR_NAME --public --clone --template https://github.
 cd $GKE_CONFIGS_DIR_NAME
 git pull
 git checkout main
-export GKE_CONFIG_REPO_URL=$(gh repo view --json url --jq .url)
+export GKE_CONFIGS_REPO_URL=$(gh repo view --json url --jq .url)
 ```
 
 ```Bash
@@ -77,7 +77,7 @@ spec:
         policyDir: config-sync
         secretType: none
         syncBranch: main
-        syncRepo: ${GKE_CONFIG_REPO_URL}
+        syncRepo: ${GKE_CONFIGS_REPO_URL}
     policyController:
       enabled: true
       referentialRulesEnabled: true

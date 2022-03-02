@@ -55,7 +55,7 @@ spec:
     repo: ${ONLINE_BOUTIQUE_REPO_URL}
     revision: HEAD
     branch: main
-    dir: "config-sync"
+    dir: config-sync
     auth: none
 EOF
 ```

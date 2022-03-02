@@ -6,9 +6,15 @@ weight: 2
 - Duration: 5 min
 - Objectives:
   - Set up a Cloud NAT in order to provide Internet access in egress for the Config Controller instance
-  - Enable multi-repository for the Config Controller's Config Sync component
+  - Enable multi-repositories for the Config Controller's Config Sync component
   - Create a dedicated Organization GitHub repository as the main/root repository of the Config Controller instance
   - Enable Cloud Billing service API in the Config Controller's GCP project
+
+Define variables:
+```Bash
+echo "export WORKSHOP_ORG_DIR_NAME=acm-workshop-org-repo" >> ~/acm-workshop-variables.sh
+source ~/acm-workshop-variables.sh
+```
 
 Open Config Controller's egress to the Internet (GitHub access):
 ```Bash
@@ -25,7 +31,7 @@ gcloud compute routers nats create nat-config \
     --auto-allocate-nat-external-ips
 ```
 
-Deploy the multi-repository setup for the Config Controller's Config Management component:
+Deploy the multi-repositories setup for the Config Controller's Config Management component:
 ```Bash
 cat << EOF | kubectl apply -f -
 apiVersion: configmanagement.gke.io/v1
@@ -38,22 +44,20 @@ spec:
     enabled: true
     logDeniesEnabled: true
     referentialRulesEnabled: true
-    templateLibraryInstalled: true
+    templateLibraryInstalled: false
 EOF
 ```
 
+Let's wait for the multi-repositories configs to be deployed:
 ```Bash
 kubectl wait --for condition=established crd rootsyncs.configsync.gke.io
 ```
 
 Deploy a `RootSync` acting as the main/root Git repository for the Config Controller instance:
 ```Bash
-export WORKSHOP_ORG_DIR_NAME=workshop-org-repo
 cd ~
 gh repo create $WORKSHOP_ORG_DIR_NAME --public --clone --template https://github.com/mathieu-benoit/config-sync-template-repo
 cd $WORKSHOP_ORG_DIR_NAME
-git pull
-git checkout main
 ORG_REPO_URL=$(gh repo view --json url --jq .url)
 cat << EOF | kubectl apply -f -
 apiVersion: configsync.gke.io/v1beta1
@@ -67,13 +71,13 @@ spec:
     repo: ${ORG_REPO_URL}
     revision: HEAD
     branch: main
-    dir: "config-sync"
+    dir: config-sync
     auth: none
 EOF
 ```
 
 {{% notice info %}}
-Since you started this workshop, you have ran 4 `kubectl` commands. For your information, moving forward you won't run any other `kubectl` commands because the design and intent of this workshop is to only deploy any Kubernetes resources via GitOps with Config Sync. You will also use some handy `gcloud` commands when appropriate.
+Since you started this workshop, you just ran 4 `kubectl` commands. For your information, moving forward you won't run any other `kubectl` commands because the design and intent of this workshop is to only deploy any Kubernetes resources via GitOps with Config Sync. You will also use some handy `gcloud` commands when appropriate.
 {{% /notice %}}
 
 Define the Cloud Billing API [`Service`](https://cloud.google.com/config-connector/docs/reference/resource-docs/serviceusage/service) resource:

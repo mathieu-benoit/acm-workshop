@@ -18,3 +18,9 @@ Install the required tools:
 You need to have:
 - GCP account with the role `owner` in your Organization in order to deploy the resources needed for this workshop
 - GitHub account, it's free. We will leverage GitHub throughout this workshop.
+
+Lastly, let's create a bash file you could run at the beginning of each lab and where we will store all the bash variables needed as you will go through this workshop:
+```Bash
+touch ~/acm-workshop-variables.sh
+chmod +x ~/acm-workshop-variables.sh
+```
