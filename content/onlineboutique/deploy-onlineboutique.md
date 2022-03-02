@@ -7,6 +7,13 @@ weight: 4
 - Objectives:
   - FIXME
 
+Initialize variables:
+```Bash
+echo "export GKE_LOCATION=us-east4" >> ~/acm-workshop-variables.sh
+echo "export GKE_NAME=gke" >> ~/acm-workshop-variables.sh
+source ~/acm-workshop-variables.sh
+```
+
 Create a dedicated folder for the Online Boutique sample apps in the GKE configs's Git repo:
 ```Bash
 cd ~/$ONLINE_BOUTIQUE_DIR_NAME/config-sync

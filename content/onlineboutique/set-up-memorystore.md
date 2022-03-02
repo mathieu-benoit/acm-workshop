@@ -7,9 +7,10 @@ weight: 3
 - Objectives:
   - FIXME
 
-
+Initialize variables:
 ```Bash
-export REDIS_NAME=cart
+echo "export REDIS_NAME=cart" >> ~/acm-workshop-variables.sh
+source ~/acm-workshop-variables.sh
 ```
 
 ```Bash
@@ -48,4 +49,6 @@ export REDIS_IP=$(gcloud redis instances describe $REDIS_NAME --region=$GKE_LOCA
 export REDIS_PORT=$(gcloud redis instances describe $REDIS_NAME --region=$GKE_LOCATION --project=$GKE_PROJECT_ID --format='get(port)')
 echo $REDIS_IP
 echo $REDIS_PORT
+echo "export REDIS_IP=${REDIS_IP}" >> ~/acm-workshop-variables.sh
+echo "export REDIS_PORT=${REDIS_PORT}" >> ~/acm-workshop-variables.sh
 ```

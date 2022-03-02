@@ -7,10 +7,11 @@ weight: 1
 - Objectives:
   - FIXME
 
-
-Define variables:
+Initialize variables:
 ```Bash
-export ONLINEBOUTIQUE_NAMESPACE=onlineboutique
+echo "export ONLINEBOUTIQUE_NAMESPACE=onlineboutique" >> ~/acm-workshop-variables.sh
+echo "export ONLINE_BOUTIQUE_DIR_NAME=acm-workshop-onlineboutique-repo" >> ~/acm-workshop-variables.sh
+source ~/acm-workshop-variables.sh
 ```
 
 ```Bash
@@ -18,6 +19,7 @@ mkdir ~/$GKE_CONFIGS_DIR_NAME/config-sync/repo-syncs
 mkdir ~/$GKE_CONFIGS_DIR_NAME/config-sync/repo-syncs/$ONLINEBOUTIQUE_NAMESPACE
 ```
 
+Define a dedicated `Namespace` for the Online Boutique apps:
 ```Bash
 cat <<EOF > ~/$GKE_CONFIGS_DIR_NAME/config-sync/repo-syncs/$ONLINEBOUTIQUE_NAMESPACE/namespace.yaml
 apiVersion: v1
@@ -33,15 +35,13 @@ EOF
 ```
 
 ```Bash
-export ONLINE_BOUTIQUE_DIR_NAME=workshop-onlineboutique-repo
 cd ~
 gh repo create $ONLINE_BOUTIQUE_DIR_NAME --public --clone --template https://github.com/mathieu-benoit/config-sync-template-repo
 cd $ONLINE_BOUTIQUE_DIR_NAME
-git pull
-git checkout main
-export ONLINE_BOUTIQUE_REPO_URL=$(gh repo view --json url --jq .url)
+ONLINE_BOUTIQUE_REPO_URL=$(gh repo view --json url --jq .url)
 ```
 
+Define a `RepoSync` linking this Git repository:
 ```Bash
 cat <<EOF > ~/$GKE_CONFIGS_DIR_NAME/config-sync/repo-syncs/$ONLINEBOUTIQUE_NAMESPACE/repo-sync.yaml
 apiVersion: configsync.gke.io/v1beta1
@@ -77,7 +77,6 @@ roleRef:
   apiGroup: rbac.authorization.k8s.io
 EOF
 ```
-
 {{% notice info %}}
 We are using the `cluster-admin` role here, but in the future we will change this with a least privilege approach. It will be something with `edit` role and the the Istio resources like `VirtualService`, etc. leveraged in this workshop. See [more information about the user-facing roles here](https://kubernetes.io/docs/reference/access-authn-authz/rbac/#user-facing-roles).
 {{% /notice %}}

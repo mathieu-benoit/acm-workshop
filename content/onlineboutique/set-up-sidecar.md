@@ -7,6 +7,11 @@ weight: 6
 - Objectives:
   - FIXME
 
+Initialize variables:
+```Bash
+source ~/acm-workshop-variables.sh
+```
+
 ```Bash
 cat <<EOF > ~/$ONLINE_BOUTIQUE_DIR_NAME/config-sync/sidecar_adservice.yaml
 apiVersion: networking.istio.io/v1beta1

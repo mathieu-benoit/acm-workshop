@@ -7,6 +7,11 @@ weight: 2
 - Objectives:
   - FIXME
 
+Initialize variables:
+```Bash
+source ~/acm-workshop-variables.sh
+```
+
 Define the Memorystore (redis) API [`Service`](https://cloud.google.com/config-connector/docs/reference/resource-docs/serviceusage/service) resource for the GKE project:
 ```Bash
 cat <<EOF > ~/$WORKSHOP_ORG_DIR_NAME/config-sync/projects/$GKE_PROJECT_ID/redis-service.yaml

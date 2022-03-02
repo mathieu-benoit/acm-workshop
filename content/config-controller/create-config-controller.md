@@ -10,10 +10,13 @@ weight: 1
 
 Define variables:
 ```Bash
-echo "export RANDOM_SUFFIX=$(shuf -i 100-999 -n 1)" >> ~/acm-workshop-variables.sh
+RANDOM_SUFFIX=$(shuf -i 100-999 -n 1)
+BILLING_ACCOUNT_ID=FIXME
+ORG_OR_FOLDER_ID=FIXME
+echo "export RANDOM_SUFFIX=${RANDOM_SUFFIX}" >> ~/acm-workshop-variables.sh
 echo "export CONFIG_CONTROLLER_PROJECT_ID=acm-workshop-${RANDOM_SUFFIX}" >> ~/acm-workshop-variables.sh
-echo "export BILLING_ACCOUNT_ID=FIXME" >> ~/acm-workshop-variables.sh
-echo "export ORG_OR_FOLDER_ID=FIXME" >> ~/acm-workshop-variables.sh
+echo "export BILLING_ACCOUNT_ID=${BILLING_ACCOUNT_ID}" >> ~/acm-workshop-variables.sh
+echo "export ORG_OR_FOLDER_ID=${ORG_OR_FOLDER_ID}" >> ~/acm-workshop-variables.sh
 echo "export LOCAL_IP_ADDRESS=$(curl ifconfig.co)" >> ~/acm-workshop-variables.sh
 source ~/acm-workshop-variables.sh
 ```
@@ -31,7 +34,6 @@ gcloud projects create $CONFIG_CONTROLLER_PROJECT_ID \
 {{% tab name="Folder level" %}}
 Alternatively, you could also create this GCP project at a Folder level:
 ```Bash
-export FOLDER_ID=FIXME
 gcloud projects create $CONFIG_CONTROLLER_PROJECT_ID \
     --folder $ORG_OR_FOLDER_ID \
     --name $CONFIG_CONTROLLER_PROJECT_ID
@@ -85,9 +87,6 @@ Create this GCP project at the Organization level:
 gcloud organizations add-iam-policy-binding ${ORG_OR_FOLDER_ID} \
     --member="serviceAccount:${CONFIG_CONTROLLER_SA}" \
     --role='roles/resourcemanager.projectCreator'
-gcloud organizations add-iam-policy-binding ${ORG_OR_FOLDER_ID} \
-    --member="serviceAccount:${CONFIG_CONTROLLER_SA}" \
-    --role='roles/billing.projectManager'
 ```
 {{% /tab %}}
 {{% tab name="Folder level" %}}
@@ -96,9 +95,6 @@ Alternatively, you could also create this GCP project at a Folder level:
 gcloud resource-manager folders add-iam-policy-binding ${ORG_OR_FOLDER_ID} \
     --member="serviceAccount:${CONFIG_CONTROLLER_SA}" \
     --role='roles/resourcemanager.projectCreator'
-gcloud resource-manager folders add-iam-policy-binding ${ORG_OR_FOLDER_ID} \
-    --member="serviceAccount:${CONFIG_CONTROLLER_SA}" \
-    --role='roles/billing.projectManager'
 ```
 {{% /tab %}}
 {{< /tabs >}}

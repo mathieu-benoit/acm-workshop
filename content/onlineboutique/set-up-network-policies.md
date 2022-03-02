@@ -7,6 +7,11 @@ weight: 5
 - Objectives:
   - FIXME
 
+Initialize variables:
+```Bash
+source ~/acm-workshop-variables.sh
+```
+
 Define fine granular `NetworkPolicy` resources:
 ```Bash
 cat <<EOF > ~/$ONLINE_BOUTIQUE_DIR_NAME/config-sync/networkpolicy_denyall.yaml

@@ -9,7 +9,8 @@ weight: 2
 
 Initialize variables:
 ```Bash
-export GKE_PROJECT_NUMBER=$(gcloud projects describe $GKE_PROJECT_ID --format='get(projectNumber)')
+echo "export GKE_PROJECT_NUMBER=$(gcloud projects describe $GKE_PROJECT_ID --format='get(projectNumber)')" >> ~/acm-workshop-variables.sh
+source ~/acm-workshop-variables.sh
 ```
 
 Define the GKE cluster with empty node pool:

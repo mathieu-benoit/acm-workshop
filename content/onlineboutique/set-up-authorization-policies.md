@@ -7,6 +7,11 @@ weight: 7
 - Objectives:
   - FIXME
 
+Initialize variables:
+```Bash
+source ~/acm-workshop-variables.sh
+```
+
 Create one `ServiceAccount` per app:
 ```Bash
 cat <<EOF > ~/$ONLINE_BOUTIQUE_DIR_NAME/config-sync/serviceaccount_adservice.yaml

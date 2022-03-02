@@ -7,6 +7,11 @@ weight: 4
 - Objectives:
   - FIXME
 
+Initialize variables:
+```Bash
+source ~/acm-workshop-variables.sh
+```
+
 ## Automatic sidecar injection
 
 https://cloud.google.com/service-mesh/docs/anthos-service-mesh-proxy-injection
@@ -30,7 +35,7 @@ spec:
       - Namespace
   parameters:
     labels:
-      - allowedRegex: asm-$
+      - allowedRegex: (asm-managed|asm-managed-rapid|asm-managed-stable)
         key: "istio.io/rev"
 EOF
 ```

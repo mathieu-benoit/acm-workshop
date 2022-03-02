@@ -7,6 +7,11 @@ weight: 5
 - Objectives:
   - FIXME
 
+Initialize variables:
+```Bash
+source ~/acm-workshop-variables.sh
+```
+
 ```Bash
 cat <<EOF > ~/$GKE_CONFIGS_DIR_NAME/config-sync/$INGRESS_GATEWAY_NAMESPACE/networkpolicy_denyall.yaml
 apiVersion: networking.k8s.io/v1

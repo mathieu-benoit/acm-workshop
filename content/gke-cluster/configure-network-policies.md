@@ -7,6 +7,11 @@ weight: 5
 - Objectives:
   - FIXME
 
+Define variables:
+```Bash
+source ~/acm-workshop-variables.sh
+```
+
 ## Network Policy logging
 
 https://cloud.google.com/kubernetes-engine/docs/how-to/network-policy-logging

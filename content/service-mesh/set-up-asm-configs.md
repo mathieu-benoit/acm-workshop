@@ -7,6 +7,11 @@ weight: 3
 - Objectives:
   - FIXME
 
+Initialize variables:
+```Bash
+source ~/acm-workshop-variables.sh
+```
+
 ## Set ASM configs Mesh-wide
 
 Define the optional Mesh configs (`distroless` container image for the proxy and Cloud Tracing):

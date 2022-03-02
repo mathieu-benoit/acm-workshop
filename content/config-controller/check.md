@@ -4,6 +4,11 @@ weight: 3
 ---
 - Duration: 2 min
 
+Initialize variables:
+```Bash
+source ~/acm-workshop-variables.sh
+```
+
 Here is what you should have at this stage:
 
 If you run:

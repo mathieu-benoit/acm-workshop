@@ -7,6 +7,11 @@ weight: 3
 - Objectives:
   - FIXME
 
+Define variables:
+```Bash
+source ~/acm-workshop-variables.sh
+```
+
 Define the `gkehub.admin` role with an [`IAMPolicyMember`](https://cloud.google.com/config-connector/docs/reference/resource-docs/iam/iampolicymember) for the GKE project's service account:
 ```Bash
 cat <<EOF > ~/$WORKSHOP_ORG_DIR_NAME/config-sync/projects/$GKE_PROJECT_ID/gke-hub-admin.yaml

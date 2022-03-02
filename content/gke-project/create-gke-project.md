@@ -1,14 +1,20 @@
 ---
-title: "Set up GKE project"
+title: "Create GKE project"
 weight: 1
 ---
 - Persona: Org Admin
-- Duration: 20 min
+- Duration: 10 min
 - Objectives:
   - FIXME
 
+Define variables:
 ```Bash
-export GKE_PROJECT_ID=${PREFIX}workshop-${RANDOM_SUFFIX}
+echo "export GKE_PROJECT_ID=acm-workshop-${RANDOM_SUFFIX}-gke" >> ~/acm-workshop-variables.sh
+source ~/acm-workshop-variables.sh
+```
+
+Create a dedicated folder for this GKE project resources:
+```Bash
 mkdir ~/$WORKSHOP_ORG_DIR_NAME/config-sync/projects
 mkdir ~/$WORKSHOP_ORG_DIR_NAME/config-sync/projects/$GKE_PROJECT_ID
 ```
@@ -31,7 +37,7 @@ spec:
   billingAccountRef:
     external: "${BILLING_ACCOUNT_ID}"
   organizationRef:
-    external: "${ORG_ID}"
+    external: "${ORG_OR_FOLDER_ID}"
   resourceID: ${GKE_PROJECT_ID}
 EOF
 ```
@@ -77,7 +83,7 @@ cat <<EOF > ~/$WORKSHOP_ORG_DIR_NAME/config-sync/projects/$GKE_PROJECT_ID/worklo
 apiVersion: iam.cnrm.cloud.google.com/v1beta1
 kind: IAMPartialPolicy
 metadata:
-  name: ${GKE_PROJECT_ID}-sa-workload-identity-binding
+  name: ${GKE_PROJECT_ID}-sa-wi-user
   namespace: config-control
 spec:
   resourceRef:
@@ -109,7 +115,7 @@ cat <<EOF > ~/$WORKSHOP_ORG_DIR_NAME/config-sync/projects/$GKE_PROJECT_ID/config
 apiVersion: core.cnrm.cloud.google.com/v1beta1
 kind: ConfigConnectorContext
 metadata:
-  name: configconnectorcontext.core.cnrm.cloud.google.com
+  name: configconnectorcontext
   namespace: ${GKE_PROJECT_ID}
 spec:
   googleServiceAccount: ${GKE_PROJECT_ID}@${CONFIG_CONTROLLER_PROJECT_ID}.iam.gserviceaccount.com

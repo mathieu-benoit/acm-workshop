@@ -7,13 +7,16 @@ weight: 3
 - Objectives:
   - FIXME
 
+Initialize variables:
+```Bash
+echo "export SECURITY_POLICY_NAME=${GKE_NAME}-asm-ingressgateway" >> ~/acm-workshop-variables.sh
+echo "export SSL_POLICY_NAME=${SECURITY_POLICY_NAME}" >> ~/acm-workshop-variables.sh
+source ~/acm-workshop-variables.sh
+```
+
 ## Cloud Armor
 
 https://cloud.google.com/config-connector/docs/reference/resource-docs/compute/computesecuritypolicy
-
-```Bash
-export SECURITY_POLICY_NAME=$GKE_NAME-asm-ingressgateway
-```
 
 Define the Ingress Gateway's Cloud Armor rules:
 ```Bash
@@ -82,10 +85,6 @@ git push
 ## SSL policy
 
 Not directly related to Cloud Armor, but let's define an SSL policy which will allow us to set an HTTP to HTTPS redirect on the `Ingress`.
-
-```Bash
-export SSL_POLICY_NAME=$SECURITY_POLICY_NAME
-```
 
 ```Bash
 cat <<EOF > ~/$GKE_PROJECT_DIR_NAME/config-sync/ssl-policy.yaml

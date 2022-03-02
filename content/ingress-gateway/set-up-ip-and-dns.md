@@ -7,9 +7,12 @@ weight: 1
 - Objectives:
   - FIXME
 
-
+Initialize variables:
 ```Bash
-export INGRESS_GATEWAY_PUBLIC_IP_NAME=$GKE_NAME-asm-ingressgateway
+echo "export INGRESS_GATEWAY_PUBLIC_IP_NAME=${GKE_NAME}-asm-ingressgateway" >> ~/acm-workshop-variables.sh
+echo "export ONLINE_BOUTIQUE_INGRESS_GATEWAY_HOST_NAME='onlineboutique.endpoints.${GKE_PROJECT_ID}.cloud.goog'" >> ~/acm-workshop-variables.sh
+echo "export BANK_OF_ANTHOS_INGRESS_GATEWAY_HOST_NAME='bankofanthos.endpoints.${GKE_PROJECT_ID}.cloud.goog'" >> ~/acm-workshop-variables.sh
+source ~/acm-workshop-variables.sh
 ```
 
 Define the Ingress Gateway's public static IP address resource:
@@ -34,12 +37,11 @@ git push
 ```
 
 ```Bash
-export INGRESS_GATEWAY_PUBLIC_IP=$(gcloud compute addresses describe $INGRESS_GATEWAY_PUBLIC_IP_NAME --global --project ${GKE_PROJECT_ID} --format "value(address)")
+INGRESS_GATEWAY_PUBLIC_IP=$(gcloud compute addresses describe $INGRESS_GATEWAY_PUBLIC_IP_NAME --global --project ${GKE_PROJECT_ID} --format "value(address)")
 echo ${INGRESS_GATEWAY_PUBLIC_IP}
 ```
 
 ```Bash
-export ONLINE_BOUTIQUE_INGRESS_GATEWAY_HOST_NAME="onlineboutique.endpoints.${GKE_PROJECT_ID}.cloud.goog"
 cat <<EOF > ~/dns-spec.yaml
 swagger: "2.0"
 info:
@@ -57,7 +59,6 @@ rm ~/dns-spec.yaml
 ```
 
 ```Bash
-export BANK_OF_ANTHOS_INGRESS_GATEWAY_HOST_NAME="bankofanthos.endpoints.${GKE_PROJECT_ID}.cloud.goog"
 cat <<EOF > ~/dns-spec.yaml
 swagger: "2.0"
 info:

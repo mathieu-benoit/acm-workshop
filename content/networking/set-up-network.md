@@ -7,9 +7,11 @@ weight: 1
 - Objectives:
   - FIXME
 
+Initialize variables:
 ```Bash
-export GKE_LOCATION=us-east4
-export GKE_NAME=gke
+echo "export GKE_LOCATION=us-east4" >> ~/acm-workshop-variables.sh
+echo "export GKE_NAME=gke" >> ~/acm-workshop-variables.sh
+source ~/acm-workshop-variables.sh
 ```
 
 ```Bash

@@ -47,18 +47,25 @@ spec:
     templateLibraryInstalled: false
 EOF
 ```
+{{% notice info %}}
+We explicitly set the Policy Controller's `templateLibraryInstalled` field to `false`. Throughout this workshop, we will create our own `ConstraintTemplate` resources when needed. It will have two main benefits: first you will learn about how to create your own `ConstraintTemplate` (with OPA rego) and second, you we will be able to validate our Kubernetes resources against this . But be aware of this [default library of `ConstraintTemplate` resources](https://cloud.google.com/anthos-config-management/docs/reference/constraint-template-library) you could leverage as-is if you set this field to `true`.
+{{% /notice %}}
 
 Let's wait for the multi-repositories configs to be deployed:
 ```Bash
 kubectl wait --for condition=established crd rootsyncs.configsync.gke.io
 ```
 
-Deploy a `RootSync` acting as the main/root Git repository for the Config Controller instance:
+Create a dedicated GitHub repository to store any Kubernetes manifests associated to the GCP Organization:
 ```Bash
 cd ~
 gh repo create $WORKSHOP_ORG_DIR_NAME --public --clone --template https://github.com/mathieu-benoit/config-sync-template-repo
 cd $WORKSHOP_ORG_DIR_NAME
 ORG_REPO_URL=$(gh repo view --json url --jq .url)
+```
+
+Deploy a `RootSync` linking this GitHub repository to the Config Controller instance as the main/root GitOps configuration:
+```Bash
 cat << EOF | kubectl apply -f -
 apiVersion: configsync.gke.io/v1beta1
 kind: RootSync
@@ -75,7 +82,6 @@ spec:
     auth: none
 EOF
 ```
-
 {{% notice info %}}
 Since you started this workshop, you just ran 4 `kubectl` commands. For your information, moving forward you won't run any other `kubectl` commands because the design and intent of this workshop is to only deploy any Kubernetes resources via GitOps with Config Sync. You will also use some handy `gcloud` commands when appropriate.
 {{% /notice %}}

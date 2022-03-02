@@ -7,6 +7,19 @@ weight: 2
 - Objectives:
   - FIXME
 
+Initialize variables:
+```Bash
+echo "export ASM_CHANNEL=rapid" >> ~/acm-workshop-variables.sh
+echo "export ASM_LABEL=asm-managed" >> ~/acm-workshop-variables.sh
+ASM_VERSION=$ASM_LABEL
+if [ $ASM_CHANNEL = "rapid" ] || [ $ASM_CHANNEL = "stable" ] ; then ASM_VERSION=$ASM_LABEL-$ASM_CHANNEL; fi
+echo "export ASM_VERSION=${ASM_VERSION}" >> ~/acm-workshop-variables.sh
+source ~/acm-workshop-variables.sh
+```
+{{% notice note %}}
+The possible values for `ASM_CHANNEL` are `regular`, `stable` or `rapid`.
+{{% /notice %}}
+
 ## Enable the GKE ASM feature
 
 Define the ASM [`GKEHubFeature`](https://cloud.google.com/config-connector/docs/reference/resource-docs/gkehub/gkehubfeature) resource:
@@ -43,14 +56,6 @@ gcloud container hub mesh describe --project ${GKE_PROJECT_ID}
 
 ## Install ASM MCP
 
-Initialize variables:
-```Bash
-export ASM_CHANNEL=rapid # or regular or stable
-export ASM_LABEL=asm-managed
-export ASM_VERSION=$ASM_LABEL
-if [ $ASM_CHANNEL = "rapid" ] || [ $ASM_CHANNEL = "stable" ] ; then ASM_VERSION=$ASM_LABEL-$ASM_CHANNEL; fi
-```
-
 Create a dedicated `istio-system` folder in the GKE configs's Git repo:
 ```Bash
 mkdir ~/$GKE_CONFIGS_DIR_NAME/config-sync/istio-system
@@ -81,7 +86,6 @@ spec:
   channel: "${ASM_CHANNEL}"
 EOF
 ```
-
 {{% notice tip %}}
 We are using `mesh.cloud.google.com/managed-cni-enabled: "true"` in order to leverage the Istio CNI has a best practice for security and performance perspectives. It's also mandatory when using the Managed Data Plane feature of ASM.
 {{% /notice %}}

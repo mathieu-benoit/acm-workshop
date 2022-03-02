@@ -7,16 +7,21 @@ weight: 2
 - Objectives:
   - FIXME
 
+Define variables:
 ```Bash
-export GKE_PROJECT_DIR_NAME=workshop-gke-project-repo
+echo "export GKE_PROJECT_DIR_NAME=acm-workshop-gke-project-repo" >> ~/acm-workshop-variables.sh
+source ~/acm-workshop-variables.sh
+```
+
+Create a dedicated GitHub repository to store any Kubernetes manifests associated to the GKE project:
+```Bash
 cd ~
 gh repo create $GKE_PROJECT_DIR_NAME --public --clone --template https://github.com/mathieu-benoit/config-sync-template-repo
 cd $GKE_PROJECT_DIR_NAME
-git pull
-git checkout main
-export GKE_PLATFORM_REPO_URL=$(gh repo view --json url --jq .url)
+GKE_PLATFORM_REPO_URL=$(gh repo view --json url --jq .url)
 ```
 
+Define a `RepoSync` linking this Git repository:
 ```Bash
 cat <<EOF > ~/$WORKSHOP_ORG_DIR_NAME/config-sync/projects/$GKE_PROJECT_ID/gke-config-repo-sync.yaml
 apiVersion: configsync.gke.io/v1beta1
@@ -52,7 +57,6 @@ roleRef:
   apiGroup: rbac.authorization.k8s.io
 EOF
 ```
-
 {{% notice info %}}
 We are using the `edit` role here, see [more information about the user-facing roles here](https://kubernetes.io/docs/reference/access-authn-authz/rbac/#user-facing-roles).
 {{% /notice %}}

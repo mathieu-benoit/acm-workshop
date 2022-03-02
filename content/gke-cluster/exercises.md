@@ -6,6 +6,11 @@ weight: 8
 
 Do you want more optional exercises? Here you are!
 
+Initialize variables:
+```Bash
+source ~/acm-workshop-variables.sh
+```
+
 ## Concept of drift
 
 Let's modify the GKE cluster via a gcloud command and see what happens.
