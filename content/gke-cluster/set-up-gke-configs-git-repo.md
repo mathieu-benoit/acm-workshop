@@ -52,11 +52,8 @@ EOF
 
 Create a dedicated GitHub repository where we will commit all the configs, policies, etc. we want to deploy in this GKE cluster:
 ```Bash
-cd ~
-gh repo create $GKE_CONFIGS_DIR_NAME --public --clone --template https://github.com/mathieu-benoit/config-sync-template-repo
-cd $GKE_CONFIGS_DIR_NAME
-git pull
-git checkout main
+gh repo create ~/$GKE_CONFIGS_DIR_NAME --public --clone --template https://github.com/mathieu-benoit/config-sync-template-repo
+cd ~/$GKE_CONFIGS_DIR_NAME
 GKE_CONFIGS_REPO_URL=$(gh repo view --json url --jq .url)
 ```
 
