@@ -8,8 +8,3 @@ This workshop allows to illustrate advanced setup of a platform based on Kuberne
 The workshop explains how to... with hands-on exercises.
 
 After the workshop, you will be able to...
-
-3 main Personas are involved:
-- Org Admin
-- Platform Admin
-- Apps Operator
