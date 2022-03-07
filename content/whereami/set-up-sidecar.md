@@ -1,6 +1,6 @@
 ---
 title: "Set up Sidecar"
-weight: 4
+weight: 5
 ---
 - Persona: Apps Operator
 - Duration: 5 min

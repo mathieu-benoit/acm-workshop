@@ -1,6 +1,6 @@
 ---
 title: "Exercises"
-weight: 8
+weight: 9
 ---
 - Duration: 5 min
 

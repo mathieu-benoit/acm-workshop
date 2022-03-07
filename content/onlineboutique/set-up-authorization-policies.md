@@ -1,6 +1,6 @@
 ---
 title: "Set up Authorization Policies"
-weight: 7
+weight: 8
 ---
 - Persona: Apps Operator
 - Duration: 5 min

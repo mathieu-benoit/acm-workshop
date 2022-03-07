@@ -1,6 +1,6 @@
 ---
 title: "Set up Network Policies"
-weight: 5
+weight: 6
 ---
 - Persona: Apps Operator
 - Duration: 5 min

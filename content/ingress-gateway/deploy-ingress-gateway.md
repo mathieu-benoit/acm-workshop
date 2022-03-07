@@ -195,45 +195,6 @@ EOF
 ```
 
 ```Bash
-cat <<EOF > ~/$GKE_CONFIGS_DIR_NAME/config-sync/$INGRESS_GATEWAY_NAMESPACE/managedcertificate-whereami.yaml
-apiVersion: networking.gke.io/v1
-kind: ManagedCertificate
-metadata:
-  name: whereami
-  namespace: ${INGRESS_GATEWAY_NAMESPACE}
-spec:
-  domains:
-    - "${WHERE_AMI_INGRESS_GATEWAY_HOST_NAME}"
-EOF
-```
-
-```Bash
-cat <<EOF > ~/$GKE_CONFIGS_DIR_NAME/config-sync/$INGRESS_GATEWAY_NAMESPACE/managedcertificate-onlineboutique.yaml
-apiVersion: networking.gke.io/v1
-kind: ManagedCertificate
-metadata:
-  name: onlineboutique
-  namespace: ${INGRESS_GATEWAY_NAMESPACE}
-spec:
-  domains:
-    - "${ONLINE_BOUTIQUE_INGRESS_GATEWAY_HOST_NAME}"
-EOF
-```
-
-```Bash
-cat <<EOF > ~/$GKE_CONFIGS_DIR_NAME/config-sync/$INGRESS_GATEWAY_NAMESPACE/managedcertificate-bankofanthos.yaml
-apiVersion: networking.gke.io/v1
-kind: ManagedCertificate
-metadata:
-  name: bankofanthos
-  namespace: ${INGRESS_GATEWAY_NAMESPACE}
-spec:
-  domains:
-    - "${BANK_OF_ANTHOS_INGRESS_GATEWAY_HOST_NAME}"
-EOF
-```
-
-```Bash
 cat <<EOF > ~/$GKE_CONFIGS_DIR_NAME/config-sync/$INGRESS_GATEWAY_NAMESPACE/ingress.yaml
 apiVersion: networking.k8s.io/v1
 kind: Ingress
@@ -242,7 +203,6 @@ metadata:
   namespace: ${INGRESS_GATEWAY_NAMESPACE}
   annotations:
     kubernetes.io/ingress.global-static-ip-name: "${INGRESS_GATEWAY_PUBLIC_IP_NAME}"
-    networking.gke.io/managed-certificates: "whereami,onlineboutique,bankofanthos"
     kubernetes.io/ingress.class: "gce"
     networking.gke.io/v1beta1.FrontendConfig: ${INGRESS_GATEWAY_NAME}
 spec:

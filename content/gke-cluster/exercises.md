@@ -86,7 +86,8 @@ EOF
 
 And now let's evaluate this `Constraint` on the current Kubernetes manifests we have locally:
 ```Bash
-kpt fn eval ~/$GKE_CONFIGS_DIR_NAME/config-sync --image=gcr.io/kpt-fn/gatekeeper:v0.2
+kpt fn eval ~/$GKE_CONFIGS_DIR_NAME/config-sync \
+  -i gatekeeper:v0.2
 ```
 
 We could even create a Pull Request to see in action how this violation could be tracked by the default GitHub actions definition:
