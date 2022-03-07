@@ -34,7 +34,9 @@ git commit -m "Ingress Gateway's public static IP address"
 git push
 ```
 
+Grab the provisioned IP address:
 ```Bash
 INGRESS_GATEWAY_PUBLIC_IP=$(gcloud compute addresses describe $INGRESS_GATEWAY_PUBLIC_IP_NAME --global --project ${GKE_PROJECT_ID} --format "value(address)")
 echo ${INGRESS_GATEWAY_PUBLIC_IP}
+echo "export INGRESS_GATEWAY_PUBLIC_IP=${INGRESS_GATEWAY_PUBLIC_IP}" >> ~/acm-workshop-variables.sh
 ```

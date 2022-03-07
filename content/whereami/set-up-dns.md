@@ -13,7 +13,7 @@ source ~/acm-workshop-variables.sh
 echo "export WHERE_AMI_INGRESS_GATEWAY_HOST_NAME='whereami.endpoints.${GKE_PROJECT_ID}.cloud.goog'" >> ~/acm-workshop-variables.sh
 ```
 
-Create a an FQDN with Cloud Ednpoints for Whereami:
+Create an FQDN with Cloud Ednpoints for Whereami:
 ```Bash
 cat <<EOF > ~/dns-spec.yaml
 swagger: "2.0"

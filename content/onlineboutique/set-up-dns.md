@@ -13,7 +13,7 @@ source ~/acm-workshop-variables.sh
 echo "export ONLINE_BOUTIQUE_INGRESS_GATEWAY_HOST_NAME='onlineboutique.endpoints.${GKE_PROJECT_ID}.cloud.goog'" >> ~/acm-workshop-variables.sh
 ```
 
-Create a an FQDN with Cloud Ednpoints for Online Boutique:
+Create an FQDN with Cloud Ednpoints for Online Boutique:
 ```Bash
 cat <<EOF > ~/dns-spec.yaml
 swagger: "2.0"
