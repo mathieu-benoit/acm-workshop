@@ -1,5 +1,5 @@
 ---
-title: "Set up Online Boutique's Git repo"
+title: "Set up Whereami's Git repo"
 weight: 1
 ---
 - Persona: Platform Admin
@@ -9,47 +9,47 @@ weight: 1
 
 Initialize variables:
 ```Bash
-echo "export ONLINEBOUTIQUE_NAMESPACE=onlineboutique" >> ~/acm-workshop-variables.sh
-echo "export ONLINE_BOUTIQUE_DIR_NAME=acm-workshop-onlineboutique-repo" >> ~/acm-workshop-variables.sh
+echo "export WHEREAMI_NAMESPACE=whereami" >> ~/acm-workshop-variables.sh
+echo "export WHERE_AMI_DIR_NAME=acm-workshop-whereami-repo" >> ~/acm-workshop-variables.sh
 source ~/acm-workshop-variables.sh
 ```
 
 ```Bash
 mkdir ~/$GKE_CONFIGS_DIR_NAME/config-sync/repo-syncs
-mkdir ~/$GKE_CONFIGS_DIR_NAME/config-sync/repo-syncs/$ONLINEBOUTIQUE_NAMESPACE
+mkdir ~/$GKE_CONFIGS_DIR_NAME/config-sync/repo-syncs/$WHEREAMI_NAMESPACE
 ```
 
-Define a dedicated `Namespace` for the Online Boutique apps:
+Define a dedicated `Namespace` for the Whereami app:
 ```Bash
-cat <<EOF > ~/$GKE_CONFIGS_DIR_NAME/config-sync/repo-syncs/$ONLINEBOUTIQUE_NAMESPACE/namespace.yaml
+cat <<EOF > ~/$GKE_CONFIGS_DIR_NAME/config-sync/repo-syncs/$WHEREAMI_NAMESPACE/namespace.yaml
 apiVersion: v1
 kind: Namespace
 metadata:
-  name: ${ONLINEBOUTIQUE_NAMESPACE}
+  name: ${WHEREAMI_NAMESPACE}
   labels:
-    name: ${ONLINEBOUTIQUE_NAMESPACE}
+    name: ${WHEREAMI_NAMESPACE}
     istio.io/rev: ${ASM_VERSION}
 EOF
 ```
 
 ```Bash
-gh repo create $ONLINE_BOUTIQUE_DIR_NAME --public --clone --template https://github.com/mathieu-benoit/config-sync-template-repo
-cd ~/$ONLINE_BOUTIQUE_DIR_NAME
-ONLINE_BOUTIQUE_REPO_URL=$(gh repo view --json url --jq .url)
+gh repo create $WHERE_AMI_DIR_NAME --public --clone --template https://github.com/mathieu-benoit/config-sync-template-repo
+cd ~/$WHERE_AMI_DIR_NAME
+WHERE_AMI_REPO_URL=$(gh repo view --json url --jq .url)
 ```
 
 Define a `RepoSync` linking this Git repository:
 ```Bash
-cat <<EOF > ~/$GKE_CONFIGS_DIR_NAME/config-sync/repo-syncs/$ONLINEBOUTIQUE_NAMESPACE/repo-sync.yaml
+cat <<EOF > ~/$GKE_CONFIGS_DIR_NAME/config-sync/repo-syncs/$WHEREAMI_NAMESPACE/repo-sync.yaml
 apiVersion: configsync.gke.io/v1beta1
 kind: RepoSync
 metadata:
   name: repo-sync
-  namespace: ${ONLINEBOUTIQUE_NAMESPACE}
+  namespace: ${WHEREAMI_NAMESPACE}
 spec:
   sourceFormat: unstructured
   git:
-    repo: ${ONLINE_BOUTIQUE_REPO_URL}
+    repo: ${WHERE_AMI_REPO_URL}
     revision: HEAD
     branch: main
     dir: config-sync
@@ -58,15 +58,15 @@ EOF
 ```
 
 ```Bash
-cat <<EOF > ~/$GKE_CONFIGS_DIR_NAME/config-sync/repo-syncs/$ONLINEBOUTIQUE_NAMESPACE/repo-sync-role-binding.yaml
+cat <<EOF > ~/$GKE_CONFIGS_DIR_NAME/config-sync/repo-syncs/$WHEREAMI_NAMESPACE/repo-sync-role-binding.yaml
 apiVersion: rbac.authorization.k8s.io/v1
 kind: RoleBinding
 metadata:
   name: repo-sync
-  namespace: ${ONLINEBOUTIQUE_NAMESPACE}
+  namespace: ${WHEREAMI_NAMESPACE}
 subjects:
 - kind: ServiceAccount
-  name: ns-reconciler-${ONLINEBOUTIQUE_NAMESPACE}
+  name: ns-reconciler-${WHEREAMI_NAMESPACE}
   namespace: config-management-system
 roleRef:
   kind: ClusterRole
@@ -82,6 +82,6 @@ Deploy all these Kubernetes manifests via a GitOps approach:
 ```Bash
 cd ~/$GKE_CONFIGS_DIR_NAME/
 git add .
-git commit -m "GitOps for Online Boutique apps"
+git commit -m "GitOps for Whereami app"
 git push
 ```

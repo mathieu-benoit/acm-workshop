@@ -1,5 +1,5 @@
 ---
-title: "Deploy Online Boutique"
+title: "Deploy Online Boutique apps"
 weight: 4
 ---
 - Persona: Apps Operator
@@ -9,8 +9,6 @@ weight: 4
 
 Initialize variables:
 ```Bash
-echo "export GKE_LOCATION=us-east4" >> ~/acm-workshop-variables.sh
-echo "export GKE_NAME=gke" >> ~/acm-workshop-variables.sh
 source ~/acm-workshop-variables.sh
 ```
 
@@ -58,6 +56,6 @@ Deploy all these Kubernetes manifests via a GitOps approach:
 ```Bash
 cd ~/$ONLINE_BOUTIQUE_DIR_NAME/
 git add .
-git commit -m "Online Boutique sample apps"
+git commit -m "Online Boutique apps"
 git push
 ```

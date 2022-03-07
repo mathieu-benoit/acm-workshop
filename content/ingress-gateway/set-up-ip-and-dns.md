@@ -10,6 +10,7 @@ weight: 1
 Initialize variables:
 ```Bash
 echo "export INGRESS_GATEWAY_PUBLIC_IP_NAME=${GKE_NAME}-asm-ingressgateway" >> ~/acm-workshop-variables.sh
+echo "export WHERE_AMI_INGRESS_GATEWAY_HOST_NAME='whereami.endpoints.${GKE_PROJECT_ID}.cloud.goog'" >> ~/acm-workshop-variables.sh
 echo "export ONLINE_BOUTIQUE_INGRESS_GATEWAY_HOST_NAME='onlineboutique.endpoints.${GKE_PROJECT_ID}.cloud.goog'" >> ~/acm-workshop-variables.sh
 echo "export BANK_OF_ANTHOS_INGRESS_GATEWAY_HOST_NAME='bankofanthos.endpoints.${GKE_PROJECT_ID}.cloud.goog'" >> ~/acm-workshop-variables.sh
 source ~/acm-workshop-variables.sh
@@ -39,6 +40,23 @@ git push
 ```Bash
 INGRESS_GATEWAY_PUBLIC_IP=$(gcloud compute addresses describe $INGRESS_GATEWAY_PUBLIC_IP_NAME --global --project ${GKE_PROJECT_ID} --format "value(address)")
 echo ${INGRESS_GATEWAY_PUBLIC_IP}
+```
+
+```Bash
+cat <<EOF > ~/dns-spec.yaml
+swagger: "2.0"
+info:
+  description: "Cloud Endpoints DNS"
+  title: "Cloud Endpoints DNS"
+  version: "1.0.0"
+paths: {}
+host: "${WHERE_AMI_INGRESS_GATEWAY_HOST_NAME}"
+x-google-endpoints:
+- name: "${WHERE_AMI_INGRESS_GATEWAY_HOST_NAME}"
+  target: "${INGRESS_GATEWAY_PUBLIC_IP}"
+EOF
+gcloud endpoints services deploy ~/dns-spec.yaml --project ${GKE_PROJECT_ID}
+rm ~/dns-spec.yaml
 ```
 
 ```Bash

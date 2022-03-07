@@ -28,7 +28,13 @@ weight: 2
     1. As Platform Admin, deploy the Ingress Gateway linked to Cloud Armor in GKE cluster
     1. As Platform Admin, set up `NetworkPolicy` resources for the Ingress Gateway namespace in GKE cluster
     1. As Platform Admin, set up `AuthorizationPolicy` resources for the Ingress Gateway namespace in GKE cluster
-1. Online Boutique
+1. Whereami app
+    1. As Platform Admin, set up the Whereami app's Git repo in GKE cluster
+    1. As Apps Operator, deploy the Whereami app
+    1. As Apps Operator, set up `NetworkPolicy` resources for the Whereami namespace in GKE cluster
+    1. As Apps Operator, set up `Sidecar` resources for the Whereami namespace in GKE cluster
+    1. As Apps Operator, set up `AuthorizationPolicy` resources for the Whereami namespace in GKE cluster
+1. Online Boutique apps
     1. As Platform Admin, set up the Online Boutique apps's Git repo in GKE cluster
     1. As Org Admin, allow Memorystore (redis) for GKE project in Config Controller
     1. As Platform Admin, set up Memorystore (redis) in GKE project

@@ -1,8 +1,8 @@
 ---
-title: "Online Boutique"
+title: "Online Boutique apps"
 chapter: true
-weight: 8
+weight: 9
 ---
-Set up the Online Boutique sample.
+Set up the Online Boutique apps.
 
 {{% children showhidden="false" %}}

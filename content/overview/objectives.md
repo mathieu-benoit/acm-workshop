@@ -14,6 +14,11 @@ At the end of this workshop, here is what you will accomplish:
 
 ## Personas
 
+Three personas are involved:
+- Org Admin
+- Platform Admin
+- Apps Operator
+
 ![Personas](/images/personas.png)
 
 ## GCP services involved

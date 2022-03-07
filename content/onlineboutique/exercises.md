@@ -13,5 +13,5 @@ In the GCP Console UI, you could navigate to _Anthos > Security > Policy Audit_ 
 
 ## ASM Topology
 
-In the GCP Console UI, you could navigate to _Anthos > Service Mesh > Topology_ to see the topology graph of the Online Boutique:
+In the GCP Console UI, you could navigate to _Anthos > Service Mesh > Topology_ to see the topology graph of the Online Boutique apps:
 ![Anthos Service Mesh Topology view in GCP Console for Online Boutique](/images/onlineboutique-service-mesh-topology.png)
