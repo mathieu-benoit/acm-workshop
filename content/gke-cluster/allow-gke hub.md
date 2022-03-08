@@ -4,13 +4,13 @@ weight: 3
 ---
 - Persona: Org Admin
 - Duration: 5 min
-- Objectives:
-  - FIXME
 
 Define variables:
 ```Bash
 source ~/acm-workshop-variables.sh
 ```
+
+## Define GKE Hub admin role
 
 Define the `gkehub.admin` role with an [`IAMPolicyMember`](https://cloud.google.com/config-connector/docs/reference/resource-docs/iam/iampolicymember) for the GKE project's service account:
 ```Bash
@@ -29,6 +29,8 @@ spec:
     external: projects/${GKE_PROJECT_ID}
 EOF
 ```
+
+## Define GKE and GKE Hub APIs
 
 Define the GKE and GKE Hub APIs [`Service`](https://cloud.google.com/config-connector/docs/reference/resource-docs/serviceusage/service) resources for the GKE project:
 ```Bash
@@ -56,7 +58,8 @@ metadata:
 EOF
 ```
 
-Deploy all these Kubernetes manifests via a GitOps approach:
+## Deploy Kubernetes manifests
+
 ```Bash
 cd ~/$WORKSHOP_ORG_DIR_NAME/
 git add .

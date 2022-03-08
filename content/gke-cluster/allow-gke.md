@@ -4,13 +4,13 @@ weight: 1
 ---
 - Persona: Org Admin
 - Duration: 5 min
-- Objectives:
-  - FIXME
 
 Define variables:
 ```Bash
 source ~/acm-workshop-variables.sh
 ```
+
+## Define roles
 
 Define the `container.admin`, `iam.serviceAccountAdmin`, `resourcemanager.projectIamAdmin` and `iam.serviceAccountUser` roles with an [`IAMPolicyMember`](https://cloud.google.com/config-connector/docs/reference/resource-docs/iam/iampolicymember) resource for the GKE project's service account:
 ```Bash
@@ -72,6 +72,8 @@ spec:
 EOF
 ```
 
+## Define GKE API
+
 Define the GKE API [`Service`](https://cloud.google.com/config-connector/docs/reference/resource-docs/serviceusage/service) resource for the GKE project:
 ```Bash
 cat <<EOF > ~/$WORKSHOP_ORG_DIR_NAME/config-sync/projects/$GKE_PROJECT_ID/container-service.yaml
@@ -90,7 +92,8 @@ EOF
 We are enabling the GCP services APIs from the Org Admin, it allows more control and governance over which GCP services APIs the Platform Admin could use or not. If you want to give more autonomy to the Platform Admin, you could grant the `serviceusage.serviceUsageAdmin` role to the associated service account.
 {{% /notice %}}
 
-Deploy all these Kubernetes manifests via a GitOps approach:
+## Deploy Kubernetes manifests
+
 ```Bash
 cd ~/$WORKSHOP_ORG_DIR_NAME/
 git add .

@@ -4,15 +4,13 @@ weight: 4
 ---
 - Persona: Platform Admin
 - Duration: 10 min
-- Objectives:
-  - FIXME
 
 Initialize variables:
 ```Bash
 source ~/acm-workshop-variables.sh
 ```
 
-## Automatic sidecar injection
+## Define "Automatic sidecar injection" policy
 
 https://cloud.google.com/service-mesh/docs/anthos-service-mesh-proxy-injection
 
@@ -40,7 +38,7 @@ spec:
 EOF
 ```
 
-## Allowed Service port names
+## Define "Allowed Service port names" policy
 
 https://cloud.google.com/service-mesh/docs/naming-service-ports
 
@@ -108,7 +106,7 @@ spec:
 EOF
 ```
 
-## Policy STRICT only
+## Define "Policy STRICT only" policy
 
 Define the `ConstraintTemplate` resource:
 ```Bash
@@ -190,7 +188,7 @@ spec:
 EOF
 ```
 
-## Defined AuthorizationPolicy source principals 
+## Define "Defined AuthorizationPolicy source principals" policy
 
 https://istio.io/latest/docs/reference/config/security/authorization-policy/
 
@@ -258,7 +256,7 @@ spec:
 EOF
 ```
 
-## DestinationRule TLS enabled 
+## Define "DestinationRule TLS enabled" policy
 
 https://istio.io/latest/docs/reference/config/networking/destination-rule
 
@@ -322,7 +320,8 @@ spec:
 EOF
 ```
 
-Deploy these Kubernetes manifests via a GitOps approach:
+## Deploy Kubernetes manifests
+
 ```Bash
 cd ~/$GKE_CONFIGS_DIR_NAME/
 git add .

@@ -4,8 +4,6 @@ weight: 1
 ---
 - Persona: Org Admin
 - Duration: 10 min
-- Objectives:
-  - FIXME
 
 Define variables:
 ```Bash
@@ -19,7 +17,9 @@ mkdir ~/$WORKSHOP_ORG_DIR_NAME/config-sync/projects
 mkdir ~/$WORKSHOP_ORG_DIR_NAME/config-sync/projects/$GKE_PROJECT_ID
 ```
 
-Create the GCP project:
+## Define GCP project
+
+Define the GCP project:
 {{< tabs groupId="org-level">}}
 {{% tab name="Org level" %}}
 At the Organization level:
@@ -122,7 +122,8 @@ spec:
 EOF
 ```
 
-Deploy all these Kubernetes manifests via a GitOps approach:
+## Deploy Kubernetes manifests
+
 ```Bash
 cd ~/$WORKSHOP_ORG_DIR_NAME/
 git add .

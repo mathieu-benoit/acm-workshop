@@ -99,7 +99,8 @@ metadata:
 EOF
 ```
 
-Deploy this Cloud Billing service API resource via a GitOps approach:
+## Deploy Kubernetes manifests
+
 ```Bash
 cd ~/$WORKSHOP_ORG_DIR_NAME/
 git add .

@@ -10,7 +10,7 @@ Initialize variables:
 source ~/acm-workshop-variables.sh
 ```
 
-## Allowed container registries
+## Define "Allowed container registries" policy
 
 Define the `ConstraintTemplate` resource:
 ```Bash

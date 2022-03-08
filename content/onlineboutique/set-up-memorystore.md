@@ -4,8 +4,6 @@ weight: 3
 ---
 - Persona: Platform Admin
 - Duration: 10 min
-- Objectives:
-  - FIXME
 
 Initialize variables:
 ```Bash
@@ -16,6 +14,8 @@ source ~/acm-workshop-variables.sh
 ```Bash
 mkdir ~/$GKE_PROJECT_DIR_NAME/config-sync/$ONLINEBOUTIQUE_NAMESPACE
 ```
+
+## Define Memorystore (redis)
 
 Define the [Memorystore (redis) resource](https://cloud.google.com/config-connector/docs/reference/resource-docs/redis/redisinstance):
 ```Bash
@@ -35,13 +35,16 @@ spec:
 EOF
 ```
 
-Deploy this Memorystore (redis) resource via a GitOps approach:
+## Deploy Kubernetes manifests
+
 ```Bash
 cd ~/$GKE_PROJECT_DIR_NAME/
 git add .
 git commit -m "Memorystore (redis) instance"
 git push
 ```
+
+## Grab Memorystore (redis) connection information
 
 Make sure the Memorystore (redis) instance is successfully provisioned and grab its associated connection information we will leverage in the next section:
 ```Bash

@@ -28,7 +28,7 @@ spec:
 EOF
 ```
 
-## Allow GKE cluster to pull container images from Artifact Registry
+## Define Artifact Registry reader role
 
 ```Bash
 cat <<EOF > ~/$GKE_PROJECT_DIR_NAME/config-sync/artifactregistry-reader.yaml

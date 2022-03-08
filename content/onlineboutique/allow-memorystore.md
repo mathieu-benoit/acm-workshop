@@ -4,13 +4,13 @@ weight: 2
 ---
 - Persona: Org Admin
 - Duration: 5 min
-- Objectives:
-  - FIXME
 
 Initialize variables:
 ```Bash
 source ~/acm-workshop-variables.sh
 ```
+
+## Define API
 
 Define the Memorystore (redis) API [`Service`](https://cloud.google.com/config-connector/docs/reference/resource-docs/serviceusage/service) resource for the GKE project:
 ```Bash
@@ -26,6 +26,8 @@ metadata:
   namespace: config-control
 EOF
 ```
+
+## Define role
 
 Define the `redis.admin` role with an [`IAMPolicyMember`](https://cloud.google.com/config-connector/docs/reference/resource-docs/iam/iampolicymember) for the GKE project's service account:
 ```Bash
@@ -45,7 +47,8 @@ spec:
 EOF
 ```
 
-Deploy all these Kubernetes manifests via a GitOps approach:
+## Deploy Kubernetes manifests
+
 ```Bash
 cd ~/$WORKSHOP_ORG_DIR_NAME/
 git add .

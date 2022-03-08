@@ -4,13 +4,13 @@ weight: 6
 ---
 - Persona: Platform Admin
 - Duration: 5 min
-- Objectives:
-  - FIXME
 
 Initialize variables:
 ```Bash
 source ~/acm-workshop-variables.sh
 ```
+
+## Define AuthorizationPolicy resources
 
 ```Bash
 cat <<EOF > ~/$GKE_CONFIGS_DIR_NAME/config-sync/$INGRESS_GATEWAY_NAMESPACE/authorizationpolicy_denyall.yaml
@@ -38,7 +38,8 @@ spec:
 EOF
 ```
 
-Deploy all these Kubernetes manifests via a GitOps approach:
+## Deploy Kubernetes manifests
+
 ```Bash
 cd ~/$GKE_CONFIGS_DIR_NAME/
 git add .

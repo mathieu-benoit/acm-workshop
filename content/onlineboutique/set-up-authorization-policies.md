@@ -4,15 +4,15 @@ weight: 8
 ---
 - Persona: Apps Operator
 - Duration: 5 min
-- Objectives:
-  - FIXME
 
 Initialize variables:
 ```Bash
 source ~/acm-workshop-variables.sh
 ```
 
-Create one `ServiceAccount` per app:
+## Define ServiceAccount resources
+
+Define one `ServiceAccount` per app:
 ```Bash
 cat <<EOF > ~/$ONLINE_BOUTIQUE_DIR_NAME/config-sync/serviceaccount_adservice.yaml
 apiVersion: v1
@@ -93,11 +93,15 @@ metadata:
 EOF
 ```
 
+## Update ServieAccount in Kubernetes manifests
+
 Replace the default `ServiceAccount` per app:
 ```Bash
 services="adservice cartservice checkoutservice currencyservice emailservice frontend loadgenerator paymentservice productcatalogservice recommendationservice shippingservice"
 for s in $services; do sed -i "s/serviceAccountName: default/serviceAccountName: $s/g" ~/$ONLINE_BOUTIQUE_DIR_NAME/config-sync/deployment_$s.yaml; done
 ```
+
+## Define AuthorizationPolicy resources
 
 Define fine granular `AuthorizationPolicy` resources:
 ```Bash
@@ -310,7 +314,8 @@ spec:
 EOF
 ```
 
-Deploy all these Kubernetes manifests via a GitOps approach:
+## Deploy Kubernetes manifests
+
 ```Bash
 cd ~/$ONLINE_BOUTIQUE_DIR_NAME/
 git add .

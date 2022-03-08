@@ -4,15 +4,13 @@ weight: 3
 ---
 - Persona: Platform Admin
 - Duration: 10 min
-- Objectives:
-  - FIXME
 
 Initialize variables:
 ```Bash
 source ~/acm-workshop-variables.sh
 ```
 
-## Set ASM configs Mesh-wide
+## Define ASM configs Mesh-wide
 
 Define the optional Mesh configs (`distroless` container image for the proxy and Cloud Tracing):
 ```Bash
@@ -33,7 +31,8 @@ metadata:
 EOF
 ```
 
-Deploy this Kubernetes manifest via a GitOps approach:
+## Deploy Kubernetes manifests
+
 ```Bash
 cd ~/$GKE_CONFIGS_DIR_NAME/
 git add .
@@ -41,7 +40,7 @@ git commit -m "ASM configs in GKE cluster"
 git push
 ```
 
-## Set mTLS STRICT Mesh-wide
+## Define mTLS STRICT Mesh-wide
 
 Define the mTLS `STRICT` policy Mesh-wide:
 ```Bash
@@ -57,7 +56,8 @@ spec:
 EOF
 ```
 
-Deploy this Kubernetes manifest via a GitOps approach:
+## Deploy Kubernetes manifests
+
 ```Bash
 cd ~/$GKE_CONFIGS_DIR_NAME/
 git add .

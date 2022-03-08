@@ -4,19 +4,21 @@ weight: 3
 ---
 - Persona: Apps Operator
 - Duration: 5 min
-- Objectives:
-  - FIXME
 
 Initialize variables:
 ```Bash
 source ~/acm-workshop-variables.sh
 ```
 
+## Grab upstream Kubernetes manifests
+
 Create a dedicated folder for the Whereami sample app in the GKE configs's Git repo:
 ```Bash
 cd ~/$WHERE_AMI_DIR_NAME/config-sync
 kpt pkg get https://github.com/GoogleCloudPlatform/kubernetes-engine-samples/whereami/k8s
 ```
+
+## Update Kubernetes manifests
 
 Cleanup and update the upstream files:
 ```Bash
@@ -30,6 +32,8 @@ kpt fn eval . \
 sed -i "s/LoadBalancer/ClusterIP/g" ~/$WHERE_AMI_DIR_NAME/config-sync/service.yaml
 sed -i "s/TRACE_SAMPLING_RATIO: \"0.10\"/TRACE_SAMPLING_RATIO: \"0\"/g" ~/$WHERE_AMI_DIR_NAME/config-sync/configmap.yaml
 ```
+
+## Define VirtualService
 
 ```Bash
 cat <<EOF > ~/$WHERE_AMI_DIR_NAME/config-sync/virtualservice.yaml
@@ -52,6 +56,8 @@ spec:
 EOF
 ```
 
+## Setup WorkloadIdentity
+
 ```Bash
 # FIXME: TMP, to replace by KCC equivalent:
 ksaName=whereami-ksa
@@ -72,7 +78,8 @@ gcloud projects add-iam-policy-binding $GKE_PROJECT_ID \
   --role roles/cloudtrace.agent
 ```
 
-Deploy all these Kubernetes manifests via a GitOps approach:
+## Deploy Kubernetes manifests
+
 ```Bash
 cd ~/$WHERE_AMI_DIR_NAME/
 git add .

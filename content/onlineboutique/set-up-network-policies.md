@@ -4,13 +4,13 @@ weight: 6
 ---
 - Persona: Apps Operator
 - Duration: 5 min
-- Objectives:
-  - FIXME
 
 Initialize variables:
 ```Bash
 source ~/acm-workshop-variables.sh
 ```
+
+## Define NetworkPolicy resources
 
 Define fine granular `NetworkPolicy` resources:
 ```Bash
@@ -304,7 +304,8 @@ spec:
 EOF
 ```
 
-Deploy all these Kubernetes manifests via a GitOps approach:
+## Deploy Kubernetes manifests
+
 ```Bash
 cd ~/$ONLINE_BOUTIQUE_DIR_NAME/
 git add .

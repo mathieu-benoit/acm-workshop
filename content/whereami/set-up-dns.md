@@ -4,14 +4,14 @@ weight: 2
 ---
 - Persona: Platform Admin
 - Duration: 5 min
-- Objectives:
-  - FIXME
 
 Initialize variables:
 ```Bash
 source ~/acm-workshop-variables.sh
 echo "export WHERE_AMI_INGRESS_GATEWAY_HOST_NAME='whereami.endpoints.${GKE_PROJECT_ID}.cloud.goog'" >> ~/acm-workshop-variables.sh
 ```
+
+## Create FQDN
 
 Create an FQDN with Cloud Ednpoints for Whereami:
 ```Bash
@@ -32,6 +32,8 @@ gcloud endpoints services deploy ~/dns-spec.yaml \
 rm ~/dns-spec.yaml
 ```
 
+## Define ManagedCertificate
+
 Define the `ManagedCertificate` for Whereami in the Ingress Gateway namespace:
 ```Bash
 cat <<EOF > ~/$GKE_CONFIGS_DIR_NAME/config-sync/$INGRESS_GATEWAY_NAMESPACE/managedcertificate-whereami.yaml
@@ -46,6 +48,8 @@ spec:
 EOF
 ```
 
+## Update Ingress
+
 Configure Whereami `ManagedCertificate` on the Ingress Gateway's `Ingress` resource:
 ```Bash
 cd ~/$GKE_CONFIGS_DIR_NAME/config-sync/$INGRESS_GATEWAY_NAMESPACE
@@ -55,7 +59,8 @@ kpt fn eval . \
     -- networking.gke.io/managed-certificates=whereami
 ```
 
-Deploy these Kubernetes manifests via a GitOps approach:
+## Deploy Kubernetes manifests
+
 ```Bash
 cd ~/$GKE_CONFIGS_DIR_NAME/
 git add .

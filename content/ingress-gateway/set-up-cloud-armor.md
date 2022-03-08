@@ -4,8 +4,6 @@ weight: 3
 ---
 - Persona: Platform Admin
 - Duration: 10 min
-- Objectives:
-  - FIXME
 
 Initialize variables:
 ```Bash
@@ -14,7 +12,7 @@ echo "export SSL_POLICY_NAME=${SECURITY_POLICY_NAME}" >> ~/acm-workshop-variable
 source ~/acm-workshop-variables.sh
 ```
 
-## Cloud Armor
+## Define Cloud Armor rules
 
 https://cloud.google.com/config-connector/docs/reference/resource-docs/compute/computesecuritypolicy
 
@@ -74,7 +72,8 @@ EOF
 
 https://cloud.google.com/armor/docs/rule-tuning#preconfigured_rules
 
-Deploy this Cloud Armor rules resource via a GitOps approach:
+## Deploy Kubernetes manifests
+
 ```Bash
 cd ~/$GKE_PROJECT_DIR_NAME/
 git add .
@@ -88,7 +87,7 @@ gcloud compute security-policies update ${SECURITY_POLICY_NAME} \
   --log-level=VERBOSE
 ```
 
-## SSL policy
+## Define SSL policy
 
 Not directly related to Cloud Armor, but let's define an SSL policy which will allow us to set an HTTP to HTTPS redirect on the `Ingress`.
 
@@ -105,7 +104,8 @@ spec:
 EOF
 ```
 
-Deploy this SSL policy resource via a GitOps approach:
+## Deploy Kubernetes manifests
+
 ```Bash
 cd ~/$GKE_PROJECT_DIR_NAME/
 git add .

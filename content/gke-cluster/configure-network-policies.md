@@ -4,15 +4,13 @@ weight: 5
 ---
 - Persona: Platform Admin
 - Duration: 5 min
-- Objectives:
-  - FIXME
 
 Define variables:
 ```Bash
 source ~/acm-workshop-variables.sh
 ```
 
-## Network Policy logging
+## Define Network Policy logging
 
 https://cloud.google.com/kubernetes-engine/docs/how-to/network-policy-logging
 
@@ -33,7 +31,8 @@ spec:
 EOF
 ```
 
-Deploy this `NetworkLogging` resource via a GitOps approach:
+## Deploy Kubernetes manifests
+
 ```Bash
 cd ~/$GKE_CONFIGS_DIR_NAME/
 git add .
@@ -131,7 +130,6 @@ spec:
       - Namespace
     excludedNamespaces:
       - cnrm-system
-      - 
       - istio-system
   parameters:
     labels:
@@ -139,32 +137,12 @@ spec:
 EOF
 ```
 
-Define the `Constraint` resource for the `Namespace` resources:
-```Bash
-cat <<EOF > ~/$GKE_CONFIGS_DIR_NAME/config-sync/policies/constraints/deployment-required-labels.yaml
-apiVersion: constraints.gatekeeper.sh/v1beta1
-kind: K8sRequiredLabels
-metadata:
-  name: deployment-required-labels
-spec:
-  enforcementAction: deny
-  match:
-    kinds:
-    - apiGroups:
-      - apps
-      kinds:
-      - Deployment
-  parameters:
-    labels:
-      - key: app
-EOF
-```
-
-### Requireed NetworPolicy in Namespace
+### Required NetworPolicy in Namespace
 
 FIXME - https://cloud.google.com/anthos-config-management/docs/reference/constraint-template-library#k8srequirenamespacenetworkpolicies
 
-Deploy these Kubernetes resources via a GitOps approach:
+## Deploy Kubernetes manifests
+
 ```Bash
 cd ~/$GKE_CONFIGS_DIR_NAME/
 git add .

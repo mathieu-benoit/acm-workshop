@@ -4,8 +4,6 @@ weight: 2
 ---
 - Persona: Org Admin
 - Duration: 10 min
-- Objectives:
-  - FIXME
 
 Define variables:
 ```Bash
@@ -13,12 +11,16 @@ echo "export GKE_PROJECT_DIR_NAME=acm-workshop-gke-project-repo" >> ~/acm-worksh
 source ~/acm-workshop-variables.sh
 ```
 
+## Create GitHub repository
+
 Create a dedicated GitHub repository to store any Kubernetes manifests associated to the GKE project:
 ```Bash
 gh repo create $GKE_PROJECT_DIR_NAME --public --clone --template https://github.com/mathieu-benoit/config-sync-template-repo
 cd ~/$GKE_PROJECT_DIR_NAME
 GKE_PLATFORM_REPO_URL=$(gh repo view --json url --jq .url)
 ```
+
+## Define RepoSync
 
 Define a `RepoSync` linking this Git repository:
 ```Bash
@@ -60,7 +62,8 @@ EOF
 We are using the `edit` role here, see [more information about the user-facing roles here](https://kubernetes.io/docs/reference/access-authn-authz/rbac/#user-facing-roles).
 {{% /notice %}}
 
-Deploy all these Kubernetes manifests via a GitOps approach:
+## Deploy Kubernetes manifests
+
 ```Bash
 cd ~/$WORKSHOP_ORG_DIR_NAME/
 git add .

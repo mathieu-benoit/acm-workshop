@@ -4,13 +4,13 @@ weight: 1
 ---
 - Persona: Org Admin
 - Duration: 2 min
-- Objectives:
-  - FIXME
 
 Initialize variables:
 ```Bash
 source ~/acm-workshop-variables.sh
 ```
+
+## Define role
 
 Define the `compute.networkAdmin` role with an [`IAMPolicyMember`](https://cloud.google.com/config-connector/docs/reference/resource-docs/iam/iampolicymember) for the GKE project's service account:
 ```Bash
@@ -30,7 +30,8 @@ spec:
 EOF
 ```
 
-Deploy this Kubernetes manifest via a GitOps approach:
+## Deploy Kubernetes manifests
+
 ```Bash
 cd ~/$WORKSHOP_ORG_DIR_NAME/
 git add .

@@ -4,8 +4,6 @@ weight: 2
 ---
 - Persona: Platform Admin
 - Duration: 10 min
-- Objectives:
-  - FIXME
 
 Initialize variables:
 ```Bash
@@ -20,7 +18,7 @@ source ~/acm-workshop-variables.sh
 The possible values for `ASM_CHANNEL` are `regular`, `stable` or `rapid`.
 {{% /notice %}}
 
-## Enable the GKE ASM feature
+## Define GKE ASM feature
 
 Define the ASM [`GKEHubFeature`](https://cloud.google.com/config-connector/docs/reference/resource-docs/gkehub/gkehubfeature) resource:
 ```Bash
@@ -41,7 +39,8 @@ EOF
 The `resourceID` must be `servicemesh` if you want to use Managed Control Plane feature of Anthos Service Mesh.
 {{% /notice %}}
 
-Deploy all these Kubernetes manifests via a GitOps approach:
+## Deploy Kubernetes manifests
+
 ```Bash
 cd ~/$GKE_PROJECT_DIR_NAME/
 git add .
@@ -54,7 +53,7 @@ Check that the ASM MCP is successfuly installed with `state: ACTIVE`:
 gcloud container hub mesh describe --project ${GKE_PROJECT_ID}
 ```
 
-## Install ASM MCP
+## Define ASM ControlPlaneRevision
 
 Create a dedicated `istio-system` folder in the GKE configs's Git repo:
 ```Bash
@@ -90,7 +89,8 @@ EOF
 We are using `mesh.cloud.google.com/managed-cni-enabled: "true"` in order to leverage the Istio CNI has a best practice for security and performance perspectives. It's also mandatory when using the Managed Data Plane feature of ASM.
 {{% /notice %}}
 
-Deploy all these Kubernetes manifests via a GitOps approach:
+## Deploy Kubernetes manifests
+
 ```Bash
 cd ~/$GKE_CONFIGS_DIR_NAME/
 git add .

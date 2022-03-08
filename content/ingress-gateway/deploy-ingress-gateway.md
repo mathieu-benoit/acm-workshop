@@ -4,8 +4,6 @@ weight: 4
 ---
 - Persona: Platform Admin
 - Duration: 15 min
-- Objectives:
-  - FIXME
 
 Initialize variables:
 ```Bash
@@ -20,6 +18,8 @@ Create a dedicated folder for the ASM Ingress Gateway in the GKE configs's Git r
 mkdir ~/$GKE_CONFIGS_DIR_NAME/config-sync/$INGRESS_GATEWAY_NAMESPACE
 ```
 
+## Define Namespace
+
 ```Bash
 cat <<EOF > ~/$GKE_CONFIGS_DIR_NAME/config-sync/$INGRESS_GATEWAY_NAMESPACE/namespace.yaml
 apiVersion: v1
@@ -31,6 +31,8 @@ metadata:
     istio.io/rev: ${ASM_VERSION}
 EOF
 ```
+
+## Define Deployment
 
 ```Bash
 cat <<EOF > ~/$GKE_CONFIGS_DIR_NAME/config-sync/$INGRESS_GATEWAY_NAMESPACE/deployment.yaml
@@ -131,6 +133,8 @@ subjects:
 EOF
 ```
 
+## Define Service and Ingress
+
 ```Bash
 cat <<EOF > ~/$GKE_CONFIGS_DIR_NAME/config-sync/$INGRESS_GATEWAY_NAMESPACE/backend-config.yaml
 apiVersion: cloud.google.com/v1
@@ -224,6 +228,8 @@ spec:
 EOF
 ```
 
+## Define Gateway
+
 ```Bash
 cat <<EOF > ~/$GKE_CONFIGS_DIR_NAME/config-sync/$INGRESS_GATEWAY_NAMESPACE/gateway.yaml
 apiVersion: networking.istio.io/v1alpha3
@@ -243,8 +249,12 @@ spec:
     - '*'
 EOF
 ```
+{{% notice tip %}}
+We define a [shared `Gateway`](https://istio.io/latest/docs/setup/additional-setup/gateway/#shared-gateway) resource. Gateways are generally owned by the platform admins or network admins team. Therefore, the `Gateway` resource is created in the Ingress Gateway namespace owned by the platform admin and could be use in other namespaces via their own `VirtualService` entries.
+{{% /notice %}}
 
-Deploy all these Kubernetes manifests via a GitOps approach:
+## Deploy Kubernetes manifests
+
 ```Bash
 cd ~/$GKE_CONFIGS_DIR_NAME/
 git add .

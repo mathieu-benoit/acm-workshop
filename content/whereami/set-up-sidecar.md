@@ -12,6 +12,8 @@ Initialize variables:
 source ~/acm-workshop-variables.sh
 ```
 
+## Define Sidecar resource
+
 ```Bash
 cat <<EOF > ~/$WHERE_AMI_DIR_NAME/config-sync/sidecar.yaml
 apiVersion: networking.istio.io/v1beta1
@@ -29,7 +31,8 @@ spec:
 EOF
 ```
 
-Deploy all these Kubernetes manifests via a GitOps approach:
+## Deploy Kubernetes manifests
+
 ```Bash
 cd ~/$WHERE_AMI_DIR_NAME/
 git add .

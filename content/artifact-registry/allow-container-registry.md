@@ -10,7 +10,7 @@ Initialize variables:
 source ~/acm-workshop-variables.sh
 ```
 
-## Artifact Registry role
+## Define Artifact Registry role
 
 Define the `artifactregistry.admin` role with an [`IAMPolicyMember`](https://cloud.google.com/config-connector/docs/reference/resource-docs/iam/iampolicymember) for the GKE project's service account:
 ```Bash
@@ -30,7 +30,7 @@ spec:
 EOF
 ```
 
-## Artifact Registry API
+## Define Artifact Registry API
 
 Define the Artifact Registry API [`Service`](https://cloud.google.com/config-connector/docs/reference/resource-docs/serviceusage/service) resource for the GKE project:
 ```Bash
@@ -50,7 +50,7 @@ EOF
 We are enabling the GCP services APIs from the Org Admin, it allows more control and governance over which GCP services APIs the Platform Admin could use or not. If you want to give more autonomy to the Platform Admin, you could grant the `serviceusage.serviceUsageAdmin` role to the associated service account.
 {{% /notice %}}
 
-## Container Scanning APIs
+## Define Container Scanning APIs
 
 Define the [Container Scanning](https://cloud.google.com/container-analysis/docs/automated-scanning-howto) APIs [`Service`](https://cloud.google.com/config-connector/docs/reference/resource-docs/serviceusage/service) resource for the GKE project:
 ```Bash

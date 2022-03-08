@@ -4,8 +4,6 @@ weight: 2
 ---
 - Persona: Platform Admin
 - Duration: 5 min
-- Objectives:
-  - FIXME
 
 Initialize variables:
 ```Bash
@@ -13,6 +11,8 @@ echo "export GKE_PROJECT_NUMBER=$(gcloud projects describe $GKE_PROJECT_ID --for
 echo "export GKE_SA=gke-primary-pool" >> ~/acm-workshop-variables.sh
 source ~/acm-workshop-variables.sh
 ```
+
+## Define GKE cluster
 
 Define the GKE cluster with empty node pool:
 ```Bash
@@ -67,6 +67,8 @@ spec:
     workloadPool: ${GKE_PROJECT_ID}.svc.id.goog
 EOF
 ```
+
+## Define GKE primary node pool's service account
 
 Define the GKE primary node pool's service account:
 ```Bash
@@ -136,6 +138,8 @@ spec:
 EOF
 ```
 
+## Define GKE primary node pool
+
 Define the GKE primary node pool:
 ```Bash
 cat <<EOF > ~/$GKE_PROJECT_DIR_NAME/config-sync/gke-primary-pool.yaml
@@ -167,7 +171,8 @@ spec:
 EOF
 ```
 
-Deploy all these Kubernetes manifests via a GitOps approach:
+## Deploy Kubernetes manifests
+
 ```Bash
 cd ~/$GKE_PROJECT_DIR_NAME/
 git add .

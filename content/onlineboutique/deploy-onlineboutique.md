@@ -12,6 +12,8 @@ Initialize variables:
 source ~/acm-workshop-variables.sh
 ```
 
+## Grab upstream Kubernetes manifests
+
 Create a dedicated folder for the Online Boutique sample apps in the GKE configs's Git repo:
 ```Bash
 cd ~/$ONLINE_BOUTIQUE_DIR_NAME/config-sync
@@ -19,6 +21,8 @@ curl https://raw.githubusercontent.com/GoogleCloudPlatform/microservices-demo/ma
 nomos hydrate --path . --output . --no-api-server-check --source-format unstructured
 rm tmp.yaml
 ```
+
+## Update Kubernetes manifests
 
 Cleanup and update the upstream files:
 ```Bash
@@ -30,6 +34,8 @@ kpt fn eval . \
   -- namespace=$ONLINEBOUTIQUE_NAMESPACE
 sed -i "s/redis-cart:6379/$REDIS_IP:$REDIS_PORT/g" ~/$ONLINE_BOUTIQUE_DIR_NAME/config-sync/deployment_cartservice.yaml
 ```
+
+## Define VirtualService
 
 ```Bash
 cat <<EOF > ~/$ONLINE_BOUTIQUE_DIR_NAME/config-sync/virtualservice_frontend.yaml
@@ -52,7 +58,8 @@ spec:
 EOF
 ```
 
-Deploy all these Kubernetes manifests via a GitOps approach:
+## Deploy Kubernetes manifests
+
 ```Bash
 cd ~/$ONLINE_BOUTIQUE_DIR_NAME/
 git add .

@@ -4,8 +4,6 @@ weight: 1
 ---
 - Persona: Platform Admin
 - Duration: 10 min
-- Objectives:
-  - FIXME
 
 Initialize variables:
 ```Bash
@@ -18,6 +16,8 @@ source ~/acm-workshop-variables.sh
 mkdir ~/$GKE_CONFIGS_DIR_NAME/config-sync/repo-syncs
 mkdir ~/$GKE_CONFIGS_DIR_NAME/config-sync/repo-syncs/$ONLINEBOUTIQUE_NAMESPACE
 ```
+
+## Define Namespace
 
 Define a dedicated `Namespace` for the Online Boutique apps:
 ```Bash
@@ -32,11 +32,15 @@ metadata:
 EOF
 ```
 
+## Create GitHub repository
+
 ```Bash
 gh repo create $ONLINE_BOUTIQUE_DIR_NAME --public --clone --template https://github.com/mathieu-benoit/config-sync-template-repo
 cd ~/$ONLINE_BOUTIQUE_DIR_NAME
 ONLINE_BOUTIQUE_REPO_URL=$(gh repo view --json url --jq .url)
 ```
+
+## Define RepoSync
 
 Define a `RepoSync` linking this Git repository:
 ```Bash
@@ -78,7 +82,8 @@ EOF
 We are using the `cluster-admin` role here, but in the future we will change this with a least privilege approach. It will be something with `edit` role and the the Istio resources like `VirtualService`, etc. leveraged in this workshop. See [more information about the user-facing roles here](https://kubernetes.io/docs/reference/access-authn-authz/rbac/#user-facing-roles).
 {{% /notice %}}
 
-Deploy all these Kubernetes manifests via a GitOps approach:
+## Deploy Kubernetes manifests
+
 ```Bash
 cd ~/$GKE_CONFIGS_DIR_NAME/
 git add .

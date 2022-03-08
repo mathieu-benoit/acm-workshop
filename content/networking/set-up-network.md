@@ -4,8 +4,6 @@ weight: 1
 ---
 - Persona: Platform Admin
 - Duration: 15 min
-- Objectives:
-  - FIXME
 
 Initialize variables:
 ```Bash
@@ -13,6 +11,8 @@ echo "export GKE_LOCATION=us-east4" >> ~/acm-workshop-variables.sh
 echo "export GKE_NAME=gke" >> ~/acm-workshop-variables.sh
 source ~/acm-workshop-variables.sh
 ```
+
+## Define VPC and Subnet
 
 ```Bash
 cat <<EOF > ~/$GKE_PROJECT_DIR_NAME/config-sync/vpc.yaml
@@ -46,6 +46,8 @@ spec:
     ipCidrRange: 10.4.0.0/20
 EOF
 ```
+
+## Define Cloud NAT
 
 ```Bash
 cat <<EOF > ~/$GKE_PROJECT_DIR_NAME/config-sync/router.yaml
@@ -82,7 +84,8 @@ spec:
 EOF
 ```
 
-Deploy all these Kubernetes manifests via a GitOps approach:
+## Deploy Kubernetes manifests
+
 ```Bash
 cd ~/$GKE_PROJECT_DIR_NAME/
 git add .
