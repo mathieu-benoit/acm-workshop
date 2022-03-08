@@ -10,6 +10,7 @@ weight: 2
 Initialize variables:
 ```Bash
 echo "export GKE_PROJECT_NUMBER=$(gcloud projects describe $GKE_PROJECT_ID --format='get(projectNumber)')" >> ~/acm-workshop-variables.sh
+echo "export GKE_SA=gke-primary-pool" >> ~/acm-workshop-variables.sh
 source ~/acm-workshop-variables.sh
 ```
 
@@ -73,10 +74,10 @@ cat <<EOF > ~/$GKE_PROJECT_DIR_NAME/config-sync/gke-primary-pool-sa.yaml
 apiVersion: iam.cnrm.cloud.google.com/v1beta1
 kind: IAMServiceAccount
 metadata:
-  name: gke-primary-pool
+  name: ${GKE_SA}
   namespace: ${GKE_PROJECT_ID}
 spec:
-  displayName: gke-primary-pool
+  displayName: ${GKE_SA}
 EOF
 ```
 
@@ -86,12 +87,12 @@ cat <<EOF > ~/$GKE_PROJECT_DIR_NAME/config-sync/log-writer-gke-sa.yaml
 apiVersion: iam.cnrm.cloud.google.com/v1beta1
 kind: IAMPolicyMember
 metadata:
-  name: log-writer-gke
+  name: log-writer
   namespace: ${GKE_PROJECT_ID}
 spec:
   memberFrom:
     serviceAccountRef:
-      name: gke-primary-pool
+      name: ${GKE_SA}
       namespace: ${GKE_PROJECT_ID}
   resourceRef:
     apiVersion: resourcemanager.cnrm.cloud.google.com/v1beta1
@@ -103,12 +104,12 @@ cat <<EOF > ~/$GKE_PROJECT_DIR_NAME/config-sync/metric-writer-gke-sa.yaml
 apiVersion: iam.cnrm.cloud.google.com/v1beta1
 kind: IAMPolicyMember
 metadata:
-  name: metric-writer-gke
+  name: metric-writer
   namespace: ${GKE_PROJECT_ID}
 spec:
   memberFrom:
     serviceAccountRef:
-      name: gke-primary-pool
+      name: ${GKE_SA}
       namespace: ${GKE_PROJECT_ID}
   resourceRef:
     apiVersion: resourcemanager.cnrm.cloud.google.com/v1beta1
@@ -120,12 +121,12 @@ cat <<EOF > ~/$GKE_PROJECT_DIR_NAME/config-sync/monitoring-viewer-gke-sa.yaml
 apiVersion: iam.cnrm.cloud.google.com/v1beta1
 kind: IAMPolicyMember
 metadata:
-  name: monitoring-viewer-gke
+  name: monitoring-viewer
   namespace: ${GKE_PROJECT_ID}
 spec:
   memberFrom:
     serviceAccountRef:
-      name: gke-primary-pool
+      name: ${GKE_SA}
       namespace: ${GKE_PROJECT_ID}
   resourceRef:
     apiVersion: resourcemanager.cnrm.cloud.google.com/v1beta1
@@ -162,7 +163,7 @@ spec:
       enableIntegrityMonitoring: true
       enableSecureBoot: true
     serviceAccountRef:
-      name: gke-primary-pool
+      name: ${GKE_SA}
 EOF
 ```
 

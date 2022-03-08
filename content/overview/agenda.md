@@ -17,6 +17,9 @@ weight: 2
     1. As Org Admin, allow GKE Hub for GKE project in Config Controller
     1. As Platform Admin, set up GKE configs's Git repo in GKE project
     1. As Platform Admin, set up `NetworkPolicy` logging in GKE cluster
+1. Artifact Registry
+    1. As Org Admin, allow Artifact Registry for GKE project in Config Controller
+    1. As Platform Admin, create Artifact Registry in GKE project and allow GKE cluster to pull containers
 1. Service Mesh
     1. As Org Admin, allow ASM for GKE project in Config Controller
     1. As Platform Admin, install ASM in GKE cluster

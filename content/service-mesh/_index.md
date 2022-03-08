@@ -1,7 +1,7 @@
 ---
 title: "Service Mesh"
 chapter: true
-weight: 6
+weight: 7
 ---
 Set up Anthos Service Mesh (ASM).
 

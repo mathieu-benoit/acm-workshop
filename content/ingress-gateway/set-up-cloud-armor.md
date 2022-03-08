@@ -82,6 +82,12 @@ git commit -m "Ingress Gateway's Cloud Armor rules"
 git push
 ```
 
+```Bash
+gcloud compute security-policies update ${SECURITY_POLICY_NAME} \
+  --project ${GKE_PROJECT_ID}
+  --log-level=VERBOSE
+```
+
 ## SSL policy
 
 Not directly related to Cloud Armor, but let's define an SSL policy which will allow us to set an HTTP to HTTPS redirect on the `Ingress`.

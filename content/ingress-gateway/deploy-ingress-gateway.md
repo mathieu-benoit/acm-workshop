@@ -248,6 +248,6 @@ Deploy all these Kubernetes manifests via a GitOps approach:
 ```Bash
 cd ~/$GKE_CONFIGS_DIR_NAME/
 git add .
-git commit -m "ASM Ingress Gateway in GKE cluster."
+git commit -m "ASM Ingress Gateway in GKE cluster"
 git push
 ```

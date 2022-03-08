@@ -26,7 +26,7 @@ rm service_redis-cart.yaml
 rm deployment_redis-cart.yaml
 rm service_frontend-external.yaml
 kpt fn eval . \
-  -i set-namespace:v0.2.0 \
+  -i set-namespace:v0.2 \
   -- namespace=$ONLINEBOUTIQUE_NAMESPACE
 sed -i "s/redis-cart:6379/$REDIS_IP:$REDIS_PORT/g" ~/$ONLINE_BOUTIQUE_DIR_NAME/config-sync/deployment_cartservice.yaml
 ```

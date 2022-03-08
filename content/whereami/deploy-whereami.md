@@ -25,7 +25,7 @@ rm -r k8s/
 rm Kptfile
 rm kustomization.yaml
 kpt fn eval . \
-  -i set-namespace:v0.2.0 \
+  -i set-namespace:v0.2 \
   -- namespace=$WHEREAMI_NAMESPACE
 sed -i "s/LoadBalancer/ClusterIP/g" ~/$WHERE_AMI_DIR_NAME/config-sync/service.yaml
 sed -i "s/TRACE_SAMPLING_RATIO: \"0.10\"/TRACE_SAMPLING_RATIO: \"0\"/g" ~/$WHERE_AMI_DIR_NAME/config-sync/configmap.yaml

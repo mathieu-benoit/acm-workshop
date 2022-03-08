@@ -14,6 +14,7 @@ Install the required tools:
 - `kpt`
 - `curl`
 - `nomos`
+- `docker`
 
 You need to have:
 - GCP account with the role `owner` in your Organization in order to deploy the resources needed for this workshop

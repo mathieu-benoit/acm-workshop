@@ -1,7 +1,7 @@
 ---
 title: "Whereami app"
 chapter: true
-weight: 8
+weight: 9
 ---
 Set up the Whereami app.
 
