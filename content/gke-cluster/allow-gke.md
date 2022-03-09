@@ -92,6 +92,118 @@ EOF
 We are enabling the GCP services APIs from the Org Admin, it allows more control and governance over which GCP services APIs the Platform Admin could use or not. If you want to give more autonomy to the Platform Admin, you could grant the `serviceusage.serviceUsageAdmin` role to the associated service account.
 {{% /notice %}}
 
+## Enforce policies
+
+Define the `ConstraintTemplate` resource:
+```Bash
+cat <<EOF > ~/$WORKSHOP_ORG_DIR_NAME/config-sync/policies/templates/limitgkecluster.yaml
+apiVersion: templates.gatekeeper.sh/v1
+kind: ConstraintTemplate
+metadata:
+  name: limitgkecluster
+  annotations:
+    description: "Requirements for any GKE cluster."
+spec:
+  crd:
+    spec:
+      names:
+        kind: LimitGKECluster
+  targets:
+    - target: admission.k8s.gatekeeper.sh
+      rego: |-
+        package limitgkecluster
+        violation[{"msg":msg}] {
+          input.review.kind.kind == "ContainerCluster"
+          not input.review.object.spec.confidentialNodes.enabled == true
+          msg := sprintf("GKE cluster %s should enable confidentialNodes.", [input.review.object.metadata.name])
+        }
+        violation[{"msg":msg}] {
+          input.review.kind.kind == "ContainerCluster"
+          not input.review.object.spec.enableShieldedNodes == true
+          msg := sprintf("GKE cluster %s should enable enableShieldedNodes.", [input.review.object.metadata.name])
+        }
+        violation[{"msg":msg}] {
+          input.review.kind.kind == "ContainerCluster"
+          not input.review.object.spec.networkingMode == "VPC_NATIVE"
+          msg := sprintf("GKE cluster %s should use VPC_NATIVE networkingMode.", [input.review.object.metadata.name])
+        }
+        violation[{"msg":msg}] {
+          input.review.kind.kind == "ContainerCluster"
+          not input.review.object.spec.privateClusterConfig.enablePrivateNodes == true
+          msg := sprintf("GKE cluster %s should enable enablePrivateNodes.", [input.review.object.metadata.name])
+        }
+        violation[{"msg":msg}] {
+          input.review.kind.kind == "ContainerCluster"
+          not input.review.object.spec.workloadIdentityConfig.workloadPool
+          msg := sprintf("GKE cluster %s should define workloadIdentityConfig.workloadPool.", [input.review.object.metadata.name])
+        }
+        violation[{"msg":msg}] {
+          input.review.kind.kind == "ContainerCluster"
+          not input.review.object.spec.datapathProvider == "ADVANCED_DATAPATH"
+          msg := sprintf("GKE cluster %s should define datapathProvider as ADVANCED_DATAPATH to use GKE Dataplane V2.", [input.review.object.metadata.name])
+        }
+        violation[{"msg":msg}] {
+          input.review.kind.kind == "ContainerCluster"
+          not input.review.object.spec.addonsConfig.httpLoadBalancing.disabled == false
+          msg := sprintf("GKE cluster %s should enable addonsConfig.httpLoadBalancing.", [input.review.object.metadata.name])
+        }
+        violation[{"msg":msg}] {
+          input.review.kind.kind == "ContainerNodePool"
+          not input.review.object.spec.management.autoRepair == true
+          msg := sprintf("GKE node pool %s should enable management.autoRepair.", [input.review.object.metadata.name])
+        }
+        violation[{"msg":msg}] {
+          input.review.kind.kind == "ContainerNodePool"
+          not input.review.object.spec.management.autoUpgrade == true
+          msg := sprintf("GKE node pool %s should enable management.autoUpgrade.", [input.review.object.metadata.name])
+        }
+        violation[{"msg":msg}] {
+          input.review.kind.kind == "ContainerNodePool"
+          not input.review.object.spec.nodeConfig.imageType == "COS_CONTAINERD"
+          msg := sprintf("GKE node pool %s should define nodeConfig.imageType as COS_CONTAINERD.", [input.review.object.metadata.name])
+        }
+        violation[{"msg":msg}] {
+          input.review.kind.kind == "ContainerNodePool"
+          not input.review.object.spec.nodeConfig.imageType == "COS_CONTAINERD"
+          msg := sprintf("GKE node pool %s should define nodeConfig.imageType as COS_CONTAINERD.", [input.review.object.metadata.name])
+        }
+        violation[{"msg":msg}] {
+          input.review.kind.kind == "ContainerNodePool"
+          not input.review.object.spec.nodeConfig.shieldedInstanceConfig.enableIntegrityMonitoring == true
+          msg := sprintf("GKE node pool %s should enable nodeConfig.shieldedInstanceConfig.enableIntegrityMonitoring.", [input.review.object.metadata.name])
+        }
+        violation[{"msg":msg}] {
+          input.review.kind.kind == "ContainerNodePool"
+          not input.review.object.spec.nodeConfig.shieldedInstanceConfig.enableSecureBoot == true
+          msg := sprintf("GKE node pool %s should enable nodeConfig.shieldedInstanceConfig.enableSecureBoot.", [input.review.object.metadata.name])
+        }
+        violation[{"msg":msg}] {
+          input.review.kind.kind == "ContainerNodePool"
+          not input.review.object.spec.nodeConfig.serviceAccountRef.name
+          msg := sprintf("GKE node pool %s should define nodeConfig.serviceAccountRef.", [input.review.object.metadata.name])
+        }
+EOF
+```
+
+Define the `Constraint` resource:
+```Bash
+cat <<EOF > ~/$WORKSHOP_ORG_DIR_NAME/config-sync/policies/constraints/allowed-gke-cluster.yaml
+apiVersion: constraints.gatekeeper.sh/v1beta1
+kind: LimitGKECluster
+metadata:
+  name: allowed-gke-cluster
+spec:
+  enforcementAction: deny
+  match:
+    kinds:
+      - apiGroups:
+          - container.cnrm.cloud.google.com
+        kinds:
+          - ContainerCluster
+          - ContainerNodePool
+EOF
+```
+
 ## Deploy Kubernetes manifests
 
 ```Bash

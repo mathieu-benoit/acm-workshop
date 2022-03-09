@@ -97,9 +97,9 @@ spec:
   match:
     kinds:
       - apiGroups:
-        - redis.cnrm.cloud.google.com
+          - redis.cnrm.cloud.google.com
         kinds:
-        - RedisInstance
+          - RedisInstance
 EOF
 ```
 

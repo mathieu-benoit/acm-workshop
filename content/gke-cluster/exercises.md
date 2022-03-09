@@ -1,6 +1,6 @@
 ---
 title: "Exercises"
-weight: 8
+weight: 6
 description: "Duration: 10 min"
 ---
 _{{< param description >}}_
@@ -53,7 +53,7 @@ You could rollback this local change if you want:
 ```Bash
 cd ~/$GKE_PROJECT_DIR_NAME
 git checkout ~/$GKE_PROJECT_DIR_NAME/config-sync/gke-cluster.yaml
-kubectl delete -f ~/$GKE_PROJECT_DIR_NAME/config-sync/gke-cluster.yaml
+kubectl apply -f ~/$GKE_PROJECT_DIR_NAME/config-sync/gke-cluster.yaml
 ```
 
 ## Validate Policies
@@ -89,9 +89,4 @@ And now let's evaluate this `Constraint` on the current Kubernetes manifests we 
 ```Bash
 kpt fn eval ~/$GKE_CONFIGS_DIR_NAME/config-sync \
   -i gatekeeper:v0.2
-```
-
-We could even create a Pull Request to see in action how this violation could be tracked by the default GitHub actions definition:
-```Bash
-FIXME
 ```
