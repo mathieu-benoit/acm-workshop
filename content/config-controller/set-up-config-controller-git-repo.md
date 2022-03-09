@@ -4,11 +4,6 @@ weight: 2
 ---
 - Persona: Org Admin
 - Duration: 5 min
-- Objectives:
-  - Set up a Cloud NAT in order to provide Internet access in egress for the Config Controller instance
-  - Enable multi-repositories for the Config Controller's Config Sync component
-  - Create a dedicated Organization GitHub repository as the main/root repository of the Config Controller instance
-  - Enable Cloud Billing service API in the Config Controller's GCP project
 
 Define variables:
 ```Bash
