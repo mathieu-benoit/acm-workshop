@@ -1,5 +1,5 @@
 ---
-title: "Whereami app"
+title: "8. Whereami app"
 chapter: true
 weight: 9
 ---

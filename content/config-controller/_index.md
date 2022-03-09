@@ -1,5 +1,5 @@
 ---
-title: "Config Controller"
+title: "1. Config Controller"
 chapter: true
 weight: 2
 ---

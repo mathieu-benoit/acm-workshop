@@ -1,5 +1,5 @@
 ---
-title: "Ingress Gateway"
+title: "7. Ingress Gateway"
 chapter: true
 weight: 8
 ---

@@ -1,5 +1,5 @@
 ---
-title: "Online Boutique apps"
+title: "9. Online Boutique apps"
 chapter: true
 weight: 10
 ---

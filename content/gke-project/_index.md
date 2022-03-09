@@ -1,5 +1,5 @@
 ---
-title: "GKE project"
+title: "2. GKE project"
 chapter: true
 weight: 3
 ---

@@ -1,5 +1,5 @@
 ---
-title: "Artifact Registry"
+title: "5. Artifact Registry"
 chapter: true
 weight: 6
 ---

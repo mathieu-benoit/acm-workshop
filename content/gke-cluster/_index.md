@@ -1,5 +1,5 @@
 ---
-title: "GKE cluster"
+title: "4. GKE cluster"
 chapter: true
 weight: 5
 ---

@@ -1,5 +1,5 @@
 ---
-title: "Service Mesh"
+title: "6. Service Mesh"
 chapter: true
 weight: 7
 ---
