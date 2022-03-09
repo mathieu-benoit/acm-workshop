@@ -48,9 +48,10 @@ git commit -m "ASM MCP for GKE project"
 git push
 ```
 
-Check that the ASM MCP is successfuly installed with `state: ACTIVE`:
+Check that the ASM MCP is successfuly installed with `resourceState.state: ACTIVE` and `membershipStates[].state.code: OK`:
 ```Bash
-gcloud container hub mesh describe --project ${GKE_PROJECT_ID}
+gcloud container hub mesh describe --project ${GKE_PROJECT_ID} --format="value(resourceState.state)"
+gcloud container hub mesh describe --project ${GKE_PROJECT_ID} --format="value(membershipStates[].state.code)"
 ```
 
 ## Define ASM ControlPlaneRevision
@@ -96,4 +97,10 @@ cd ~/$GKE_CONFIGS_DIR_NAME/
 git add .
 git commit -m "ASM MCP for GKE cluster"
 git push
+```
+
+Check that the ASM MCP is successfuly installed with `resourceState.state: ACTIVE` and `membershipStates[].state.code: OK`:
+```Bash
+gcloud container hub mesh describe --project ${GKE_PROJECT_ID} --format="value(resourceState.state)"
+gcloud container hub mesh describe --project ${GKE_PROJECT_ID} --format="value(membershipStates[].state.code)"
 ```
