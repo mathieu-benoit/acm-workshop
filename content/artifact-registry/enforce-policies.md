@@ -3,6 +3,8 @@ title: "Enforce policies"
 weight: 3
 description: "Duration: 10 min | Persona: Platform Admin"
 ---
+_Duration: 10 min | Persona: Platform Admin_
+
 Initialize variables:
 ```Bash
 source ~/acm-workshop-variables.sh

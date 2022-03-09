@@ -3,6 +3,8 @@ title: "Allow Artifact Registry"
 weight: 1
 description: "Duration: 5 min | Persona: Org Admin"
 ---
+{{ .Description }}
+
 Initialize variables:
 ```Bash
 source ~/acm-workshop-variables.sh
