@@ -12,18 +12,15 @@ source ~/acm-workshop-variables.sh
 
 ## Define ASM configs Mesh-wide
 
-Define the optional Mesh configs (`distroless` container image for the proxy and Cloud Tracing):
+Define the optional Mesh configs (`distroless` container image for the proxy):
 ```Bash
 cat <<EOF > ~/$GKE_CONFIGS_DIR_NAME/config-sync/istio-system/mesh-configs.yaml
 apiVersion: v1
 data:
   mesh: |-
-    enableTracing: true
     defaultConfig:
       image:
         imageType: distroless
-      tracing:
-        stackdriver:{}
 kind: ConfigMap
 metadata:
   name: istio-${ASM_VERSION}
