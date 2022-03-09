@@ -47,12 +47,68 @@ spec:
 EOF
 ```
 
+## Enforce policies
+
+Define the `ConstraintTemplate` resource:
+```Bash
+cat <<EOF > ~/$WORKSHOP_ORG_DIR_NAME/config-sync/policies/templates/limitmemorystoreredis.yaml
+apiVersion: templates.gatekeeper.sh/v1
+kind: ConstraintTemplate
+metadata:
+  name: limitmemorystoreredis
+  annotations:
+    description: "Requirements for any Memorystore (redis) instance."
+spec:
+  crd:
+    spec:
+      names:
+        kind: LimitMemorystoreRedis
+  targets:
+    - target: admission.k8s.gatekeeper.sh
+      rego: |-
+        package limitmemorystoreredis
+        violation[{"msg":msg}] {
+          input.review.kind.kind == "RedisInstance"
+          not input.review.object.spec.redisVersion == "REDIS_6_X"
+          msg := sprintf("Memorystore (redis) %s's version should be 6.", [input.review.object.metadata.name])
+        }
+        violation[{"msg":msg}] {
+          input.review.kind.kind == "RedisInstance"
+          not input.review.object.spec.authorizedNetworkRef
+          msg := sprintf("Memorystore (redis) %s's VPC shouldn't be default.", [input.review.object.metadata.name])
+        }
+        violation[{"msg":msg}] {
+          input.review.kind.kind == "RedisInstance"
+          input.review.object.spec.authorizedNetworkRef.name == "default"
+          msg := sprintf("Memorystore (redis) %s's VPC shouldn't be default.", [input.review.object.metadata.name])
+        }
+EOF
+```
+
+Define the `Constraint` resource:
+```Bash
+cat <<EOF > ~/$WORKSHOP_ORG_DIR_NAME/config-sync/policies/constraints/allowed-memorystore-redis.yaml
+apiVersion: constraints.gatekeeper.sh/v1beta1
+kind: LimitMemorystoreRedis
+metadata:
+  name: allowed-memorystore-redis
+spec:
+  enforcementAction: deny
+  match:
+    kinds:
+      - apiGroups:
+        - redis.cnrm.cloud.google.com
+        kinds:
+        - RedisInstance
+EOF
+```
+
 ## Deploy Kubernetes manifests
 
 ```Bash
 cd ~/$WORKSHOP_ORG_DIR_NAME/
 git add .
-git commit -m "Memorystore rights for GKE project"
+git commit -m "Allow Memorystore for GKE project"
 git push
 ```
 
