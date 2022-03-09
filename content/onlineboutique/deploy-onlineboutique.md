@@ -4,8 +4,6 @@ weight: 5
 ---
 - Persona: Apps Operator
 - Duration: 5 min
-- Objectives:
-  - FIXME
 
 Initialize variables:
 ```Bash

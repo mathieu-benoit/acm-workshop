@@ -4,8 +4,6 @@ weight: 6
 ---
 - Persona: Platform Admin
 - Duration: 10 min
-- Objectives:
-  - FIXME
 
 Initialize variables:
 ```Bash

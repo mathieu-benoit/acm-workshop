@@ -4,9 +4,6 @@ weight: 1
 ---
 - Persona: Org Admin
 - Duration: 20 min
-- Objectives:
-  - Create a Config Controller instance in its dedicated GCP project
-  - Assign the least privilege GCP roles to the Config Controller's GCP service account
 
 Define variables:
 ```Bash
@@ -20,6 +17,8 @@ echo "export ORG_OR_FOLDER_ID=${ORG_OR_FOLDER_ID}" >> ~/acm-workshop-variables.s
 echo "export LOCAL_IP_ADDRESS=$(curl ifconfig.co)" >> ~/acm-workshop-variables.sh
 source ~/acm-workshop-variables.sh
 ```
+
+## Create Config Controller's GCP project
 
 Create the Config Controller's GCP project:
 {{< tabs groupId="org-level">}}
@@ -52,6 +51,8 @@ Set this project as the default project for following `gcloud` commands:
 gcloud config set project $CONFIG_CONTROLLER_PROJECT_ID
 ```
 
+## Create the Config Controller instance
+
 Create the Config Controller instance:
 ```Bash
 gcloud services enable krmapihosting.googleapis.com \
@@ -70,7 +71,7 @@ gcloud anthos config controller describe $CONFIG_CONTROLLER_NAME \
 The Config Controller instance provisioning could take around 15-20 min.
 {{% /notice %}}
 
-## Set roles to the Config Controller's service account 
+## Set Config Controller's service account roles
 
 Get the actual the Config Controller's service account:
 ```Bash

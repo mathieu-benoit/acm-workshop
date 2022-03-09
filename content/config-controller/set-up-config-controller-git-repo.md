@@ -16,6 +16,8 @@ echo "export WORKSHOP_ORG_DIR_NAME=acm-workshop-org-repo" >> ~/acm-workshop-vari
 source ~/acm-workshop-variables.sh
 ```
 
+## Set up Cloud NAT
+
 Open Config Controller's egress to the Internet (GitHub access):
 ```Bash
 CONFIG_CONTROLLER_NETWORK=$(gcloud anthos config controller describe $CONFIG_CONTROLLER_NAME \
@@ -30,6 +32,8 @@ gcloud compute routers nats create nat-config \
     --nat-all-subnet-ip-ranges \
     --auto-allocate-nat-external-ips
 ```
+
+## Enable multi-repositories
 
 Deploy the multi-repositories setup for the Config Controller's Config Management component:
 ```Bash
@@ -55,6 +59,8 @@ Let's wait for the multi-repositories configs to be deployed:
 ```Bash
 kubectl wait --for condition=established crd rootsyncs.configsync.gke.io
 ```
+
+## Define the primary Git repository
 
 Create a dedicated GitHub repository to store any Kubernetes manifests associated to the GCP Organization:
 ```Bash
@@ -84,6 +90,8 @@ EOF
 {{% notice info %}}
 Since you started this workshop, you just ran 4 `kubectl` commands. For your information, moving forward you won't run any other `kubectl` commands because the design and intent of this workshop is to only deploy any Kubernetes resources via GitOps with Config Sync. You will also use some handy `gcloud` commands when appropriate.
 {{% /notice %}}
+
+## Define Cloud Billing API
 
 Define the Cloud Billing API [`Service`](https://cloud.google.com/config-connector/docs/reference/resource-docs/serviceusage/service) resource:
 ```Bash
