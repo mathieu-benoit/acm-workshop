@@ -1,9 +1,8 @@
 ---
 title: "Exercises"
 weight: 8
+description: "Duration: 10 min"
 ---
-- Duration: 10 min
-
 Do you want more optional exercises? Here you are!
 
 Initialize variables:

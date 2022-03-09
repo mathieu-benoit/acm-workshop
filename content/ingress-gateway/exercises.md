@@ -1,9 +1,8 @@
 ---
 title: "Exercises"
 weight: 7
+description: "Duration: 2 min"
 ---
-- Duration: 2 min
-
 Do you want more optional exercises? Here you are!
 
 ## Anthos Security view
