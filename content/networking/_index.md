@@ -5,6 +5,6 @@ weight: 4
 ---
 Set up the Networking.
 
-{{% children showhidden="false" description="true" %}}
+{{% children showhidden="false" description="true" style="h4" %}}
 
 ![Networking overview](/images/networking-overview.png?width=50pc)

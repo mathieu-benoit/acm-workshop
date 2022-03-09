@@ -5,6 +5,6 @@ weight: 6
 ---
 Set up Artifact Registry.
 
-{{% children showhidden="false" description="true" %}}
+{{% children showhidden="false" description="true" style="h4" %}}
 
 ![Artifact Registry overview](/images/artifact-registry-overview.png?width=50pc)

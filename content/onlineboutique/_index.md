@@ -5,6 +5,6 @@ weight: 10
 ---
 Set up the Online Boutique apps.
 
-{{% children showhidden="false" description="true" style="h3" %}}
+{{% children showhidden="false" description="true" style="h4" %}}
 
 ![Online Boutique overview](/images/onlineboutique-overview.png?width=50pc)

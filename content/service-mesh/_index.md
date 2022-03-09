@@ -5,6 +5,6 @@ weight: 7
 ---
 Set up Anthos Service Mesh (ASM).
 
-{{% children showhidden="false" description="true" %}}
+{{% children showhidden="false" description="true" style="h4" %}}
 
 ![ASM overview](/images/asm-overview.png?width=50pc)
