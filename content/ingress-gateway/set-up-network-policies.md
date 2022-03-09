@@ -1,10 +1,8 @@
 ---
 title: "Set up Network Policies"
 weight: 5
+description: "Duration: 5 min | Persona: Platform Admin"
 ---
-- Persona: Platform Admin
-- Duration: 5 min
-
 Initialize variables:
 ```Bash
 source ~/acm-workshop-variables.sh

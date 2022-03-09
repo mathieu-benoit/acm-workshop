@@ -1,10 +1,8 @@
 ---
 title: "Set up Online Boutique's Git repo"
 weight: 1
+description: "Duration: 10 min | Persona: Platform Admin"
 ---
-- Persona: Platform Admin
-- Duration: 10 min
-
 Initialize variables:
 ```Bash
 echo "export ONLINEBOUTIQUE_NAMESPACE=onlineboutique" >> ~/acm-workshop-variables.sh

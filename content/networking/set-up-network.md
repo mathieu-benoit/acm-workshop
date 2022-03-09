@@ -1,10 +1,8 @@
 ---
 title: "Set up Network"
 weight: 1
+description: "Duration: 15 min | Persona: Platform Admin"
 ---
-- Persona: Platform Admin
-- Duration: 15 min
-
 Initialize variables:
 ```Bash
 echo "export GKE_LOCATION=us-east4" >> ~/acm-workshop-variables.sh

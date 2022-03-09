@@ -1,10 +1,8 @@
 ---
 title: "Allow Memorystore"
 weight: 2
+description: "Duration: 5 min | Persona: Org Admin"
 ---
-- Persona: Org Admin
-- Duration: 5 min
-
 Initialize variables:
 ```Bash
 source ~/acm-workshop-variables.sh

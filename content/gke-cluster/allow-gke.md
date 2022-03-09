@@ -1,10 +1,8 @@
 ---
 title: "Allow GKE"
 weight: 1
+description: "Duration: 5 min | Persona: Org Admin"
 ---
-- Persona: Org Admin
-- Duration: 5 min
-
 Define variables:
 ```Bash
 source ~/acm-workshop-variables.sh
@@ -97,7 +95,7 @@ We are enabling the GCP services APIs from the Org Admin, it allows more control
 ```Bash
 cd ~/$WORKSHOP_ORG_DIR_NAME/
 git add .
-git commit -m "GKE rights for GKE project"
+git commit -m "Allow GKE for GKE project"
 git push
 ```
 

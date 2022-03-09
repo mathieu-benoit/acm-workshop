@@ -1,10 +1,8 @@
 ---
 title: "Enforce policies"
 weight: 3
+description: "Duration: 10 min | Persona: Platform Admin"
 ---
-- Persona: Platform Admin
-- Duration: 10 min
-
 Initialize variables:
 ```Bash
 source ~/acm-workshop-variables.sh
@@ -15,7 +13,7 @@ source ~/acm-workshop-variables.sh
 Define the `ConstraintTemplate` resource:
 ```Bash
 cat <<EOF > ~/$GKE_CONFIGS_DIR_NAME/config-sync/policies/templates/k8sallowedrepos.yaml
-apiVersion: templates.gatekeeper.sh/v1beta1
+apiVersion: templates.gatekeeper.sh/v1
 kind: ConstraintTemplate
 metadata:
   name: k8sallowedrepos

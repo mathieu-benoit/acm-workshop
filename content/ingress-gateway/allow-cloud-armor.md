@@ -1,10 +1,8 @@
 ---
 title: "Allow Cloud Armor"
 weight: 2
+description: "Duration: 2 min | Persona: Org Admin"
 ---
-- Persona: Org Admin
-- Duration: 2 min
-
 Initialize variables:
 ```Bash
 source ~/acm-workshop-variables.sh
@@ -35,7 +33,7 @@ EOF
 ```Bash
 cd ~/$WORKSHOP_ORG_DIR_NAME/
 git add .
-git commit -m "Security rights for GKE project"
+git commit -m "Allow Security for GKE project"
 git push
 ```
 

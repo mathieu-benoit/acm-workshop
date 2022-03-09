@@ -1,10 +1,8 @@
 ---
 title: "Allow GKE Hub"
 weight: 3
+description: "Duration: 5 min | Persona: Org Admin"
 ---
-- Persona: Org Admin
-- Duration: 5 min
-
 Define variables:
 ```Bash
 source ~/acm-workshop-variables.sh
@@ -63,7 +61,7 @@ EOF
 ```Bash
 cd ~/$WORKSHOP_ORG_DIR_NAME/
 git add .
-git commit -m "GKE Hub rights for GKE project"
+git commit -m "Allow GKE Hub for GKE project"
 git push
 ```
 

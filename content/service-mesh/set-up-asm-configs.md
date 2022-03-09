@@ -1,10 +1,8 @@
 ---
 title: "Set up ASM configs"
 weight: 3
+description: "Duration: 5 min | Persona: Platform Admin"
 ---
-- Persona: Platform Admin
-- Duration: 10 min
-
 Initialize variables:
 ```Bash
 source ~/acm-workshop-variables.sh

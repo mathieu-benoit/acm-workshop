@@ -1,10 +1,8 @@
 ---
 title: "Set up GKE configs's Git repo"
 weight: 4
+description: "Duration: 10 min | Persona: Platform Admin"
 ---
-- Persona: Platform Admin
-- Duration: 10 min
-
 Define variables:
 ```Bash
 echo "export export GKE_CONFIGS_DIR_NAME=acm-workshop-gke-configs-repo" >> ~/acm-workshop-variables.sh

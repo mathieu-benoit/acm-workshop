@@ -1,10 +1,8 @@
 ---
 title: "Allow Artifact Registry"
 weight: 1
+description: "Duration: 5 min | Persona: Org Admin"
 ---
-- Persona: Org Admin
-- Duration: 5 min
-
 Initialize variables:
 ```Bash
 source ~/acm-workshop-variables.sh
@@ -83,6 +81,6 @@ EOF
 ```Bash
 cd ~/$WORKSHOP_ORG_DIR_NAME/
 git add .
-git commit -m "Artifact Registry rights for GKE project"
+git commit -m "Allow Artifact Registry for GKE project"
 git push
 ```

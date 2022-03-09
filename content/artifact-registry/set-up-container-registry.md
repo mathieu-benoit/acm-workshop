@@ -1,10 +1,8 @@
 ---
 title: "Set up Artifact Registry"
 weight: 2
+description: "Duration: 5 min | Persona: Platform Admin"
 ---
-- Persona: Platform Admin
-- Duration: 5 min
-
 Initialize variables:
 ```Bash
 echo "export CONTAINER_REGISTRY_NAME=containers" >> ~/acm-workshop-variables.sh
