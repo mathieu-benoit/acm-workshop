@@ -3,6 +3,8 @@ title: "Set up Memorystore"
 weight: 3
 description: "Duration: 10 min | Persona: Platform Admin"
 ---
+_{{< param description >}}_
+
 Initialize variables:
 ```Bash
 echo "export REDIS_NAME=cart" >> ~/acm-workshop-variables.sh

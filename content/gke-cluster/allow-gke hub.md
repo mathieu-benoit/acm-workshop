@@ -3,6 +3,8 @@ title: "Allow GKE Hub"
 weight: 3
 description: "Duration: 5 min | Persona: Org Admin"
 ---
+_{{< param description >}}_
+
 Define variables:
 ```Bash
 source ~/acm-workshop-variables.sh

@@ -3,6 +3,8 @@ title: "Allow ASM"
 weight: 1
 description: "Duration: 5 min | Persona: Org Admin"
 ---
+_{{< param description >}}_
+
 Initialize variables:
 ```Bash
 source ~/acm-workshop-variables.sh

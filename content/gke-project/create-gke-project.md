@@ -3,6 +3,8 @@ title: "Create GKE project"
 weight: 1
 description: "Duration: 10 min | Persona: Org Admin"
 ---
+_{{< param description >}}_
+
 Define variables:
 ```Bash
 echo "export GKE_PROJECT_ID=acm-workshop-${RANDOM_SUFFIX}-gke" >> ~/acm-workshop-variables.sh

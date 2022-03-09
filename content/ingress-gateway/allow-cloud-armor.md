@@ -3,6 +3,8 @@ title: "Allow Cloud Armor"
 weight: 2
 description: "Duration: 2 min | Persona: Org Admin"
 ---
+_{{< param description >}}_
+
 Initialize variables:
 ```Bash
 source ~/acm-workshop-variables.sh

@@ -3,6 +3,8 @@ title: "Deploy Ingress Gateway"
 weight: 4
 description: "Duration: 15 min | Persona: Platform Admin"
 ---
+_{{< param description >}}_
+
 Initialize variables:
 ```Bash
 echo "export INGRESS_GATEWAY_NAMESPACE=asm-ingress" >> ~/acm-workshop-variables.sh

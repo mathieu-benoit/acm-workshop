@@ -3,6 +3,8 @@ title: "Set up Network Policies"
 weight: 6
 description: "Duration: 5 min | Persona: Apps Operator"
 ---
+_{{< param description >}}_
+
 Initialize variables:
 ```Bash
 source ~/acm-workshop-variables.sh

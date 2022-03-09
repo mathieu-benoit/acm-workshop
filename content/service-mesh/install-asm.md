@@ -3,6 +3,8 @@ title: "Install ASM"
 weight: 2
 description: "Duration: 10 min | Persona: Platform Admin"
 ---
+_{{< param description >}}_
+
 Initialize variables:
 ```Bash
 echo "export ASM_CHANNEL=rapid" >> ~/acm-workshop-variables.sh

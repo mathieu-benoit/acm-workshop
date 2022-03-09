@@ -3,7 +3,7 @@ title: "Set up Online Boutique's Git repo"
 weight: 1
 description: "Duration: 10 min | Persona: Platform Admin"
 ---
-_Duration: 10 min | Persona: Platform Admin_
+_{{< param description >}}_
 
 Initialize variables:
 ```Bash

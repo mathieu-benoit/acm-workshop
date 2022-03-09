@@ -3,6 +3,8 @@ title: "Set up Config Controller's Git repo"
 weight: 2
 description: "Duration: 5 min | Persona: Org Admin"
 ---
+_{{< param description >}}_
+
 Define variables:
 ```Bash
 echo "export WORKSHOP_ORG_DIR_NAME=acm-workshop-org-repo" >> ~/acm-workshop-variables.sh

@@ -3,6 +3,8 @@ title: "Set up GKE project's Git repo"
 weight: 2
 description: "Duration: 10 min | Persona: Org Admin"
 ---
+_{{< param description >}}_
+
 Define variables:
 ```Bash
 echo "export GKE_PROJECT_DIR_NAME=acm-workshop-gke-project-repo" >> ~/acm-workshop-variables.sh

@@ -3,6 +3,8 @@ title: "Create the GKE cluster"
 weight: 2
 description: "Duration: 5 min | Persona: Platform Admin"
 ---
+_{{< param description >}}_
+
 Initialize variables:
 ```Bash
 echo "export GKE_PROJECT_NUMBER=$(gcloud projects describe $GKE_PROJECT_ID --format='get(projectNumber)')" >> ~/acm-workshop-variables.sh

@@ -3,6 +3,8 @@ title: "Exercises"
 weight: 9
 description: "Duration: 5 min"
 ---
+_{{< param description >}}_
+
 Do you want more optional exercises? Here you are!
 
 ## Anthos Security view

@@ -3,6 +3,8 @@ title: "Deploy Online Boutique apps"
 weight: 5
 description: "Duration: 5 min | Persona: Apps Operator"
 ---
+_{{< param description >}}_
+
 Initialize variables:
 ```Bash
 source ~/acm-workshop-variables.sh

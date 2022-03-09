@@ -3,7 +3,7 @@ title: "Allow Artifact Registry"
 weight: 1
 description: "Duration: 5 min | Persona: Org Admin"
 ---
-{{ .Description }}
+_{{< param description >}}_
 
 Initialize variables:
 ```Bash

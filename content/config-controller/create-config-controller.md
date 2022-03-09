@@ -3,6 +3,8 @@ title: "Create Config Controller"
 weight: 1
 description: "Duration: 20 min | Persona: Org Admin"
 ---
+_{{< param description >}}_
+
 Define variables:
 ```Bash
 RANDOM_SUFFIX=$(shuf -i 100-999 -n 1)

@@ -3,6 +3,8 @@ title: "Exercises"
 weight: 8
 description: "Duration: 10 min"
 ---
+_{{< param description >}}_
+
 Do you want more optional exercises? Here you are!
 
 Initialize variables:

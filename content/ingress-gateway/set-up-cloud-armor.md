@@ -3,6 +3,8 @@ title: "Set up Cloud Armor"
 weight: 3
 description: "Duration: 10 min | Persona: Platform Admin"
 ---
+_{{< param description >}}_
+
 Initialize variables:
 ```Bash
 echo "export SECURITY_POLICY_NAME=${GKE_NAME}-asm-ingressgateway" >> ~/acm-workshop-variables.sh

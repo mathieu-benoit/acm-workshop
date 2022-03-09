@@ -3,6 +3,8 @@ title: "Set up Whereami's Git repo"
 weight: 1
 description: "Duration: 10 min | Persona: Platform Admin"
 ---
+_{{< param description >}}_
+
 Initialize variables:
 ```Bash
 echo "export WHEREAMI_NAMESPACE=whereami" >> ~/acm-workshop-variables.sh

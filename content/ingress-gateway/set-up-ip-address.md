@@ -3,6 +3,8 @@ title: "Set up IP address"
 weight: 1
 description: "Duration: 10 min | Persona: Platform Admin"
 ---
+_{{< param description >}}_
+
 Initialize variables:
 ```Bash
 echo "export INGRESS_GATEWAY_PUBLIC_IP_NAME=${GKE_NAME}-asm-ingressgateway" >> ~/acm-workshop-variables.sh
