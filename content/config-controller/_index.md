@@ -5,6 +5,6 @@ weight: 2
 ---
 Set up Config Controller.
 
-{{% children showhidden="false" %}}
+{{% children showhidden="false" description="true" %}}
 
 ![Config Controller overview](/images/config-controller-overview.png?width=50pc)

@@ -5,6 +5,6 @@ weight: 9
 ---
 Set up the Whereami app.
 
-{{% children showhidden="false" %}}
+{{% children showhidden="false" description="true" %}}
 
 ![Whereami overview](/images/whereami-overview.png?width=50pc)
