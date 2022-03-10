@@ -118,7 +118,7 @@ cat <<EOF > ~/$WORKSHOP_ORG_DIR_NAME/config-sync/projects/$GKE_PROJECT_ID/config
 apiVersion: core.cnrm.cloud.google.com/v1beta1
 kind: ConfigConnectorContext
 metadata:
-  name: configconnectorcontext
+  name: configconnectorcontext.core.cnrm.cloud.google.com
   namespace: ${GKE_PROJECT_ID}
 spec:
   googleServiceAccount: ${GKE_PROJECT_ID}@${CONFIG_CONTROLLER_PROJECT_ID}.iam.gserviceaccount.com
