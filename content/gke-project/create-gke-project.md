@@ -136,13 +136,14 @@ git push
 
 ## Check deployments
 
-Here is what you should have at this stage:
-
-If you run:
+List the GCP resources created:
 ```Bash
-cd ~/$WORKSHOP_ORG_DIR_NAME && gh run list
+gcloud projects describe $GKE_PROJECT_ID
+gcloud iam service-accounts describe $GKE_PROJECT_ID@$CONFIG_CONTROLLER_PROJECT_ID.iam.gserviceaccount.com \
+  --project $CONFIG_CONTROLLER_PROJECT_ID
 ```
-You should see:
+
+List the GitHub runs for the Org configs repository `cd ~/$WORKSHOP_ORG_DIR_NAME && gh run list`:
 ```Plaintext
 STATUS  NAME                                      WORKFLOW  BRANCH  EVENT  ID          ELAPSED  AGE
 ✓       Setting up GKE namespace/project          ci        main    push   1960908849  1m12s    1m

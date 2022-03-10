@@ -124,3 +124,13 @@ gcloud projects add-iam-policy-binding ${CONFIG_CONTROLLER_PROJECT_ID} \
     --member="serviceAccount:${CONFIG_CONTROLLER_SA}" \
     --role='roles/iam.serviceAccountAdmin'
 ```
+
+## Check deployments
+
+List the GCP resources created:
+```Bash
+gcloud projects describe $CONFIG_CONTROLLER_PROJECT_ID
+gcloud anthos config controller describe $CONFIG_CONTROLLER_NAME \
+    --location $CONFIG_CONTROLLER_LOCATION
+gcloud projects get-iam-policy $CONFIG_CONTROLLER_PROJECT_ID
+```

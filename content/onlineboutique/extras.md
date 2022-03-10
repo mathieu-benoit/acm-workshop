@@ -1,5 +1,5 @@
 ---
-title: "Exercises"
+title: "Extras"
 weight: 9
 description: "Duration: 5 min"
 ---

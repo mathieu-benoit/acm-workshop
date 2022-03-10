@@ -215,13 +215,7 @@ git push
 
 ## Check deployments
 
-Here is what you should have at this stage:
-
-If you run:
-```Bash
-cd ~/$WORKSHOP_ORG_DIR_NAME && gh run list
-```
-You should see:
+List the GitHub runs for the Org configs repository `cd ~/$WORKSHOP_ORG_DIR_NAME && gh run list`:
 ```Plaintext
 STATUS  NAME                                      WORKFLOW  BRANCH  EVENT  ID          ELAPSED  AGE
 ✓       Allow GKE for GKE project                 ci        main    push   1961343262  10s      0m
@@ -254,31 +248,31 @@ gcloud alpha anthos config sync repo describe \
 You should see:
 ```Plaintext
 getting 2 RepoSync and RootSync from krmapihost-configcontroller
-┌───────────────────────────────────────┬────────────────────────┬────────────────────────────────────────────┬──────────────────────┐
-│                 GROUP                 │          KIND          │                    NAME                    │      NAMESPACE       │
-├───────────────────────────────────────┼────────────────────────┼────────────────────────────────────────────┼──────────────────────┤
-│                                       │ Namespace              │ config-control                             │                      │
-│                                       │ Namespace              │ acm-workshop-464-gke                       │                      │
-│ constraints.gatekeeper.sh             │ LimitLocations         │ allowed-locations                          │                      │
-│ constraints.gatekeeper.sh             │ LimitGKECluster        │ allowed-gke-cluster                        │                      │
-│ templates.gatekeeper.sh               │ ConstraintTemplate     │ limitgkecluster                            │                      │
-│ templates.gatekeeper.sh               │ ConstraintTemplate     │ limitlocations                             │                      │
-│ compute.cnrm.cloud.google.com         │ ComputeRouterNAT       │ gke                                        │ acm-workshop-464-gke │
-│ compute.cnrm.cloud.google.com         │ ComputeSubnetwork      │ gke                                        │ acm-workshop-464-gke │
-│ compute.cnrm.cloud.google.com         │ ComputeNetwork         │ gke                                        │ acm-workshop-464-gke │
-│ compute.cnrm.cloud.google.com         │ ComputeRouter          │ gke                                        │ acm-workshop-464-gke │
-│ configsync.gke.io                     │ RepoSync               │ repo-sync                                  │ acm-workshop-464-gke │
-│ core.cnrm.cloud.google.com            │ ConfigConnectorContext │ configconnectorcontext                     │ acm-workshop-464-gke │
-│ rbac.authorization.k8s.io             │ RoleBinding            │ syncs-repo                                 │ acm-workshop-464-gke │
-│ iam.cnrm.cloud.google.com             │ IAMPolicyMember        │ service-account-user-acm-workshop-464-gke  │ config-control       │
-│ iam.cnrm.cloud.google.com             │ IAMPartialPolicy       │ acm-workshop-464-gke-sa-wi-user            │ config-control       │
-│ iam.cnrm.cloud.google.com             │ IAMServiceAccount      │ acm-workshop-464-gke                       │ config-control       │
-│ iam.cnrm.cloud.google.com             │ IAMPolicyMember        │ network-admin-acm-workshop-464-gke         │ config-control       │
-│ iam.cnrm.cloud.google.com             │ IAMPolicyMember        │ service-account-admin-acm-workshop-464-gke │ config-control       │
-│ iam.cnrm.cloud.google.com             │ IAMPolicyMember        │ iam-admin-acm-workshop-464-gke             │ config-control       │
-│ iam.cnrm.cloud.google.com             │ IAMPolicyMember        │ container-admin-acm-workshop-464-gke       │ config-control       │
-│ resourcemanager.cnrm.cloud.google.com │ Project                │ acm-workshop-464-gke                       │ config-control       │
-│ serviceusage.cnrm.cloud.google.com    │ Service                │ container.googleapis.com                   │ config-control       │
-│ serviceusage.cnrm.cloud.google.com    │ Service                │ cloudbilling.googleapis.com                │ config-control       │
-└───────────────────────────────────────┴────────────────────────┴────────────────────────────────────────────┴──────────────────────┘
+┌───────────────────────────────────────┬────────────────────────┬───────────────────────────────────────────────────┬──────────────────────┐
+│                 GROUP                 │          KIND          │                        NAME                       │      NAMESPACE       │
+├───────────────────────────────────────┼────────────────────────┼───────────────────────────────────────────────────┼──────────────────────┤
+│                                       │ Namespace              │ acm-workshop-464-gke                              │                      │
+│                                       │ Namespace              │ config-control                                    │                      │
+│ constraints.gatekeeper.sh             │ LimitGKECluster        │ allowed-gke-cluster                               │                      │
+│ constraints.gatekeeper.sh             │ LimitLocations         │ allowed-locations                                 │                      │
+│ templates.gatekeeper.sh               │ ConstraintTemplate     │ limitlocations                                    │                      │
+│ templates.gatekeeper.sh               │ ConstraintTemplate     │ limitgkecluster                                   │                      │
+│ compute.cnrm.cloud.google.com         │ ComputeRouterNAT       │ gke                                               │ acm-workshop-464-gke │
+│ compute.cnrm.cloud.google.com         │ ComputeSubnetwork      │ gke                                               │ acm-workshop-464-gke │
+│ compute.cnrm.cloud.google.com         │ ComputeNetwork         │ gke                                               │ acm-workshop-464-gke │
+│ compute.cnrm.cloud.google.com         │ ComputeRouter          │ gke                                               │ acm-workshop-464-gke │
+│ configsync.gke.io                     │ RepoSync               │ repo-sync                                         │ acm-workshop-464-gke │
+│ core.cnrm.cloud.google.com            │ ConfigConnectorContext │ configconnectorcontext.core.cnrm.cloud.google.com │ acm-workshop-464-gke │
+│ rbac.authorization.k8s.io             │ RoleBinding            │ syncs-repo                                        │ acm-workshop-464-gke │
+│ iam.cnrm.cloud.google.com             │ IAMPolicyMember        │ iam-admin-acm-workshop-464-gke                    │ config-control       │
+│ iam.cnrm.cloud.google.com             │ IAMPartialPolicy       │ acm-workshop-464-gke-sa-wi-user                   │ config-control       │
+│ iam.cnrm.cloud.google.com             │ IAMPolicyMember        │ network-admin-acm-workshop-464-gke                │ config-control       │
+│ iam.cnrm.cloud.google.com             │ IAMServiceAccount      │ acm-workshop-464-gke                              │ config-control       │
+│ iam.cnrm.cloud.google.com             │ IAMPolicyMember        │ service-account-admin-acm-workshop-464-gke        │ config-control       │
+│ iam.cnrm.cloud.google.com             │ IAMPolicyMember        │ container-admin-acm-workshop-464-gke              │ config-control       │
+│ iam.cnrm.cloud.google.com             │ IAMPolicyMember        │ service-account-user-acm-workshop-464-gke         │ config-control       │
+│ resourcemanager.cnrm.cloud.google.com │ Project                │ acm-workshop-464-gke                              │ config-control       │
+│ serviceusage.cnrm.cloud.google.com    │ Service                │ cloudbilling.googleapis.com                       │ config-control       │
+│ serviceusage.cnrm.cloud.google.com    │ Service                │ container.googleapis.com                          │ config-control       │
+└───────────────────────────────────────┴────────────────────────┴───────────────────────────────────────────────────┴──────────────────────┘
 ```

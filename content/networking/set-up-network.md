@@ -95,13 +95,22 @@ git push
 
 ## Check deployments
 
-Here is what you should have at this stage:
-
-If you run:
+List the GCP resources created:
 ```Bash
-cd ~/$WORKSHOP_ORG_DIR_NAME && gh run list
+gcloud compute networks describe $GKE_NAME \
+  --project $GKE_PROJECT_ID
+gcloud compute networks subnets describe $GKE_NAME \
+  --project $GKE_PROJECT_ID
+gcloud compute routers describe $GKE_NAME \
+  --region $GKE_LOCATION \
+  --project $GKE_PROJECT_ID
+gcloud compute routers nats describe $GKE_NAME \
+  --router $GKE_NAME \
+  --region $GKE_LOCATION \
+  --project $GKE_PROJECT_ID
 ```
-You should see:
+
+List the GitHub runs for the Org configs repository `cd ~/$WORKSHOP_ORG_DIR_NAME && gh run list`:
 ```Plaintext
 STATUS  NAME                                      WORKFLOW  BRANCH  EVENT  ID          ELAPSED  AGE
 ✓       Allow Networking for GKE project          ci        main    push   1960975064  1m11s    2m

@@ -18,12 +18,14 @@ Open Config Controller's egress to the Internet (GitHub access):
 CONFIG_CONTROLLER_NETWORK=$(gcloud anthos config controller describe $CONFIG_CONTROLLER_NAME \
     --location=$CONFIG_CONTROLLER_LOCATION \
     --format='get(managementConfig.standardManagementConfig.network)')
-gcloud compute routers create nat-router \
+CONFIG_CONTROLLER_NAT_ROUTER_NAME=nat-router
+gcloud compute routers create $CONFIG_CONTROLLER_NAT_ROUTER_NAME \
     --network $CONFIG_CONTROLLER_NETWORK \
     --region $CONFIG_CONTROLLER_LOCATION
-gcloud compute routers nats create nat-config \
+CONFIG_CONTROLLER_NAT_CONFIG_NAME=nat-config
+gcloud compute routers nats create $CONFIG_CONTROLLER_NAT_CONFIG_NAME \
     --router-region $CONFIG_CONTROLLER_LOCATION \
-    --router nat-router \
+    --router $CONFIG_CONTROLLER_NAT_ROUTER_NAME \
     --nat-all-subnet-ip-ranges \
     --auto-allocate-nat-external-ips
 ```
@@ -115,13 +117,18 @@ git push
 
 ## Check deployments
 
-Here is what you should have at this stage:
-
-If you run:
+List the GCP resources created:
 ```Bash
-cd ~/$WORKSHOP_ORG_DIR_NAME && gh run list
+gcloud compute routers describe $CONFIG_CONTROLLER_NAT_ROUTER_NAME \
+  --region $CONFIG_CONTROLLER_LOCATION \
+  --project $CONFIG_CONTROLLER_PROJECT_ID
+gcloud compute routers nats describe $CONFIG_CONTROLLER_NAT_CONFIG_NAME \
+  --router $CONFIG_CONTROLLER_NAT_ROUTER_NAME \
+  --region $CONFIG_CONTROLLER_LOCATION \
+  --project $CONFIG_CONTROLLER_PROJECT_ID
 ```
-You should see:
+
+List the GitHub runs for the Org configs repository `cd ~/$WORKSHOP_ORG_DIR_NAME && gh run list`:
 ```Plaintext
 STATUS  NAME                                      WORKFLOW  BRANCH  EVENT  ID          ELAPSED  AGE
 ✓       Billing API in Config Controller project  ci        main    push   1960889246  1m0s     1m

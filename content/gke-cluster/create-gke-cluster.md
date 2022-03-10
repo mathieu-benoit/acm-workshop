@@ -182,13 +182,13 @@ git push
 
 ## Check deployments
 
-Here is what you should have at this stage:
-
-If you run:
+List the GCP resources created:
 ```Bash
-cd ~/$WORKSHOP_ORG_DIR_NAME && gh run list
+gcloud container node-pools describe primary \
+  --cluster $GKE_NAME
 ```
-You should see:
+
+List the GitHub runs for the Org configs repository `cd ~/$WORKSHOP_ORG_DIR_NAME && gh run list`:
 ```Plaintext
 FIXME
 ```
@@ -196,15 +196,6 @@ FIXME
 If you run:
 ```Bash
 cd ~/$GKE_PROJECT_DIR_NAME && gh run list
-```
-You should see:
-```Plaintext
-FIXME
-```
-
-If you run:
-```Bash
-cd ~/$GKE_CONFIGS_DIR_NAME && gh run list
 ```
 You should see:
 ```Plaintext
