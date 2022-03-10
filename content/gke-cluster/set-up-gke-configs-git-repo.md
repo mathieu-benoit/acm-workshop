@@ -52,6 +52,8 @@ Create a dedicated GitHub repository where we will commit all the configs, polic
 ```Bash
 gh repo create $GKE_CONFIGS_DIR_NAME --public --clone --template https://github.com/mathieu-benoit/config-sync-template-repo
 cd ~/$GKE_CONFIGS_DIR_NAME
+git pull
+git checkout main
 GKE_CONFIGS_REPO_URL=$(gh repo view --json url --jq .url)
 ```
 

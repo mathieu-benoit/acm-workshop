@@ -17,6 +17,8 @@ Create a dedicated GitHub repository to store any Kubernetes manifests associate
 ```Bash
 gh repo create $GKE_PROJECT_DIR_NAME --public --clone --template https://github.com/mathieu-benoit/config-sync-template-repo
 cd ~/$GKE_PROJECT_DIR_NAME
+git pull
+git checkout main
 GKE_PLATFORM_REPO_URL=$(gh repo view --json url --jq .url)
 ```
 
@@ -97,5 +99,18 @@ gcloud alpha anthos config sync repo describe \
 ```
 You should see:
 ```Plaintext
-FIXME
+getting 2 RepoSync and RootSync from krmapihost-configcontroller
+┌───────────────────────────────────────┬────────────────────────┬────────────────────────────────────┬──────────────────────┐
+│                 GROUP                 │          KIND          │                NAME                │      NAMESPACE       │
+├───────────────────────────────────────┼────────────────────────┼────────────────────────────────────┼──────────────────────┤
+│                                       │ Namespace              │ acm-workshop-464-gke               │                      │
+│                                       │ Namespace              │ config-control                     │                      │
+│ configsync.gke.io                     │ RepoSync               │ repo-sync                          │ acm-workshop-464-gke │
+│ core.cnrm.cloud.google.com            │ ConfigConnectorContext │ configconnectorcontext             │ acm-workshop-464-gke │
+│ rbac.authorization.k8s.io             │ RoleBinding            │ syncs-repo                         │ acm-workshop-464-gke │
+│ iam.cnrm.cloud.google.com             │ IAMServiceAccount      │ acm-workshop-464-gke               │ config-control       │
+│ iam.cnrm.cloud.google.com             │ IAMPartialPolicy       │ acm-workshop-464-gke-sa-wi-user    │ config-control       │
+│ resourcemanager.cnrm.cloud.google.com │ Project                │ acm-workshop-464-gke               │ config-control       │
+│ serviceusage.cnrm.cloud.google.com    │ Service                │ cloudbilling.googleapis.com        │ config-control       │
+└───────────────────────────────────────┴────────────────────────┴────────────────────────────────────┴──────────────────────┘
 ```

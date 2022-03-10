@@ -61,6 +61,8 @@ Create a dedicated GitHub repository to store any Kubernetes manifests associate
 ```Bash
 gh repo create $WORKSHOP_ORG_DIR_NAME --public --clone --template https://github.com/mathieu-benoit/config-sync-template-repo
 cd ~/$WORKSHOP_ORG_DIR_NAME
+git pull
+git checkout main
 ORG_REPO_URL=$(gh repo view --json url --jq .url)
 ```
 

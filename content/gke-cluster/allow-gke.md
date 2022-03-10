@@ -223,7 +223,14 @@ cd ~/$WORKSHOP_ORG_DIR_NAME && gh run list
 ```
 You should see:
 ```Plaintext
-FIXME
+STATUS  NAME                                      WORKFLOW  BRANCH  EVENT  ID          ELAPSED  AGE
+✓       Allow GKE for GKE project                 ci        main    push   1961343262  10s      0m
+✓       Allow Networking for GKE project          ci        main    push   1961279233  1m9s     19m
+✓       Enforce policies for GKE project          ci        main    push   1961276465  1m2s     20m
+✓       GitOps for GKE project                    ci        main    push   1961259400  1m7s     24m
+✓       Setting up GKE namespace/project          ci        main    push   1961160322  1m7s     1h
+✓       Billing API in Config Controller project  ci        main    push   1961142326  1m12s    1h
+✓       Initial commit                            ci        main    push   1961132028  1m2s     1h
 ```
 
 If you run:
@@ -232,16 +239,9 @@ cd ~/$GKE_PROJECT_DIR_NAME && gh run list
 ```
 You should see:
 ```Plaintext
-FIXME
-```
-
-If you run:
-```Bash
-cd ~/$GKE_CONFIGS_DIR_NAME && gh run list
-```
-You should see:
-```Plaintext
-FIXME
+STATUS  NAME                     WORKFLOW  BRANCH  EVENT  ID          ELAPSED  AGE
+✓       Network for GKE project  ci        main    push   1961289819  1m13s    17m
+✓       Initial commit           ci        main    push   1961170391  56s      58m
 ```
 
 If you run:
@@ -253,17 +253,32 @@ gcloud alpha anthos config sync repo describe \
 ```
 You should see:
 ```Plaintext
-FIXME
-```
-
-If you run:
-```Bash
-gcloud alpha anthos config sync repo describe \
-   --project $GKE_PROJECT_ID \
-   --managed-resources all \
-   --format="multi(statuses:format=none,managed_resources:format='table[box](group:sort=2,kind,name,namespace:sort=1)')"
-```
-You should see:
-```Plaintext
-FIXME
+getting 2 RepoSync and RootSync from krmapihost-configcontroller
+┌───────────────────────────────────────┬────────────────────────┬────────────────────────────────────────────┬──────────────────────┐
+│                 GROUP                 │          KIND          │                    NAME                    │      NAMESPACE       │
+├───────────────────────────────────────┼────────────────────────┼────────────────────────────────────────────┼──────────────────────┤
+│                                       │ Namespace              │ config-control                             │                      │
+│                                       │ Namespace              │ acm-workshop-464-gke                       │                      │
+│ constraints.gatekeeper.sh             │ LimitLocations         │ allowed-locations                          │                      │
+│ constraints.gatekeeper.sh             │ LimitGKECluster        │ allowed-gke-cluster                        │                      │
+│ templates.gatekeeper.sh               │ ConstraintTemplate     │ limitgkecluster                            │                      │
+│ templates.gatekeeper.sh               │ ConstraintTemplate     │ limitlocations                             │                      │
+│ compute.cnrm.cloud.google.com         │ ComputeRouterNAT       │ gke                                        │ acm-workshop-464-gke │
+│ compute.cnrm.cloud.google.com         │ ComputeSubnetwork      │ gke                                        │ acm-workshop-464-gke │
+│ compute.cnrm.cloud.google.com         │ ComputeNetwork         │ gke                                        │ acm-workshop-464-gke │
+│ compute.cnrm.cloud.google.com         │ ComputeRouter          │ gke                                        │ acm-workshop-464-gke │
+│ configsync.gke.io                     │ RepoSync               │ repo-sync                                  │ acm-workshop-464-gke │
+│ core.cnrm.cloud.google.com            │ ConfigConnectorContext │ configconnectorcontext                     │ acm-workshop-464-gke │
+│ rbac.authorization.k8s.io             │ RoleBinding            │ syncs-repo                                 │ acm-workshop-464-gke │
+│ iam.cnrm.cloud.google.com             │ IAMPolicyMember        │ service-account-user-acm-workshop-464-gke  │ config-control       │
+│ iam.cnrm.cloud.google.com             │ IAMPartialPolicy       │ acm-workshop-464-gke-sa-wi-user            │ config-control       │
+│ iam.cnrm.cloud.google.com             │ IAMServiceAccount      │ acm-workshop-464-gke                       │ config-control       │
+│ iam.cnrm.cloud.google.com             │ IAMPolicyMember        │ network-admin-acm-workshop-464-gke         │ config-control       │
+│ iam.cnrm.cloud.google.com             │ IAMPolicyMember        │ service-account-admin-acm-workshop-464-gke │ config-control       │
+│ iam.cnrm.cloud.google.com             │ IAMPolicyMember        │ iam-admin-acm-workshop-464-gke             │ config-control       │
+│ iam.cnrm.cloud.google.com             │ IAMPolicyMember        │ container-admin-acm-workshop-464-gke       │ config-control       │
+│ resourcemanager.cnrm.cloud.google.com │ Project                │ acm-workshop-464-gke                       │ config-control       │
+│ serviceusage.cnrm.cloud.google.com    │ Service                │ container.googleapis.com                   │ config-control       │
+│ serviceusage.cnrm.cloud.google.com    │ Service                │ cloudbilling.googleapis.com                │ config-control       │
+└───────────────────────────────────────┴────────────────────────┴────────────────────────────────────────────┴──────────────────────┘
 ```

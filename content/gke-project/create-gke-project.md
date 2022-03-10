@@ -159,5 +159,16 @@ gcloud alpha anthos config sync repo describe \
 ```
 You should see:
 ```Plaintext
-FIXME
+getting 1 RepoSync and RootSync from krmapihost-configcontroller
+┌───────────────────────────────────────┬────────────────────────┬─────────────────────────────────┬──────────────────────┐
+│                 GROUP                 │          KIND          │               NAME              │      NAMESPACE       │
+├───────────────────────────────────────┼────────────────────────┼─────────────────────────────────┼──────────────────────┤
+│                                       │ Namespace              │ config-control                  │                      │
+│                                       │ Namespace              │ acm-workshop-463-gke            │                      │
+│ core.cnrm.cloud.google.com            │ ConfigConnectorContext │ configconnectorcontext          │ acm-workshop-463-gke │
+│ iam.cnrm.cloud.google.com             │ IAMServiceAccount      │ acm-workshop-463-gke            │ config-control       │
+│ iam.cnrm.cloud.google.com             │ IAMPartialPolicy       │ acm-workshop-463-gke-sa-wi-user │ config-control       │
+│ resourcemanager.cnrm.cloud.google.com │ Project                │ acm-workshop-463-gke            │ config-control       │
+│ serviceusage.cnrm.cloud.google.com    │ Service                │ cloudbilling.googleapis.com     │ config-control       │
+└───────────────────────────────────────┴────────────────────────┴─────────────────────────────────┴──────────────────────┘
 ```

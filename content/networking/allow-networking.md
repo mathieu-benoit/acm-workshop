@@ -67,5 +67,21 @@ gcloud alpha anthos config sync repo describe \
 ```
 You should see:
 ```Plaintext
-FIXME
+getting 2 RepoSync and RootSync from krmapihost-configcontroller
+┌───────────────────────────────────────┬────────────────────────┬────────────────────────────────────┬──────────────────────┐
+│                 GROUP                 │          KIND          │                NAME                │      NAMESPACE       │
+├───────────────────────────────────────┼────────────────────────┼────────────────────────────────────┼──────────────────────┤
+│                                       │ Namespace              │ acm-workshop-464-gke               │                      │
+│                                       │ Namespace              │ config-control                     │                      │
+│ constraints.gatekeeper.sh             │ LimitLocations         │ allowed-locations                  │                      │
+│ templates.gatekeeper.sh               │ ConstraintTemplate     │ limitlocations                     │                      │
+│ configsync.gke.io                     │ RepoSync               │ repo-sync                          │ acm-workshop-464-gke │
+│ core.cnrm.cloud.google.com            │ ConfigConnectorContext │ configconnectorcontext             │ acm-workshop-464-gke │
+│ rbac.authorization.k8s.io             │ RoleBinding            │ syncs-repo                         │ acm-workshop-464-gke │
+│ iam.cnrm.cloud.google.com             │ IAMPolicyMember        │ network-admin-acm-workshop-464-gke │ config-control       │
+│ iam.cnrm.cloud.google.com             │ IAMServiceAccount      │ acm-workshop-464-gke               │ config-control       │
+│ iam.cnrm.cloud.google.com             │ IAMPartialPolicy       │ acm-workshop-464-gke-sa-wi-user    │ config-control       │
+│ resourcemanager.cnrm.cloud.google.com │ Project                │ acm-workshop-464-gke               │ config-control       │
+│ serviceusage.cnrm.cloud.google.com    │ Service                │ cloudbilling.googleapis.com        │ config-control       │
+└───────────────────────────────────────┴────────────────────────┴────────────────────────────────────┴──────────────────────┘
 ```

@@ -37,6 +37,8 @@ EOF
 ```Bash
 gh repo create $ONLINE_BOUTIQUE_DIR_NAME --public --clone --template https://github.com/mathieu-benoit/config-sync-template-repo
 cd ~/$ONLINE_BOUTIQUE_DIR_NAME
+git pull
+git checkout main
 ONLINE_BOUTIQUE_REPO_URL=$(gh repo view --json url --jq .url)
 ```
 

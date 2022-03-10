@@ -37,6 +37,8 @@ EOF
 ```Bash
 gh repo create $WHERE_AMI_DIR_NAME --public --clone --template https://github.com/mathieu-benoit/config-sync-template-repo
 cd ~/$WHERE_AMI_DIR_NAME
+git pull
+git checkout main
 WHERE_AMI_REPO_URL=$(gh repo view --json url --jq .url)
 ```
 
