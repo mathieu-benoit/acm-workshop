@@ -68,17 +68,17 @@ spec:
       rego: |-
         package limitmemorystoreredis
         violation[{"msg":msg}] {
-          input.review.kind.kind == "RedisInstance"
+          input.review.object.kind == "RedisInstance"
           not input.review.object.spec.redisVersion == "REDIS_6_X"
           msg := sprintf("Memorystore (redis) %s's version should be 6.", [input.review.object.metadata.name])
         }
         violation[{"msg":msg}] {
-          input.review.kind.kind == "RedisInstance"
+          input.review.object.kind == "RedisInstance"
           not input.review.object.spec.authorizedNetworkRef
           msg := sprintf("Memorystore (redis) %s's VPC shouldn't be default.", [input.review.object.metadata.name])
         }
         violation[{"msg":msg}] {
-          input.review.kind.kind == "RedisInstance"
+          input.review.object.kind == "RedisInstance"
           input.review.object.spec.authorizedNetworkRef.name == "default"
           msg := sprintf("Memorystore (redis) %s's VPC shouldn't be default.", [input.review.object.metadata.name])
         }
