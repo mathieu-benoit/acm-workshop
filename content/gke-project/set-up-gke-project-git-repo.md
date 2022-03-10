@@ -1,7 +1,7 @@
 ---
 title: "Set up GKE project's Git repo"
 weight: 2
-description: "Duration: 10 min | Persona: Org Admin"
+description: "Duration: 5 min | Persona: Org Admin"
 ---
 _{{< param description >}}_
 
@@ -81,43 +81,17 @@ cd ~/$WORKSHOP_ORG_DIR_NAME && gh run list
 ```
 You should see:
 ```Plaintext
-FIXME
-```
-
-If you run:
-```Bash
-cd ~/$GKE_PROJECT_DIR_NAME && gh run list
-```
-You should see:
-```Plaintext
-FIXME
-```
-
-If you run:
-```Bash
-cd ~/$GKE_CONFIGS_DIR_NAME && gh run list
-```
-You should see:
-```Plaintext
-FIXME
+STATUS  NAME                                      WORKFLOW  BRANCH  EVENT  ID          ELAPSED  AGE
+✓       GitOps for GKE project                    ci        main    push   1960959789  1m5s     1m
+✓       Setting up GKE namespace/project          ci        main    push   1960908849  1m12s    16m
+✓       Billing API in Config Controller project  ci        main    push   1960889246  1m0s     22m
+✓       Initial commit                            ci        main    push   1960885850  1m8s     24m
 ```
 
 If you run:
 ```Bash
 gcloud alpha anthos config sync repo describe \
    --project $CONFIG_CONTROLLER_PROJECT_ID \
-   --managed-resources all \
-   --format="multi(statuses:format=none,managed_resources:format='table[box](group:sort=2,kind,name,namespace:sort=1)')"
-```
-You should see:
-```Plaintext
-FIXME
-```
-
-If you run:
-```Bash
-gcloud alpha anthos config sync repo describe \
-   --project $GKE_PROJECT_ID \
    --managed-resources all \
    --format="multi(statuses:format=none,managed_resources:format='table[box](group:sort=2,kind,name,namespace:sort=1)')"
 ```

@@ -1,7 +1,7 @@
 ---
 title: "Enforce policies"
 weight: 3
-description: "Duration: 10 min | Persona: Platform Admin"
+description: "Duration: 5 min | Persona: Org Admin"
 ---
 _{{< param description >}}_
 
@@ -90,4 +90,34 @@ cd ~/$WORKSHOP_ORG_DIR_NAME/
 git add .
 git commit -m "Enforce policies for GKE project"
 git push
+```
+
+## Check deployments
+
+Here is what you should have at this stage:
+
+If you run:
+```Bash
+cd ~/$WORKSHOP_ORG_DIR_NAME && gh run list
+```
+You should see:
+```Plaintext
+STATUS  NAME                                      WORKFLOW  BRANCH  EVENT  ID          ELAPSED  AGE
+✓       Enforce policies for GKE project          ci        main    push   1960968253  1m4s     1m
+✓       GitOps for GKE project                    ci        main    push   1960959789  1m5s     3m
+✓       Setting up GKE namespace/project          ci        main    push   1960908849  1m12s    18m
+✓       Billing API in Config Controller project  ci        main    push   1960889246  1m0s     25m
+✓       Initial commit                            ci        main    push   1960885850  1m8s     26m
+```
+
+If you run:
+```Bash
+gcloud alpha anthos config sync repo describe \
+   --project $CONFIG_CONTROLLER_PROJECT_ID \
+   --managed-resources all \
+   --format="multi(statuses:format=none,managed_resources:format='table[box](group:sort=2,kind,name,namespace:sort=1)')"
+```
+You should see:
+```Plaintext
+FIXME
 ```

@@ -10,6 +10,7 @@ Define variables:
 RANDOM_SUFFIX=$(shuf -i 100-999 -n 1)
 BILLING_ACCOUNT_ID=FIXME
 ORG_OR_FOLDER_ID=FIXME
+rm ~/acm-workshop-variables.sh # remove previous workshop information
 echo "export RANDOM_SUFFIX=${RANDOM_SUFFIX}" >> ~/acm-workshop-variables.sh
 echo "export CONFIG_CONTROLLER_PROJECT_ID=acm-workshop-${RANDOM_SUFFIX}" >> ~/acm-workshop-variables.sh
 echo "export BILLING_ACCOUNT_ID=${BILLING_ACCOUNT_ID}" >> ~/acm-workshop-variables.sh
@@ -60,16 +61,27 @@ gcloud services enable krmapihosting.googleapis.com \
 CONFIG_CONTROLLER_NAME=configcontroller
 CONFIG_CONTROLLER_LOCATION=us-east1 # or us-central1 are supported for now
 gcloud anthos config controller create $CONFIG_CONTROLLER_NAME \
-    --location=$CONFIG_CONTROLLER_LOCATION \
+    --location $CONFIG_CONTROLLER_LOCATION \
     --man-block $LOCAL_IP_ADDRESS/32
-gcloud anthos config controller list \
-    --location=$CONFIG_CONTROLLER_LOCATION
-gcloud anthos config controller describe $CONFIG_CONTROLLER_NAME \
-    --location=$CONFIG_CONTROLLER_LOCATION
 ```
 {{% notice note %}}
 The Config Controller instance provisioning could take around 15-20 min.
 {{% /notice %}}
+
+Check that the Config Controller instance was successfully created:
+```Bash
+gcloud anthos config controller list \
+    --location $CONFIG_CONTROLLER_LOCATION
+gcloud anthos config controller describe $CONFIG_CONTROLLER_NAME \
+    --location $CONFIG_CONTROLLER_LOCATION
+```
+
+## Get the Config Controller instance credentials
+
+```Bash
+gcloud container clusters get-credentials krmapihost-$CONFIG_CONTROLLER_NAME \
+    --region $CONFIG_CONTROLLER_LOCATION
+```
 
 ## Set Config Controller's service account roles
 

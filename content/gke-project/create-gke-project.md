@@ -65,6 +65,7 @@ EOF
 {{% /tab %}}
 {{< /tabs >}}
 
+## Define GKE Project service account
 
 ```Bash
 cat <<EOF > ~/$WORKSHOP_ORG_DIR_NAME/config-sync/projects/$GKE_PROJECT_ID/service-account.yaml
@@ -96,6 +97,8 @@ spec:
         - member: serviceAccount:${CONFIG_CONTROLLER_PROJECT_ID}.svc.id.goog[cnrm-system/cnrm-controller-manager-${GKE_PROJECT_ID}]
 EOF
 ```
+
+## Define GKE project namespace and ConfigConnectorContext
 
 ```Bash
 cat <<EOF > ~/$WORKSHOP_ORG_DIR_NAME/config-sync/projects/$GKE_PROJECT_ID/namespace.yaml
@@ -141,43 +144,16 @@ cd ~/$WORKSHOP_ORG_DIR_NAME && gh run list
 ```
 You should see:
 ```Plaintext
-FIXME
-```
-
-If you run:
-```Bash
-cd ~/$GKE_PROJECT_DIR_NAME && gh run list
-```
-You should see:
-```Plaintext
-FIXME
-```
-
-If you run:
-```Bash
-cd ~/$GKE_CONFIGS_DIR_NAME && gh run list
-```
-You should see:
-```Plaintext
-FIXME
+STATUS  NAME                                      WORKFLOW  BRANCH  EVENT  ID          ELAPSED  AGE
+✓       Setting up GKE namespace/project          ci        main    push   1960908849  1m12s    1m
+✓       Billing API in Config Controller project  ci        main    push   1960889246  1m0s     8m
+✓       Initial commit                            ci        main    push   1960885850  1m8s     9m
 ```
 
 If you run:
 ```Bash
 gcloud alpha anthos config sync repo describe \
    --project $CONFIG_CONTROLLER_PROJECT_ID \
-   --managed-resources all \
-   --format="multi(statuses:format=none,managed_resources:format='table[box](group:sort=2,kind,name,namespace:sort=1)')"
-```
-You should see:
-```Plaintext
-FIXME
-```
-
-If you run:
-```Bash
-gcloud alpha anthos config sync repo describe \
-   --project $GKE_PROJECT_ID \
    --managed-resources all \
    --format="multi(statuses:format=none,managed_resources:format='table[box](group:sort=2,kind,name,namespace:sort=1)')"
 ```

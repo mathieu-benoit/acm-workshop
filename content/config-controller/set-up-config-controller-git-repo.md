@@ -1,7 +1,7 @@
 ---
 title: "Set up Config Controller's Git repo"
 weight: 2
-description: "Duration: 5 min | Persona: Org Admin"
+description: "Duration: 10 min | Persona: Org Admin"
 ---
 _{{< param description >}}_
 
@@ -17,7 +17,7 @@ Open Config Controller's egress to the Internet (GitHub access):
 ```Bash
 CONFIG_CONTROLLER_NETWORK=$(gcloud anthos config controller describe $CONFIG_CONTROLLER_NAME \
     --location=$CONFIG_CONTROLLER_LOCATION \
-    --format='get(network)')
+    --format='get(managementConfig.standardManagementConfig.network)')
 gcloud compute routers create nat-router \
     --network $CONFIG_CONTROLLER_NETWORK \
     --region $CONFIG_CONTROLLER_LOCATION
@@ -122,8 +122,8 @@ cd ~/$WORKSHOP_ORG_DIR_NAME && gh run list
 You should see:
 ```Plaintext
 STATUS  NAME                                      WORKFLOW  BRANCH  EVENT  ID          ELAPSED  AGE
-✓       Billing API in Config Controller project  ci        main    push   1923237183  14s      0m
-✓       Initial commit                            ci        main    push   1922899373  1m2s     1h
+✓       Billing API in Config Controller project  ci        main    push   1960889246  1m0s     1m
+✓       Initial commit                            ci        main    push   1960885850  1m8s     2m
 ```
 
 If you run:
