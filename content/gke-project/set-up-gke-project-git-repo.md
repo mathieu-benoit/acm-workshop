@@ -75,9 +75,7 @@ git push
 
 ## Check deployments
 
-Here is what you should have at this stage:
-
-List the GitHub runs for the Org configs repository `cd ~/$WORKSHOP_ORG_DIR_NAME && gh run list`:
+List the GitHub runs for the **Org configs** repository `cd ~/$WORKSHOP_ORG_DIR_NAME && gh run list`:
 ```Plaintext
 STATUS  NAME                                      WORKFLOW  BRANCH  EVENT  ID          ELAPSED  AGE
 ✓       GitOps for GKE project                    ci        main    push   1960959789  1m5s     1m

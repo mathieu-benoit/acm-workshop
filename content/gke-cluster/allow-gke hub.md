@@ -21,7 +21,7 @@ metadata:
   name: gke-hub-admin-${GKE_PROJECT_ID}
   namespace: config-control
 spec:
-  member: serviceAccount:${GKE_PROJECT_ID}@${CONFIG_CONTROLLER_PROJECT_ID}.iam.gserviceaccount.com
+  member: serviceAccount:${GKE_PROJECT_SA}
   role: roles/gkehub.admin
   resourceRef:
     apiVersion: resourcemanager.cnrm.cloud.google.com/v1beta1
@@ -77,9 +77,9 @@ FIXME
 If you run:
 ```Bash
 gcloud alpha anthos config sync repo describe \
-   --project $CONFIG_CONTROLLER_PROJECT_ID \
-   --managed-resources all \
-   --format="multi(statuses:format=none,managed_resources:format='table[box](group:sort=2,kind,name,namespace:sort=1)')"
+    --project $CONFIG_CONTROLLER_PROJECT_ID \
+    --managed-resources all \
+    --format="multi(statuses:format=none,managed_resources:format='table[box](group:sort=2,kind,name,namespace:sort=1)')"
 ```
 You should see:
 ```Plaintext
@@ -89,9 +89,9 @@ FIXME
 If you run:
 ```Bash
 gcloud alpha anthos config sync repo describe \
-   --project $GKE_PROJECT_ID \
-   --managed-resources all \
-   --format="multi(statuses:format=none,managed_resources:format='table[box](group:sort=2,kind,name,namespace:sort=1)')"
+    --project $GKE_PROJECT_ID \
+    --managed-resources all \
+    --format="multi(statuses:format=none,managed_resources:format='table[box](group:sort=2,kind,name,namespace:sort=1)')"
 ```
 You should see:
 ```Plaintext

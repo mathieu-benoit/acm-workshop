@@ -38,7 +38,7 @@ metadata:
   name: redis-admin-${GKE_PROJECT_ID}
   namespace: config-control
 spec:
-  member: serviceAccount:${GKE_PROJECT_ID}@${CONFIG_CONTROLLER_PROJECT_ID}.iam.gserviceaccount.com
+  member: serviceAccount:${GKE_PROJECT_SA}
   role: roles/redis.admin
   resourceRef:
     apiVersion: resourcemanager.cnrm.cloud.google.com/v1beta1

@@ -96,7 +96,7 @@ git push
 
 Here is what you should have at this stage:
 
-List the GitHub runs for the Org configs repository `cd ~/$WORKSHOP_ORG_DIR_NAME && gh run list`:
+List the GitHub runs for the **Org configs** repository `cd ~/$WORKSHOP_ORG_DIR_NAME && gh run list`:
 ```Plaintext
 STATUS  NAME                                      WORKFLOW  BRANCH  EVENT  ID          ELAPSED  AGE
 ✓       Enforce policies for GKE project          ci        main    push   1960968253  1m4s     1m

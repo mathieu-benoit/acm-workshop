@@ -97,20 +97,29 @@ git push
 
 List the GCP resources created:
 ```Bash
-gcloud compute networks describe $GKE_NAME \
-  --project $GKE_PROJECT_ID
-gcloud compute networks subnets describe $GKE_NAME \
-  --project $GKE_PROJECT_ID
-gcloud compute routers describe $GKE_NAME \
-  --region $GKE_LOCATION \
-  --project $GKE_PROJECT_ID
-gcloud compute routers nats describe $GKE_NAME \
-  --router $GKE_NAME \
-  --region $GKE_LOCATION \
-  --project $GKE_PROJECT_ID
+gcloud compute networks list \
+    --project $GKE_PROJECT_ID
+gcloud compute networks subnets list \
+    --project $GKE_PROJECT_ID
+gcloud compute routers list \
+    --project $GKE_PROJECT_ID
+gcloud compute routers nats list \
+    --router $GKE_NAME \
+    --region $GKE_LOCATION \
+    --project $GKE_PROJECT_ID
+```
+```Plaintext
+NAME  SUBNET_MODE  BGP_ROUTING_MODE  IPV4_RANGE  GATEWAY_IPV4
+gke   CUSTOM       REGIONAL
+NAME  REGION    NETWORK  RANGE        STACK_TYPE  IPV6_ACCESS_TYPE  IPV6_CIDR_RANGE  EXTERNAL_IPV6_CIDR_RANGE
+gke   us-east4  gke      10.2.0.0/20  IPV4_ONLY
+NAME  REGION    NETWORK
+gke   us-east4  gke
+NAME  NAT_IP_ALLOCATE_OPTION  SOURCE_SUBNETWORK_IP_RANGES_TO_NAT
+gke   AUTO_ONLY               LIST_OF_SUBNETWORKS
 ```
 
-List the GitHub runs for the Org configs repository `cd ~/$WORKSHOP_ORG_DIR_NAME && gh run list`:
+List the GitHub runs for the **Org configs** repository `cd ~/$WORKSHOP_ORG_DIR_NAME && gh run list`:
 ```Plaintext
 STATUS  NAME                                      WORKFLOW  BRANCH  EVENT  ID          ELAPSED  AGE
 ✓       Allow Networking for GKE project          ci        main    push   1960975064  1m11s    2m
@@ -121,11 +130,7 @@ STATUS  NAME                                      WORKFLOW  BRANCH  EVENT  ID   
 ✓       Initial commit                            ci        main    push   1960885850  1m8s     29m
 ```
 
-If you run:
-```Bash
-cd ~/$GKE_PROJECT_DIR_NAME && gh run list
-```
-You should see:
+List the GitHub runs for the **GKE project configs** repository `cd ~/$GKE_PROJECT_DIR_NAME && gh run list`:
 ```Plaintext
 STATUS  NAME                     WORKFLOW  BRANCH  EVENT  ID          ELAPSED  AGE
 ✓       Network for GKE project  ci        main    push   1961289819  10s      1m
@@ -135,9 +140,9 @@ STATUS  NAME                     WORKFLOW  BRANCH  EVENT  ID          ELAPSED  A
 If you run:
 ```Bash
 gcloud alpha anthos config sync repo describe \
-   --project $CONFIG_CONTROLLER_PROJECT_ID \
-   --managed-resources all \
-   --format="multi(statuses:format=none,managed_resources:format='table[box](group:sort=2,kind,name,namespace:sort=1)')"
+    --project $CONFIG_CONTROLLER_PROJECT_ID \
+    --managed-resources all \
+    --format="multi(statuses:format=none,managed_resources:format='table[box](group:sort=2,kind,name,namespace:sort=1)')"
 ```
 You should see:
 ```Plaintext

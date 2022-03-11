@@ -8,6 +8,7 @@ _{{< param description >}}_
 Define variables:
 ```Bash
 echo "export GKE_PROJECT_ID=acm-workshop-${RANDOM_SUFFIX}-gke" >> ~/acm-workshop-variables.sh
+echo "export GKE_PROJECT_SA=${GKE_PROJECT_ID}@${CONFIG_CONTROLLER_PROJECT_ID}.iam.gserviceaccount.com" >> ~/acm-workshop-variables.sh
 source ~/acm-workshop-variables.sh
 ```
 
@@ -121,7 +122,7 @@ metadata:
   name: configconnectorcontext.core.cnrm.cloud.google.com
   namespace: ${GKE_PROJECT_ID}
 spec:
-  googleServiceAccount: ${GKE_PROJECT_ID}@${CONFIG_CONTROLLER_PROJECT_ID}.iam.gserviceaccount.com
+  googleServiceAccount: ${GKE_PROJECT_SA}
 EOF
 ```
 
@@ -139,11 +140,11 @@ git push
 List the GCP resources created:
 ```Bash
 gcloud projects describe $GKE_PROJECT_ID
-gcloud iam service-accounts describe $GKE_PROJECT_ID@$CONFIG_CONTROLLER_PROJECT_ID.iam.gserviceaccount.com \
-  --project $CONFIG_CONTROLLER_PROJECT_ID
+gcloud iam service-accounts describe $GKE_PROJECT_SA \
+    --project $CONFIG_CONTROLLER_PROJECT_ID
 ```
 
-List the GitHub runs for the Org configs repository `cd ~/$WORKSHOP_ORG_DIR_NAME && gh run list`:
+List the GitHub runs for the **Org configs** repository `cd ~/$WORKSHOP_ORG_DIR_NAME && gh run list`:
 ```Plaintext
 STATUS  NAME                                      WORKFLOW  BRANCH  EVENT  ID          ELAPSED  AGE
 ✓       Setting up GKE namespace/project          ci        main    push   1960908849  1m12s    1m

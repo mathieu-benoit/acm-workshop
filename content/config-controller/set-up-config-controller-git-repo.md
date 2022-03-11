@@ -119,13 +119,18 @@ git push
 
 List the GCP resources created:
 ```Bash
-gcloud compute routers describe $CONFIG_CONTROLLER_NAT_ROUTER_NAME \
-  --region $CONFIG_CONTROLLER_LOCATION \
-  --project $CONFIG_CONTROLLER_PROJECT_ID
-gcloud compute routers nats describe $CONFIG_CONTROLLER_NAT_CONFIG_NAME \
-  --router $CONFIG_CONTROLLER_NAT_ROUTER_NAME \
-  --region $CONFIG_CONTROLLER_LOCATION \
-  --project $CONFIG_CONTROLLER_PROJECT_ID
+gcloud compute routers list \
+    --project $CONFIG_CONTROLLER_PROJECT_ID
+gcloud compute routers nats list \
+    --router $CONFIG_CONTROLLER_NAT_ROUTER_NAME \
+    --region $CONFIG_CONTROLLER_LOCATION \
+    --project $CONFIG_CONTROLLER_PROJECT_ID
+```
+```Plaintext
+NAME        REGION    NETWORK
+nat-router  us-east1  default
+NAME        NAT_IP_ALLOCATE_OPTION  SOURCE_SUBNETWORK_IP_RANGES_TO_NAT
+nat-config  AUTO_ONLY               ALL_SUBNETWORKS_ALL_IP_RANGES
 ```
 
 List the GitHub runs for the Org configs repository `cd ~/$WORKSHOP_ORG_DIR_NAME && gh run list`:
@@ -138,9 +143,9 @@ STATUS  NAME                                      WORKFLOW  BRANCH  EVENT  ID   
 If you run:
 ```Bash
 gcloud alpha anthos config sync repo describe \
-  --project $CONFIG_CONTROLLER_PROJECT_ID \
-  --managed-resources all \
-  --format="multi(statuses:format=none,managed_resources:format='table[box](group:sort=2,kind,name,namespace:sort=1)')"
+    --project $CONFIG_CONTROLLER_PROJECT_ID \
+    --managed-resources all \
+    --format="multi(statuses:format=none,managed_resources:format='table[box](group:sort=2,kind,name,namespace:sort=1)')"
 ```
 You should see:
 ```Plaintext

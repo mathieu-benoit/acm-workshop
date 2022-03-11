@@ -21,7 +21,7 @@ metadata:
   name: network-admin-${GKE_PROJECT_ID}
   namespace: config-control
 spec:
-  member: serviceAccount:${GKE_PROJECT_ID}@${CONFIG_CONTROLLER_PROJECT_ID}.iam.gserviceaccount.com
+  member: serviceAccount:${GKE_PROJECT_SA}
   role: roles/compute.networkAdmin
   resourceRef:
     apiVersion: resourcemanager.cnrm.cloud.google.com/v1beta1
@@ -43,10 +43,17 @@ git push
 
 List the GCP resources created:
 ```Bash
-gcloud projects get-iam-policy $GKE_PROJECT_ID
+gcloud projects get-iam-policy $GKE_PROJECT_ID \
+    --filter="bindings.members:${GKE_PROJECT_SA}" \
+    --flatten="bindings[].members" \
+    --format="table(bindings.role)"
+```
+```Plaintext
+ROLE
+roles/compute.networkAdmin
 ```
 
-List the GitHub runs for the Org configs repository `cd ~/$WORKSHOP_ORG_DIR_NAME && gh run list`:
+List the GitHub runs for the **Org configs** repository `cd ~/$WORKSHOP_ORG_DIR_NAME && gh run list`:
 ```Plaintext
 STATUS  NAME                                      WORKFLOW  BRANCH  EVENT  ID          ELAPSED  AGE
 ✓       Allow Networking for GKE project          ci        main    push   1960975064  1m11s    2m

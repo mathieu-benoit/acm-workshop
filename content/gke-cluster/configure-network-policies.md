@@ -178,9 +178,9 @@ FIXME
 If you run:
 ```Bash
 gcloud alpha anthos config sync repo describe \
-   --project $CONFIG_CONTROLLER_PROJECT_ID \
-   --managed-resources all \
-   --format="multi(statuses:format=none,managed_resources:format='table[box](group:sort=2,kind,name,namespace:sort=1)')"
+    --project $CONFIG_CONTROLLER_PROJECT_ID \
+    --managed-resources all \
+    --format="multi(statuses:format=none,managed_resources:format='table[box](group:sort=2,kind,name,namespace:sort=1)')"
 ```
 You should see:
 ```Plaintext
@@ -190,9 +190,9 @@ FIXME
 If you run:
 ```Bash
 gcloud alpha anthos config sync repo describe \
-   --project $GKE_PROJECT_ID \
-   --managed-resources all \
-   --format="multi(statuses:format=none,managed_resources:format='table[box](group:sort=2,kind,name,namespace:sort=1)')"
+    --project $GKE_PROJECT_ID \
+    --managed-resources all \
+    --format="multi(statuses:format=none,managed_resources:format='table[box](group:sort=2,kind,name,namespace:sort=1)')"
 ```
 You should see:
 ```Plaintext

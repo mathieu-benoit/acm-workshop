@@ -21,7 +21,7 @@ metadata:
   name: container-admin-${GKE_PROJECT_ID}
   namespace: config-control
 spec:
-  member: serviceAccount:${GKE_PROJECT_ID}@${CONFIG_CONTROLLER_PROJECT_ID}.iam.gserviceaccount.com
+  member: serviceAccount:${GKE_PROJECT_SA}
   role: roles/container.admin
   resourceRef:
     apiVersion: resourcemanager.cnrm.cloud.google.com/v1beta1
@@ -35,7 +35,7 @@ metadata:
   name: service-account-admin-${GKE_PROJECT_ID}
   namespace: config-control
 spec:
-  member: serviceAccount:${GKE_PROJECT_ID}@${CONFIG_CONTROLLER_PROJECT_ID}.iam.gserviceaccount.com
+  member: serviceAccount:${GKE_PROJECT_SA}
   role: roles/iam.serviceAccountAdmin
   resourceRef:
     apiVersion: resourcemanager.cnrm.cloud.google.com/v1beta1
@@ -49,7 +49,7 @@ metadata:
   name: iam-admin-${GKE_PROJECT_ID}
   namespace: config-control
 spec:
-  member: serviceAccount:${GKE_PROJECT_ID}@${CONFIG_CONTROLLER_PROJECT_ID}.iam.gserviceaccount.com
+  member: serviceAccount:${GKE_PROJECT_SA}
   role: roles/resourcemanager.projectIamAdmin
   resourceRef:
     apiVersion: resourcemanager.cnrm.cloud.google.com/v1beta1
@@ -63,7 +63,7 @@ metadata:
   name: service-account-user-${GKE_PROJECT_ID}
   namespace: config-control
 spec:
-  member: serviceAccount:${GKE_PROJECT_ID}@${CONFIG_CONTROLLER_PROJECT_ID}.iam.gserviceaccount.com
+  member: serviceAccount:${GKE_PROJECT_SA}
   role: roles/iam.serviceAccountUser
   resourceRef:
     apiVersion: resourcemanager.cnrm.cloud.google.com/v1beta1
@@ -215,7 +215,23 @@ git push
 
 ## Check deployments
 
-List the GitHub runs for the Org configs repository `cd ~/$WORKSHOP_ORG_DIR_NAME && gh run list`:
+List the GCP resources created:
+```Bash
+gcloud projects get-iam-policy $GKE_PROJECT_ID \
+    --filter="bindings.members:${GKE_PROJECT_SA}" \
+    --flatten="bindings[].members" \
+    --format="table(bindings.role)"
+```
+```Plaintext
+ROLE
+roles/compute.networkAdmin
+roles/container.admin
+roles/iam.serviceAccountAdmin
+roles/iam.serviceAccountUser
+roles/resourcemanager.projectIamAdmin
+```
+
+List the GitHub runs for the **Org configs** repository `cd ~/$WORKSHOP_ORG_DIR_NAME && gh run list`:
 ```Plaintext
 STATUS  NAME                                      WORKFLOW  BRANCH  EVENT  ID          ELAPSED  AGE
 ✓       Allow GKE for GKE project                 ci        main    push   1961343262  10s      0m
@@ -227,11 +243,7 @@ STATUS  NAME                                      WORKFLOW  BRANCH  EVENT  ID   
 ✓       Initial commit                            ci        main    push   1961132028  1m2s     1h
 ```
 
-If you run:
-```Bash
-cd ~/$GKE_PROJECT_DIR_NAME && gh run list
-```
-You should see:
+List the GitHub runs for the **GKE project configs** repository `cd ~/$GKE_PROJECT_DIR_NAME && gh run list`:
 ```Plaintext
 STATUS  NAME                     WORKFLOW  BRANCH  EVENT  ID          ELAPSED  AGE
 ✓       Network for GKE project  ci        main    push   1961289819  1m13s    17m
@@ -241,9 +253,9 @@ STATUS  NAME                     WORKFLOW  BRANCH  EVENT  ID          ELAPSED  A
 If you run:
 ```Bash
 gcloud alpha anthos config sync repo describe \
-   --project $CONFIG_CONTROLLER_PROJECT_ID \
-   --managed-resources all \
-   --format="multi(statuses:format=none,managed_resources:format='table[box](group:sort=2,kind,name,namespace:sort=1)')"
+    --project $CONFIG_CONTROLLER_PROJECT_ID \
+    --managed-resources all \
+    --format="multi(statuses:format=none,managed_resources:format='table[box](group:sort=2,kind,name,namespace:sort=1)')"
 ```
 You should see:
 ```Plaintext

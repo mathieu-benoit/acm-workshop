@@ -130,7 +130,29 @@ gcloud projects add-iam-policy-binding ${CONFIG_CONTROLLER_PROJECT_ID} \
 List the GCP resources created:
 ```Bash
 gcloud projects describe $CONFIG_CONTROLLER_PROJECT_ID
-gcloud anthos config controller describe $CONFIG_CONTROLLER_NAME \
-    --location $CONFIG_CONTROLLER_LOCATION
-gcloud projects get-iam-policy $CONFIG_CONTROLLER_PROJECT_ID
+gcloud anthos config controller list \
+    --project $CONFIG_CONTROLLER_PROJECT_ID
+gcloud organizations get-iam-policy $ORG_OR_FOLDER_ID \
+    --filter="bindings.members:${CONFIG_CONTROLLER_SA}" \
+    --flatten="bindings[].members" \
+    --format="table(bindings.role)"
+gcloud beta billing accounts get-iam-policy ${BILLING_ACCOUNT_ID} \
+    --filter="bindings.members:${CONFIG_CONTROLLER_SA}" \
+    --flatten="bindings[].members" \
+    --format="table(bindings.role)"
+gcloud projects get-iam-policy $CONFIG_CONTROLLER_PROJECT_ID \
+    --filter="bindings.members:${CONFIG_CONTROLLER_SA}" \
+    --flatten="bindings[].members" \
+    --format="table(bindings.role)"
+```
+```Plaintext
+NAME                                                                       LOCATION  STATE
+projects/acm-workshop-463/locations/us-east1/krmApiHosts/configcontroller  us-east1  RUNNING
+ROLE
+roles/resourcemanager.projectCreator
+ROLE
+roles/billing.user
+ROLE
+roles/iam.serviceAccountAdmin
+roles/serviceusage.serviceUsageAdmin
 ```
