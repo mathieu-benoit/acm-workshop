@@ -21,7 +21,9 @@ metadata:
   name: container-admin-${GKE_PROJECT_ID}
   namespace: config-control
 spec:
-  member: serviceAccount:${GKE_PROJECT_SA}
+  memberFrom:
+    serviceAccountRef:
+      name: ${GKE_PROJECT_ID}
   role: roles/container.admin
   resourceRef:
     apiVersion: resourcemanager.cnrm.cloud.google.com/v1beta1
@@ -35,7 +37,9 @@ metadata:
   name: service-account-admin-${GKE_PROJECT_ID}
   namespace: config-control
 spec:
-  member: serviceAccount:${GKE_PROJECT_SA}
+  memberFrom:
+    serviceAccountRef:
+      name: ${GKE_PROJECT_ID}
   role: roles/iam.serviceAccountAdmin
   resourceRef:
     apiVersion: resourcemanager.cnrm.cloud.google.com/v1beta1
@@ -49,7 +53,9 @@ metadata:
   name: iam-admin-${GKE_PROJECT_ID}
   namespace: config-control
 spec:
-  member: serviceAccount:${GKE_PROJECT_SA}
+  memberFrom:
+    serviceAccountRef:
+      name: ${GKE_PROJECT_ID}
   role: roles/resourcemanager.projectIamAdmin
   resourceRef:
     apiVersion: resourcemanager.cnrm.cloud.google.com/v1beta1
@@ -63,7 +69,9 @@ metadata:
   name: service-account-user-${GKE_PROJECT_ID}
   namespace: config-control
 spec:
-  member: serviceAccount:${GKE_PROJECT_SA}
+  memberFrom:
+    serviceAccountRef:
+      name: ${GKE_PROJECT_ID}
   role: roles/iam.serviceAccountUser
   resourceRef:
     apiVersion: resourcemanager.cnrm.cloud.google.com/v1beta1
@@ -218,7 +226,7 @@ git push
 List the GCP resources created:
 ```Bash
 gcloud projects get-iam-policy $GKE_PROJECT_ID \
-    --filter="bindings.members:${GKE_PROJECT_SA}" \
+    --filter="bindings.members:${GKE_PROJECT_SA_EMAIL}" \
     --flatten="bindings[].members" \
     --format="table(bindings.role)"
 ```

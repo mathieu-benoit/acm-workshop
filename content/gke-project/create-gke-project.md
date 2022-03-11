@@ -8,7 +8,7 @@ _{{< param description >}}_
 Define variables:
 ```Bash
 echo "export GKE_PROJECT_ID=acm-workshop-${RANDOM_SUFFIX}-gke" >> ~/acm-workshop-variables.sh
-echo "export GKE_PROJECT_SA=${GKE_PROJECT_ID}@${CONFIG_CONTROLLER_PROJECT_ID}.iam.gserviceaccount.com" >> ~/acm-workshop-variables.sh
+echo "export GKE_PROJECT_SA_EMAIL=${GKE_PROJECT_ID}@${CONFIG_CONTROLLER_PROJECT_ID}.iam.gserviceaccount.com" >> ~/acm-workshop-variables.sh
 source ~/acm-workshop-variables.sh
 ```
 
@@ -122,7 +122,7 @@ metadata:
   name: configconnectorcontext.core.cnrm.cloud.google.com
   namespace: ${GKE_PROJECT_ID}
 spec:
-  googleServiceAccount: ${GKE_PROJECT_SA}
+  googleServiceAccount: ${GKE_PROJECT_SA_EMAIL}
 EOF
 ```
 
@@ -140,7 +140,7 @@ git push
 List the GCP resources created:
 ```Bash
 gcloud projects describe $GKE_PROJECT_ID
-gcloud iam service-accounts describe $GKE_PROJECT_SA \
+gcloud iam service-accounts describe $GKE_PROJECT_SA_EMAIL \
     --project $CONFIG_CONTROLLER_PROJECT_ID
 ```
 

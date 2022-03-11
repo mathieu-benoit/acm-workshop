@@ -21,7 +21,9 @@ metadata:
   name: network-admin-${GKE_PROJECT_ID}
   namespace: config-control
 spec:
-  member: serviceAccount:${GKE_PROJECT_SA}
+  memberFrom:
+    serviceAccountRef:
+      name: ${GKE_PROJECT_ID}
   role: roles/compute.networkAdmin
   resourceRef:
     apiVersion: resourcemanager.cnrm.cloud.google.com/v1beta1
@@ -44,7 +46,7 @@ git push
 List the GCP resources created:
 ```Bash
 gcloud projects get-iam-policy $GKE_PROJECT_ID \
-    --filter="bindings.members:${GKE_PROJECT_SA}" \
+    --filter="bindings.members:${GKE_PROJECT_SA_EMAIL}" \
     --flatten="bindings[].members" \
     --format="table(bindings.role)"
 ```

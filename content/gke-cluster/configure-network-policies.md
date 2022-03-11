@@ -44,7 +44,7 @@ git push
 
 ### Required labels on Namespace and Deployment
 
-As a best practice and in order to get the `NetworkPolicy` resources working in this workshop, we need to guarantee that any `Deployment` has an `app` label and that any `Namespace` has an `name` label.
+As a best practice and in order to get the `NetworkPolicy` resources working in this workshop, we need to guarantee that that any `Namespace` has an `name` label.
 
 Define the `ConstraintTemplate` resource:
 ```Bash
@@ -136,10 +136,6 @@ spec:
       - key: name
 EOF
 ```
-
-### Required NetworPolicy in Namespace
-
-FIXME - https://cloud.google.com/anthos-config-management/docs/reference/constraint-template-library#k8srequirenamespacenetworkpolicies
 
 ## Deploy Kubernetes manifests
 

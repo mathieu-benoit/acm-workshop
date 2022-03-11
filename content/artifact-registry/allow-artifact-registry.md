@@ -21,7 +21,13 @@ metadata:
   name: artifactregistry-admin-${GKE_PROJECT_ID}
   namespace: config-control
 spec:
-  member: serviceAccount:${GKE_PROJECT_SA}
+  memberFrom:
+    serviceAccountRef:
+      name: ${GKE_PROJECT_ID}
+  memberFrom:
+    serviceAccountRef:
+      name: ${GKE_SA}
+      namespace: ${GKE_PROJECT_ID}
   role: roles/artifactregistry.admin
   resourceRef:
     apiVersion: resourcemanager.cnrm.cloud.google.com/v1beta1

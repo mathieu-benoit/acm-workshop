@@ -21,7 +21,9 @@ metadata:
   name: gke-hub-admin-${GKE_PROJECT_ID}
   namespace: config-control
 spec:
-  member: serviceAccount:${GKE_PROJECT_SA}
+  memberFrom:
+    serviceAccountRef:
+      name: ${GKE_PROJECT_ID}
   role: roles/gkehub.admin
   resourceRef:
     apiVersion: resourcemanager.cnrm.cloud.google.com/v1beta1
