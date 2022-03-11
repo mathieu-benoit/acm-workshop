@@ -90,9 +90,11 @@ EOF
 Since you started this workshop, you just ran 4 `kubectl` commands. For your information, moving forward you won't run any other `kubectl` commands because the design and intent of this workshop is to only deploy any Kubernetes resources via GitOps with Config Sync. You will also use some handy `gcloud` commands when appropriate.
 {{% /notice %}}
 
+## Define 
+
 ## Define Cloud Billing API
 
-Define the Cloud Billing API [`Service`](https://cloud.google.com/config-connector/docs/reference/resource-docs/serviceusage/service) resource:
+In order to have Config Controller's Config Sync linking a Billing Account to GCP projects later in this workshop, we need to define the Cloud Billing API [`Service`](https://cloud.google.com/config-connector/docs/reference/resource-docs/serviceusage/service) resource for Config Controller's GCP project:
 ```Bash
 cat <<EOF > ~/$WORKSHOP_ORG_DIR_NAME/config-sync/cloudbilling-service.yaml
 apiVersion: serviceusage.cnrm.cloud.google.com/v1beta1
