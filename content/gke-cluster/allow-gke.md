@@ -251,13 +251,6 @@ STATUS  NAME                                      WORKFLOW  BRANCH  EVENT  ID   
 ✓       Initial commit                            ci        main    push   1961132028  1m2s     1h
 ```
 
-List the GitHub runs for the **GKE project configs** repository `cd ~/$GKE_PROJECT_DIR_NAME && gh run list`:
-```Plaintext
-STATUS  NAME                     WORKFLOW  BRANCH  EVENT  ID          ELAPSED  AGE
-✓       Network for GKE project  ci        main    push   1961289819  1m13s    17m
-✓       Initial commit           ci        main    push   1961170391  56s      58m
-```
-
 List the Kubernetes resources managed by Config Sync in **Config Controller**:
 ```Bash
 gcloud alpha anthos config sync repo describe \

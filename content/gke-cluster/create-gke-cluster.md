@@ -205,18 +205,6 @@ NAME     MACHINE_TYPE    DISK_SIZE_GB  NODE_VERSION
 primary  n2d-standard-4  100           1.22.6-gke.300
 ```
 
-List the GitHub runs for the **Org configs** repository `cd ~/$WORKSHOP_ORG_DIR_NAME && gh run list`:
-```Plaintext
-STATUS  NAME                                      WORKFLOW  BRANCH  EVENT  ID          ELAPSED  AGE
-✓       Allow GKE for GKE project                 ci        main    push   1961343262  1m0s     19h
-✓       Allow Networking for GKE project          ci        main    push   1961279233  1m9s     20h
-✓       Enforce policies for GKE project          ci        main    push   1961276465  1m2s     20h
-✓       GitOps for GKE project                    ci        main    push   1961259400  1m7s     20h
-✓       Setting up GKE namespace/project          ci        main    push   1961245039  1m4s     20h
-✓       Billing API in Config Controller project  ci        main    push   1961142326  1m12s    20h
-✓       Initial commit                            ci        main    push   1961132028  1m2s     21h
-```
-
 List the GitHub runs for the **GKE project configs** repository `cd ~/$GKE_PROJECT_DIR_NAME && gh run list`:
 ```Plaintext
 STATUS  NAME                                                  WORKFLOW  BRANCH  EVENT  ID          ELAPSED  AGE

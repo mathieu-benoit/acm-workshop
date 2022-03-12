@@ -24,10 +24,6 @@ spec:
   memberFrom:
     serviceAccountRef:
       name: ${GKE_PROJECT_ID}
-  memberFrom:
-    serviceAccountRef:
-      name: ${GKE_SA}
-      namespace: ${GKE_PROJECT_ID}
   role: roles/artifactregistry.admin
   resourceRef:
     apiVersion: resourcemanager.cnrm.cloud.google.com/v1beta1
@@ -91,4 +87,39 @@ cd ~/$WORKSHOP_ORG_DIR_NAME/
 git add .
 git commit -m "Allow Artifact Registry for GKE project"
 git push
+```
+
+## Check deployments
+
+List the GCP resources created:
+```Bash
+gcloud projects get-iam-policy $GKE_PROJECT_ID \
+    --filter="bindings.members:${GKE_PROJECT_SA_EMAIL}" \
+    --flatten="bindings[].members" \
+    --format="table(bindings.role)"
+```
+```Plaintext
+ROLE
+roles/artifactregistry.admin
+roles/compute.networkAdmin
+roles/container.admin
+roles/gkehub.admin
+roles/iam.serviceAccountAdmin
+roles/iam.serviceAccountUser
+roles/resourcemanager.projectIamAdmin
+```
+
+List the GitHub runs for the **Org configs** repository `cd ~/$WORKSHOP_ORG_DIR_NAME && gh run list`:
+```Plaintext
+STATUS  NAME                                      WORKFLOW  BRANCH  EVENT  ID          ELAPSED  AGE
+✓       Allow Artifact Registry for GKE project   ci        main    push   1972065864  57s      5m
+✓       Enforce policies for GKE project          ci        main    push   1970984571  1m19s    6h
+✓       Allow GKE Hub for GKE project             ci        main    push   1970917868  1m8s     6h
+✓       Allow GKE for GKE project                 ci        main    push   1961343262  1m0s     1d
+✓       Allow Networking for GKE project          ci        main    push   1961279233  1m9s     1d
+✓       Enforce policies for GKE project          ci        main    push   1961276465  1m2s     1d
+✓       GitOps for GKE project                    ci        main    push   1961259400  1m7s     1d
+✓       Setting up GKE namespace/project          ci        main    push   1961160322  1m7s     1d
+✓       Billing API in Config Controller project  ci        main    push   1961142326  1m12s    1d
+✓       Initial commit                            ci        main    push   1961132028  1m2s     1d
 ```

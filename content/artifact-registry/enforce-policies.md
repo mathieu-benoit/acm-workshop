@@ -105,3 +105,38 @@ git add .
 git commit -m "Enforce Container Registries Policies in GKE cluster"
 git push
 ```
+
+## Check deployments
+
+List the GitHub runs for the **GKE cluster configs** repository `cd ~/$GKE_CONFIGS_DIR_NAME && gh run list`:
+```Plaintext
+STATUS  NAME                                                  WORKFLOW  BRANCH  EVENT  ID          ELAPSED  AGE
+✓       Enforce Container Registries Policies in GKE cluster  ci        main    push   1972138349  55s      4m
+✓       Policies for NetworkPolicy resources                  ci        main    push   1971716019  1m14s    2h
+✓       Network Policies logging                              ci        main    push   1971353547  1m1s     4h
+✓       Config Sync monitoring                                ci        main    push   1971296656  1m9s     5h
+✓       Initial commit                                        ci        main    push   1970951731  57s      6h
+```
+
+List the Kubernetes resources managed by Config Sync in the **GKE cluster**:
+```Bash
+gcloud alpha anthos config sync repo describe \
+    --project $GKE_PROJECT_ID \
+    --managed-resources all \
+    --format="multi(statuses:format=none,managed_resources:format='table[box](group:sort=2,kind,name,namespace:sort=1)')"
+```
+```Plaintext
+getting 1 RepoSync and RootSync from gke-hub-membership
+┌───────────────────────────┬────────────────────┬──────────────────────────────┬──────────────────────────────┐
+│           GROUP           │        KIND        │             NAME             │          NAMESPACE           │
+├───────────────────────────┼────────────────────┼──────────────────────────────┼──────────────────────────────┤
+│                           │ Namespace          │ config-management-monitoring │                              │
+│ constraints.gatekeeper.sh │ K8sAllowedRepos    │ allowed-container-registries │                              │
+│ constraints.gatekeeper.sh │ K8sRequiredLabels  │ namespace-required-labels    │                              │
+│ constraints.gatekeeper.sh │ K8sRequiredLabels  │ deployment-required-labels   │                              │
+│ networking.gke.io         │ NetworkLogging     │ default                      │                              │
+│ templates.gatekeeper.sh   │ ConstraintTemplate │ k8sallowedrepos              │                              │
+│ templates.gatekeeper.sh   │ ConstraintTemplate │ k8srequiredlabels            │                              │
+│                           │ ServiceAccount     │ default                      │ config-management-monitoring │
+└───────────────────────────┴────────────────────┴──────────────────────────────┴──────────────────────────────┘
+```

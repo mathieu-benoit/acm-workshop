@@ -138,19 +138,6 @@ git push
 
 Here is what you should have at this stage:
 
-List the GitHub runs for the **Org configs** repository `cd ~/$WORKSHOP_ORG_DIR_NAME && gh run list`:
-```Plaintext
-STATUS  NAME                                      WORKFLOW  BRANCH  EVENT  ID          ELAPSED  AGE
-✓       Allow GKE Hub for GKE project             ci        main    push   1970917868  1m8s     4m
-✓       Allow GKE for GKE project                 ci        main    push   1961343262  1m0s     1d
-✓       Allow Networking for GKE project          ci        main    push   1961279233  1m9s     1d
-✓       Enforce policies for GKE project          ci        main    push   1961276465  1m2s     1d
-✓       GitOps for GKE project                    ci        main    push   1961259400  1m7s     1d
-✓       Setting up GKE namespace/project          ci        main    push   1961160322  1m7s     1d
-✓       Billing API in Config Controller project  ci        main    push   1961142326  1m12s    1d
-✓       Initial commit                            ci        main    push   1961132028  1m2s     1d
-```
-
 List the GitHub runs for the **GKE project configs** repository `cd ~/$GKE_PROJECT_DIR_NAME && gh run list`:
 ```Plaintext
 STATUS  NAME                                                  WORKFLOW  BRANCH  EVENT  ID          ELAPSED  AGE

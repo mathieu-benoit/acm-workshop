@@ -113,17 +113,17 @@ spec:
       kinds:
       - Namespace
     excludedNamespaces:
-      - config-management-monitoring
-      - config-management-system
-      - default
-      - gatekeeper-system
-      - kube-node-lease
-      - kube-public
-      - kube-system
-      - resource-group-system
+    - config-management-monitoring
+    - config-management-system
+    - default
+    - gatekeeper-system
+    - kube-node-lease
+    - kube-public
+    - kube-system
+    - resource-group-system
   parameters:
     labels:
-      - key: name
+    - key: name
 EOF
 ```
 
@@ -147,17 +147,17 @@ spec:
       kinds:
       - Deployment
     excludedNamespaces:
-      - config-management-monitoring
-      - config-management-system
-      - default
-      - gatekeeper-system
-      - kube-node-lease
-      - kube-public
-      - kube-system
-      - resource-group-system
+    - config-management-monitoring
+    - config-management-system
+    - default
+    - gatekeeper-system
+    - kube-node-lease
+    - kube-public
+    - kube-system
+    - resource-group-system
   parameters:
     labels:
-      - key: app
+    - key: app
 EOF
 ```
 
