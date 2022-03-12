@@ -7,7 +7,6 @@ _{{< param description >}}_
 
 Initialize variables:
 ```Bash
-echo "export INGRESS_GATEWAY_NAMESPACE=asm-ingress" >> ~/acm-workshop-variables.sh
 echo "export INGRESS_GATEWAY_NAME=asm-ingressgateway" >> ~/acm-workshop-variables.sh
 echo "export INGRESS_GATEWAY_LABEL='asm: ingressgateway'" >> ~/acm-workshop-variables.sh
 source ~/acm-workshop-variables.sh

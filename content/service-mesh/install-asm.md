@@ -7,8 +7,10 @@ _{{< param description >}}_
 
 Initialize variables:
 ```Bash
-echo "export ASM_CHANNEL=rapid" >> ~/acm-workshop-variables.sh
-echo "export ASM_LABEL=asm-managed" >> ~/acm-workshop-variables.sh
+ASM_CHANNEL=rapid
+ASM_LABEL=asm-managed
+echo "export ASM_CHANNEL=${ASM_CHANNEL}" >> ~/acm-workshop-variables.sh
+echo "export ASM_LABEL=${ASM_LABEL}" >> ~/acm-workshop-variables.sh
 ASM_VERSION=$ASM_LABEL
 if [ $ASM_CHANNEL = "rapid" ] || [ $ASM_CHANNEL = "stable" ] ; then ASM_VERSION=$ASM_LABEL-$ASM_CHANNEL; fi
 echo "export ASM_VERSION=${ASM_VERSION}" >> ~/acm-workshop-variables.sh
@@ -46,12 +48,6 @@ cd ~/$GKE_PROJECT_DIR_NAME/
 git add .
 git commit -m "ASM MCP for GKE project"
 git push
-```
-
-Check that the ASM MCP is successfuly installed with `resourceState.state: ACTIVE` and `membershipStates[].state.code: OK`:
-```Bash
-gcloud container hub mesh describe --project ${GKE_PROJECT_ID} --format="value(resourceState.state)"
-gcloud container hub mesh describe --project ${GKE_PROJECT_ID} --format="value(membershipStates[].state.code)"
 ```
 
 ## Define ASM ControlPlaneRevision
@@ -99,63 +95,112 @@ git commit -m "ASM MCP for GKE cluster"
 git push
 ```
 
-Check that the ASM MCP is successfuly installed with `resourceState.state: ACTIVE` and `membershipStates[].state.code: OK`:
-```Bash
-gcloud container hub mesh describe --project ${GKE_PROJECT_ID} --format="value(resourceState.state)"
-gcloud container hub mesh describe --project ${GKE_PROJECT_ID} --format="value(membershipStates[].state.code)"
-```
-
 ## Check deployments
 
 Here is what you should have at this stage:
 
-If you run:
-```Bash
-cd ~/$WORKSHOP_ORG_DIR_NAME && gh run list
-```
-You should see:
+List the GitHub runs for the **GKE project configs** repository `cd ~/$GKE_PROJECT_DIR_NAME && gh run list`:
 ```Plaintext
-FIXME
+STATUS  NAME                                                           WORKFLOW  BRANCH  EVENT  ID          ELAPSED  AGE
+✓       ASM MCP for GKE project                                        ci        main    push   1972180913  8m20s    14m
+✓       Artifact Registry for GKE cluster                              ci        main    push   1972095446  1m11s    12m
+✓       GitOps for GKE cluster configs                                 ci        main    push   1970974465  53s      7h
+✓       GKE cluster, primary nodepool and SA for GKE project           ci        main    push   1963473275  1m16s    1d
+✓       Network for GKE project                                        ci        main    push   1961289819  1m13s    1d
+✓       Initial commit                                                 ci        main    push   1961170391  56s      1d
 ```
 
-If you run:
-```Bash
-cd ~/$GKE_PROJECT_DIR_NAME && gh run list
-```
-You should see:
+List the GitHub runs for the **GKE cluster configs** repository `cd ~/$GKE_CONFIGS_DIR_NAME && gh run list`:
 ```Plaintext
-FIXME
+STATUS  NAME                                                  WORKFLOW  BRANCH  EVENT  ID          ELAPSED  AGE
+✓       ASM MCP for GKE cluster                               ci        main    push   1972222841  56s      1m
+✓       Enforce Container Registries Policies in GKE cluster  ci        main    push   1972138349  55s      42m
+✓       Policies for NetworkPolicy resources                  ci        main    push   1971716019  1m14s    3h
+✓       Network Policies logging                              ci        main    push   1971353547  1m1s     5h
+✓       Config Sync monitoring                                ci        main    push   1971296656  1m9s     5h
+✓       Initial commit                                        ci        main    push   1970951731  57s      7h
 ```
 
-If you run:
-```Bash
-cd ~/$GKE_CONFIGS_DIR_NAME && gh run list
-```
-You should see:
-```Plaintext
-FIXME
-```
-
-If you run:
+List the Kubernetes resources managed by Config Sync in **Config Controller**:
 ```Bash
 gcloud alpha anthos config sync repo describe \
    --project $CONFIG_CONTROLLER_PROJECT_ID \
    --managed-resources all \
    --format="multi(statuses:format=none,managed_resources:format='table[box](group:sort=2,kind,name,namespace:sort=1)')"
 ```
-You should see:
 ```Plaintext
-FIXME
+getting 2 RepoSync and RootSync from krmapihost-configcontroller
+┌────────────────────────────────────────┬────────────────────────────┬───────────────────────────────────────────────────┬──────────────────────┐
+│                 GROUP                  │            KIND            │                        NAME                       │      NAMESPACE       │
+├────────────────────────────────────────┼────────────────────────────┼───────────────────────────────────────────────────┼──────────────────────┤
+│                                        │ Namespace                  │ acm-workshop-464-gke                              │                      │
+│                                        │ Namespace                  │ config-control                                    │                      │
+│ constraints.gatekeeper.sh              │ LimitLocations             │ allowed-locations                                 │                      │
+│ constraints.gatekeeper.sh              │ LimitGKECluster            │ allowed-gke-cluster                               │                      │
+│ templates.gatekeeper.sh                │ ConstraintTemplate         │ limitlocations                                    │                      │
+│ templates.gatekeeper.sh                │ ConstraintTemplate         │ limitgkecluster                                   │                      │
+│ artifactregistry.cnrm.cloud.google.com │ ArtifactRegistryRepository │ containers                                        │ acm-workshop-464-gke │
+│ compute.cnrm.cloud.google.com          │ ComputeRouterNAT           │ gke                                               │ acm-workshop-464-gke │
+│ compute.cnrm.cloud.google.com          │ ComputeRouter              │ gke                                               │ acm-workshop-464-gke │
+│ compute.cnrm.cloud.google.com          │ ComputeNetwork             │ gke                                               │ acm-workshop-464-gke │
+│ compute.cnrm.cloud.google.com          │ ComputeSubnetwork          │ gke                                               │ acm-workshop-464-gke │
+│ configsync.gke.io                      │ RepoSync                   │ repo-sync                                         │ acm-workshop-464-gke │
+│ container.cnrm.cloud.google.com        │ ContainerNodePool          │ primary                                           │ acm-workshop-464-gke │
+│ container.cnrm.cloud.google.com        │ ContainerCluster           │ gke                                               │ acm-workshop-464-gke │
+│ core.cnrm.cloud.google.com             │ ConfigConnectorContext     │ configconnectorcontext.core.cnrm.cloud.google.com │ acm-workshop-464-gke │
+│ gkehub.cnrm.cloud.google.com           │ GKEHubMembership           │ gke-hub-membership                                │ acm-workshop-464-gke │
+│ gkehub.cnrm.cloud.google.com           │ GKEHubFeature              │ gke-acm                                           │ acm-workshop-464-gke │
+│ gkehub.cnrm.cloud.google.com           │ GKEHubFeature              │ gke-asm                                           │ acm-workshop-464-gke │
+│ gkehub.cnrm.cloud.google.com           │ GKEHubFeatureMembership    │ gke-acm-membership                                │ acm-workshop-464-gke │
+│ iam.cnrm.cloud.google.com              │ IAMPolicyMember            │ log-writer                                        │ acm-workshop-464-gke │
+│ iam.cnrm.cloud.google.com              │ IAMPolicyMember            │ monitoring-viewer                                 │ acm-workshop-464-gke │
+│ iam.cnrm.cloud.google.com              │ IAMPartialPolicy           │ gke-primary-pool-sa-cs-monitoring-wi-user         │ acm-workshop-464-gke │
+│ iam.cnrm.cloud.google.com              │ IAMServiceAccount          │ gke-primary-pool                                  │ acm-workshop-464-gke │
+│ iam.cnrm.cloud.google.com              │ IAMPolicyMember            │ artifactregistry-reader                           │ acm-workshop-464-gke │
+│ iam.cnrm.cloud.google.com              │ IAMPolicyMember            │ metric-writer                                     │ acm-workshop-464-gke │
+│ rbac.authorization.k8s.io              │ RoleBinding                │ syncs-repo                                        │ acm-workshop-464-gke │
+│ iam.cnrm.cloud.google.com              │ IAMPolicyMember            │ service-account-admin-acm-workshop-464-gke        │ config-control       │
+│ iam.cnrm.cloud.google.com              │ IAMPolicyMember            │ artifactregistry-admin-acm-workshop-464-gke       │ config-control       │
+│ iam.cnrm.cloud.google.com              │ IAMPolicyMember            │ gke-hub-admin-acm-workshop-464-gke                │ config-control       │
+│ iam.cnrm.cloud.google.com              │ IAMServiceAccount          │ acm-workshop-464-gke                              │ config-control       │
+│ iam.cnrm.cloud.google.com              │ IAMPartialPolicy           │ acm-workshop-464-gke-sa-wi-user                   │ config-control       │
+│ iam.cnrm.cloud.google.com              │ IAMPolicyMember            │ container-admin-acm-workshop-464-gke              │ config-control       │
+│ iam.cnrm.cloud.google.com              │ IAMPolicyMember            │ iam-admin-acm-workshop-464-gke                    │ config-control       │
+│ iam.cnrm.cloud.google.com              │ IAMPolicyMember            │ network-admin-acm-workshop-464-gke                │ config-control       │
+│ iam.cnrm.cloud.google.com              │ IAMPolicyMember            │ service-account-user-acm-workshop-464-gke         │ config-control       │
+│ resourcemanager.cnrm.cloud.google.com  │ Project                    │ acm-workshop-464-gke                              │ config-control       │
+│ serviceusage.cnrm.cloud.google.com     │ Service                    │ gkehub.googleapis.com                             │ config-control       │
+│ serviceusage.cnrm.cloud.google.com     │ Service                    │ mesh.googleapis.com                               │ config-control       │
+│ serviceusage.cnrm.cloud.google.com     │ Service                    │ anthosconfigmanagement.googleapis.com             │ config-control       │
+│ serviceusage.cnrm.cloud.google.com     │ Service                    │ artifactregistry.googleapis.com                   │ config-control       │
+│ serviceusage.cnrm.cloud.google.com     │ Service                    │ container.googleapis.com                          │ config-control       │
+│ serviceusage.cnrm.cloud.google.com     │ Service                    │ cloudbilling.googleapis.com                       │ config-control       │
+│ serviceusage.cnrm.cloud.google.com     │ Service                    │ containeranalysis.googleapis.com                  │ config-control       │
+│ serviceusage.cnrm.cloud.google.com     │ Service                    │ containerscanning.googleapis.com                  │ config-control       │
+└────────────────────────────────────────┴────────────────────────────┴───────────────────────────────────────────────────┴──────────────────────┘
 ```
 
-If you run:
+List the Kubernetes resources managed by Config Sync in the **GKE cluster**:
 ```Bash
 gcloud alpha anthos config sync repo describe \
    --project $GKE_PROJECT_ID \
    --managed-resources all \
    --format="multi(statuses:format=none,managed_resources:format='table[box](group:sort=2,kind,name,namespace:sort=1)')"
 ```
-You should see:
 ```Plaintext
-FIXME
+getting 1 RepoSync and RootSync from gke-hub-membership
+┌───────────────────────────┬──────────────────────┬──────────────────────────────┬──────────────────────────────┐
+│           GROUP           │         KIND         │             NAME             │          NAMESPACE           │
+├───────────────────────────┼──────────────────────┼──────────────────────────────┼──────────────────────────────┤
+│                           │ Namespace            │ istio-system                 │                              │
+│                           │ Namespace            │ config-management-monitoring │                              │
+│ constraints.gatekeeper.sh │ K8sAllowedRepos      │ allowed-container-registries │                              │
+│ constraints.gatekeeper.sh │ K8sRequiredLabels    │ namespace-required-labels    │                              │
+│ constraints.gatekeeper.sh │ K8sRequiredLabels    │ deployment-required-labels   │                              │
+│ networking.gke.io         │ NetworkLogging       │ default                      │                              │
+│ templates.gatekeeper.sh   │ ConstraintTemplate   │ k8srequiredlabels            │                              │
+│ templates.gatekeeper.sh   │ ConstraintTemplate   │ k8sallowedrepos              │                              │
+│                           │ ServiceAccount       │ default                      │ config-management-monitoring │
+│ mesh.cloud.google.com     │ ControlPlaneRevision │ asm-managed-rapid            │ istio-system                 │
+└───────────────────────────┴──────────────────────┴──────────────────────────────┴──────────────────────────────┘
 ```

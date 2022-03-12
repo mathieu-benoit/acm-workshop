@@ -151,6 +151,7 @@ spec:
     - config-management-system
     - default
     - gatekeeper-system
+    - istio-system
     - kube-node-lease
     - kube-public
     - kube-system
