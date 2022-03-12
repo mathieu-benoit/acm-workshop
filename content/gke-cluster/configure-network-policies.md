@@ -1,6 +1,6 @@
 ---
 title: "Configure Network Policy"
-weight: 5
+weight: 6
 description: "Duration: 5 min | Persona: Platform Admin"
 ---
 _{{< param description >}}_
@@ -44,7 +44,7 @@ git push
 
 ### Required labels on Namespace and Deployment
 
-As a best practice and in order to get the `NetworkPolicy` resources working in this workshop, we need to guarantee that that any `Namespace` has an `name` label.
+As a best practice and in order to get the `NetworkPolicy` resources working in this workshop, we need to guarantee that that any `Namespace` has a `name` label and `Deployment` has an `app` label.
 
 Define the `ConstraintTemplate` resource:
 ```Bash
@@ -53,7 +53,7 @@ apiVersion: templates.gatekeeper.sh/v1
 kind: ConstraintTemplate
 metadata:
   annotations:
-    description: Requires resources to contain specified labels, with values matching provided regular expressions.
+    description: Requires resources to contain specified labels.
   name: k8srequiredlabels
 spec:
   crd:
@@ -68,52 +68,36 @@ spec:
               description: A list of labels and values the object must specify.
               items:
                 properties:
-                  allowedRegex:
-                    description: If specified, a regular expression the annotation's
-                      value must match. The value must contain at least one match
-                      for the regular expression.
-                    type: string
                   key:
                     description: The required label.
                     type: string
                 type: object
               type: array
-            message:
-              type: string
           type: object
   targets:
   - rego: |
       package k8srequiredlabels
-      get_message(parameters, _default) = msg {
-        not parameters.message
-        msg := _default
-      }
-      get_message(parameters, _default) = msg {
-        msg := parameters.message
-      }
-      violation[{"msg": msg, "details": {"missing_labels": missing}}] {
+      violation[{"msg": msg}] {
+        not input.review.object.kind == "Deployment"
         provided := {label | input.review.object.metadata.labels[label]}
         required := {label | label := input.parameters.labels[_].key}
         missing := required - provided
         count(missing) > 0
-        def_msg := sprintf("you must provide labels: %v", [missing])
-        msg := get_message(input.parameters, def_msg)
+        msg := sprintf("you must provide labels: %v", [missing])
       }
       violation[{"msg": msg}] {
-        value := input.review.object.metadata.labels[key]
-        expected := input.parameters.labels[_]
-        expected.key == key
-        # do not match if allowedRegex is not defined, or is an empty string
-        expected.allowedRegex != ""
-        not re_match(expected.allowedRegex, value)
-        def_msg := sprintf("Label <%v: %v> does not satisfy allowed regex: %v", [key, value, expected.allowedRegex])
-        msg := get_message(input.parameters, def_msg)
+        input.review.object.kind == "Deployment"
+        provided := {label | input.review.object.spec.template.metadata.labels[label]}
+        required := {label | label := input.parameters.labels[_].key}
+        missing := required - provided
+        count(missing) > 0
+        msg := sprintf("you must provide labels: %v", [missing])
       }
     target: admission.k8s.gatekeeper.sh
 EOF
 ```
 
-Define the `Constraint` resource for the `Deployment` resources:
+Define the `Constraint` resource for the `Namespace` resources:
 ```Bash
 cat <<EOF > ~/$GKE_CONFIGS_DIR_NAME/config-sync/policies/constraints/namespace-required-labels.yaml
 apiVersion: constraints.gatekeeper.sh/v1beta1
@@ -129,11 +113,51 @@ spec:
       kinds:
       - Namespace
     excludedNamespaces:
-      - cnrm-system
-      - istio-system
+      - config-management-monitoring
+      - config-management-system
+      - default
+      - gatekeeper-system
+      - kube-node-lease
+      - kube-public
+      - kube-system
+      - resource-group-system
   parameters:
     labels:
       - key: name
+EOF
+```
+
+Define the `Constraint` resource for the `Deployment` resources:
+```Bash
+cat <<EOF > ~/$GKE_CONFIGS_DIR_NAME/config-sync/policies/constraints/deployment-required-labels.yaml
+apiVersion: constraints.gatekeeper.sh/v1beta1
+kind: K8sRequiredLabels
+metadata:
+  name: deployment-required-labels
+spec:
+  enforcementAction: deny
+  match:
+    kinds:
+    - apiGroups:
+      - ""
+      kinds:
+      - Pod
+    - apiGroups:
+      - apps
+      kinds:
+      - Deployment
+    excludedNamespaces:
+      - config-management-monitoring
+      - config-management-system
+      - default
+      - gatekeeper-system
+      - kube-node-lease
+      - kube-public
+      - kube-system
+      - resource-group-system
+  parameters:
+    labels:
+      - key: app
 EOF
 ```
 
@@ -148,39 +172,13 @@ git push
 
 ## Check deployments
 
-List the GitHub runs for the Org configs repository `cd ~/$WORKSHOP_ORG_DIR_NAME && gh run list`:
+List the GitHub runs for the **GKE cluster configs** repository `cd ~/$GKE_CONFIGS_DIR_NAME && gh run list`:
 ```Plaintext
-FIXME
-```
-
-If you run:
-```Bash
-cd ~/$GKE_PROJECT_DIR_NAME && gh run list
-```
-You should see:
-```Plaintext
-FIXME
-```
-
-If you run:
-```Bash
-cd ~/$GKE_CONFIGS_DIR_NAME && gh run list
-```
-You should see:
-```Plaintext
-FIXME
-```
-
-If you run:
-```Bash
-gcloud alpha anthos config sync repo describe \
-    --project $CONFIG_CONTROLLER_PROJECT_ID \
-    --managed-resources all \
-    --format="multi(statuses:format=none,managed_resources:format='table[box](group:sort=2,kind,name,namespace:sort=1)')"
-```
-You should see:
-```Plaintext
-FIXME
+STATUS  NAME                                  WORKFLOW  BRANCH  EVENT  ID          ELAPSED  AGE
+✓       Policies for NetworkPolicy resources  ci        main    push   1971716019  1m14s    2m
+✓       Network Policies logging              ci        main    push   1971353547  1m1s     1h
+✓       Config Sync monitoring                ci        main    push   1971296656  1m9s     2h
+✓       Initial commit                        ci        main    push   1970951731  57s      3h
 ```
 
 If you run:
@@ -192,5 +190,15 @@ gcloud alpha anthos config sync repo describe \
 ```
 You should see:
 ```Plaintext
-FIXME
+getting 1 RepoSync and RootSync from gke-hub-membership
+┌───────────────────────────┬────────────────────┬──────────────────────────────┬──────────────────────────────┐
+│           GROUP           │        KIND        │             NAME             │          NAMESPACE           │
+├───────────────────────────┼────────────────────┼──────────────────────────────┼──────────────────────────────┤
+│                           │ Namespace          │ config-management-monitoring │                              │
+│ constraints.gatekeeper.sh │ K8sRequiredLabels  │ deployment-required-labels   │                              │
+│ constraints.gatekeeper.sh │ K8sRequiredLabels  │ namespace-required-labels    │                              │
+│ networking.gke.io         │ NetworkLogging     │ default                      │                              │
+│ templates.gatekeeper.sh   │ ConstraintTemplate │ k8srequiredlabels            │                              │
+│                           │ ServiceAccount     │ default                      │ config-management-monitoring │
+└───────────────────────────┴────────────────────┴──────────────────────────────┴──────────────────────────────┘
 ```
