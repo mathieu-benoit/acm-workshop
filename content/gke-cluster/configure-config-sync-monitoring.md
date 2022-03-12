@@ -44,14 +44,13 @@ STATUS  NAME                    WORKFLOW  BRANCH  EVENT  ID          ELAPSED  AG
 ✓       Initial commit          ci        main    push   1970951731  57s      1h
 ```
 
-If you run:
+List the Kubernetes resources managed by Config Sync in the **GKE cluster**:
 ```Bash
 gcloud alpha anthos config sync repo describe \
     --project $GKE_PROJECT_ID \
     --managed-resources all \
     --format="multi(statuses:format=none,managed_resources:format='table[box](group:sort=2,kind,name,namespace:sort=1)')"
 ```
-You should see:
 ```Plaintext
 getting 1 RepoSync and RootSync from gke-hub-membership
 ┌───────┬────────────────┬──────────────────────────────┬──────────────────────────────┐

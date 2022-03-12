@@ -152,14 +152,13 @@ STATUS  NAME                                      WORKFLOW  BRANCH  EVENT  ID   
 ✓       Initial commit                            ci        main    push   1960885850  1m8s     9m
 ```
 
-If you run:
+List the Kubernetes resources managed by Config Sync in **Config Controller**:
 ```Bash
 gcloud alpha anthos config sync repo describe \
    --project $CONFIG_CONTROLLER_PROJECT_ID \
    --managed-resources all \
    --format="multi(statuses:format=none,managed_resources:format='table[box](group:sort=2,kind,name,namespace:sort=1)')"
 ```
-You should see:
 ```Plaintext
 getting 1 RepoSync and RootSync from krmapihost-configcontroller
 ┌───────────────────────────────────────┬────────────────────────┬─────────────────────────────────┬──────────────────────┐
