@@ -79,8 +79,8 @@ gcloud anthos config controller describe $CONFIG_CONTROLLER_NAME \
 ## Get the Config Controller instance credentials
 
 ```Bash
-gcloud container clusters get-credentials krmapihost-$CONFIG_CONTROLLER_NAME \
-    --region $CONFIG_CONTROLLER_LOCATION
+gcloud anthos config controller get-credentials $CONFIG_CONTROLLER_NAME \
+    --location $CONFIG_CONTROLLER_LOCATION
 ```
 
 ## Set Config Controller's service account roles
