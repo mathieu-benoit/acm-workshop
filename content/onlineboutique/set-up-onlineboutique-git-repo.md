@@ -30,6 +30,7 @@ metadata:
   labels:
     name: ${ONLINEBOUTIQUE_NAMESPACE}
     istio.io/rev: ${ASM_VERSION}
+    istio-discovery: enabled
 EOF
 ```
 

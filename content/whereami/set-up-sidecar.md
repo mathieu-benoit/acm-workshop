@@ -25,7 +25,7 @@ spec:
       app: whereami
   egress:
   - hosts:
-    - "istio-system/*"
+    - istio-system/*
 EOF
 ```
 

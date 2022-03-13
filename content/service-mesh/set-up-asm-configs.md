@@ -74,8 +74,8 @@ metadata:
 spec:
   egress:
   - hosts:
-    - "./*"
-    - "istio-system/*"
+    - ./*
+    - istio-system/*
 EOF
 ```
 {{% notice tip %}}

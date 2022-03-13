@@ -38,8 +38,10 @@ spec:
         principals: ["cluster.local/ns/${INGRESS_GATEWAY_NAMESPACE}/sa/${INGRESS_GATEWAY_NAME}"]
     to:
     - operation:
-        ports: ["8080"]
-        methods: ["GET"]
+        ports:
+        - 8080
+        methods:
+        - GET
 EOF
 ```
 

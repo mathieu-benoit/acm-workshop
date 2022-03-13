@@ -45,10 +45,8 @@ spec:
     - resource-group-system
   parameters:
     labels:
-      - allowedRegex: (asm-managed|asm-managed-rapid|asm-managed-stable)
-        key: istio.io/rev
-      - allowedRegex: enabled
-        key: istio-discovery
+    - key: istio.io/rev
+    - key: istio-discovery
 EOF
 ```
 
