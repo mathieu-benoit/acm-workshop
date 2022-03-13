@@ -76,7 +76,6 @@ List the Kubernetes resources managed by Config Sync in the **GKE cluster** for 
 gcloud alpha anthos config sync repo describe \
     --project $GKE_PROJECT_ID \
     --managed-resources all \
-    --format="multi(statuses:format=none,managed_resources:format='table[box](group:sort=2,kind,name,namespace:sort=1)')" \
     --sync-name root-sync \
     --sync-namespace config-management-system
 ```
