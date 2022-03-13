@@ -29,6 +29,7 @@ metadata:
   labels:
     name: ${INGRESS_GATEWAY_NAMESPACE}
     istio.io/rev: ${ASM_VERSION}
+    istio-discovery: enabled
 EOF
 ```
 
@@ -269,8 +270,7 @@ List the GitHub runs for the **GKE cluster configs** repository `cd ~/$GKE_CONFI
 STATUS  NAME                                                  WORKFLOW  BRANCH  EVENT  ID          ELAPSED  AGE
 ✓       ASM Ingress Gateway in GKE cluster                    ci        main    push   1975240395  1m14s    2m
 ✓       Enforce ASM/Istio Policies in GKE cluster             ci        main    push   1972244827  59s      23h
-✓       mTLS STRICT in GKE cluster                            ci        main    push   1972234050  56s      23h
-✓       ASM configs in GKE cluster                            ci        main    push   1972232995  1m3s     23h
+✓       ASM configs (mTLS, Sidecar, etc.) in GKE cluster      ci        main    push   1972234050  56s      23h
 ✓       ASM MCP for GKE cluster                               ci        main    push   1972185200  1m8s     23h
 ✓       Enforce Container Registries Policies in GKE cluster  ci        main    push   1972138349  55s      23h
 ✓       Policies for NetworkPolicy resources                  ci        main    push   1971716019  1m14s    1d

@@ -12,7 +12,7 @@ source ~/acm-workshop-variables.sh
 
 ## Define ASM configs Mesh-wide
 
-Define the optional Mesh configs (`distroless` container image for the proxy):
+Define the optional Mesh configs:
 ```Bash
 cat <<EOF > ~/$GKE_CONFIGS_DIR_NAME/config-sync/istio-system/mesh-configs.yaml
 apiVersion: v1
@@ -21,21 +21,21 @@ data:
     defaultConfig:
       image:
         imageType: distroless
+    discoverySelectors:
+    - matchLabels:
+        istio-discovery: enabled
 kind: ConfigMap
 metadata:
   name: istio-${ASM_VERSION}
   namespace: istio-system
 EOF
 ```
-
-## Deploy Kubernetes manifests
-
-```Bash
-cd ~/$GKE_CONFIGS_DIR_NAME/
-git add .
-git commit -m "ASM configs in GKE cluster"
-git push
-```
+{{% notice tip %}}
+The [`distroless` base image ensures that the proxy image](https://cloud.google.com/service-mesh/docs/managed/enable-managed-anthos-service-mesh-optional-features#distroless_proxy_image) contains the minimal number of packages required to run the proxy. This improves security posture by reducing the overall attack surface of the image and gets cleaner results with CVE scanners.
+{{% /notice %}}
+{{% notice tip %}}
+[`discoverySelectors`](https://istio.io/latest/blog/2021/discovery-selectors/) is a way to dynamically restrict the set of namespaces that are part of the mesh so that the Istio control plane only processes resources in those namespaces.
+{{% /notice %}}
 
 ## Define mTLS STRICT Mesh-wide
 
@@ -52,13 +52,42 @@ spec:
     mode: STRICT
 EOF
 ```
+{{% notice tip %}}
+Here we are locking down [mutual TLS to `STRICT` for the entire mesh](https://istio.io/latest/docs/tasks/security/authentication/mtls-migration/#lock-down-mutual-tls-for-the-entire-mesh).
+{{% /notice %}}
+
+## Define Sidecar Mesh-wide
+
+Create a dedicated `istio-config` folder in the GKE configs's Git repo:
+```Bash
+mkdir ~/$GKE_CONFIGS_DIR_NAME/config-sync/istio-config
+```
+
+Define the `istio-config` namespace:
+```Bash
+cat <<EOF > ~/$GKE_CONFIGS_DIR_NAME/config-sync/istio-config/sidecar.yaml
+apiVersion: networking.istio.io/v1alpha3
+kind: Sidecar
+metadata:
+  name: default
+  namespace: istio-config
+spec:
+  egress:
+  - hosts:
+    - "./*"
+    - "istio-system/*"
+EOF
+```
+{{% notice tip %}}
+A [`Sidecar`](https://istio.io/latest/docs/reference/config/networking/sidecar/) configuration in the `MeshConfig` root namespace will be applied by default to all namespaces without a `Sidecar` configuration.
+{{% /notice %}}
 
 ## Deploy Kubernetes manifests
 
 ```Bash
 cd ~/$GKE_CONFIGS_DIR_NAME/
 git add .
-git commit -m "mTLS STRICT in GKE cluster"
+git commit -m "ASM configs (mTLS, Sidecar, etc.) in GKE cluster"
 git push
 ```
 
@@ -69,8 +98,7 @@ Here is what you should have at this stage:
 List the GitHub runs for the **GKE cluster configs** repository `cd ~/$GKE_CONFIGS_DIR_NAME && gh run list`:
 ```Plaintext
 STATUS  NAME                                                  WORKFLOW  BRANCH  EVENT  ID          ELAPSED  AGE
-✓       mTLS STRICT in GKE cluster                            ci        main    push   1972234050  56s      2m
-✓       ASM configs in GKE cluster                            ci        main    push   1972232995  1m3s     2m
+✓       ASM configs (mTLS, Sidecar, etc.) in GKE cluster      ci        main    push   1972234050  56s      2m
 ✓       ASM MCP for GKE cluster                               ci        main    push   1972222841  56s      7m
 ✓       Enforce Container Registries Policies in GKE cluster  ci        main    push   1972138349  55s      49m
 ✓       Policies for NetworkPolicy resources                  ci        main    push   1971716019  1m14s    3h

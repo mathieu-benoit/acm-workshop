@@ -46,7 +46,9 @@ spec:
   parameters:
     labels:
       - allowedRegex: (asm-managed|asm-managed-rapid|asm-managed-stable)
-        key: "istio.io/rev"
+        key: istio.io/rev
+      - allowedRegex: enabled
+        key: istio-discovery
 EOF
 ```
 
@@ -349,8 +351,7 @@ List the GitHub runs for the **GKE cluster configs** repository `cd ~/$GKE_CONFI
 ```Plaintext
 STATUS  NAME                                                  WORKFLOW  BRANCH  EVENT  ID          ELAPSED  AGE
 ✓       Enforce ASM/Istio Policies in GKE cluster             ci        main    push   1972257889  58s      4m
-✓       mTLS STRICT in GKE cluster                            ci        main    push   1972234050  56s      17m
-✓       ASM configs in GKE cluster                            ci        main    push   1972232995  1m3s     17m
+✓       ASM configs (mTLS, Sidecar, etc.) in GKE cluster      ci        main    push   1972234050  56s      17m
 ✓       ASM MCP for GKE cluster                               ci        main    push   1972222841  56s      22m
 ✓       Enforce Container Registries Policies in GKE cluster  ci        main    push   1972138349  55s      1h
 ✓       Policies for NetworkPolicy resources                  ci        main    push   1971716019  1m14s    3h

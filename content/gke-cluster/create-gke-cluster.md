@@ -137,6 +137,23 @@ spec:
     external: ${GKE_PROJECT_ID}
   role: roles/monitoring.viewer
 EOF
+cat <<EOF > ~/$GKE_PROJECT_DIR_NAME/config-sync/cloudtrace-agent-gke-sa.yaml
+apiVersion: iam.cnrm.cloud.google.com/v1beta1
+kind: IAMPolicyMember
+metadata:
+  name: cloudtrace-agent
+  namespace: ${GKE_PROJECT_ID}
+spec:
+  memberFrom:
+    serviceAccountRef:
+      name: ${GKE_SA}
+      namespace: ${GKE_PROJECT_ID}
+  resourceRef:
+    apiVersion: resourcemanager.cnrm.cloud.google.com/v1beta1
+    kind: Project
+    external: ${GKE_PROJECT_ID}
+  role: roles/cloudtrace.agent
+EOF
 ```
 
 ## Define GKE primary node pool
@@ -197,6 +214,7 @@ gcloud container node-pools list \
 ```
 ```Plaintext
 ROLE
+roles/cloudtrace.agent
 roles/logging.logWriter
 roles/monitoring.metricWriter
 roles/monitoring.viewer
@@ -238,5 +256,6 @@ getting 1 RepoSync and RootSync from krmapihost-configcontroller
 │ iam.cnrm.cloud.google.com              │ IAMServiceAccount          │ gke-primary-pool                          │ acm-workshop-464-gke │
 │ iam.cnrm.cloud.google.com              │ IAMPolicyMember            │ metric-writer                             │ acm-workshop-464-gke │
 │ iam.cnrm.cloud.google.com              │ IAMPolicyMember            │ monitoring-viewer                         │ acm-workshop-464-gke │
+│ iam.cnrm.cloud.google.com              │ IAMPolicyMember            │ cloudtrace-agent                          │ acm-workshop-464-gke │
 └────────────────────────────────────────┴────────────────────────────┴───────────────────────────────────────────┴──────────────────────┘
 ```

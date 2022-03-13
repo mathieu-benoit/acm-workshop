@@ -40,55 +40,36 @@ git push
 
 ## Check deployments
 
-Here is what you should have at this stage:
-
-If you run:
-```Bash
-cd ~/$WORKSHOP_ORG_DIR_NAME && gh run list
-```
-You should see:
+List the GitHub runs for the **Whereami app** repository `cd ~/$WHERE_AMI_DIR_NAME && gh run list`:
 ```Plaintext
-FIXME
+STATUS  NAME                       WORKFLOW  BRANCH  EVENT  ID          ELAPSED  AGE
+✓       Whereami Sidecar           ci        main    push   1976601129  1m3s     5m
+✓       Whereami Network Policies  ci        main    push   1976593659  1m1s     1m
+✓       Whereami app               ci        main    push   1976257627  1m1s     2h
+✓       Initial commit             ci        main    push   1975324083  1m5s     10h
 ```
 
-If you run:
-```Bash
-cd ~/$GKE_PROJECT_DIR_NAME && gh run list
-```
-You should see:
-```Plaintext
-FIXME
-```
-
-If you run:
-```Bash
-cd ~/$GKE_CONFIGS_DIR_NAME && gh run list
-```
-You should see:
-```Plaintext
-FIXME
-```
-
-If you run:
+List the Kubernetes resources managed by Config Sync in the **GKE cluster** for the **Whereami app** repository:
 ```Bash
 gcloud alpha anthos config sync repo describe \
-   --project $CONFIG_CONTROLLER_PROJECT_ID \
-   --managed-resources all \
-   --format="multi(statuses:format=none,managed_resources:format='table[box](group:sort=2,kind,name,namespace:sort=1)')"
+    --project $GKE_PROJECT_ID \
+    --managed-resources all \
+    --format="multi(statuses:format=none,managed_resources:format='table[box](group:sort=2,kind,name,namespace:sort=1)')" \
+    --sync-name repo-sync \
+    --sync-namespace $WHEREAMI_NAMESPACE
 ```
-You should see:
 ```Plaintext
-FIXME
-```
-
-If you run:
-```Bash
-gcloud alpha anthos config sync repo describe \
-   --project $GKE_PROJECT_ID \
-   --managed-resources all \
-   --format="multi(statuses:format=none,managed_resources:format='table[box](group:sort=2,kind,name,namespace:sort=1)')"
-```
-You should see:
-```Plaintext
-FIXME
+getting 1 RepoSync and RootSync from gke-hub-membership
+┌─────────────────────┬─────────────────────┬────────────────────┬───────────┐
+│        GROUP        │         KIND        │        NAME        │ NAMESPACE │
+├─────────────────────┼─────────────────────┼────────────────────┼───────────┤
+│                     │ ServiceAccount      │ whereami-ksa       │ whereami  │
+│                     │ Service             │ whereami           │ whereami  │
+│                     │ ConfigMap           │ whereami-configmap │ whereami  │
+│ apps                │ Deployment          │ whereami           │ whereami  │
+│ networking.istio.io │ Sidecar             │ whereami           │ whereami  │
+│ networking.istio.io │ VirtualService      │ whereami           │ whereami  │
+│ networking.k8s.io   │ NetworkPolicy       │ denyall            │ whereami  │
+│ networking.k8s.io   │ NetworkPolicy       │ whereami           │ whereami  │
+└─────────────────────┴─────────────────────┴────────────────────┴───────────┘
 ```
