@@ -251,40 +251,38 @@ STATUS  NAME                                      WORKFLOW  BRANCH  EVENT  ID   
 ✓       Initial commit                            ci        main    push   1961132028  1m2s     1h
 ```
 
-List the Kubernetes resources managed by Config Sync in **Config Controller**:
+List the Kubernetes resources managed by Config Sync in **Config Controller** for the **Org configs** repository:
 ```Bash
 gcloud alpha anthos config sync repo describe \
     --project $CONFIG_CONTROLLER_PROJECT_ID \
     --managed-resources all \
-    --format="multi(statuses:format=none,managed_resources:format='table[box](group:sort=2,kind,name,namespace:sort=1)')"
+    --format="multi(statuses:format=none,managed_resources:format='table[box](group:sort=2,kind,name,namespace:sort=1)')" \
+    --sync-name root-sync \
+    --sync-namespace config-management-system
 ```
 ```Plaintext
-getting 2 RepoSync and RootSync from krmapihost-configcontroller
+getting 1 RepoSync and RootSync from krmapihost-configcontroller
 ┌───────────────────────────────────────┬────────────────────────┬───────────────────────────────────────────────────┬──────────────────────┐
 │                 GROUP                 │          KIND          │                        NAME                       │      NAMESPACE       │
 ├───────────────────────────────────────┼────────────────────────┼───────────────────────────────────────────────────┼──────────────────────┤
-│                                       │ Namespace              │ acm-workshop-464-gke                              │                      │
 │                                       │ Namespace              │ config-control                                    │                      │
+│                                       │ Namespace              │ acm-workshop-464-gke                              │                      │
 │ constraints.gatekeeper.sh             │ LimitGKECluster        │ allowed-gke-cluster                               │                      │
 │ constraints.gatekeeper.sh             │ LimitLocations         │ allowed-locations                                 │                      │
 │ templates.gatekeeper.sh               │ ConstraintTemplate     │ limitlocations                                    │                      │
 │ templates.gatekeeper.sh               │ ConstraintTemplate     │ limitgkecluster                                   │                      │
-│ compute.cnrm.cloud.google.com         │ ComputeRouterNAT       │ gke                                               │ acm-workshop-464-gke │
-│ compute.cnrm.cloud.google.com         │ ComputeSubnetwork      │ gke                                               │ acm-workshop-464-gke │
-│ compute.cnrm.cloud.google.com         │ ComputeNetwork         │ gke                                               │ acm-workshop-464-gke │
-│ compute.cnrm.cloud.google.com         │ ComputeRouter          │ gke                                               │ acm-workshop-464-gke │
 │ configsync.gke.io                     │ RepoSync               │ repo-sync                                         │ acm-workshop-464-gke │
 │ core.cnrm.cloud.google.com            │ ConfigConnectorContext │ configconnectorcontext.core.cnrm.cloud.google.com │ acm-workshop-464-gke │
 │ rbac.authorization.k8s.io             │ RoleBinding            │ syncs-repo                                        │ acm-workshop-464-gke │
-│ iam.cnrm.cloud.google.com             │ IAMPolicyMember        │ iam-admin-acm-workshop-464-gke                    │ config-control       │
 │ iam.cnrm.cloud.google.com             │ IAMPartialPolicy       │ acm-workshop-464-gke-sa-wi-user                   │ config-control       │
-│ iam.cnrm.cloud.google.com             │ IAMPolicyMember        │ network-admin-acm-workshop-464-gke                │ config-control       │
-│ iam.cnrm.cloud.google.com             │ IAMServiceAccount      │ acm-workshop-464-gke                              │ config-control       │
-│ iam.cnrm.cloud.google.com             │ IAMPolicyMember        │ service-account-admin-acm-workshop-464-gke        │ config-control       │
-│ iam.cnrm.cloud.google.com             │ IAMPolicyMember        │ container-admin-acm-workshop-464-gke              │ config-control       │
 │ iam.cnrm.cloud.google.com             │ IAMPolicyMember        │ service-account-user-acm-workshop-464-gke         │ config-control       │
+│ iam.cnrm.cloud.google.com             │ IAMPolicyMember        │ iam-admin-acm-workshop-464-gke                    │ config-control       │
+│ iam.cnrm.cloud.google.com             │ IAMPolicyMember        │ service-account-admin-acm-workshop-464-gke        │ config-control       │
+│ iam.cnrm.cloud.google.com             │ IAMServiceAccount      │ acm-workshop-464-gke                              │ config-control       │
+│ iam.cnrm.cloud.google.com             │ IAMPolicyMember        │ container-admin-acm-workshop-464-gke              │ config-control       │
+│ iam.cnrm.cloud.google.com             │ IAMPolicyMember        │ network-admin-acm-workshop-464-gke                │ config-control       │
 │ resourcemanager.cnrm.cloud.google.com │ Project                │ acm-workshop-464-gke                              │ config-control       │
-│ serviceusage.cnrm.cloud.google.com    │ Service                │ cloudbilling.googleapis.com                       │ config-control       │
 │ serviceusage.cnrm.cloud.google.com    │ Service                │ container.googleapis.com                          │ config-control       │
+│ serviceusage.cnrm.cloud.google.com    │ Service                │ cloudbilling.googleapis.com                       │ config-control       │
 └───────────────────────────────────────┴────────────────────────┴───────────────────────────────────────────────────┴──────────────────────┘
 ```

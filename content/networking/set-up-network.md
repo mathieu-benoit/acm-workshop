@@ -127,33 +127,23 @@ STATUS  NAME                     WORKFLOW  BRANCH  EVENT  ID          ELAPSED  A
 ✓       Initial commit           ci        main    push   1961170391  56s      41m
 ```
 
-List the Kubernetes resources managed by Config Sync in **Config Controller**:
+List the Kubernetes resources managed by Config Sync in **Config Controller** for the **GKE project configs** repository:
 ```Bash
 gcloud alpha anthos config sync repo describe \
     --project $CONFIG_CONTROLLER_PROJECT_ID \
     --managed-resources all \
-    --format="multi(statuses:format=none,managed_resources:format='table[box](group:sort=2,kind,name,namespace:sort=1)')"
+    --format="multi(statuses:format=none,managed_resources:format='table[box](group:sort=2,kind,name,namespace:sort=1)')" \
+    --sync-name repo-sync \
+    --sync-namespace $GKE_PROJECT_ID
 ```
 ```Plaintext
-getting 2 RepoSync and RootSync from krmapihost-configcontroller
-┌───────────────────────────────────────┬────────────────────────┬────────────────────────────────────┬──────────────────────┐
-│                 GROUP                 │          KIND          │                NAME                │      NAMESPACE       │
-├───────────────────────────────────────┼────────────────────────┼────────────────────────────────────┼──────────────────────┤
-│                                       │ Namespace              │ acm-workshop-464-gke               │                      │
-│                                       │ Namespace              │ config-control                     │                      │
-│ constraints.gatekeeper.sh             │ LimitLocations         │ allowed-locations                  │                      │
-│ templates.gatekeeper.sh               │ ConstraintTemplate     │ limitlocations                     │                      │
-│ compute.cnrm.cloud.google.com         │ ComputeRouterNAT       │ gke                                │ acm-workshop-464-gke │
-│ compute.cnrm.cloud.google.com         │ ComputeSubnetwork      │ gke                                │ acm-workshop-464-gke │
-│ compute.cnrm.cloud.google.com         │ ComputeNetwork         │ gke                                │ acm-workshop-464-gke │
-│ compute.cnrm.cloud.google.com         │ ComputeRouter          │ gke                                │ acm-workshop-464-gke │
-│ configsync.gke.io                     │ RepoSync               │ repo-sync                          │ acm-workshop-464-gke │
-│ core.cnrm.cloud.google.com            │ ConfigConnectorContext │ configconnectorcontext             │ acm-workshop-464-gke │
-│ rbac.authorization.k8s.io             │ RoleBinding            │ syncs-repo                         │ acm-workshop-464-gke │
-│ iam.cnrm.cloud.google.com             │ IAMPolicyMember        │ network-admin-acm-workshop-464-gke │ config-control       │
-│ iam.cnrm.cloud.google.com             │ IAMServiceAccount      │ acm-workshop-464-gke               │ config-control       │
-│ iam.cnrm.cloud.google.com             │ IAMPartialPolicy       │ acm-workshop-464-gke-sa-wi-user    │ config-control       │
-│ resourcemanager.cnrm.cloud.google.com │ Project                │ acm-workshop-464-gke               │ config-control       │
-│ serviceusage.cnrm.cloud.google.com    │ Service                │ cloudbilling.googleapis.com        │ config-control       │
-└───────────────────────────────────────┴────────────────────────┴────────────────────────────────────┴──────────────────────┘
+getting 1 RepoSync and RootSync from krmapihost-configcontroller
+┌────────────────────────────────────────┬────────────────────────────┬───────────────────────────────────────────┬──────────────────────┐
+│                 GROUP                  │            KIND            │                    NAME                   │      NAMESPACE       │
+├────────────────────────────────────────┼────────────────────────────┼───────────────────────────────────────────┼──────────────────────┤
+│ compute.cnrm.cloud.google.com          │ ComputeRouterNAT           │ gke                                       │ acm-workshop-464-gke │
+│ compute.cnrm.cloud.google.com          │ ComputeNetwork             │ gke                                       │ acm-workshop-464-gke │
+│ compute.cnrm.cloud.google.com          │ ComputeRouter              │ gke                                       │ acm-workshop-464-gke │
+│ compute.cnrm.cloud.google.com          │ ComputeSubnetwork          │ gke                                       │ acm-workshop-464-gke │
+└────────────────────────────────────────┴────────────────────────────┴───────────────────────────────────────────┴──────────────────────┘
 ```

@@ -359,12 +359,14 @@ STATUS  NAME                                                  WORKFLOW  BRANCH  
 ✓       Initial commit                                        ci        main    push   1970951731  57s      7h
 ```
 
-List the Kubernetes resources managed by Config Sync in the **GKE cluster**:
+List the Kubernetes resources managed by Config Sync in the **GKE cluster** for the **GKE cluster configs** repository:
 ```Bash
 gcloud alpha anthos config sync repo describe \
-   --project $GKE_PROJECT_ID \
-   --managed-resources all \
-   --format="multi(statuses:format=none,managed_resources:format='table[box](group:sort=2,kind,name,namespace:sort=1)')"
+    --project $GKE_PROJECT_ID \
+    --managed-resources all \
+    --format="multi(statuses:format=none,managed_resources:format='table[box](group:sort=2,kind,name,namespace:sort=1)')" \
+    --sync-name root-sync \
+    --sync-namespace config-management-system
 ```
 ```Plaintext
 getting 1 RepoSync and RootSync from gke-hub-membership

@@ -8,7 +8,8 @@ _{{< param description >}}_
 Initialize variables:
 ```Bash
 source ~/acm-workshop-variables.sh
-echo "export SECURITY_POLICY_NAME=${GKE_NAME}-asm-ingressgateway" >> ~/acm-workshop-variables.sh
+SECURITY_POLICY_NAME=$GKE_NAME-asm-ingressgateway
+echo "export SECURITY_POLICY_NAME=${SECURITY_POLICY_NAME}" >> ~/acm-workshop-variables.sh
 echo "export SSL_POLICY_NAME=${SECURITY_POLICY_NAME}" >> ~/acm-workshop-variables.sh
 source ~/acm-workshop-variables.sh
 ```
@@ -116,51 +117,51 @@ git push
 
 ## Check deployments
 
-Here is what you should have at this stage:
-
-List the GitHub runs for the Org configs repository `cd ~/$WORKSHOP_ORG_DIR_NAME && gh run list`:
+List the GitHub runs for the **GKE project configs** repository `cd ~/$GKE_PROJECT_DIR_NAME && gh run list`:
 ```Plaintext
-FIXME
+STATUS  NAME                                                                                              WORKFLOW  BRANCH  EVENT  ID          ELAPSED  AGE
+✓       Ingress Gateway's SSL policy                                                                      ci        main    push   1975187062  53s      13m
+✓       Ingress Gateway's public static IP address                                                        ci        main    push   1974996579  59s      1h
+✓       ASM MCP for GKE project                                                                           ci        main    push   1972180913  8m20s    23h
+✓       GitOps for GKE cluster configs                                                                    ci        main    push   1970974465  53s      1d
+✓       GKE cluster, primary nodepool and SA for GKE project                                              ci        main    push   1963473275  1m16s    2d
+✓       Network for GKE project                                                                           ci        main    push   1961289819  1m13s    2d
+✓       Initial commit                                                                                    ci        main    push   1961170391  56s      2d
 ```
 
-If you run:
-```Bash
-cd ~/$GKE_PROJECT_DIR_NAME && gh run list
-```
-You should see:
-```Plaintext
-FIXME
-```
-
-If you run:
-```Bash
-cd ~/$GKE_CONFIGS_DIR_NAME && gh run list
-```
-You should see:
-```Plaintext
-FIXME
-```
-
-If you run:
+List the Kubernetes resources managed by Config Sync in **Config Controller** for the **GKE project configs** repository:
 ```Bash
 gcloud alpha anthos config sync repo describe \
-   --project $CONFIG_CONTROLLER_PROJECT_ID \
-   --managed-resources all \
-   --format="multi(statuses:format=none,managed_resources:format='table[box](group:sort=2,kind,name,namespace:sort=1)')"
+    --project $CONFIG_CONTROLLER_PROJECT_ID \
+    --managed-resources all \
+    --format="multi(statuses:format=none,managed_resources:format='table[box](group:sort=2,kind,name,namespace:sort=1)')" \
+    --sync-name repo-sync \
+    --sync-namespace $GKE_PROJECT_ID
 ```
-You should see:
 ```Plaintext
-FIXME
-```
-
-If you run:
-```Bash
-gcloud alpha anthos config sync repo describe \
-   --project $GKE_PROJECT_ID \
-   --managed-resources all \
-   --format="multi(statuses:format=none,managed_resources:format='table[box](group:sort=2,kind,name,namespace:sort=1)')"
-```
-You should see:
-```Plaintext
-FIXME
+getting 1 RepoSync and RootSync from krmapihost-configcontroller
+┌────────────────────────────────────────┬────────────────────────────┬───────────────────────────────────────────┬──────────────────────┐
+│                 GROUP                  │            KIND            │                    NAME                   │      NAMESPACE       │
+├────────────────────────────────────────┼────────────────────────────┼───────────────────────────────────────────┼──────────────────────┤
+│ artifactregistry.cnrm.cloud.google.com │ ArtifactRegistryRepository │ containers                                │ acm-workshop-464-gke │
+│ compute.cnrm.cloud.google.com          │ ComputeSecurityPolicy      │ gke-asm-ingressgateway                    │ acm-workshop-464-gke │
+│ compute.cnrm.cloud.google.com          │ ComputeRouter              │ gke                                       │ acm-workshop-464-gke │
+│ compute.cnrm.cloud.google.com          │ ComputeSSLPolicy           │ gke-asm-ingressgateway                    │ acm-workshop-464-gke │
+│ compute.cnrm.cloud.google.com          │ ComputeSubnetwork          │ gke                                       │ acm-workshop-464-gke │
+│ compute.cnrm.cloud.google.com          │ ComputeRouterNAT           │ gke                                       │ acm-workshop-464-gke │
+│ compute.cnrm.cloud.google.com          │ ComputeAddress             │ gke-asm-ingressgateway                    │ acm-workshop-464-gke │
+│ compute.cnrm.cloud.google.com          │ ComputeNetwork             │ gke                                       │ acm-workshop-464-gke │
+│ container.cnrm.cloud.google.com        │ ContainerNodePool          │ primary                                   │ acm-workshop-464-gke │
+│ container.cnrm.cloud.google.com        │ ContainerCluster           │ gke                                       │ acm-workshop-464-gke │
+│ gkehub.cnrm.cloud.google.com           │ GKEHubFeature              │ gke-acm                                   │ acm-workshop-464-gke │
+│ gkehub.cnrm.cloud.google.com           │ GKEHubFeatureMembership    │ gke-acm-membership                        │ acm-workshop-464-gke │
+│ gkehub.cnrm.cloud.google.com           │ GKEHubFeature              │ gke-asm                                   │ acm-workshop-464-gke │
+│ gkehub.cnrm.cloud.google.com           │ GKEHubMembership           │ gke-hub-membership                        │ acm-workshop-464-gke │
+│ iam.cnrm.cloud.google.com              │ IAMPartialPolicy           │ gke-primary-pool-sa-cs-monitoring-wi-user │ acm-workshop-464-gke │
+│ iam.cnrm.cloud.google.com              │ IAMServiceAccount          │ gke-primary-pool                          │ acm-workshop-464-gke │
+│ iam.cnrm.cloud.google.com              │ IAMPolicyMember            │ log-writer                                │ acm-workshop-464-gke │
+│ iam.cnrm.cloud.google.com              │ IAMPolicyMember            │ monitoring-viewer                         │ acm-workshop-464-gke │
+│ iam.cnrm.cloud.google.com              │ IAMPolicyMember            │ metric-writer                             │ acm-workshop-464-gke │
+│ iam.cnrm.cloud.google.com              │ IAMPolicyMember            │ artifactregistry-reader                   │ acm-workshop-464-gke │
+└────────────────────────────────────────┴────────────────────────────┴───────────────────────────────────────────┴──────────────────────┘
 ```
