@@ -46,6 +46,17 @@ echo "export INGRESS_GATEWAY_PUBLIC_IP=${INGRESS_GATEWAY_PUBLIC_IP}" >> ~/acm-wo
 
 ## Check deployments
 
+List the GCP resources created:
+```Bash
+gcloud compute addresses list \
+    --project $GKE_PROJECT_ID
+```
+```Plaintext
+NAME                                    ADDRESS/RANGE  TYPE      PURPOSE   NETWORK  REGION    SUBNET  STATUS
+gke-asm-ingressgateway                  34.110.242.88  EXTERNAL                                       IN_USE
+nat-auto-ip-5398467-6-1646921274443878  35.245.29.122  EXTERNAL  NAT_AUTO           us-east4          IN_USE
+```
+
 List the GitHub runs for the **GKE project configs** repository `cd ~/$GKE_PROJECT_DIR_NAME && gh run list`:
 ```Plaintext
 STATUS  NAME                                                        WORKFLOW  BRANCH  EVENT  ID          ELAPSED  AGE

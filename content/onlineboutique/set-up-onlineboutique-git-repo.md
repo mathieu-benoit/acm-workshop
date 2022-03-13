@@ -36,6 +36,7 @@ EOF
 ## Create GitHub repository
 
 ```Bash
+cd ~
 gh repo create $ONLINE_BOUTIQUE_DIR_NAME --public --clone --template https://github.com/mathieu-benoit/config-sync-template-repo
 cd ~/$ONLINE_BOUTIQUE_DIR_NAME
 git pull

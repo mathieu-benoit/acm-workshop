@@ -117,6 +117,20 @@ git push
 
 ## Check deployments
 
+List the GCP resources created:
+```Bash
+gcloud compute security-policies list \
+    --project $GKE_PROJECT_ID
+gcloud compute ssl-policies list \
+    --project $GKE_PROJECT_ID
+```
+```Plaintext
+NAME
+gke-asm-ingressgateway
+NAME                    PROFILE     MIN_TLS_VERSION
+gke-asm-ingressgateway  COMPATIBLE  TLS_1_0
+```
+
 List the GitHub runs for the **GKE project configs** repository `cd ~/$GKE_PROJECT_DIR_NAME && gh run list`:
 ```Plaintext
 STATUS  NAME                                                                                              WORKFLOW  BRANCH  EVENT  ID          ELAPSED  AGE

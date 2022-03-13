@@ -62,6 +62,7 @@ kubectl wait --for condition=established crd rootsyncs.configsync.gke.io
 
 Create a dedicated GitHub repository to store any Kubernetes manifests associated to the GCP Organization:
 ```Bash
+cd ~
 gh repo create $WORKSHOP_ORG_DIR_NAME --public --clone --template https://github.com/mathieu-benoit/config-sync-template-repo
 cd ~/$WORKSHOP_ORG_DIR_NAME
 git pull

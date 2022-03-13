@@ -16,6 +16,7 @@ source ~/acm-workshop-variables.sh
 
 Create a dedicated GitHub repository to store any Kubernetes manifests associated to the GKE project:
 ```Bash
+cd ~
 gh repo create $GKE_PROJECT_DIR_NAME --public --clone --template https://github.com/mathieu-benoit/config-sync-template-repo
 cd ~/$GKE_PROJECT_DIR_NAME
 git pull
