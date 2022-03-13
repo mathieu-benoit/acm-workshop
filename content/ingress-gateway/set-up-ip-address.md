@@ -7,6 +7,7 @@ _{{< param description >}}_
 
 Initialize variables:
 ```Bash
+source ~/acm-workshop-variables.sh
 echo "export INGRESS_GATEWAY_PUBLIC_IP_NAME=${GKE_NAME}-asm-ingressgateway" >> ~/acm-workshop-variables.sh
 source ~/acm-workshop-variables.sh
 ```

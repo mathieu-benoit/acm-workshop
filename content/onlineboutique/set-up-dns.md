@@ -9,6 +9,7 @@ Initialize variables:
 ```Bash
 source ~/acm-workshop-variables.sh
 echo "export ONLINE_BOUTIQUE_INGRESS_GATEWAY_HOST_NAME='onlineboutique.endpoints.${GKE_PROJECT_ID}.cloud.goog'" >> ~/acm-workshop-variables.sh
+source ~/acm-workshop-variables.sh
 ```
 
 ## Create FQDN

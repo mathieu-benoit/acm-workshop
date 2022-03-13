@@ -7,6 +7,7 @@ _{{< param description >}}_
 
 Initialize variables:
 ```Bash
+source ~/acm-workshop-variables.sh
 ASM_CHANNEL=rapid
 ASM_LABEL=asm-managed
 echo "export ASM_CHANNEL=${ASM_CHANNEL}" >> ~/acm-workshop-variables.sh

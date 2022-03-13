@@ -7,6 +7,7 @@ _{{< param description >}}_
 
 Initialize variables:
 ```Bash
+source ~/acm-workshop-variables.sh
 echo "export REDIS_NAME=cart" >> ~/acm-workshop-variables.sh
 source ~/acm-workshop-variables.sh
 ```

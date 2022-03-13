@@ -7,6 +7,7 @@ _{{< param description >}}_
 
 Initialize variables:
 ```Bash
+source ~/acm-workshop-variables.sh
 echo "export GKE_LOCATION=us-east4" >> ~/acm-workshop-variables.sh
 echo "export GKE_NAME=gke" >> ~/acm-workshop-variables.sh
 source ~/acm-workshop-variables.sh

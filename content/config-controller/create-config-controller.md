@@ -7,6 +7,7 @@ _{{< param description >}}_
 
 Define variables:
 ```Bash
+source ~/acm-workshop-variables.sh
 RANDOM_SUFFIX=$(shuf -i 100-999 -n 1)
 BILLING_ACCOUNT_ID=FIXME
 ORG_OR_FOLDER_ID=FIXME

@@ -7,6 +7,7 @@ _{{< param description >}}_
 
 Define variables:
 ```Bash
+source ~/acm-workshop-variables.sh
 echo "export GKE_PROJECT_DIR_NAME=acm-workshop-gke-project-repo" >> ~/acm-workshop-variables.sh
 source ~/acm-workshop-variables.sh
 ```

@@ -38,42 +38,6 @@ git push
 
 ## Check deployments
 
-List the GCP resources created:
-```Bash
-gcloud services list \
-    --project $GKE_PROJECT_ID
-```
-```Plaintext
-NAME                                   TITLE
-anthosconfigmanagement.googleapis.com  Anthos Config Management API
-artifactregistry.googleapis.com        Artifact Registry API
-autoscaling.googleapis.com             Cloud Autoscaling API
-bigquery.googleapis.com                BigQuery API
-bigquerymigration.googleapis.com       BigQuery Migration API
-bigquerystorage.googleapis.com         BigQuery Storage API
-compute.googleapis.com                 Compute Engine API
-container.googleapis.com               Kubernetes Engine API
-containeranalysis.googleapis.com       Container Analysis API
-containerfilesystem.googleapis.com     Container File System API
-containerregistry.googleapis.com       Container Registry API
-containerscanning.googleapis.com       Container Scanning API
-gkeconnect.googleapis.com              GKE Connect API
-gkehub.googleapis.com                  GKE Hub API
-iam.googleapis.com                     Identity and Access Management (IAM) API
-iamcredentials.googleapis.com          IAM Service Account Credentials API
-logging.googleapis.com                 Cloud Logging API
-mesh.googleapis.com                    Mesh API
-meshca.googleapis.com                  Anthos Service Mesh Certificate Authority API
-meshconfig.googleapis.com              Mesh Configuration API
-monitoring.googleapis.com              Cloud Monitoring API
-multiclustermetering.googleapis.com    Multi cluster metering API
-opsconfigmonitoring.googleapis.com     Config Monitoring for Ops API
-oslogin.googleapis.com                 Cloud OS Login API
-pubsub.googleapis.com                  Cloud Pub/Sub API
-stackdriver.googleapis.com             Stackdriver API
-storage-api.googleapis.com             Google Cloud Storage JSON API
-```
-
 List the GitHub runs for the **Org configs** repository `cd ~/$WORKSHOP_ORG_DIR_NAME && gh run list`:
 ```Plaintext
 STATUS  NAME                                      WORKFLOW  BRANCH  EVENT  ID          ELAPSED  AGE

@@ -9,6 +9,7 @@ Initialize variables:
 ```Bash
 source ~/acm-workshop-variables.sh
 echo "export WHERE_AMI_INGRESS_GATEWAY_HOST_NAME='whereami.endpoints.${GKE_PROJECT_ID}.cloud.goog'" >> ~/acm-workshop-variables.sh
+source ~/acm-workshop-variables.sh
 ```
 
 ## Create FQDN
