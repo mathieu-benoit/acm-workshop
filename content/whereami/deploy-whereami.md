@@ -56,28 +56,6 @@ spec:
 EOF
 ```
 
-## Setup WorkloadIdentity
-
-```Bash
-# FIXME: TMP, to replace by KCC equivalent:
-ksaName=whereami-ksa
-gsaName=whereami-gsa
-gsaAccountName=$gsaName@$GKE_PROJECT_ID.iam.gserviceaccount.com
-gcloud iam service-accounts create $gsaName \
-  --project $GKE_PROJECT_ID
-gcloud iam service-accounts add-iam-policy-binding \
-  --project $GKE_PROJECT_ID \
-  --role roles/iam.workloadIdentityUser \
-  --member "serviceAccount:$GKE_PROJECT_ID.svc.id.goog[$WHEREAMI_NAMESPACE/$ksaName]" \
-  $gsaAccountName
-kubectl annotate serviceaccount \
-  $ksaName \
-  iam.gke.io/gcp-service-account=$gsaAccountName
-gcloud projects add-iam-policy-binding $GKE_PROJECT_ID \
-  --member "serviceAccount:$gsaAccountName" \
-  --role roles/cloudtrace.agent
-```
-
 ## Deploy Kubernetes manifests
 
 ```Bash

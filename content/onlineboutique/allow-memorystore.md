@@ -107,64 +107,87 @@ EOF
 
 ## Deploy Kubernetes manifests
 
+List the GCP resources created:
 ```Bash
-cd ~/$WORKSHOP_ORG_DIR_NAME/
-git add .
-git commit -m "Allow Memorystore for GKE project"
-git push
+gcloud projects get-iam-policy $GKE_PROJECT_ID \
+    --filter="bindings.members:${GKE_PROJECT_SA_EMAIL}" \
+    --flatten="bindings[].members" \
+    --format="table(bindings.role)"
 ```
-
-## Check deployments
-
-Here is what you should have at this stage:
-
-If you run:
-```Bash
-cd ~/$WORKSHOP_ORG_DIR_NAME && gh run list
-```
-You should see:
 ```Plaintext
-FIXME
+ROLE
+roles/artifactregistry.admin
+roles/compute.networkAdmin
+roles/compute.securityAdmin
+roles/container.admin
+roles/gkehub.admin
+roles/iam.serviceAccountAdmin
+roles/iam.serviceAccountUser
+roles/redis.admin
+roles/resourcemanager.projectIamAdmin
 ```
 
-If you run:
-```Bash
-cd ~/$GKE_PROJECT_DIR_NAME && gh run list
-```
-You should see:
+List the GitHub runs for the **Org configs** repository `cd ~/$WORKSHOP_ORG_DIR_NAME && gh run list`:
 ```Plaintext
-FIXME
+STATUS  NAME                                      WORKFLOW  BRANCH  EVENT  ID          ELAPSED  AGE
+✓       Allow Memorystore for GKE project         ci        main    push   1978342885  1m6s     2m
+✓       Allow Security for GKE project            ci        main    push   1975011420  1m10s    1d
+✓       Allow ASM for GKE project                 ci        main    push   1972159145  1m1s     22h
+✓       Allow Artifact Registry for GKE project   ci        main    push   1972065864  57s      22h
+✓       Allow GKE Hub for GKE project             ci        main    push   1970917868  1m8s     1d
+✓       Allow GKE for GKE project                 ci        main    push   1961343262  1m0s     2d
+✓       Allow Networking for GKE project          ci        main    push   1961279233  1m9s     2d
+✓       Enforce policies for GKE project          ci        main    push   1961276465  1m2s     2d
+✓       GitOps for GKE project                    ci        main    push   1961259400  1m7s     2d
+✓       Setting up GKE namespace/project          ci        main    push   1961160322  1m7s     2d
+✓       Billing API in Config Controller project  ci        main    push   1961142326  1m12s    2d
+✓       Initial commit                            ci        main    push   1961132028  1m2s     2d
 ```
 
-If you run:
-```Bash
-cd ~/$GKE_CONFIGS_DIR_NAME && gh run list
-```
-You should see:
-```Plaintext
-FIXME
-```
-
-If you run:
+List the Kubernetes resources managed by Config Sync in **Config Controller** for the **Org configs** repository:
 ```Bash
 gcloud alpha anthos config sync repo describe \
-   --project $CONFIG_CONTROLLER_PROJECT_ID \
-   --managed-resources all \
-   --format="multi(statuses:format=none,managed_resources:format='table[box](group:sort=2,kind,name,namespace:sort=1)')"
+    --project $CONFIG_CONTROLLER_PROJECT_ID \
+    --managed-resources all \
+    --sync-name root-sync \
+    --sync-namespace config-management-system
 ```
-You should see:
 ```Plaintext
-FIXME
-```
-
-If you run:
-```Bash
-gcloud alpha anthos config sync repo describe \
-   --project $GKE_PROJECT_ID \
-   --managed-resources all \
-   --format="multi(statuses:format=none,managed_resources:format='table[box](group:sort=2,kind,name,namespace:sort=1)')"
-```
-You should see:
-```Plaintext
-FIXME
+getting 1 RepoSync and RootSync from krmapihost-configcontroller
+┌───────────────────────────────────────┬────────────────────────┬───────────────────────────────────────────────────┬──────────────────────┐
+│                 GROUP                 │          KIND          │                        NAME                       │      NAMESPACE       │
+├───────────────────────────────────────┼────────────────────────┼───────────────────────────────────────────────────┼──────────────────────┤
+│                                       │ Namespace              │ acm-workshop-464-gke                              │                      │
+│                                       │ Namespace              │ config-control                                    │                      │
+│ constraints.gatekeeper.sh             │ LimitGKECluster        │ allowed-gke-cluster                               │                      │
+│ constraints.gatekeeper.sh             │ LimitLocations         │ allowed-locations                                 │                      │
+│ constraints.gatekeeper.sh             │ LimitMemorystoreRedis  │ allowed-memorystore-redis                         │                      │
+│ templates.gatekeeper.sh               │ ConstraintTemplate     │ limitgkecluster                                   │                      │
+│ templates.gatekeeper.sh               │ ConstraintTemplate     │ limitlocations                                    │                      │
+│ templates.gatekeeper.sh               │ ConstraintTemplate     │ limitmemorystoreredis                             │                      │
+│ configsync.gke.io                     │ RepoSync               │ repo-sync                                         │ acm-workshop-464-gke │
+│ core.cnrm.cloud.google.com            │ ConfigConnectorContext │ configconnectorcontext.core.cnrm.cloud.google.com │ acm-workshop-464-gke │
+│ rbac.authorization.k8s.io             │ RoleBinding            │ syncs-repo                                        │ acm-workshop-464-gke │
+│ iam.cnrm.cloud.google.com             │ IAMPolicyMember        │ gke-hub-admin-acm-workshop-464-gke                │ config-control       │
+│ iam.cnrm.cloud.google.com             │ IAMPolicyMember        │ service-account-user-acm-workshop-464-gke         │ config-control       │
+│ iam.cnrm.cloud.google.com             │ IAMPolicyMember        │ service-account-admin-acm-workshop-464-gke        │ config-control       │
+│ iam.cnrm.cloud.google.com             │ IAMPolicyMember        │ iam-admin-acm-workshop-464-gke                    │ config-control       │
+│ iam.cnrm.cloud.google.com             │ IAMPolicyMember        │ redis-admin-acm-workshop-464-gke                  │ config-control       │
+│ iam.cnrm.cloud.google.com             │ IAMPolicyMember        │ security-admin-acm-workshop-464-gke               │ config-control       │
+│ iam.cnrm.cloud.google.com             │ IAMServiceAccount      │ acm-workshop-464-gke                              │ config-control       │
+│ iam.cnrm.cloud.google.com             │ IAMPolicyMember        │ container-admin-acm-workshop-464-gke              │ config-control       │
+│ iam.cnrm.cloud.google.com             │ IAMPolicyMember        │ artifactregistry-admin-acm-workshop-464-gke       │ config-control       │
+│ iam.cnrm.cloud.google.com             │ IAMPolicyMember        │ network-admin-acm-workshop-464-gke                │ config-control       │
+│ iam.cnrm.cloud.google.com             │ IAMPartialPolicy       │ acm-workshop-464-gke-sa-wi-user                   │ config-control       │
+│ resourcemanager.cnrm.cloud.google.com │ Project                │ acm-workshop-464-gke                              │ config-control       │
+│ serviceusage.cnrm.cloud.google.com    │ Service                │ redis.googleapis.com                              │ config-control       │
+│ serviceusage.cnrm.cloud.google.com    │ Service                │ gkehub.googleapis.com                             │ config-control       │
+│ serviceusage.cnrm.cloud.google.com    │ Service                │ artifactregistry.googleapis.com                   │ config-control       │
+│ serviceusage.cnrm.cloud.google.com    │ Service                │ mesh.googleapis.com                               │ config-control       │
+│ serviceusage.cnrm.cloud.google.com    │ Service                │ cloudbilling.googleapis.com                       │ config-control       │
+│ serviceusage.cnrm.cloud.google.com    │ Service                │ container.googleapis.com                          │ config-control       │
+│ serviceusage.cnrm.cloud.google.com    │ Service                │ containeranalysis.googleapis.com                  │ config-control       │
+│ serviceusage.cnrm.cloud.google.com    │ Service                │ anthosconfigmanagement.googleapis.com             │ config-control       │
+│ serviceusage.cnrm.cloud.google.com    │ Service                │ containerscanning.googleapis.com                  │ config-control       │
+└───────────────────────────────────────┴────────────────────────┴───────────────────────────────────────────────────┴──────────────────────┘
 ```

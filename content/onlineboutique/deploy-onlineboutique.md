@@ -67,55 +67,47 @@ git push
 
 ## Check deployments
 
-Here is what you should have at this stage:
-
-If you run:
-```Bash
-cd ~/$WORKSHOP_ORG_DIR_NAME && gh run list
-```
-You should see:
+List the GitHub runs for the **Online Boutique app** repository `cd ~/$ONLINE_BOUTIQUE_DIR_NAME && gh run list`:
 ```Plaintext
-FIXME
+STATUS  NAME                  WORKFLOW  BRANCH  EVENT  ID          ELAPSED  AGE
+✓       Online Boutique apps  ci        main    push   1978432931  1m3s     1m
+✓       Initial commit        ci        main    push   1976979782  54s      9h
 ```
 
-If you run:
-```Bash
-cd ~/$GKE_PROJECT_DIR_NAME && gh run list
-```
-You should see:
-```Plaintext
-FIXME
-```
-
-If you run:
-```Bash
-cd ~/$GKE_CONFIGS_DIR_NAME && gh run list
-```
-You should see:
-```Plaintext
-FIXME
-```
-
-If you run:
+List the Kubernetes resources managed by Config Sync in the **GKE cluster** for the **Online Boutique app** repository:
 ```Bash
 gcloud alpha anthos config sync repo describe \
-   --project $CONFIG_CONTROLLER_PROJECT_ID \
-   --managed-resources all \
-   --format="multi(statuses:format=none,managed_resources:format='table[box](group:sort=2,kind,name,namespace:sort=1)')"
+    --project $GKE_PROJECT_ID \
+    --managed-resources all \
+    --sync-name repo-sync \
+    --sync-namespace $ONLINEBOUTIQUE_NAMESPACE
 ```
-You should see:
 ```Plaintext
-FIXME
-```
-
-If you run:
-```Bash
-gcloud alpha anthos config sync repo describe \
-   --project $GKE_PROJECT_ID \
-   --managed-resources all \
-   --format="multi(statuses:format=none,managed_resources:format='table[box](group:sort=2,kind,name,namespace:sort=1)')"
-```
-You should see:
-```Plaintext
-FIXME
+getting 1 RepoSync and RootSync from gke-hub-membership
+┌─────────────────────┬────────────────┬───────────────────────┬────────────────┐
+│        GROUP        │      KIND      │          NAME         │   NAMESPACE    │
+├─────────────────────┼────────────────┼───────────────────────┼────────────────┤
+│                     │ Service        │ productcatalogservice │ onlineboutique │
+│                     │ Service        │ frontend              │ onlineboutique │
+│                     │ Service        │ paymentservice        │ onlineboutique │
+│                     │ Service        │ shippingservice       │ onlineboutique │
+│                     │ Service        │ currencyservice       │ onlineboutique │
+│                     │ Service        │ emailservice          │ onlineboutique │
+│                     │ Service        │ cartservice           │ onlineboutique │
+│                     │ Service        │ adservice             │ onlineboutique │
+│                     │ Service        │ checkoutservice       │ onlineboutique │
+│                     │ Service        │ recommendationservice │ onlineboutique │
+│ apps                │ Deployment     │ frontend              │ onlineboutique │
+│ apps                │ Deployment     │ checkoutservice       │ onlineboutique │
+│ apps                │ Deployment     │ shippingservice       │ onlineboutique │
+│ apps                │ Deployment     │ emailservice          │ onlineboutique │
+│ apps                │ Deployment     │ paymentservice        │ onlineboutique │
+│ apps                │ Deployment     │ cartservice           │ onlineboutique │
+│ apps                │ Deployment     │ adservice             │ onlineboutique │
+│ apps                │ Deployment     │ productcatalogservice │ onlineboutique │
+│ apps                │ Deployment     │ currencyservice       │ onlineboutique │
+│ apps                │ Deployment     │ loadgenerator         │ onlineboutique │
+│ apps                │ Deployment     │ recommendationservice │ onlineboutique │
+│ networking.istio.io │ VirtualService │ frontend              │ onlineboutique │
+└─────────────────────┴────────────────┴───────────────────────┴────────────────┘
 ```

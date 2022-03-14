@@ -135,7 +135,7 @@ spec:
         methods:
         - POST
         ports:
-        - 9555
+        - "9555"
 EOF
 cat <<EOF > ~/$ONLINE_BOUTIQUE_DIR_NAME/config-sync/authorizationpolicy_cartservice.yaml
 apiVersion: security.istio.io/v1beta1
@@ -162,7 +162,7 @@ spec:
         methods:
         - POST
         ports:
-        - 7070
+        - "7070"
 EOF
 cat <<EOF > ~/$ONLINE_BOUTIQUE_DIR_NAME/config-sync/authorizationpolicy_checkoutservice.yaml
 apiVersion: security.istio.io/v1beta1
@@ -186,7 +186,7 @@ spec:
         methods:
         - POST
         ports:
-        - 5050
+        - "5050"
 EOF
 cat <<EOF > ~/$ONLINE_BOUTIQUE_DIR_NAME/config-sync/authorizationpolicy_currencyservice.yaml
 apiVersion: security.istio.io/v1beta1
@@ -212,7 +212,7 @@ spec:
         methods:
         - POST
         ports:
-        - 7000
+        - "7000"
 EOF
 cat <<EOF > ~/$ONLINE_BOUTIQUE_DIR_NAME/config-sync/authorizationpolicy_emailservice.yaml
 apiVersion: security.istio.io/v1beta1
@@ -236,7 +236,7 @@ spec:
         methods:
         - POST
         ports:
-        - 8080
+        - "8080"
 EOF
 cat <<EOF > ~/$ONLINE_BOUTIQUE_DIR_NAME/config-sync/authorizationpolicy_frontend.yaml
 apiVersion: security.istio.io/v1beta1
@@ -256,11 +256,11 @@ spec:
         - cluster.local/ns/${INGRESS_GATEWAY_NAMESPACE}/sa/${INGRESS_GATEWAY_NAME}
     to:
     - operation:
-        ports:
-        - 8080
         methods:
         - GET
         - POST
+        ports:
+        - "8080"
 EOF
 cat <<EOF > ~/$ONLINE_BOUTIQUE_DIR_NAME/config-sync/authorizationpolicy_paymentservice.yaml
 apiVersion: security.istio.io/v1beta1
@@ -284,7 +284,7 @@ spec:
         methods:
         - POST
         ports:
-        - 50051
+        - "50051"
 EOF
 cat <<EOF > ~/$ONLINE_BOUTIQUE_DIR_NAME/config-sync/authorizationpolicy_productcatalogservice.yaml
 apiVersion: security.istio.io/v1beta1
@@ -311,7 +311,7 @@ spec:
         methods:
         - POST
         ports:
-        - 3550
+        - "3550"
 EOF
 cat <<EOF > ~/$ONLINE_BOUTIQUE_DIR_NAME/config-sync/authorizationpolicy_recommendationservice.yaml
 apiVersion: security.istio.io/v1beta1
@@ -335,7 +335,7 @@ spec:
         methods:
         - POST
         ports:
-        - 8080
+        - "8080"
 EOF
 cat <<EOF > ~/$ONLINE_BOUTIQUE_DIR_NAME/config-sync/authorizationpolicy_shippingservice.yaml
 apiVersion: security.istio.io/v1beta1
@@ -361,7 +361,7 @@ spec:
         methods:
         - POST
         ports:
-        - 50051
+        - "50051"
 EOF
 ```
 
@@ -376,55 +376,96 @@ git push
 
 ## Check deployments
 
-Here is what you should have at this stage:
-
-If you run:
-```Bash
-cd ~/$WORKSHOP_ORG_DIR_NAME && gh run list
-```
-You should see:
+List the GitHub runs for the **Online Boutique app** repository `cd ~/$ONLINE_BOUTIQUE_DIR_NAME && gh run list`:
 ```Plaintext
-FIXME
+STATUS  NAME                                    WORKFLOW  BRANCH  EVENT  ID          ELAPSED  AGE
+✓       Online Boutique Authorization Policies  ci        main    push   1978549160  1m13s    3m
+✓       Online Boutique Sidecar                 ci        main    push   1978491894  1m0s     24m
+✓       Online Boutique Network Policies        ci        main    push   1978459522  54s      34m
+✓       Online Boutique apps                    ci        main    push   1978432931  1m3s     43m
+✓       Initial commit                          ci        main    push   1976979782  54s      10h
+
 ```
 
-If you run:
-```Bash
-cd ~/$GKE_PROJECT_DIR_NAME && gh run list
-```
-You should see:
-```Plaintext
-FIXME
-```
-
-If you run:
-```Bash
-cd ~/$GKE_CONFIGS_DIR_NAME && gh run list
-```
-You should see:
-```Plaintext
-FIXME
-```
-
-If you run:
+List the Kubernetes resources managed by Config Sync in the **GKE cluster** for the **Online Boutique app** repository:
 ```Bash
 gcloud alpha anthos config sync repo describe \
-   --project $CONFIG_CONTROLLER_PROJECT_ID \
-   --managed-resources all \
-   --format="multi(statuses:format=none,managed_resources:format='table[box](group:sort=2,kind,name,namespace:sort=1)')"
+    --project $GKE_PROJECT_ID \
+    --managed-resources all \
+    --sync-name repo-sync \
+    --sync-namespace $ONLINEBOUTIQUE_NAMESPACE
 ```
-You should see:
 ```Plaintext
-FIXME
-```
-
-If you run:
-```Bash
-gcloud alpha anthos config sync repo describe \
-   --project $GKE_PROJECT_ID \
-   --managed-resources all \
-   --format="multi(statuses:format=none,managed_resources:format='table[box](group:sort=2,kind,name,namespace:sort=1)')"
-```
-You should see:
-```Plaintext
-FIXME
+getting 1 RepoSync and RootSync from gke-hub-membership
+┌─────────────────────┬─────────────────────┬───────────────────────┬────────────────┐
+│        GROUP        │         KIND        │          NAME         │   NAMESPACE    │
+├─────────────────────┼─────────────────────┼───────────────────────┼────────────────┤
+│                     │ ServiceAccount      │ recommendationservice │ onlineboutique │
+│                     │ Service             │ currencyservice       │ onlineboutique │
+│                     │ ServiceAccount      │ emailservice          │ onlineboutique │
+│                     │ ServiceAccount      │ productcatalogservice │ onlineboutique │
+│                     │ Service             │ frontend              │ onlineboutique │
+│                     │ ServiceAccount      │ cartservice           │ onlineboutique │
+│                     │ ServiceAccount      │ paymentservice        │ onlineboutique │
+│                     │ Service             │ productcatalogservice │ onlineboutique │
+│                     │ ServiceAccount      │ frontend              │ onlineboutique │
+│                     │ ServiceAccount      │ currencyservice       │ onlineboutique │
+│                     │ Service             │ adservice             │ onlineboutique │
+│                     │ Service             │ shippingservice       │ onlineboutique │
+│                     │ ServiceAccount      │ adservice             │ onlineboutique │
+│                     │ Service             │ paymentservice        │ onlineboutique │
+│                     │ Service             │ cartservice           │ onlineboutique │
+│                     │ ServiceAccount      │ loadgenerator         │ onlineboutique │
+│                     │ ServiceAccount      │ shippingservice       │ onlineboutique │
+│                     │ Service             │ emailservice          │ onlineboutique │
+│                     │ Service             │ checkoutservice       │ onlineboutique │
+│                     │ ServiceAccount      │ checkoutservice       │ onlineboutique │
+│                     │ Service             │ recommendationservice │ onlineboutique │
+│ apps                │ Deployment          │ frontend              │ onlineboutique │
+│ apps                │ Deployment          │ currencyservice       │ onlineboutique │
+│ apps                │ Deployment          │ shippingservice       │ onlineboutique │
+│ apps                │ Deployment          │ loadgenerator         │ onlineboutique │
+│ apps                │ Deployment          │ paymentservice        │ onlineboutique │
+│ apps                │ Deployment          │ cartservice           │ onlineboutique │
+│ apps                │ Deployment          │ productcatalogservice │ onlineboutique │
+│ apps                │ Deployment          │ checkoutservice       │ onlineboutique │
+│ apps                │ Deployment          │ recommendationservice │ onlineboutique │
+│ apps                │ Deployment          │ adservice             │ onlineboutique │
+│ apps                │ Deployment          │ emailservice          │ onlineboutique │
+│ networking.istio.io │ Sidecar             │ productcatalogservice │ onlineboutique │
+│ networking.istio.io │ Sidecar             │ cartservice           │ onlineboutique │
+│ networking.istio.io │ Sidecar             │ emailservice          │ onlineboutique │
+│ networking.istio.io │ Sidecar             │ currencyservice       │ onlineboutique │
+│ networking.istio.io │ Sidecar             │ loadgenerator         │ onlineboutique │
+│ networking.istio.io │ Sidecar             │ shippingservice       │ onlineboutique │
+│ networking.istio.io │ Sidecar             │ adservice             │ onlineboutique │
+│ networking.istio.io │ Sidecar             │ paymentservice        │ onlineboutique │
+│ networking.istio.io │ Sidecar             │ frontend              │ onlineboutique │
+│ networking.istio.io │ Sidecar             │ recommendationservice │ onlineboutique │
+│ networking.istio.io │ VirtualService      │ frontend              │ onlineboutique │
+│ networking.istio.io │ Sidecar             │ checkoutservice       │ onlineboutique │
+│ networking.k8s.io   │ NetworkPolicy       │ paymentservice        │ onlineboutique │
+│ networking.k8s.io   │ NetworkPolicy       │ currencyservice       │ onlineboutique │
+│ networking.k8s.io   │ NetworkPolicy       │ loadgenerator         │ onlineboutique │
+│ networking.k8s.io   │ NetworkPolicy       │ adservice             │ onlineboutique │
+│ networking.k8s.io   │ NetworkPolicy       │ denyall               │ onlineboutique │
+│ networking.k8s.io   │ NetworkPolicy       │ emailservice          │ onlineboutique │
+│ networking.k8s.io   │ NetworkPolicy       │ checkoutservice       │ onlineboutique │
+│ networking.k8s.io   │ NetworkPolicy       │ cartservice           │ onlineboutique │
+│ networking.k8s.io   │ NetworkPolicy       │ shippingservice       │ onlineboutique │
+│ networking.k8s.io   │ NetworkPolicy       │ recommendationservice │ onlineboutique │
+│ networking.k8s.io   │ NetworkPolicy       │ productcatalogservice │ onlineboutique │
+│ networking.k8s.io   │ NetworkPolicy       │ frontend              │ onlineboutique │
+│ security.istio.io   │ AuthorizationPolicy │ adservice             │ onlineboutique │
+│ security.istio.io   │ AuthorizationPolicy │ productcatalogservice │ onlineboutique │
+│ security.istio.io   │ AuthorizationPolicy │ paymentservice        │ onlineboutique │
+│ security.istio.io   │ AuthorizationPolicy │ currencyservice       │ onlineboutique │
+│ security.istio.io   │ AuthorizationPolicy │ recommendationservice │ onlineboutique │
+│ security.istio.io   │ AuthorizationPolicy │ frontend              │ onlineboutique │
+│ security.istio.io   │ AuthorizationPolicy │ checkoutservice       │ onlineboutique │
+│ security.istio.io   │ AuthorizationPolicy │ emailservice          │ onlineboutique │
+│ security.istio.io   │ AuthorizationPolicy │ deny-all              │ onlineboutique │
+│ security.istio.io   │ AuthorizationPolicy │ cartservice           │ onlineboutique │
+│ security.istio.io   │ AuthorizationPolicy │ shippingservice       │ onlineboutique │
+└─────────────────────┴─────────────────────┴───────────────────────┴────────────────┘
 ```

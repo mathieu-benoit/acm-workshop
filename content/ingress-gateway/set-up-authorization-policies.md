@@ -35,7 +35,7 @@ spec:
   - to:
     - operation:
         ports:
-        - 8080
+        - "8080"
 EOF
 ```
 

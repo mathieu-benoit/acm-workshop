@@ -195,55 +195,72 @@ git push
 
 ## Check deployments
 
-Here is what you should have at this stage:
-
-If you run:
-```Bash
-cd ~/$WORKSHOP_ORG_DIR_NAME && gh run list
-```
-You should see:
+List the GitHub runs for the **Online Boutique app** repository `cd ~/$ONLINE_BOUTIQUE_DIR_NAME && gh run list`:
 ```Plaintext
-FIXME
+STATUS  NAME                              WORKFLOW  BRANCH  EVENT  ID          ELAPSED  AGE
+✓       Online Boutique Sidecar           ci        main    push   1978491894  9s       1m
+✓       Online Boutique Network Policies  ci        main    push   1978459522  54s      11m
+✓       Online Boutique apps              ci        main    push   1978432931  1m3s     19m
+✓       Initial commit                    ci        main    push   1976979782  54s      10h
 ```
 
-If you run:
-```Bash
-cd ~/$GKE_PROJECT_DIR_NAME && gh run list
-```
-You should see:
-```Plaintext
-FIXME
-```
-
-If you run:
-```Bash
-cd ~/$GKE_CONFIGS_DIR_NAME && gh run list
-```
-You should see:
-```Plaintext
-FIXME
-```
-
-If you run:
+List the Kubernetes resources managed by Config Sync in the **GKE cluster** for the **Online Boutique app** repository:
 ```Bash
 gcloud alpha anthos config sync repo describe \
-   --project $CONFIG_CONTROLLER_PROJECT_ID \
-   --managed-resources all \
-   --format="multi(statuses:format=none,managed_resources:format='table[box](group:sort=2,kind,name,namespace:sort=1)')"
+    --project $GKE_PROJECT_ID \
+    --managed-resources all \
+    --sync-name repo-sync \
+    --sync-namespace $ONLINEBOUTIQUE_NAMESPACE
 ```
-You should see:
 ```Plaintext
-FIXME
-```
-
-If you run:
-```Bash
-gcloud alpha anthos config sync repo describe \
-   --project $GKE_PROJECT_ID \
-   --managed-resources all \
-   --format="multi(statuses:format=none,managed_resources:format='table[box](group:sort=2,kind,name,namespace:sort=1)')"
-```
-You should see:
-```Plaintext
-FIXME
+getting 1 RepoSync and RootSync from gke-hub-membership
+┌─────────────────────┬────────────────┬───────────────────────┬────────────────┐
+│        GROUP        │      KIND      │          NAME         │   NAMESPACE    │
+├─────────────────────┼────────────────┼───────────────────────┼────────────────┤
+│                     │ Service        │ productcatalogservice │ onlineboutique │
+│                     │ Service        │ checkoutservice       │ onlineboutique │
+│                     │ Service        │ cartservice           │ onlineboutique │
+│                     │ Service        │ frontend              │ onlineboutique │
+│                     │ Service        │ adservice             │ onlineboutique │
+│                     │ Service        │ recommendationservice │ onlineboutique │
+│                     │ Service        │ paymentservice        │ onlineboutique │
+│                     │ Service        │ currencyservice       │ onlineboutique │
+│                     │ Service        │ shippingservice       │ onlineboutique │
+│                     │ Service        │ emailservice          │ onlineboutique │
+│ apps                │ Deployment     │ cartservice           │ onlineboutique │
+│ apps                │ Deployment     │ frontend              │ onlineboutique │
+│ apps                │ Deployment     │ recommendationservice │ onlineboutique │
+│ apps                │ Deployment     │ shippingservice       │ onlineboutique │
+│ apps                │ Deployment     │ paymentservice        │ onlineboutique │
+│ apps                │ Deployment     │ productcatalogservice │ onlineboutique │
+│ apps                │ Deployment     │ loadgenerator         │ onlineboutique │
+│ apps                │ Deployment     │ checkoutservice       │ onlineboutique │
+│ apps                │ Deployment     │ emailservice          │ onlineboutique │
+│ apps                │ Deployment     │ adservice             │ onlineboutique │
+│ apps                │ Deployment     │ currencyservice       │ onlineboutique │
+│ networking.istio.io │ Sidecar        │ adservice             │ onlineboutique │
+│ networking.istio.io │ Sidecar        │ paymentservice        │ onlineboutique │
+│ networking.istio.io │ Sidecar        │ currencyservice       │ onlineboutique │
+│ networking.istio.io │ Sidecar        │ emailservice          │ onlineboutique │
+│ networking.istio.io │ Sidecar        │ cartservice           │ onlineboutique │
+│ networking.istio.io │ Sidecar        │ frontend              │ onlineboutique │
+│ networking.istio.io │ Sidecar        │ loadgenerator         │ onlineboutique │
+│ networking.istio.io │ Sidecar        │ checkoutservice       │ onlineboutique │
+│ networking.istio.io │ Sidecar        │ recommendationservice │ onlineboutique │
+│ networking.istio.io │ VirtualService │ frontend              │ onlineboutique │
+│ networking.istio.io │ Sidecar        │ productcatalogservice │ onlineboutique │
+│ networking.istio.io │ Sidecar        │ shippingservice       │ onlineboutique │
+│ networking.k8s.io   │ NetworkPolicy  │ emailservice          │ onlineboutique │
+│ networking.k8s.io   │ NetworkPolicy  │ frontend              │ onlineboutique │
+│ networking.k8s.io   │ NetworkPolicy  │ currencyservice       │ onlineboutique │
+│ networking.k8s.io   │ NetworkPolicy  │ checkoutservice       │ onlineboutique │
+│ networking.k8s.io   │ NetworkPolicy  │ shippingservice       │ onlineboutique │
+│ networking.k8s.io   │ NetworkPolicy  │ loadgenerator         │ onlineboutique │
+│ networking.k8s.io   │ NetworkPolicy  │ denyall               │ onlineboutique │
+│ networking.k8s.io   │ NetworkPolicy  │ recommendationservice │ onlineboutique │
+│ networking.k8s.io   │ NetworkPolicy  │ productcatalogservice │ onlineboutique │
+│ networking.k8s.io   │ NetworkPolicy  │ cartservice           │ onlineboutique │
+│ networking.k8s.io   │ NetworkPolicy  │ adservice             │ onlineboutique │
+│ networking.k8s.io   │ NetworkPolicy  │ paymentservice        │ onlineboutique │
+└─────────────────────┴────────────────┴───────────────────────┴────────────────┘
 ```
