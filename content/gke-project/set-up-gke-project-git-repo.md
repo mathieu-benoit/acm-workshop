@@ -72,7 +72,7 @@ We are using the `edit` role here, see [more information about the user-facing r
 cd ~/$WORKSHOP_ORG_DIR_NAME/
 git add .
 git commit -m "GitOps for GKE project"
-git push
+git push origin main
 ```
 
 ## Check deployments

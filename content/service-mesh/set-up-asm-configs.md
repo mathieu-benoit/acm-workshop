@@ -88,7 +88,7 @@ A [`Sidecar`](https://istio.io/latest/docs/reference/config/networking/sidecar/)
 cd ~/$GKE_CONFIGS_DIR_NAME/
 git add .
 git commit -m "ASM configs (mTLS, Sidecar, etc.) in GKE cluster"
-git push
+git push origin main
 ```
 
 ## Check deployments

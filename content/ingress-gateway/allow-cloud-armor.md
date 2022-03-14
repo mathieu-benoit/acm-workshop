@@ -38,7 +38,7 @@ EOF
 cd ~/$WORKSHOP_ORG_DIR_NAME/
 git add .
 git commit -m "Allow Security for GKE project"
-git push
+git push origin main
 ```
 
 ## Check deployments

@@ -104,7 +104,7 @@ EOF
 cd ~/$GKE_CONFIGS_DIR_NAME/
 git add .
 git commit -m "Enforce Container Registries Policies in GKE cluster"
-git push
+git push origin main
 ```
 
 ## Check deployments

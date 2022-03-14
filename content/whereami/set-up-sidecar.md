@@ -35,7 +35,7 @@ EOF
 cd ~/$WHERE_AMI_DIR_NAME/
 git add .
 git commit -m "Whereami Sidecar"
-git push
+git push origin main
 ```
 
 ## Check deployments

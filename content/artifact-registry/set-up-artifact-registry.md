@@ -57,7 +57,7 @@ EOF
 cd ~/$GKE_PROJECT_DIR_NAME/
 git add .
 git commit -m "Artifact Registry for GKE cluster"
-git push
+git push origin main
 ```
 
 ## Check deployments

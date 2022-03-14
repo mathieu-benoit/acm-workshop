@@ -91,7 +91,7 @@ EOF
 cd ~/$GKE_PROJECT_DIR_NAME/
 git add .
 git commit -m "Network for GKE project"
-git push
+git push origin main
 ```
 
 ## Check deployments

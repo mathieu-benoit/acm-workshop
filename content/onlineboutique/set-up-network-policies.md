@@ -310,7 +310,7 @@ EOF
 cd ~/$ONLINE_BOUTIQUE_DIR_NAME/
 git add .
 git commit -m "Online Boutique Network Policies"
-git push
+git push origin main
 ```
 
 ## Check deployments

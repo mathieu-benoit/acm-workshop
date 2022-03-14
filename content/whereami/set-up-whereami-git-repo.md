@@ -93,7 +93,7 @@ We are using the `cluster-admin` role here, but in the future we will change thi
 cd ~/$GKE_CONFIGS_DIR_NAME/
 git add .
 git commit -m "GitOps for Whereami app"
-git push
+git push origin main
 ```
 
 ## Check deployments

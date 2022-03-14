@@ -69,7 +69,7 @@ The annotation `networking.gke.io/managed-certificates` has 2 values, `whereami`
 cd ~/$GKE_CONFIGS_DIR_NAME/
 git add .
 git commit -m "Online Boutique ManagedCertificate"
-git push
+git push origin main
 ```
 
 ## Check deployments

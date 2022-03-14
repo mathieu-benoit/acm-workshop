@@ -114,7 +114,7 @@ EOF
 cd ~/$WORKSHOP_ORG_DIR_NAME/
 git add .
 git commit -m "Billing API in Config Controller project"
-git push
+git push origin main
 ```
 
 ## Check deployments

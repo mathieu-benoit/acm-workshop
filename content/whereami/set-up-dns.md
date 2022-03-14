@@ -66,7 +66,7 @@ kpt fn eval . \
 cd ~/$GKE_CONFIGS_DIR_NAME/
 git add .
 git commit -m "Whereami ManagedCertificate"
-git push
+git push origin main
 ```
 
 ## Check deployments

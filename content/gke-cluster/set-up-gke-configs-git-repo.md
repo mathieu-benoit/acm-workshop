@@ -133,7 +133,7 @@ EOF
 cd ~/$GKE_PROJECT_DIR_NAME/
 git add .
 git commit -m "GitOps for GKE cluster configs"
-git push
+git push origin main
 ```
 
 ## Check deployments

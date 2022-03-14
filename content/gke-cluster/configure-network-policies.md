@@ -37,7 +37,7 @@ EOF
 cd ~/$GKE_CONFIGS_DIR_NAME/
 git add .
 git commit -m "Network Policies logging"
-git push
+git push origin main
 ```
 
 ## Enforce NetworkPolicy policies
@@ -169,7 +169,7 @@ EOF
 cd ~/$GKE_CONFIGS_DIR_NAME/
 git add .
 git commit -m "Policies for NetworkPolicy resources"
-git push
+git push origin main
 ```
 
 ## Check deployments

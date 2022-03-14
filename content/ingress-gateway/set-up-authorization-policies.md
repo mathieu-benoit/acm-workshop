@@ -45,7 +45,7 @@ EOF
 cd ~/$GKE_CONFIGS_DIR_NAME/
 git add .
 git commit -m "Ingress Gateway Authorization Policies"
-git push
+git push origin main
 ```
 
 ## Check deployments

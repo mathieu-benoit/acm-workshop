@@ -42,7 +42,7 @@ EOF
 cd ~/$GKE_PROJECT_DIR_NAME/
 git add .
 git commit -m "Memorystore (redis) instance"
-git push
+git push origin main
 ```
 
 ## Get Memorystore (redis) connection information

@@ -32,7 +32,7 @@ EOF
 cd ~/$GKE_CONFIGS_DIR_NAME/
 git add .
 git commit -m "Config Sync monitoring"
-git push
+git push origin main
 ```
 
 ## Check deployments

@@ -48,7 +48,7 @@ The `resourceID` must be `servicemesh` if you want to use Managed Control Plane 
 cd ~/$GKE_PROJECT_DIR_NAME/
 git add .
 git commit -m "ASM MCP for GKE project"
-git push
+git push origin main
 ```
 
 ## Define ASM ControlPlaneRevision
@@ -93,7 +93,7 @@ We are using `mesh.cloud.google.com/managed-cni-enabled: "true"` in order to lev
 cd ~/$GKE_CONFIGS_DIR_NAME/
 git add .
 git commit -m "ASM MCP for GKE cluster"
-git push
+git push origin main
 ```
 
 ## Check deployments

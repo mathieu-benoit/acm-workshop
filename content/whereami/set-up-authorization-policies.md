@@ -51,7 +51,7 @@ EOF
 cd ~/$WHERE_AMI_DIR_NAME/
 git add .
 git commit -m "Whereami Authorization Policies"
-git push
+git push origin main
 ```
 
 ## Check deployments

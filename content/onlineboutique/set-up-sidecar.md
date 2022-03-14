@@ -190,7 +190,7 @@ EOF
 cd ~/$ONLINE_BOUTIQUE_DIR_NAME/
 git add .
 git commit -m "Online Boutique Sidecar"
-git push
+git push origin main
 ```
 
 ## Check deployments

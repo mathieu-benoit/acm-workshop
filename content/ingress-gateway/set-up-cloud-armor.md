@@ -80,7 +80,7 @@ https://cloud.google.com/armor/docs/rule-tuning#preconfigured_rules
 cd ~/$GKE_PROJECT_DIR_NAME/
 git add .
 git commit -m "Ingress Gateway's Cloud Armor rules"
-git push
+git push origin main
 ```
 
 ```Bash
@@ -112,7 +112,7 @@ EOF
 cd ~/$GKE_PROJECT_DIR_NAME/
 git add .
 git commit -m "Ingress Gateway's SSL policy"
-git push
+git push origin main
 ```
 
 ## Check deployments

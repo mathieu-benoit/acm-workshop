@@ -133,7 +133,7 @@ EOF
 cd ~/$WORKSHOP_ORG_DIR_NAME/
 git add .
 git commit -m "Setting up GKE namespace/project"
-git push
+git push origin main
 ```
 
 ## Check deployments
