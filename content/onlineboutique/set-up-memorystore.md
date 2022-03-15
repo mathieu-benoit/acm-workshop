@@ -47,7 +47,7 @@ git push origin main
 
 ## Get Memorystore (redis) connection information
 
-Make sure the Memorystore (redis) instance is successfully provisioned and grab its associated connection information we will leverage in the next section:
+Make sure the Memorystore (redis) instance is successfully provisioned and get its associated connection information we will leverage in the next section:
 ```Bash
 export REDIS_IP=$(gcloud redis instances describe $REDIS_NAME --region=$GKE_LOCATION --project=$GKE_PROJECT_ID --format='get(host)')
 export REDIS_PORT=$(gcloud redis instances describe $REDIS_NAME --region=$GKE_LOCATION --project=$GKE_PROJECT_ID --format='get(port)')

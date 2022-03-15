@@ -10,7 +10,7 @@ Initialize variables:
 source ~/acm-workshop-variables.sh
 ```
 
-## Grab upstream Kubernetes manifests
+## Get upstream Kubernetes manifests
 
 Create a dedicated folder for the Online Boutique sample apps in the GKE configs's Git repo:
 ```Bash
