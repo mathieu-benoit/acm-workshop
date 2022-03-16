@@ -12,39 +12,49 @@ source ~/acm-workshop-variables.sh
 
 ## Get upstream Kubernetes manifests
 
-Create a dedicated folder for the Whereami sample app in the GKE configs's Git repo:
+Get the upstream Kubernetes manifests:
 ```Bash
-cd ~/$WHERE_AMI_DIR_NAME/config-sync
+cd ~/$WHERE_AMI_DIR_NAME
 kpt pkg get https://github.com/GoogleCloudPlatform/kubernetes-engine-samples/whereami/k8s
+mv k8s upstream
 ```
 
-## Update Kubernetes manifests
+## Create base overlay
 
-Cleanup and update the upstream files:
+Create Kustomize base overlay files:
 ```Bash
-mv k8s/* .
-rm -r k8s/
-rm Kptfile
-rm kustomization.yaml
-kpt fn eval . \
-  -i set-namespace:v0.2 \
-  -- namespace=$WHEREAMI_NAMESPACE
-sed -i "s/LoadBalancer/ClusterIP/g" ~/$WHERE_AMI_DIR_NAME/config-sync/service.yaml
-sed -i "s/TRACE_SAMPLING_RATIO: \"0.10\"/TRACE_SAMPLING_RATIO: \"0\"/g" ~/$WHERE_AMI_DIR_NAME/config-sync/configmap.yaml
+mkdir ~/$WHERE_AMI_DIR_NAME/base
+cd ~/$WHERE_AMI_DIR_NAME/base
+kustomize create --resources ../upstream
+cat <<EOF >> ~/$WHERE_AMI_DIR_NAME/base/kustomization.yaml
+configMapGenerator:
+- name: whereami-configmap
+  behavior: merge
+  literals:
+  - TRACE_SAMPLING_RATIO="0"
+patchesJson6902:
+- target:
+    kind: Service
+    name: whereami
+  patch: |-
+    - op: replace
+      path: /spec/type
+      value: ClusterIP
+EOF
 ```
 
 ## Define VirtualService
 
+Define the `VirtualService` resource in order to establish the Ingress Gateway routing to the Whereami app:
 ```Bash
-cat <<EOF > ~/$WHERE_AMI_DIR_NAME/config-sync/virtualservice.yaml
+cat <<EOF > ~/$WHERE_AMI_DIR_NAME/base/virtualservice.yaml
 apiVersion: networking.istio.io/v1alpha3
 kind: VirtualService
 metadata:
   name: whereami
-  namespace: ${WHEREAMI_NAMESPACE}
 spec:
   hosts:
-  - ${WHERE_AMI_INGRESS_GATEWAY_HOST_NAME}
+  - "*"
   gateways:
   - ${INGRESS_GATEWAY_NAMESPACE}/${INGRESS_GATEWAY_NAME}
   http:
@@ -53,6 +63,38 @@ spec:
         host: whereami
         port:
           number: 80
+EOF
+```
+
+Update the Kustomize base overlay:
+```Bash
+cd ~/$WHERE_AMI_DIR_NAME/base
+kustomize edit add resource virtualservice.yaml
+```
+
+## Define Staging namespace overlay
+
+```Bash
+cd ~/$WHERE_AMI_DIR_NAME/staging
+kustomize edit add resource ../base
+kustomize edit set namespace $WHEREAMI_NAMESPACE
+```
+{{% notice note %}}
+The `kustomization.yaml` file was already existing from the [GitHub repository template](https://github.com/mathieu-benoit/config-sync-app-template-repo/blob/main/staging/kustomization.yaml) used when we created the `Whereami` app repository.
+{{% /notice %}}
+
+Update the Kustomize base overlay:
+```Bash
+cat <<EOF >> ~/$WHERE_AMI_DIR_NAME/staging/kustomization.yaml
+patchesJson6902:
+- target:
+    kind: VirtualService
+    name: whereami
+  patch: |-
+    - op: replace
+      path: /spec/hosts
+      value:
+        - ${WHERE_AMI_INGRESS_GATEWAY_HOST_NAME}
 EOF
 ```
 

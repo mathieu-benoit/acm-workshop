@@ -9,6 +9,7 @@ You can run this workshop on Cloud Shell or on your local machine running Linux.
 Install the required tools:
 - [`gcloud`](https://cloud.google.com/sdk/docs/install)
 - [`kubectl`](https://kubernetes.io/docs/tasks/tools/#kubectl)
+- [`kustomize`]
 - `git`
 - `gh` (GitHub CLI)
 - `kpt`

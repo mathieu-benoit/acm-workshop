@@ -14,24 +14,22 @@ source ~/acm-workshop-variables.sh
 
 Define fine granular `NetworkPolicy` resources:
 ```Bash
-cat <<EOF > ~/$WHERE_AMI_DIR_NAME/config-sync/networkpolicy_denyall.yaml
+cat <<EOF > ~/$WHERE_AMI_DIR_NAME/base/networkpolicy_denyall.yaml
 apiVersion: networking.k8s.io/v1
 kind: NetworkPolicy
 metadata:
   name: denyall
-  namespace: ${WHEREAMI_NAMESPACE}
 spec:
   podSelector: {}
   policyTypes:
   - Ingress
   - Egress
 EOF
-cat <<EOF > ~/$WHERE_AMI_DIR_NAME/config-sync/networkpolicy_whereami.yaml
+cat <<EOF > ~/$WHERE_AMI_DIR_NAME/base/networkpolicy_whereami.yaml
 apiVersion: networking.k8s.io/v1
 kind: NetworkPolicy
 metadata:
   name: whereami
-  namespace: ${WHEREAMI_NAMESPACE}
 spec:
   podSelector:
     matchLabels:
@@ -53,6 +51,13 @@ spec:
   egress:
   - {}
 EOF
+```
+
+Update the Kustomize base overlay:
+```Bash
+cd ~/$WHERE_AMI_DIR_NAME/base
+kustomize edit add resource networkpolicy_denyall.yaml
+kustomize edit add resource networkpolicy_whereami.yaml
 ```
 
 ## Deploy Kubernetes manifests

@@ -13,12 +13,11 @@ source ~/acm-workshop-variables.sh
 ## Define Sidecar resource
 
 ```Bash
-cat <<EOF > ~/$WHERE_AMI_DIR_NAME/config-sync/sidecar.yaml
+cat <<EOF > ~/$WHERE_AMI_DIR_NAME/base/sidecar.yaml
 apiVersion: networking.istio.io/v1beta1
 kind: Sidecar
 metadata:
   name: whereami
-  namespace: ${WHEREAMI_NAMESPACE}
 spec:
   workloadSelector:
     labels:
@@ -27,6 +26,12 @@ spec:
   - hosts:
     - istio-system/*
 EOF
+```
+
+Update the Kustomize base overlay:
+```Bash
+cd ~/$WHERE_AMI_DIR_NAME/base
+kustomize edit add resource sidecar.yaml
 ```
 
 ## Deploy Kubernetes manifests
