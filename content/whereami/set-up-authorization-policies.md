@@ -14,20 +14,18 @@ source ~/acm-workshop-variables.sh
 
 Define fine granular `AuthorizationPolicy` resources:
 ```Bash
-cat <<EOF > ~/$WHERE_AMI_DIR_NAME/config-sync/authorizationpolicy_denyall.yaml
+cat <<EOF > ~/$WHERE_AMI_DIR_NAME/base/authorizationpolicy_denyall.yaml
 apiVersion: security.istio.io/v1beta1
 kind: AuthorizationPolicy
 metadata:
   name: deny-all
-  namespace: ${WHEREAMI_NAMESPACE}
 spec: {}
 EOF
-cat <<EOF > ~/$WHERE_AMI_DIR_NAME/config-sync/authorizationpolicy_whereami.yaml
+cat <<EOF > ~/$WHERE_AMI_DIR_NAME/base/authorizationpolicy_whereami.yaml
 apiVersion: security.istio.io/v1beta1
 kind: AuthorizationPolicy
 metadata:
   name: whereami
-  namespace: ${WHEREAMI_NAMESPACE}
 spec:
   selector:
     matchLabels:
@@ -35,7 +33,8 @@ spec:
   rules:
   - from:
     - source:
-        principals: ["cluster.local/ns/${INGRESS_GATEWAY_NAMESPACE}/sa/${INGRESS_GATEWAY_NAME}"]
+        principals:
+        - cluster.local/ns/${INGRESS_GATEWAY_NAMESPACE}/sa/${INGRESS_GATEWAY_NAME}
     to:
     - operation:
         ports:
@@ -43,6 +42,13 @@ spec:
         methods:
         - GET
 EOF
+```
+
+Update the Kustomize base overlay:
+```Bash
+cd ~/$WHERE_AMI_DIR_NAME/base
+kustomize edit add resource authorizationpolicy_denyall.yaml
+kustomize edit add resource authorizationpolicy_whereami.yaml
 ```
 
 ## Deploy Kubernetes manifests

@@ -42,7 +42,6 @@ apiVersion: networking.gke.io/v1
 kind: ManagedCertificate
 metadata:
   name: whereami
-  namespace: ${INGRESS_GATEWAY_NAMESPACE}
 spec:
   domains:
     - "${WHERE_AMI_INGRESS_GATEWAY_HOST_NAME}"
