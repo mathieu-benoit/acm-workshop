@@ -23,6 +23,7 @@ mv k8s upstream
 
 Create Kustomize base overlay files:
 ```Bash
+mkdir ~/$WHERE_AMI_DIR_NAME/base
 cd ~/$WHERE_AMI_DIR_NAME/base
 kustomize create --resources ../upstream
 cat <<EOF >> ~/$WHERE_AMI_DIR_NAME/base/kustomization.yaml
@@ -75,9 +76,12 @@ kustomize edit add resource virtualservice.yaml
 
 ```Bash
 cd ~/$WHERE_AMI_DIR_NAME/staging
-kustomize create --resources ../base
+kustomize edit add resource ../base
 kustomize edit set namespace $WHEREAMI_NAMESPACE
 ```
+{{% notice note %}}
+The `kustomization.yaml` file was already existing from the [GitHub repository template](https://github.com/mathieu-benoit/config-sync-app-template-repo/blob/main/staging/kustomization.yaml) used when we created the `Whereami` app repository.
+{{% /notice %}}
 
 Update the Kustomize base overlay:
 ```Bash
