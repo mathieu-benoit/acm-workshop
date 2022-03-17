@@ -42,6 +42,9 @@ patchesJson6902:
       value: ClusterIP
 EOF
 ```
+{{% notice note %}}
+Here we are disabling tracing from the upstream files as well as changing the `Service` `type` to `ClusterIP`.
+{{% /notice %}}
 
 ## Define VirtualService
 
@@ -83,7 +86,7 @@ kustomize edit set namespace $WHEREAMI_NAMESPACE
 The `kustomization.yaml` file was already existing from the [GitHub repository template](https://github.com/mathieu-benoit/config-sync-app-template-repo/blob/main/staging/kustomization.yaml) used when we created the `Whereami` app repository.
 {{% /notice %}}
 
-Update the Kustomize base overlay:
+Update the Kustomize base overlay in order to set proper `hosts` value in the `VirtualService` resource:
 ```Bash
 cat <<EOF >> ~/$WHERE_AMI_DIR_NAME/staging/kustomization.yaml
 patchesJson6902:
