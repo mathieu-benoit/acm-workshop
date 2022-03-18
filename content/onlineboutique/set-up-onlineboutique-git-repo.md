@@ -38,7 +38,7 @@ EOF
 
 ```Bash
 cd ~
-gh repo create $ONLINE_BOUTIQUE_DIR_NAME --public --clone --template https://github.com/mathieu-benoit/config-sync-template-repo
+gh repo create $ONLINE_BOUTIQUE_DIR_NAME --public --clone --template https://github.com/mathieu-benoit/config-sync-app-template-repo
 cd ~/$ONLINE_BOUTIQUE_DIR_NAME
 git pull
 git checkout main
@@ -61,7 +61,7 @@ spec:
     repo: ${ONLINE_BOUTIQUE_REPO_URL}
     revision: HEAD
     branch: main
-    dir: config-sync
+    dir: staging
     auth: none
 EOF
 ```
