@@ -61,7 +61,7 @@ spec:
     repo: ${WHERE_AMI_REPO_URL}
     revision: HEAD
     branch: main
-    dir: config-sync
+    dir: staging
     auth: none
 EOF
 ```
