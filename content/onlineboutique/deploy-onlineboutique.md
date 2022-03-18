@@ -108,7 +108,7 @@ cat <<EOF >> ~/$ONLINE_BOUTIQUE_DIR_NAME/staging/kustomization.yaml
 patchesJson6902:
 - target:
     kind: VirtualService
-    name: whereami
+    name: frontend
   patch: |-
     - op: replace
       path: /spec/hosts
