@@ -93,7 +93,7 @@ spec:
       referentialRulesEnabled: true
       logDeniesEnabled: true
       templateLibraryInstalled: false
-    version: "1.10.2"
+    version: "1.11.0"
 EOF
 ```
 {{% notice tip %}}
