@@ -10,17 +10,10 @@ Initialize variables:
 source ~/acm-workshop-variables.sh
 ```
 
-## Define AuthorizationPolicy resources
+## Define AuthorizationPolicy resource
 
-Define fine granular `AuthorizationPolicy` resources:
+Define fine granular `AuthorizationPolicy` resource:
 ```Bash
-cat <<EOF > ~/$WHERE_AMI_DIR_NAME/base/authorizationpolicy_denyall.yaml
-apiVersion: security.istio.io/v1beta1
-kind: AuthorizationPolicy
-metadata:
-  name: deny-all
-spec: {}
-EOF
 cat <<EOF > ~/$WHERE_AMI_DIR_NAME/base/authorizationpolicy_whereami.yaml
 apiVersion: security.istio.io/v1beta1
 kind: AuthorizationPolicy
@@ -47,7 +40,6 @@ EOF
 Update the Kustomize base overlay:
 ```Bash
 cd ~/$WHERE_AMI_DIR_NAME/base
-kustomize edit add resource authorizationpolicy_denyall.yaml
 kustomize edit add resource authorizationpolicy_whereami.yaml
 ```
 
@@ -56,7 +48,7 @@ kustomize edit add resource authorizationpolicy_whereami.yaml
 ```Bash
 cd ~/$WHERE_AMI_DIR_NAME/
 git add .
-git commit -m "Whereami Authorization Policies"
+git commit -m "Whereami Authorization Policy"
 git push origin main
 ```
 
@@ -65,7 +57,7 @@ git push origin main
 List the GitHub runs for the **Whereami app** repository `cd ~/$WHERE_AMI_DIR_NAME && gh run list`:
 ```Plaintext
 STATUS  NAME                             WORKFLOW  BRANCH  EVENT  ID          ELAPSED  AGE
-✓       Whereami Authorization Policies  ci        main    push   1976612253  1m9s     2m
+✓       Whereami Authorization Policy  ci        main    push   1976612253  1m9s     2m
 ✓       Whereami Sidecar                 ci        main    push   1976601129  1m3s     5m
 ✓       Whereami Network Policies        ci        main    push   1976593659  1m1s     1m
 ✓       Whereami app                     ci        main    push   1976257627  1m1s     2h
@@ -94,6 +86,5 @@ getting 1 RepoSync and RootSync from gke-hub-membership
 │ networking.k8s.io   │ NetworkPolicy       │ denyall            │ whereami  │
 │ networking.k8s.io   │ NetworkPolicy       │ whereami           │ whereami  │
 │ security.istio.io   │ AuthorizationPolicy │ whereami           │ whereami  │
-│ security.istio.io   │ AuthorizationPolicy │ deny-all           │ whereami  │
 └─────────────────────┴─────────────────────┴────────────────────┴───────────┘
 ```

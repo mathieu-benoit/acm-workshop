@@ -79,15 +79,29 @@ spec:
 EOF
 ```
 {{% notice tip %}}
-A [`Sidecar`](https://istio.io/latest/docs/reference/config/networking/sidecar/) configuration in the `MeshConfig` root namespace will be applied by default to all namespaces without a `Sidecar` configuration.
+A [`Sidecar`](https://istio.io/latest/docs/reference/config/networking/sidecar/) configuration in the `MeshConfig` root namespace will be applied by default to all namespaces.
 {{% /notice %}}
+
+## Define default deny AuthorizationPolicy Mesh-wide
+
+Define `deny` `AuthorizationPolicy` resource:
+```Bash
+cat <<EOF > ~/$GKE_CONFIGS_DIR_NAME/config-sync/istio-config/authorizationpolicy_denyall.yaml
+apiVersion: security.istio.io/v1beta1
+kind: AuthorizationPolicy
+metadata:
+  name: deny-all
+  namespace: istio-system
+spec: {}
+EOF
+```
 
 ## Deploy Kubernetes manifests
 
 ```Bash
 cd ~/$GKE_CONFIGS_DIR_NAME/
 git add .
-git commit -m "ASM configs (mTLS, Sidecar, etc.) in GKE cluster"
+git commit -m "ASM Mesh configs in GKE cluster"
 git push origin main
 ```
 
@@ -98,7 +112,7 @@ Here is what you should have at this stage:
 List the GitHub runs for the **GKE cluster configs** repository `cd ~/$GKE_CONFIGS_DIR_NAME && gh run list`:
 ```Plaintext
 STATUS  NAME                                                  WORKFLOW  BRANCH  EVENT  ID          ELAPSED  AGE
-✓       ASM configs (mTLS, Sidecar, etc.) in GKE cluster      ci        main    push   1972234050  56s      2m
+✓       ASM Mesh configs in GKE cluster                       ci        main    push   1972234050  56s      2m
 ✓       ASM MCP for GKE cluster                               ci        main    push   1972222841  56s      7m
 ✓       Enforce Container Registries Policies in GKE cluster  ci        main    push   1972138349  55s      49m
 ✓       Policies for NetworkPolicy resources                  ci        main    push   1971716019  1m14s    3h
@@ -129,6 +143,7 @@ getting 1 RepoSync and RootSync from gke-hub-membership
 │ templates.gatekeeper.sh   │ ConstraintTemplate   │ k8sallowedrepos              │                              │
 │ templates.gatekeeper.sh   │ ConstraintTemplate   │ k8srequiredlabels            │                              │
 │                           │ ServiceAccount       │ default                      │ config-management-monitoring │
+│ security.istio.io         │ AuthorizationPolicy  │ deny-all                     │ istio-system                 │
 │                           │ ConfigMap            │ istio-asm-managed-rapid      │ istio-system                 │
 │ mesh.cloud.google.com     │ ControlPlaneRevision │ asm-managed-rapid            │ istio-system                 │
 │ security.istio.io         │ PeerAuthentication   │ default                      │ istio-system                 │
