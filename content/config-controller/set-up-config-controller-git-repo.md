@@ -60,14 +60,30 @@ kubectl wait --for condition=established crd rootsyncs.configsync.gke.io
 
 ## Define the primary Git repository
 
-Create a dedicated GitHub repository to store any Kubernetes manifests associated to the GCP Organization:
+Create a dedicated private GitHub repository to store any Kubernetes manifests associated to the GCP Organization:
 ```Bash
 cd ~
 gh repo create $WORKSHOP_ORG_DIR_NAME --public --clone --template https://github.com/mathieu-benoit/config-sync-template-repo
 cd ~/$WORKSHOP_ORG_DIR_NAME
 git pull
 git checkout main
-ORG_REPO_URL=$(gh repo view --json url --jq .url)
+ORG_REPO_URL=$(gh repo view --json sshUrl --jq .sshUrl)
+ORG_REPO_NAME_WITH_OWNER=$(gh repo view --json nameWithOwner --jq .nameWithOwner)
+```
+
+Generate [SSH key pair](https://cloud.google.com/anthos-config-management/docs/how-to/installing-config-sync#ssh-key-pair) in order to get a read access to the private Git repository:
+```Bash
+mkdir tmp
+ssh-keygen -t rsa -b 4096 \
+    -C "${ORG_REPO_NAME_WITH_OWNER}@github" \
+    -N '' \
+    -f ./tmp/github-org-repo
+kubectl create ns config-management-system && \
+kubectl create secret generic git-creds \
+    --namespace=config-management-system \
+    --from-file=ssh=./tmp/github-org-repo
+gh repo deploy-key add ./tmp/github-org-repo.pub
+rm -r tmp
 ```
 
 Deploy a `RootSync` linking this GitHub repository to the Config Controller instance as the main/root GitOps configuration:
@@ -85,12 +101,16 @@ spec:
     revision: HEAD
     branch: main
     dir: config-sync
-    auth: none
+    auth: ssh
+    secretRef:
+      name: git-creds
 EOF
 ```
-{{% notice info %}}
-Since you started this workshop, you just ran 4 `kubectl` commands. For your information, moving forward you won't run any other `kubectl` commands because the design and intent of this workshop is to only deploy any Kubernetes resources via GitOps with Config Sync. You will also use some handy `gcloud` commands when appropriate.
+{{% notice tips %}}
+The GitHub repository is private in order to demonstrate how to allow read access to Config Sync when you use a restricted Git repository. 
 {{% /notice %}}
+
+Since you started this workshop, you just ran 6 `kubectl` commands. For your information, moving forward you won't run any other `kubectl` commands because the design and intent of this workshop is to only deploy any Kubernetes resources via GitOps with Config Sync. You will also use some handy `gcloud` commands when appropriate.
 
 ## Define Cloud Billing API
 

@@ -41,9 +41,9 @@ Three personas are involved:
 - 2 GCP Projects
 - 1 Config Controller instance
 - 1 GKE cluster
-- 4 `kubectl` commands
-- 44 `git commit` commands
-- 126 `gcloud` commands
+- 6 `kubectl` commands
+- 42 `git commit` commands
+- 170 `gcloud` commands
 - 145 Kubernetes manifests
 - 57 KCC resources
 - 12 containerized apps

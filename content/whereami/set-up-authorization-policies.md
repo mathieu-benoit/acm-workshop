@@ -57,7 +57,7 @@ git push origin main
 List the GitHub runs for the **Whereami app** repository `cd ~/$WHERE_AMI_DIR_NAME && gh run list`:
 ```Plaintext
 STATUS  NAME                             WORKFLOW  BRANCH  EVENT  ID          ELAPSED  AGE
-✓       Whereami Authorization Policy  ci        main    push   1976612253  1m9s     2m
+✓       Whereami Authorization Policy    ci        main    push   1976612253  1m9s     2m
 ✓       Whereami Sidecar                 ci        main    push   1976601129  1m3s     5m
 ✓       Whereami Network Policies        ci        main    push   1976593659  1m1s     1m
 ✓       Whereami app                     ci        main    push   1976257627  1m1s     2h
