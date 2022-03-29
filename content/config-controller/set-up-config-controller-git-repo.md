@@ -106,7 +106,7 @@ spec:
       name: git-creds
 EOF
 ```
-{{% notice tips %}}
+{{% notice tip %}}
 The GitHub repository is private in order to demonstrate how to allow read access to Config Sync when you use a restricted Git repository. 
 {{% /notice %}}
 

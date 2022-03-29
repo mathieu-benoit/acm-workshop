@@ -79,12 +79,12 @@ subjects:
   namespace: config-management-system
 roleRef:
   kind: ClusterRole
-  name: cluster-admin
+  name: edit
   apiGroup: rbac.authorization.k8s.io
 EOF
 ```
-{{% notice info %}}
-We are using the `cluster-admin` role here, but in the future we will change this with a least privilege approach. It will be something with `edit` role and the the Istio resources like `VirtualService`, etc. leveraged in this workshop. See [more information about the user-facing roles here](https://kubernetes.io/docs/reference/access-authn-authz/rbac/#user-facing-roles).
+{{% notice tip %}}
+We are using the [`edit` user-facing role](https://kubernetes.io/docs/reference/access-authn-authz/rbac/#user-facing-roles) here, to follow the least privilege principle. Earlier in this workshop during the ASM installation, we extended the default `edit` role with more capabilities regarding to the Istio resources: `VirtualService`, `Sidecar` and `Authorization` wich will be leveraged in the OnlineBoutique's namespace.
 {{% /notice %}}
 
 ## Deploy Kubernetes manifests

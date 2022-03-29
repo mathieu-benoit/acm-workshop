@@ -96,6 +96,33 @@ spec: {}
 EOF
 ```
 
+## Define new ClusterRole with Istio capabilities for ConfigSync
+
+Define the extended [`edit` user-facing role](https://kubernetes.io/docs/reference/access-authn-authz/rbac/#user-facing-roles) with more Istio resources capabilities:
+```Bash
+cat <<EOF > ~/$GKE_CONFIGS_DIR_NAME/config-sync/custom-edit-clusterrole-istio.yaml
+apiVersion: rbac.authorization.k8s.io/v1
+kind: ClusterRole
+metadata:
+  labels:
+    rbac.authorization.k8s.io/aggregate-to-edit: "true"
+  name: custom:aggregate-to-edit:istio
+rules:
+- apiGroups:
+  - "networking.istio.io"
+  - "security.istio.io"
+  resources:
+  - "virtualservices"
+  - "authorizationpolicies"
+  - "sidecars"
+  verbs:
+  - "*"
+EOF
+```
+{{% notice tip %}}
+Later in this workshop, for each app namespace, we will define a Config Sync's `RepoSync` which will be bound to the `edit` `ClusterRole`. With that new extension, it will allow each namespace to deploy Istio resources such as `Sidecar`, `VirtualService` and `AuthorizationPolicy` while meeting with the least privilege principle requirement.
+{{% /notice %}}
+
 ## Deploy Kubernetes manifests
 
 ```Bash
@@ -131,21 +158,22 @@ gcloud alpha anthos config sync repo describe \
 ```
 ```Plaintext
 getting 1 RepoSync and RootSync from gke-hub-membership
-┌───────────────────────────┬──────────────────────┬──────────────────────────────┬──────────────────────────────┐
-│           GROUP           │         KIND         │             NAME             │          NAMESPACE           │
-├───────────────────────────┼──────────────────────┼──────────────────────────────┼──────────────────────────────┤
-│                           │ Namespace            │ istio-system                 │                              │
-│                           │ Namespace            │ config-management-monitoring │                              │
-│ constraints.gatekeeper.sh │ K8sRequiredLabels    │ deployment-required-labels   │                              │
-│ constraints.gatekeeper.sh │ K8sRequiredLabels    │ namespace-required-labels    │                              │
-│ constraints.gatekeeper.sh │ K8sAllowedRepos      │ allowed-container-registries │                              │
-│ networking.gke.io         │ NetworkLogging       │ default                      │                              │
-│ templates.gatekeeper.sh   │ ConstraintTemplate   │ k8sallowedrepos              │                              │
-│ templates.gatekeeper.sh   │ ConstraintTemplate   │ k8srequiredlabels            │                              │
-│                           │ ServiceAccount       │ default                      │ config-management-monitoring │
-│ security.istio.io         │ AuthorizationPolicy  │ deny-all                     │ istio-system                 │
-│                           │ ConfigMap            │ istio-asm-managed-rapid      │ istio-system                 │
-│ mesh.cloud.google.com     │ ControlPlaneRevision │ asm-managed-rapid            │ istio-system                 │
-│ security.istio.io         │ PeerAuthentication   │ default                      │ istio-system                 │
-└───────────────────────────┴──────────────────────┴──────────────────────────────┴──────────────────────────────┘
+┌───────────────────────────┬──────────────────────┬────────────────────────────────┬──────────────────────────────┐
+│           GROUP           │         KIND         │             NAME               │          NAMESPACE           │
+├───────────────────────────┼──────────────────────┼────────────────────────────────┼──────────────────────────────┤
+│                           │ Namespace            │ istio-system                   │                              │
+│                           │ Namespace            │ config-management-monitoring   │                              │
+│ constraints.gatekeeper.sh │ K8sRequiredLabels    │ deployment-required-labels     │                              │
+│ constraints.gatekeeper.sh │ K8sRequiredLabels    │ namespace-required-labels      │                              │
+│ constraints.gatekeeper.sh │ K8sAllowedRepos      │ allowed-container-registries   │                              │
+│ networking.gke.io         │ NetworkLogging       │ default                        │                              │
+| rbac.authorization.k8s.io │ ClusterRole          │ custom:aggregate-to-edit:istio │                              │
+│ templates.gatekeeper.sh   │ ConstraintTemplate   │ k8sallowedrepos                │                              │
+│ templates.gatekeeper.sh   │ ConstraintTemplate   │ k8srequiredlabels              │                              │
+│                           │ ServiceAccount       │ default                        │ config-management-monitoring │
+│ security.istio.io         │ AuthorizationPolicy  │ deny-all                       │ istio-system                 │
+│                           │ ConfigMap            │ istio-asm-managed-rapid        │ istio-system                 │
+│ mesh.cloud.google.com     │ ControlPlaneRevision │ asm-managed-rapid              │ istio-system                 │
+│ security.istio.io         │ PeerAuthentication   │ default                        │ istio-system                 │
+└───────────────────────────┴──────────────────────┴────────────────────────────────┴──────────────────────────────┘
 ```
