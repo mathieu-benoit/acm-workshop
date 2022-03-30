@@ -3,7 +3,7 @@ title: "Credits"
 weight: 4
 ---
 Different contents have been leveraged in order to make and inpsire this workshop, here is the list of them:
-- [Exposing service mesh applications through GKE Ingress](https://cloud.google.com/architecture/exposing-service-mesh-apps-through-gke-ingress) - Alex Mattson, Ameer Abbas, Mark Church
+- [Exposing service mesh applications through GKE Ingress](https://cloud.google.com/architecture/exposing-service-mesh-apps-through-gke-ingress) - Alex Mattson, Ameer Abbas and Mark Church
 - [Whereami app](https://github.com/GoogleCloudPlatform/kubernetes-engine-samples/tree/main/whereami) - Alex Mattson
 - [OnlineBoutique apps](https://github.com/GoogleCloudPlatform/microservices-demo) - Megan O'Keefe and Nim Jayawardena
 - [Kubernetes Network Policies recipes](https://github.com/ahmetb/kubernetes-network-policy-recipes) - Ahmet Alp Balkan
