@@ -50,7 +50,7 @@ spec:
 EOF
 ```
 {{% notice info %}}
-We explicitly set the Policy Controller's `templateLibraryInstalled` field to `false`. Throughout this workshop, we will create our own `ConstraintTemplate` resources when needed. It will have two main benefits: first you will learn about how to create your own `ConstraintTemplate` (with OPA rego) and second, you we will be able to validate our Kubernetes resources against this . But be aware of this [default library of `ConstraintTemplate` resources](https://cloud.google.com/anthos-config-management/docs/reference/constraint-template-library) you could leverage as-is if you set this field to `true`.
+We explicitly set the Policy Controller's `templateLibraryInstalled` field to `false`. Throughout this workshop, we will create our own `ConstraintTemplate` resources when needed. It will have two main benefits: first you will learn about how to create your own `ConstraintTemplate` (with OPA rego) and second, you we will be able to validate our Kubernetes resources against the `Constraint` without interacting with the Kubernetes Server API. But be aware of this [default library of `ConstraintTemplate` resources](https://cloud.google.com/anthos-config-management/docs/reference/constraint-template-library) that you could leverage as-is if you set this field to `true`.
 {{% /notice %}}
 
 Let's wait for the multi-repositories configs to be deployed:
@@ -63,6 +63,7 @@ kubectl wait --for condition=established crd rootsyncs.configsync.gke.io
 Create a dedicated private GitHub repository to store any Kubernetes manifests associated to the GCP Organization:
 ```Bash
 cd ~
+gh auth login
 gh repo create $WORKSHOP_ORG_DIR_NAME --public --clone --template https://github.com/mathieu-benoit/config-sync-template-repo
 cd ~/$WORKSHOP_ORG_DIR_NAME
 git pull
@@ -78,7 +79,6 @@ ssh-keygen -t rsa -b 4096 \
     -C "${ORG_REPO_NAME_WITH_OWNER}@github" \
     -N '' \
     -f ./tmp/github-org-repo
-kubectl create ns config-management-system && \
 kubectl create secret generic git-creds \
     --namespace=config-management-system \
     --from-file=ssh=./tmp/github-org-repo
@@ -136,6 +136,9 @@ git add .
 git commit -m "Billing API in Config Controller project"
 git push origin main
 ```
+{{% notice info %}}
+Because it's the first `git commit` of this workshop, if you don't have your own environment set up with `git`, you may be prompted to properly set up `git config --global user.email "you@example.com"` and `git config --global user.name "Your Name"`.
+{{% /notice %}}
 
 ## Check deployments
 

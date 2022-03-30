@@ -8,7 +8,8 @@ _{{< param description >}}_
 Define variables:
 ```Bash
 source ~/acm-workshop-variables.sh
-echo "export GKE_PROJECT_ID=acm-workshop-${RANDOM_SUFFIX}-gke" >> ~/acm-workshop-variables.sh
+GKE_PROJECT_ID=acm-workshop-${RANDOM_SUFFIX}-gke
+echo "export GKE_PROJECT_ID=${GKE_PROJECT_ID}" >> ~/acm-workshop-variables.sh
 echo "export GKE_PROJECT_SA_EMAIL=${GKE_PROJECT_ID}@${CONFIG_CONTROLLER_PROJECT_ID}.iam.gserviceaccount.com" >> ~/acm-workshop-variables.sh
 source ~/acm-workshop-variables.sh
 ```

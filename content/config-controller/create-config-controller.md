@@ -17,8 +17,13 @@ echo "export CONFIG_CONTROLLER_PROJECT_ID=acm-workshop-${RANDOM_SUFFIX}" >> ~/ac
 echo "export BILLING_ACCOUNT_ID=${BILLING_ACCOUNT_ID}" >> ~/acm-workshop-variables.sh
 echo "export ORG_OR_FOLDER_ID=${ORG_OR_FOLDER_ID}" >> ~/acm-workshop-variables.sh
 echo "export LOCAL_IP_ADDRESS=$(curl ifconfig.co)" >> ~/acm-workshop-variables.sh
+echo "export CONFIG_CONTROLLER_NAME=configcontroller" >> ~/acm-workshop-variables.sh
+echo "export CONFIG_CONTROLLER_LOCATION=us-east1" >> ~/acm-workshop-variables.sh
 source ~/acm-workshop-variables.sh
 ```
+{{% notice info %}}
+Just `us-east1` or `us-central1` are supported region for Config Controller for now.
+{{% /notice %}}
 
 ## Create Config Controller's GCP project
 
@@ -59,8 +64,6 @@ Create the Config Controller instance:
 ```Bash
 gcloud services enable krmapihosting.googleapis.com \
     cloudresourcemanager.googleapis.com
-CONFIG_CONTROLLER_NAME=configcontroller
-CONFIG_CONTROLLER_LOCATION=us-east1 # or us-central1 are supported for now
 gcloud anthos config controller create $CONFIG_CONTROLLER_NAME \
     --location $CONFIG_CONTROLLER_LOCATION \
     --man-block $LOCAL_IP_ADDRESS/32
