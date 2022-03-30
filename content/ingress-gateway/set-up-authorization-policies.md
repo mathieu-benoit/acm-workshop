@@ -10,17 +10,9 @@ Initialize variables:
 source ~/acm-workshop-variables.sh
 ```
 
-## Define AuthorizationPolicy resources
+## Define AuthorizationPolicy resource
 
 ```Bash
-cat <<EOF > ~/$GKE_CONFIGS_DIR_NAME/config-sync/$INGRESS_GATEWAY_NAMESPACE/authorizationpolicy_denyall.yaml
-apiVersion: security.istio.io/v1beta1
-kind: AuthorizationPolicy
-metadata:
-  name: deny-all
-  namespace: ${INGRESS_GATEWAY_NAMESPACE}
-spec: {}
-EOF
 cat <<EOF > ~/$GKE_CONFIGS_DIR_NAME/config-sync/$INGRESS_GATEWAY_NAMESPACE/authorizationpolicy_ingress-gateway.yaml
 apiVersion: security.istio.io/v1beta1
 kind: AuthorizationPolicy
@@ -109,7 +101,6 @@ getting 1 RepoSync and RootSync from gke-hub-membership
 │ rbac.authorization.k8s.io │ RoleBinding               │ asm-ingressgateway              │ asm-ingress                  │
 │ rbac.authorization.k8s.io │ Role                      │ asm-ingressgateway              │ asm-ingress                  │
 │ security.istio.io         │ AuthorizationPolicy       │ asm-ingressgateway              │ asm-ingress                  │
-│ security.istio.io         │ AuthorizationPolicy       │ deny-all                        │ asm-ingress                  │
 │                           │ ServiceAccount            │ default                         │ config-management-monitoring │
 │                           │ ConfigMap                 │ istio-asm-managed-rapid         │ istio-system                 │
 │ mesh.cloud.google.com     │ ControlPlaneRevision      │ asm-managed-rapid               │ istio-system                 │
