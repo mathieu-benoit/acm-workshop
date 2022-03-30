@@ -15,5 +15,6 @@ Different contents have been leveraged in order to make and inpsire this worksho
 - Improve Security Posture in GKE Environment with ACM and ASM - Ameer Abbas
 - Hybrid SME Academy Labs - Megan O'Keefe, Dan Sanche and Sandeep Parikh
 - Anthos Multicloud Workshop - Kent Hua, Aaron Rueth and Ameer Abbas
+- [Istio Sidecar resource to reduce memory overhead](https://youtu.be/JcfLUHdntN4) - Christian Posta
 
 Thank you to their authors!
