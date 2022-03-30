@@ -17,7 +17,6 @@ Get the upstream Kubernetes manifests:
 cd ~/$WHERE_AMI_DIR_NAME
 kpt pkg get https://github.com/GoogleCloudPlatform/kubernetes-engine-samples/whereami/k8s
 mv k8s upstream
-rm upstream/Kptfile
 ```
 
 ## Create base overlay
