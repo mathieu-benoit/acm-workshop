@@ -64,7 +64,7 @@ Create a dedicated private GitHub repository to store any Kubernetes manifests a
 ```Bash
 cd ~
 gh auth login
-gh repo create $WORKSHOP_ORG_DIR_NAME --public --clone --template https://github.com/mathieu-benoit/config-sync-template-repo
+gh repo create $WORKSHOP_ORG_DIR_NAME --private --clone --template https://github.com/mathieu-benoit/config-sync-template-repo
 cd ~/$WORKSHOP_ORG_DIR_NAME
 git pull
 git checkout main
