@@ -16,60 +16,34 @@ Get the upstream Kubernetes manifests:
 ```Bash
 cd ~/$ONLINE_BOUTIQUE_DIR_NAME
 mkdir upstream
-mkdir upstream/base
-curl https://raw.githubusercontent.com/GoogleCloudPlatform/microservices-demo/main/release/kubernetes-manifests.yaml > upstream/base/kubernetes-manifests.yaml
-cd upstream/base
-kustomize create --resources kubernetes-manifests.yaml
+cd upstream
+kpt pkg get https://github.com/GoogleCloudPlatform/anthos-service-mesh-samples.git/docs/online-boutique-asm-manifests/base@asm-acm-tutorial
 ```
 
 ## Create base overlay
 
 Create Kustomize base overlay files:
 ```Bash
-mkdir ~/$ONLINE_BOUTIQUE_DIR_NAME/base
-cd ~/$ONLINE_BOUTIQUE_DIR_NAME/base
-kustomize create --resources ../upstream/base
-cat <<EOF >> ~/$ONLINE_BOUTIQUE_DIR_NAME/base/kustomization.yaml
-patchesJson6902:
-- target:
-    kind: Deployment
-    name: cartservice
-  patch: |-
-    - op: replace
-      path: /spec/template/spec/containers/0/env/0
-      value:
-        name: REDIS_ADDR
-        value: $REDIS_IP:$REDIS_PORT
+cd ~/$ONLINE_BOUTIQUE_DIR_NAME
+mkdir base
+cd base
+kustomize create --resources ../upstream/base/all
+cat <<EOF >> kustomization.yaml
 patchesStrategicMerge:
 - |-
-  apiVersion: apps/v1
-  kind: Deployment
-  metadata:
-    name: redis-cart
-  \$patch: delete
-- |-
   apiVersion: v1
-  kind: Service
+  kind: Namespace
   metadata:
-    name: redis-cart
-  \$patch: delete
-- |-
-  apiVersion: v1
-  kind: Service
-  metadata:
-    name: frontend-external
+    name: onlineboutique
   \$patch: delete
 EOF
 ```
-{{% notice note %}}
-Here we are removing the `redis-cart` `Deployment` and `Service` because we are leveraging Memorystore (redis) instead. We are also removing the default `frontend-external` `Service` because we will use the ASM Ingress Gateway to expose the Online Boutique's `frontend`.
+{{% notice info %}}
+Here, we are removing the upstream `Namespace` resource as we already defined it in a previous section while configuring the associated Config Sync's `RepoSync` setup.
 {{% /notice %}}
 
-## Define VirtualService
-
-Define the `VirtualService` resource in order to establish the Ingress Gateway routing to the OnlineBoutique app:
-```Bash
-cat <<EOF > ~/$ONLINE_BOUTIQUE_DIR_NAME/base/virtual-service-frontend.yaml
+You could browse the files in the `~/$ONLINE_BOUTIQUE_DIR_NAME/upstream/base` folder, along with the `Namespace`, `Deployment` and `Service` resources for the OnlineBoutique apps, you could see the  `VirtualService` resource which will allow to establish the Ingress Gateway routing to the OnlineBoutique app. The `spec.hosts` value is `"*"` but in the following part you will replace this value by the actual DNS of the OnlineBoutique solution (i.e. `ONLINE_BOUTIQUE_INGRESS_GATEWAY_HOST_NAME`) defined a previous section.
+```YAML
 apiVersion: networking.istio.io/v1alpha3
 kind: VirtualService
 metadata:
@@ -78,43 +52,30 @@ spec:
   hosts:
   - "*"
   gateways:
-  - ${INGRESS_GATEWAY_NAMESPACE}/${INGRESS_GATEWAY_NAME}
+  - asm-ingress/asm-ingressgateway
   http:
   - route:
     - destination:
         host: frontend
         port:
           number: 80
-EOF
-```
-
-Update the Kustomize base overlay:
-```Bash
-cd ~/$ONLINE_BOUTIQUE_DIR_NAME/base
-kustomize edit add resource virtual-service-frontend.yaml
 ```
 
 ## Define Staging namespace overlay
 
+Here are the updates for the overlay files needed to define the Staging namespace:
 ```Bash
 cd ~/$ONLINE_BOUTIQUE_DIR_NAME/staging
+mkdir base
+cd base
 kustomize edit add resource ../base
 kustomize edit set namespace $ONLINEBOUTIQUE_NAMESPACE
-```
-
-Update the Kustomize base overlay in order to set proper `hosts` value in the `VirtualService` resource:
-```Bash
-cat <<EOF >> ~/$ONLINE_BOUTIQUE_DIR_NAME/staging/kustomization.yaml
-patchesJson6902:
-- target:
-    kind: VirtualService
-    name: frontend
-  patch: |-
-    - op: replace
-      path: /spec/hosts
-      value:
-        - ${ONLINE_BOUTIQUE_INGRESS_GATEWAY_HOST_NAME}
-EOF
+cp -r ../../upstream/base/for-memorystore/ .
+sed -i "s/REDIS_IP/${REDIS_IP}/g;s/REDIS_PORT/${REDIS_PORT}/g" for-memorystore/kustomization.yaml
+kustomize edit add component for-memorystore
+cp -r ../../upstream/base/for-virtualservice-host/ .
+sed -i "s/HOST_NAME/${ONLINE_BOUTIQUE_INGRESS_GATEWAY_HOST_NAME}/g" for-virtualservice-host/kustomization.yaml
+kustomize edit add component for-virtualservice-host
 ```
 
 ## Deploy Kubernetes manifests

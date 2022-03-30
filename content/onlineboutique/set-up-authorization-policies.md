@@ -15,12 +15,8 @@ source ~/acm-workshop-variables.sh
 Get the upstream Kubernetes manifests:
 ```Bash
 cd ~/$ONLINE_BOUTIQUE_DIR_NAME/upstream
-kpt pkg get https://github.com/GoogleCloudPlatform/microservices-demo.git/docs/service-accounts@mathieu-benoit/authorization-policies
-rm service-accounts/Kptfile
-rm service-accounts/kustomization.yaml
-kpt pkg get https://github.com/GoogleCloudPlatform/microservices-demo.git/docs/authorization-policies@mathieu-benoit/authorization-policies
-rm authorization-policies/Kptfile
-rm authorization-policies/kustomization.yaml
+kpt pkg get https://github.com/GoogleCloudPlatform/anthos-service-mesh-samples.git/docs/online-boutique-asm-manifests/service-accounts@asm-acm-tutorial
+kpt pkg get https://github.com/GoogleCloudPlatform/anthos-service-mesh-samples.git/docs/online-boutique-asm-manifests/authorization-policies@asm-acm-tutorial
 ```
 
 ## Update the Kustomize base overlay
@@ -31,10 +27,19 @@ kustomize edit add component ../upstream/service-accounts/all
 kustomize edit add component ../upstream/service-accounts/for-memorystore
 kustomize edit add component ../upstream/authorization-policies/all
 kustomize edit add component ../upstream/authorization-policies/for-memorystore
-kustomize edit add component ../upstream/authorization-policies/for-ingress-gateway
+```
 
-sed -i "s,ns/default,ns/${ONLINEBOUTIQUE_NAMESPACE},g" ../upstream/authorization-policies/all/kustomization.yaml
-sed -i "s,ns/default,ns/${ONLINEBOUTIQUE_NAMESPACE},g" ../upstream/authorization-policies/for-ingress-gateway/kustomization.yaml
+## Update Staging namespace overlay
+
+```Bash
+cd ~/$ONLINE_BOUTIQUE_DIR_NAME/staging
+mkdir authorization-policies
+cp -r ../upstream/authorization-policies/for-namespace/ authorization-policies/.
+sed -i "s/ONLINEBOUTIQUE_NAMESPACE/${ONLINEBOUTIQUE_NAMESPACE}/g" authorization-policies/for-namespace/kustomization.yaml
+kustomize edit add component authorization-policies/for-namespace
+cp -r ../upstream/authorization-policies/for-ingress-gateway/ authorization-policies/.
+sed -i "s/ONLINEBOUTIQUE_NAMESPACE/${ONLINEBOUTIQUE_NAMESPACE}/g;s/INGRESS_GATEWAY_NAMESPACE/${INGRESS_GATEWAY_NAMESPACE}/g;s/INGRESS_GATEWAY_NAME/${INGRESS_GATEWAY_NAME}/g" authorization-policies/for-ingress-gateway/kustomization.yaml
+kustomize edit add component authorization-policies/for-ingress-gateway
 ```
 
 ## Deploy Kubernetes manifests

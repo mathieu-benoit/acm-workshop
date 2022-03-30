@@ -15,18 +15,51 @@ source ~/acm-workshop-variables.sh
 Get the upstream Kubernetes manifests:
 ```Bash
 cd ~/$ONLINE_BOUTIQUE_DIR_NAME/upstream
-kpt pkg get https://github.com/GoogleCloudPlatform/microservices-demo.git/docs/network-policies@mathieu-benoit/authorization-policies
-rm network-policies/Kptfile
-rm network-policies/kustomization.yaml
+kpt pkg get https://github.com/GoogleCloudPlatform/microservices-demo.git/docs/network-policies@main
+cd network-policies
+kustomize create --autodetect
+kustomize edit remove resource Kptfile
 ```
 
 ## Update the Kustomize base overlay
 
 ```Bash
 cd ~/$ONLINE_BOUTIQUE_DIR_NAME/base
-kustomize edit add component ../upstream/network-policies/all
-kustomize edit add component ../upstream/network-policies/for-ingress-gateway
-kustomize edit add component ../upstream/network-policies/for-memorystore
+mkdir network-policies
+cat <<EOF >> network-policies/kustomization.yaml
+apiVersion: kustomize.config.k8s.io/v1alpha1
+kind: Component
+patchesStrategicMerge:
+- |-
+  apiVersion: networking.k8s.io/v1
+  kind: NetworkPolicy
+  metadata:
+    name: redis-cart
+  \$patch: delete
+patchesJson6902:
+- target:
+    kind: NetworkPolicy
+    name: frontend
+  patch: |-
+    - op: replace
+      path: /spec/ingress
+      value:
+        - from:
+          - podSelector:
+              matchLabels:
+                app: loadgenerator
+          - namespaceSelector:
+              matchLabels:
+                name: ${INGRESS_GATEWAY_NAMESPACE}
+            podSelector:
+              matchLabels:
+                app: ${INGRESS_GATEWAY_NAME}
+          ports:
+          - port: 8080
+            protocol: TCP
+EOF
+kustomize edit add resources ../upstream/network-policies
+kustomize edit add component network-policies
 ```
 
 ## Deploy Kubernetes manifests

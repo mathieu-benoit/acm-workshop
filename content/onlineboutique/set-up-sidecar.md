@@ -10,14 +10,12 @@ Initialize variables:
 source ~/acm-workshop-variables.sh
 ```
 
-## Get upstream Kubernetes manifests
+## Prepare upstream Kubernetes manifests
 
-Get the upstream Kubernetes manifests:
+Prepare the upstream Kubernetes manifests:
 ```Bash
 cd ~/$ONLINE_BOUTIQUE_DIR_NAME/upstream
-kpt pkg get https://github.com/GoogleCloudPlatform/microservices-demo.git/docs/sidecars@mathieu-benoit/authorization-policies
-rm sidecars/Kptfile
-rm sidecars/kustomization.yaml
+kpt pkg get https://github.com/GoogleCloudPlatform/anthos-service-mesh-samples.git/docs/online-boutique-asm-manifests/sidecars@asm-acm-tutorial
 ```
 
 ## Update the Kustomize base overlay
@@ -25,9 +23,17 @@ rm sidecars/kustomization.yaml
 ```Bash
 cd ~/$ONLINE_BOUTIQUE_DIR_NAME/base
 kustomize edit add component ../upstream/sidecars/all
-kustomize edit add component ../upstream/sidecars/for-memorystore
+```
 
-sed -i "s/default.svc.cluster.local/${ONLINEBOUTIQUE_NAMESPACE}.svc.cluster.local/g" ../upstream/sidecars/all/*
+## Update Staging namespace overlay
+
+```Bash
+cd ~/$ONLINE_BOUTIQUE_DIR_NAME/staging
+mkdir sidecars
+cp -r ../upstream/sidecars/for-namespace/ sidecars/.
+sed -i "s/ONLINEBOUTIQUE_NAMESPACE/${ONLINEBOUTIQUE_NAMESPACE}/g" sidecars/for-namespace/kustomization.yaml
+kustomize edit add component sidecars/for-namespace
+kustomize edit add component ../upstream/sidecars/for-memorystore
 ```
 
 ## Deploy Kubernetes manifests
