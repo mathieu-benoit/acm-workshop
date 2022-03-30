@@ -40,7 +40,7 @@ Currently, you can't access the GKE cluster via `kubectl` commands because it's 
     - cidrBlock: FIXME_YOUR_LOCAL_IP_ADDRESS/32
       displayName: local
 ```
-As an example, you could get your local IP address by running this command: `curl ifconfig.co`.
+As an example, you could get your local IP address by running this command: `curl -4 ifconfig.co`.
 
 The associated file to update manually is here: `~/$GKE_PROJECT_DIR_NAME/config-sync/gke-cluster.yaml`, and you could then run this command to actually deploy this change in Config Controller:
 ```Bash

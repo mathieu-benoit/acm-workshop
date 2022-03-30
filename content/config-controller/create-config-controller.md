@@ -16,7 +16,7 @@ echo "export RANDOM_SUFFIX=${RANDOM_SUFFIX}" >> ~/acm-workshop-variables.sh
 echo "export CONFIG_CONTROLLER_PROJECT_ID=acm-workshop-${RANDOM_SUFFIX}" >> ~/acm-workshop-variables.sh
 echo "export BILLING_ACCOUNT_ID=${BILLING_ACCOUNT_ID}" >> ~/acm-workshop-variables.sh
 echo "export ORG_OR_FOLDER_ID=${ORG_OR_FOLDER_ID}" >> ~/acm-workshop-variables.sh
-echo "export LOCAL_IP_ADDRESS=$(curl ifconfig.co)" >> ~/acm-workshop-variables.sh
+echo "export LOCAL_IP_ADDRESS=$(curl -4 ifconfig.co)" >> ~/acm-workshop-variables.sh
 echo "export CONFIG_CONTROLLER_NAME=configcontroller" >> ~/acm-workshop-variables.sh
 echo "export CONFIG_CONTROLLER_LOCATION=us-east1" >> ~/acm-workshop-variables.sh
 source ~/acm-workshop-variables.sh
