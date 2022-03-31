@@ -25,6 +25,7 @@ metadata:
   namespace: ${GKE_PROJECT_ID}
   annotations:
     cnrm.cloud.google.com/remove-default-node-pool: "true"
+    config.kubernetes.io/depends-on: compute.cnrm.cloud.google.com/namespaces/${GKE_PROJECT_ID}/ComputeSubnetwork/${GKE_NAME}
   labels:
     mesh_id: proj-${GKE_PROJECT_NUMBER}
 spec:
