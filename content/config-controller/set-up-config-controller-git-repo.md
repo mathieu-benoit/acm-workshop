@@ -80,8 +80,8 @@ ssh-keygen -t rsa -b 4096 \
     -N '' \
     -f ./tmp/github-org-repo
 kubectl create secret generic git-creds \
-    --namespace=config-management-system \
-    --from-file=ssh=./tmp/github-org-repo
+    -n config-management-system \
+    --from-file ssh=./tmp/github-org-repo
 gh repo deploy-key add ./tmp/github-org-repo.pub
 rm -r tmp
 ```
@@ -107,7 +107,7 @@ spec:
 EOF
 ```
 {{% notice tip %}}
-The GitHub repository is private in order to demonstrate how to allow read access to Config Sync when you use a restricted Git repository. 
+The GitHub repository is private in order to demonstrate how to allow read access to Config Sync when you use a private Git repository. 
 {{% /notice %}}
 
 Since you started this workshop, you just ran 6 `kubectl` commands. For your information, moving forward you won't run any other `kubectl` commands because the design and intent of this workshop is to only deploy any Kubernetes resources via GitOps with Config Sync. You will also use some handy `gcloud` commands when appropriate.
