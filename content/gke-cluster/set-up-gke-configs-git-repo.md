@@ -20,7 +20,7 @@ cat <<EOF > ~/$GKE_PROJECT_DIR_NAME/config-sync/gke-hub-feature-acm.yaml
 apiVersion: gkehub.cnrm.cloud.google.com/v1beta1
 kind: GKEHubFeature
 metadata:
-  name: ${GKE_NAME}-acm
+  name: configmanagement
   namespace: ${GKE_PROJECT_ID}
 spec:
   projectRef:
@@ -38,8 +38,10 @@ cat <<EOF > ~/$GKE_PROJECT_DIR_NAME/config-sync/gke-hub-membership.yaml
 apiVersion: gkehub.cnrm.cloud.google.com/v1beta1
 kind: GKEHubMembership
 metadata:
-  name: ${GKE_NAME}-hub-membership
+  name: ${GKE_NAME}
   namespace: ${GKE_PROJECT_ID}
+  annotations:
+    config.kubernetes.io/depends-on: container.cnrm.cloud.google.com/namespaces/${GKE_PROJECT_ID}/ContainerCluster/${GKE_NAME}
 spec:
   location: global
   authority:
@@ -72,14 +74,16 @@ kind: GKEHubFeatureMembership
 metadata:
   name: ${GKE_NAME}-acm-membership
   namespace: ${GKE_PROJECT_ID}
+  annotations:
+    config.kubernetes.io/depends-on: gkehub.cnrm.cloud.google.com/namespaces/${GKE_PROJECT_ID}/GKEHubMembership/${GKE_NAME},gkehub.cnrm.cloud.google.com/namespaces/${GKE_PROJECT_ID}/GKEHubFeature/configmanagement
 spec:
   projectRef:
     external: ${GKE_PROJECT_ID}
   location: global
   membershipRef:
-    name: ${GKE_NAME}-hub-membership
+    name: ${GKE_NAME}
   featureRef:
-    name: ${GKE_NAME}-acm
+    name: configmanagement
   configmanagement:
     configSync:
       sourceFormat: unstructured
@@ -115,6 +119,8 @@ kind: IAMPartialPolicy
 metadata:
   name: ${GKE_SA}-sa-cs-monitoring-wi-user
   namespace: ${GKE_PROJECT_ID}
+  annotations:
+    config.kubernetes.io/depends-on: iam.cnrm.cloud.google.com/namespaces/${GKE_PROJECT_ID}/IAMServiceAccount/${GKE_SA}
 spec:
   resourceRef:
     name: ${GKE_SA}
@@ -173,7 +179,7 @@ getting 1 RepoSync and RootSync from krmapihost-configcontroller
 │ container.cnrm.cloud.google.com        │ ContainerNodePool          │ primary                                   │ acm-workshop-464-gke │
 │ container.cnrm.cloud.google.com        │ ContainerCluster           │ gke                                       │ acm-workshop-464-gke │
 │ gkehub.cnrm.cloud.google.com           │ GKEHubMembership           │ gke-hub-membership                        │ acm-workshop-464-gke │
-│ gkehub.cnrm.cloud.google.com           │ GKEHubFeature              │ gke-acm                                   │ acm-workshop-464-gke │
+│ gkehub.cnrm.cloud.google.com           │ GKEHubFeature              │ configmanagement                          │ acm-workshop-464-gke │
 │ gkehub.cnrm.cloud.google.com           │ GKEHubFeatureMembership    │ gke-acm-membership                        │ acm-workshop-464-gke │
 │ iam.cnrm.cloud.google.com              │ IAMPolicyMember            │ log-writer                                │ acm-workshop-464-gke │
 │ iam.cnrm.cloud.google.com              │ IAMServiceAccount          │ gke-primary-pool                          │ acm-workshop-464-gke │

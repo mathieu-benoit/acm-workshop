@@ -20,6 +20,8 @@ kind: IAMPolicyMember
 metadata:
   name: container-admin-${GKE_PROJECT_ID}
   namespace: config-control
+  annotations:
+    config.kubernetes.io/depends-on: iam.cnrm.cloud.google.com/namespaces/config-control/IAMServiceAccount/${GKE_PROJECT_ID},resourcemanager.cnrm.cloud.google.com/namespaces/config-control/Project/${GKE_PROJECT_ID}
 spec:
   memberFrom:
     serviceAccountRef:
@@ -36,6 +38,8 @@ kind: IAMPolicyMember
 metadata:
   name: service-account-admin-${GKE_PROJECT_ID}
   namespace: config-control
+  annotations:
+    config.kubernetes.io/depends-on: iam.cnrm.cloud.google.com/namespaces/config-control/IAMServiceAccount/${GKE_PROJECT_ID},resourcemanager.cnrm.cloud.google.com/namespaces/config-control/Project/${GKE_PROJECT_ID}
 spec:
   memberFrom:
     serviceAccountRef:
@@ -52,6 +56,8 @@ kind: IAMPolicyMember
 metadata:
   name: iam-admin-${GKE_PROJECT_ID}
   namespace: config-control
+  annotations:
+    config.kubernetes.io/depends-on: iam.cnrm.cloud.google.com/namespaces/config-control/IAMServiceAccount/${GKE_PROJECT_ID},resourcemanager.cnrm.cloud.google.com/namespaces/config-control/Project/${GKE_PROJECT_ID}
 spec:
   memberFrom:
     serviceAccountRef:
@@ -68,6 +74,8 @@ kind: IAMPolicyMember
 metadata:
   name: service-account-user-${GKE_PROJECT_ID}
   namespace: config-control
+  annotations:
+    config.kubernetes.io/depends-on: iam.cnrm.cloud.google.com/namespaces/config-control/IAMServiceAccount/${GKE_PROJECT_ID},resourcemanager.cnrm.cloud.google.com/namespaces/config-control/Project/${GKE_PROJECT_ID}
 spec:
   memberFrom:
     serviceAccountRef:

@@ -20,6 +20,8 @@ kind: IAMPolicyMember
 metadata:
   name: gke-hub-admin-${GKE_PROJECT_ID}
   namespace: config-control
+  annotations:
+    config.kubernetes.io/depends-on: iam.cnrm.cloud.google.com/namespaces/config-control/IAMServiceAccount/${GKE_PROJECT_ID},resourcemanager.cnrm.cloud.google.com/namespaces/config-control/Project/${GKE_PROJECT_ID}
 spec:
   memberFrom:
     serviceAccountRef:

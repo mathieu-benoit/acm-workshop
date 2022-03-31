@@ -89,6 +89,8 @@ kind: IAMPartialPolicy
 metadata:
   name: ${GKE_PROJECT_ID}-sa-wi-user
   namespace: config-control
+  annotations:
+    config.kubernetes.io/depends-on: iam.cnrm.cloud.google.com/namespaces/config-control/IAMServiceAccount/${GKE_PROJECT_ID}
 spec:
   resourceRef:
     name: ${GKE_PROJECT_ID}
@@ -100,6 +102,9 @@ spec:
         - member: serviceAccount:${CONFIG_CONTROLLER_PROJECT_ID}.svc.id.goog[cnrm-system/cnrm-controller-manager-${GKE_PROJECT_ID}]
 EOF
 ```
+{{% notice tip %}}
+You could see that we use the annotation `config.kubernetes.io/depends-on`, [since the version 1.11 of Config Management](https://cloud.google.com/anthos-config-management/docs/release-notes#March_24_2022) we could declare [resource dependencies between resource objects](https://cloud.google.com/anthos-config-management/docs/how-to/declare-resource-dependency). KCC already handles dependencies with a retry loop with backoff, which can make things with long reconcile time even longer and generate warnings or errors on these resources. With that annotation we are optimizing these behaviors. We will use this annotation as much as we can throughout this workshop.
+{{% /notice %}}
 
 ## Define GKE project namespace and ConfigConnectorContext
 

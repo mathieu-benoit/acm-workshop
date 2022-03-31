@@ -29,7 +29,7 @@ cat <<EOF > ~/$GKE_PROJECT_DIR_NAME/config-sync/gke-hub-feature-asm.yaml
 apiVersion: gkehub.cnrm.cloud.google.com/v1beta1
 kind: GKEHubFeature
 metadata:
-  name: ${GKE_NAME}-asm
+  name: servicemesh
   namespace: ${GKE_PROJECT_ID}
 spec:
   projectRef:
@@ -78,6 +78,8 @@ metadata:
   namespace: istio-system
   labels:
     mesh.cloud.google.com/managed-cni-enabled: "true"
+  annotations:
+    config.kubernetes.io/depends-on: gkehub.cnrm.cloud.google.com/namespaces/${GKE_PROJECT_ID}/GKEHubFeature/servicemesh
 spec:
   type: managed_service
   channel: "${ASM_CHANNEL}"
@@ -141,8 +143,8 @@ getting 1 RepoSync and RootSync from krmapihost-configcontroller
 │ container.cnrm.cloud.google.com        │ ContainerNodePool          │ primary                                   │ acm-workshop-464-gke │
 │ container.cnrm.cloud.google.com        │ ContainerCluster           │ gke                                       │ acm-workshop-464-gke │
 │ gkehub.cnrm.cloud.google.com           │ GKEHubMembership           │ gke-hub-membership                        │ acm-workshop-464-gke │
-│ gkehub.cnrm.cloud.google.com           │ GKEHubFeature              │ gke-asm                                   │ acm-workshop-464-gke │
-│ gkehub.cnrm.cloud.google.com           │ GKEHubFeature              │ gke-acm                                   │ acm-workshop-464-gke │
+│ gkehub.cnrm.cloud.google.com           │ GKEHubFeature              │ servicemesh                               │ acm-workshop-464-gke │
+│ gkehub.cnrm.cloud.google.com           │ GKEHubFeature              │ configmanagement                          │ acm-workshop-464-gke │
 │ gkehub.cnrm.cloud.google.com           │ GKEHubFeatureMembership    │ gke-acm-membership                        │ acm-workshop-464-gke │
 │ iam.cnrm.cloud.google.com              │ IAMPolicyMember            │ log-writer                                │ acm-workshop-464-gke │
 │ iam.cnrm.cloud.google.com              │ IAMServiceAccount          │ gke-primary-pool                          │ acm-workshop-464-gke │

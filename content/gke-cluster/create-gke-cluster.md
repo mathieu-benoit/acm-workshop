@@ -92,6 +92,8 @@ kind: IAMPolicyMember
 metadata:
   name: log-writer
   namespace: ${GKE_PROJECT_ID}
+  annotations:
+    config.kubernetes.io/depends-on: iam.cnrm.cloud.google.com/namespaces/${GKE_PROJECT_ID}/IAMServiceAccount/${GKE_SA}
 spec:
   memberFrom:
     serviceAccountRef:
@@ -109,6 +111,8 @@ kind: IAMPolicyMember
 metadata:
   name: metric-writer
   namespace: ${GKE_PROJECT_ID}
+  annotations:
+    config.kubernetes.io/depends-on: iam.cnrm.cloud.google.com/namespaces/${GKE_PROJECT_ID}/IAMServiceAccount/${GKE_SA}
 spec:
   memberFrom:
     serviceAccountRef:
@@ -126,6 +130,8 @@ kind: IAMPolicyMember
 metadata:
   name: monitoring-viewer
   namespace: ${GKE_PROJECT_ID}
+  annotations:
+    config.kubernetes.io/depends-on: iam.cnrm.cloud.google.com/namespaces/${GKE_PROJECT_ID}/IAMServiceAccount/${GKE_SA}
 spec:
   memberFrom:
     serviceAccountRef:
@@ -143,6 +149,8 @@ kind: IAMPolicyMember
 metadata:
   name: cloudtrace-agent
   namespace: ${GKE_PROJECT_ID}
+  annotations:
+    config.kubernetes.io/depends-on: iam.cnrm.cloud.google.com/namespaces/${GKE_PROJECT_ID}/IAMServiceAccount/${GKE_SA}
 spec:
   memberFrom:
     serviceAccountRef:
@@ -166,6 +174,8 @@ kind: ContainerNodePool
 metadata:
   name: primary
   namespace: ${GKE_PROJECT_ID}
+  annotations:
+    config.kubernetes.io/depends-on: container.cnrm.cloud.google.com/namespaces/${GKE_PROJECT_ID}/ContainerCluster/${GKE_NAME}
 spec:
   clusterRef:
     name: ${GKE_NAME}

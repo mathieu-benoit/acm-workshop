@@ -35,6 +35,8 @@ kind: ComputeSubnetwork
 metadata:
   name: ${GKE_NAME}
   namespace: ${GKE_PROJECT_ID}
+  annotations:
+    config.kubernetes.io/depends-on: compute.cnrm.cloud.google.com/namespaces/${GKE_PROJECT_ID}/ComputeNetwork/${GKE_NAME}
 spec:
   ipCidrRange: 10.2.0.0/20
   region: ${GKE_LOCATION}
@@ -57,6 +59,8 @@ kind: ComputeRouter
 metadata:
   name: ${GKE_NAME}
   namespace: ${GKE_PROJECT_ID}
+  annotations:
+    config.kubernetes.io/depends-on: compute.cnrm.cloud.google.com/namespaces/${GKE_PROJECT_ID}/ComputeNetwork/${GKE_NAME}
 spec:
   networkRef:
     name: ${GKE_NAME}
@@ -71,6 +75,8 @@ kind: ComputeRouterNAT
 metadata:
   name: ${GKE_NAME}
   namespace: ${GKE_PROJECT_ID}
+  annotations:
+    config.kubernetes.io/depends-on: compute.cnrm.cloud.google.com/namespaces/${GKE_PROJECT_ID}/ComputeSubnetwork/${GKE_NAME},compute.cnrm.cloud.google.com/namespaces/${GKE_PROJECT_ID}/ComputeRouter/${GKE_NAME}
 spec:
   natIpAllocateOption: AUTO_ONLY
   region: ${GKE_LOCATION}
