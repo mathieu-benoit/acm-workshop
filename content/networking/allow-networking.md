@@ -45,6 +45,15 @@ git push origin main
 
 ## Check deployments
 
+{{< mermaid >}}
+graph TD;
+  IAMServiceAccount-->Project
+  IAMPartialPolicy-->IAMServiceAccount
+  ConfigConnectorContext-->IAMServiceAccount
+  IAMPolicyMember-->IAMServiceAccount
+  IAMPolicyMember-->Project
+{{< /mermaid >}}
+
 List the GCP resources created:
 ```Bash
 gcloud projects get-iam-policy $GKE_PROJECT_ID \

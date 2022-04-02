@@ -102,6 +102,14 @@ git push origin main
 
 ## Check deployments
 
+{{< mermaid >}}
+graph TD;
+  ComputeSubnetwork-->ComputeNetwork
+  ComputeRouterNAT-->ComputeSubnetwork
+  ComputeRouterNAT-->ComputeRouter
+  ComputeRouter-->ComputeNetwork
+{{< /mermaid >}}
+
 List the GCP resources created:
 ```Bash
 gcloud compute networks list \

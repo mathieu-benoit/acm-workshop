@@ -77,6 +77,8 @@ kind: IAMServiceAccount
 metadata:
   name: ${GKE_PROJECT_ID}
   namespace: config-control
+  annotations:
+    config.kubernetes.io/depends-on: resourcemanager.cnrm.cloud.google.com/namespaces/config-control/Project/${GKE_PROJECT_ID}
 spec:
   displayName: ${GKE_PROJECT_ID}
 EOF
@@ -128,6 +130,8 @@ kind: ConfigConnectorContext
 metadata:
   name: configconnectorcontext.core.cnrm.cloud.google.com
   namespace: ${GKE_PROJECT_ID}
+  annotations:
+    config.kubernetes.io/depends-on: iam.cnrm.cloud.google.com/namespaces/${GKE_PROJECT_ID}/IAMServiceAccount/${GKE_PROJECT_ID}
 spec:
   googleServiceAccount: ${GKE_PROJECT_SA_EMAIL}
 EOF
@@ -143,6 +147,13 @@ git push origin main
 ```
 
 ## Check deployments
+
+{{< mermaid >}}
+graph TD;
+  IAMServiceAccount-->Project
+  IAMPartialPolicy-->IAMServiceAccount
+  ConfigConnectorContext-->IAMServiceAccount
+{{< /mermaid >}}
 
 List the GCP resources created:
 ```Bash

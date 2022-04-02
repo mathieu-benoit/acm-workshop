@@ -22,6 +22,7 @@ metadata:
     cnrm.cloud.google.com/project-id: ${GKE_PROJECT_ID}
     cnrm.cloud.google.com/deletion-policy: "abandon"
     cnrm.cloud.google.com/disable-dependent-services: "false"
+    resourcemanager.cnrm.cloud.google.com/namespaces/config-control/Project/${GKE_PROJECT_ID}
   name: mesh.googleapis.com
   namespace: config-control
 EOF
@@ -37,6 +38,34 @@ git push origin main
 ```
 
 ## Check deployments
+
+{{< mermaid >}}
+graph TD;
+  IAMServiceAccount-->Project
+  IAMPartialPolicy-->IAMServiceAccount
+  ConfigConnectorContext-->IAMServiceAccount
+  IAMPolicyMember-->IAMServiceAccount
+  IAMPolicyMember-->Project
+  IAMPolicyMember-->IAMServiceAccount
+  IAMPolicyMember-->Project
+  IAMPolicyMember-->IAMServiceAccount
+  IAMPolicyMember-->Project
+  IAMPolicyMember-->IAMServiceAccount
+  IAMPolicyMember-->Project
+  IAMPolicyMember-->IAMServiceAccount
+  IAMPolicyMember-->Project
+  Service-->Project
+  IAMPolicyMember-->IAMServiceAccount
+  IAMPolicyMember-->Project
+  Service-->Project
+  Service-->Project
+  IAMPolicyMember-->IAMServiceAccount
+  IAMPolicyMember-->Project
+  Service-->Project
+  Service-->Project
+  Service-->Project
+  Service-->Project
+{{< /mermaid >}}
 
 List the GitHub runs for the **Org configs** repository `cd ~/$WORKSHOP_ORG_DIR_NAME && gh run list`:
 ```Plaintext

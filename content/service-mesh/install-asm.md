@@ -78,8 +78,6 @@ metadata:
   namespace: istio-system
   labels:
     mesh.cloud.google.com/managed-cni-enabled: "true"
-  annotations:
-    config.kubernetes.io/depends-on: gkehub.cnrm.cloud.google.com/namespaces/${GKE_PROJECT_ID}/GKEHubFeature/servicemesh
 spec:
   type: managed_service
   channel: "${ASM_CHANNEL}"
@@ -99,6 +97,27 @@ git push origin main
 ```
 
 ## Check deployments
+
+{{< mermaid >}}
+graph TD;
+  ComputeSubnetwork-->ComputeNetwork
+  ComputeRouterNAT-->ComputeSubnetwork
+  ComputeRouterNAT-->ComputeRouter
+  ComputeRouter-->ComputeNetwork
+  ContainerNodePool-->ContainerCluster
+  ContainerNodePool-->IAMServiceAccount
+  IAMPolicyMember-->IAMServiceAccount
+  IAMPolicyMember-->IAMServiceAccount
+  IAMPolicyMember-->IAMServiceAccount
+  IAMPolicyMember-->IAMServiceAccount
+  IAMPartialPolicy-->IAMServiceAccount
+  ContainerCluster-->ComputeSubnetwork
+  GKEHubFeatureMembership-->GKEHubMembership
+  GKEHubFeatureMembership-->GKEHubFeature
+  GKEHubMembership-->ContainerCluster
+  IAMPolicyMember-->ArtifactRegistryRepository
+  IAMPolicyMember-->IAMServiceAccount
+{{< /mermaid >}}
 
 List the GitHub runs for the **GKE project configs** repository `cd ~/$GKE_PROJECT_DIR_NAME && gh run list`:
 ```Plaintext
