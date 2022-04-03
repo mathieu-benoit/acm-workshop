@@ -131,7 +131,7 @@ metadata:
   name: configconnectorcontext.core.cnrm.cloud.google.com
   namespace: ${GKE_PROJECT_ID}
   annotations:
-    config.kubernetes.io/depends-on: iam.cnrm.cloud.google.com/namespaces/${GKE_PROJECT_ID}/IAMServiceAccount/${GKE_PROJECT_ID}
+    config.kubernetes.io/depends-on: iam.cnrm.cloud.google.com/namespaces/config-control/IAMServiceAccount/${GKE_PROJECT_ID}
 spec:
   googleServiceAccount: ${GKE_PROJECT_SA_EMAIL}
 EOF
