@@ -46,7 +46,7 @@ metadata:
     cnrm.cloud.google.com/project-id: ${GKE_PROJECT_ID}
     cnrm.cloud.google.com/deletion-policy: "abandon"
     cnrm.cloud.google.com/disable-dependent-services: "false"
-    resourcemanager.cnrm.cloud.google.com/namespaces/config-control/Project/${GKE_PROJECT_ID}
+    config.kubernetes.io/depends-on: resourcemanager.cnrm.cloud.google.com/namespaces/config-control/Project/${GKE_PROJECT_ID}
   name: artifactregistry.googleapis.com
   namespace: config-control
 EOF
@@ -67,7 +67,7 @@ metadata:
     cnrm.cloud.google.com/project-id: ${GKE_PROJECT_ID}
     cnrm.cloud.google.com/deletion-policy: "abandon"
     cnrm.cloud.google.com/disable-dependent-services: "false"
-    resourcemanager.cnrm.cloud.google.com/namespaces/config-control/Project/${GKE_PROJECT_ID}
+    config.kubernetes.io/depends-on: resourcemanager.cnrm.cloud.google.com/namespaces/config-control/Project/${GKE_PROJECT_ID}
   name: containeranalysis.googleapis.com
   namespace: config-control
 EOF
@@ -79,7 +79,7 @@ metadata:
     cnrm.cloud.google.com/project-id: ${GKE_PROJECT_ID}
     cnrm.cloud.google.com/deletion-policy: "abandon"
     cnrm.cloud.google.com/disable-dependent-services: "false"
-    resourcemanager.cnrm.cloud.google.com/namespaces/config-control/Project/${GKE_PROJECT_ID}
+    config.kubernetes.io/depends-on: resourcemanager.cnrm.cloud.google.com/namespaces/config-control/Project/${GKE_PROJECT_ID}
   name: containerscanning.googleapis.com
   namespace: config-control
 EOF
