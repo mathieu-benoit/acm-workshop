@@ -213,6 +213,8 @@ git push origin main
 
 {{< mermaid >}}
 graph TD;
+  ComputeNetwork-.->Project
+  IAMServiceAccount-.->Project
   ComputeSubnetwork-->ComputeNetwork
   ComputeRouterNAT-->ComputeSubnetwork
   ComputeRouterNAT-->ComputeRouter

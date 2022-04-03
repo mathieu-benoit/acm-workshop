@@ -117,6 +117,34 @@ git push origin main
 
 ## Check deployments
 
+{{< mermaid >}}
+graph TD;
+  ComputeNetwork-.->Project
+  IAMServiceAccount-.->Project
+  GKEHubFeature-.->Project
+  ArtifactRegistryRepository-.->Project
+  GKEHubFeature-.->Project
+  ComputeSecurityPolicy-.->Project
+  ComputeSSLPolicy-.->Project
+  ComputeSubnetwork-->ComputeNetwork
+  ComputeRouterNAT-->ComputeSubnetwork
+  ComputeRouterNAT-->ComputeRouter
+  ComputeRouter-->ComputeNetwork
+  ContainerNodePool-->ContainerCluster
+  ContainerNodePool-->IAMServiceAccount
+  IAMPolicyMember-->IAMServiceAccount
+  IAMPolicyMember-->IAMServiceAccount
+  IAMPolicyMember-->IAMServiceAccount
+  IAMPolicyMember-->IAMServiceAccount
+  IAMPartialPolicy-->IAMServiceAccount
+  ContainerCluster-->ComputeSubnetwork
+  GKEHubFeatureMembership-->GKEHubMembership
+  GKEHubFeatureMembership-->GKEHubFeature
+  GKEHubMembership-->ContainerCluster
+  IAMPolicyMember-->ArtifactRegistryRepository
+  IAMPolicyMember-->IAMServiceAccount
+{{< /mermaid >}}
+
 List the GCP resources created:
 ```Bash
 gcloud compute security-policies list \
