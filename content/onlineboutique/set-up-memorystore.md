@@ -26,6 +26,8 @@ kind: RedisInstance
 metadata:
   name: ${REDIS_NAME}
   namespace: ${GKE_PROJECT_ID}
+  annotations:
+    config.kubernetes.io/depends-on: compute.cnrm.cloud.google.com/namespaces/${GKE_PROJECT_ID}/ComputeNetwork/${GKE_NAME}
 spec:
   region: ${GKE_LOCATION}
   tier: BASIC
@@ -58,6 +60,37 @@ echo "export REDIS_PORT=${REDIS_PORT}" >> ~/acm-workshop-variables.sh
 ```
 
 ## Check deployments
+
+{{< mermaid >}}
+graph TD;
+  ComputeNetwork-.->Project
+  IAMServiceAccount-.->Project
+  GKEHubFeature-.->Project
+  ArtifactRegistryRepository-.->Project
+  GKEHubFeature-.->Project
+  ComputeAddress-.->Project
+  ComputeSecurityPolicy-.->Project
+  ComputeSSLPolicy-.->Project
+  ComputeSubnetwork-->ComputeNetwork
+  ComputeRouterNAT-->ComputeSubnetwork
+  ComputeRouterNAT-->ComputeRouter
+  ComputeRouter-->ComputeNetwork
+  ContainerNodePool-->ContainerCluster
+  ContainerNodePool-->IAMServiceAccount
+  IAMPolicyMember-->IAMServiceAccount
+  IAMPolicyMember-->IAMServiceAccount
+  IAMPolicyMember-->IAMServiceAccount
+  IAMPolicyMember-->IAMServiceAccount
+  IAMPartialPolicy-->IAMServiceAccount
+  ContainerCluster-->ComputeSubnetwork
+  GKEHubFeatureMembership-->GKEHubMembership
+  GKEHubFeatureMembership-->GKEHubFeature
+  GKEHubMembership-->ContainerCluster
+  IAMPolicyMember-->ArtifactRegistryRepository
+  IAMPolicyMember-->IAMServiceAccount
+  RedisInstance-.->Project
+  RedisInstance-->ComputeNetwork
+{{< /mermaid >}}
 
 List the GCP resources created:
 ```Bash
