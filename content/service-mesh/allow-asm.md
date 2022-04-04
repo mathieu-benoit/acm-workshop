@@ -19,12 +19,15 @@ apiVersion: serviceusage.cnrm.cloud.google.com/v1beta1
 kind: Service
 metadata:
   annotations:
-    cnrm.cloud.google.com/project-id: ${GKE_PROJECT_ID}
     cnrm.cloud.google.com/deletion-policy: "abandon"
     cnrm.cloud.google.com/disable-dependent-services: "false"
     config.kubernetes.io/depends-on: resourcemanager.cnrm.cloud.google.com/namespaces/config-control/Project/${GKE_PROJECT_ID}
-  name: mesh.googleapis.com
+  name: ${GKE_PROJECT_ID}-mesh
   namespace: config-control
+spec:
+  projectRef:
+    name: ${GKE_PROJECT_ID}
+  resourceID: mesh.googleapis.com
 EOF
 ```
 

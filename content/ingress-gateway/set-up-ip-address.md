@@ -54,8 +54,6 @@ graph TD;
   ArtifactRegistryRepository-.->Project
   GKEHubFeature-.->Project
   ComputeAddress-.->Project
-  ComputeSecurityPolicy-.->Project
-  ComputeSSLPolicy-.->Project
   ComputeSubnetwork-->ComputeNetwork
   ComputeRouterNAT-->ComputeSubnetwork
   ComputeRouterNAT-->ComputeRouter

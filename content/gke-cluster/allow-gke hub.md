@@ -43,24 +43,30 @@ apiVersion: serviceusage.cnrm.cloud.google.com/v1beta1
 kind: Service
 metadata:
   annotations:
-    cnrm.cloud.google.com/project-id: ${GKE_PROJECT_ID}
     cnrm.cloud.google.com/deletion-policy: "abandon"
     cnrm.cloud.google.com/disable-dependent-services: "false"
     config.kubernetes.io/depends-on: resourcemanager.cnrm.cloud.google.com/namespaces/config-control/Project/${GKE_PROJECT_ID}
-  name: gkehub.googleapis.com
+  name: ${GKE_PROJECT_ID}-gkehub
   namespace: config-control
+spec:
+  projectRef:
+    name: ${GKE_PROJECT_ID}
+  resourceID: gkehub.googleapis.com
 EOF
 cat <<EOF > ~/$WORKSHOP_ORG_DIR_NAME/config-sync/projects/$GKE_PROJECT_ID/anthos-configmanagement-service.yaml
 apiVersion: serviceusage.cnrm.cloud.google.com/v1beta1
 kind: Service
 metadata:
   annotations:
-    cnrm.cloud.google.com/project-id: ${GKE_PROJECT_ID}
     cnrm.cloud.google.com/deletion-policy: "abandon"
     cnrm.cloud.google.com/disable-dependent-services: "false"
     config.kubernetes.io/depends-on: resourcemanager.cnrm.cloud.google.com/namespaces/config-control/Project/${GKE_PROJECT_ID}
-  name: anthosconfigmanagement.googleapis.com
+  name: ${GKE_PROJECT_ID}-anthosconfigmanagement
   namespace: config-control
+spec:
+  projectRef:
+    name: ${GKE_PROJECT_ID}
+  resourceID: anthosconfigmanagement.googleapis.com
 EOF
 ```
 
