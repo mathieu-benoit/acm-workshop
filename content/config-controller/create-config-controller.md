@@ -96,7 +96,7 @@ CONFIG_CONTROLLER_SA="$(kubectl get ConfigConnectorContext \
     -o jsonpath='{.items[0].spec.googleServiceAccount}')"
 ```
 
-Set the `resourcemanager.projectCreator` and `roles/billing.projectManager` roles:
+Set the `resourcemanager.projectCreator` role:
 {{< tabs groupId="org-level">}}
 {{% tab name="Org level" %}}
 Create this GCP project at the Organization level:
