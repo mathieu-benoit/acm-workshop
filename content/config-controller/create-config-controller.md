@@ -7,11 +7,11 @@ _{{< param description >}}_
 
 Define variables:
 ```Bash
-source ~/acm-workshop-variables.sh
+touch ~/acm-workshop-variables.sh
+chmod +x ~/acm-workshop-variables.sh
 RANDOM_SUFFIX=$(shuf -i 100-999 -n 1)
 BILLING_ACCOUNT_ID=FIXME
 ORG_OR_FOLDER_ID=FIXME
-rm ~/acm-workshop-variables.sh # remove previous workshop information
 echo "export RANDOM_SUFFIX=${RANDOM_SUFFIX}" >> ~/acm-workshop-variables.sh
 echo "export CONFIG_CONTROLLER_PROJECT_ID=acm-workshop-${RANDOM_SUFFIX}" >> ~/acm-workshop-variables.sh
 echo "export BILLING_ACCOUNT_ID=${BILLING_ACCOUNT_ID}" >> ~/acm-workshop-variables.sh
