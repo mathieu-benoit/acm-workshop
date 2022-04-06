@@ -16,9 +16,6 @@ source ~/acm-workshop-variables.sh
 
 Open Config Controller's egress to the Internet (GitHub access):
 ```Bash
-CONFIG_CONTROLLER_NETWORK=$(gcloud anthos config controller describe $CONFIG_CONTROLLER_NAME \
-    --location=$CONFIG_CONTROLLER_LOCATION \
-    --format='get(managementConfig.standardManagementConfig.network)')
 CONFIG_CONTROLLER_NAT_ROUTER_NAME=nat-router
 gcloud compute routers create $CONFIG_CONTROLLER_NAT_ROUTER_NAME \
     --network $CONFIG_CONTROLLER_NETWORK \

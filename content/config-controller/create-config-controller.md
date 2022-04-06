@@ -19,6 +19,7 @@ echo "export ORG_OR_FOLDER_ID=${ORG_OR_FOLDER_ID}" >> ~/acm-workshop-variables.s
 echo "export LOCAL_IP_ADDRESS=$(curl -4 ifconfig.co)" >> ~/acm-workshop-variables.sh
 echo "export CONFIG_CONTROLLER_NAME=configcontroller" >> ~/acm-workshop-variables.sh
 echo "export CONFIG_CONTROLLER_LOCATION=us-east1" >> ~/acm-workshop-variables.sh
+echo "export CONFIG_CONTROLLER_NETWORK=default" >> ~/acm-workshop-variables.sh
 source ~/acm-workshop-variables.sh
 ```
 {{% notice info %}}
@@ -60,12 +61,19 @@ gcloud config set project $CONFIG_CONTROLLER_PROJECT_ID
 
 ## Create the Config Controller instance
 
+If you don't have a default network in your project, create one by running the following command:
+```Bash
+gcloud compute networks create $CONFIG_CONTROLLER_NETWORK \
+    --subnet-mode=auto
+```
+
 Create the Config Controller instance:
 ```Bash
 gcloud services enable krmapihosting.googleapis.com \
     cloudresourcemanager.googleapis.com
 gcloud anthos config controller create $CONFIG_CONTROLLER_NAME \
     --location $CONFIG_CONTROLLER_LOCATION \
+    --network $CONFIG_CONTROLLER_NETWORK \
     --man-block $LOCAL_IP_ADDRESS/32
 ```
 {{% notice note %}}
