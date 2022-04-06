@@ -74,13 +74,13 @@ cat <<EOF > ~/$GKE_CONFIGS_DIR_NAME/config-sync/istio-system/control-plane-confi
 apiVersion: mesh.cloud.google.com/v1beta1
 kind: ControlPlaneRevision
 metadata:
-  name: "${ASM_VERSION}"
+  name: ${ASM_VERSION}
   namespace: istio-system
   labels:
     mesh.cloud.google.com/managed-cni-enabled: "true"
 spec:
   type: managed_service
-  channel: "${ASM_CHANNEL}"
+  channel: ${ASM_CHANNEL}
 EOF
 ```
 {{% notice tip %}}
