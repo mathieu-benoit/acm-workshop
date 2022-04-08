@@ -23,7 +23,7 @@ echo "export CONFIG_CONTROLLER_NETWORK=default" >> ~/acm-workshop-variables.sh
 source ~/acm-workshop-variables.sh
 ```
 {{% notice info %}}
-Just `us-east1` or `us-central1` are the supported regions for now for Config Controller.
+Just `us-east1`, `us-central1` and `northamerica-northeast1` are the supported regions for now for Config Controller.
 {{% /notice %}}
 
 ## Create Config Controller's GCP project
