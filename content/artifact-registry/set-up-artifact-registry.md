@@ -7,10 +7,10 @@ _{{< param description >}}_
 
 Initialize variables:
 ```Bash
-source ~/acm-workshop-variables.sh
-echo "export CONTAINER_REGISTRY_NAME=containers" >> ~/acm-workshop-variables.sh
-echo "export CONTAINER_REGISTRY_REPOSITORY=${GKE_LOCATION}-docker.pkg.dev/${GKE_PROJECT_ID}/${CONTAINER_REGISTRY_NAME}" >> ~/acm-workshop-variables.sh
-source ~/acm-workshop-variables.sh
+source ${WORK_DIR}acm-workshop-variables.sh
+echo "export CONTAINER_REGISTRY_NAME=containers" >> ${WORK_DIR}acm-workshop-variables.sh
+echo "export CONTAINER_REGISTRY_REPOSITORY=${GKE_LOCATION}-docker.pkg.dev/${GKE_PROJECT_ID}/${CONTAINER_REGISTRY_NAME}" >> ${WORK_DIR}acm-workshop-variables.sh
+source ${WORK_DIR}acm-workshop-variables.sh
 ```
 
 ## Define Artifact Registry resource

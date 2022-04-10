@@ -7,9 +7,9 @@ _{{< param description >}}_
 
 Initialize variables:
 ```Bash
-source ~/acm-workshop-variables.sh
-echo "export INGRESS_GATEWAY_NAMESPACE=asm-ingress" >> ~/acm-workshop-variables.sh
-source ~/acm-workshop-variables.sh
+source ${WORK_DIR}acm-workshop-variables.sh
+echo "export INGRESS_GATEWAY_NAMESPACE=asm-ingress" >> ${WORK_DIR}acm-workshop-variables.sh
+source ${WORK_DIR}acm-workshop-variables.sh
 ```
 
 ## Define "Automatic sidecar injection" policy

@@ -7,10 +7,10 @@ _{{< param description >}}_
 
 Initialize variables:
 ```Bash
-source ~/acm-workshop-variables.sh
-echo "export INGRESS_GATEWAY_NAME=asm-ingressgateway" >> ~/acm-workshop-variables.sh
-echo "export INGRESS_GATEWAY_LABEL='asm: ingressgateway'" >> ~/acm-workshop-variables.sh
-source ~/acm-workshop-variables.sh
+source ${WORK_DIR}acm-workshop-variables.sh
+echo "export INGRESS_GATEWAY_NAME=asm-ingressgateway" >> ${WORK_DIR}acm-workshop-variables.sh
+echo "export INGRESS_GATEWAY_LABEL='asm: ingressgateway'" >> ${WORK_DIR}acm-workshop-variables.sh
+source ${WORK_DIR}acm-workshop-variables.sh
 ```
 
 Create a dedicated folder for the ASM Ingress Gateway in the GKE configs's Git repo:

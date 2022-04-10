@@ -7,10 +7,10 @@ _{{< param description >}}_
 
 Initialize variables:
 ```Bash
-source ~/acm-workshop-variables.sh
-echo "export GKE_PROJECT_NUMBER=$(gcloud projects describe $GKE_PROJECT_ID --format='get(projectNumber)')" >> ~/acm-workshop-variables.sh
-echo "export GKE_SA=gke-primary-pool" >> ~/acm-workshop-variables.sh
-source ~/acm-workshop-variables.sh
+source ${WORK_DIR}acm-workshop-variables.sh
+echo "export GKE_PROJECT_NUMBER=$(gcloud projects describe $GKE_PROJECT_ID --format='get(projectNumber)')" >> ${WORK_DIR}acm-workshop-variables.sh
+echo "export GKE_SA=gke-primary-pool" >> ${WORK_DIR}acm-workshop-variables.sh
+source ${WORK_DIR}acm-workshop-variables.sh
 ```
 
 ## Define GKE cluster

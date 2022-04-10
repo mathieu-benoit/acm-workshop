@@ -7,20 +7,21 @@ _{{< param description >}}_
 
 Define variables:
 ```Bash
-touch ~/acm-workshop-variables.sh
-chmod +x ~/acm-workshop-variables.sh
+WORK_DIR=~/
+touch ${WORK_DIR}acm-workshop-variables.sh
+chmod +x ${WORK_DIR}acm-workshop-variables.sh
 RANDOM_SUFFIX=$(shuf -i 100-999 -n 1)
 BILLING_ACCOUNT_ID=FIXME
 ORG_OR_FOLDER_ID=FIXME
-echo "export RANDOM_SUFFIX=${RANDOM_SUFFIX}" >> ~/acm-workshop-variables.sh
-echo "export CONFIG_CONTROLLER_PROJECT_ID=acm-workshop-${RANDOM_SUFFIX}" >> ~/acm-workshop-variables.sh
-echo "export BILLING_ACCOUNT_ID=${BILLING_ACCOUNT_ID}" >> ~/acm-workshop-variables.sh
-echo "export ORG_OR_FOLDER_ID=${ORG_OR_FOLDER_ID}" >> ~/acm-workshop-variables.sh
-echo "export LOCAL_IP_ADDRESS=$(curl -4 ifconfig.co)" >> ~/acm-workshop-variables.sh
-echo "export CONFIG_CONTROLLER_NAME=configcontroller" >> ~/acm-workshop-variables.sh
-echo "export CONFIG_CONTROLLER_LOCATION=us-east1" >> ~/acm-workshop-variables.sh
-echo "export CONFIG_CONTROLLER_NETWORK=default" >> ~/acm-workshop-variables.sh
-source ~/acm-workshop-variables.sh
+echo "export RANDOM_SUFFIX=${RANDOM_SUFFIX}" >> ${WORK_DIR}acm-workshop-variables.sh
+echo "export CONFIG_CONTROLLER_PROJECT_ID=acm-workshop-${RANDOM_SUFFIX}" >> ${WORK_DIR}acm-workshop-variables.sh
+echo "export BILLING_ACCOUNT_ID=${BILLING_ACCOUNT_ID}" >> ${WORK_DIR}acm-workshop-variables.sh
+echo "export ORG_OR_FOLDER_ID=${ORG_OR_FOLDER_ID}" >> ${WORK_DIR}acm-workshop-variables.sh
+echo "export LOCAL_IP_ADDRESS=$(curl -4 ifconfig.co)" >> ${WORK_DIR}acm-workshop-variables.sh
+echo "export CONFIG_CONTROLLER_NAME=configcontroller" >> ${WORK_DIR}acm-workshop-variables.sh
+echo "export CONFIG_CONTROLLER_LOCATION=us-east1" >> ${WORK_DIR}acm-workshop-variables.sh
+echo "export CONFIG_CONTROLLER_NETWORK=default" >> ${WORK_DIR}acm-workshop-variables.sh
+source ${WORK_DIR}acm-workshop-variables.sh
 ```
 {{% notice info %}}
 Just `us-east1`, `us-central1` and `northamerica-northeast1` are the supported regions for now for Config Controller.

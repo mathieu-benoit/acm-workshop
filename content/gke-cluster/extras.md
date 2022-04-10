@@ -9,7 +9,7 @@ Do you want more optional exercises? Here you are!
 
 Initialize variables:
 ```Bash
-source ~/acm-workshop-variables.sh
+source ${WORK_DIR}acm-workshop-variables.sh
 ```
 
 ## Concept of drift

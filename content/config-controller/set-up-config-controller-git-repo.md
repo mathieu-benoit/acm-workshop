@@ -7,9 +7,9 @@ _{{< param description >}}_
 
 Define variables:
 ```Bash
-source ~/acm-workshop-variables.sh
-echo "export WORKSHOP_ORG_DIR_NAME=acm-workshop-org-repo" >> ~/acm-workshop-variables.sh
-source ~/acm-workshop-variables.sh
+source ${WORK_DIR}acm-workshop-variables.sh
+echo "export WORKSHOP_ORG_DIR_NAME=acm-workshop-org-repo" >> ${WORK_DIR}acm-workshop-variables.sh
+source ${WORK_DIR}acm-workshop-variables.sh
 ```
 
 ## Set up Cloud NAT

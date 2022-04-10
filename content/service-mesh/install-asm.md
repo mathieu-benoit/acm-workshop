@@ -7,15 +7,15 @@ _{{< param description >}}_
 
 Initialize variables:
 ```Bash
-source ~/acm-workshop-variables.sh
+source ${WORK_DIR}acm-workshop-variables.sh
 ASM_CHANNEL=rapid
 ASM_LABEL=asm-managed
-echo "export ASM_CHANNEL=${ASM_CHANNEL}" >> ~/acm-workshop-variables.sh
-echo "export ASM_LABEL=${ASM_LABEL}" >> ~/acm-workshop-variables.sh
+echo "export ASM_CHANNEL=${ASM_CHANNEL}" >> ${WORK_DIR}acm-workshop-variables.sh
+echo "export ASM_LABEL=${ASM_LABEL}" >> ${WORK_DIR}acm-workshop-variables.sh
 ASM_VERSION=$ASM_LABEL
 if [ $ASM_CHANNEL = "rapid" ] || [ $ASM_CHANNEL = "stable" ] ; then ASM_VERSION=$ASM_LABEL-$ASM_CHANNEL; fi
-echo "export ASM_VERSION=${ASM_VERSION}" >> ~/acm-workshop-variables.sh
-source ~/acm-workshop-variables.sh
+echo "export ASM_VERSION=${ASM_VERSION}" >> ${WORK_DIR}acm-workshop-variables.sh
+source ${WORK_DIR}acm-workshop-variables.sh
 ```
 {{% notice note %}}
 The possible values for `ASM_CHANNEL` are `regular`, `stable` or `rapid`.

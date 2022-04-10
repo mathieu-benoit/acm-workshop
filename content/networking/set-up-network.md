@@ -7,10 +7,10 @@ _{{< param description >}}_
 
 Initialize variables:
 ```Bash
-source ~/acm-workshop-variables.sh
-echo "export GKE_LOCATION=us-east4" >> ~/acm-workshop-variables.sh
-echo "export GKE_NAME=gke" >> ~/acm-workshop-variables.sh
-source ~/acm-workshop-variables.sh
+source ${WORK_DIR}acm-workshop-variables.sh
+echo "export GKE_LOCATION=us-east4" >> ${WORK_DIR}acm-workshop-variables.sh
+echo "export GKE_NAME=gke" >> ${WORK_DIR}acm-workshop-variables.sh
+source ${WORK_DIR}acm-workshop-variables.sh
 ```
 
 ## Define VPC and Subnet

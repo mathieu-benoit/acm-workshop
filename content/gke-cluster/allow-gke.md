@@ -7,7 +7,7 @@ _{{< param description >}}_
 
 Define variables:
 ```Bash
-source ~/acm-workshop-variables.sh
+source ${WORK_DIR}acm-workshop-variables.sh
 ```
 
 ## Define roles

@@ -7,11 +7,11 @@ _{{< param description >}}_
 
 Initialize variables:
 ```Bash
-source ~/acm-workshop-variables.sh
+source ${WORK_DIR}acm-workshop-variables.sh
 SECURITY_POLICY_NAME=$GKE_NAME-asm-ingressgateway
-echo "export SECURITY_POLICY_NAME=${SECURITY_POLICY_NAME}" >> ~/acm-workshop-variables.sh
-echo "export SSL_POLICY_NAME=${SECURITY_POLICY_NAME}" >> ~/acm-workshop-variables.sh
-source ~/acm-workshop-variables.sh
+echo "export SECURITY_POLICY_NAME=${SECURITY_POLICY_NAME}" >> ${WORK_DIR}acm-workshop-variables.sh
+echo "export SSL_POLICY_NAME=${SECURITY_POLICY_NAME}" >> ${WORK_DIR}acm-workshop-variables.sh
+source ${WORK_DIR}acm-workshop-variables.sh
 ```
 
 ## Define Cloud Armor rules
