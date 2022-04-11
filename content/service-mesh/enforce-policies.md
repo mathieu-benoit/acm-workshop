@@ -12,13 +12,13 @@ echo "export INGRESS_GATEWAY_NAMESPACE=asm-ingress" >> ${WORK_DIR}acm-workshop-v
 source ${WORK_DIR}acm-workshop-variables.sh
 ```
 
-## Define "Automatic sidecar injection" policy
+## Define "Automatic sidecar injection" policies
 
 https://cloud.google.com/service-mesh/docs/anthos-service-mesh-proxy-injection
 
 We already defined the `k8srequiredlabels` `ConstraintTemplate` resource in a previous section, we will reuse it here.
 
-Define the `Constraint` resource:
+Define the `automatic-sidecar-injection` `Constraint` resource:
 ```Bash
 cat <<EOF > ~/$GKE_CONFIGS_DIR_NAME/config-sync/policies/constraints/automatic-sidecar-injection.yaml
 apiVersion: constraints.gatekeeper.sh/v1beta1
@@ -51,58 +51,49 @@ spec:
 EOF
 ```
 
-## Define "Allowed Service port names" policy
-
-https://cloud.google.com/service-mesh/docs/naming-service-ports
-
-Define the `ConstraintTemplate` resource:
+Define the `PodSidecarInjection` `ConstraintTemplate` resource:
 ```Bash
-cat <<EOF > ~/$GKE_CONFIGS_DIR_NAME/config-sync/policies/templates/allowedserviceportname.yaml
+cat <<EOF > ~/$GKE_CONFIGS_DIR_NAME/config-sync/policies/templates/podsidecarinjection.yaml
 apiVersion: templates.gatekeeper.sh/v1
 kind: ConstraintTemplate
 metadata:
   annotations:
-    description: Requires that service port names have a prefix from a specified list.
-  name: allowedserviceportname
+    description: Enforce the istio proxy sidecar always been injected to workload.
+  name: podsidecarinjection
 spec:
   crd:
     spec:
       names:
-        kind: AllowedServicePortName
+        kind: PodSidecarInjection
       validation:
         legacySchema: true
-        openAPIV3Schema:
-          properties:
-            prefixes:
-              description: Prefixes of allowed service port names.
-              items:
-                type: string
-              type: array
+        openAPIV3Schema: {}
   targets:
-  - rego: |
-      package asm.guardrails.allowedserviceportname
+  - rego: |-
+      package istio.security.workloadpolicy
+      resource = input.review.object
+      spec = resource.spec
+      # Annotation sidecar.istio.io/inject: false should not be applied on workload pods which will bypass istio proxy.
+      forbidden_injection_annotation := {"key": "sidecar.istio.io/inject", "value": "false"}
       violation[{"msg": msg}] {
-        service := input.review.object
-        port := service.spec.ports[_]
-        prefixes := input.parameters.prefixes
-        not is_prefixed(port, prefixes)
-        msg := "service port name missing prefix"
+          is_pod(input.review.kind)
+          contains(resource.metadata.annotations[forbidden_injection_annotation["key"]], forbidden_injection_annotation["value"])
+          msg := sprintf("The annotation %v: %v should not be applied on workload pods", [forbidden_injection_annotation["key"], forbidden_injection_annotation["value"]])
       }
-      is_prefixed(port, prefixes) {
-        prefix := prefixes[_]
-        startswith(port.name, prefix)
+      is_pod(kind) {
+          kind.kind == "Pod"
       }
     target: admission.k8s.gatekeeper.sh
 EOF
 ```
 
-Define the `Constraint` resource:
+Define the `pod-sidecar-injection` `Constraint` resource:
 ```Bash
-cat <<EOF > ~/$GKE_CONFIGS_DIR_NAME/config-sync/policies/constraints/allowed-service-port-names.yaml
+cat <<EOF > ~/$GKE_CONFIGS_DIR_NAME/config-sync/policies/constraints/pod-sidecar-injection.yaml
 apiVersion: constraints.gatekeeper.sh/v1beta1
-kind: AllowedServicePortName
+kind: PodSidecarInjection
 metadata:
-  name: allowed-service-port-names
+  name: pod-sidecar-injection
 spec:
   enforcementAction: deny
   match:
@@ -110,90 +101,119 @@ spec:
     - apiGroups:
       - ""
       kinds:
-      - Service
-  parameters:
-    prefixes:
-    - http
-    - http2
-    - grpc
+      - Pod
+    excludedNamespaces:
+    - kube-system # to exclude istio-cni pods.
 EOF
 ```
 
-## Define "Policy STRICT only" policy
+## Define "STRICT mTLS in the Mesh" policies
 
-Define the `ConstraintTemplate` resource:
+Define the `PeerAuthnStrictMtls` `ConstraintTemplate` resource:
 ```Bash
-cat <<EOF > ~/$GKE_CONFIGS_DIR_NAME/config-sync/policies/templates/policystrictonly.yaml
+cat <<EOF > ~/$GKE_CONFIGS_DIR_NAME/config-sync/policies/templates/peerauthnmeshstrictmtls.yaml
 apiVersion: templates.gatekeeper.sh/v1
 kind: ConstraintTemplate
 metadata:
   annotations:
-    description: "Requires that STRICT Istio mutual TLS is always specified when
-      using [PeerAuthentication](https://istio.io/latest/docs/reference/config/security/peer_authentication/).
-      This constraint also ensures that the deprecated [Policy](https://istio.io/v1.4/docs/reference/config/security/istio.authentication.v1alpha1/#Policy)
-      and MeshPolicy resources enforce STRICT mutual TLS. See: https://istio.io/latest/docs/tasks/security/authentication/mtls-migration/#lock-down-mutual-tls-for-the-entire-mesh"
-  name: policystrictonly
+    description: Enforce the mesh level strict mtls PeerAuthentication.
+  name: peerauthnmeshstrictmtls
 spec:
   crd:
     spec:
       names:
-        kind: PolicyStrictOnly
+        kind: PeerAuthnMeshStrictMtls
       validation:
         legacySchema: true
-        openAPIV3Schema: {}
+        openAPIV3Schema:
+          properties:
+            rootNamespace:
+              description: Istio root namespace, default value is "istio-system" if not specified.
+              type: string
   targets:
   - rego: |-
-      package asm.guardrails.policystrictonly
-      OLD_KINDS = ["Policy", "MeshPolicy"]
-      strict_mtls {
-        p := input.review.object
-        count(p.spec.peers) == 1
-        p.spec.peers[0].mtls.mode == "STRICT"
-      }
-      # VIOLATION peer authentication does not set mTLS correctly
+      package istio.security.peerauthentication
       violation[{"msg": msg}] {
-        p := input.review.object
-        startswith(p.apiVersion, "authentication.istio.io/")
-        p.kind == OLD_KINDS[_]
-        not strict_mtls
-        msg := "spec.peers does not include STRICT mTLS settings"
+        is_peer_authn_mesh_strict_mtls(input.review.kind)
+        root_ns := object.get(object.get(input, "parameters", {}), "rootNamespace", "istio-system")
+        not namespace_has_default_strict_mtls_pa(root_ns)
+        msg := sprintf("Root namespace <%v> does not have a strict mTLS PeerAuthentication", [root_ns])
       }
-      # VIOLATION spec.mtls must be set to STRICT
-      violation[{"msg": msg}] {
-        p := input.review.object
-        startswith(p.apiVersion, "security.istio.io/")
-        p.kind == "PeerAuthentication"
-        not p.spec.mtls.mode == "STRICT"
-        msg := "spec.mtls.mode must be set to STRICT"
+      namespace_has_default_strict_mtls_pa(ns) {
+        pa := data.inventory.namespace[ns][_].PeerAuthentication[_]
+        pa.spec.mtls.mode == "STRICT"
       }
-      # VIOLATION no ports can override STRICT mTLS mode
-      violation[{"msg": msg}] {
-        p := input.review.object
-        startswith(p.apiVersion, "security.istio.io/")
-        p.kind == "PeerAuthentication"
-        valid_modes := {"UNSET", "STRICT"}
-        count({p.spec.portLevelMtls[port].mode} - valid_modes) > 0
-        msg := sprintf("port <%v> has invalid mtls mode <%v>", [port, p.spec.portLevelMtls[port].mode])
+      is_peer_authn_mesh_strict_mtls(kind) {
+        kind.kind == "PeerAuthnMeshStrictMtls"
+        kind.group == "constraints.gatekeeper.sh"
       }
     target: admission.k8s.gatekeeper.sh
 EOF
 ```
 
-Define the `Constraint` resource:
+Define the `mesh-level-strict-mtls` `Constraint` resource:
 ```Bash
-cat <<EOF > ~/$GKE_CONFIGS_DIR_NAME/config-sync/policies/constraints/policy-strict-only.yaml
+cat <<EOF > ~/$GKE_CONFIGS_DIR_NAME/config-sync/policies/constraints/mesh-level-strict-mtls.yaml
 apiVersion: constraints.gatekeeper.sh/v1beta1
-kind: PolicyStrictOnly
+kind: PeerAuthnMeshStrictMtls
 metadata:
-  name: policy-strict-only
+  name: mesh-level-strict-mtls
+spec:
+  enforcementAction: deny
+EOF
+```
+
+Define the `PeerAuthnStrictMtls` `ConstraintTemplate` resource:
+```Bash
+cat <<EOF > ~/$GKE_CONFIGS_DIR_NAME/config-sync/policies/templates/peerauthnstrictmtls.yaml
+apiVersion: templates.gatekeeper.sh/v1
+kind: ConstraintTemplate
+metadata:
+  annotations:
+    description: Enforce all PeerAuthentications cannot overwrite strict mtls.
+  name: peerauthnstrictmtls
+spec:
+  crd:
+    spec:
+      names:
+        kind: PeerAuthnStrictMtls
+      validation:
+        legacySchema: true
+        openAPIV3Schema: {}
+  targets:
+  - rego: |-
+      package istio.security.peerauthentication
+      spec = input.review.object.spec
+      valid_modes := {"UNSET", "STRICT"}
+      violation[{"msg": msg}] {
+          is_peerauthentication(input.review.kind)
+          count({spec.mtls.mode} - valid_modes) > 0
+          msg := "PeerAuthentication mtls mode can only be set to UNSET or STRICT"
+      }
+      violation[{"msg": msg}] {
+          is_peerauthentication(input.review.kind)
+          count({spec.portLevelMtls[port].mode} - valid_modes) > 0
+          msg := sprintf("PeerAuthentication port <%v> has invalid mtls mode <%v>, it can only be set to UNSET or STRICT", [port, spec.portLevelMtls[port].mode])
+      }
+      is_peerauthentication(kind) {
+          kind.kind == "PeerAuthentication"
+          kind.group == "security.istio.io"
+      }
+    target: admission.k8s.gatekeeper.sh
+EOF
+```
+
+Define the `peerauthentication-strict-mtls` `Constraint` resource:
+```Bash
+cat <<EOF > ~/$GKE_CONFIGS_DIR_NAME/config-sync/policies/constraints/peerauthentication-strict-mtls.yaml
+apiVersion: constraints.gatekeeper.sh/v1beta1
+kind: PeerAuthnStrictMtls
+metadata:
+  name: peerauthentication-strict-mtls
 spec:
   enforcementAction: deny
   match:
     kinds:
-    - apiGroups:
-      - authentication.istio.io
-      kinds:
-      - Policy
     - apiGroups:
       - security.istio.io
       kinds:
@@ -201,11 +221,133 @@ spec:
 EOF
 ```
 
-## Define "Defined AuthorizationPolicy source principals" policy
+Define the [`DestinationRuleTLSEnabled`](https://istio.io/latest/docs/reference/config/networking/destination-rule) `ConstraintTemplate` resource:
+```Bash
+cat <<EOF > ~/$GKE_CONFIGS_DIR_NAME/config-sync/policies/templates/destinationruletlsenabled.yaml
+apiVersion: templates.gatekeeper.sh/v1
+kind: ConstraintTemplate
+metadata:
+  annotations:
+    description: Prohibits disabling TLS for all hosts and host subsets in Istio DestinationRules.
+  name: destinationruletlsenabled
+spec:
+  crd:
+    spec:
+      names:
+        kind: DestinationRuleTLSEnabled
+      validation:
+        legacySchema: true
+        openAPIV3Schema: {}
+  targets:
+  - rego: |
+      package asm.guardrails.destinationruletlsenabled
+      # spec.trafficPolicy.tls.mode == DISABLE
+      violation[{"msg": msg}] {
+        d := input.review.object
+        startswith(d.apiVersion, "networking.istio.io/")
+        d.kind == "DestinationRule"
+        tpl := d.spec.trafficPolicy[_]
+        tpl == {"mode": "DISABLE"}
+        msg := sprintf("spec.trafficPolicy.tls.mode == DISABLE for host(s): %v", [d.spec.host])
+      }
+      # spec.subsets[].trafficPolicy.tls.mode == DISABLE
+      violation[{"msg": msg}] {
+        d := input.review.object
+        startswith(d.apiVersion, "networking.istio.io/")
+        d.kind == "DestinationRule"
+        subset := d.spec.subsets[_]
+        subset.trafficPolicy == {"tls": {"mode": "DISABLE"}}
+        msg := sprintf("subsets[].trafficPolicy.tls.mode == DISABLE for host-subset: %v-%v", [d.spec.host, subset.name])
+      }
+    target: admission.k8s.gatekeeper.sh
+EOF
+```
+
+Define the `destination-rule-tls-enabled` `Constraint` resource:
+```Bash
+cat <<EOF > ~/$GKE_CONFIGS_DIR_NAME/config-sync/policies/constraints/destination-rule-tls-enabled.yaml
+apiVersion: constraints.gatekeeper.sh/v1beta1
+kind: DestinationRuleTLSEnabled
+metadata:
+  name: destination-rule-tls-enabled
+spec:
+  enforcementAction: deny
+  match:
+    kinds:
+    - apiGroups:
+      - networking.istio.io
+      kinds:
+      - DestinationRule
+EOF
+```
+
+## Define AuthorizationPolicy policies
 
 https://istio.io/latest/docs/reference/config/security/authorization-policy/
 
-Define the `ConstraintTemplate` resource:
+Define the `AuthzPolicyDefaultDeny` `ConstraintTemplate` resource:
+```Bash
+cat <<EOF > ~/$GKE_CONFIGS_DIR_NAME/config-sync/policies/templates/authzpolicydefaultdeny.yaml
+apiVersion: templates.gatekeeper.sh/v1
+kind: ConstraintTemplate
+metadata:
+  annotations:
+    description: Enforce the mesh level strict mtls PeerAuthentication.
+  name: authzpolicydefaultdeny
+spec:
+  crd:
+    spec:
+      names:
+        kind: AuthzPolicyDefaultDeny
+      validation:
+        legacySchema: true
+        openAPIV3Schema:
+          properties:
+            rootNamespace:
+              description: Istio root namespace, default value is "istio-system" if not specified.
+              type: string
+  targets:
+  - rego: |-
+      package istio.security.authorizationpolicy
+      violation[{"msg": msg}] {
+        is_authz_policy_default_deny(input.review.kind)
+        # use input root namespace or default value istio-system
+        root_ns := object.get(object.get(input, "parameters", {}), "rootNamespace", "istio-system")
+        not namespace_has_default_deny_policy(root_ns)
+        msg := sprintf("Root namespace <%v> does not have a default deny AuthorizationPolicy", [root_ns])
+      }
+      is_authz_policy_default_deny(kind) {
+        kind.kind == "AuthzPolicyDefaultDeny"
+        kind.group == "constraints.gatekeeper.sh"
+      }
+      namespace_has_default_deny_policy(ns) {
+        ap := data.inventory.namespace[ns][_].AuthorizationPolicy[_]
+        is_allow_action(ap)
+        not ap.spec.rules
+      }
+      is_allow_action(ap) {
+        ap.spec.action == "ALLOW"
+      }
+      is_allow_action(ap) {
+        not ap.spec.action
+      }
+    target: admission.k8s.gatekeeper.sh
+EOF
+```
+
+Define the `default-deny-authorization-policies` `Constraint` resource:
+```Bash
+cat <<EOF > ~/$GKE_CONFIGS_DIR_NAME/config-sync/policies/constraints/default-deny-authorization-policies.yaml
+apiVersion: constraints.gatekeeper.sh/v1beta1
+kind: AuthzPolicyDefaultDeny
+metadata:
+  name: default-deny-authorization-policies
+spec:
+  enforcementAction: deny
+EOF
+```
+
+Define the `SourceNotAllAuthz` `ConstraintTemplate` resource:
 ```Bash
 cat <<EOF > ~/$GKE_CONFIGS_DIR_NAME/config-sync/policies/templates/sourcenotallauthz.yaml
 apiVersion: templates.gatekeeper.sh/v1
@@ -249,7 +391,7 @@ spec:
 EOF
 ```
 
-Define the `Constraint` resource:
+Define the `defined-authz-source-principals` `Constraint` resource:
 ```Bash
 cat <<EOF > ~/$GKE_CONFIGS_DIR_NAME/config-sync/policies/constraints/defined-authz-source-principals.yaml
 apiVersion: constraints.gatekeeper.sh/v1beta1
@@ -269,67 +411,109 @@ spec:
 EOF
 ```
 
-## Define "DestinationRule TLS enabled" policy
+## Define "Allowed Service port names" policy
 
-https://istio.io/latest/docs/reference/config/networking/destination-rule
-
-Define the `ConstraintTemplate` resource:
+Define the [`AllowedServicePortName`](https://cloud.google.com/service-mesh/docs/naming-service-ports) `ConstraintTemplate` resource:
 ```Bash
-cat <<EOF > ~/$GKE_CONFIGS_DIR_NAME/config-sync/policies/templates/destinationruletlsenabled.yaml
+cat <<EOF > ~/$GKE_CONFIGS_DIR_NAME/config-sync/policies/templates/allowedserviceportname.yaml
 apiVersion: templates.gatekeeper.sh/v1
 kind: ConstraintTemplate
 metadata:
   annotations:
-    description: Prohibits disabling TLS for all hosts and host subsets in Istio DestinationRules.
-  name: destinationruletlsenabled
+    description: Requires that service port names have a prefix from a specified list.
+  name: allowedserviceportname
 spec:
   crd:
     spec:
       names:
-        kind: DestinationRuleTLSEnabled
+        kind: AllowedServicePortName
       validation:
         legacySchema: true
-        openAPIV3Schema: {}
+        openAPIV3Schema:
+          properties:
+            prefixes:
+              description: Prefixes of allowed service port names.
+              items:
+                type: string
+              type: array
   targets:
   - rego: |
-      package asm.guardrails.destinationruletlsenabled
-      # spec.trafficPolicy.tls.mode == DISABLE
+      package asm.guardrails.allowedserviceportname
       violation[{"msg": msg}] {
-        d := input.review.object
-        startswith(d.apiVersion, "networking.istio.io/")
-        d.kind == "DestinationRule"
-        tpl := d.spec.trafficPolicy[_]
-        tpl == {"mode": "DISABLE"}
-        msg := sprintf("spec.trafficPolicy.tls.mode == DISABLE for host(s): %v", [d.spec.host])
+        service := input.review.object
+        port := service.spec.ports[_]
+        prefixes := input.parameters.prefixes
+        not is_prefixed(port, prefixes)
+        msg := "service port name missing prefix"
       }
-      # spec.subsets[].trafficPolicy.tls.mode == DISABLE
-      violation[{"msg": msg}] {
-        d := input.review.object
-        startswith(d.apiVersion, "networking.istio.io/")
-        d.kind == "DestinationRule"
-        subset := d.spec.subsets[_]
-        subset.trafficPolicy == {"tls": {"mode": "DISABLE"}}
-        msg := sprintf("subsets[].trafficPolicy.tls.mode == DISABLE for host-subset: %v-%v", [d.spec.host, subset.name])
+      is_prefixed(port, prefixes) {
+        prefix := prefixes[_]
+        startswith(port.name, prefix)
       }
     target: admission.k8s.gatekeeper.sh
 EOF
 ```
 
-Define the `Constraint` resource:
+Define the `allowed-service-port-names` `Constraint` resource:
 ```Bash
-cat <<EOF > ~/$GKE_CONFIGS_DIR_NAME/config-sync/policies/constraints/destination-rule-tls-enabled.yaml
+cat <<EOF > ~/$GKE_CONFIGS_DIR_NAME/config-sync/policies/constraints/allowed-service-port-names.yaml
 apiVersion: constraints.gatekeeper.sh/v1beta1
-kind: DestinationRuleTLSEnabled
+kind: AllowedServicePortName
 metadata:
-  name: destination-rule-tls-enabled
+  name: allowed-service-port-names
 spec:
   enforcementAction: deny
   match:
     kinds:
     - apiGroups:
-      - networking.istio.io
+      - ""
       kinds:
-      - DestinationRule
+      - Service
+  parameters:
+    prefixes:
+    - http
+    - http2
+    - grpc
+EOF
+```
+
+## Define Gatekeeper config for Referrential `Constraints`
+
+Create the `gatekeeper-system` folder:
+```Bash
+mkdir ~/$GKE_CONFIGS_DIR_NAME/config-sync/gatekeeper-system
+```
+
+Define the `gatekeeper-system` `Namespace`:
+```Bash
+cat <<EOF > ~/$GKE_CONFIGS_DIR_NAME/config-sync/gatekeeper-system/namespace.yaml
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: gatekeeper-system
+EOF
+```
+
+Define the `config-referential-constraints` `Config`:
+```Bash
+cat <<EOF > ~/$GKE_CONFIGS_DIR_NAME/config-sync/gatekeeper-system/config-referential-constraints.yaml
+apiVersion: config.gatekeeper.sh/v1alpha1
+kind: Config
+metadata:
+  name: config
+  namespace: gatekeeper-system
+spec:
+  sync:
+    syncOnly:
+      - group: ""
+        version: "v1"
+        kind: "Namespace"
+      - group: "security.istio.io"
+        version: "v1beta1"
+        kind: "PeerAuthentication"
+      - group: "security.istio.io"
+        version: "v1beta1"
+        kind: "AuthorizationPolicy"
 EOF
 ```
 
