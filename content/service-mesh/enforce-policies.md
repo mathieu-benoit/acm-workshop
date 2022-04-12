@@ -65,9 +65,6 @@ spec:
     spec:
       names:
         kind: PodSidecarInjection
-      validation:
-        legacySchema: true
-        openAPIV3Schema: {}
   targets:
   - rego: |-
       package istio.security.workloadpolicy
@@ -124,8 +121,8 @@ spec:
       names:
         kind: PeerAuthnMeshStrictMtls
       validation:
-        legacySchema: true
         openAPIV3Schema:
+          type: object
           properties:
             rootNamespace:
               description: Istio root namespace, default value is "istio-system" if not specified.
@@ -177,9 +174,6 @@ spec:
     spec:
       names:
         kind: PeerAuthnStrictMtls
-      validation:
-        legacySchema: true
-        openAPIV3Schema: {}
   targets:
   - rego: |-
       package istio.security.peerauthentication
@@ -235,9 +229,6 @@ spec:
     spec:
       names:
         kind: DestinationRuleTLSEnabled
-      validation:
-        legacySchema: true
-        openAPIV3Schema: {}
   targets:
   - rego: |
       package asm.guardrails.destinationruletlsenabled
@@ -300,8 +291,8 @@ spec:
       names:
         kind: AuthzPolicyDefaultDeny
       validation:
-        legacySchema: true
         openAPIV3Schema:
+          type: object
           properties:
             rootNamespace:
               description: Istio root namespace, default value is "istio-system" if not specified.
@@ -361,9 +352,6 @@ spec:
     spec:
       names:
         kind: SourceNotAllAuthz
-      validation:
-        legacySchema: true
-        openAPIV3Schema: {}
   targets:
   - rego: |
       package asm.guardrails.sourcenotallauthz
@@ -428,8 +416,8 @@ spec:
       names:
         kind: AllowedServicePortName
       validation:
-        legacySchema: true
         openAPIV3Schema:
+          type: object
           properties:
             prefixes:
               description: Prefixes of allowed service port names.
