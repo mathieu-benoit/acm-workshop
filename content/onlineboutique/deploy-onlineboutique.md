@@ -17,7 +17,7 @@ Get the upstream Kubernetes manifests:
 cd ~/$ONLINE_BOUTIQUE_DIR_NAME
 mkdir upstream
 cd upstream
-kpt pkg get https://github.com/GoogleCloudPlatform/anthos-service-mesh-samples.git/docs/online-boutique-asm-manifests/base@asm-acm-tutorial
+kpt pkg get https://github.com/GoogleCloudPlatform/anthos-service-mesh-samples.git/docs/online-boutique-asm-manifests/base@main
 ```
 
 ## Create base overlay

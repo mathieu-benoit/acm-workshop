@@ -15,8 +15,8 @@ source ${WORK_DIR}acm-workshop-variables.sh
 Get the upstream Kubernetes manifests:
 ```Bash
 cd ~/$ONLINE_BOUTIQUE_DIR_NAME/upstream
-kpt pkg get https://github.com/GoogleCloudPlatform/anthos-service-mesh-samples.git/docs/online-boutique-asm-manifests/service-accounts@asm-acm-tutorial
-kpt pkg get https://github.com/GoogleCloudPlatform/anthos-service-mesh-samples.git/docs/online-boutique-asm-manifests/authorization-policies@asm-acm-tutorial
+kpt pkg get https://github.com/GoogleCloudPlatform/anthos-service-mesh-samples.git/docs/online-boutique-asm-manifests/service-accounts@main
+kpt pkg get https://github.com/GoogleCloudPlatform/anthos-service-mesh-samples.git/docs/online-boutique-asm-manifests/authorization-policies@main
 ```
 
 ## Update the Kustomize base overlay
