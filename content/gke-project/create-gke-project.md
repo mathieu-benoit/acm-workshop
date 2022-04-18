@@ -22,29 +22,8 @@ mkdir ~/$WORKSHOP_ORG_DIR_NAME/config-sync/projects/$GKE_PROJECT_ID
 
 ## Define GCP project
 
-Define the GCP project:
+Define the GCP project either at the Folder level or the Organization level:
 {{< tabs groupId="org-level">}}
-{{% tab name="Org level" %}}
-At the Organization level:
-```Bash
-cat <<EOF > ~/$WORKSHOP_ORG_DIR_NAME/config-sync/projects/$GKE_PROJECT_ID/project.yaml
-apiVersion: resourcemanager.cnrm.cloud.google.com/v1beta1
-kind: Project
-metadata:
-  annotations:
-    cnrm.cloud.google.com/auto-create-network: "false"
-  name: ${GKE_PROJECT_ID}
-  namespace: config-control
-spec:
-  name: ${GKE_PROJECT_ID}
-  billingAccountRef:
-    external: "${BILLING_ACCOUNT_ID}"
-  organizationRef:
-    external: "${ORG_OR_FOLDER_ID}"
-  resourceID: ${GKE_PROJECT_ID}
-EOF
-```
-{{% /tab %}}
 {{% tab name="Folder level" %}}
 At the Folder level:
 ```Bash
@@ -62,6 +41,27 @@ spec:
     external: "${BILLING_ACCOUNT_ID}"
   folderRef:
     external: "${FOLDER_ID}"
+  resourceID: ${GKE_PROJECT_ID}
+EOF
+```
+{{% /tab %}}
+{{% tab name="Org level" %}}
+At the Organization level:
+```Bash
+cat <<EOF > ~/$WORKSHOP_ORG_DIR_NAME/config-sync/projects/$GKE_PROJECT_ID/project.yaml
+apiVersion: resourcemanager.cnrm.cloud.google.com/v1beta1
+kind: Project
+metadata:
+  annotations:
+    cnrm.cloud.google.com/auto-create-network: "false"
+  name: ${GKE_PROJECT_ID}
+  namespace: config-control
+spec:
+  name: ${GKE_PROJECT_ID}
+  billingAccountRef:
+    external: "${BILLING_ACCOUNT_ID}"
+  organizationRef:
+    external: "${ORG_OR_FOLDER_ID}"
   resourceID: ${GKE_PROJECT_ID}
 EOF
 ```

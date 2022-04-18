@@ -29,21 +29,21 @@ Just `us-east1`, `us-central1` and `northamerica-northeast1` are the supported r
 
 ## Create Config Controller's GCP project
 
-Create the Config Controller's GCP project:
+Create the Config Controller's GCP project either at the Folder level or the Organization level:
 {{< tabs groupId="org-level">}}
-{{% tab name="Org level" %}}
-Create this GCP project at the Organization level:
-```Bash
-gcloud projects create $CONFIG_CONTROLLER_PROJECT_ID \
-    --organization $ORG_OR_FOLDER_ID \
-    --name $CONFIG_CONTROLLER_PROJECT_ID
-```
-{{% /tab %}}
 {{% tab name="Folder level" %}}
 Alternatively, you could also create this GCP project at a Folder level:
 ```Bash
 gcloud projects create $CONFIG_CONTROLLER_PROJECT_ID \
     --folder $ORG_OR_FOLDER_ID \
+    --name $CONFIG_CONTROLLER_PROJECT_ID
+```
+{{% /tab %}}
+{{% tab name="Org level" %}}
+Create this GCP project at the Organization level:
+```Bash
+gcloud projects create $CONFIG_CONTROLLER_PROJECT_ID \
+    --organization $ORG_OR_FOLDER_ID \
     --name $CONFIG_CONTROLLER_PROJECT_ID
 ```
 {{% /tab %}}
@@ -105,20 +105,20 @@ CONFIG_CONTROLLER_SA="$(kubectl get ConfigConnectorContext \
     -o jsonpath='{.items[0].spec.googleServiceAccount}')"
 ```
 
-Set the `resourcemanager.projectCreator` role:
+Set the `resourcemanager.projectCreator` role either at the Folder level or the Organization level:
 {{< tabs groupId="org-level">}}
-{{% tab name="Org level" %}}
-Create this GCP project at the Organization level:
-```Bash
-gcloud organizations add-iam-policy-binding ${ORG_OR_FOLDER_ID} \
-    --member="serviceAccount:${CONFIG_CONTROLLER_SA}" \
-    --role='roles/resourcemanager.projectCreator'
-```
-{{% /tab %}}
 {{% tab name="Folder level" %}}
 Alternatively, you could also create this GCP project at a Folder level:
 ```Bash
 gcloud resource-manager folders add-iam-policy-binding ${ORG_OR_FOLDER_ID} \
+    --member="serviceAccount:${CONFIG_CONTROLLER_SA}" \
+    --role='roles/resourcemanager.projectCreator'
+```
+{{% /tab %}}
+{{% tab name="Org level" %}}
+Create this GCP project at the Organization level:
+```Bash
+gcloud organizations add-iam-policy-binding ${ORG_OR_FOLDER_ID} \
     --member="serviceAccount:${CONFIG_CONTROLLER_SA}" \
     --role='roles/resourcemanager.projectCreator'
 ```
@@ -145,10 +145,6 @@ List the GCP resources created:
 gcloud projects describe $CONFIG_CONTROLLER_PROJECT_ID
 gcloud anthos config controller list \
     --project $CONFIG_CONTROLLER_PROJECT_ID
-gcloud organizations get-iam-policy $ORG_OR_FOLDER_ID \
-    --filter="bindings.members:${CONFIG_CONTROLLER_SA}" \
-    --flatten="bindings[].members" \
-    --format="table(bindings.role)"
 gcloud beta billing accounts get-iam-policy ${BILLING_ACCOUNT_ID} \
     --filter="bindings.members:${CONFIG_CONTROLLER_SA}" \
     --flatten="bindings[].members" \
@@ -158,6 +154,25 @@ gcloud projects get-iam-policy $CONFIG_CONTROLLER_PROJECT_ID \
     --flatten="bindings[].members" \
     --format="table(bindings.role)"
 ```
+{{< tabs groupId="org-level">}}
+{{% tab name="Folder level" %}}
+```Bash
+gcloud resource-manager folders get-iam-policy $ORG_OR_FOLDER_ID \
+    --filter="bindings.members:${CONFIG_CONTROLLER_SA}" \
+    --flatten="bindings[].members" \
+    --format="table(bindings.role)"
+```
+{{% /tab %}}
+{{% tab name="Org level" %}}
+```Bash
+gcloud organizations get-iam-policy $ORG_OR_FOLDER_ID \
+    --filter="bindings.members:${CONFIG_CONTROLLER_SA}" \
+    --flatten="bindings[].members" \
+    --format="table(bindings.role)"
+```
+{{% /tab %}}
+{{< /tabs >}}
+
 ```Plaintext
 NAME                                                                       LOCATION  STATE
 projects/acm-workshop-463/locations/us-east1/krmApiHosts/configcontroller  us-east1  RUNNING
@@ -168,4 +183,8 @@ roles/billing.user
 ROLE
 roles/iam.serviceAccountAdmin
 roles/serviceusage.serviceUsageAdmin
+```
+```Plaintext
+ROLE
+roles/resourcemanager.projectCreator
 ```
