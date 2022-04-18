@@ -40,7 +40,7 @@ spec:
   billingAccountRef:
     external: "${BILLING_ACCOUNT_ID}"
   folderRef:
-    external: "${FOLDER_ID}"
+    external: "${ORG_OR_FOLDER_ID}"
   resourceID: ${GKE_PROJECT_ID}
 EOF
 ```
