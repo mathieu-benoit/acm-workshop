@@ -29,7 +29,7 @@ metadata:
   name: ${WHEREAMI_NAMESPACE}
   labels:
     name: ${WHEREAMI_NAMESPACE}
-    istio.io/rev: ${ASM_VERSION}
+    istio-injection: enabled
     istio-discovery: enabled
 EOF
 ```

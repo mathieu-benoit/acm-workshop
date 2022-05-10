@@ -28,7 +28,7 @@ metadata:
   name: ${INGRESS_GATEWAY_NAMESPACE}
   labels:
     name: ${INGRESS_GATEWAY_NAMESPACE}
-    istio.io/rev: ${ASM_VERSION}
+    istio-injection: enabled
     istio-discovery: enabled
 EOF
 ```

@@ -46,7 +46,7 @@ spec:
     - resource-group-system
   parameters:
     labels:
-    - key: istio.io/rev
+    - key: istio-injection
     - key: istio-discovery
 EOF
 ```
