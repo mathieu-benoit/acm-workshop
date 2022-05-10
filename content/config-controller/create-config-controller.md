@@ -32,7 +32,7 @@ source ${WORK_DIR}acm-workshop-variables.sh
 Create the Config Controller's GCP project either at the Folder level or the Organization level:
 {{< tabs groupId="org-level">}}
 {{% tab name="Folder level" %}}
-Create this GCP project at a Folder level:
+Create this resource at a Folder level:
 ```Bash
 gcloud projects create $CONFIG_CONTROLLER_PROJECT_ID \
     --folder $ORG_OR_FOLDER_ID \
@@ -40,7 +40,7 @@ gcloud projects create $CONFIG_CONTROLLER_PROJECT_ID \
 ```
 {{% /tab %}}
 {{% tab name="Org level" %}}
-Alternatively, you could also create this GCP project at the Organization level:
+Alternatively, you could also create this resource at the Organization level:
 ```Bash
 gcloud projects create $CONFIG_CONTROLLER_PROJECT_ID \
     --organization $ORG_OR_FOLDER_ID \
@@ -81,14 +81,6 @@ gcloud anthos config controller create $CONFIG_CONTROLLER_NAME \
 The Config Controller instance provisioning could take around 15-20 min.
 {{% /notice %}}
 
-Check that the Config Controller instance was successfully created:
-```Bash
-gcloud anthos config controller list \
-    --location $CONFIG_CONTROLLER_LOCATION
-gcloud anthos config controller describe $CONFIG_CONTROLLER_NAME \
-    --location $CONFIG_CONTROLLER_LOCATION
-```
-
 ## Get the Config Controller instance credentials
 
 ```Bash
@@ -105,31 +97,8 @@ CONFIG_CONTROLLER_SA="$(kubectl get ConfigConnectorContext \
     -o jsonpath='{.items[0].spec.googleServiceAccount}')"
 ```
 
-Set the `resourcemanager.projectCreator` role either at the Folder level or the Organization level:
-{{< tabs groupId="org-level">}}
-{{% tab name="Folder level" %}}
-Create this GCP project at a Folder level:
+Set the `serviceusage.serviceUsageAdmin` and `iam.serviceAccountAdmin` roles:
 ```Bash
-gcloud resource-manager folders add-iam-policy-binding ${ORG_OR_FOLDER_ID} \
-    --member="serviceAccount:${CONFIG_CONTROLLER_SA}" \
-    --role='roles/resourcemanager.projectCreator'
-```
-{{% /tab %}}
-{{% tab name="Org level" %}}
-Alternatively, you could also create this GCP project at the Organization level:
-```Bash
-gcloud organizations add-iam-policy-binding ${ORG_OR_FOLDER_ID} \
-    --member="serviceAccount:${CONFIG_CONTROLLER_SA}" \
-    --role='roles/resourcemanager.projectCreator'
-```
-{{% /tab %}}
-{{< /tabs >}}
-
-Set the `billing.user`, `serviceusage.serviceUsageAdmin` and `iam.serviceAccountAdmin` roles:
-```Bash
-gcloud beta billing accounts add-iam-policy-binding ${BILLING_ACCOUNT_ID} \
-    --member="serviceAccount:${CONFIG_CONTROLLER_SA}" \
-    --role='roles/billing.user'
 gcloud projects add-iam-policy-binding ${CONFIG_CONTROLLER_PROJECT_ID} \
     --member="serviceAccount:${CONFIG_CONTROLLER_SA}" \
     --role='roles/serviceusage.serviceUsageAdmin'
@@ -145,46 +114,15 @@ List the GCP resources created:
 gcloud projects describe $CONFIG_CONTROLLER_PROJECT_ID
 gcloud anthos config controller list \
     --project $CONFIG_CONTROLLER_PROJECT_ID
-gcloud beta billing accounts get-iam-policy ${BILLING_ACCOUNT_ID} \
-    --filter="bindings.members:${CONFIG_CONTROLLER_SA}" \
-    --flatten="bindings[].members" \
-    --format="table(bindings.role)"
 gcloud projects get-iam-policy $CONFIG_CONTROLLER_PROJECT_ID \
     --filter="bindings.members:${CONFIG_CONTROLLER_SA}" \
     --flatten="bindings[].members" \
     --format="table(bindings.role)"
 ```
-{{< tabs groupId="org-level">}}
-{{% tab name="Folder level" %}}
-```Bash
-gcloud resource-manager folders get-iam-policy $ORG_OR_FOLDER_ID \
-    --filter="bindings.members:${CONFIG_CONTROLLER_SA}" \
-    --flatten="bindings[].members" \
-    --format="table(bindings.role)"
-```
-{{% /tab %}}
-{{% tab name="Org level" %}}
-```Bash
-gcloud organizations get-iam-policy $ORG_OR_FOLDER_ID \
-    --filter="bindings.members:${CONFIG_CONTROLLER_SA}" \
-    --flatten="bindings[].members" \
-    --format="table(bindings.role)"
-```
-{{% /tab %}}
-{{< /tabs >}}
-
 ```Plaintext
 NAME                                                                       LOCATION  STATE
 projects/acm-workshop-463/locations/us-east1/krmApiHosts/configcontroller  us-east1  RUNNING
 ROLE
-roles/resourcemanager.projectCreator
-ROLE
-roles/billing.user
-ROLE
 roles/iam.serviceAccountAdmin
 roles/serviceusage.serviceUsageAdmin
-```
-```Plaintext
-ROLE
-roles/resourcemanager.projectCreator
 ```

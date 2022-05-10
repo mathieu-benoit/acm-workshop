@@ -16,7 +16,6 @@ source ${WORK_DIR}acm-workshop-variables.sh
 
 Create a dedicated folder for this GKE project resources:
 ```Bash
-mkdir ~/$WORKSHOP_ORG_DIR_NAME/config-sync/projects
 mkdir ~/$WORKSHOP_ORG_DIR_NAME/config-sync/projects/$GKE_PROJECT_ID
 ```
 
@@ -34,7 +33,7 @@ metadata:
   annotations:
     cnrm.cloud.google.com/auto-create-network: "false"
   name: ${GKE_PROJECT_ID}
-  namespace: config-control
+  namespace: ${PROJECTS_NAMESPACE}
 spec:
   name: ${GKE_PROJECT_ID}
   billingAccountRef:
@@ -55,7 +54,7 @@ metadata:
   annotations:
     cnrm.cloud.google.com/auto-create-network: "false"
   name: ${GKE_PROJECT_ID}
-  namespace: config-control
+  namespace: ${PROJECTS_NAMESPACE}
 spec:
   name: ${GKE_PROJECT_ID}
   billingAccountRef:
@@ -76,9 +75,9 @@ apiVersion: iam.cnrm.cloud.google.com/v1beta1
 kind: IAMServiceAccount
 metadata:
   name: ${GKE_PROJECT_ID}
-  namespace: config-control
+  namespace: ${PROJECTS_NAMESPACE}
   annotations:
-    config.kubernetes.io/depends-on: resourcemanager.cnrm.cloud.google.com/namespaces/config-control/Project/${GKE_PROJECT_ID}
+    config.kubernetes.io/depends-on: resourcemanager.cnrm.cloud.google.com/namespaces/${PROJECTS_NAMESPACE}/Project/${GKE_PROJECT_ID}
 spec:
   displayName: ${GKE_PROJECT_ID}
 EOF
@@ -90,13 +89,12 @@ apiVersion: iam.cnrm.cloud.google.com/v1beta1
 kind: IAMPartialPolicy
 metadata:
   name: ${GKE_PROJECT_ID}-sa-wi-user
-  namespace: config-control
+  namespace: ${PROJECTS_NAMESPACE}
   annotations:
-    config.kubernetes.io/depends-on: iam.cnrm.cloud.google.com/namespaces/config-control/IAMServiceAccount/${GKE_PROJECT_ID}
+    config.kubernetes.io/depends-on: iam.cnrm.cloud.google.com/namespaces/${PROJECTS_NAMESPACE}/IAMServiceAccount/${GKE_PROJECT_ID}
 spec:
   resourceRef:
     name: ${GKE_PROJECT_ID}
-    apiVersion: iam.cnrm.cloud.google.com/v1beta1
     kind: IAMServiceAccount
   bindings:
     - role: roles/iam.workloadIdentityUser
@@ -117,8 +115,6 @@ kind: Namespace
 metadata:
   annotations:
     cnrm.cloud.google.com/project-id: ${GKE_PROJECT_ID}
-  labels:
-    owner: ${GKE_PROJECT_ID}
   name: ${GKE_PROJECT_ID}
 EOF
 ```
@@ -131,7 +127,7 @@ metadata:
   name: configconnectorcontext.core.cnrm.cloud.google.com
   namespace: ${GKE_PROJECT_ID}
   annotations:
-    config.kubernetes.io/depends-on: iam.cnrm.cloud.google.com/namespaces/config-control/IAMServiceAccount/${GKE_PROJECT_ID}
+    config.kubernetes.io/depends-on: iam.cnrm.cloud.google.com/namespaces/${PROJECTS_NAMESPACE}/IAMServiceAccount/${GKE_PROJECT_ID}
 spec:
   googleServiceAccount: ${GKE_PROJECT_SA_EMAIL}
 EOF
