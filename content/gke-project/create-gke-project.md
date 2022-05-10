@@ -189,3 +189,35 @@ getting 1 RepoSync and RootSync from krmapihost-configcontroller
 │ serviceusage.cnrm.cloud.google.com    │ Service                │ cloudbilling.googleapis.com     │ config-control       │
 └───────────────────────────────────────┴────────────────────────┴─────────────────────────────────┴──────────────────────┘
 ```
+
+Here, if you skipped the assignment of the `billing.user` role earlier while you were setting up your Config Controller instance, you will have an error with the creation of the `Project`. A simple way to make sure you don't have any error is to run this command below:
+```Bash
+kubectl get gcpproject -n config-control
+```
+
+If the output is similar to this below, you are good:
+```Plaintext
+NAMESPACE        NAME                     AGE     READY   STATUS     STATUS AGE
+config-control   acm-workshop-463-gke     24m     True    UpToDate   21m
+```
+
+But if you have this output below, that's where you will need to take actions:
+```Plaintext
+NAMESPACE        NAME                     AGE     READY   STATUS        STATUS AGE
+config-control   acm-workshop-463-gke     24m     True    UpdateFailed  21m
+```
+
+With a closer look at the error by running this command `kubectl descibe gcpproject -n config-control`, you will see that the error is similar too:
+```Plaintext
+Update call failed: error applying desired state: summary: Error setting billing account "XXX" for project "projects/acm-workshop-463-gke": googleapi: Error 403: The caller does not have permission, forbidden
+```
+
+You can resolve this issue by running by yourself this command below:
+```Bash
+gcloud beta billing projects link $GKE_PROJECT_ID \
+    --billing-account $BILLING_ACCOUNT_ID
+```
+
+As Config Connector is still reconciling the resources, if you successfully ran this command, the error will disappear. You can run again the command `kubectl get gcpproject -n config-control` to make sure about that.
+
+If you can't run the command above, the alternative is having someone in your organization (Billing Account or Organization admins) running it for you.

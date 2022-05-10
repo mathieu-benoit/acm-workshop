@@ -127,11 +127,8 @@ gcloud organizations add-iam-policy-binding ${ORG_OR_FOLDER_ID} \
 {{% /tab %}}
 {{< /tabs >}}
 
-Set the `billing.user`, `serviceusage.serviceUsageAdmin` and `iam.serviceAccountAdmin` roles:
+Set the `serviceusage.serviceUsageAdmin` and `iam.serviceAccountAdmin` roles:
 ```Bash
-gcloud beta billing accounts add-iam-policy-binding ${BILLING_ACCOUNT_ID} \
-    --member="serviceAccount:${CONFIG_CONTROLLER_SA}" \
-    --role='roles/billing.user'
 gcloud projects add-iam-policy-binding ${CONFIG_CONTROLLER_PROJECT_ID} \
     --member="serviceAccount:${CONFIG_CONTROLLER_SA}" \
     --role='roles/serviceusage.serviceUsageAdmin'
@@ -139,6 +136,16 @@ gcloud projects add-iam-policy-binding ${CONFIG_CONTROLLER_PROJECT_ID} \
     --member="serviceAccount:${CONFIG_CONTROLLER_SA}" \
     --role='roles/iam.serviceAccountAdmin'
 ```
+
+Finally, you need to assign the `billing.user` role too. Later in this workshop, it will be needed to attach a `Project` to a Billing Account. If you don't have the proper role you may have an error by running the command below. In this case you need to ask your Billing Account or Organization admins in order to run this command for you.
+```Bash
+gcloud beta billing accounts add-iam-policy-binding ${BILLING_ACCOUNT_ID} \
+    --member="serviceAccount:${CONFIG_CONTROLLER_SA}" \
+    --role='roles/billing.user'
+```
+{{% notice note %}}
+In some specific scenario, you may not be able to accomplish this step. You could skip it for now, another way to assign the Billing Account to a `Project` will be provided later in this workshop, when you will need it.
+{{% /notice %}}
 
 ## Check deployments
 
