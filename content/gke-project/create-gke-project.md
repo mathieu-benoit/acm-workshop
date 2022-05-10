@@ -116,8 +116,6 @@ kind: Namespace
 metadata:
   annotations:
     cnrm.cloud.google.com/project-id: ${GKE_PROJECT_ID}
-  labels:
-    owner: ${GKE_PROJECT_ID}
   name: ${GKE_PROJECT_ID}
 EOF
 ```
