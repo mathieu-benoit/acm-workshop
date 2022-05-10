@@ -32,7 +32,7 @@ source ${WORK_DIR}acm-workshop-variables.sh
 Create the Config Controller's GCP project either at the Folder level or the Organization level:
 {{< tabs groupId="org-level">}}
 {{% tab name="Folder level" %}}
-Create this GCP project at a Folder level:
+Create this resource at a Folder level:
 ```Bash
 gcloud projects create $CONFIG_CONTROLLER_PROJECT_ID \
     --folder $ORG_OR_FOLDER_ID \
@@ -40,7 +40,7 @@ gcloud projects create $CONFIG_CONTROLLER_PROJECT_ID \
 ```
 {{% /tab %}}
 {{% tab name="Org level" %}}
-Alternatively, you could also create this GCP project at the Organization level:
+Alternatively, you could also create this resource at the Organization level:
 ```Bash
 gcloud projects create $CONFIG_CONTROLLER_PROJECT_ID \
     --organization $ORG_OR_FOLDER_ID \
@@ -108,7 +108,7 @@ CONFIG_CONTROLLER_SA="$(kubectl get ConfigConnectorContext \
 Set the `resourcemanager.projectCreator` role either at the Folder level or the Organization level:
 {{< tabs groupId="org-level">}}
 {{% tab name="Folder level" %}}
-Create this GCP project at a Folder level:
+Create this resource at a Folder level:
 ```Bash
 gcloud resource-manager folders add-iam-policy-binding ${ORG_OR_FOLDER_ID} \
     --member="serviceAccount:${CONFIG_CONTROLLER_SA}" \
@@ -116,7 +116,7 @@ gcloud resource-manager folders add-iam-policy-binding ${ORG_OR_FOLDER_ID} \
 ```
 {{% /tab %}}
 {{% tab name="Org level" %}}
-Alternatively, you could also create this GCP project at the Organization level:
+Alternatively, you could also create this resource at the Organization level:
 ```Bash
 gcloud organizations add-iam-policy-binding ${ORG_OR_FOLDER_ID} \
     --member="serviceAccount:${CONFIG_CONTROLLER_SA}" \
