@@ -101,7 +101,6 @@ spec:
       name: ${GKE_SA}
       namespace: ${GKE_PROJECT_ID}
   resourceRef:
-    apiVersion: resourcemanager.cnrm.cloud.google.com/v1beta1
     kind: Project
     external: ${GKE_PROJECT_ID}
   role: roles/logging.logWriter
@@ -120,7 +119,6 @@ spec:
       name: ${GKE_SA}
       namespace: ${GKE_PROJECT_ID}
   resourceRef:
-    apiVersion: resourcemanager.cnrm.cloud.google.com/v1beta1
     kind: Project
     external: ${GKE_PROJECT_ID}
   role: roles/monitoring.metricWriter
@@ -139,7 +137,6 @@ spec:
       name: ${GKE_SA}
       namespace: ${GKE_PROJECT_ID}
   resourceRef:
-    apiVersion: resourcemanager.cnrm.cloud.google.com/v1beta1
     kind: Project
     external: ${GKE_PROJECT_ID}
   role: roles/monitoring.viewer
@@ -158,7 +155,6 @@ spec:
       name: ${GKE_SA}
       namespace: ${GKE_PROJECT_ID}
   resourceRef:
-    apiVersion: resourcemanager.cnrm.cloud.google.com/v1beta1
     kind: Project
     external: ${GKE_PROJECT_ID}
   role: roles/cloudtrace.agent

@@ -46,7 +46,6 @@ spec:
       name: ${GKE_SA}
       namespace: ${GKE_PROJECT_ID}
   resourceRef:
-    apiVersion: artifactregistry.cnrm.cloud.google.com/v1beta1
     kind: ArtifactRegistryRepository
     name: ${CONTAINER_REGISTRY_NAME}
   role: roles/artifactregistry.reader

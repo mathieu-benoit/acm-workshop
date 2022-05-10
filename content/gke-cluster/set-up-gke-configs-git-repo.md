@@ -124,7 +124,6 @@ metadata:
 spec:
   resourceRef:
     name: ${GKE_SA}
-    apiVersion: iam.cnrm.cloud.google.com/v1beta1
     kind: IAMServiceAccount
   bindings:
     - role: roles/iam.workloadIdentityUser

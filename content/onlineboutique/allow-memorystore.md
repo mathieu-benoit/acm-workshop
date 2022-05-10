@@ -49,7 +49,6 @@ spec:
       name: ${GKE_PROJECT_ID}
   role: roles/redis.admin
   resourceRef:
-    apiVersion: resourcemanager.cnrm.cloud.google.com/v1beta1
     kind: Project
     external: projects/${GKE_PROJECT_ID}
 EOF

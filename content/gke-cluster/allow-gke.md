@@ -28,7 +28,6 @@ spec:
       name: ${GKE_PROJECT_ID}
   role: roles/container.admin
   resourceRef:
-    apiVersion: resourcemanager.cnrm.cloud.google.com/v1beta1
     kind: Project
     external: projects/${GKE_PROJECT_ID}
 EOF
@@ -46,7 +45,6 @@ spec:
       name: ${GKE_PROJECT_ID}
   role: roles/iam.serviceAccountAdmin
   resourceRef:
-    apiVersion: resourcemanager.cnrm.cloud.google.com/v1beta1
     kind: Project
     external: projects/${GKE_PROJECT_ID}
 EOF
@@ -64,7 +62,6 @@ spec:
       name: ${GKE_PROJECT_ID}
   role: roles/resourcemanager.projectIamAdmin
   resourceRef:
-    apiVersion: resourcemanager.cnrm.cloud.google.com/v1beta1
     kind: Project
     external: projects/${GKE_PROJECT_ID}
 EOF
@@ -82,7 +79,6 @@ spec:
       name: ${GKE_PROJECT_ID}
   role: roles/iam.serviceAccountUser
   resourceRef:
-    apiVersion: resourcemanager.cnrm.cloud.google.com/v1beta1
     kind: Project
     external: projects/${GKE_PROJECT_ID}
 EOF
