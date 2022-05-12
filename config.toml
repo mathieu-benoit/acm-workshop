@@ -10,7 +10,7 @@ googleAnalytics = 'G-NJ4GHWP296'
 
 [params]
   editURL = "https://github.com/mathieu-benoit/acm-workshop/edit/main/content/"
-  description = "Anthos Config Management Workshop"
+  description = "Anthos Config Management Workshop - Team 1"
   author = "Mathieu Benoit"
   showVisitedLinks = true
   disableBreadcrumb = false
