@@ -3,6 +3,7 @@ title: "Allow Memorystore"
 weight: 2
 description: "Duration: 5 min | Persona: Org Admin"
 ---
+![Platform Admin](/images/platform-admin.png)
 _{{< param description >}}_
 
 Initialize variables:

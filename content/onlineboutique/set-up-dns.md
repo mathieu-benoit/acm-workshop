@@ -3,6 +3,7 @@ title: "Set up DNS"
 weight: 4
 description: "Duration: 5 min | Persona: Platform Admin"
 ---
+![Platform Admin](/images/platform-admin.png)
 _{{< param description >}}_
 
 Initialize variables:

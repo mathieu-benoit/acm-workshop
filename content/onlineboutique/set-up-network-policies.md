@@ -3,6 +3,7 @@ title: "Set up Network Policies"
 weight: 6
 description: "Duration: 5 min | Persona: Apps Operator"
 ---
+![Apps Operator](/images/apps-operator.png)
 _{{< param description >}}_
 
 Initialize variables:
