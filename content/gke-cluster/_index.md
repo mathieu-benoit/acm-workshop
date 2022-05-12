@@ -2,6 +2,7 @@
 title: "4. GKE cluster"
 chapter: true
 weight: 5
+hidden: true
 ---
 Set up the GKE cluster.
 

@@ -2,6 +2,7 @@
 title: "8. Whereami app"
 chapter: true
 weight: 9
+hidden: true
 ---
 Set up the Whereami app.
 

@@ -2,6 +2,7 @@
 title: "2. GKE project"
 chapter: true
 weight: 3
+hidden: true
 ---
 Set up the GKE project.
 

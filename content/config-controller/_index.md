@@ -2,6 +2,7 @@
 title: "1. Config Controller"
 chapter: true
 weight: 2
+hidden: true
 ---
 Set up Config Controller.
 

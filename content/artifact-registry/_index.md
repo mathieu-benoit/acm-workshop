@@ -2,6 +2,7 @@
 title: "5. Artifact Registry"
 chapter: true
 weight: 6
+hidden: true
 ---
 Set up Artifact Registry.
 

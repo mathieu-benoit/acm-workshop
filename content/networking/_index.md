@@ -2,6 +2,7 @@
 title: "3. Networking"
 chapter: true
 weight: 4
+hidden: true
 ---
 Set up the Networking.
 

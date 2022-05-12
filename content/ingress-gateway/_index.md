@@ -2,6 +2,7 @@
 title: "7. Ingress Gateway"
 chapter: true
 weight: 8
+hidden: true
 ---
 Set up Anthos Service Mesh (ASM) Ingress Gateway.
 
