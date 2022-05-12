@@ -47,7 +47,6 @@ spec:
   parameters:
     labels:
     - key: istio-injection
-    - key: istio-discovery
 EOF
 ```
 

@@ -30,7 +30,6 @@ metadata:
   labels:
     name: ${WHEREAMI_NAMESPACE}
     istio-injection: enabled
-    istio-discovery: enabled
 EOF
 ```
 

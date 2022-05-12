@@ -29,7 +29,6 @@ metadata:
   labels:
     name: ${INGRESS_GATEWAY_NAMESPACE}
     istio-injection: enabled
-    istio-discovery: enabled
 EOF
 ```
 

@@ -23,7 +23,7 @@ data:
         imageType: distroless
     discoverySelectors:
     - matchLabels:
-        istio-discovery: enabled
+        istio-injection: enabled
 kind: ConfigMap
 metadata:
   name: istio-${ASM_VERSION}
