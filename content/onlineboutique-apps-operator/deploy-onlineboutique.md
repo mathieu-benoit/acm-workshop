@@ -10,14 +10,27 @@ In this section, you will deploy your Online Boutique apps using Kustomize.
 
 Initialize variables:
 ```Bash
+WORK_DIR=~/
+touch ${WORK_DIR}acm-workshop-variables.sh
+chmod +x ${WORK_DIR}acm-workshop-variables.sh
+GKE_PROJECT_ID=acm-workshop-464-gke
+echo "export GKE_PROJECT_ID=${GKE_PROJECT_ID}" >> ${WORK_DIR}acm-workshop-variables.sh
+ONLINEBOUTIQUE_NAMESPACE=ob-team1
+echo "export ONLINEBOUTIQUE_NAMESPACE=${ONLINEBOUTIQUE_NAMESPACE}" >> ${WORK_DIR}acm-workshop-variables.sh
+echo "export ONLINE_BOUTIQUE_DIR_NAME=acm-workshop-${ONLINEBOUTIQUE_NAMESPACE}-repo" >> ${WORK_DIR}acm-workshop-variables.sh
+echo "export ONLINE_BOUTIQUE_INGRESS_GATEWAY_HOST_NAME='${ONLINEBOUTIQUE_NAMESPACE}.endpoints.${GKE_PROJECT_ID}.cloud.goog'" >> ${WORK_DIR}acm-workshop-variables.sh
+echo "gcloud config set accessibility/screen_reader false" >> ${WORK_DIR}acm-workshop-variables.sh
 source ${WORK_DIR}acm-workshop-variables.sh
 ```
 
-A GitHub repository already exists where all the Kubernetes manifests to deploy Online Boutique apps are stored. It was created in a previous section by the Platform Admin. Here you are cloning this repo in order to add the Online Boutique manifests:
+A GitHub repository already exists where all the Kubernetes manifests to deploy Online Boutique apps are stored. It was created in a previous section by the Platform Admin. 
+
+First thing first, you need to ask your Platform Admin to grant you access as Contributor/Editor to this Online Boutique GitHub repo.
+
+Then, you are cloning this repo in order to add the Online Boutique manifests:
 ```Bash
 cd ~
-git clone https://github.com/mathieu-benoit/$GKE_PROJECT_DIR_NAME
-mkdir ~/$GKE_PROJECT_DIR_NAME/config-sync/$ONLINEBOUTIQUE_NAMESPACE
+git clone https://github.com/FIXME/$ONLINEBOUTIQUE_NAMESPACE
 ```
 
 ## Get upstream Kubernetes manifests
@@ -56,6 +69,16 @@ You could browse the files in the `~/$ONLINE_BOUTIQUE_DIR_NAME/upstream/base` fo
 
 ## Define Staging namespace overlay
 
+You need first to grab the Memorystore (redis) connection information:
+```Bash
+export REDIS_IP=$(gcloud redis instances describe $REDIS_NAME --region=$GKE_LOCATION --project=$GKE_PROJECT_ID --format='get(host)')
+export REDIS_PORT=$(gcloud redis instances describe $REDIS_NAME --region=$GKE_LOCATION --project=$GKE_PROJECT_ID --format='get(port)')
+echo $REDIS_IP
+echo $REDIS_PORT
+echo "export REDIS_IP=${REDIS_IP}" >> ${WORK_DIR}acm-workshop-variables.sh
+echo "export REDIS_PORT=${REDIS_PORT}" >> ${WORK_DIR}acm-workshop-variables.sh
+```
+
 Here are the updates for the overlay files needed to define the Staging namespace:
 ```Bash
 cd ~/$ONLINE_BOUTIQUE_DIR_NAME/staging
@@ -68,6 +91,9 @@ cp -r ../upstream/base/for-virtualservice-host/ .
 sed -i "s/HOST_NAME/${ONLINE_BOUTIQUE_INGRESS_GATEWAY_HOST_NAME}/g" for-virtualservice-host/kustomization.yaml
 kustomize edit add component for-virtualservice-host
 ```
+{{% notice note %}}
+If you have an error message, it's because you don't have access to this project, no worries, just asked your Platform Admin to run that for you and provide you these information :)
+{{% /notice %}}
 
 ## Deploy Kubernetes manifests
 

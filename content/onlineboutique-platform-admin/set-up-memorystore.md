@@ -156,15 +156,3 @@ getting 1 RepoSync and RootSync from krmapihost-configcontroller
 {{% notice info %}}
 There is an issue currently with this command, you will get this error message: `ERROR: Timed out getting ConfigManagement object from krmapihost-configcontroller` instead.
 {{% /notice %}}
-
-## Get Memorystore (redis) connection information
-
-Make sure the Memorystore (redis) instance is successfully provisioned and get its associated connection information we will leverage in the next section:
-```Bash
-export REDIS_IP=$(gcloud redis instances describe $REDIS_NAME --region=$GKE_LOCATION --project=$GKE_PROJECT_ID --format='get(host)')
-export REDIS_PORT=$(gcloud redis instances describe $REDIS_NAME --region=$GKE_LOCATION --project=$GKE_PROJECT_ID --format='get(port)')
-echo $REDIS_IP
-echo $REDIS_PORT
-echo "export REDIS_IP=${REDIS_IP}" >> ${WORK_DIR}acm-workshop-variables.sh
-echo "export REDIS_PORT=${REDIS_PORT}" >> ${WORK_DIR}acm-workshop-variables.sh
-```
