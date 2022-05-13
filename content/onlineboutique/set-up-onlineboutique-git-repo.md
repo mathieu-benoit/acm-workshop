@@ -17,6 +17,7 @@ echo "export GKE_CONFIGS_DIR_NAME=acm-workshop-gke-configs-repo" >> ${WORK_DIR}a
 ONLINEBOUTIQUE_NAMESPACE=ob-team1
 echo "export ONLINEBOUTIQUE_NAMESPACE=${ONLINEBOUTIQUE_NAMESPACE}" >> ${WORK_DIR}acm-workshop-variables.sh
 echo "export ONLINE_BOUTIQUE_DIR_NAME=acm-workshop-${ONLINEBOUTIQUE_NAMESPACE}-repo" >> ${WORK_DIR}acm-workshop-variables.sh
+echo "gcloud config set accessibility/screen_reader false" >> ${WORK_DIR}acm-workshop-variables.sh
 source ${WORK_DIR}acm-workshop-variables.sh
 ```
 
@@ -105,10 +106,9 @@ git push origin main
 
 ## Check deployments
 
-List the GitHub runs for the **GKE cluster configs** repository `cd ~/$GKE_CONFIGS_DIR_NAME && gh run list -L 1`:
+List the GitHub runs for the **GKE cluster configs** repository `cd ~/$GKE_CONFIGS_DIR_NAME && gh run list | grep $ONLINEBOUTIQUE_NAMESPACE`:
 ```Plaintext
-STATUS  NAME                                                  WORKFLOW  BRANCH  EVENT  ID          ELAPSED  AGE
-✓       GitOps for Online Boutique apps                       ci        main    push   1976985906  1m5s     1m
+completed       GitOps for Online Boutique apps                       ci        main    push   1976985906  1m5s     1m
 ```
 
 List the Kubernetes resources managed by Config Sync in the **GKE cluster** for the **GKE cluster configs** repository:
@@ -117,56 +117,12 @@ gcloud alpha anthos config sync repo describe \
     --project $GKE_PROJECT_ID \
     --managed-resources all \
     --sync-name root-sync \
-    --sync-namespace config-management-system
+    --sync-namespace config-management-system \
+    | grep $ONLINEBOUTIQUE_NAMESPACE
 ```
 ```Plaintext
-getting 1 RepoSync and RootSync from gke-hub-membership
-┌───────────────────────────┬───────────────────────────┬─────────────────────────────────┬──────────────────────────────┐
-│           GROUP           │            KIND           │               NAME              │          NAMESPACE           │
-├───────────────────────────┼───────────────────────────┼─────────────────────────────────┼──────────────────────────────┤
-│                           │ Namespace                 │ asm-ingress                     │                              │
-│                           │ Namespace                 │ istio-config                    │                              │
-│                           │ Namespace                 │ onlineboutique                  │                              │
-│                           │ Namespace                 │ config-management-monitoring    │                              │
-│                           │ Namespace                 │ whereami                        │                              │
-│                           │ Namespace                 │ istio-system                    │                              │
-│ constraints.gatekeeper.sh │ K8sRequiredLabels         │ automatic-sidecar-injection     │                              │
-│ constraints.gatekeeper.sh │ AllowedServicePortName    │ allowed-service-port-names      │                              │
-│ constraints.gatekeeper.sh │ K8sAllowedRepos           │ allowed-container-registries    │                              │
-│ constraints.gatekeeper.sh │ PolicyStrictOnly          │ policy-strict-only              │                              │
-│ constraints.gatekeeper.sh │ K8sRequiredLabels         │ deployment-required-labels      │                              │
-│ constraints.gatekeeper.sh │ SourceNotAllAuthz         │ defined-authz-source-principals │                              │
-│ constraints.gatekeeper.sh │ DestinationRuleTLSEnabled │ destination-rule-tls-enabled    │                              │
-│ constraints.gatekeeper.sh │ K8sRequiredLabels         │ namespace-required-labels       │                              │
-│ networking.gke.io         │ NetworkLogging            │ default                         │                              │
-│ templates.gatekeeper.sh   │ ConstraintTemplate        │ policystrictonly                │                              │
-│ templates.gatekeeper.sh   │ ConstraintTemplate        │ sourcenotallauthz               │                              │
-│ templates.gatekeeper.sh   │ ConstraintTemplate        │ k8srequiredlabels               │                              │
-│ templates.gatekeeper.sh   │ ConstraintTemplate        │ allowedserviceportname          │                              │
-│ templates.gatekeeper.sh   │ ConstraintTemplate        │ k8sallowedrepos                 │                              │
-│ templates.gatekeeper.sh   │ ConstraintTemplate        │ destinationruletlsenabled       │                              │
-│                           │ Service                   │ asm-ingressgateway              │ asm-ingress                  │
-│                           │ ServiceAccount            │ asm-ingressgateway              │ asm-ingress                  │
-│ apps                      │ Deployment                │ asm-ingressgateway              │ asm-ingress                  │
-│ cloud.google.com          │ BackendConfig             │ asm-ingressgateway              │ asm-ingress                  │
-│ networking.gke.io         │ ManagedCertificate        │ whereami                        │ asm-ingress                  │
-│ networking.gke.io         │ FrontendConfig            │ asm-ingressgateway              │ asm-ingress                  │
-│ networking.istio.io       │ Gateway                   │ asm-ingressgateway              │ asm-ingress                  │
-│ networking.k8s.io         │ NetworkPolicy             │ denyall                         │ asm-ingress                  │
-│ networking.k8s.io         │ NetworkPolicy             │ asm-ingressgateway              │ asm-ingress                  │
-│ networking.k8s.io         │ Ingress                   │ asm-ingressgateway              │ asm-ingress                  │
-│ rbac.authorization.k8s.io │ Role                      │ asm-ingressgateway              │ asm-ingress                  │
-│ rbac.authorization.k8s.io │ RoleBinding               │ asm-ingressgateway              │ asm-ingress                  │
-│ security.istio.io         │ AuthorizationPolicy       │ asm-ingressgateway              │ asm-ingress                  │
-│ security.istio.io         │ AuthorizationPolicy       │ deny-all                        │ asm-ingress                  │
-│                           │ ServiceAccount            │ default                         │ config-management-monitoring │
-│ networking.istio.io       │ Sidecar                   │ default                         │ istio-config                 │
-│                           │ ConfigMap                 │ istio-asm-managed-rapid         │ istio-system                 │
-│ mesh.cloud.google.com     │ ControlPlaneRevision      │ asm-managed-rapid               │ istio-system                 │
-│ security.istio.io         │ PeerAuthentication        │ default                         │ istio-system                 │
-│ configsync.gke.io         │ RepoSync                  │ repo-sync                       │ onlineboutique               │
-│ rbac.authorization.k8s.io │ RoleBinding               │ repo-sync                       │ onlineboutique               │
-│ configsync.gke.io         │ RepoSync                  │ repo-sync                       │ whereami                     │
-│ rbac.authorization.k8s.io │ RoleBinding               │ repo-sync                       │ whereami                     │
-└───────────────────────────┴───────────────────────────┴─────────────────────────────────┴──────────────────────────────┘
+getting 1 RepoSync and RootSync from projects/acm-workshop-464-gke/locations/global/memberships/gke-hub-membership
+│                           │ Namespace                 │ ob-team1                            │                              │ Current │
+│ configsync.gke.io         │ RepoSync                  │ repo-sync                           │ ob-team1                     │ Current │
+│ rbac.authorization.k8s.io │ RoleBinding               │ repo-sync                           │ ob-team1                     │ Current │
 ```

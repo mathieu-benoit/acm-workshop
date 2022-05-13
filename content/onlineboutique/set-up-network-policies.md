@@ -9,6 +9,8 @@ _{{< param description >}}_
 Initialize variables:
 ```Bash
 source ${WORK_DIR}acm-workshop-variables.sh
+echo "export INGRESS_GATEWAY_NAME=asm-ingressgateway" >> ${WORK_DIR}acm-workshop-variables.sh
+source ${WORK_DIR}acm-workshop-variables.sh
 ```
 
 ## Get upstream Kubernetes manifests
@@ -59,7 +61,7 @@ patchesJson6902:
           - port: 8080
             protocol: TCP
 EOF
-kustomize edit add resources ../upstream/network-policies
+kustomize edit add resource ../upstream/network-policies
 kustomize edit add component network-policies
 ```
 
