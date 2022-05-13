@@ -8,7 +8,12 @@ _{{< param description >}}_
 
 Initialize variables:
 ```Bash
-source ${WORK_DIR}acm-workshop-variables.sh
+WORK_DIR=~/
+touch ${WORK_DIR}acm-workshop-variables.sh
+chmod +x ${WORK_DIR}acm-workshop-variables.sh
+GKE_PROJECT_ID=acm-workshop-464-gke
+echo "export GKE_PROJECT_ID=${GKE_PROJECT_ID}" >> ${WORK_DIR}acm-workshop-variables.sh
+echo "export GKE_CONFIGS_DIR_NAME=acm-workshop-gke-configs-repo" >> ${WORK_DIR}acm-workshop-variables.sh
 ONLINEBOUTIQUE_NAMESPACE=ob-team1
 echo "export ONLINEBOUTIQUE_NAMESPACE=${ONLINEBOUTIQUE_NAMESPACE}" >> ${WORK_DIR}acm-workshop-variables.sh
 echo "export ONLINE_BOUTIQUE_DIR_NAME=acm-workshop-${ONLINEBOUTIQUE_NAMESPACE}-repo" >> ${WORK_DIR}acm-workshop-variables.sh
@@ -16,7 +21,8 @@ source ${WORK_DIR}acm-workshop-variables.sh
 ```
 
 ```Bash
-mkdir ~/$GKE_CONFIGS_DIR_NAME/config-sync/repo-syncs
+cd ~
+git clone https://github.com/mathieu-benoit/$GKE_CONFIGS_DIR_NAME
 mkdir ~/$GKE_CONFIGS_DIR_NAME/config-sync/repo-syncs/$ONLINEBOUTIQUE_NAMESPACE
 ```
 
@@ -93,28 +99,16 @@ We are using the [`edit` user-facing role](https://kubernetes.io/docs/reference/
 ```Bash
 cd ~/$GKE_CONFIGS_DIR_NAME/
 git add .
-git commit -m "GitOps for Online Boutique apps"
+git commit -m "GitOps for ${ONLINEBOUTIQUE_NAMESPACE}"
 git push origin main
 ```
 
 ## Check deployments
 
-List the GitHub runs for the **GKE cluster configs** repository `cd ~/$GKE_CONFIGS_DIR_NAME && gh run list`:
+List the GitHub runs for the **GKE cluster configs** repository `cd ~/$GKE_CONFIGS_DIR_NAME && gh run list -L 1`:
 ```Plaintext
 STATUS  NAME                                                  WORKFLOW  BRANCH  EVENT  ID          ELAPSED  AGE
 ✓       GitOps for Online Boutique apps                       ci        main    push   1976985906  1m5s     1m
-✓       GitOps for Whereami app                               ci        main    push   1975326305  1m16s    6m
-✓       Ingress Gateway Authorization Policies                ci        main    push   1975262483  1m9s     39m
-✓       Ingress Gateway Network Policies                      ci        main    push   1975253466  1m11s    6m
-✓       ASM Ingress Gateway in GKE cluster                    ci        main    push   1975240395  1m14s    10m
-✓       Enforce ASM/Istio Policies in GKE cluster             ci        main    push   1972244827  59s      23h
-✓       ASM configs (mTLS, Sidecar, etc.) in GKE cluster      ci        main    push   1972234050  56s      23h
-✓       ASM MCP for GKE cluster                               ci        main    push   1972185200  1m8s     23h
-✓       Enforce Container Registries Policies in GKE cluster  ci        main    push   1972138349  55s      23h
-✓       Policies for NetworkPolicy resources                  ci        main    push   1971716019  1m14s    1d
-✓       Network Policies logging                              ci        main    push   1971353547  1m1s     1d
-✓       Config Sync monitoring                                ci        main    push   1971296656  1m9s     1d
-✓       Initial commit                                        ci        main    push   1970951731  57s      1d
 ```
 
 List the Kubernetes resources managed by Config Sync in the **GKE cluster** for the **GKE cluster configs** repository:
