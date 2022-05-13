@@ -78,7 +78,7 @@ git push origin main
 
 ## Check deployments
 
-List the GitHub runs for the **Online Boutique app** repository `cd ~/$ONLINE_BOUTIQUE_DIR_NAME && gh run list | grep $ONLINEBOUTIQUE_NAMESPACE`:
+List the GitHub runs for the **Online Boutique app** repository `cd ~/$ONLINE_BOUTIQUE_DIR_NAME && gh run list | grep $ONLINEBOUTIQUE_NAMESPACE -m 1`:
 ```Plaintext
 in_progress             Network Policies for ob-team1   ci      main    push    2317274227      7s      0m
 ```

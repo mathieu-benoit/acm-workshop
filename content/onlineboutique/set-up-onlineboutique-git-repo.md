@@ -6,7 +6,7 @@ description: "Duration: 10 min | Persona: Platform Admin"
 ![Platform Admin](/images/platform-admin.png)
 _{{< param description >}}_
 
-In this section, you will a GitOps setup with a GitHub repository dedicated to the Kubernetes manifests for you Online Boutique apps.
+In this section, you will configure a GitOps setup with a GitHub repository dedicated to the Kubernetes manifests for you Online Boutique apps.
 
 Initialize variables:
 ```Bash
@@ -23,6 +23,7 @@ echo "gcloud config set accessibility/screen_reader false" >> ${WORK_DIR}acm-wor
 source ${WORK_DIR}acm-workshop-variables.sh
 ```
 
+A GitHub repository already exists where all the general setup and configs of the GKE cluster are stored (policies, Ingress Gateway, etc.). Here you are cloning this repo in order to add the GitOps setup for the Online Boutique apps:
 ```Bash
 cd ~
 git clone https://github.com/mathieu-benoit/$GKE_CONFIGS_DIR_NAME
@@ -108,9 +109,9 @@ git push origin main
 
 ## Check deployments
 
-List the GitHub runs for the **GKE cluster configs** repository `cd ~/$GKE_CONFIGS_DIR_NAME && gh run list | grep $ONLINEBOUTIQUE_NAMESPACE`:
+List the GitHub runs for the **GKE cluster configs** repository `cd ~/$GKE_CONFIGS_DIR_NAME && gh run list | grep $ONLINEBOUTIQUE_NAMESPACE -m 1`:
 ```Plaintext
-completed       GitOps for Online Boutique apps                       ci        main    push   1976985906  1m5s     1m
+completed       success GitOps for ob-team1     ci      main    push    2320137540      1m3s    2m
 ```
 
 List the Kubernetes resources managed by Config Sync in the **GKE cluster** for the **GKE cluster configs** repository:
@@ -124,7 +125,7 @@ gcloud alpha anthos config sync repo describe \
 ```
 ```Plaintext
 getting 1 RepoSync and RootSync from projects/acm-workshop-464-gke/locations/global/memberships/gke-hub-membership
-│                           │ Namespace                 │ ob-team1                            │                              │ Current │
-│ configsync.gke.io         │ RepoSync                  │ repo-sync                           │ ob-team1                     │ Current │
-│ rbac.authorization.k8s.io │ RoleBinding               │ repo-sync                           │ ob-team1                     │ Current │
+│                           │ Namespace                 │ ob-team1                            │                              │ Current │            │
+│ configsync.gke.io         │ RepoSync                  │ repo-sync                           │ ob-team1                     │ Current │            │
+│ rbac.authorization.k8s.io │ RoleBinding               │ repo-sync                           │ ob-team1                     │ Current │            │
 ```

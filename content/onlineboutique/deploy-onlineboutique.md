@@ -73,9 +73,9 @@ git push origin main
 
 ## Check deployments
 
-List the GitHub runs for the **Online Boutique app** repository `cd ~/$ONLINE_BOUTIQUE_DIR_NAME && gh run list | ${ONLINEBOUTIQUE_NAMESPACE}`:
+List the GitHub runs for the **Online Boutique app** repository `cd ~/$ONLINE_BOUTIQUE_DIR_NAME && gh run list | grep $ONLINEBOUTIQUE_NAMESPACE -m 1`:
 ```Plaintext
-✓       Deploy apps  ci        main    push   1978432931  1m3s     1m
+completed       success Deploy ob-team1 apps    ci      main    push    2320635242      1m8s    1m
 ```
 
 List the Kubernetes resources managed by Config Sync in the **GKE cluster** for the **Online Boutique app** repository:

@@ -96,7 +96,7 @@ ob-team1.endpoints.acm-workshop-464-gke.cloud.goog: PROVISIONING
 This usually takes about 30 minutes for the `ManagedCertificate` to be provisioned. You can continue with the rest of the lab while it's provisioning.
 {{% /notice %}}
 
-List the GitHub runs for the **GKE cluster configs** repository `cd ~/$GKE_CONFIGS_DIR_NAME && gh run list | grep $ONLINEBOUTIQUE_NAMESPACE`:
+List the GitHub runs for the **GKE cluster configs** repository `cd ~/$GKE_CONFIGS_DIR_NAME && gh run list | grep $ONLINEBOUTIQUE_NAMESPACE -m 1`:
 ```Plaintext
 completed       success ManagedCertificate for ob-team1     ci      main    push    2317091323      1m11s   2m
 ```
@@ -107,7 +107,8 @@ gcloud alpha anthos config sync repo describe \
     --project $GKE_PROJECT_ID \
     --managed-resources all \
     --sync-name root-sync \
-    --sync-namespace config-management-system
+    --sync-namespace config-management-system \
+    | grep $ONLINEBOUTIQUE_NAMESPACE
 ```
 ```Plaintext
 getting 1 RepoSync and RootSync from projects/acm-workshop-464-gke/locations/global/memberships/gke-hub-membership
