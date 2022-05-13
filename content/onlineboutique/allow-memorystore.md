@@ -77,7 +77,7 @@ spec:
         violation[{"msg":msg}] {
           input.review.object.kind == "RedisInstance"
           not input.review.object.spec.redisVersion == "REDIS_6_X"
-          msg := sprintf("Memorystore (redis) %s's version should be 6.", [input.review.object.metadata.name])
+          msg := sprintf("Memorystore (redis) %s's version should be REDIS_6_X instead of %s.", [input.review.object.metadata.name, input.review.object.spec.redisVersion])
         }
         violation[{"msg":msg}] {
           input.review.object.kind == "RedisInstance"
