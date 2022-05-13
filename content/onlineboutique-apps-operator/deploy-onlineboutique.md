@@ -13,6 +13,13 @@ Initialize variables:
 source ${WORK_DIR}acm-workshop-variables.sh
 ```
 
+A GitHub repository already exists where all the Kubernetes manifests to deploy Online Boutique apps are stored. It was created in a previous section by the Platform Admin. Here you are cloning this repo in order to add the Online Boutique manifests:
+```Bash
+cd ~
+git clone https://github.com/mathieu-benoit/$GKE_PROJECT_DIR_NAME
+mkdir ~/$GKE_PROJECT_DIR_NAME/config-sync/$ONLINEBOUTIQUE_NAMESPACE
+```
+
 ## Get upstream Kubernetes manifests
 
 Get the upstream Kubernetes manifests:
