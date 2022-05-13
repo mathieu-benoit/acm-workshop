@@ -42,38 +42,19 @@ EOF
 Here, we are removing the upstream `Namespace` resource as we already defined it in a previous section while configuring the associated Config Sync's `RepoSync` setup.
 {{% /notice %}}
 
-You could browse the files in the `~/$ONLINE_BOUTIQUE_DIR_NAME/upstream/base` folder, along with the `Namespace`, `Deployment` and `Service` resources for the OnlineBoutique apps, you could see the  `VirtualService` resource which will allow to establish the Ingress Gateway routing to the OnlineBoutique app. The `spec.hosts` value is `"*"` but in the following part you will replace this value by the actual DNS of the OnlineBoutique solution (i.e. `ONLINE_BOUTIQUE_INGRESS_GATEWAY_HOST_NAME`) defined a previous section.
-```YAML
-apiVersion: networking.istio.io/v1alpha3
-kind: VirtualService
-metadata:
-  name: frontend
-spec:
-  hosts:
-  - "*"
-  gateways:
-  - asm-ingress/asm-ingressgateway
-  http:
-  - route:
-    - destination:
-        host: frontend
-        port:
-          number: 80
-```
+You could browse the files in the `~/$ONLINE_BOUTIQUE_DIR_NAME/upstream/base` folder, along with the `Namespace`, `Deployment` and `Service` resources for the OnlineBoutique apps, you could see the  `VirtualService` resource which will allow to establish the Ingress Gateway routing to the OnlineBoutique app. The `spec.hosts` value is `"*"` but in the following part you will replace this value by the actual DNS of the OnlineBoutique solution (i.e. `ONLINE_BOUTIQUE_INGRESS_GATEWAY_HOST_NAME`) defined in a previous section.
 
 ## Define Staging namespace overlay
 
 Here are the updates for the overlay files needed to define the Staging namespace:
 ```Bash
 cd ~/$ONLINE_BOUTIQUE_DIR_NAME/staging
-mkdir base
-cd base
 kustomize edit add resource ../base
 kustomize edit set namespace $ONLINEBOUTIQUE_NAMESPACE
-cp -r ../../upstream/base/for-memorystore/ .
+cp -r ../upstream/base/for-memorystore/ .
 sed -i "s/REDIS_IP/${REDIS_IP}/g;s/REDIS_PORT/${REDIS_PORT}/g" for-memorystore/kustomization.yaml
 kustomize edit add component for-memorystore
-cp -r ../../upstream/base/for-virtualservice-host/ .
+cp -r ../upstream/base/for-virtualservice-host/ .
 sed -i "s/HOST_NAME/${ONLINE_BOUTIQUE_INGRESS_GATEWAY_HOST_NAME}/g" for-virtualservice-host/kustomization.yaml
 kustomize edit add component for-virtualservice-host
 ```
