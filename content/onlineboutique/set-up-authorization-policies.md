@@ -48,21 +48,15 @@ kustomize edit add component authorization-policies/for-ingress-gateway
 ```Bash
 cd ~/$ONLINE_BOUTIQUE_DIR_NAME/
 git add .
-git commit -m "Online Boutique Authorization Policies"
+git commit -m "Authorization Policies for ${ONLINEBOUTIQUE_NAMESPACE}"
 git push origin main
 ```
 
 ## Check deployments
 
-List the GitHub runs for the **Online Boutique app** repository `cd ~/$ONLINE_BOUTIQUE_DIR_NAME && gh run list`:
+List the GitHub runs for the **Online Boutique app** repository `cd ~/$ONLINE_BOUTIQUE_DIR_NAME && gh run list | grep $ONLINEBOUTIQUE_NAMESPACE`:
 ```Plaintext
-STATUS  NAME                                    WORKFLOW  BRANCH  EVENT  ID          ELAPSED  AGE
-✓       Online Boutique Authorization Policies  ci        main    push   1978549160  1m13s    3m
-✓       Online Boutique Sidecar                 ci        main    push   1978491894  1m0s     24m
-✓       Online Boutique Network Policies        ci        main    push   1978459522  54s      34m
-✓       Online Boutique apps                    ci        main    push   1978432931  1m3s     43m
-✓       Initial commit                          ci        main    push   1976979782  54s      10h
-
+completed       success Authorization Policies for ob-team1     ci      main    push    2317317787      9s      0m
 ```
 
 List the Kubernetes resources managed by Config Sync in the **GKE cluster** for the **Online Boutique app** repository:
@@ -71,79 +65,76 @@ gcloud alpha anthos config sync repo describe \
     --project $GKE_PROJECT_ID \
     --managed-resources all \
     --sync-name repo-sync \
-    --sync-namespace $ONLINEBOUTIQUE_NAMESPACE
+    --sync-namespace $ONLINEBOUTIQUE_NAMESPACE \
+    | grep $ONLINEBOUTIQUE_NAMESPACE
 ```
 ```Plaintext
-getting 1 RepoSync and RootSync from gke-hub-membership
-┌─────────────────────┬─────────────────────┬───────────────────────┬────────────────┐
-│        GROUP        │         KIND        │          NAME         │   NAMESPACE    │
-├─────────────────────┼─────────────────────┼───────────────────────┼────────────────┤
-│                     │ ServiceAccount      │ recommendationservice │ onlineboutique │
-│                     │ Service             │ currencyservice       │ onlineboutique │
-│                     │ ServiceAccount      │ emailservice          │ onlineboutique │
-│                     │ ServiceAccount      │ productcatalogservice │ onlineboutique │
-│                     │ Service             │ frontend              │ onlineboutique │
-│                     │ ServiceAccount      │ cartservice           │ onlineboutique │
-│                     │ ServiceAccount      │ paymentservice        │ onlineboutique │
-│                     │ Service             │ productcatalogservice │ onlineboutique │
-│                     │ ServiceAccount      │ frontend              │ onlineboutique │
-│                     │ ServiceAccount      │ currencyservice       │ onlineboutique │
-│                     │ Service             │ adservice             │ onlineboutique │
-│                     │ Service             │ shippingservice       │ onlineboutique │
-│                     │ ServiceAccount      │ adservice             │ onlineboutique │
-│                     │ Service             │ paymentservice        │ onlineboutique │
-│                     │ Service             │ cartservice           │ onlineboutique │
-│                     │ ServiceAccount      │ loadgenerator         │ onlineboutique │
-│                     │ ServiceAccount      │ shippingservice       │ onlineboutique │
-│                     │ Service             │ emailservice          │ onlineboutique │
-│                     │ Service             │ checkoutservice       │ onlineboutique │
-│                     │ ServiceAccount      │ checkoutservice       │ onlineboutique │
-│                     │ Service             │ recommendationservice │ onlineboutique │
-│ apps                │ Deployment          │ frontend              │ onlineboutique │
-│ apps                │ Deployment          │ currencyservice       │ onlineboutique │
-│ apps                │ Deployment          │ shippingservice       │ onlineboutique │
-│ apps                │ Deployment          │ loadgenerator         │ onlineboutique │
-│ apps                │ Deployment          │ paymentservice        │ onlineboutique │
-│ apps                │ Deployment          │ cartservice           │ onlineboutique │
-│ apps                │ Deployment          │ productcatalogservice │ onlineboutique │
-│ apps                │ Deployment          │ checkoutservice       │ onlineboutique │
-│ apps                │ Deployment          │ recommendationservice │ onlineboutique │
-│ apps                │ Deployment          │ adservice             │ onlineboutique │
-│ apps                │ Deployment          │ emailservice          │ onlineboutique │
-│ networking.istio.io │ Sidecar             │ productcatalogservice │ onlineboutique │
-│ networking.istio.io │ Sidecar             │ cartservice           │ onlineboutique │
-│ networking.istio.io │ Sidecar             │ emailservice          │ onlineboutique │
-│ networking.istio.io │ Sidecar             │ currencyservice       │ onlineboutique │
-│ networking.istio.io │ Sidecar             │ loadgenerator         │ onlineboutique │
-│ networking.istio.io │ Sidecar             │ shippingservice       │ onlineboutique │
-│ networking.istio.io │ Sidecar             │ adservice             │ onlineboutique │
-│ networking.istio.io │ Sidecar             │ paymentservice        │ onlineboutique │
-│ networking.istio.io │ Sidecar             │ frontend              │ onlineboutique │
-│ networking.istio.io │ Sidecar             │ recommendationservice │ onlineboutique │
-│ networking.istio.io │ VirtualService      │ frontend              │ onlineboutique │
-│ networking.istio.io │ Sidecar             │ checkoutservice       │ onlineboutique │
-│ networking.k8s.io   │ NetworkPolicy       │ paymentservice        │ onlineboutique │
-│ networking.k8s.io   │ NetworkPolicy       │ currencyservice       │ onlineboutique │
-│ networking.k8s.io   │ NetworkPolicy       │ loadgenerator         │ onlineboutique │
-│ networking.k8s.io   │ NetworkPolicy       │ adservice             │ onlineboutique │
-│ networking.k8s.io   │ NetworkPolicy       │ denyall               │ onlineboutique │
-│ networking.k8s.io   │ NetworkPolicy       │ emailservice          │ onlineboutique │
-│ networking.k8s.io   │ NetworkPolicy       │ checkoutservice       │ onlineboutique │
-│ networking.k8s.io   │ NetworkPolicy       │ cartservice           │ onlineboutique │
-│ networking.k8s.io   │ NetworkPolicy       │ shippingservice       │ onlineboutique │
-│ networking.k8s.io   │ NetworkPolicy       │ recommendationservice │ onlineboutique │
-│ networking.k8s.io   │ NetworkPolicy       │ productcatalogservice │ onlineboutique │
-│ networking.k8s.io   │ NetworkPolicy       │ frontend              │ onlineboutique │
-│ security.istio.io   │ AuthorizationPolicy │ adservice             │ onlineboutique │
-│ security.istio.io   │ AuthorizationPolicy │ productcatalogservice │ onlineboutique │
-│ security.istio.io   │ AuthorizationPolicy │ paymentservice        │ onlineboutique │
-│ security.istio.io   │ AuthorizationPolicy │ currencyservice       │ onlineboutique │
-│ security.istio.io   │ AuthorizationPolicy │ recommendationservice │ onlineboutique │
-│ security.istio.io   │ AuthorizationPolicy │ frontend              │ onlineboutique │
-│ security.istio.io   │ AuthorizationPolicy │ checkoutservice       │ onlineboutique │
-│ security.istio.io   │ AuthorizationPolicy │ emailservice          │ onlineboutique │
-│ security.istio.io   │ AuthorizationPolicy │ deny-all              │ onlineboutique │
-│ security.istio.io   │ AuthorizationPolicy │ cartservice           │ onlineboutique │
-│ security.istio.io   │ AuthorizationPolicy │ shippingservice       │ onlineboutique │
-└─────────────────────┴─────────────────────┴───────────────────────┴────────────────┘
+getting 1 RepoSync and RootSync from projects/acm-workshop-464-gke/locations/global/memberships/gke-hub-membership
+    "source": "https://github.com/mathieu-benoit/acm-workshop-ob-team1-repo//staging@main:HEAD",
+│                     │ Service             │ adservice             │ ob-team1  │ Current │            │
+│                     │ Service             │ cartservice           │ ob-team1  │ Current │            │
+│                     │ Service             │ checkoutservice       │ ob-team1  │ Current │            │
+│                     │ Service             │ currencyservice       │ ob-team1  │ Current │            │
+│                     │ Service             │ emailservice          │ ob-team1  │ Current │            │
+│                     │ Service             │ frontend              │ ob-team1  │ Current │            │
+│                     │ Service             │ paymentservice        │ ob-team1  │ Current │            │
+│                     │ Service             │ productcatalogservice │ ob-team1  │ Current │            │
+│                     │ Service             │ recommendationservice │ ob-team1  │ Current │            │
+│                     │ Service             │ shippingservice       │ ob-team1  │ Current │            │
+│                     │ ServiceAccount      │ adservice             │ ob-team1  │ Current │            │
+│                     │ ServiceAccount      │ cartservice           │ ob-team1  │ Current │            │
+│                     │ ServiceAccount      │ checkoutservice       │ ob-team1  │ Current │            │
+│                     │ ServiceAccount      │ currencyservice       │ ob-team1  │ Current │            │
+│                     │ ServiceAccount      │ emailservice          │ ob-team1  │ Current │            │
+│                     │ ServiceAccount      │ frontend              │ ob-team1  │ Current │            │
+│                     │ ServiceAccount      │ loadgenerator         │ ob-team1  │ Current │            │
+│                     │ ServiceAccount      │ paymentservice        │ ob-team1  │ Current │            │
+│                     │ ServiceAccount      │ productcatalogservice │ ob-team1  │ Current │            │
+│                     │ ServiceAccount      │ recommendationservice │ ob-team1  │ Current │            │
+│                     │ ServiceAccount      │ shippingservice       │ ob-team1  │ Current │            │
+│ apps                │ Deployment          │ adservice             │ ob-team1  │ Current │            │
+│ apps                │ Deployment          │ cartservice           │ ob-team1  │ Current │            │
+│ apps                │ Deployment          │ checkoutservice       │ ob-team1  │ Current │            │
+│ apps                │ Deployment          │ currencyservice       │ ob-team1  │ Current │            │
+│ apps                │ Deployment          │ emailservice          │ ob-team1  │ Current │            │
+│ apps                │ Deployment          │ frontend              │ ob-team1  │ Current │            │
+│ apps                │ Deployment          │ loadgenerator         │ ob-team1  │ Current │            │
+│ apps                │ Deployment          │ paymentservice        │ ob-team1  │ Current │            │
+│ apps                │ Deployment          │ productcatalogservice │ ob-team1  │ Current │            │
+│ apps                │ Deployment          │ recommendationservice │ ob-team1  │ Current │            │
+│ apps                │ Deployment          │ shippingservice       │ ob-team1  │ Current │            │
+│ networking.istio.io │ Sidecar             │ adservice             │ ob-team1  │ Current │            │
+│ networking.istio.io │ Sidecar             │ cartservice           │ ob-team1  │ Current │            │
+│ networking.istio.io │ Sidecar             │ checkoutservice       │ ob-team1  │ Current │            │
+│ networking.istio.io │ Sidecar             │ currencyservice       │ ob-team1  │ Current │            │
+│ networking.istio.io │ Sidecar             │ emailservice          │ ob-team1  │ Current │            │
+│ networking.istio.io │ Sidecar             │ frontend              │ ob-team1  │ Current │            │
+│ networking.istio.io │ Sidecar             │ loadgenerator         │ ob-team1  │ Current │            │
+│ networking.istio.io │ Sidecar             │ paymentservice        │ ob-team1  │ Current │            │
+│ networking.istio.io │ Sidecar             │ productcatalogservice │ ob-team1  │ Current │            │
+│ networking.istio.io │ Sidecar             │ recommendationservice │ ob-team1  │ Current │            │
+│ networking.istio.io │ Sidecar             │ shippingservice       │ ob-team1  │ Current │            │
+│ networking.istio.io │ VirtualService      │ frontend              │ ob-team1  │ Current │            │
+│ networking.k8s.io   │ NetworkPolicy       │ adservice             │ ob-team1  │ Current │            │
+│ networking.k8s.io   │ NetworkPolicy       │ cartservice           │ ob-team1  │ Current │            │
+│ networking.k8s.io   │ NetworkPolicy       │ checkoutservice       │ ob-team1  │ Current │            │
+│ networking.k8s.io   │ NetworkPolicy       │ currencyservice       │ ob-team1  │ Current │            │
+│ networking.k8s.io   │ NetworkPolicy       │ deny-all              │ ob-team1  │ Current │            │
+│ networking.k8s.io   │ NetworkPolicy       │ emailservice          │ ob-team1  │ Current │            │
+│ networking.k8s.io   │ NetworkPolicy       │ frontend              │ ob-team1  │ Current │            │
+│ networking.k8s.io   │ NetworkPolicy       │ loadgenerator         │ ob-team1  │ Current │            │
+│ networking.k8s.io   │ NetworkPolicy       │ paymentservice        │ ob-team1  │ Current │            │
+│ networking.k8s.io   │ NetworkPolicy       │ productcatalogservice │ ob-team1  │ Current │            │
+│ networking.k8s.io   │ NetworkPolicy       │ recommendationservice │ ob-team1  │ Current │            │
+│ networking.k8s.io   │ NetworkPolicy       │ shippingservice       │ ob-team1  │ Current │            │
+│ security.istio.io   │ AuthorizationPolicy │ adservice             │ ob-team1  │ Current │            │
+│ security.istio.io   │ AuthorizationPolicy │ cartservice           │ ob-team1  │ Current │            │
+│ security.istio.io   │ AuthorizationPolicy │ checkoutservice       │ ob-team1  │ Current │            │
+│ security.istio.io   │ AuthorizationPolicy │ currencyservice       │ ob-team1  │ Current │            │
+│ security.istio.io   │ AuthorizationPolicy │ emailservice          │ ob-team1  │ Current │            │
+│ security.istio.io   │ AuthorizationPolicy │ frontend              │ ob-team1  │ Current │            │
+│ security.istio.io   │ AuthorizationPolicy │ paymentservice        │ ob-team1  │ Current │            │
+│ security.istio.io   │ AuthorizationPolicy │ productcatalogservice │ ob-team1  │ Current │            │
+│ security.istio.io   │ AuthorizationPolicy │ recommendationservice │ ob-team1  │ Current │            │
+│ security.istio.io   │ AuthorizationPolicy │ shippingservice       │ ob-team1  │ Current │            │
 ```

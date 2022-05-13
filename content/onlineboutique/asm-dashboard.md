@@ -1,5 +1,5 @@
 ---
-title: "Extras"
+title: "ASM Dashboard"
 weight: 9
 description: "Duration: 5 min"
 ---

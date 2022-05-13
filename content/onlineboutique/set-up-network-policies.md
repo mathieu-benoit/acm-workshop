@@ -70,18 +70,15 @@ kustomize edit add component network-policies
 ```Bash
 cd ~/$ONLINE_BOUTIQUE_DIR_NAME/
 git add .
-git commit -m "Online Boutique Network Policies"
+git commit -m "Network Policies for ${ONLINEBOUTIQUE_NAMESPACE}"
 git push origin main
 ```
 
 ## Check deployments
 
-List the GitHub runs for the **Online Boutique app** repository `cd ~/$ONLINE_BOUTIQUE_DIR_NAME && gh run list`:
+List the GitHub runs for the **Online Boutique app** repository `cd ~/$ONLINE_BOUTIQUE_DIR_NAME && gh run list | grep $ONLINEBOUTIQUE_NAMESPACE`:
 ```Plaintext
-STATUS  NAME                              WORKFLOW  BRANCH  EVENT  ID          ELAPSED  AGE
-✓       Online Boutique Network Policies  ci        main    push   1978459522  54s      2m
-✓       Online Boutique apps              ci        main    push   1978432931  1m3s     10m
-✓       Initial commit                    ci        main    push   1976979782  54s      10h
+in_progress             Network Policies for ob-team1   ci      main    push    2317274227      7s      0m
 ```
 
 List the Kubernetes resources managed by Config Sync in the **GKE cluster** for the **Online Boutique app** repository:
@@ -90,45 +87,44 @@ gcloud alpha anthos config sync repo describe \
     --project $GKE_PROJECT_ID \
     --managed-resources all \
     --sync-name repo-sync \
-    --sync-namespace $ONLINEBOUTIQUE_NAMESPACE
+    --sync-namespace $ONLINEBOUTIQUE_NAMESPACE \
+    | grep $ONLINEBOUTIQUE_NAMESPACE
 ```
 ```Plaintext
-getting 1 RepoSync and RootSync from gke-hub-membership
-┌─────────────────────┬────────────────┬───────────────────────┬────────────────┐
-│        GROUP        │      KIND      │          NAME         │   NAMESPACE    │
-├─────────────────────┼────────────────┼───────────────────────┼────────────────┤
-│                     │ Service        │ productcatalogservice │ onlineboutique │
-│                     │ Service        │ adservice             │ onlineboutique │
-│                     │ Service        │ checkoutservice       │ onlineboutique │
-│                     │ Service        │ recommendationservice │ onlineboutique │
-│                     │ Service        │ cartservice           │ onlineboutique │
-│                     │ Service        │ shippingservice       │ onlineboutique │
-│                     │ Service        │ emailservice          │ onlineboutique │
-│                     │ Service        │ paymentservice        │ onlineboutique │
-│                     │ Service        │ currencyservice       │ onlineboutique │
-│                     │ Service        │ frontend              │ onlineboutique │
-│ apps                │ Deployment     │ paymentservice        │ onlineboutique │
-│ apps                │ Deployment     │ productcatalogservice │ onlineboutique │
-│ apps                │ Deployment     │ shippingservice       │ onlineboutique │
-│ apps                │ Deployment     │ recommendationservice │ onlineboutique │
-│ apps                │ Deployment     │ frontend              │ onlineboutique │
-│ apps                │ Deployment     │ emailservice          │ onlineboutique │
-│ apps                │ Deployment     │ checkoutservice       │ onlineboutique │
-│ apps                │ Deployment     │ adservice             │ onlineboutique │
-│ apps                │ Deployment     │ currencyservice       │ onlineboutique │
-│ apps                │ Deployment     │ cartservice           │ onlineboutique │
-│ networking.istio.io │ VirtualService │ frontend              │ onlineboutique │
-│ networking.k8s.io   │ NetworkPolicy  │ recommendationservice │ onlineboutique │
-│ networking.k8s.io   │ NetworkPolicy  │ paymentservice        │ onlineboutique │
-│ networking.k8s.io   │ NetworkPolicy  │ loadgenerator         │ onlineboutique │
-│ networking.k8s.io   │ NetworkPolicy  │ emailservice          │ onlineboutique │
-│ networking.k8s.io   │ NetworkPolicy  │ cartservice           │ onlineboutique │
-│ networking.k8s.io   │ NetworkPolicy  │ checkoutservice       │ onlineboutique │
-│ networking.k8s.io   │ NetworkPolicy  │ productcatalogservice │ onlineboutique │
-│ networking.k8s.io   │ NetworkPolicy  │ frontend              │ onlineboutique │
-│ networking.k8s.io   │ NetworkPolicy  │ currencyservice       │ onlineboutique │
-│ networking.k8s.io   │ NetworkPolicy  │ adservice             │ onlineboutique │
-│ networking.k8s.io   │ NetworkPolicy  │ denyall               │ onlineboutique │
-│ networking.k8s.io   │ NetworkPolicy  │ shippingservice       │ onlineboutique │
-└─────────────────────┴────────────────┴───────────────────────┴────────────────┘
+getting 1 RepoSync and RootSync from projects/acm-workshop-464-gke/locations/global/memberships/gke-hub-membership
+    "source": "https://github.com/mathieu-benoit/acm-workshop-ob-team1-repo//staging@main:HEAD",
+│                     │ Service        │ adservice             │ ob-team1  │ Current │
+│                     │ Service        │ cartservice           │ ob-team1  │ Current │
+│                     │ Service        │ checkoutservice       │ ob-team1  │ Current │
+│                     │ Service        │ currencyservice       │ ob-team1  │ Current │
+│                     │ Service        │ emailservice          │ ob-team1  │ Current │
+│                     │ Service        │ frontend              │ ob-team1  │ Current │
+│                     │ Service        │ paymentservice        │ ob-team1  │ Current │
+│                     │ Service        │ productcatalogservice │ ob-team1  │ Current │
+│                     │ Service        │ recommendationservice │ ob-team1  │ Current │
+│                     │ Service        │ shippingservice       │ ob-team1  │ Current │
+│ apps                │ Deployment     │ adservice             │ ob-team1  │ Current │
+│ apps                │ Deployment     │ cartservice           │ ob-team1  │ Current │
+│ apps                │ Deployment     │ checkoutservice       │ ob-team1  │ Current │
+│ apps                │ Deployment     │ currencyservice       │ ob-team1  │ Current │
+│ apps                │ Deployment     │ emailservice          │ ob-team1  │ Current │
+│ apps                │ Deployment     │ frontend              │ ob-team1  │ Current │
+│ apps                │ Deployment     │ loadgenerator         │ ob-team1  │ Current │
+│ apps                │ Deployment     │ paymentservice        │ ob-team1  │ Current │
+│ apps                │ Deployment     │ productcatalogservice │ ob-team1  │ Current │
+│ apps                │ Deployment     │ recommendationservice │ ob-team1  │ Current │
+│ apps                │ Deployment     │ shippingservice       │ ob-team1  │ Current │
+│ networking.istio.io │ VirtualService │ frontend              │ ob-team1  │ Current │
+│ networking.k8s.io   │ NetworkPolicy  │ adservice             │ ob-team1  │ Current │
+│ networking.k8s.io   │ NetworkPolicy  │ cartservice           │ ob-team1  │ Current │
+│ networking.k8s.io   │ NetworkPolicy  │ checkoutservice       │ ob-team1  │ Current │
+│ networking.k8s.io   │ NetworkPolicy  │ currencyservice       │ ob-team1  │ Current │
+│ networking.k8s.io   │ NetworkPolicy  │ deny-all              │ ob-team1  │ Current │
+│ networking.k8s.io   │ NetworkPolicy  │ emailservice          │ ob-team1  │ Current │
+│ networking.k8s.io   │ NetworkPolicy  │ frontend              │ ob-team1  │ Current │
+│ networking.k8s.io   │ NetworkPolicy  │ loadgenerator         │ ob-team1  │ Current │
+│ networking.k8s.io   │ NetworkPolicy  │ paymentservice        │ ob-team1  │ Current │
+│ networking.k8s.io   │ NetworkPolicy  │ productcatalogservice │ ob-team1  │ Current │
+│ networking.k8s.io   │ NetworkPolicy  │ recommendationservice │ ob-team1  │ Current │
+│ networking.k8s.io   │ NetworkPolicy  │ shippingservice       │ ob-team1  │ Current │
 ```
