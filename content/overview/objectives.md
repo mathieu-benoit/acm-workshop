@@ -10,8 +10,7 @@ At the end of this workshop, here is what you will accomplish:
 
 ## Personas
 
-Three personas are involved:
-- Org Admin
+Two personas are involved:
 - Platform Admin
 - Apps Operator
 

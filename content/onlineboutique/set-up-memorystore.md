@@ -6,6 +6,8 @@ description: "Duration: 10 min | Persona: Platform Admin"
 ![Platform Admin](/images/platform-admin.png)
 _{{< param description >}}_
 
+In this section, you will provision a Memorystore (redis) instance. This database will be used by `cartservie` later.
+
 Initialize variables:
 ```Bash
 source ${WORK_DIR}acm-workshop-variables.sh

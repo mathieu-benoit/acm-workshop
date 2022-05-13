@@ -6,6 +6,8 @@ description: "Duration: 10 min | Persona: Platform Admin"
 ![Platform Admin](/images/platform-admin.png)
 _{{< param description >}}_
 
+In this section, you will a GitOps setup with a GitHub repository dedicated to the Kubernetes manifests for you Online Boutique apps.
+
 Initialize variables:
 ```Bash
 WORK_DIR=~/

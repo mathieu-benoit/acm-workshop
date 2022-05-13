@@ -6,6 +6,8 @@ description: "Duration: 5 min | Persona: Apps Operator"
 ![Apps Operator](/images/apps-operator.png)
 _{{< param description >}}_
 
+In this section, you will set up fine granular `Sidecars` for you Online Boutique apps. `Sidecars` resources allow to optimize the CPU and memory usage of your Istio sidear proxies.
+
 Initialize variables:
 ```Bash
 source ${WORK_DIR}acm-workshop-variables.sh

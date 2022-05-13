@@ -6,6 +6,8 @@ description: "Duration: 5 min | Persona: Apps Operator"
 ![Apps Operator](/images/apps-operator.png)
 _{{< param description >}}_
 
+In this section, you will deploy your Online Boutique apps using Kustomize.
+
 Initialize variables:
 ```Bash
 source ${WORK_DIR}acm-workshop-variables.sh

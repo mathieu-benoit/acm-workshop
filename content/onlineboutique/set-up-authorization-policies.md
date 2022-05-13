@@ -6,6 +6,8 @@ description: "Duration: 5 min | Persona: Apps Operator"
 ![Apps Operator](/images/apps-operator.png)
 _{{< param description >}}_
 
+In this section, you will set up fine granular `AuthorizationPolicies` for you Online Boutique apps. `AuthorizationPolicies` resources add more security between the communication of your `Pods` within your Mesh.
+
 Initialize variables:
 ```Bash
 source ${WORK_DIR}acm-workshop-variables.sh

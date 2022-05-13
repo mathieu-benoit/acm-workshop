@@ -6,6 +6,8 @@ description: "Duration: 5 min | Persona: Platform Admin"
 ![Platform Admin](/images/platform-admin.png)
 _{{< param description >}}_
 
+In this section, you will provision a Cloud Endpoints DNS for your Online Boutique app. With this DNS you will configure an associated `ManagedCertificate` for the `Ingress`.
+
 Initialize variables:
 ```Bash
 source ${WORK_DIR}acm-workshop-variables.sh
@@ -54,18 +56,16 @@ EOF
 
 ## Update Ingress
 
-FIXME
-
 Configure Online Boutique `ManagedCertificate` on the Ingress Gateway's `Ingress` resource:
 ```Bash
 cd ~/$GKE_CONFIGS_DIR_NAME/config-sync/$INGRESS_GATEWAY_NAMESPACE
 kpt fn eval . \
     -i set-annotations:v0.1 \
     --match-kind Ingress \
-    -- networking.gke.io/managed-certificates=whereami,onlineboutique,ob-team1,ob-team2,ob-team3
+    -- networking.gke.io/managed-certificates=ob-team1,ob-team2,ob-team3
 ```
 {{% notice note %}}
-The annotation `networking.gke.io/managed-certificates` has 5 values.
+The annotation `networking.gke.io/managed-certificates` has 3 values.
 {{% /notice %}}
 
 ## Deploy Kubernetes manifests
@@ -93,7 +93,7 @@ ob-team1.endpoints.acm-workshop-464-gke.cloud.goog
 ob-team1.endpoints.acm-workshop-464-gke.cloud.goog: PROVISIONING
 ```
 {{% notice note %}}
-Wait for the `ManagedCertificate` to be provisioned. This usually takes about 30 minutes.
+This usually takes about 30 minutes for the `ManagedCertificate` to be provisioned. You can continue with the rest of the lab while it's provisioning.
 {{% /notice %}}
 
 List the GitHub runs for the **GKE cluster configs** repository `cd ~/$GKE_CONFIGS_DIR_NAME && gh run list | grep $ONLINEBOUTIQUE_NAMESPACE`:
