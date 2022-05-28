@@ -2,6 +2,7 @@
 title: "Allow GKE"
 weight: 1
 description: "Duration: 5 min | Persona: Org Admin"
+tags: ["kcc", "org-admin", "policies"]
 ---
 _{{< param description >}}_
 

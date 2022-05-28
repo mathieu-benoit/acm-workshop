@@ -1,6 +1,7 @@
 ---
 title: "Objectives"
 weight: 1
+tags: ["apps-operator", "org-admin", "platform-admin"]
 ---
 ## Objectives
 

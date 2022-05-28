@@ -2,6 +2,7 @@
 title: "Allow Networking"
 weight: 1
 description: "Duration: 2 min | Persona: Org Admin"
+tags: ["kcc", "org-admin"]
 ---
 _{{< param description >}}_
 

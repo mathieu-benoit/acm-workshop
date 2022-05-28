@@ -2,6 +2,7 @@
 title: "Create Config Controller"
 weight: 1
 description: "Duration: 20 min | Persona: Org Admin"
+tags: ["org-admin"]
 ---
 _{{< param description >}}_
 

@@ -2,6 +2,7 @@
 title: "Deploy Ingress Gateway"
 weight: 4
 description: "Duration: 15 min | Persona: Platform Admin"
+tags: ["asm", "platform-admin"]
 ---
 _{{< param description >}}_
 

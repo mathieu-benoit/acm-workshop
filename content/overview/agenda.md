@@ -1,6 +1,7 @@
 ---
 title: "Agenda"
 weight: 2
+tags: ["apps-operator", "org-admin", "platform-admin"]
 ---
 1. Config Controller
     1. As Org Admin, create a Config Controller instance

@@ -2,6 +2,7 @@
 title: "Install ASM"
 weight: 2
 description: "Duration: 10 min | Persona: Platform Admin"
+tags: ["asm", "kcc", "platform-admin"]
 ---
 _{{< param description >}}_
 

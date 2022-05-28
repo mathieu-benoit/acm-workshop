@@ -2,6 +2,7 @@
 title: "Deploy Online Boutique apps"
 weight: 5
 description: "Duration: 5 min | Persona: Apps Operator"
+tags: ["apps-operator", "asm"]
 ---
 _{{< param description >}}_
 

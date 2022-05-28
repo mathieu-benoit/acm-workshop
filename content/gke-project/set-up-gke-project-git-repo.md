@@ -2,6 +2,7 @@
 title: "Set up GKE project's Git repo"
 weight: 2
 description: "Duration: 5 min | Persona: Org Admin"
+tags: ["org-admin"]
 ---
 _{{< param description >}}_
 

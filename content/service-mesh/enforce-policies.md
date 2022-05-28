@@ -2,6 +2,7 @@
 title: "Enforce policies"
 weight: 4
 description: "Duration: 10 min | Persona: Platform Admin"
+tags: ["asm", "platform-admin", "policies"]
 ---
 _{{< param description >}}_
 

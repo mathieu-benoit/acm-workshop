@@ -2,6 +2,7 @@
 title: "Allow ASM"
 weight: 1
 description: "Duration: 5 min | Persona: Org Admin"
+tags: ["asm", "kcc", "org-admin"]
 ---
 _{{< param description >}}_
 

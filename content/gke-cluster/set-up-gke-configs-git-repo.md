@@ -2,6 +2,7 @@
 title: "Set up GKE configs's Git repo"
 weight: 4
 description: "Duration: 10 min | Persona: Platform Admin"
+tags: ["kcc", "platform-admin"]
 ---
 _{{< param description >}}_
 

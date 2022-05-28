@@ -2,6 +2,7 @@
 title: "Set up Network"
 weight: 1
 description: "Duration: 15 min | Persona: Platform Admin"
+tags: ["kcc", "platform-admin"]
 ---
 _{{< param description >}}_
 

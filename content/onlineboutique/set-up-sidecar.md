@@ -2,6 +2,7 @@
 title: "Set up Sidecar"
 weight: 7
 description: "Duration: 5 min | Persona: Apps Operator"
+tags: ["asm", "apps-operator"]
 ---
 _{{< param description >}}_
 

@@ -2,6 +2,7 @@
 title: "Deploy Whereami app"
 weight: 3
 description: "Duration: 10 min | Persona: Apps Operator"
+tags: ["apps-operator", "asm"]
 ---
 _{{< param description >}}_
 

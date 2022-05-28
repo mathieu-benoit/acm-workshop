@@ -2,6 +2,7 @@
 title: "Create GKE project"
 weight: 1
 description: "Duration: 10 min | Persona: Org Admin"
+tags: ["kcc", "org-admin"]
 ---
 _{{< param description >}}_
 

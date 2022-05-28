@@ -2,6 +2,7 @@
 title: "Set up IP address"
 weight: 1
 description: "Duration: 5 min | Persona: Platform Admin"
+tags: ["kcc", "platform-admin"]
 ---
 _{{< param description >}}_
 

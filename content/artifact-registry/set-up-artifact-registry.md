@@ -2,6 +2,7 @@
 title: "Set up Artifact Registry"
 weight: 2
 description: "Duration: 5 min | Persona: Platform Admin"
+tags: ["kcc", "platform-admin"]
 ---
 _{{< param description >}}_
 

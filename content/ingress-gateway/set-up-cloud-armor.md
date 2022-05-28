@@ -2,6 +2,7 @@
 title: "Set up Cloud Armor"
 weight: 3
 description: "Duration: 10 min | Persona: Platform Admin"
+tags: ["kcc", "platform-admin"]
 ---
 _{{< param description >}}_
 

@@ -2,6 +2,7 @@
 title: "Set up ASM configs"
 weight: 3
 description: "Duration: 5 min | Persona: Platform Admin"
+tags: ["asm", "platform-admin"]
 ---
 _{{< param description >}}_
 

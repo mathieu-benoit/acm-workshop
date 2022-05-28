@@ -2,6 +2,7 @@
 title: "Set up Whereami's Git repo"
 weight: 1
 description: "Duration: 10 min | Persona: Platform Admin"
+tags: ["asm", "platform-admin"]
 ---
 _{{< param description >}}_
 
