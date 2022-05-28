@@ -4,6 +4,7 @@ weight: 1
 description: "Duration: 20 min | Persona: Org Admin"
 tags: ["org-admin"]
 ---
+![Org Admin](/images/org-admin.png)
 _{{< param description >}}_
 
 In this section, you will create your Config Controller instance in a dedicated Google Cloud project. Then and throughout this workshop, this Config Controller instance will allow to deploy any infrastructure via Kubernetes manifests. You will also add the minimal Google Cloud roles to its associated service account.

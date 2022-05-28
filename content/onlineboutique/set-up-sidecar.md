@@ -4,6 +4,7 @@ weight: 7
 description: "Duration: 5 min | Persona: Apps Operator"
 tags: ["asm", "apps-operator"]
 ---
+![Apps Operator](/images/apps-operator.png)
 _{{< param description >}}_
 
 Initialize variables:

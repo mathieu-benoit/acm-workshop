@@ -4,6 +4,7 @@ weight: 2
 description: "Duration: 2 min | Persona: Org Admin"
 tags: ["kcc", "org-admin"]
 ---
+![Org Admin](/images/org-admin.png)
 _{{< param description >}}_
 
 Initialize variables:

@@ -4,6 +4,7 @@ weight: 1
 description: "Duration: 15 min | Persona: Platform Admin"
 tags: ["kcc", "platform-admin"]
 ---
+![Platform Admin](/images/platform-admin.png)
 _{{< param description >}}_
 
 Initialize variables:
