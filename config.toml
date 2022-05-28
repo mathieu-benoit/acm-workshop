@@ -20,6 +20,11 @@ googleAnalytics = 'G-NJ4GHWP296'
   themeVariant = "mine"
 
 [[menu.shortcuts]]
+  name = "<i class='fab fa-fw fa-github'></i> Release notes"
+  url = "https://github.com/mathieu-benoit/acm-workshop/releases"
+  weight = 20
+
+[[menu.shortcuts]]
   name = "<i class='fas fa-tags'></i> Tags"
   url = "/tags"
   weight = 30
