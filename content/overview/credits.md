@@ -1,6 +1,6 @@
 ---
 title: "Credits"
-weight: 4
+weight: 5
 ---
 Different contents have been leveraged in order to make and inpsire this workshop, here is the list of them:
 - [Exposing service mesh applications through GKE Ingress](https://cloud.google.com/architecture/exposing-service-mesh-apps-through-gke-ingress) - Alex Mattson, Ameer Abbas and Mark Church

@@ -9,15 +9,6 @@ At the end of this workshop, here is what you will accomplish:
 
 ![Workshop Architecture diagram](/images/architecture.png)
 
-## Personas
-
-Three personas are involved:
-- Org Admin
-- Platform Admin
-- Apps Operator
-
-![Personas](/images/personas.png)
-
 ## GCP services involved
 
 - Config Controller

@@ -1,6 +1,6 @@
 ---
 title: "Before you begin"
-weight: 3
+weight: 4
 ---
 Before you begin you need to make sure you have the prerequisites in place.
 
