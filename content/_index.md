@@ -18,3 +18,7 @@ After the workshop, you will be able to:
 - Define clear roles and responsabilities between Org Admin, Platform Admin and Apps Operator
 - Set up a Managed Anthos Service Mesh (ASM) on GKE with a secure Ingress Gateway behind Cloud Armor
 - Deploy sample apps such as Whereami and Online Boutique with security best practices such as `NetworkPolicy`, `Sidecar`, `AuthorizationPolicy`, etc.
+
+At the end of this workshop, here is what you will accomplish:
+
+![Workshop Architecture diagram](/images/architecture.png)
