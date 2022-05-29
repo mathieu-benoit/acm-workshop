@@ -86,7 +86,7 @@ STATUS  NAME                              WORKFLOW  BRANCH  EVENT  ID          E
 List the Kubernetes resources managed by Config Sync in the **GKE cluster** for the **Online Boutique app** repository:
 ```Bash
 gcloud alpha anthos config sync repo describe \
-    --project $GKE_PROJECT_ID \
+    --project $TENANT_PROJECT_ID \
     --managed-resources all \
     --sync-name repo-sync \
     --sync-namespace $ONLINEBOUTIQUE_NAMESPACE

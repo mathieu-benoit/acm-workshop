@@ -16,7 +16,7 @@ source ${WORK_DIR}acm-workshop-variables.sh
 
 Define the `ConstraintTemplate` resource:
 ```Bash
-cat <<EOF > ~/$WORKSHOP_ORG_DIR_NAME/config-sync/policies/templates/limitlocations.yaml
+cat <<EOF > ~/$HOST_PROJECT_DIR_NAME/config-sync/policies/templates/limitlocations.yaml
 apiVersion: templates.gatekeeper.sh/v1
 kind: ConstraintTemplate
 metadata:
@@ -64,7 +64,7 @@ EOF
 
 Define the `Constraint` resource:
 ```Bash
-cat <<EOF > ~/$WORKSHOP_ORG_DIR_NAME/config-sync/policies/constraints/allowed-locations.yaml
+cat <<EOF > ~/$HOST_PROJECT_DIR_NAME/config-sync/policies/constraints/allowed-locations.yaml
 apiVersion: constraints.gatekeeper.sh/v1beta1
 kind: LimitLocations
 metadata:
@@ -89,9 +89,9 @@ EOF
 ## Deploy Kubernetes manifests
 
 ```Bash
-cd ~/$WORKSHOP_ORG_DIR_NAME/
+cd ~/$HOST_PROJECT_DIR_NAME/
 git add .
-git commit -m "Enforce policies for GKE project"
+git commit -m "Enforce policies for Tenant project"
 git push origin main
 ```
 
@@ -99,20 +99,20 @@ git push origin main
 
 Here is what you should have at this stage:
 
-List the GitHub runs for the **Org configs** repository `cd ~/$WORKSHOP_ORG_DIR_NAME && gh run list`:
+List the GitHub runs for the **Host project configs** repository `cd ~/$HOST_PROJECT_DIR_NAME && gh run list`:
 ```Plaintext
 STATUS  NAME                                      WORKFLOW  BRANCH  EVENT  ID          ELAPSED  AGE
-✓       Enforce policies for GKE project          ci        main    push   1960968253  1m4s     1m
-✓       GitOps for GKE project                    ci        main    push   1960959789  1m5s     3m
-✓       Setting up GKE namespace/project          ci        main    push   1960908849  1m12s    18m
-✓       Billing API in Config Controller project  ci        main    push   1960889246  1m0s     25m
+✓       Enforce policies for Tenant project       ci        main    push   1960968253  1m4s     1m
+✓       GitOps for Tenant project                 ci        main    push   1960959789  1m5s     3m
+✓       Setting up Tenant namespace/project       ci        main    push   1960908849  1m12s    18m
+✓       Billing API in Host project               ci        main    push   1960889246  1m0s     25m
 ✓       Initial commit                            ci        main    push   1960885850  1m8s     26m
 ```
 
-List the Kubernetes resources managed by Config Sync in **Config Controller** for the **Org configs** repository:
+List the Kubernetes resources managed by Config Sync in **Config Controller** for the **Host project configs** repository:
 ```Bash
 gcloud alpha anthos config sync repo describe \
-    --project $CONFIG_CONTROLLER_PROJECT_ID \
+    --project $HOST_PROJECT_ID \
     --managed-resources all \
     --sync-name root-sync \
     --sync-namespace config-management-system
@@ -122,16 +122,16 @@ getting 1 RepoSync and RootSync from krmapihost-configcontroller
 ┌───────────────────────────────────────┬────────────────────────┬────────────────────────────────────┬──────────────────────┐
 │                 GROUP                 │          KIND          │                NAME                │      NAMESPACE       │
 ├───────────────────────────────────────┼────────────────────────┼────────────────────────────────────┼──────────────────────┤
-│                                       │ Namespace              │ acm-workshop-464-gke               │                      │
+│                                       │ Namespace              │ acm-workshop-464-tenant               │                      │
 │                                       │ Namespace              │ config-control                     │                      │
 │ constraints.gatekeeper.sh             │ LimitLocations         │ allowed-locations                  │                      │
 │ templates.gatekeeper.sh               │ ConstraintTemplate     │ limitlocations                     │                      │
-│ configsync.gke.io                     │ RepoSync               │ repo-sync                          │ acm-workshop-464-gke │
-│ core.cnrm.cloud.google.com            │ ConfigConnectorContext │ configconnectorcontext             │ acm-workshop-464-gke │
-│ rbac.authorization.k8s.io             │ RoleBinding            │ syncs-repo                         │ acm-workshop-464-gke │
-│ iam.cnrm.cloud.google.com             │ IAMServiceAccount      │ acm-workshop-464-gke               │ config-control       │
-│ iam.cnrm.cloud.google.com             │ IAMPartialPolicy       │ acm-workshop-464-gke-sa-wi-user    │ config-control       │
-│ resourcemanager.cnrm.cloud.google.com │ Project                │ acm-workshop-464-gke               │ config-control       │
+│ configsync.gke.io                     │ RepoSync               │ repo-sync                          │ acm-workshop-464-tenant │
+│ core.cnrm.cloud.google.com            │ ConfigConnectorContext │ configconnectorcontext             │ acm-workshop-464-tenant │
+│ rbac.authorization.k8s.io             │ RoleBinding            │ syncs-repo                         │ acm-workshop-464-tenant │
+│ iam.cnrm.cloud.google.com             │ IAMServiceAccount      │ acm-workshop-464-tenant               │ config-control       │
+│ iam.cnrm.cloud.google.com             │ IAMPartialPolicy       │ acm-workshop-464-tenant-sa-wi-user    │ config-control       │
+│ resourcemanager.cnrm.cloud.google.com │ Project                │ acm-workshop-464-tenant               │ config-control       │
 │ serviceusage.cnrm.cloud.google.com    │ Service                │ cloudbilling.googleapis.com        │ config-control       │
 └───────────────────────────────────────┴────────────────────────┴────────────────────────────────────┴──────────────────────┘
 ```

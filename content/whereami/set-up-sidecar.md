@@ -59,7 +59,7 @@ STATUS  NAME                       WORKFLOW  BRANCH  EVENT  ID          ELAPSED 
 List the Kubernetes resources managed by Config Sync in the **GKE cluster** for the **Whereami app** repository:
 ```Bash
 gcloud alpha anthos config sync repo describe \
-    --project $GKE_PROJECT_ID \
+    --project $TENANT_PROJECT_ID \
     --managed-resources all \
     --sync-name repo-sync \
     --sync-namespace $WHEREAMI_NAMESPACE

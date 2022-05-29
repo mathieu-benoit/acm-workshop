@@ -1,26 +1,17 @@
 ---
 title: "Create Config Controller"
-weight: 1
+weight: 2
 description: "Duration: 20 min | Persona: Org Admin"
 tags: ["org-admin"]
 ---
 ![Org Admin](/images/org-admin.png)
 _{{< param description >}}_
 
-In this section, you will create your Config Controller instance in a dedicated Google Cloud project. Then and throughout this workshop, this Config Controller instance will allow to deploy any infrastructure via Kubernetes manifests. You will also add the minimal Google Cloud roles to its associated service account.
+In this section, you will create your Config Controller instance. You will also add the least privilege Google Cloud roles to its associated service account. This Config Controller instance will allow throughout this workshop to deploy any infrastructure via Kubernetes manifests.
 
 Define variables:
 ```Bash
-WORK_DIR=~/
-touch ${WORK_DIR}acm-workshop-variables.sh
-chmod +x ${WORK_DIR}acm-workshop-variables.sh
-RANDOM_SUFFIX=$(shuf -i 100-999 -n 1)
-BILLING_ACCOUNT_ID=FIXME
-ORG_OR_FOLDER_ID=FIXME
-echo "export RANDOM_SUFFIX=${RANDOM_SUFFIX}" >> ${WORK_DIR}acm-workshop-variables.sh
-echo "export CONFIG_CONTROLLER_PROJECT_ID=acm-workshop-${RANDOM_SUFFIX}" >> ${WORK_DIR}acm-workshop-variables.sh
-echo "export BILLING_ACCOUNT_ID=${BILLING_ACCOUNT_ID}" >> ${WORK_DIR}acm-workshop-variables.sh
-echo "export ORG_OR_FOLDER_ID=${ORG_OR_FOLDER_ID}" >> ${WORK_DIR}acm-workshop-variables.sh
+source ${WORK_DIR}acm-workshop-variables.sh
 echo "export LOCAL_IP_ADDRESS=$(curl -4 ifconfig.co)" >> ${WORK_DIR}acm-workshop-variables.sh
 echo "export CONFIG_CONTROLLER_NAME=configcontroller" >> ${WORK_DIR}acm-workshop-variables.sh
 echo "export CONFIG_CONTROLLER_LOCATION=us-east1" >> ${WORK_DIR}acm-workshop-variables.sh
@@ -30,39 +21,6 @@ source ${WORK_DIR}acm-workshop-variables.sh
 {{% notice info %}}
 `europe-north1`, `australia-southeast1`, `us-east1`, `us-central1`, `northamerica-northeast1` and `asia-northeast1` are the supported regions for now for Config Controller.
 {{% /notice %}}
-
-## Create Config Controller's GCP project
-
-Create the Config Controller's GCP project either at the Folder level or the Organization level:
-{{< tabs groupId="org-level">}}
-{{% tab name="Folder level" %}}
-Create this resource at a Folder level:
-```Bash
-gcloud projects create $CONFIG_CONTROLLER_PROJECT_ID \
-    --folder $ORG_OR_FOLDER_ID \
-    --name $CONFIG_CONTROLLER_PROJECT_ID
-```
-{{% /tab %}}
-{{% tab name="Org level" %}}
-Alternatively, you could also create this resource at the Organization level:
-```Bash
-gcloud projects create $CONFIG_CONTROLLER_PROJECT_ID \
-    --organization $ORG_OR_FOLDER_ID \
-    --name $CONFIG_CONTROLLER_PROJECT_ID
-```
-{{% /tab %}}
-{{< /tabs >}}
-
-Set the Billing account on this GCP project: 
-```
-gcloud beta billing projects link $CONFIG_CONTROLLER_PROJECT_ID \
-    --billing-account $BILLING_ACCOUNT_ID
-```
-
-Set this project as the default project for following `gcloud` commands:
-```
-gcloud config set project $CONFIG_CONTROLLER_PROJECT_ID
-```
 
 ## Create the Config Controller instance
 
@@ -131,10 +89,10 @@ gcloud organizations add-iam-policy-binding ${ORG_OR_FOLDER_ID} \
 
 Set the `serviceusage.serviceUsageAdmin` and `iam.serviceAccountAdmin` roles:
 ```Bash
-gcloud projects add-iam-policy-binding ${CONFIG_CONTROLLER_PROJECT_ID} \
+gcloud projects add-iam-policy-binding ${HOST_PROJECT_ID} \
     --member="serviceAccount:${CONFIG_CONTROLLER_SA}" \
     --role='roles/serviceusage.serviceUsageAdmin'
-gcloud projects add-iam-policy-binding ${CONFIG_CONTROLLER_PROJECT_ID} \
+gcloud projects add-iam-policy-binding ${HOST_PROJECT_ID} \
     --member="serviceAccount:${CONFIG_CONTROLLER_SA}" \
     --role='roles/iam.serviceAccountAdmin'
 ```
@@ -153,14 +111,13 @@ In some specific scenario, you may not be able to accomplish this step. You coul
 
 List the GCP resources created:
 ```Bash
-gcloud projects describe $CONFIG_CONTROLLER_PROJECT_ID
 gcloud anthos config controller list \
-    --project $CONFIG_CONTROLLER_PROJECT_ID
+    --project $HOST_PROJECT_ID
 gcloud beta billing accounts get-iam-policy ${BILLING_ACCOUNT_ID} \
     --filter="bindings.members:${CONFIG_CONTROLLER_SA}" \
     --flatten="bindings[].members" \
     --format="table(bindings.role)"
-gcloud projects get-iam-policy $CONFIG_CONTROLLER_PROJECT_ID \
+gcloud projects get-iam-policy $HOST_PROJECT_ID \
     --filter="bindings.members:${CONFIG_CONTROLLER_SA}" \
     --flatten="bindings[].members" \
     --format="table(bindings.role)"

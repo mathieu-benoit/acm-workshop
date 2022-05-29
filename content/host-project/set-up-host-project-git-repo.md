@@ -1,6 +1,6 @@
 ---
-title: "Set up Config Controller's Git repo"
-weight: 2
+title: "Set up Host project's Git repo"
+weight: 3
 description: "Duration: 10 min | Persona: Org Admin"
 tags: ["kcc", "org-admin"]
 ---
@@ -13,7 +13,7 @@ In this section, you will set up the primary Git repository of the Config Contro
 Define variables:
 ```Bash
 source ${WORK_DIR}acm-workshop-variables.sh
-echo "export WORKSHOP_ORG_DIR_NAME=acm-workshop-org-repo" >> ${WORK_DIR}acm-workshop-variables.sh
+echo "export HOST_PROJECT_DIR_NAME=acm-workshop-org-repo" >> ${WORK_DIR}acm-workshop-variables.sh
 source ${WORK_DIR}acm-workshop-variables.sh
 ```
 
@@ -62,12 +62,12 @@ kubectl wait --for condition=established crd rootsyncs.configsync.gke.io
 
 ## Define the primary Git repository
 
-Create a dedicated private GitHub repository to store any Kubernetes manifests associated to the GCP Organization:
+Create a dedicated private GitHub repository to store any Kubernetes manifests associated to the Host project:
 ```Bash
 cd ~
 gh auth login
-gh repo create $WORKSHOP_ORG_DIR_NAME --private --clone --template https://github.com/mathieu-benoit/config-sync-template-repo
-cd ~/$WORKSHOP_ORG_DIR_NAME
+gh repo create $HOST_PROJECT_DIR_NAME --private --clone --template https://github.com/mathieu-benoit/config-sync-template-repo
+cd ~/$HOST_PROJECT_DIR_NAME
 git pull
 git checkout main
 ORG_REPO_URL=$(gh repo view --json sshUrl --jq .sshUrl)
@@ -118,7 +118,7 @@ Since you started this workshop, you just ran 6 `kubectl` commands. For your inf
 
 In order to have Config Controller's Config Sync linking a Billing Account to GCP projects later in this workshop, we need to define the Cloud Billing API [`Service`](https://cloud.google.com/config-connector/docs/reference/resource-docs/serviceusage/service) resource for Config Controller's GCP project:
 ```Bash
-cat <<EOF > ~/$WORKSHOP_ORG_DIR_NAME/config-sync/cloudbilling-service.yaml
+cat <<EOF > ~/$HOST_PROJECT_DIR_NAME/config-sync/cloudbilling-service.yaml
 apiVersion: serviceusage.cnrm.cloud.google.com/v1beta1
 kind: Service
 metadata:
@@ -133,9 +133,9 @@ EOF
 ## Deploy Kubernetes manifests
 
 ```Bash
-cd ~/$WORKSHOP_ORG_DIR_NAME/
+cd ~/$HOST_PROJECT_DIR_NAME/
 git add .
-git commit -m "Billing API in Config Controller project"
+git commit -m "Billing API in Host project"
 git push origin main
 ```
 {{% notice info %}}
@@ -147,11 +147,11 @@ Because it's the first `git commit` of this workshop, if you don't have your own
 List the GCP resources created:
 ```Bash
 gcloud compute routers list \
-    --project $CONFIG_CONTROLLER_PROJECT_ID
+    --project $HOST_PROJECT_ID
 gcloud compute routers nats list \
     --router $CONFIG_CONTROLLER_NAT_ROUTER_NAME \
     --region $CONFIG_CONTROLLER_LOCATION \
-    --project $CONFIG_CONTROLLER_PROJECT_ID
+    --project $HOST_PROJECT_ID
 ```
 ```Plaintext
 NAME        REGION    NETWORK
@@ -160,17 +160,17 @@ NAME        NAT_IP_ALLOCATE_OPTION  SOURCE_SUBNETWORK_IP_RANGES_TO_NAT
 nat-config  AUTO_ONLY               ALL_SUBNETWORKS_ALL_IP_RANGES
 ```
 
-List the GitHub runs for the Org configs repository `cd ~/$WORKSHOP_ORG_DIR_NAME && gh run list`:
+List the GitHub runs for the Host project configs repository `cd ~/$HOST_PROJECT_DIR_NAME && gh run list`:
 ```Plaintext
 STATUS  NAME                                      WORKFLOW  BRANCH  EVENT  ID          ELAPSED  AGE
-✓       Billing API in Config Controller project  ci        main    push   1960889246  1m0s     1m
+✓       Billing API in Host project               ci        main    push   1960889246  1m0s     1m
 ✓       Initial commit                            ci        main    push   1960885850  1m8s     2m
 ```
 
-List the Kubernetes resources managed by Config Sync in **Config Controller** for the **Org configs** repository:
+List the Kubernetes resources managed by Config Sync in **Config Controller** for the **Host project configs** repository:
 ```Bash
 gcloud alpha anthos config sync repo describe \
-    --project $CONFIG_CONTROLLER_PROJECT_ID \
+    --project $HOST_PROJECT_ID \
     --managed-resources all \
     --sync-name root-sync \
     --sync-namespace config-management-system

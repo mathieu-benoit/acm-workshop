@@ -42,18 +42,18 @@ Currently, you can't access the GKE cluster via `kubectl` commands because it's 
 ```
 As an example, you could get your local IP address by running this command: `curl -4 ifconfig.co`.
 
-The associated file to update manually is here: `~/$GKE_PROJECT_DIR_NAME/config-sync/gke-cluster.yaml`, and you could then run this command to actually deploy this change in Config Controller:
+The associated file to update manually is here: `~/$TENANT_PROJECT_DIR_NAME/config-sync/gke-cluster.yaml`, and you could then run this command to actually deploy this change in Config Controller:
 ```Bash
-kubectl apply -f ~/$GKE_PROJECT_DIR_NAME/config-sync/gke-cluster.yaml
+kubectl apply -f ~/$TENANT_PROJECT_DIR_NAME/config-sync/gke-cluster.yaml
 ```
 
 We don't need that for the workshop as we are deploying all the Kubernetes resources via GitOps with Config Sync, but this could be handy if you need to debug some deployments from your local machine as an example.
 
 You could rollback this local change if you want:
 ```Bash
-cd ~/$GKE_PROJECT_DIR_NAME
-git checkout ~/$GKE_PROJECT_DIR_NAME/config-sync/gke-cluster.yaml
-kubectl apply -f ~/$GKE_PROJECT_DIR_NAME/config-sync/gke-cluster.yaml
+cd ~/$TENANT_PROJECT_DIR_NAME
+git checkout ~/$TENANT_PROJECT_DIR_NAME/config-sync/gke-cluster.yaml
+kubectl apply -f ~/$TENANT_PROJECT_DIR_NAME/config-sync/gke-cluster.yaml
 ```
 
 ## Validate Policies

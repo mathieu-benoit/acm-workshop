@@ -18,15 +18,15 @@ source ${WORK_DIR}acm-workshop-variables.sh
 
 Define the ACM [`GKEHubFeature`](https://cloud.google.com/config-connector/docs/reference/resource-docs/gkehub/gkehubfeature) resource:
 ```Bash
-cat <<EOF > ~/$GKE_PROJECT_DIR_NAME/config-sync/gke-hub-feature-acm.yaml
+cat <<EOF > ~/$TENANT_PROJECT_DIR_NAME/config-sync/gke-hub-feature-acm.yaml
 apiVersion: gkehub.cnrm.cloud.google.com/v1beta1
 kind: GKEHubFeature
 metadata:
   name: configmanagement
-  namespace: ${GKE_PROJECT_ID}
+  namespace: ${TENANT_PROJECT_ID}
 spec:
   projectRef:
-    external: ${GKE_PROJECT_ID}
+    external: ${TENANT_PROJECT_ID}
   location: global
   resourceID: configmanagement
 EOF
@@ -36,18 +36,18 @@ The `resourceID` must be `configmanagement` if you want to use Anthos Config Man
 {{% /notice %}}
 
 ```Bash
-cat <<EOF > ~/$GKE_PROJECT_DIR_NAME/config-sync/gke-hub-membership.yaml
+cat <<EOF > ~/$TENANT_PROJECT_DIR_NAME/config-sync/gke-hub-membership.yaml
 apiVersion: gkehub.cnrm.cloud.google.com/v1beta1
 kind: GKEHubMembership
 metadata:
   name: ${GKE_NAME}
-  namespace: ${GKE_PROJECT_ID}
+  namespace: ${TENANT_PROJECT_ID}
   annotations:
-    config.kubernetes.io/depends-on: container.cnrm.cloud.google.com/namespaces/${GKE_PROJECT_ID}/ContainerCluster/${GKE_NAME}
+    config.kubernetes.io/depends-on: container.cnrm.cloud.google.com/namespaces/${TENANT_PROJECT_ID}/ContainerCluster/${GKE_NAME}
 spec:
   location: global
   authority:
-    issuer: https://container.googleapis.com/v1/projects/${GKE_PROJECT_ID}/locations/${GKE_LOCATION}/clusters/${GKE_NAME}
+    issuer: https://container.googleapis.com/v1/projects/${TENANT_PROJECT_ID}/locations/${GKE_LOCATION}/clusters/${GKE_NAME}
   endpoint:
     gkeCluster:
       resourceRef:
@@ -70,17 +70,17 @@ GKE_CONFIGS_REPO_URL=$(gh repo view --json url --jq .url)
 ## Define RootSync with this GitHub repository 
 
 ```Bash
-cat <<EOF > ~/$GKE_PROJECT_DIR_NAME/config-sync/gke-acm-membership.yaml
+cat <<EOF > ~/$TENANT_PROJECT_DIR_NAME/config-sync/gke-acm-membership.yaml
 apiVersion: gkehub.cnrm.cloud.google.com/v1beta1
 kind: GKEHubFeatureMembership
 metadata:
   name: ${GKE_NAME}-acm-membership
-  namespace: ${GKE_PROJECT_ID}
+  namespace: ${TENANT_PROJECT_ID}
   annotations:
-    config.kubernetes.io/depends-on: gkehub.cnrm.cloud.google.com/namespaces/${GKE_PROJECT_ID}/GKEHubMembership/${GKE_NAME},gkehub.cnrm.cloud.google.com/namespaces/${GKE_PROJECT_ID}/GKEHubFeature/configmanagement
+    config.kubernetes.io/depends-on: gkehub.cnrm.cloud.google.com/namespaces/${TENANT_PROJECT_ID}/GKEHubMembership/${GKE_NAME},gkehub.cnrm.cloud.google.com/namespaces/${TENANT_PROJECT_ID}/GKEHubFeature/configmanagement
 spec:
   projectRef:
-    external: ${GKE_PROJECT_ID}
+    external: ${TENANT_PROJECT_ID}
   location: global
   membershipRef:
     name: ${GKE_NAME}
@@ -115,14 +115,14 @@ We explicitly set the Policy Controller's `templateLibraryInstalled` field to `f
 https://cloud.google.com/anthos-config-management/docs/how-to/monitoring-multi-repo
 
 ```Bash
-cat <<EOF > ~/$GKE_PROJECT_DIR_NAME/config-sync/config-sync-monitoring-workload-identity-user.yaml
+cat <<EOF > ~/$TENANT_PROJECT_DIR_NAME/config-sync/config-sync-monitoring-workload-identity-user.yaml
 apiVersion: iam.cnrm.cloud.google.com/v1beta1
 kind: IAMPartialPolicy
 metadata:
   name: ${GKE_SA}-sa-cs-monitoring-wi-user
-  namespace: ${GKE_PROJECT_ID}
+  namespace: ${TENANT_PROJECT_ID}
   annotations:
-    config.kubernetes.io/depends-on: iam.cnrm.cloud.google.com/namespaces/${GKE_PROJECT_ID}/IAMServiceAccount/${GKE_SA}
+    config.kubernetes.io/depends-on: iam.cnrm.cloud.google.com/namespaces/${TENANT_PROJECT_ID}/IAMServiceAccount/${GKE_SA}
 spec:
   resourceRef:
     name: ${GKE_SA}
@@ -130,14 +130,14 @@ spec:
   bindings:
     - role: roles/iam.workloadIdentityUser
       members:
-        - member: serviceAccount:${GKE_PROJECT_ID}.svc.id.goog[config-management-monitoring/default]
+        - member: serviceAccount:${TENANT_PROJECT_ID}.svc.id.goog[config-management-monitoring/default]
 EOF
 ```
 
 ## Deploy Kubernetes manifests
 
 ```Bash
-cd ~/$GKE_PROJECT_DIR_NAME/
+cd ~/$TENANT_PROJECT_DIR_NAME/
 git add .
 git commit -m "GitOps for GKE cluster configs"
 git push origin main
@@ -167,13 +167,13 @@ graph TD;
   GKEHubMembership-->ContainerCluster
 {{< /mermaid >}}
 
-List the GitHub runs for the **GKE project configs** repository `cd ~/$GKE_PROJECT_DIR_NAME && gh run list`:
+List the GitHub runs for the **Tenant project configs** repository `cd ~/$TENANT_PROJECT_DIR_NAME && gh run list`:
 ```Plaintext
-STATUS  NAME                                                  WORKFLOW  BRANCH  EVENT  ID          ELAPSED  AGE
-✓       GitOps for GKE cluster configs                        ci        main    push   1970974465  53s      13m
-✓       GKE cluster, primary nodepool and SA for GKE project  ci        main    push   1963473275  1m16s    1d
-✓       Network for GKE project                               ci        main    push   1961289819  1m13s    1d
-✓       Initial commit                                        ci        main    push   1961170391  56s      1d
+STATUS  NAME                                                     WORKFLOW  BRANCH  EVENT  ID          ELAPSED  AGE
+✓       GitOps for GKE cluster configs                           ci        main    push   1970974465  53s      13m
+✓       GKE cluster, primary nodepool and SA for Tenant project  ci        main    push   1963473275  1m16s    1d
+✓       Network for Tenant project                               ci        main    push   1961289819  1m13s    1d
+✓       Initial commit                                           ci        main    push   1961170391  56s      1d
 ```
 
 List the GitHub runs for the **GKE cluster configs** repository `cd ~/$GKE_CONFIGS_DIR_NAME && gh run list`:
@@ -182,32 +182,32 @@ STATUS  NAME            WORKFLOW  BRANCH  EVENT  ID          ELAPSED  AGE
 ✓       Initial commit  ci        main    push   1970951731  57s      28m
 ```
 
-List the Kubernetes resources managed by Config Sync in **Config Controller** for the **GKE project configs** repository:
+List the Kubernetes resources managed by Config Sync in **Config Controller** for the **Tenant project configs** repository:
 ```Bash
 gcloud alpha anthos config sync repo describe \
-    --project $CONFIG_CONTROLLER_PROJECT_ID \
+    --project $HOST_PROJECT_ID \
     --managed-resources all \
     --sync-name repo-sync \
-    --sync-namespace $GKE_PROJECT_ID
+    --sync-namespace $TENANT_PROJECT_ID
 ```
 ```Plaintext
 getting 1 RepoSync and RootSync from krmapihost-configcontroller
 ┌────────────────────────────────────────┬────────────────────────────┬───────────────────────────────────────────┬──────────────────────┐
 │                 GROUP                  │            KIND            │                    NAME                   │      NAMESPACE       │
 ├────────────────────────────────────────┼────────────────────────────┼───────────────────────────────────────────┼──────────────────────┤
-│ compute.cnrm.cloud.google.com          │ ComputeRouterNAT           │ gke                                       │ acm-workshop-464-gke │
-│ compute.cnrm.cloud.google.com          │ ComputeNetwork             │ gke                                       │ acm-workshop-464-gke │
-│ compute.cnrm.cloud.google.com          │ ComputeRouter              │ gke                                       │ acm-workshop-464-gke │
-│ compute.cnrm.cloud.google.com          │ ComputeSubnetwork          │ gke                                       │ acm-workshop-464-gke │
-│ container.cnrm.cloud.google.com        │ ContainerNodePool          │ primary                                   │ acm-workshop-464-gke │
-│ container.cnrm.cloud.google.com        │ ContainerCluster           │ gke                                       │ acm-workshop-464-gke │
-│ gkehub.cnrm.cloud.google.com           │ GKEHubMembership           │ gke-hub-membership                        │ acm-workshop-464-gke │
-│ gkehub.cnrm.cloud.google.com           │ GKEHubFeature              │ configmanagement                          │ acm-workshop-464-gke │
-│ gkehub.cnrm.cloud.google.com           │ GKEHubFeatureMembership    │ gke-acm-membership                        │ acm-workshop-464-gke │
-│ iam.cnrm.cloud.google.com              │ IAMPolicyMember            │ log-writer                                │ acm-workshop-464-gke │
-│ iam.cnrm.cloud.google.com              │ IAMServiceAccount          │ gke-primary-pool                          │ acm-workshop-464-gke │
-│ iam.cnrm.cloud.google.com              │ IAMPolicyMember            │ metric-writer                             │ acm-workshop-464-gke │
-│ iam.cnrm.cloud.google.com              │ IAMPolicyMember            │ monitoring-viewer                         │ acm-workshop-464-gke │
-│ iam.cnrm.cloud.google.com              │ IAMPartialPolicy           │ gke-primary-pool-sa-cs-monitoring-wi-user │ acm-workshop-464-gke │
+│ compute.cnrm.cloud.google.com          │ ComputeRouterNAT           │ gke                                       │ acm-workshop-464-tenant │
+│ compute.cnrm.cloud.google.com          │ ComputeNetwork             │ gke                                       │ acm-workshop-464-tenant │
+│ compute.cnrm.cloud.google.com          │ ComputeRouter              │ gke                                       │ acm-workshop-464-tenant │
+│ compute.cnrm.cloud.google.com          │ ComputeSubnetwork          │ gke                                       │ acm-workshop-464-tenant │
+│ container.cnrm.cloud.google.com        │ ContainerNodePool          │ primary                                   │ acm-workshop-464-tenant │
+│ container.cnrm.cloud.google.com        │ ContainerCluster           │ gke                                       │ acm-workshop-464-tenant │
+│ gkehub.cnrm.cloud.google.com           │ GKEHubMembership           │ gke-hub-membership                        │ acm-workshop-464-tenant │
+│ gkehub.cnrm.cloud.google.com           │ GKEHubFeature              │ configmanagement                          │ acm-workshop-464-tenant │
+│ gkehub.cnrm.cloud.google.com           │ GKEHubFeatureMembership    │ gke-acm-membership                        │ acm-workshop-464-tenant │
+│ iam.cnrm.cloud.google.com              │ IAMPolicyMember            │ log-writer                                │ acm-workshop-464-tenant │
+│ iam.cnrm.cloud.google.com              │ IAMServiceAccount          │ gke-primary-pool                          │ acm-workshop-464-tenant │
+│ iam.cnrm.cloud.google.com              │ IAMPolicyMember            │ metric-writer                             │ acm-workshop-464-tenant │
+│ iam.cnrm.cloud.google.com              │ IAMPolicyMember            │ monitoring-viewer                         │ acm-workshop-464-tenant │
+│ iam.cnrm.cloud.google.com              │ IAMPartialPolicy           │ gke-primary-pool-sa-cs-monitoring-wi-user │ acm-workshop-464-tenant │
 └────────────────────────────────────────┴────────────────────────────┴───────────────────────────────────────────┴──────────────────────┘
 ```

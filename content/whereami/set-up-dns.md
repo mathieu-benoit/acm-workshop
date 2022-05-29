@@ -10,7 +10,7 @@ _{{< param description >}}_
 Initialize variables:
 ```Bash
 source ${WORK_DIR}acm-workshop-variables.sh
-echo "export WHERE_AMI_INGRESS_GATEWAY_HOST_NAME='whereami.endpoints.${GKE_PROJECT_ID}.cloud.goog'" >> ${WORK_DIR}acm-workshop-variables.sh
+echo "export WHERE_AMI_INGRESS_GATEWAY_HOST_NAME='whereami.endpoints.${TENANT_PROJECT_ID}.cloud.goog'" >> ${WORK_DIR}acm-workshop-variables.sh
 source ${WORK_DIR}acm-workshop-variables.sh
 ```
 
@@ -31,7 +31,7 @@ x-google-endpoints:
   target: "${INGRESS_GATEWAY_PUBLIC_IP}"
 EOF
 gcloud endpoints services deploy ~/dns-spec.yaml \
-    --project ${GKE_PROJECT_ID}
+    --project ${TENANT_PROJECT_ID}
 rm ~/dns-spec.yaml
 ```
 
@@ -76,16 +76,16 @@ git push origin main
 List the GCP resources created:
 ```Bash
 gcloud endpoints services list \
-    --project $GKE_PROJECT_ID
+    --project $TENANT_PROJECT_ID
 gcloud compute ssl-certificates list \
-    --project $GKE_PROJECT_ID
+    --project $TENANT_PROJECT_ID
 ```
 ```Plaintext
 NAME                                                TITLE
-whereami.endpoints.acm-workshop-464-gke.cloud.goog
+whereami.endpoints.acm-workshop-464-tenant.cloud.goog
 NAME                                       TYPE     CREATION_TIMESTAMP             EXPIRE_TIME                    MANAGED_STATUS
 mcrt-cad09973-2b95-4124-866a-afa7c609e10e  MANAGED  2022-03-12T20:28:00.139-08:00  2022-06-10T20:28:01.000-07:00  ACTIVE
-    whereami.endpoints.acm-workshop-464-gke.cloud.goog: ACTIVE
+    whereami.endpoints.acm-workshop-464-tenant.cloud.goog: ACTIVE
 ```
 {{% notice note %}}
 Wait for the `ManagedCertificate` to be provisioned. This usually takes about 30 minutes.
@@ -112,7 +112,7 @@ STATUS  NAME                                                  WORKFLOW  BRANCH  
 List the Kubernetes resources managed by Config Sync in the **GKE cluster** for the **GKE cluster configs** repository:
 ```Bash
 gcloud alpha anthos config sync repo describe \
-    --project $GKE_PROJECT_ID \
+    --project $TENANT_PROJECT_ID \
     --managed-resources all \
     --sync-name root-sync \
     --sync-namespace config-management-system

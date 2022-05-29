@@ -24,7 +24,7 @@ metadata:
   name: default
   namespace: config-management-monitoring
   annotations:
-    iam.gke.io/gcp-service-account: $GKE_SA@$GKE_PROJECT_ID.iam.gserviceaccount.com
+    iam.gke.io/gcp-service-account: $GKE_SA@$TENANT_PROJECT_ID.iam.gserviceaccount.com
 EOF
 ```
 
@@ -49,7 +49,7 @@ STATUS  NAME                    WORKFLOW  BRANCH  EVENT  ID          ELAPSED  AG
 List the Kubernetes resources managed by Config Sync in the **GKE cluster** for the **GKE cluster configs** repository:
 ```Bash
 gcloud alpha anthos config sync repo describe \
-    --project $GKE_PROJECT_ID \
+    --project $TENANT_PROJECT_ID \
     --managed-resources all \
     --sync-name root-sync \
     --sync-namespace config-management-system

@@ -120,7 +120,7 @@ STATUS  NAME                                                  WORKFLOW  BRANCH  
 List the Kubernetes resources managed by Config Sync in the **GKE cluster** for the **GKE cluster configs** repository:
 ```Bash
 gcloud alpha anthos config sync repo describe \
-    --project $GKE_PROJECT_ID \
+    --project $TENANT_PROJECT_ID \
     --managed-resources all \
     --sync-name root-sync \
     --sync-namespace config-management-system
