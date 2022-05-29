@@ -2,7 +2,7 @@
 title: "Set up Authorization Policies"
 weight: 8
 description: "Duration: 5 min | Persona: Apps Operator"
-tags: ["apps-operator", "asm"]
+tags: ["apps-operator", "asm", "security-tips"]
 ---
 ![Apps Operator](/images/apps-operator.png)
 _{{< param description >}}_

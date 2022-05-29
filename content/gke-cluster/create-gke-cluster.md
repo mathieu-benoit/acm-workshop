@@ -2,7 +2,7 @@
 title: "Create the GKE cluster"
 weight: 2
 description: "Duration: 5 min | Persona: Platform Admin"
-tags: ["kcc", "platform-admin"]
+tags: ["kcc", "platform-admin", "security-tips"]
 ---
 ![Platform Admin](/images/platform-admin.png)
 _{{< param description >}}_

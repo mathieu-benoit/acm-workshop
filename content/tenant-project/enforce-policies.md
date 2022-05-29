@@ -2,7 +2,7 @@
 title: "Enforce policies"
 weight: 3
 description: "Duration: 5 min | Persona: Org Admin"
-tags: ["org-admin", "policies"]
+tags: ["org-admin", "policies", "security-tips"]
 ---
 ![Org Admin](/images/org-admin.png)
 _{{< param description >}}_

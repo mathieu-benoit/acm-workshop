@@ -2,7 +2,7 @@
 title: "Install ASM"
 weight: 2
 description: "Duration: 10 min | Persona: Platform Admin"
-tags: ["asm", "kcc", "platform-admin"]
+tags: ["asm", "kcc", "platform-admin", "security-tips"]
 ---
 ![Platform Admin](/images/platform-admin.png)
 _{{< param description >}}_

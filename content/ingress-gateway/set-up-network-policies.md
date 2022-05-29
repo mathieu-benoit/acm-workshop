@@ -2,7 +2,7 @@
 title: "Set up Network Policies"
 weight: 5
 description: "Duration: 5 min | Persona: Platform Admin"
-tags: ["platform-admin"]
+tags: ["platform-admin", "security-tips"]
 ---
 ![Platform Admin](/images/platform-admin.png)
 _{{< param description >}}_
