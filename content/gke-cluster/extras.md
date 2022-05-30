@@ -1,6 +1,6 @@
 ---
 title: "Extras"
-weight: 7
+weight: 8
 description: "Duration: 10 min"
 ---
 _{{< param description >}}_

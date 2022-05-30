@@ -1,6 +1,6 @@
 ---
 title: "Set up GKE configs's Git repo"
-weight: 4
+weight: 5
 description: "Duration: 10 min | Persona: Platform Admin"
 tags: ["kcc", "platform-admin"]
 ---

@@ -1,6 +1,6 @@
 ---
 title: "Create GKE cluster"
-weight: 2
+weight: 3
 description: "Duration: 5 min | Persona: Platform Admin"
 tags: ["kcc", "platform-admin", "security-tips"]
 ---

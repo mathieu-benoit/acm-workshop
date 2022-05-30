@@ -1,6 +1,6 @@
 ---
-title: "Configure Config Sync Monitoring"
-weight: 5
+title: "Set up Config Sync Monitoring"
+weight: 6
 description: "Duration: 5 min | Persona: Platform Admin"
 tags: ["platform-admin"]
 ---

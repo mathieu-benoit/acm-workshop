@@ -1,6 +1,6 @@
 ---
-title: "Configure Network Policy"
-weight: 6
+title: "Set up NetworkPolicies policies"
+weight: 7
 description: "Duration: 5 min | Persona: Platform Admin"
 tags: ["platform-admin", "policies", "security-tips"]
 ---
@@ -10,36 +10,6 @@ _{{< param description >}}_
 Define variables:
 ```Bash
 source ${WORK_DIR}acm-workshop-variables.sh
-```
-
-## Define Network Policy logging
-
-https://cloud.google.com/kubernetes-engine/docs/how-to/network-policy-logging
-
-```Bash
-cat <<EOF > ~/$GKE_CONFIGS_DIR_NAME/config-sync/networkpolicies-logging.yaml
-kind: NetworkLogging
-apiVersion: networking.gke.io/v1alpha1
-metadata:
-  name: default
-spec:
-  cluster:
-    allow:
-      log: false
-      delegate: false
-    deny:
-      log: true
-      delegate: false
-EOF
-```
-
-## Deploy Kubernetes manifests
-
-```Bash
-cd ~/$GKE_CONFIGS_DIR_NAME/
-git add .
-git commit -m "Network Policies logging"
-git push origin main
 ```
 
 ## Enforce NetworkPolicy policies
