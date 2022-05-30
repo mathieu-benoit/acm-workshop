@@ -194,6 +194,8 @@ getting 1 RepoSync and RootSync from krmapihost-configcontroller
 └───────────────────────────────────────┴────────────────────────┴─────────────────────────────────┴──────────────────────┘
 ```
 
+## Resolve Tenant project creation
+
 Here, if you skipped the assignment of the `billing.user` role earlier while you were setting up your Config Controller instance, you will have an error with the creation of the `Project`. A simple way to make sure you don't have any error is to run this command below:
 ```Bash
 kubectl get gcpproject -n config-control
@@ -202,16 +204,20 @@ kubectl get gcpproject -n config-control
 If the output is similar to this below, you are good:
 ```Plaintext
 NAMESPACE        NAME                     AGE     READY   STATUS     STATUS AGE
-config-control   acm-workshop-464-tenant     24m     True    UpToDate   21m
+config-control   acm-workshop-464-tenant  24m     True    UpToDate   21m
 ```
 
 But if you have this output below, that's where you will need to take actions:
 ```Plaintext
 NAMESPACE        NAME                     AGE     READY   STATUS        STATUS AGE
-config-control   acm-workshop-464-tenant     24m     True    UpdateFailed  21m
+config-control   acm-workshop-464-tenant  24m     True    UpdateFailed  21m
 ```
 
-With a closer look at the error by running this command `kubectl descibe gcpproject -n config-control`, you will see that the error is similar too:
+With a closer look at the error by running this command `kubectl descibe gcpproject -n config-control`, you may see one the two errors below:
+
+### The caller does not have permission, forbidden
+
+If you have this error:
 ```Plaintext
 Update call failed: error applying desired state: summary: Error setting billing account "XXX" for project "projects/acm-workshop-464-tenant": googleapi: Error 403: The caller does not have permission, forbidden
 ```
@@ -222,6 +228,29 @@ gcloud beta billing projects link $TENANT_PROJECT_ID \
     --billing-account $BILLING_ACCOUNT_ID
 ```
 
+If you can't run the command above, the alternative is having someone in your organization (Billing Account or Organization admins) running it for you.
+
 As Config Connector is still reconciling the resources, if you successfully ran this command, the error will disappear. You can run again the command `kubectl get gcpproject -n config-control` to make sure about that.
+
+### Missing permission billing.resourceAssociations.create
+
+If you have this error:
+```Plaintext
+Update call failed: error applying desired state: summary: failed pre-requisites: missing permission on "billingAccounts/XXX": billing.resourceAssociations.create
+```
+
+You can resolve this issue by redeploying (edit + commit) the `Project` resource by removing this part:
+```YAML
+  billingAccountRef:
+    external: "${BILLING_ACCOUNT_ID}"
+```
+
+As Config Connector is still reconciling the resources, if you successfully redeployed the `Project` resource, the error will disappear. You can run again the command `kubectl get gcpproject -n config-control` to make sure about that.
+
+Then what you have to do is to manually assigned the Billing Account to this project by running by yourself this command below:
+```Bash
+gcloud beta billing projects link $TENANT_PROJECT_ID \
+    --billing-account $BILLING_ACCOUNT_ID
+```
 
 If you can't run the command above, the alternative is having someone in your organization (Billing Account or Organization admins) running it for you.
