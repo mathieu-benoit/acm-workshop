@@ -19,7 +19,7 @@ if [ $ASM_CHANNEL = "rapid" ] || [ $ASM_CHANNEL = "stable" ] ; then ASM_VERSION=
 echo "export ASM_VERSION=${ASM_VERSION}" >> ${WORK_DIR}acm-workshop-variables.sh
 source ${WORK_DIR}acm-workshop-variables.sh
 ```
-{{% notice note %}}
+{{% notice info %}}
 The possible values for `ASM_CHANNEL` are `regular`, `stable` or `rapid`.
 {{% /notice %}}
 

@@ -44,7 +44,7 @@ patchesJson6902:
       value: ClusterIP
 EOF
 ```
-{{% notice note %}}
+{{% notice info %}}
 Here we are disabling tracing from the upstream files as well as changing the `Service` `type` to `ClusterIP`.
 {{% /notice %}}
 
@@ -84,7 +84,7 @@ cd ~/$WHERE_AMI_DIR_NAME/staging
 kustomize edit add resource ../base
 kustomize edit set namespace $WHEREAMI_NAMESPACE
 ```
-{{% notice note %}}
+{{% notice info %}}
 The `kustomization.yaml` file was already existing from the [GitHub repository template](https://github.com/mathieu-benoit/config-sync-app-template-repo/blob/main/staging/kustomization.yaml) used when we created the `Whereami` app repository.
 {{% /notice %}}
 

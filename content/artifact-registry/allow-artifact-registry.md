@@ -55,7 +55,7 @@ spec:
   resourceID: artifactregistry.googleapis.com
 EOF
 ```
-{{% notice note %}}
+{{% notice info %}}
 We are enabling the GCP services APIs from the Org Admin, it allows more control and governance over which GCP services APIs the Platform Admin could use or not. If you want to give more autonomy to the Platform Admin, you could grant the `serviceusage.serviceUsageAdmin` role to the associated service account.
 {{% /notice %}}
 
