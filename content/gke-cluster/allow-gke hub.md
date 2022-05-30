@@ -107,7 +107,7 @@ graph TD;
 List the GCP resources created:
 ```Bash
 gcloud projects get-iam-policy $TENANT_PROJECT_ID \
-    --filter="bindings.members:${GKE_PROJECT_SA_EMAIL}" \
+    --filter="bindings.members:${TENANT_PROJECT_SA_EMAIL}" \
     --flatten="bindings[].members" \
     --format="table(bindings.role)"
 ```

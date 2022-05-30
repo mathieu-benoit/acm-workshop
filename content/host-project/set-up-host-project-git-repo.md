@@ -7,7 +7,7 @@ tags: ["kcc", "org-admin", "security-tips"]
 ![Org Admin](/images/org-admin.png)
 _{{< param description >}}_
 
-In this section, you will set up the primary Git repository of the Config Controller instance in order to have in place a GitOps approach to deploy your infrastructure in Google Cloud. You will also configure a Cloud NAT to this Config Controller instance to give it access to the Internet (GitHub repositories) in Egress. Finally, you will enable the `cloudbilling` API in the Config Controller's Google Cloud project, which will allow the assignment of the Billing Account Id to any Google Cloud project Config Controller will create.
+In this section, you will set up the primary Git repository of the Config Controller instance in order to have in place a GitOps approach to deploy your infrastructure in Google Cloud. You will also configure a Cloud NAT to this Config Controller instance to give it access to the Internet (GitHub repositories) in Egress. Finally, you will enable the `cloudbilling` API in the Host project, which will allow the assignment of the Billing Account Id to any Google Cloud project Config Controller will create.
 
 
 Define variables:

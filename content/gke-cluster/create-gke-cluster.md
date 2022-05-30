@@ -10,7 +10,7 @@ _{{< param description >}}_
 Initialize variables:
 ```Bash
 source ${WORK_DIR}acm-workshop-variables.sh
-echo "export GKE_PROJECT_NUMBER=$(gcloud projects describe $TENANT_PROJECT_ID --format='get(projectNumber)')" >> ${WORK_DIR}acm-workshop-variables.sh
+echo "export TENANT_PROJECT_NUMBER=$(gcloud projects describe $TENANT_PROJECT_ID --format='get(projectNumber)')" >> ${WORK_DIR}acm-workshop-variables.sh
 echo "export GKE_SA=gke-primary-pool" >> ${WORK_DIR}acm-workshop-variables.sh
 source ${WORK_DIR}acm-workshop-variables.sh
 ```
@@ -29,7 +29,7 @@ metadata:
     cnrm.cloud.google.com/remove-default-node-pool: "true"
     config.kubernetes.io/depends-on: compute.cnrm.cloud.google.com/namespaces/${TENANT_PROJECT_ID}/ComputeSubnetwork/${GKE_NAME}
   labels:
-    mesh_id: proj-${GKE_PROJECT_NUMBER}
+    mesh_id: proj-${TENANT_PROJECT_NUMBER}
 spec:
   addonsConfig:
     dnsCacheConfig:

@@ -7,12 +7,14 @@ tags: ["kcc", "org-admin"]
 ![Org Admin](/images/org-admin.png)
 _{{< param description >}}_
 
+In this section, you will create the Tenant project. 
+
 Define variables:
 ```Bash
 source ${WORK_DIR}acm-workshop-variables.sh
 TENANT_PROJECT_ID=acm-workshop-${RANDOM_SUFFIX}-tenant
 echo "export TENANT_PROJECT_ID=${TENANT_PROJECT_ID}" >> ${WORK_DIR}acm-workshop-variables.sh
-echo "export GKE_PROJECT_SA_EMAIL=${TENANT_PROJECT_ID}@${HOST_PROJECT_ID}.iam.gserviceaccount.com" >> ${WORK_DIR}acm-workshop-variables.sh
+echo "export TENANT_PROJECT_SA_EMAIL=${TENANT_PROJECT_ID}@${HOST_PROJECT_ID}.iam.gserviceaccount.com" >> ${WORK_DIR}acm-workshop-variables.sh
 source ${WORK_DIR}acm-workshop-variables.sh
 ```
 
@@ -132,7 +134,7 @@ metadata:
   annotations:
     config.kubernetes.io/depends-on: iam.cnrm.cloud.google.com/namespaces/config-control/IAMServiceAccount/${TENANT_PROJECT_ID}
 spec:
-  googleServiceAccount: ${GKE_PROJECT_SA_EMAIL}
+  googleServiceAccount: ${TENANT_PROJECT_SA_EMAIL}
 EOF
 ```
 
@@ -157,7 +159,7 @@ graph TD;
 List the GCP resources created:
 ```Bash
 gcloud projects describe $TENANT_PROJECT_ID
-gcloud iam service-accounts describe $GKE_PROJECT_SA_EMAIL \
+gcloud iam service-accounts describe $TENANT_PROJECT_SA_EMAIL \
     --project $HOST_PROJECT_ID
 ```
 
