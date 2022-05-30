@@ -14,7 +14,7 @@ source ${WORK_DIR}acm-workshop-variables.sh
 
 ## Define NetworkPolicy resources
 
-Define fine granular `NetworkPolicy` resources:
+Define fine granular `NetworkPolicies`:
 ```Bash
 cat <<EOF > ~/$WHERE_AMI_DIR_NAME/base/networkpolicy_denyall.yaml
 apiVersion: networking.k8s.io/v1

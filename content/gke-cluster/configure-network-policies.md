@@ -46,7 +46,7 @@ git push origin main
 
 ### Required labels on Namespace and Deployment
 
-As a best practice and in order to get the `NetworkPolicy` resources working in this workshop, we need to guarantee that that any `Namespace` has a `name` label and `Deployment` has an `app` label.
+As a best practice and in order to get the `NetworkPolicies` working in this workshop, we need to guarantee that that any `Namespace` has a `name` label and `Deployment` has an `app` label.
 
 Define the `ConstraintTemplate` resource:
 ```Bash
@@ -99,7 +99,7 @@ spec:
 EOF
 ```
 
-Define the `Constraint` resource for the `Namespace` resources:
+Define the `Constraint` resource for the `Namespaces`:
 ```Bash
 cat <<EOF > ~/$GKE_CONFIGS_DIR_NAME/config-sync/policies/constraints/namespace-required-labels.yaml
 apiVersion: constraints.gatekeeper.sh/v1beta1
@@ -131,7 +131,7 @@ spec:
 EOF
 ```
 
-Define the `Constraint` resource for the `Deployment` resources:
+Define the `Constraint` resource for the `Deployments`:
 ```Bash
 cat <<EOF > ~/$GKE_CONFIGS_DIR_NAME/config-sync/policies/constraints/deployment-required-labels.yaml
 apiVersion: constraints.gatekeeper.sh/v1beta1
