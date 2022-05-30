@@ -1,6 +1,6 @@
 ---
-title: "Set up Sidecar"
-weight: 7
+title: "Deploy Sidecars"
+weight: 10
 description: "Duration: 5 min | Persona: Apps Operator"
 tags: ["asm", "apps-operator"]
 ---
@@ -37,6 +37,8 @@ sed -i "s/ONLINEBOUTIQUE_NAMESPACE/${ONLINEBOUTIQUE_NAMESPACE}/g" sidecars/for-n
 kustomize edit add component sidecars/for-namespace
 kustomize edit add component ../upstream/sidecars/for-memorystore
 ```
+
+FIXME in Sidecar: `- "./${CART_MEMORYSTORE_HOST}"`
 
 ## Deploy Kubernetes manifests
 

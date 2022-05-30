@@ -1,5 +1,5 @@
 ---
-title: "Set up Network Policies"
+title: "Deploy Network Policies"
 weight: 4
 description: "Duration: 5 min | Persona: Apps Operator"
 tags: ["apps-operator", "security-tips"]
@@ -12,7 +12,7 @@ Initialize variables:
 source ${WORK_DIR}acm-workshop-variables.sh
 ```
 
-## Define NetworkPolicy resources
+## Define NetworkPolicies
 
 Define fine granular `NetworkPolicies`:
 ```Bash

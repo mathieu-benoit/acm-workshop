@@ -1,5 +1,5 @@
 ---
-title: "Set up Network Policies"
+title: "Deploy Network Policies"
 weight: 5
 description: "Duration: 5 min | Persona: Platform Admin"
 tags: ["platform-admin", "security-tips"]
@@ -12,7 +12,7 @@ Initialize variables:
 source ${WORK_DIR}acm-workshop-variables.sh
 ```
 
-## Define NetworkPolicy resources
+## Define NetworkPolicies
 
 ```Bash
 cat <<EOF > ~/$GKE_CONFIGS_DIR_NAME/config-sync/$INGRESS_GATEWAY_NAMESPACE/networkpolicy_denyall.yaml

@@ -1,5 +1,5 @@
 ---
-title: "Enforce policies"
+title: "Enforce Artifact Registry policies"
 weight: 3
 description: "Duration: 10 min | Persona: Platform Admin"
 tags: ["platform-admin", "policies", "security-tips"]

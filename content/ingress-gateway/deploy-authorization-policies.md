@@ -1,5 +1,5 @@
 ---
-title: "Set up Authorization Policies"
+title: "Deploy Authorization Policies"
 weight: 6
 description: "Duration: 5 min | Persona: Platform Admin"
 tags: ["asm", "platform-admin", "security-tips"]
@@ -12,7 +12,7 @@ Initialize variables:
 source ${WORK_DIR}acm-workshop-variables.sh
 ```
 
-## Define AuthorizationPolicy resource
+## Define AuthorizationPolicy
 
 ```Bash
 cat <<EOF > ~/$GKE_CONFIGS_DIR_NAME/config-sync/$INGRESS_GATEWAY_NAMESPACE/authorizationpolicy_ingress-gateway.yaml

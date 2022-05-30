@@ -1,8 +1,8 @@
 ---
-title: "Allow Memorystore"
-weight: 5
+title: "Enforce Memorystore policies"
+weight: 6
 description: "Duration: 5 min | Persona: Org Admin"
-tags: ["kcc", "org-admin"]
+tags: ["org-admin"]
 ---
 ![Org Admin](/images/org-admin.png)
 _{{< param description >}}_
@@ -12,47 +12,59 @@ Initialize variables:
 source ${WORK_DIR}acm-workshop-variables.sh
 ```
 
-## Define API
+## Enforce policies
 
-Define the Memorystore (redis) API [`Service`](https://cloud.google.com/config-connector/docs/reference/resource-docs/serviceusage/service) resource for the Tenant project:
+Define the `ConstraintTemplate` resource:
 ```Bash
-cat <<EOF > ~/$HOST_PROJECT_DIR_NAME/config-sync/projects/$TENANT_PROJECT_ID/redis-service.yaml
-apiVersion: serviceusage.cnrm.cloud.google.com/v1beta1
-kind: Service
+cat <<EOF > ~/$HOST_PROJECT_DIR_NAME/config-sync/policies/templates/limitmemorystoreredis.yaml
+apiVersion: templates.gatekeeper.sh/v1
+kind: ConstraintTemplate
 metadata:
+  name: limitmemorystoreredis
   annotations:
-    cnrm.cloud.google.com/deletion-policy: "abandon"
-    cnrm.cloud.google.com/disable-dependent-services: "false"
-    config.kubernetes.io/depends-on: resourcemanager.cnrm.cloud.google.com/namespaces/config-control/Project/${TENANT_PROJECT_ID}
-  name: ${TENANT_PROJECT_ID}-redis
-  namespace: config-control
+    description: "Requirements for any Memorystore (redis) instance."
 spec:
-  projectRef:
-    name: ${TENANT_PROJECT_ID}
-  resourceID: redis.googleapis.com
+  crd:
+    spec:
+      names:
+        kind: LimitMemorystoreRedis
+  targets:
+    - target: admission.k8s.gatekeeper.sh
+      rego: |-
+        package limitmemorystoreredis
+        violation[{"msg":msg}] {
+          input.review.object.kind == "RedisInstance"
+          not input.review.object.spec.redisVersion == "REDIS_6_X"
+          msg := sprintf("Memorystore (redis) %s's version should be REDIS_6_X instead of %s.", [input.review.object.metadata.name, input.review.object.spec.redisVersion])
+        }
+        violation[{"msg":msg}] {
+          input.review.object.kind == "RedisInstance"
+          not input.review.object.spec.authorizedNetworkRef
+          msg := sprintf("Memorystore (redis) %s's VPC shouldn't be default.", [input.review.object.metadata.name])
+        }
+        violation[{"msg":msg}] {
+          input.review.object.kind == "RedisInstance"
+          input.review.object.spec.authorizedNetworkRef.name == "default"
+          msg := sprintf("Memorystore (redis) %s's VPC shouldn't be default.", [input.review.object.metadata.name])
+        }
 EOF
 ```
 
-## Define role
-
-Define the `redis.admin` role with an [`IAMPolicyMember`](https://cloud.google.com/config-connector/docs/reference/resource-docs/iam/iampolicymember) for the Tenant project's service account:
+Define the `Constraint` resource:
 ```Bash
-cat <<EOF > ~/$HOST_PROJECT_DIR_NAME/config-sync/projects/$TENANT_PROJECT_ID/redis-admin.yaml
-apiVersion: iam.cnrm.cloud.google.com/v1beta1
-kind: IAMPolicyMember
+cat <<EOF > ~/$HOST_PROJECT_DIR_NAME/config-sync/policies/constraints/allowed-memorystore-redis.yaml
+apiVersion: constraints.gatekeeper.sh/v1beta1
+kind: LimitMemorystoreRedis
 metadata:
-  name: redis-admin-${TENANT_PROJECT_ID}
-  namespace: config-control
-  annotations:
-    config.kubernetes.io/depends-on: iam.cnrm.cloud.google.com/namespaces/config-control/IAMServiceAccount/${TENANT_PROJECT_ID},resourcemanager.cnrm.cloud.google.com/namespaces/config-control/Project/${TENANT_PROJECT_ID}
+  name: allowed-memorystore-redis
 spec:
-  memberFrom:
-    serviceAccountRef:
-      name: ${TENANT_PROJECT_ID}
-  role: roles/redis.admin
-  resourceRef:
-    kind: Project
-    external: projects/${TENANT_PROJECT_ID}
+  enforcementAction: deny
+  match:
+    kinds:
+      - apiGroups:
+          - redis.cnrm.cloud.google.com
+        kinds:
+          - RedisInstance
 EOF
 ```
 
@@ -61,63 +73,11 @@ EOF
 ```Bash
 cd ~/$HOST_PROJECT_DIR_NAME/
 git add .
-git commit -m "Allow Memorystore for Tenant project"
+git commit -m "Enforce Memorystore policies"
 git push origin main
 ```
 
 ## Check deployments
-
-{{< mermaid >}}
-graph TD;
-  IAMServiceAccount-->Project
-  IAMPartialPolicy-->IAMServiceAccount
-  ConfigConnectorContext-->IAMServiceAccount
-  IAMPolicyMember-->IAMServiceAccount
-  IAMPolicyMember-->Project
-  IAMPolicyMember-->IAMServiceAccount
-  IAMPolicyMember-->Project
-  IAMPolicyMember-->IAMServiceAccount
-  IAMPolicyMember-->Project
-  IAMPolicyMember-->IAMServiceAccount
-  IAMPolicyMember-->Project
-  IAMPolicyMember-->IAMServiceAccount
-  IAMPolicyMember-->Project
-  Service-->Project
-  IAMPolicyMember-->IAMServiceAccount
-  IAMPolicyMember-->Project
-  Service-->Project
-  Service-->Project
-  IAMPolicyMember-->IAMServiceAccount
-  IAMPolicyMember-->Project
-  Service-->Project
-  Service-->Project
-  Service-->Project
-  Service-->Project
-  IAMPolicyMember-->IAMServiceAccount
-  IAMPolicyMember-->Project
-  Service-->Project
-  IAMPolicyMember-->IAMServiceAccount
-{{< /mermaid >}}
-
-List the GCP resources created:
-```Bash
-gcloud projects get-iam-policy $TENANT_PROJECT_ID \
-    --filter="bindings.members:${TENANT_PROJECT_SA_EMAIL}" \
-    --flatten="bindings[].members" \
-    --format="table(bindings.role)"
-```
-```Plaintext
-ROLE
-roles/artifactregistry.admin
-roles/compute.networkAdmin
-roles/compute.securityAdmin
-roles/container.admin
-roles/gkehub.admin
-roles/iam.serviceAccountAdmin
-roles/iam.serviceAccountUser
-roles/redis.admin
-roles/resourcemanager.projectIamAdmin
-```
 
 List the GitHub runs for the **Host project configs** repository `cd ~/$HOST_PROJECT_DIR_NAME && gh run list`:
 ```Plaintext

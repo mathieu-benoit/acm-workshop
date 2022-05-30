@@ -1,5 +1,5 @@
 ---
-title: "Set up Sidecar"
+title: "Deploy Sidecars"
 weight: 5
 description: "Duration: 5 min | Persona: Apps Operator"
 tags: ["apps-operator", "asm"]
@@ -12,7 +12,7 @@ Initialize variables:
 source ${WORK_DIR}acm-workshop-variables.sh
 ```
 
-## Define Sidecar resource
+## Define Sidecar
 
 ```Bash
 cat <<EOF > ~/$WHERE_AMI_DIR_NAME/base/sidecar.yaml

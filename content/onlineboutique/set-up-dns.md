@@ -1,6 +1,6 @@
 ---
 title: "Set up DNS"
-weight: 4
+weight: 2
 description: "Duration: 5 min | Persona: Platform Admin"
 tags: ["platform-admin"]
 ---

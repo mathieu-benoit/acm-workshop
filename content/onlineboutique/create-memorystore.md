@@ -1,7 +1,7 @@
 ---
-title: "Set up Artifact Registry"
-weight: 2
-description: "Duration: 5 min | Persona: Platform Admin"
+title: "Create Memorystore"
+weight: 7
+description: "Duration: 10 min | Persona: Platform Admin"
 tags: ["kcc", "platform-admin"]
 ---
 ![Platform Admin](/images/platform-admin.png)
@@ -10,47 +10,33 @@ _{{< param description >}}_
 Initialize variables:
 ```Bash
 source ${WORK_DIR}acm-workshop-variables.sh
-echo "export CONTAINER_REGISTRY_NAME=containers" >> ${WORK_DIR}acm-workshop-variables.sh
-echo "export CONTAINER_REGISTRY_REPOSITORY=${GKE_LOCATION}-docker.pkg.dev/${TENANT_PROJECT_ID}/${CONTAINER_REGISTRY_NAME}" >> ${WORK_DIR}acm-workshop-variables.sh
+echo "export REDIS_NAME=cart" >> ${WORK_DIR}acm-workshop-variables.sh
 source ${WORK_DIR}acm-workshop-variables.sh
 ```
 
-## Define Artifact Registry resource
-
-Define the [Artifact Registry resource](https://cloud.google.com/config-connector/docs/reference/resource-docs/artifactregistry/artifactregistryrepository):
 ```Bash
-cat <<EOF > ~/$TENANT_PROJECT_DIR_NAME/config-sync/artifactregistry.yaml
-apiVersion: artifactregistry.cnrm.cloud.google.com/v1beta1
-kind: ArtifactRegistryRepository
-metadata:
-  name: ${CONTAINER_REGISTRY_NAME}
-  namespace: ${TENANT_PROJECT_ID}
-spec:
-  format: DOCKER
-  location: ${GKE_LOCATION}
-EOF
+mkdir ~/$TENANT_PROJECT_DIR_NAME/config-sync/$ONLINEBOUTIQUE_NAMESPACE
 ```
 
-## Define Artifact Registry reader role
+## Define Memorystore (redis)
 
+Define the [Memorystore (redis) resource](https://cloud.google.com/config-connector/docs/reference/resource-docs/redis/redisinstance):
 ```Bash
-cat <<EOF > ~/$TENANT_PROJECT_DIR_NAME/config-sync/artifactregistry-reader.yaml
-apiVersion: iam.cnrm.cloud.google.com/v1beta1
-kind: IAMPolicyMember
+cat <<EOF > ~/$TENANT_PROJECT_DIR_NAME/config-sync/$ONLINEBOUTIQUE_NAMESPACE/memorystore.yaml
+apiVersion: redis.cnrm.cloud.google.com/v1beta1
+kind: RedisInstance
 metadata:
-  name: artifactregistry-reader
+  name: ${REDIS_NAME}
   namespace: ${TENANT_PROJECT_ID}
   annotations:
-    config.kubernetes.io/depends-on: iam.cnrm.cloud.google.com/namespaces/${TENANT_PROJECT_ID}/IAMServiceAccount/${GKE_SA},artifactregistry.cnrm.cloud.google.com/namespaces/${TENANT_PROJECT_ID}/ArtifactRegistryRepository/${CONTAINER_REGISTRY_NAME}
+    config.kubernetes.io/depends-on: compute.cnrm.cloud.google.com/namespaces/${TENANT_PROJECT_ID}/ComputeNetwork/${GKE_NAME}
 spec:
-  memberFrom:
-    serviceAccountRef:
-      name: ${GKE_SA}
-      namespace: ${TENANT_PROJECT_ID}
-  resourceRef:
-    kind: ArtifactRegistryRepository
-    name: ${CONTAINER_REGISTRY_NAME}
-  role: roles/artifactregistry.reader
+  region: ${GKE_LOCATION}
+  tier: BASIC
+  memorySizeGb: 1
+  redisVersion: REDIS_6_X
+  authorizedNetworkRef:
+    name: ${GKE_NAME}
 EOF
 ```
 
@@ -59,7 +45,7 @@ EOF
 ```Bash
 cd ~/$TENANT_PROJECT_DIR_NAME/
 git add .
-git commit -m "Artifact Registry for GKE cluster"
+git commit -m "Memorystore (redis) instance"
 git push origin main
 ```
 
@@ -71,6 +57,10 @@ graph TD;
   IAMServiceAccount-.->Project
   GKEHubFeature-.->Project
   ArtifactRegistryRepository-.->Project
+  GKEHubFeature-.->Project
+  ComputeAddress-.->Project
+  ComputeSecurityPolicy-.->Project
+  ComputeSSLPolicy-.->Project
   ComputeSubnetwork-->ComputeNetwork
   ComputeRouterNAT-->ComputeSubnetwork
   ComputeRouterNAT-->ComputeRouter
@@ -88,40 +78,32 @@ graph TD;
   GKEHubMembership-->ContainerCluster
   IAMPolicyMember-->ArtifactRegistryRepository
   IAMPolicyMember-->IAMServiceAccount
+  RedisInstance-.->Project
+  RedisInstance-->ComputeNetwork
 {{< /mermaid >}}
 
 List the GCP resources created:
 ```Bash
-gcloud projects get-iam-policy $TENANT_PROJECT_ID \
-    --filter="bindings.members:${GKE_SA}@${TENANT_PROJECT_ID}.iam.gserviceaccount.com" \
-    --flatten="bindings[].members" \
-    --format="table(bindings.role)"
-gcloud artifacts repositories get-iam-policy $CONTAINER_REGISTRY_NAME \
-    --location $GKE_LOCATION \
-    --filter="bindings.members:${GKE_SA}@${TENANT_PROJECT_ID}.iam.gserviceaccount.com" \
-    --flatten="bindings[].members" \
-    --format="table(bindings.role)"
-gcloud artifacts repositories list \
-    --project $TENANT_PROJECT_ID
+gcloud redis instances list \
+    --region=$GKE_LOCATION \
+    --project=$TENANT_PROJECT_ID
 ```
 ```Plaintext
-ROLE
-roles/logging.logWriter
-roles/monitoring.metricWriter
-roles/monitoring.viewer
-ROLE
-roles/artifactregistry.reader
-REPOSITORY  FORMAT  DESCRIPTION  LOCATION  LABELS                ENCRYPTION          CREATE_TIME          UPDATE_TIME
-containers  DOCKER               us-east4  managed-by-cnrm=true  Google-managed key  2022-03-11T22:12:35  2022-03-11T22:12:35
+INSTANCE_NAME  VERSION    REGION    TIER   SIZE_GB  HOST            PORT  NETWORK  RESERVED_IP        STATUS  CREATE_TIME
+cart           REDIS_6_X  us-east4  BASIC  1        10.234.239.235  6379  gke      10.234.239.232/29  READY   2022-03-14T02:40:24
 ```
 
 List the GitHub runs for the **Tenant project configs** repository `cd ~/$TENANT_PROJECT_DIR_NAME && gh run list`:
 ```Plaintext
-STATUS  NAME                                                     WORKFLOW  BRANCH  EVENT  ID          ELAPSED  AGE
-✓       Artifact Registry for GKE cluster                        ci        main    push   1972095446  1m11s    12m
-✓       GKE cluster, primary nodepool and SA for Tenant project  ci        main    push   1963473275  1m16s    11h
-✓       Network for Tenant project                               ci        main    push   1961289819  1m13s    20h
-✓       Initial commit                                           ci        main    push   1961170391  56s      20h
+STATUS  NAME                                                          WORKFLOW  BRANCH  EVENT  ID          ELAPSED  AGE
+✓       Memorystore (redis) instance                                  ci        main    push   1978366334  1m9s     1m
+✓       Ingress Gateway's SSL policy                                  ci        main    push   1975231271  1m1s     23h
+✓       Ingress Gateway's public static IP address                    ci        main    push   1974996579  59s      1d
+✓       ASM MCP for Tenant project                                    ci        main    push   1972180913  8m20s    1d
+✓       GitOps for GKE cluster configs                                ci        main    push   1970974465  53s      2d
+✓       GKE cluster, primary nodepool and SA for Tenant project       ci        main    push   1963473275  1m16s    3d
+✓       Network for Tenant project                                    ci        main    push   1961289819  1m13s    3d
+✓       Initial commit                                                ci        main    push   1961170391  56s      3d
 ```
 
 List the Kubernetes resources managed by Config Sync in **Config Controller** for the **Tenant project configs** repository:
@@ -138,20 +120,25 @@ getting 1 RepoSync and RootSync from krmapihost-configcontroller
 │                 GROUP                  │            KIND            │                    NAME                   │      NAMESPACE       │
 ├────────────────────────────────────────┼────────────────────────────┼───────────────────────────────────────────┼──────────────────────┤
 │ artifactregistry.cnrm.cloud.google.com │ ArtifactRegistryRepository │ containers                                │ acm-workshop-464-tenant │
+│ compute.cnrm.cloud.google.com          │ ComputeSSLPolicy           │ gke-asm-ingressgateway                    │ acm-workshop-464-tenant │
 │ compute.cnrm.cloud.google.com          │ ComputeRouterNAT           │ gke                                       │ acm-workshop-464-tenant │
-│ compute.cnrm.cloud.google.com          │ ComputeNetwork             │ gke                                       │ acm-workshop-464-tenant │
 │ compute.cnrm.cloud.google.com          │ ComputeRouter              │ gke                                       │ acm-workshop-464-tenant │
+│ compute.cnrm.cloud.google.com          │ ComputeNetwork             │ gke                                       │ acm-workshop-464-tenant │
+│ compute.cnrm.cloud.google.com          │ ComputeSecurityPolicy      │ gke-asm-ingressgateway                    │ acm-workshop-464-tenant │
+│ compute.cnrm.cloud.google.com          │ ComputeAddress             │ gke-asm-ingressgateway                    │ acm-workshop-464-tenant │
 │ compute.cnrm.cloud.google.com          │ ComputeSubnetwork          │ gke                                       │ acm-workshop-464-tenant │
-│ container.cnrm.cloud.google.com        │ ContainerNodePool          │ primary                                   │ acm-workshop-464-tenant │
 │ container.cnrm.cloud.google.com        │ ContainerCluster           │ gke                                       │ acm-workshop-464-tenant │
+│ container.cnrm.cloud.google.com        │ ContainerNodePool          │ primary                                   │ acm-workshop-464-tenant │
+│ gkehub.cnrm.cloud.google.com           │ GKEHubFeatureMembership    │ gke-acm-membership                        │ acm-workshop-464-tenant │
+│ gkehub.cnrm.cloud.google.com           │ GKEHubFeature              │ servicemesh                               │ acm-workshop-464-tenant │
 │ gkehub.cnrm.cloud.google.com           │ GKEHubMembership           │ gke-hub-membership                        │ acm-workshop-464-tenant │
 │ gkehub.cnrm.cloud.google.com           │ GKEHubFeature              │ configmanagement                          │ acm-workshop-464-tenant │
-│ gkehub.cnrm.cloud.google.com           │ GKEHubFeatureMembership    │ gke-acm-membership                        │ acm-workshop-464-tenant │
-│ iam.cnrm.cloud.google.com              │ IAMPolicyMember            │ log-writer                                │ acm-workshop-464-tenant │
-│ iam.cnrm.cloud.google.com              │ IAMServiceAccount          │ gke-primary-pool                          │ acm-workshop-464-tenant │
 │ iam.cnrm.cloud.google.com              │ IAMPolicyMember            │ artifactregistry-reader                   │ acm-workshop-464-tenant │
 │ iam.cnrm.cloud.google.com              │ IAMPolicyMember            │ metric-writer                             │ acm-workshop-464-tenant │
-│ iam.cnrm.cloud.google.com              │ IAMPolicyMember            │ monitoring-viewer                         │ acm-workshop-464-tenant │
 │ iam.cnrm.cloud.google.com              │ IAMPartialPolicy           │ gke-primary-pool-sa-cs-monitoring-wi-user │ acm-workshop-464-tenant │
+│ iam.cnrm.cloud.google.com              │ IAMPolicyMember            │ monitoring-viewer                         │ acm-workshop-464-tenant │
+│ iam.cnrm.cloud.google.com              │ IAMServiceAccount          │ gke-primary-pool                          │ acm-workshop-464-tenant │
+│ iam.cnrm.cloud.google.com              │ IAMPolicyMember            │ log-writer                                │ acm-workshop-464-tenant │
+│ redis.cnrm.cloud.google.com            │ RedisInstance              │ cart                                      │ acm-workshop-464-tenant │
 └────────────────────────────────────────┴────────────────────────────┴───────────────────────────────────────────┴──────────────────────┘
 ```

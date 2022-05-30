@@ -1,5 +1,5 @@
 ---
-title: "Set up Authorization Policies"
+title: "Deploy Authorization Policies"
 weight: 6
 description: "Duration: 5 min | Persona: Apps Operator"
 tags: ["apps-operator", "asm", "security-tips"]
@@ -12,7 +12,7 @@ Initialize variables:
 source ${WORK_DIR}acm-workshop-variables.sh
 ```
 
-## Define AuthorizationPolicy resource
+## Define AuthorizationPolicy
 
 Define fine granular `AuthorizationPolicy` resource:
 ```Bash

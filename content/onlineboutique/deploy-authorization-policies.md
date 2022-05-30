@@ -1,6 +1,6 @@
 ---
-title: "Set up Authorization Policies"
-weight: 8
+title: "Deploy Authorization Policies"
+weight: 4
 description: "Duration: 5 min | Persona: Apps Operator"
 tags: ["apps-operator", "asm", "security-tips"]
 ---

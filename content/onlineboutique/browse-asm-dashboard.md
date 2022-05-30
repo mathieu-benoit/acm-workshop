@@ -1,6 +1,6 @@
 ---
 title: "Browse ASM dashboard"
-weight: 9
+weight: 11
 description: "Duration: 5 min | Persona: Apps Operator"
 ---
 ![Apps Operator](/images/apps-operator.png)
