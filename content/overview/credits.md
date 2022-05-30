@@ -8,7 +8,7 @@ Different contents have been leveraged in order to make and inpsire this worksho
 - [OnlineBoutique apps](https://github.com/GoogleCloudPlatform/microservices-demo) - Megan O'Keefe and Nim Jayawardena
 - [Kubernetes Network Policies recipes](https://github.com/ahmetb/kubernetes-network-policy-recipes) - Ahmet Alp Balkan
 - [Managing microservice architectures with Anthos Service Mesh](https://youtu.be/OeevDBEDAIA) - Ameer Abbas
-- ACM Best practices - Sandeep Parikh
+- [Organizing Teams for GitOps and Cloud Native Deployments](https://youtu.be/Kl4-f1d_viY) - Sandeep Parikh
 - [Build a platform with KRM](https://github.com/askmeegs/build-a-platform-with-krm) - Megan O'Keefe
 - [Enforcing Service Mesh Structure using OPA Gatekeeper](https://youtu.be/90RHTBinAFU) - Sandeep Parikh
 - [ACM @ Goldman Sachs](https://youtu.be/5ENId064XLo)
