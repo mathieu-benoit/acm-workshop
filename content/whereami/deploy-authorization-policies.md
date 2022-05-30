@@ -1,6 +1,6 @@
 ---
 title: "Deploy Authorization Policies"
-weight: 6
+weight: 4
 description: "Duration: 5 min | Persona: Apps Operator"
 tags: ["apps-operator", "asm", "security-tips"]
 ---
@@ -90,3 +90,12 @@ getting 1 RepoSync and RootSync from gke-hub-membership
 │ security.istio.io   │ AuthorizationPolicy │ whereami           │ whereami  │
 └─────────────────────┴─────────────────────┴────────────────────┴───────────┘
 ```
+
+## Check the Whereami app
+
+Navigate to the Whereami app, click on the link displayed by the command below:
+```Bash
+echo -e "https://${WHERE_AMI_INGRESS_GATEWAY_HOST_NAME}"
+```
+
+You should now have the Whereami app working successfully.

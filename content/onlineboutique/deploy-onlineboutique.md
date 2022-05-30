@@ -116,3 +116,12 @@ getting 1 RepoSync and RootSync from gke-hub-membership
 │ networking.istio.io │ VirtualService │ frontend              │ onlineboutique │
 └─────────────────────┴────────────────┴───────────────────────┴────────────────┘
 ```
+
+## Check the Online Boutique apps
+
+Navigate to the Online Boutique apps, click on the link displayed by the command below:
+```Bash
+echo -e "https://${ONLINE_BOUTIQUE_INGRESS_GATEWAY_HOST_NAME}"
+```
+
+You should receive the error: `RBAC: access denied`. This is because the default deny-all `AuthorizationPolicy` has been applied to the entire mesh. In the next section you will apply a fine granular `AuthorizationPolicies` for the Online Boutique apps in order to get them working.

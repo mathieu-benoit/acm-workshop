@@ -141,3 +141,12 @@ getting 1 RepoSync and RootSync from gke-hub-membership
 │ networking.istio.io │ VirtualService │ whereami           │ whereami  │
 └─────────────────────┴────────────────┴────────────────────┴───────────┘
 ```
+
+## Check the Whereami app
+
+Navigate to the Whereami app, click on the link displayed by the command below:
+```Bash
+echo -e "https://${WHERE_AMI_INGRESS_GATEWAY_HOST_NAME}"
+```
+
+You should receive the error: `RBAC: access denied`. This is because the default deny-all `AuthorizationPolicy` has been applied to the entire mesh. In the next section you will apply a fine granular `AuthorizationPolicy` for the Whereami app in order to get it working.

@@ -1,6 +1,6 @@
 ---
 title: "Deploy Network Policies"
-weight: 4
+weight: 5
 description: "Duration: 5 min | Persona: Apps Operator"
 tags: ["apps-operator", "security-tips"]
 ---
@@ -103,3 +103,12 @@ getting 1 RepoSync and RootSync from gke-hub-membership
 │ networking.k8s.io   │ NetworkPolicy  │ denyall            │ whereami  │
 └─────────────────────┴────────────────┴────────────────────┴───────────┘
 ```
+
+## Check the Whereami app
+
+Navigate to the Whereami app, click on the link displayed by the command below:
+```Bash
+echo -e "https://${WHERE_AMI_INGRESS_GATEWAY_HOST_NAME}"
+```
+
+You should still have the Whereami app working successfully.

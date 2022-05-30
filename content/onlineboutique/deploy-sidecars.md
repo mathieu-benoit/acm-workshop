@@ -120,3 +120,12 @@ getting 1 RepoSync and RootSync from gke-hub-membership
 │ networking.k8s.io   │ NetworkPolicy  │ paymentservice        │ onlineboutique │
 └─────────────────────┴────────────────┴───────────────────────┴────────────────┘
 ```
+
+## Check the Online Boutique apps
+
+Navigate to the Online Boutique apps, click on the link displayed by the command below:
+```Bash
+echo -e "https://${ONLINE_BOUTIQUE_INGRESS_GATEWAY_HOST_NAME}"
+```
+
+You should still have the Online Boutique apps working successfully.
