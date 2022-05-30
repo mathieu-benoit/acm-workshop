@@ -1,5 +1,5 @@
 ---
-title: "Enforce policies"
+title: "Enforce Tenant project policies"
 weight: 3
 description: "Duration: 5 min | Persona: Org Admin"
 tags: ["org-admin", "policies", "security-tips"]
