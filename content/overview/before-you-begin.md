@@ -17,7 +17,7 @@ It's recommended that you have a minimum knowledge about Istio, Anthos Service M
 - [Memorystore in a minute](https://youtu.be/ra3Vow3-HHg)
 - [Cloud Operations Suite in a minute](https://youtu.be/5j8LfmRhHKQ)
 
-Based on these introductions, here are higly recommended resources you watch before running this workshop:
+Based on these introductions, here are higly recommended resources to watch before running this workshop:
 - [Organizing Teams for GitOps and Cloud Native Deployments](https://youtu.be/Kl4-f1d_viY)
 - [ACM @ Goldman Sachs](https://youtu.be/5ENId064XLo)
 - [Enforcing Service Mesh Structure using OPA Gatekeeper](https://youtu.be/90RHTBinAFU)
