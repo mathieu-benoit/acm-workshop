@@ -1,5 +1,5 @@
 ---
-title: "Deploy Authorization Policies"
+title: "Deploy AuthorizationPolicies"
 weight: 6
 description: "Duration: 5 min | Persona: Platform Admin"
 tags: ["asm", "platform-admin", "security-tips"]

@@ -1,5 +1,5 @@
 ---
-title: "Deploy Network Policies"
+title: "Deploy NetworkPolicies"
 weight: 9
 description: "Duration: 5 min | Persona: Apps Operator"
 tags: ["apps-operator", "security-tips"]
