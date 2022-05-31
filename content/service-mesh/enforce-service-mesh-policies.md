@@ -110,13 +110,13 @@ spec:
 EOF
 ```
 
-Define the `destination-rule-tls-enabled` `Constraint` based on the [`DestinationRuleTLSEnabled`](https://cloud.devsite.corp.google.com/anthos-config-management/docs/reference/constraint-template-library#asmpeerauthnstrictmtls) `ConstraintTemplate` for `PeerAuthentications`:
+Define the `destination-rule-tls-enabled` `Constraint` based on the [`DestinationRuleTLSEnabled`](https://cloud.devsite.corp.google.com/anthos-config-management/docs/reference/constraint-template-library#destinationruletlsenabled) `ConstraintTemplate` for `DestinationRules`:
 ```Bash
-cat <<EOF > ~/$GKE_CONFIGS_DIR_NAME/config-sync/policies/constraints/destination-rule-tls-enabled.yaml
+cat <<EOF > ~/$GKE_CONFIGS_DIR_NAME/config-sync/policies/constraints/destinationrule-tls-enabled.yaml
 apiVersion: constraints.gatekeeper.sh/v1beta1
 kind: DestinationRuleTLSEnabled
 metadata:
-  name: destination-rule-tls-enabled
+  name: destinationrule-tls-enabled
 spec:
   enforcementAction: deny
   match:
@@ -132,25 +132,28 @@ EOF
 
 https://istio.io/latest/docs/reference/config/security/authorization-policy/
 
-Define the `default-deny-authorization-policies` `Constraint` resource:
+Define the `default-deny-authorization-policies` `Constraint` based on the [`AsmAuthzPolicyDefaultDeny`](https://cloud.devsite.corp.google.com/anthos-config-management/docs/reference/constraint-template-library#asmauthzpolicydefaultdeny) `ConstraintTemplate` for `DestinationRules`:
 ```Bash
 cat <<EOF > ~/$GKE_CONFIGS_DIR_NAME/config-sync/policies/constraints/default-deny-authorization-policies.yaml
 apiVersion: constraints.gatekeeper.sh/v1beta1
-kind: AuthzPolicyDefaultDeny
+kind: AsmAuthzPolicyDefaultDeny
 metadata:
   name: default-deny-authorization-policies
 spec:
   enforcementAction: deny
+  parameters:
+    rootNamespace: istio-system
+    strictnessLevel: High
 EOF
 ```
 
-Define the `defined-authz-source-principals` `Constraint` resource:
+Define the `authz-source-principals-not-all` `Constraint` based on the [`AsmAuthzPolicyEnforceSourcePrincipals`](https://cloud.devsite.corp.google.com/anthos-config-management/docs/reference/constraint-template-library#asmauthzpolicyenforcesourceprincipals) `ConstraintTemplate` for `DestinationRules`:
 ```Bash
-cat <<EOF > ~/$GKE_CONFIGS_DIR_NAME/config-sync/policies/constraints/defined-authz-source-principals.yaml
+cat <<EOF > ~/$GKE_CONFIGS_DIR_NAME/config-sync/policies/constraints/authz-source-principals-not-all.yaml
 apiVersion: constraints.gatekeeper.sh/v1beta1
-kind: SourceNotAllAuthz
+kind: AsmAuthzPolicyEnforceSourcePrincipals
 metadata:
-  name: defined-authz-source-principals
+  name: authz-source-principals-not-all
 spec:
   enforcementAction: deny
   match:
@@ -161,6 +164,27 @@ spec:
       - AuthorizationPolicy
     excludedNamespaces:
       - ${INGRESS_GATEWAY_NAMESPACE}
+EOF
+```
+
+Define the `authz-source-principals-prefix-not-default` `Constraint` based on the [`AsmAuthzPolicyDisallowedPrefix`](https://cloud.devsite.corp.google.com/anthos-config-management/docs/reference/constraint-template-library#asmauthzpolicydisallowedprefix) `ConstraintTemplate` for `AuthorizationPolicies`:
+```Bash
+cat <<EOF > ~/$GKE_CONFIGS_DIR_NAME/config-sync/policies/constraints/authz-source-principals-prefix-not-default.yaml
+apiVersion: constraints.gatekeeper.sh/v1beta1
+kind: AsmAuthzPolicyDisallowedPrefix
+metadata:
+  name: authz-source-principals-prefix-not-default
+spec:
+  enforcementAction: deny
+  match:
+    kinds:
+    - apiGroups:
+      - security.istio.io
+      kinds:
+      - AuthorizationPolicy
+  parameters:
+    disallowedPrincipalPrefixes:
+    - default
 EOF
 ```
 
