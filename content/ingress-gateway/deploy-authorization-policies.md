@@ -38,7 +38,7 @@ EOF
 ```Bash
 cd ~/$GKE_CONFIGS_DIR_NAME/
 git add .
-git commit -m "Ingress Gateway Authorization Policies"
+git commit -m "Ingress Gateway AuthorizationPolicy"
 git push origin main
 ```
 

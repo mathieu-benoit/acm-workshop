@@ -36,16 +36,27 @@ cp -r ../upstream/sidecars/for-namespace/ sidecars/.
 sed -i "s/ONLINEBOUTIQUE_NAMESPACE/${ONLINEBOUTIQUE_NAMESPACE}/g" sidecars/for-namespace/kustomization.yaml
 kustomize edit add component sidecars/for-namespace
 kustomize edit add component ../upstream/sidecars/for-memorystore
+cd sidecars
+cat <<EOF >> kustomization.yaml
+patchesJson6902:
+- target:
+    kind: Sidecar
+    name: cartservice
+  patch: |-
+    - op: replace
+      path: /spec/egress/0/hosts
+      value:
+        - "istio-system/*"
+        - "./${CART_MEMORYSTORE_HOST}"
+EOF
 ```
-
-FIXME in Sidecar: `- "./${CART_MEMORYSTORE_HOST}"`
 
 ## Deploy Kubernetes manifests
 
 ```Bash
 cd ~/$ONLINE_BOUTIQUE_DIR_NAME/
 git add .
-git commit -m "Online Boutique Sidecar"
+git commit -m "Online Boutique Sidecars"
 git push origin main
 ```
 

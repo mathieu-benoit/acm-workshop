@@ -53,9 +53,6 @@ Here are the updates for the overlay files needed to define the Staging namespac
 cd ~/$ONLINE_BOUTIQUE_DIR_NAME/staging
 kustomize edit add resource ../base
 kustomize edit set namespace $ONLINEBOUTIQUE_NAMESPACE
-cp -r ../upstream/base/for-memorystore/ .
-sed -i "s/REDIS_IP/${REDIS_IP}/g;s/REDIS_PORT/${REDIS_PORT}/g" for-memorystore/kustomization.yaml
-kustomize edit add component for-memorystore
 cp -r ../upstream/base/for-virtualservice-host/ .
 sed -i "s/HOST_NAME/${ONLINE_BOUTIQUE_INGRESS_GATEWAY_HOST_NAME}/g" for-virtualservice-host/kustomization.yaml
 kustomize edit add component for-virtualservice-host

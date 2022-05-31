@@ -31,12 +31,13 @@ metadata:
   annotations:
     config.kubernetes.io/depends-on: compute.cnrm.cloud.google.com/namespaces/${TENANT_PROJECT_ID}/ComputeNetwork/${GKE_NAME}
 spec:
-  region: ${GKE_LOCATION}
-  tier: BASIC
-  memorySizeGb: 1
-  redisVersion: REDIS_6_X
   authorizedNetworkRef:
     name: ${GKE_NAME}
+  memorySizeGb: 1
+  redisVersion: REDIS_6_X
+  region: ${GKE_LOCATION}
+  tier: BASIC
+  transitEncryptionMode: SERVER_AUTHENTICATION
 EOF
 ```
 

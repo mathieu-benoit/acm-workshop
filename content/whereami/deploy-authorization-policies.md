@@ -50,7 +50,7 @@ kustomize edit add resource authorizationpolicy_whereami.yaml
 ```Bash
 cd ~/$WHERE_AMI_DIR_NAME/
 git add .
-git commit -m "Whereami Authorization Policy"
+git commit -m "Whereami AuthorizationPolicy"
 git push origin main
 ```
 

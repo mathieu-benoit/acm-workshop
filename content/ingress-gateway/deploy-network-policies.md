@@ -52,7 +52,7 @@ EOF
 ```Bash
 cd ~/$GKE_CONFIGS_DIR_NAME/
 git add .
-git commit -m "Ingress Gateway Network Policies"
+git commit -m "Ingress Gateway NetworkPolicies"
 git push origin main
 ```
 

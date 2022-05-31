@@ -1,67 +1,128 @@
 ---
-title: "Deploy NetworkPolicies"
-weight: 9
-description: "Duration: 5 min | Persona: Apps Operator"
-tags: ["apps-operator", "security-tips"]
+title: "Secure Memorystore access"
+weight: 8
+description: "Duration: 10 min | Persona: Apps Operator"
+tags: ["apps-operator", "asm", "security-tips"]
 ---
 ![Apps Operator](/images/apps-operator.png)
 _{{< param description >}}_
 
+In this section, you will secure the access by TLS to the Memorystore (redis) instance from the OnlineBoutique's `cartservice` appl, without updating the source code of the app, just with Istio's capabilities.
+
 Initialize variables:
 ```Bash
 source ${WORK_DIR}acm-workshop-variables.sh
+echo "export CART_MEMORYSTORE_HOST=${REDIS_NAME}.memorystore-redis.${ONLINEBOUTIQUE_NAMESPACE}" >> ${WORK_DIR}acm-workshop-variables.sh
+source ${WORK_DIR}acm-workshop-variables.sh
 ```
+{{% notice info %}}
+The `CART_MEMORYSTORE_HOST` has been built in order to explicitly represent the Memorystore endpoint on an Istio perspective. This name will be leveraged in 3 Istio resources: `ServiceEntry`, `DestinationRule` and `Sidecar`.
+{{% /notice %}}
 
-## Get upstream Kubernetes manifests
+## Update Staging namespace overlay
 
-Get the upstream Kubernetes manifests:
+Get Memorystore (redis) connection information:
 ```Bash
-cd ~/$ONLINE_BOUTIQUE_DIR_NAME/upstream
-kpt pkg get https://github.com/GoogleCloudPlatform/microservices-demo.git/docs/network-policies@main
-cd network-policies
-kustomize create --autodetect
-kustomize edit remove resource Kptfile
+export REDIS_IP=$(gcloud redis instances describe $REDIS_NAME --region=$GKE_LOCATION --project=$TENANT_PROJECT_ID --format='get(host)')
+export REDIS_PORT=$(gcloud redis instances describe $REDIS_NAME --region=$GKE_LOCATION --project=$TENANT_PROJECT_ID --format='get(port)')
+export REDIS_TLS_CERT_NAME=redis-cert
+gcloud redis instances describe $REDIS_NAME --region=$GKE_LOCATION --project=$TENANT_PROJECT_ID --format='get(serverCaCerts[0].cert)' > ${WORK_DIR}${REDIS_TLS_CERT_NAME}.pem
 ```
 
-## Update the Kustomize base overlay
+Update the Online Boutique apps with the new Memorystore (redis) connection information:
+```Bash
+cd ~/$ONLINE_BOUTIQUE_DIR_NAME/staging
+cp -r ../upstream/base/for-memorystore/ .
+sed -i "s/REDIS_IP/${REDIS_IP}/g;s/REDIS_PORT/${REDIS_PORT}/g" for-memorystore/kustomization.yaml
+kustomize edit add component for-memorystore
+```
+{{% notice info %}}
+This will change the `REDIS_ADDR` environment variable of the `cartservice` to point to the Memorystore (redis) instance as well as removing the `Deployment` and the `Service` of the default in-cluster `redis` database container.
+{{% /notice %}}
 
+Define the `Secret` with the Certificate Authority:
+```Bash
+cd ~/$ONLINE_BOUTIQUE_DIR_NAME/staging/for-memorystore
+kubectl create secret generic $REDIS_TLS_CERT_NAME --from-file=${WORK_DIR}${REDIS_TLS_CERT_NAME}.pem -n $ONLINEBOUTIQUE_NAMESPACE --dry-run=client -o yaml > memorystore-redis-tls-secret.yaml
+kustomize edit add resource memorystore-redis-tls-secret.yaml
+```
+{{% notice note %}}
+The certificate value will be exposed in the `Secret` manifest in the Git repository. It is not a good practice, you shouldn't do that for your own workload. In the future, this will be fixed in this workshop with for example the use of the [Google Secret Manager provider for the Secret Store CSI Driver](https://github.com/GoogleCloudPlatform/secrets-store-csi-driver-provider-gcp).
+{{% /notice %}}
+
+Define the `ServiceEntry` and `DestinationRule` in order to configure the TLS connection outside of the mesh and the cluster, pointing to the Memorystore (redis) instance:
+```Bash
+cd ~/$ONLINE_BOUTIQUE_DIR_NAME/staging/for-memorystore
+cat <<EOF >> memorystore-redis-tls-serviceentry.yaml
+apiVersion: networking.istio.io/v1beta1
+kind: ServiceEntry
+metadata:
+  name: memorystore-redis-tls
+spec:
+  hosts:
+  - ${CART_MEMORYSTORE_HOST}
+  addresses:
+  - ${REDIS_IP}/32
+  endpoints:
+  - address: ${REDIS_IP}
+  location: MESH_EXTERNAL
+  resolution: STATIC
+  ports:
+  - number: ${REDIS_PORT}
+    name: tcp-redis
+    protocol: TCP
+EOF
+cat <<EOF >> memorystore-redis-tls-destinationrule.yaml
+apiVersion: networking.istio.io/v1beta1
+kind: DestinationRule
+metadata:
+  name: memorystore-redis-tls
+spec:
+  exportTo:
+  - '.'
+  host: ${CART_MEMORYSTORE_HOST}
+  trafficPolicy:
+    tls:
+      mode: SIMPLE
+      caCertificates: /etc/certs/${REDIS_TLS_CERT_NAME}.pem
+EOF
+kustomize edit add resource memorystore-redis-tls-serviceentry.yaml
+kustomize edit add resource memorystore-redis-tls-destinationrule.yaml
+```
+
+Update the `cartservice` `Deployment` in order to be able to load the TLS configuration for the sidecar proxy:
+```Bash
+cd ~/$ONLINE_BOUTIQUE_DIR_NAME/staging/for-memorystore
+cat <<EOF >> kustomization.yaml
+patches:
+  - patch: |-
+      apiVersion: apps/v1
+      kind: Deployment
+      metadata:
+        name: cartservice
+      spec:
+        template:
+          metadata:
+            annotations:
+              sidecar.istio.io/userVolumeMount: "[{"name":"${REDIS_TLS_CERT_NAME}", "mountPath":"/etc/certs", "readonly":true}]"
+              sidecar.istio.io/userVolume: "[{"name":"${REDIS_TLS_CERT_NAME}", "secret":{"secretName":"${REDIS_TLS_CERT_NAME}"}}]"
+              proxy.istio.io/config: "{"holdApplicationUntilProxyStarts":true}"
+EOF
+```
+
+Lastly, by waiting the release of Online Boutique v0.3.8, we need to patch the container image of the `cartservice` app:
 ```Bash
 cd ~/$ONLINE_BOUTIQUE_DIR_NAME/base
-mkdir network-policies
-cat <<EOF >> network-policies/kustomization.yaml
-apiVersion: kustomize.config.k8s.io/v1alpha1
-kind: Component
-patchesStrategicMerge:
-- |-
-  apiVersion: networking.k8s.io/v1
-  kind: NetworkPolicy
-  metadata:
-    name: redis-cart
-  \$patch: delete
+cat <<EOF >> kustomization.yaml
 patchesJson6902:
 - target:
-    kind: NetworkPolicy
-    name: frontend
+    kind: Deployment
+    name: cartservice
   patch: |-
     - op: replace
-      path: /spec/ingress
-      value:
-        - from:
-          - podSelector:
-              matchLabels:
-                app: loadgenerator
-          - namespaceSelector:
-              matchLabels:
-                name: ${INGRESS_GATEWAY_NAMESPACE}
-            podSelector:
-              matchLabels:
-                app: ${INGRESS_GATEWAY_NAME}
-          ports:
-          - port: 8080
-            protocol: TCP
+      path: /spec/template/spec/containers/0/image
+      value: us-east4-docker.pkg.dev/mygke-200/containers/boutique/cartservice:redis7
 EOF
-kustomize edit add resource ../upstream/network-policies
-kustomize edit add component network-policies
 ```
 
 ## Deploy Kubernetes manifests
@@ -69,7 +130,7 @@ kustomize edit add component network-policies
 ```Bash
 cd ~/$ONLINE_BOUTIQUE_DIR_NAME/
 git add .
-git commit -m "Online Boutique NetworkPolicies"
+git commit -m "Secure Memorystore access"
 git push origin main
 ```
 
@@ -83,7 +144,7 @@ STATUS  NAME                              WORKFLOW  BRANCH  EVENT  ID          E
 ✓       Initial commit                    ci        main    push   1976979782  54s      10h
 ```
 
-List the Kubernetes resources managed by Config Sync in the **GKE cluster** for the **Online Boutique app** repository:
+List the Kubernetes resources managed by Config Sync in **GKE cluster** for the **Online Boutique app** repository:
 ```Bash
 gcloud alpha anthos config sync repo describe \
     --project $TENANT_PROJECT_ID \

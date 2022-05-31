@@ -2,7 +2,7 @@
 title: "Enforce Memorystore policies"
 weight: 6
 description: "Duration: 5 min | Persona: Org Admin"
-tags: ["org-admin"]
+tags: ["org-admin", "policies", "security-tips"]
 ---
 ![Org Admin](/images/org-admin.png)
 _{{< param description >}}_
@@ -46,6 +46,11 @@ spec:
           input.review.object.kind == "RedisInstance"
           input.review.object.spec.authorizedNetworkRef.name == "default"
           msg := sprintf("Memorystore (redis) %s's VPC shouldn't be default.", [input.review.object.metadata.name])
+        }
+        violation[{"msg":msg}] {
+          input.review.object.kind == "RedisInstance"
+          not input.review.object.spec.transitEncryptionMode == "SERVER_AUTHENTICATION"
+          msg := sprintf("Memorystore (redis) %s's transit encryption mode should be set to SERVER_AUTHENTICATION.", [input.review.object.metadata.name])
         }
 EOF
 ```
