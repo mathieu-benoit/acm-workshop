@@ -28,10 +28,12 @@ cat <<EOF > ~/$GKE_CONFIGS_DIR_NAME/config-sync/repo-syncs/$WHEREAMI_NAMESPACE/n
 apiVersion: v1
 kind: Namespace
 metadata:
-  name: ${WHEREAMI_NAMESPACE}
+  annotations:
+    mesh.cloud.google.com/proxy: {"managed":"true"}
   labels:
     name: ${WHEREAMI_NAMESPACE}
     istio-injection: enabled
+  name: ${WHEREAMI_NAMESPACE}
 EOF
 ```
 

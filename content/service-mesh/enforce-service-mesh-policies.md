@@ -45,8 +45,8 @@ spec:
     - kube-system
     - resource-group-system
   parameters:
-    labels:
-    - key: istio-injection
+    - allowedRegex: enabled
+      key: istio-injection
 EOF
 ```
 
@@ -69,6 +69,39 @@ spec:
     - kube-system # to exclude istio-cni pods
   parameters:
     strictnessLevel: High
+EOF
+```
+
+Define the `namespaces-managed-dataplance-annotation` `Constraint` based on the [`K8sRequiredAnnotations`](https://cloud.devsite.corp.google.com/anthos-config-management/docs/reference/constraint-template-library#k8srequiredannotations) `ConstraintTemplate` for `Namespaces`:
+```Bash
+cat <<EOF > ~/$GKE_CONFIGS_DIR_NAME/config-sync/policies/constraints/namespaces-managed-dataplance-annotation.yaml
+apiVersion: constraints.gatekeeper.sh/v1beta1
+kind: K8sRequiredAnnotations
+metadata:
+  name: namespaces-managed-dataplance-annotation
+spec:
+  enforcementAction: deny
+  match:
+    kinds:
+    - apiGroups:
+      - ""
+      kinds:
+      - Namespace
+    excludedNamespaces:
+    - config-management-monitoring
+    - config-management-system
+    - default
+    - gatekeeper-system
+    - istio-system
+    - istio-config
+    - kube-node-lease
+    - kube-public
+    - kube-system
+    - resource-group-system
+  parameters:
+    annotations:
+    - allowedRegex: '{"managed": true}'
+      key: mesh.cloud.google.com/proxy
 EOF
 ```
 

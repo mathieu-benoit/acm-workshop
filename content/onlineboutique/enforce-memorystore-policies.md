@@ -12,7 +12,7 @@ Initialize variables:
 source ${WORK_DIR}acm-workshop-variables.sh
 ```
 
-## Enforce policies
+## Enforce Memorystore policies
 
 Define the `ConstraintTemplate` resource:
 ```Bash

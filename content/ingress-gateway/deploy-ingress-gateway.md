@@ -27,10 +27,12 @@ cat <<EOF > ~/$GKE_CONFIGS_DIR_NAME/config-sync/$INGRESS_GATEWAY_NAMESPACE/names
 apiVersion: v1
 kind: Namespace
 metadata:
-  name: ${INGRESS_GATEWAY_NAMESPACE}
+  annotations:
+    mesh.cloud.google.com/proxy: {"managed":"true"}
   labels:
     name: ${INGRESS_GATEWAY_NAMESPACE}
     istio-injection: enabled
+  name: ${INGRESS_GATEWAY_NAMESPACE}
 EOF
 ```
 

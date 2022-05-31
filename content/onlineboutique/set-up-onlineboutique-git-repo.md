@@ -28,10 +28,12 @@ cat <<EOF > ~/$GKE_CONFIGS_DIR_NAME/config-sync/repo-syncs/$ONLINEBOUTIQUE_NAMES
 apiVersion: v1
 kind: Namespace
 metadata:
-  name: ${ONLINEBOUTIQUE_NAMESPACE}
+  annotations:
+    mesh.cloud.google.com/proxy: {"managed":"true"}
   labels:
     name: ${ONLINEBOUTIQUE_NAMESPACE}
     istio-injection: enabled
+  name: ${ONLINEBOUTIQUE_NAMESPACE}
 EOF
 ```
 
