@@ -17,6 +17,7 @@ googleAnalytics = 'G-NJ4GHWP296'
   disableNextPrev = false
   disableLandingPageButton = true
   disableInlineCopyToClipBoard = false
+  disableSearch = true
   themeVariant = "mine"
 
 [[menu.shortcuts]]
