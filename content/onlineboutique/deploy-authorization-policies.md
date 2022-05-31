@@ -48,9 +48,7 @@ kustomize edit add component authorization-policies/for-ingress-gateway
 
 ```Bash
 cd ~/$ONLINE_BOUTIQUE_DIR_NAME/
-git add .
-git commit -m "Online Boutique AuthorizationPolicies"
-git push origin main
+git add . && git commit -m "Online Boutique AuthorizationPolicies" && git push origin main
 ```
 
 ## Check deployments

@@ -202,9 +202,7 @@ EOF
 
 ```Bash
 cd ~/$TENANT_PROJECT_DIR_NAME/
-git add .
-git commit -m "GKE cluster, primary nodepool and SA for Tenant project"
-git push origin main
+git add . && git commit -m "GKE cluster, primary nodepool and SA for Tenant project" && git push origin main
 ```
 
 ## Check deployments

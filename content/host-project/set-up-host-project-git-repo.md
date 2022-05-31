@@ -134,9 +134,7 @@ EOF
 
 ```Bash
 cd ~/$HOST_PROJECT_DIR_NAME/
-git add .
-git commit -m "Billing API in Host project"
-git push origin main
+git add . && git commit -m "Billing API in Host project" && git push origin main
 ```
 {{% notice info %}}
 Because it's the first `git commit` of this workshop, if you don't have your own environment set up with `git`, you may be prompted to properly set up `git config --global user.email "you@example.com"` and `git config --global user.name "Your Name"`.

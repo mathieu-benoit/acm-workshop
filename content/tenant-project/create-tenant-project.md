@@ -142,9 +142,7 @@ EOF
 
 ```Bash
 cd ~/$HOST_PROJECT_DIR_NAME/
-git add .
-git commit -m "Setting up Tenant namespace/project"
-git push origin main
+git add . && git commit -m "Setting up Tenant namespace/project" && git push origin main
 ```
 
 ## Check deployments

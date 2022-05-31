@@ -261,9 +261,7 @@ We define a [shared `Gateway`](https://istio.io/latest/docs/setup/additional-set
 
 ```Bash
 cd ~/$GKE_CONFIGS_DIR_NAME/
-git add .
-git commit -m "ASM Ingress Gateway in GKE cluster"
-git push origin main
+git add . && git commit -m "ASM Ingress Gateway in GKE cluster" && git push origin main
 ```
 
 ## Check deployments

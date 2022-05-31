@@ -66,9 +66,7 @@ kustomize edit add resource networkpolicy_whereami.yaml
 
 ```Bash
 cd ~/$WHERE_AMI_DIR_NAME/
-git add .
-git commit -m "Whereami NetworkPolicies"
-git push origin main
+git add . && git commit -m "Whereami NetworkPolicies" && git push origin main
 ```
 
 ## Check deployments

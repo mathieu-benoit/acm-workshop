@@ -80,9 +80,7 @@ https://cloud.google.com/armor/docs/rule-tuning#preconfigured_rules
 
 ```Bash
 cd ~/$TENANT_PROJECT_DIR_NAME/
-git add .
-git commit -m "Ingress Gateway's Cloud Armor rules"
-git push origin main
+git add . && git commit -m "Ingress Gateway's Cloud Armor rules" && git push origin main
 ```
 
 ```Bash
@@ -112,9 +110,7 @@ EOF
 
 ```Bash
 cd ~/$TENANT_PROJECT_DIR_NAME/
-git add .
-git commit -m "Ingress Gateway's SSL policy"
-git push origin main
+git add . && git commit -m "Ingress Gateway's SSL policy" && git push origin main
 ```
 
 ## Check deployments

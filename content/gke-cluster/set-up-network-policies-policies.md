@@ -152,9 +152,7 @@ EOF
 
 ```Bash
 cd ~/$GKE_CONFIGS_DIR_NAME/
-git add .
-git commit -m "Policies for NetworkPolicies"
-git push origin main
+git add . && git commit -m "Policies for NetworkPolicies" && git push origin main
 ```
 
 ## Check deployments

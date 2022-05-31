@@ -33,9 +33,7 @@ EOF
 
 ```Bash
 cd ~/$TENANT_PROJECT_DIR_NAME/
-git add .
-git commit -m "Ingress Gateway's public static IP address"
-git push origin main
+git add . && git commit -m "Ingress Gateway's public static IP address" && git push origin main
 ```
 
 ## Get the provisioned IP address

@@ -92,9 +92,7 @@ We are using the [`edit` user-facing role](https://kubernetes.io/docs/reference/
 
 ```Bash
 cd ~/$GKE_CONFIGS_DIR_NAME/
-git add .
-git commit -m "GitOps for Online Boutique apps"
-git push origin main
+git add . && git commit -m "GitOps for Online Boutique apps" && git push origin main
 ```
 
 ## Check deployments

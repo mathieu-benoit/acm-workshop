@@ -129,9 +129,7 @@ EOF
 
 ```Bash
 cd ~/$ONLINE_BOUTIQUE_DIR_NAME/
-git add .
-git commit -m "Secure Memorystore access"
-git push origin main
+git add . && git commit -m "Secure Memorystore access" && git push origin main
 ```
 
 ## Check deployments

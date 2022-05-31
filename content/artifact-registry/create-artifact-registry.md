@@ -58,9 +58,7 @@ EOF
 
 ```Bash
 cd ~/$TENANT_PROJECT_DIR_NAME/
-git add .
-git commit -m "Artifact Registry for GKE cluster"
-git push origin main
+git add . && git commit -m "Artifact Registry for GKE cluster" && git push origin main
 ```
 
 ## Check deployments

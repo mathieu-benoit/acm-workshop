@@ -114,9 +114,7 @@ We are enabling the GCP services APIs from the Org Admin, it allows more control
 
 ```Bash
 cd ~/$HOST_PROJECT_DIR_NAME/
-git add .
-git commit -m "Allow GKE for Tenant project"
-git push origin main
+git add . && git commit -m "Allow GKE for Tenant project" && git push origin main
 ```
 
 ## Check deployments

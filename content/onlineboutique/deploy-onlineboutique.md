@@ -62,9 +62,7 @@ kustomize edit add component for-virtualservice-host
 
 ```Bash
 cd ~/$ONLINE_BOUTIQUE_DIR_NAME/
-git add .
-git commit -m "Online Boutique apps"
-git push origin main
+git add . && git commit -m "Online Boutique apps" && git push origin main
 ```
 
 ## Check deployments

@@ -72,9 +72,7 @@ We are using the `edit` role here, see [more information about the user-facing r
 
 ```Bash
 cd ~/$HOST_PROJECT_DIR_NAME/
-git add .
-git commit -m "GitOps for Tenant project"
-git push origin main
+git add . && git commit -m "GitOps for Tenant project" && git push origin main
 ```
 
 ## Check deployments

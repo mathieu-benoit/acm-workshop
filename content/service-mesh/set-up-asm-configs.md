@@ -129,9 +129,7 @@ Later in this workshop, for each app namespace, we will define a Config Sync's `
 
 ```Bash
 cd ~/$GKE_CONFIGS_DIR_NAME/
-git add .
-git commit -m "ASM Mesh configs in GKE cluster"
-git push origin main
+git add . && git commit -m "ASM Mesh configs in GKE cluster" && git push origin main
 ```
 
 ## Check deployments

@@ -45,9 +45,7 @@ EOF
 
 ```Bash
 cd ~/$TENANT_PROJECT_DIR_NAME/
-git add .
-git commit -m "Memorystore (redis) instance"
-git push origin main
+git add . && git commit -m "Memorystore (redis) instance" && git push origin main
 ```
 
 ## Check deployments

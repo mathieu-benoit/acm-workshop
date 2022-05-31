@@ -77,9 +77,7 @@ EOF
 
 ```Bash
 cd ~/$HOST_PROJECT_DIR_NAME/
-git add .
-git commit -m "Enforce Memorystore policies"
-git push origin main
+git add . && git commit -m "Enforce Memorystore policies" && git push origin main
 ```
 
 ## Check deployments
