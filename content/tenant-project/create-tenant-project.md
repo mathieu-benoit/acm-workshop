@@ -44,7 +44,7 @@ spec:
   billingAccountRef:
     external: "${BILLING_ACCOUNT_ID}"
   folderRef:
-    external: "${ORG_OR_FOLDER_ID}"
+    external: "${FOLDER_OR_ORG_ID}"
   resourceID: ${TENANT_PROJECT_ID}
 EOF
 ```
@@ -65,7 +65,7 @@ spec:
   billingAccountRef:
     external: "${BILLING_ACCOUNT_ID}"
   organizationRef:
-    external: "${ORG_OR_FOLDER_ID}"
+    external: "${FOLDER_OR_ORG_ID}"
   resourceID: ${TENANT_PROJECT_ID}
 EOF
 ```

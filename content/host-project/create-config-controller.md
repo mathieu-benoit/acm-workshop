@@ -77,7 +77,7 @@ Set the `resourcemanager.projectCreator` role either at the Folder level or the 
 {{% tab name="Folder level" %}}
 Create this resource at a Folder level:
 ```Bash
-gcloud resource-manager folders add-iam-policy-binding ${ORG_OR_FOLDER_ID} \
+gcloud resource-manager folders add-iam-policy-binding ${FOLDER_OR_ORG_ID} \
     --member="serviceAccount:${CONFIG_CONTROLLER_SA}" \
     --role='roles/resourcemanager.projectCreator'
 ```
@@ -85,7 +85,7 @@ gcloud resource-manager folders add-iam-policy-binding ${ORG_OR_FOLDER_ID} \
 {{% tab name="Org level" %}}
 Alternatively, you could also create this resource at the Organization level:
 ```Bash
-gcloud organizations add-iam-policy-binding ${ORG_OR_FOLDER_ID} \
+gcloud organizations add-iam-policy-binding ${FOLDER_OR_ORG_ID} \
     --member="serviceAccount:${CONFIG_CONTROLLER_SA}" \
     --role='roles/resourcemanager.projectCreator'
 ```
@@ -130,7 +130,7 @@ gcloud projects get-iam-policy $HOST_PROJECT_ID \
 {{< tabs groupId="org-level">}}
 {{% tab name="Folder level" %}}
 ```Bash
-gcloud resource-manager folders get-iam-policy $ORG_OR_FOLDER_ID \
+gcloud resource-manager folders get-iam-policy $FOLDER_OR_ORG_ID \
     --filter="bindings.members:${CONFIG_CONTROLLER_SA}" \
     --flatten="bindings[].members" \
     --format="table(bindings.role)"
@@ -138,7 +138,7 @@ gcloud resource-manager folders get-iam-policy $ORG_OR_FOLDER_ID \
 {{% /tab %}}
 {{% tab name="Org level" %}}
 ```Bash
-gcloud organizations get-iam-policy $ORG_OR_FOLDER_ID \
+gcloud organizations get-iam-policy $FOLDER_OR_ORG_ID \
     --filter="bindings.members:${CONFIG_CONTROLLER_SA}" \
     --flatten="bindings[].members" \
     --format="table(bindings.role)"
