@@ -47,20 +47,20 @@ spec:
   policyController:
     enabled: true
     logDeniesEnabled: true
-    referentialRulesEnabled: false
-    templateLibraryInstalled: false
+    referentialRulesEnabled: true
+    templateLibraryInstalled: true
 EOF
 ```
 {{% notice info %}}
-We explicitly set the Policy Controller's `templateLibraryInstalled` field to `false`. Throughout this workshop, we will create our own `ConstraintTemplates` when needed. It will have two main benefits: first you will learn about how to create your own `ConstraintTemplate` (with OPA rego) and second, you we will be able to validate our Kubernetes resources against the `Constraint` without interacting with the Kubernetes Server API. But be aware of this [default library of `ConstraintTemplates`](https://cloud.google.com/anthos-config-management/docs/reference/constraint-template-library) that you could leverage as-is if you set this field to `true`.
+We explicitly set the Policy Controller's `templateLibraryInstalled` field to `true`, in order to install the [default library of `ConstraintTemplates`](https://cloud.google.com/anthos-config-management/docs/reference/constraint-template-library).
 {{% /notice %}}
 
-Let's wait for the multi-repositories configs to be deployed:
+Let's wait for Policy Controller and Config Sync to be successfully installed:
 ```Bash
-kubectl wait --for condition=established crd rootsyncs.configsync.gke.io
+watch -g "gcloud beta container fleet config-management status | grep 'Policy_Controller: INSTALLED'"
 ```
 
-## Define the primary Git repository
+## Define the Host project's Git repository
 
 Create a dedicated private GitHub repository to store any Kubernetes manifests associated to the Host project:
 ```Bash

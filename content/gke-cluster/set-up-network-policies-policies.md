@@ -12,70 +12,19 @@ Define variables:
 source ${WORK_DIR}acm-workshop-variables.sh
 ```
 
-## Enforce NetworkPolicy policies
+## Enforce NetworkPolicies policies
 
-### Required labels on Namespace and Deployment
+### Require labels for Namespaces and Pods
 
-As a best practice and in order to get the `NetworkPolicies` working in this workshop, we need to guarantee that that any `Namespace` has a `name` label and `Deployment` has an `app` label.
+As a best practice and in order to get the `NetworkPolicies` working in this workshop, we need to guarantee that that any `Namespaces` have a `name` label and `Pods` have an `app` label.
 
-Define the `ConstraintTemplate` resource:
+Define the `namespaces-required-labels` `Constraint` based on the [`K8sRequiredLabels`](https://cloud.devsite.corp.google.com/anthos-config-management/docs/reference/constraint-template-library#k8srequiredlabels) `ConstraintTemplate` for `Namespaces`:
 ```Bash
-cat <<EOF > ~/$GKE_CONFIGS_DIR_NAME/config-sync/policies/templates/k8srequiredlabels.yaml
-apiVersion: templates.gatekeeper.sh/v1
-kind: ConstraintTemplate
-metadata:
-  annotations:
-    description: Requires resources to contain specified labels.
-  name: k8srequiredlabels
-spec:
-  crd:
-    spec:
-      names:
-        kind: K8sRequiredLabels
-      validation:
-        openAPIV3Schema:
-          type: object
-          properties:
-            labels:
-              description: A list of labels and values the object must specify.
-              items:
-                properties:
-                  key:
-                    description: The required label.
-                    type: string
-                type: object
-              type: array
-          type: object
-  targets:
-  - rego: |
-      package k8srequiredlabels
-      violation[{"msg": msg}] {
-        not input.review.object.kind == "Deployment"
-        provided := {label | input.review.object.metadata.labels[label]}
-        required := {label | label := input.parameters.labels[_].key}
-        missing := required - provided
-        count(missing) > 0
-        msg := sprintf("you must provide labels: %v", [missing])
-      }
-      violation[{"msg": msg}] {
-        input.review.object.kind == "Deployment"
-        provided := {label | input.review.object.spec.template.metadata.labels[label]}
-        required := {label | label := input.parameters.labels[_].key}
-        missing := required - provided
-        count(missing) > 0
-        msg := sprintf("you must provide labels: %v", [missing])
-      }
-    target: admission.k8s.gatekeeper.sh
-EOF
-```
-
-Define the `Constraint` resource for the `Namespaces`:
-```Bash
-cat <<EOF > ~/$GKE_CONFIGS_DIR_NAME/config-sync/policies/constraints/namespace-required-labels.yaml
+cat <<EOF > ~/$GKE_CONFIGS_DIR_NAME/config-sync/policies/constraints/namespaces-required-labels.yaml
 apiVersion: constraints.gatekeeper.sh/v1beta1
 kind: K8sRequiredLabels
 metadata:
-  name: namespace-required-labels
+  name: namespaces-required-labels
 spec:
   enforcementAction: deny
   match:
@@ -101,13 +50,13 @@ spec:
 EOF
 ```
 
-Define the `Constraint` resource for the `Deployments`:
+Define the `pods-required-labels` `Constraint` based on the [`K8sRequiredLabels`](https://cloud.devsite.corp.google.com/anthos-config-management/docs/reference/constraint-template-library#k8srequiredlabels) `ConstraintTemplate` for `Pods`:
 ```Bash
-cat <<EOF > ~/$GKE_CONFIGS_DIR_NAME/config-sync/policies/constraints/deployment-required-labels.yaml
+cat <<EOF > ~/$GKE_CONFIGS_DIR_NAME/config-sync/policies/constraints/pods-required-labels.yaml
 apiVersion: constraints.gatekeeper.sh/v1beta1
 kind: K8sRequiredLabels
 metadata:
-  name: deployment-required-labels
+  name: pods-required-labels
 spec:
   enforcementAction: deny
   match:
@@ -116,10 +65,6 @@ spec:
       - ""
       kinds:
       - Pod
-    - apiGroups:
-      - apps
-      kinds:
-      - Deployment
     excludedNamespaces:
     - config-management-monitoring
     - config-management-system
@@ -135,12 +80,80 @@ spec:
 EOF
 ```
 
+### Require NetworkPolicies in Namespaces
+
+Define the `namespaces-required-networkpolicies` `Constraint` based on the [`K8sRequireNamespaceNetworkPolicies`](https://cloud.devsite.corp.google.com/anthos-config-management/docs/reference/constraint-template-library#k8srequirenamespacenetworkpolicies) `ConstraintTemplate` for `Namespaces`. This `Constraint` requires that any `Namespaces` defined in the cluster has a `NetworkPolicy`:
+```Bash
+cat <<EOF > ~/$GKE_CONFIGS_DIR_NAME/config-sync/policies/constraints/namespaces-required-labels.yaml
+apiVersion: constraints.gatekeeper.sh/v1beta1
+kind: K8sRequireNamespaceNetworkPolicies
+metadata:
+  name: namespaces-required-networkpolicies
+spec:
+  enforcementAction: deny
+  match:
+    kinds:
+    - apiGroups:
+      - ""
+      kinds:
+      - Namespace
+    excludedNamespaces:
+    - config-management-monitoring
+    - config-management-system
+    - default
+    - gatekeeper-system
+    - istio-system
+    - istio-config
+    - kube-node-lease
+    - kube-public
+    - kube-system
+    - resource-group-system
+EOF
+```
+
+### Define Gatekeeper config for Referrential `Constraints`
+
+Create the `gatekeeper-system` folder:
+```Bash
+mkdir ~/$GKE_CONFIGS_DIR_NAME/config-sync/gatekeeper-system
+```
+
+Define the `gatekeeper-system` `Namespace`:
+```Bash
+cat <<EOF > ~/$GKE_CONFIGS_DIR_NAME/config-sync/gatekeeper-system/namespace.yaml
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: gatekeeper-system
+EOF
+```
+
+Define the `config-referential-constraints` `Config`:
+```Bash
+cat <<EOF > ~/$GKE_CONFIGS_DIR_NAME/config-sync/gatekeeper-system/config-referential-constraints.yaml
+apiVersion: config.gatekeeper.sh/v1alpha1
+kind: Config
+metadata:
+  name: config
+  namespace: gatekeeper-system
+spec:
+  sync:
+    syncOnly:
+      - group: ""
+        version: "v1"
+        kind: "Namespace"
+      - group: "networking.k8s.io"
+        version: "v1"
+        kind: "NetworkPolicy"
+EOF
+```
+
 ## Deploy Kubernetes manifests
 
 ```Bash
 cd ~/$GKE_CONFIGS_DIR_NAME/
 git add .
-git commit -m "Policies for NetworkPolicy resources"
+git commit -m "Policies for NetworkPolicies"
 git push origin main
 ```
 

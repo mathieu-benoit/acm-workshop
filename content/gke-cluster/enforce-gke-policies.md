@@ -12,26 +12,26 @@ Define variables:
 source ${WORK_DIR}acm-workshop-variables.sh
 ```
 
-## Enforce policies
+## Enforce GKE clusters policies
 
-Define the `ConstraintTemplate` resource:
+Define the `ConstraintTemplate`:
 ```Bash
-cat <<EOF > ~/$HOST_PROJECT_DIR_NAME/config-sync/policies/templates/limitgkecluster.yaml
+cat <<EOF > ~/$HOST_PROJECT_DIR_NAME/config-sync/policies/templates/gke-clusters-requirements-template.yaml
 apiVersion: templates.gatekeeper.sh/v1
 kind: ConstraintTemplate
 metadata:
-  name: limitgkecluster
+  name: gkeclusterrequirement
   annotations:
     description: "Requirements for any GKE cluster."
 spec:
   crd:
     spec:
       names:
-        kind: LimitGKECluster
+        kind: GkeClusterRequirement
   targets:
     - target: admission.k8s.gatekeeper.sh
       rego: |-
-        package limitgkecluster
+        package gkeclusterrequirement
         violation[{"msg":msg}] {
           input.review.object.kind == "ContainerCluster"
           not input.review.object.spec.confidentialNodes.enabled == true
@@ -100,13 +100,13 @@ spec:
 EOF
 ```
 
-Define the `Constraint` resource:
+Define the `gke-clusters-requirements` `Constraint` based on the `GkeClusterRequirement` `ConstraintTemplate` just created:
 ```Bash
-cat <<EOF > ~/$HOST_PROJECT_DIR_NAME/config-sync/policies/constraints/allowed-gke-cluster.yaml
+cat <<EOF > ~/$HOST_PROJECT_DIR_NAME/config-sync/policies/constraints/gke-clusters-requirements.yaml
 apiVersion: constraints.gatekeeper.sh/v1beta1
-kind: LimitGKECluster
+kind: GkeClusterRequirement
 metadata:
-  name: allowed-gke-cluster
+  name: gke-clusters-requirements
 spec:
   enforcementAction: deny
   match:
@@ -124,7 +124,7 @@ EOF
 ```Bash
 cd ~/$HOST_PROJECT_DIR_NAME/
 git add .
-git commit -m "Allow GKE for Tenant project"
+git commit -m "Policies for GKE clusters"
 git push origin main
 ```
 

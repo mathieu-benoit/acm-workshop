@@ -96,9 +96,9 @@ spec:
         syncRepo: ${GKE_CONFIGS_REPO_URL}
     policyController:
       enabled: true
-      referentialRulesEnabled: false
+      referentialRulesEnabled: true
       logDeniesEnabled: true
-      templateLibraryInstalled: false
+      templateLibraryInstalled: true
     version: "1.11.2"
 EOF
 ```
@@ -107,7 +107,7 @@ We explicitly set the Config Management's `version` field with the current versi
 {{% /notice %}}
 
 {{% notice info %}}
-We explicitly set the Policy Controller's `templateLibraryInstalled` field to `false`. Throughout this workshop, we will create our own `ConstraintTemplates` when needed. It will have two main benefits: first you will learn about how to create your own `ConstraintTemplate` (with OPA rego) and second, you we will be able to validate our Kubernetes resources against this . But be aware of this [default library of `ConstraintTemplates`](https://cloud.google.com/anthos-config-management/docs/reference/constraint-template-library) you could leverage as-is if you set this field to `true`.
+We explicitly set the Policy Controller's `templateLibraryInstalled` field to `true`, in order to install the [default library of `ConstraintTemplates`](https://cloud.google.com/anthos-config-management/docs/reference/constraint-template-library).
 {{% /notice %}}
 
 ## Define Config Sync Monitoring

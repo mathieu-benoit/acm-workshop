@@ -17,12 +17,12 @@ This workshop leverages 3 main services:
 It's a step-by-step guided hands-on lab.
 
 After the workshop, you will be able to:
-- Better understand the different services included in Anthos Config Management (ACM): Config Sync, Config Controller, Policy Controller and Config Connector
+- Better understand the different services included in ACM: Config Sync, Config Controller, Policy Controller and Config Connector
 - Secure a GKE cluster
 - Get experience with GitOps flow to deploy Kubernetes manifests
 - Deploy Infrastructure, Configs and Applications via Kubernetes manifests, via GitOps
 - Define clear roles and responsabilities between Org Admin, Platform Admin and Apps Operator
-- Set up a Managed Anthos Service Mesh (ASM) on GKE with a secure Ingress Gateway behind a HTTPS GCLB and Cloud Armor
+- Set up a Managed ASM on GKE with a secure Ingress Gateway behind a HTTPS GCLB and Cloud Armor
 - Deploy sample apps such as Whereami and Online Boutique with security best practices including `NetworkPolicies`, `Sidecars` and `AuthorizationPolicies`.
 
 With this workshop, here is what you will accomplish, from scratch:
