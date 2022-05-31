@@ -12,7 +12,6 @@ In this section, you will create your Config Controller instance. You will also 
 Define variables:
 ```Bash
 source ${WORK_DIR}acm-workshop-variables.sh
-echo "export LOCAL_IP_ADDRESS=$(curl -4 ifconfig.co)" >> ${WORK_DIR}acm-workshop-variables.sh
 echo "export CONFIG_CONTROLLER_NAME=configcontroller" >> ${WORK_DIR}acm-workshop-variables.sh
 echo "export CONFIG_CONTROLLER_LOCATION=us-east1" >> ${WORK_DIR}acm-workshop-variables.sh
 echo "export CONFIG_CONTROLLER_NETWORK=default" >> ${WORK_DIR}acm-workshop-variables.sh
@@ -36,9 +35,11 @@ gcloud services enable krmapihosting.googleapis.com \
     cloudresourcemanager.googleapis.com
 gcloud anthos config controller create $CONFIG_CONTROLLER_NAME \
     --location $CONFIG_CONTROLLER_LOCATION \
-    --network $CONFIG_CONTROLLER_NETWORK \
-    --man-block $LOCAL_IP_ADDRESS/32
+    --network $CONFIG_CONTROLLER_NETWORK
 ```
+{{% notice tip %}}
+As a security best practice you could provision your Config Controller instance with the `--man-block $(curl -4 ifconfig.co)/32` parameter. We are not doing this in this workshop to avoid any issues with Cloud Shell which is allocating a new IP address as soon as the session expired.
+{{% /notice %}}
 {{% notice note %}}
 The Config Controller instance provisioning could take around 15-20 min.
 {{% /notice %}}
