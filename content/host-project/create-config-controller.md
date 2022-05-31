@@ -18,7 +18,7 @@ echo "export CONFIG_CONTROLLER_NETWORK=default" >> ${WORK_DIR}acm-workshop-varia
 source ${WORK_DIR}acm-workshop-variables.sh
 ```
 {{% notice info %}}
-`europe-north1`, `australia-southeast1`, `us-east1`, `us-central1`, `northamerica-northeast1` and `asia-northeast1` are the supported regions for now for Config Controller.
+`europe-north1`, `australia-southeast1`, `us-east1`, `us-central1`, `northamerica-northeast1`, `northamerica-northeast2`, `asia-northeast1` and `asia-northeast2` are the supported regions for now for Config Controller.
 {{% /notice %}}
 
 ## Create the Config Controller instance
@@ -29,10 +29,14 @@ gcloud compute networks create $CONFIG_CONTROLLER_NETWORK \
     --subnet-mode=auto
 ```
 
-Create the Config Controller instance:
+Enable the required Google Cloud APIs:
 ```Bash
 gcloud services enable krmapihosting.googleapis.com \
     cloudresourcemanager.googleapis.com
+```
+
+Create the Config Controller instance:
+```Bash
 gcloud anthos config controller create $CONFIG_CONTROLLER_NAME \
     --location $CONFIG_CONTROLLER_LOCATION \
     --network $CONFIG_CONTROLLER_NETWORK
