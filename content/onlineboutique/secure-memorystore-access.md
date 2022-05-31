@@ -110,7 +110,7 @@ patches:
 EOF
 ```
 
-Lastly, by waiting the release of Online Boutique v0.3.8, we need to patch the container image of the `cartservice` app:
+Lastly, by waiting the release of Online Boutique v0.3.8, we need to patch the container image of the `cartservice` app with a temporary public image:
 ```Bash
 cd ~/$ONLINE_BOUTIQUE_DIR_NAME/base
 cat <<EOF >> kustomization.yaml
