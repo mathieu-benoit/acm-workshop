@@ -91,7 +91,7 @@ A [`Sidecar`](https://istio.io/latest/docs/reference/config/networking/sidecar/)
 
 Define `deny` `AuthorizationPolicy` resource:
 ```Bash
-cat <<EOF > ${WORK_DIR}$GKE_CONFIGS_DIR_NAME/istio-config/authorizationpolicy_denyall.yaml
+cat <<EOF > ${WORK_DIR}$GKE_CONFIGS_DIR_NAME/istio-system/authorizationpolicy_denyall.yaml
 apiVersion: security.istio.io/v1beta1
 kind: AuthorizationPolicy
 metadata:
