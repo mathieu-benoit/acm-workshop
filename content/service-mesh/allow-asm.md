@@ -13,7 +13,7 @@ WORK_DIR=~/
 source ${WORK_DIR}acm-workshop-variables.sh
 ```
 
-## Define API
+## Define APIs
 
 Define the Mesh API [`Service`](https://cloud.google.com/config-connector/docs/reference/resource-docs/serviceusage/service) resource in the Tenant project:
 ```Bash
@@ -33,6 +33,28 @@ spec:
   resourceID: mesh.googleapis.com
 EOF
 ```
+
+Define the Anthos API [`Service`](https://cloud.google.com/config-connector/docs/reference/resource-docs/serviceusage/service) resource in the Tenant project:
+```Bash
+cat <<EOF > ${WORK_DIR}$HOST_PROJECT_DIR_NAME/projects/$TENANT_PROJECT_ID/anthos-service.yaml
+apiVersion: serviceusage.cnrm.cloud.google.com/v1beta1
+kind: Service
+metadata:
+  annotations:
+    cnrm.cloud.google.com/deletion-policy: "abandon"
+    cnrm.cloud.google.com/disable-dependent-services: "false"
+    config.kubernetes.io/depends-on: resourcemanager.cnrm.cloud.google.com/namespaces/config-control/Project/${TENANT_PROJECT_ID}
+  name: ${TENANT_PROJECT_ID}-anthos
+  namespace: config-control
+spec:
+  projectRef:
+    name: ${TENANT_PROJECT_ID}
+  resourceID: anthos.googleapis.com
+EOF
+```
+{{% notice info %}}
+We are enabling the Anthos API here because that's how you will access to Anthos Service Mesh (ASM) advanced features from within the Google Cloud console, such as ASM Topology, ASM Monitoring, etc.
+{{% /notice %}}
 
 ## Deploy Kubernetes manifests
 
