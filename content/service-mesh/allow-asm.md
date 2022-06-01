@@ -9,6 +9,7 @@ _{{< param description >}}_
 
 Initialize variables:
 ```Bash
+WORK_DIR=~/
 source ${WORK_DIR}acm-workshop-variables.sh
 ```
 
@@ -83,12 +84,4 @@ Wait and re-run this command above until you see `"status": "SYNCED"` for this `
 List the GitHub runs for the **Host project configs** repository:
 ```Bash
 cd ${WORK_DIR}$HOST_PROJECT_DIR_NAME && gh run list
-```
-
-List the Google Cloud resources created:
-```Bash
-gcloud projects get-iam-policy $TENANT_PROJECT_ID \
-    --filter="bindings.members:${TENANT_PROJECT_SA_EMAIL}" \
-    --flatten="bindings[].members" \
-    --format="table(bindings.role)"
 ```

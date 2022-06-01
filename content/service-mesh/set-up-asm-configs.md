@@ -17,13 +17,15 @@ source ${WORK_DIR}acm-workshop-variables.sh
 
 Define the optional Mesh configs:
 ```Bash
-cat <<EOF > ~/$GKE_CONFIGS_DIR_NAME/istio-system/mesh-configs.yaml
+cat <<EOF > ${WORK_DIR}$GKE_CONFIGS_DIR_NAME/istio-system/mesh-configs.yaml
 apiVersion: v1
 data:
   mesh: |-
     defaultConfig:
       image:
         imageType: distroless
+      tracing:
+        stackdriver: {}
     discoverySelectors:
     - matchLabels:
         istio-injection: enabled
@@ -44,7 +46,7 @@ The [`distroless` base image ensures that the proxy image](https://cloud.google.
 
 Define the mTLS `STRICT` policy Mesh-wide:
 ```Bash
-cat <<EOF > ~/$GKE_CONFIGS_DIR_NAME/istio-system/mesh-mtls.yaml
+cat <<EOF > ${WORK_DIR}$GKE_CONFIGS_DIR_NAME/istio-system/mesh-mtls.yaml
 apiVersion: security.istio.io/v1beta1
 kind: PeerAuthentication
 metadata:
@@ -63,12 +65,12 @@ Here we are locking down [mutual TLS to `STRICT` for the entire mesh](https://is
 
 Create a dedicated `istio-config` folder in the GKE configs's Git repo:
 ```Bash
-mkdir ~/$GKE_CONFIGS_DIR_NAME/istio-config
+mkdir ${WORK_DIR}$GKE_CONFIGS_DIR_NAME/istio-config
 ```
 
 Define the `istio-config` namespace:
 ```Bash
-cat <<EOF > ~/$GKE_CONFIGS_DIR_NAME/istio-config/sidecar.yaml
+cat <<EOF > ${WORK_DIR}$GKE_CONFIGS_DIR_NAME/istio-config/sidecar.yaml
 apiVersion: networking.istio.io/v1alpha3
 kind: Sidecar
 metadata:
@@ -89,7 +91,7 @@ A [`Sidecar`](https://istio.io/latest/docs/reference/config/networking/sidecar/)
 
 Define `deny` `AuthorizationPolicy` resource:
 ```Bash
-cat <<EOF > ~/$GKE_CONFIGS_DIR_NAME/istio-config/authorizationpolicy_denyall.yaml
+cat <<EOF > ${WORK_DIR}$GKE_CONFIGS_DIR_NAME/istio-config/authorizationpolicy_denyall.yaml
 apiVersion: security.istio.io/v1beta1
 kind: AuthorizationPolicy
 metadata:
@@ -103,7 +105,7 @@ EOF
 
 Define the extended [`edit` user-facing role](https://kubernetes.io/docs/reference/access-authn-authz/rbac/#user-facing-roles) with more Istio resources capabilities:
 ```Bash
-cat <<EOF > ~/$GKE_CONFIGS_DIR_NAME/custom-edit-clusterrole-istio.yaml
+cat <<EOF > ${WORK_DIR}$GKE_CONFIGS_DIR_NAME/custom-edit-clusterrole-istio.yaml
 apiVersion: rbac.authorization.k8s.io/v1
 kind: ClusterRole
 metadata:
@@ -129,27 +131,13 @@ Later in this workshop, for each app namespace, we will define a Config Sync's `
 ## Deploy Kubernetes manifests
 
 ```Bash
-cd ~/$GKE_CONFIGS_DIR_NAME/
+cd ${WORK_DIR}$GKE_CONFIGS_DIR_NAME/
 git add . && git commit -m "ASM Mesh configs in GKE cluster" && git push origin main
 ```
 
 ## Check deployments
 
-Here is what you should have at this stage:
-
-List the GitHub runs for the **GKE cluster configs** repository `cd ~/$GKE_CONFIGS_DIR_NAME && gh run list`:
-```Plaintext
-STATUS  NAME                                                  WORKFLOW  BRANCH  EVENT  ID          ELAPSED  AGE
-✓       ASM Mesh configs in GKE cluster                       ci        main    push   1972234050  56s      2m
-✓       ASM MCP for GKE cluster                               ci        main    push   1972222841  56s      7m
-✓       Enforce Container Registries Policies in GKE cluster  ci        main    push   1972138349  55s      49m
-✓       Policies for NetworkPolicy resources                  ci        main    push   1971716019  1m14s    3h
-✓       Network Policies logging                              ci        main    push   1971353547  1m1s     5h
-✓       Config Sync monitoring                                ci        main    push   1971296656  1m9s     5h
-✓       Initial commit                                        ci        main    push   1970951731  57s      7h
-```
-
-List the Kubernetes resources managed by Config Sync in the **GKE cluster** for the **GKE cluster configs** repository:
+List the Kubernetes resources managed by Config Sync in **GKE cluster** for the **GKE cluster configs** repository:
 ```Bash
 gcloud alpha anthos config sync repo describe \
     --project $TENANT_PROJECT_ID \
@@ -157,24 +145,9 @@ gcloud alpha anthos config sync repo describe \
     --sync-name root-sync \
     --sync-namespace config-management-system
 ```
-```Plaintext
-getting 1 RepoSync and RootSync from gke-hub-membership
-┌───────────────────────────┬──────────────────────┬────────────────────────────────┬──────────────────────────────┐
-│           GROUP           │         KIND         │             NAME               │          NAMESPACE           │
-├───────────────────────────┼──────────────────────┼────────────────────────────────┼──────────────────────────────┤
-│                           │ Namespace            │ istio-system                   │                              │
-│                           │ Namespace            │ config-management-monitoring   │                              │
-│ constraints.gatekeeper.sh │ K8sRequiredLabels    │ deployment-required-labels     │                              │
-│ constraints.gatekeeper.sh │ K8sRequiredLabels    │ namespace-required-labels      │                              │
-│ constraints.gatekeeper.sh │ K8sAllowedRepos      │ allowed-container-registries   │                              │
-│ networking.gke.io         │ NetworkLogging       │ default                        │                              │
-| rbac.authorization.k8s.io │ ClusterRole          │ custom:aggregate-to-edit:istio │                              │
-│ templates.gatekeeper.sh   │ ConstraintTemplate   │ k8sallowedrepos                │                              │
-│ templates.gatekeeper.sh   │ ConstraintTemplate   │ k8srequiredlabels              │                              │
-│                           │ ServiceAccount       │ default                        │ config-management-monitoring │
-│ security.istio.io         │ AuthorizationPolicy  │ deny-all                       │ istio-system                 │
-│                           │ ConfigMap            │ istio-asm-managed-rapid        │ istio-system                 │
-│ mesh.cloud.google.com     │ ControlPlaneRevision │ asm-managed-rapid              │ istio-system                 │
-│ security.istio.io         │ PeerAuthentication   │ default                        │ istio-system                 │
-└───────────────────────────┴──────────────────────┴────────────────────────────────┴──────────────────────────────┘
+Wait and re-run this command above until you see `"status": "SYNCED"` for this `RepoSync`. All the `managed_resources` listed should have `STATUS: Current` as well.
+
+List the GitHub runs for the **GKE cluster configs** repository:
+```Bash
+cd ${WORK_DIR}$GKE_CONFIGS_DIR_NAME && gh run list
 ```
