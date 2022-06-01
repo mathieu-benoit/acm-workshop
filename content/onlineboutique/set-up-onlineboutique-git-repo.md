@@ -16,15 +16,15 @@ source ${WORK_DIR}acm-workshop-variables.sh
 ```
 
 ```Bash
-mkdir ~/$GKE_CONFIGS_DIR_NAME/config-sync/repo-syncs
-mkdir ~/$GKE_CONFIGS_DIR_NAME/config-sync/repo-syncs/$ONLINEBOUTIQUE_NAMESPACE
+mkdir ~/$GKE_CONFIGS_DIR_NAME/repo-syncs
+mkdir ~/$GKE_CONFIGS_DIR_NAME/repo-syncs/$ONLINEBOUTIQUE_NAMESPACE
 ```
 
 ## Define Namespace
 
 Define a dedicated `Namespace` for the Online Boutique apps:
 ```Bash
-cat <<EOF > ~/$GKE_CONFIGS_DIR_NAME/config-sync/repo-syncs/$ONLINEBOUTIQUE_NAMESPACE/namespace.yaml
+cat <<EOF > ~/$GKE_CONFIGS_DIR_NAME/repo-syncs/$ONLINEBOUTIQUE_NAMESPACE/namespace.yaml
 apiVersion: v1
 kind: Namespace
 metadata:
@@ -52,7 +52,7 @@ ONLINE_BOUTIQUE_REPO_URL=$(gh repo view --json url --jq .url)
 
 Define a `RepoSync` linking this Git repository:
 ```Bash
-cat <<EOF > ~/$GKE_CONFIGS_DIR_NAME/config-sync/repo-syncs/$ONLINEBOUTIQUE_NAMESPACE/repo-sync.yaml
+cat <<EOF > ~/$GKE_CONFIGS_DIR_NAME/repo-syncs/$ONLINEBOUTIQUE_NAMESPACE/repo-sync.yaml
 apiVersion: configsync.gke.io/v1beta1
 kind: RepoSync
 metadata:
@@ -70,7 +70,7 @@ EOF
 ```
 
 ```Bash
-cat <<EOF > ~/$GKE_CONFIGS_DIR_NAME/config-sync/repo-syncs/$ONLINEBOUTIQUE_NAMESPACE/repo-sync-role-binding.yaml
+cat <<EOF > ~/$GKE_CONFIGS_DIR_NAME/repo-syncs/$ONLINEBOUTIQUE_NAMESPACE/repo-sync-role-binding.yaml
 apiVersion: rbac.authorization.k8s.io/v1
 kind: RoleBinding
 metadata:

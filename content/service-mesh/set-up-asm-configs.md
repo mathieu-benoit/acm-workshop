@@ -16,7 +16,7 @@ source ${WORK_DIR}acm-workshop-variables.sh
 
 Define the optional Mesh configs:
 ```Bash
-cat <<EOF > ~/$GKE_CONFIGS_DIR_NAME/config-sync/istio-system/mesh-configs.yaml
+cat <<EOF > ~/$GKE_CONFIGS_DIR_NAME/istio-system/mesh-configs.yaml
 apiVersion: v1
 data:
   mesh: |-
@@ -43,7 +43,7 @@ The [`distroless` base image ensures that the proxy image](https://cloud.google.
 
 Define the mTLS `STRICT` policy Mesh-wide:
 ```Bash
-cat <<EOF > ~/$GKE_CONFIGS_DIR_NAME/config-sync/istio-system/mesh-mtls.yaml
+cat <<EOF > ~/$GKE_CONFIGS_DIR_NAME/istio-system/mesh-mtls.yaml
 apiVersion: security.istio.io/v1beta1
 kind: PeerAuthentication
 metadata:
@@ -62,12 +62,12 @@ Here we are locking down [mutual TLS to `STRICT` for the entire mesh](https://is
 
 Create a dedicated `istio-config` folder in the GKE configs's Git repo:
 ```Bash
-mkdir ~/$GKE_CONFIGS_DIR_NAME/config-sync/istio-config
+mkdir ~/$GKE_CONFIGS_DIR_NAME/istio-config
 ```
 
 Define the `istio-config` namespace:
 ```Bash
-cat <<EOF > ~/$GKE_CONFIGS_DIR_NAME/config-sync/istio-config/sidecar.yaml
+cat <<EOF > ~/$GKE_CONFIGS_DIR_NAME/istio-config/sidecar.yaml
 apiVersion: networking.istio.io/v1alpha3
 kind: Sidecar
 metadata:
@@ -88,7 +88,7 @@ A [`Sidecar`](https://istio.io/latest/docs/reference/config/networking/sidecar/)
 
 Define `deny` `AuthorizationPolicy` resource:
 ```Bash
-cat <<EOF > ~/$GKE_CONFIGS_DIR_NAME/config-sync/istio-config/authorizationpolicy_denyall.yaml
+cat <<EOF > ~/$GKE_CONFIGS_DIR_NAME/istio-config/authorizationpolicy_denyall.yaml
 apiVersion: security.istio.io/v1beta1
 kind: AuthorizationPolicy
 metadata:
@@ -102,7 +102,7 @@ EOF
 
 Define the extended [`edit` user-facing role](https://kubernetes.io/docs/reference/access-authn-authz/rbac/#user-facing-roles) with more Istio resources capabilities:
 ```Bash
-cat <<EOF > ~/$GKE_CONFIGS_DIR_NAME/config-sync/custom-edit-clusterrole-istio.yaml
+cat <<EOF > ~/$GKE_CONFIGS_DIR_NAME/custom-edit-clusterrole-istio.yaml
 apiVersion: rbac.authorization.k8s.io/v1
 kind: ClusterRole
 metadata:

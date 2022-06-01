@@ -15,14 +15,14 @@ source ${WORK_DIR}acm-workshop-variables.sh
 ```
 
 ```Bash
-mkdir ~/$TENANT_PROJECT_DIR_NAME/config-sync/$ONLINEBOUTIQUE_NAMESPACE
+mkdir ~/$TENANT_PROJECT_DIR_NAME/$ONLINEBOUTIQUE_NAMESPACE
 ```
 
 ## Define Memorystore (redis)
 
 Define the [Memorystore (redis) resource](https://cloud.google.com/config-connector/docs/reference/resource-docs/redis/redisinstance):
 ```Bash
-cat <<EOF > ~/$TENANT_PROJECT_DIR_NAME/config-sync/$ONLINEBOUTIQUE_NAMESPACE/memorystore.yaml
+cat <<EOF > ~/$TENANT_PROJECT_DIR_NAME/$ONLINEBOUTIQUE_NAMESPACE/memorystore.yaml
 apiVersion: redis.cnrm.cloud.google.com/v1beta1
 kind: RedisInstance
 metadata:
@@ -81,7 +81,7 @@ graph TD;
   RedisInstance-->ComputeNetwork
 {{< /mermaid >}}
 
-List the GCP resources created:
+List the Google Cloud resources created:
 ```Bash
 gcloud redis instances list \
     --region=$GKE_LOCATION \

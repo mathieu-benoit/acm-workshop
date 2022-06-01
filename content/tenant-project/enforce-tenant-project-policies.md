@@ -16,7 +16,7 @@ source ${WORK_DIR}acm-workshop-variables.sh
 
 Define the `ConstraintTemplate` resource:
 ```Bash
-cat <<EOF > ~/$HOST_PROJECT_DIR_NAME/config-sync/policies/templates/limitlocations.yaml
+cat <<EOF > ~/$HOST_PROJECT_DIR_NAME/policies/templates/limitlocations.yaml
 apiVersion: templates.gatekeeper.sh/v1
 kind: ConstraintTemplate
 metadata:
@@ -64,7 +64,7 @@ EOF
 
 Define the `Constraint` resource:
 ```Bash
-cat <<EOF > ~/$HOST_PROJECT_DIR_NAME/config-sync/policies/constraints/allowed-locations.yaml
+cat <<EOF > ~/$HOST_PROJECT_DIR_NAME/policies/constraints/allowed-locations.yaml
 apiVersion: constraints.gatekeeper.sh/v1beta1
 kind: LimitLocations
 metadata:

@@ -16,7 +16,7 @@ source ${WORK_DIR}acm-workshop-variables.sh
 
 Define the `ConstraintTemplate`:
 ```Bash
-cat <<EOF > ~/$HOST_PROJECT_DIR_NAME/config-sync/policies/templates/gke-clusters-requirements-template.yaml
+cat <<EOF > ~/$HOST_PROJECT_DIR_NAME/policies/templates/gke-clusters-requirements-template.yaml
 apiVersion: templates.gatekeeper.sh/v1
 kind: ConstraintTemplate
 metadata:
@@ -102,7 +102,7 @@ EOF
 
 Define the `gke-clusters-requirements` `Constraint` based on the `GkeClusterRequirement` `ConstraintTemplate` just created:
 ```Bash
-cat <<EOF > ~/$HOST_PROJECT_DIR_NAME/config-sync/policies/constraints/gke-clusters-requirements.yaml
+cat <<EOF > ~/$HOST_PROJECT_DIR_NAME/policies/constraints/gke-clusters-requirements.yaml
 apiVersion: constraints.gatekeeper.sh/v1beta1
 kind: GkeClusterRequirement
 metadata:

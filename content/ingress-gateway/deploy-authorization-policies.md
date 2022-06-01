@@ -15,7 +15,7 @@ source ${WORK_DIR}acm-workshop-variables.sh
 ## Define AuthorizationPolicy
 
 ```Bash
-cat <<EOF > ~/$GKE_CONFIGS_DIR_NAME/config-sync/$INGRESS_GATEWAY_NAMESPACE/authorizationpolicy_ingress-gateway.yaml
+cat <<EOF > ~/$GKE_CONFIGS_DIR_NAME/$INGRESS_GATEWAY_NAMESPACE/authorizationpolicy_ingress-gateway.yaml
 apiVersion: security.istio.io/v1beta1
 kind: AuthorizationPolicy
 metadata:

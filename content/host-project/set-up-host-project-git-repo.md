@@ -55,19 +55,19 @@ EOF
 We explicitly set the Policy Controller's `templateLibraryInstalled` field to `true`, in order to install the [default library of `ConstraintTemplates`](https://cloud.google.com/anthos-config-management/docs/reference/constraint-template-library).
 {{% /notice %}}
 
-Let's wait for Policy Controller and Config Sync to be successfully installed:
+Let's wait for the multi-repositories configs to be deployed:
 ```Bash
-watch -g "gcloud beta container fleet config-management status | grep 'Policy_Controller: INSTALLED'"
+kubectl wait --for condition=established crd rootsyncs.configsync.gke.io
 ```
 
 ## Define the Host project's Git repository
 
 Create a dedicated private GitHub repository to store any Kubernetes manifests associated to the Host project:
 ```Bash
-cd ~
+cd ${WORK_DIR}
 gh auth login
 gh repo create $HOST_PROJECT_DIR_NAME --private --clone --template https://github.com/mathieu-benoit/config-sync-template-repo
-cd ~/$HOST_PROJECT_DIR_NAME
+cd $HOST_PROJECT_DIR_NAME
 git pull
 git checkout main
 ORG_REPO_URL=$(gh repo view --json sshUrl --jq .sshUrl)
@@ -102,7 +102,7 @@ spec:
     repo: ${ORG_REPO_URL}
     revision: HEAD
     branch: main
-    dir: config-sync
+    dir: .
     auth: ssh
     secretRef:
       name: git-creds
@@ -118,7 +118,7 @@ Since you started this workshop, you just ran 6 `kubectl` commands. For your inf
 
 In order to have Config Controller's Config Sync linking a Billing Account to GCP projects later in this workshop, we need to define the Cloud Billing API [`Service`](https://cloud.google.com/config-connector/docs/reference/resource-docs/serviceusage/service) resource for Config Controller's GCP project:
 ```Bash
-cat <<EOF > ~/$HOST_PROJECT_DIR_NAME/config-sync/cloudbilling-service.yaml
+cat <<EOF > ${WORK_DIR}$HOST_PROJECT_DIR_NAME/cloudbilling-service.yaml
 apiVersion: serviceusage.cnrm.cloud.google.com/v1beta1
 kind: Service
 metadata:
@@ -133,7 +133,7 @@ EOF
 ## Deploy Kubernetes manifests
 
 ```Bash
-cd ~/$HOST_PROJECT_DIR_NAME/
+cd ${WORK_DIR}$HOST_PROJECT_DIR_NAME/
 git add . && git commit -m "Billing API in Host project" && git push origin main
 ```
 {{% notice info %}}
@@ -142,43 +142,16 @@ Because it's the first `git commit` of this workshop, if you don't have your own
 
 ## Check deployments
 
-List the GCP resources created:
+List the GitHub runs for the Host project configs repository:
 ```Bash
-gcloud compute routers list \
-    --project $HOST_PROJECT_ID
-gcloud compute routers nats list \
-    --router $CONFIG_CONTROLLER_NAT_ROUTER_NAME \
-    --region $CONFIG_CONTROLLER_LOCATION \
-    --project $HOST_PROJECT_ID
-```
-```Plaintext
-NAME        REGION    NETWORK
-nat-router  us-east1  default
-NAME        NAT_IP_ALLOCATE_OPTION  SOURCE_SUBNETWORK_IP_RANGES_TO_NAT
-nat-config  AUTO_ONLY               ALL_SUBNETWORKS_ALL_IP_RANGES
+cd ${WORK_DIR}$HOST_PROJECT_DIR_NAME && gh run list
 ```
 
-List the GitHub runs for the Host project configs repository `cd ~/$HOST_PROJECT_DIR_NAME && gh run list`:
-```Plaintext
-STATUS  NAME                                      WORKFLOW  BRANCH  EVENT  ID          ELAPSED  AGE
-✓       Billing API in Host project               ci        main    push   1960889246  1m0s     1m
-✓       Initial commit                            ci        main    push   1960885850  1m8s     2m
-```
-
-List the Kubernetes resources managed by Config Sync in **Config Controller** for the **Host project configs** repository:
+List the Kubernetes resources managed by Config Sync in **Config Controller** for the **Host project configs** repository, and wait for the `status` `SYNCED`:
 ```Bash
 gcloud alpha anthos config sync repo describe \
     --project $HOST_PROJECT_ID \
     --managed-resources all \
     --sync-name root-sync \
     --sync-namespace config-management-system
-```
-```Plaintext
-getting 1 RepoSync and RootSync from krmapihost-configcontroller
-┌────────────────────────────────────┬───────────┬─────────────────────────────┬────────────────┐
-│               GROUP                │    KIND   │             NAME            │   NAMESPACE    │
-├────────────────────────────────────┼───────────┼─────────────────────────────┼────────────────┤
-│                                    │ Namespace │ config-control              │                │
-│ serviceusage.cnrm.cloud.google.com │ Service   │ cloudbilling.googleapis.com │ config-control │
-└────────────────────────────────────┴───────────┴─────────────────────────────┴────────────────┘
 ```

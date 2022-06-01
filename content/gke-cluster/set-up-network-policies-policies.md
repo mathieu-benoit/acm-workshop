@@ -20,7 +20,7 @@ As a best practice and in order to get the `NetworkPolicies` working in this wor
 
 Define the `namespaces-required-labels` `Constraint` based on the [`K8sRequiredLabels`](https://cloud.devsite.corp.google.com/anthos-config-management/docs/reference/constraint-template-library#k8srequiredlabels) `ConstraintTemplate` for `Namespaces`:
 ```Bash
-cat <<EOF > ~/$GKE_CONFIGS_DIR_NAME/config-sync/policies/constraints/namespaces-required-labels.yaml
+cat <<EOF > ~/$GKE_CONFIGS_DIR_NAME/policies/constraints/namespaces-required-labels.yaml
 apiVersion: constraints.gatekeeper.sh/v1beta1
 kind: K8sRequiredLabels
 metadata:
@@ -52,7 +52,7 @@ EOF
 
 Define the `pods-required-labels` `Constraint` based on the [`K8sRequiredLabels`](https://cloud.devsite.corp.google.com/anthos-config-management/docs/reference/constraint-template-library#k8srequiredlabels) `ConstraintTemplate` for `Pods`:
 ```Bash
-cat <<EOF > ~/$GKE_CONFIGS_DIR_NAME/config-sync/policies/constraints/pods-required-labels.yaml
+cat <<EOF > ~/$GKE_CONFIGS_DIR_NAME/policies/constraints/pods-required-labels.yaml
 apiVersion: constraints.gatekeeper.sh/v1beta1
 kind: K8sRequiredLabels
 metadata:
@@ -84,7 +84,7 @@ EOF
 
 Define the `namespaces-required-networkpolicies` `Constraint` based on the [`K8sRequireNamespaceNetworkPolicies`](https://cloud.devsite.corp.google.com/anthos-config-management/docs/reference/constraint-template-library#k8srequirenamespacenetworkpolicies) `ConstraintTemplate` for `Namespaces`. This `Constraint` requires that any `Namespaces` defined in the cluster has a `NetworkPolicy`:
 ```Bash
-cat <<EOF > ~/$GKE_CONFIGS_DIR_NAME/config-sync/policies/constraints/namespaces-required-labels.yaml
+cat <<EOF > ~/$GKE_CONFIGS_DIR_NAME/policies/constraints/namespaces-required-labels.yaml
 apiVersion: constraints.gatekeeper.sh/v1beta1
 kind: K8sRequireNamespaceNetworkPolicies
 metadata:
@@ -115,12 +115,12 @@ EOF
 
 Create the `gatekeeper-system` folder:
 ```Bash
-mkdir ~/$GKE_CONFIGS_DIR_NAME/config-sync/gatekeeper-system
+mkdir ~/$GKE_CONFIGS_DIR_NAME/gatekeeper-system
 ```
 
 Define the `gatekeeper-system` `Namespace`:
 ```Bash
-cat <<EOF > ~/$GKE_CONFIGS_DIR_NAME/config-sync/gatekeeper-system/namespace.yaml
+cat <<EOF > ~/$GKE_CONFIGS_DIR_NAME/gatekeeper-system/namespace.yaml
 apiVersion: v1
 kind: Namespace
 metadata:
@@ -130,7 +130,7 @@ EOF
 
 Define the `config-referential-constraints` `Config`:
 ```Bash
-cat <<EOF > ~/$GKE_CONFIGS_DIR_NAME/config-sync/gatekeeper-system/config-referential-constraints.yaml
+cat <<EOF > ~/$GKE_CONFIGS_DIR_NAME/gatekeeper-system/config-referential-constraints.yaml
 apiVersion: config.gatekeeper.sh/v1alpha1
 kind: Config
 metadata:

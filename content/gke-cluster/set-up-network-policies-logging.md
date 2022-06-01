@@ -17,7 +17,7 @@ source ${WORK_DIR}acm-workshop-variables.sh
 https://cloud.google.com/kubernetes-engine/docs/how-to/network-policy-logging
 
 ```Bash
-cat <<EOF > ~/$GKE_CONFIGS_DIR_NAME/config-sync/networkpolicies-logging.yaml
+cat <<EOF > ~/$GKE_CONFIGS_DIR_NAME/networkpolicies-logging.yaml
 kind: NetworkLogging
 apiVersion: networking.gke.io/v1alpha1
 metadata:

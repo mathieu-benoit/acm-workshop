@@ -17,7 +17,7 @@ source ${WORK_DIR}acm-workshop-variables.sh
 https://cloud.google.com/anthos-config-management/docs/how-to/monitoring-multi-repo
 
 ```Bash
-cat <<EOF > ~/$GKE_CONFIGS_DIR_NAME/config-sync/config-sync-monitoring.yaml
+cat <<EOF > ~/$GKE_CONFIGS_DIR_NAME/config-sync-monitoring.yaml
 apiVersion: v1
 kind: ServiceAccount
 metadata:

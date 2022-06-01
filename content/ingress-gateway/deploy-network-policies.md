@@ -15,7 +15,7 @@ source ${WORK_DIR}acm-workshop-variables.sh
 ## Define NetworkPolicies
 
 ```Bash
-cat <<EOF > ~/$GKE_CONFIGS_DIR_NAME/config-sync/$INGRESS_GATEWAY_NAMESPACE/networkpolicy_denyall.yaml
+cat <<EOF > ~/$GKE_CONFIGS_DIR_NAME/$INGRESS_GATEWAY_NAMESPACE/networkpolicy_denyall.yaml
 apiVersion: networking.k8s.io/v1
 kind: NetworkPolicy
 metadata:
@@ -27,7 +27,7 @@ spec:
   - Ingress
   - Egress
 EOF
-cat <<EOF > ~/$GKE_CONFIGS_DIR_NAME/config-sync/$INGRESS_GATEWAY_NAMESPACE/networkpolicy_ingress-gateway.yaml
+cat <<EOF > ~/$GKE_CONFIGS_DIR_NAME/$INGRESS_GATEWAY_NAMESPACE/networkpolicy_ingress-gateway.yaml
 apiVersion: networking.k8s.io/v1
 kind: NetworkPolicy
 metadata:

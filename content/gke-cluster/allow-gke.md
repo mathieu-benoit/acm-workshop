@@ -16,7 +16,7 @@ source ${WORK_DIR}acm-workshop-variables.sh
 
 Define the `container.admin`, `iam.serviceAccountAdmin`, `resourcemanager.projectIamAdmin` and `iam.serviceAccountUser` roles with an [`IAMPolicyMember`](https://cloud.google.com/config-connector/docs/reference/resource-docs/iam/iampolicymember) resource for the Tenant project's service account:
 ```Bash
-cat <<EOF > ~/$HOST_PROJECT_DIR_NAME/config-sync/projects/$TENANT_PROJECT_ID/container-admin.yaml
+cat <<EOF > ~/$HOST_PROJECT_DIR_NAME/projects/$TENANT_PROJECT_ID/container-admin.yaml
 apiVersion: iam.cnrm.cloud.google.com/v1beta1
 kind: IAMPolicyMember
 metadata:
@@ -33,7 +33,7 @@ spec:
     kind: Project
     external: projects/${TENANT_PROJECT_ID}
 EOF
-cat <<EOF > ~/$HOST_PROJECT_DIR_NAME/config-sync/projects/$TENANT_PROJECT_ID/service-account-admin.yaml
+cat <<EOF > ~/$HOST_PROJECT_DIR_NAME/projects/$TENANT_PROJECT_ID/service-account-admin.yaml
 apiVersion: iam.cnrm.cloud.google.com/v1beta1
 kind: IAMPolicyMember
 metadata:
@@ -50,7 +50,7 @@ spec:
     kind: Project
     external: projects/${TENANT_PROJECT_ID}
 EOF
-cat <<EOF > ~/$HOST_PROJECT_DIR_NAME/config-sync/projects/$TENANT_PROJECT_ID/iam-admin.yaml
+cat <<EOF > ~/$HOST_PROJECT_DIR_NAME/projects/$TENANT_PROJECT_ID/iam-admin.yaml
 apiVersion: iam.cnrm.cloud.google.com/v1beta1
 kind: IAMPolicyMember
 metadata:
@@ -67,7 +67,7 @@ spec:
     kind: Project
     external: projects/${TENANT_PROJECT_ID}
 EOF
-cat <<EOF > ~/$HOST_PROJECT_DIR_NAME/config-sync/projects/$TENANT_PROJECT_ID/service-account-user.yaml
+cat <<EOF > ~/$HOST_PROJECT_DIR_NAME/projects/$TENANT_PROJECT_ID/service-account-user.yaml
 apiVersion: iam.cnrm.cloud.google.com/v1beta1
 kind: IAMPolicyMember
 metadata:
@@ -90,7 +90,7 @@ EOF
 
 Define the GKE API [`Service`](https://cloud.google.com/config-connector/docs/reference/resource-docs/serviceusage/service) resource for the Tenant project:
 ```Bash
-cat <<EOF > ~/$HOST_PROJECT_DIR_NAME/config-sync/projects/$TENANT_PROJECT_ID/container-service.yaml
+cat <<EOF > ~/$HOST_PROJECT_DIR_NAME/projects/$TENANT_PROJECT_ID/container-service.yaml
 apiVersion: serviceusage.cnrm.cloud.google.com/v1beta1
 kind: Service
 metadata:
@@ -137,7 +137,7 @@ graph TD;
   Service-->Project
 {{< /mermaid >}}
 
-List the GCP resources created:
+List the Google Cloud resources created:
 ```Bash
 gcloud projects get-iam-policy $TENANT_PROJECT_ID \
     --filter="bindings.members:${TENANT_PROJECT_SA_EMAIL}" \

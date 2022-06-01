@@ -16,7 +16,7 @@ source ${WORK_DIR}acm-workshop-variables.sh
 
 Define the `compute.networkAdmin` role with an [`IAMPolicyMember`](https://cloud.google.com/config-connector/docs/reference/resource-docs/iam/iampolicymember) for the Tenant project's service account:
 ```Bash
-cat <<EOF > ~/$HOST_PROJECT_DIR_NAME/config-sync/projects/$TENANT_PROJECT_ID/network-admin.yaml
+cat <<EOF > ~/$HOST_PROJECT_DIR_NAME/projects/$TENANT_PROJECT_ID/network-admin.yaml
 apiVersion: iam.cnrm.cloud.google.com/v1beta1
 kind: IAMPolicyMember
 metadata:
@@ -53,7 +53,7 @@ graph TD;
   IAMPolicyMember-->Project
 {{< /mermaid >}}
 
-List the GCP resources created:
+List the Google Cloud resources created:
 ```Bash
 gcloud projects get-iam-policy $TENANT_PROJECT_ID \
     --filter="bindings.members:${TENANT_PROJECT_SA_EMAIL}" \

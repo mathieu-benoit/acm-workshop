@@ -18,7 +18,7 @@ source ${WORK_DIR}acm-workshop-variables.sh
 
 Define the Ingress Gateway's public static IP address resource:
 ```Bash
-cat <<EOF > ~/$TENANT_PROJECT_DIR_NAME/config-sync/public-ip-address.yaml
+cat <<EOF > ~/$TENANT_PROJECT_DIR_NAME/public-ip-address.yaml
 apiVersion: compute.cnrm.cloud.google.com/v1beta1
 kind: ComputeAddress
 metadata:
@@ -73,7 +73,7 @@ graph TD;
   IAMPolicyMember-->IAMServiceAccount
 {{< /mermaid >}}
 
-List the GCP resources created:
+List the Google Cloud resources created:
 ```Bash
 gcloud compute addresses list \
     --project $TENANT_PROJECT_ID

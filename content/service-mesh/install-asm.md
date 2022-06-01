@@ -27,7 +27,7 @@ The possible values for `ASM_CHANNEL` are `regular`, `stable` or `rapid`.
 
 Define the ASM [`GKEHubFeature`](https://cloud.google.com/config-connector/docs/reference/resource-docs/gkehub/gkehubfeature) resource:
 ```Bash
-cat <<EOF > ~/$TENANT_PROJECT_DIR_NAME/config-sync/gke-hub-feature-asm.yaml
+cat <<EOF > ~/$TENANT_PROJECT_DIR_NAME/gke-hub-feature-asm.yaml
 apiVersion: gkehub.cnrm.cloud.google.com/v1beta1
 kind: GKEHubFeature
 metadata:
@@ -55,12 +55,12 @@ git add . && git commit -m "ASM MCP for Tenant project" && git push origin main
 
 Create a dedicated `istio-system` folder in the GKE configs's Git repo:
 ```Bash
-mkdir ~/$GKE_CONFIGS_DIR_NAME/config-sync/istio-system
+mkdir ~/$GKE_CONFIGS_DIR_NAME/istio-system
 ```
 
 Define the `istio-system` namespace:
 ```Bash
-cat <<EOF > ~/$GKE_CONFIGS_DIR_NAME/config-sync/istio-system/namespace.yaml
+cat <<EOF > ~/$GKE_CONFIGS_DIR_NAME/istio-system/namespace.yaml
 apiVersion: v1
 kind: Namespace
 metadata:
@@ -70,7 +70,7 @@ EOF
 
 Define ASM Managed Control Plane configs:
 ```Bash
-cat <<EOF > ~/$GKE_CONFIGS_DIR_NAME/config-sync/istio-system/control-plane-configs.yaml
+cat <<EOF > ~/$GKE_CONFIGS_DIR_NAME/istio-system/control-plane-configs.yaml
 apiVersion: mesh.cloud.google.com/v1beta1
 kind: ControlPlaneRevision
 metadata:

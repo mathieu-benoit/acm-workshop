@@ -16,7 +16,7 @@ source ${WORK_DIR}acm-workshop-variables.sh
 
 Define the `artifactregistry.admin` role with an [`IAMPolicyMember`](https://cloud.google.com/config-connector/docs/reference/resource-docs/iam/iampolicymember) for the Tenant project's service account:
 ```Bash
-cat <<EOF > ~/$HOST_PROJECT_DIR_NAME/config-sync/projects/$TENANT_PROJECT_ID/artifactregistry-admin.yaml
+cat <<EOF > ~/$HOST_PROJECT_DIR_NAME/projects/$TENANT_PROJECT_ID/artifactregistry-admin.yaml
 apiVersion: iam.cnrm.cloud.google.com/v1beta1
 kind: IAMPolicyMember
 metadata:
@@ -39,7 +39,7 @@ EOF
 
 Define the Artifact Registry API [`Service`](https://cloud.google.com/config-connector/docs/reference/resource-docs/serviceusage/service) resource for the Tenant project:
 ```Bash
-cat <<EOF > ~/$HOST_PROJECT_DIR_NAME/config-sync/projects/$TENANT_PROJECT_ID/artifactregistry-service.yaml
+cat <<EOF > ~/$HOST_PROJECT_DIR_NAME/projects/$TENANT_PROJECT_ID/artifactregistry-service.yaml
 apiVersion: serviceusage.cnrm.cloud.google.com/v1beta1
 kind: Service
 metadata:
@@ -63,7 +63,7 @@ We are enabling the GCP services APIs from the Org Admin, it allows more control
 
 Define the [Container Scanning](https://cloud.google.com/container-analysis/docs/automated-scanning-howto) APIs [`Service`](https://cloud.google.com/config-connector/docs/reference/resource-docs/serviceusage/service) resource for the Tenant project:
 ```Bash
-cat <<EOF > ~/$HOST_PROJECT_DIR_NAME/config-sync/projects/$TENANT_PROJECT_ID/containeranalysis-service.yaml
+cat <<EOF > ~/$HOST_PROJECT_DIR_NAME/projects/$TENANT_PROJECT_ID/containeranalysis-service.yaml
 apiVersion: serviceusage.cnrm.cloud.google.com/v1beta1
 kind: Service
 metadata:
@@ -78,7 +78,7 @@ spec:
     name: ${TENANT_PROJECT_ID}
   resourceID: containeranalysis.googleapis.com
 EOF
-cat <<EOF > ~/$HOST_PROJECT_DIR_NAME/config-sync/projects/$TENANT_PROJECT_ID/containerscanning-service.yaml
+cat <<EOF > ~/$HOST_PROJECT_DIR_NAME/projects/$TENANT_PROJECT_ID/containerscanning-service.yaml
 apiVersion: serviceusage.cnrm.cloud.google.com/v1beta1
 kind: Service
 metadata:
@@ -131,7 +131,7 @@ graph TD;
   Service-->Project
 {{< /mermaid >}}
 
-List the GCP resources created:
+List the Google Cloud resources created:
 ```Bash
 gcloud projects get-iam-policy $TENANT_PROJECT_ID \
     --filter="bindings.members:${TENANT_PROJECT_SA_EMAIL}" \

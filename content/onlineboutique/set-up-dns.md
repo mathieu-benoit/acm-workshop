@@ -39,7 +39,7 @@ rm ~/dns-spec.yaml
 
 Define the `ManagedCertificate` for Online Boutique in the Ingress Gateway namespace:
 ```Bash
-cat <<EOF > ~/$GKE_CONFIGS_DIR_NAME/config-sync/$INGRESS_GATEWAY_NAMESPACE/managedcertificate-onlineboutique.yaml
+cat <<EOF > ~/$GKE_CONFIGS_DIR_NAME/$INGRESS_GATEWAY_NAMESPACE/managedcertificate-onlineboutique.yaml
 apiVersion: networking.gke.io/v1
 kind: ManagedCertificate
 metadata:
@@ -55,7 +55,7 @@ EOF
 
 Configure Online Boutique `ManagedCertificate` on the Ingress Gateway's `Ingress` resource:
 ```Bash
-cd ~/$GKE_CONFIGS_DIR_NAME/config-sync/$INGRESS_GATEWAY_NAMESPACE
+cd ~/$GKE_CONFIGS_DIR_NAME/$INGRESS_GATEWAY_NAMESPACE
 kpt fn eval . \
     -i set-annotations:v0.1 \
     --match-kind Ingress \
@@ -74,7 +74,7 @@ git add . && git commit -m "Online Boutique ManagedCertificate" && git push orig
 
 ## Check deployments
 
-List the GCP resources created:
+List the Google Cloud resources created:
 ```Bash
 gcloud endpoints services list \
     --project $TENANT_PROJECT_ID

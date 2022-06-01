@@ -9,12 +9,12 @@ _{{< param description >}}_
 
 In this section, you will create the Host project. This Google Cloud project will host the Config Controller instance later.
 
-Two Google Cloud Projects will be created during this workshop, we will assign them your Billing Account Id. Set your Billing Account Id for the rest of the workshop:
+Two Google Cloud Projects will be created during this workshop, we will assign them your Billing Account Id. Set your **Billing Account Id** for the rest of the workshop:
 ```Bash
 BILLING_ACCOUNT_ID=FIXME
 ```
 
-These two Google Cloud Projects will be created either at the Folder level (recommended) or at the Organization level. Set your Folder Id or Organization Id for the rest of the workshop:
+These two Google Cloud Projects will be created either at the Folder level (recommended) or at the Organization level. Set your **Folder Id** or **Organization Id** for the rest of the workshop:
 ```Bash
 FOLDER_OR_ORG_ID=FIXME
 ```
@@ -32,7 +32,7 @@ echo "export FOLDER_OR_ORG_ID=${FOLDER_OR_ORG_ID}" >> ${WORK_DIR}acm-workshop-va
 source ${WORK_DIR}acm-workshop-variables.sh
 ```
 {{% notice info %}}
-This `source ${WORK_DIR}acm-workshop-variables.sh` command will be particularly helful if you are running this workshop from within Cloud Shell. You could run it every time your session timed out to reinitialize yoru environment variables.
+This `source ${WORK_DIR}acm-workshop-variables.sh` command will be particularly helpful if you are running this workshop from within Cloud Shell. You could run it every time your session timed out to reinitialize yoru environment variables.
 {{% /notice %}}
 
 ## Create Host project
@@ -70,7 +70,7 @@ gcloud config set project $HOST_PROJECT_ID
 
 ## Check deployments
 
-List the GCP resources created:
+List the Google Cloud resources created:
 ```Bash
 gcloud projects describe $HOST_PROJECT_ID
 ```

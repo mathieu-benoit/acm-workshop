@@ -20,8 +20,8 @@ source ${WORK_DIR}acm-workshop-variables.sh
 
 Create a dedicated folder for this Tenant project resources:
 ```Bash
-mkdir ~/$HOST_PROJECT_DIR_NAME/config-sync/projects
-mkdir ~/$HOST_PROJECT_DIR_NAME/config-sync/projects/$TENANT_PROJECT_ID
+mkdir ${WORK_DIR}$HOST_PROJECT_DIR_NAME/projects
+mkdir ${WORK_DIR}$HOST_PROJECT_DIR_NAME/projects/$TENANT_PROJECT_ID
 ```
 
 ## Define GCP project
@@ -31,7 +31,7 @@ Define the GCP project either at the Folder level or the Organization level:
 {{% tab name="Folder level" %}}
 At the Folder level:
 ```Bash
-cat <<EOF > ~/$HOST_PROJECT_DIR_NAME/config-sync/projects/$TENANT_PROJECT_ID/project.yaml
+cat <<EOF > ${WORK_DIR}$HOST_PROJECT_DIR_NAME/projects/$TENANT_PROJECT_ID/project.yaml
 apiVersion: resourcemanager.cnrm.cloud.google.com/v1beta1
 kind: Project
 metadata:
@@ -52,7 +52,7 @@ EOF
 {{% tab name="Org level" %}}
 At the Organization level:
 ```Bash
-cat <<EOF > ~/$HOST_PROJECT_DIR_NAME/config-sync/projects/$TENANT_PROJECT_ID/project.yaml
+cat <<EOF > ${WORK_DIR}$HOST_PROJECT_DIR_NAME/projects/$TENANT_PROJECT_ID/project.yaml
 apiVersion: resourcemanager.cnrm.cloud.google.com/v1beta1
 kind: Project
 metadata:
@@ -75,7 +75,7 @@ EOF
 ## Define Tenant project service account
 
 ```Bash
-cat <<EOF > ~/$HOST_PROJECT_DIR_NAME/config-sync/projects/$TENANT_PROJECT_ID/service-account.yaml
+cat <<EOF > ${WORK_DIR}$HOST_PROJECT_DIR_NAME/projects/$TENANT_PROJECT_ID/service-account.yaml
 apiVersion: iam.cnrm.cloud.google.com/v1beta1
 kind: IAMServiceAccount
 metadata:
@@ -89,7 +89,7 @@ EOF
 ```
 
 ```Bash
-cat <<EOF > ~/$HOST_PROJECT_DIR_NAME/config-sync/projects/$TENANT_PROJECT_ID/workload-identity-user.yaml
+cat <<EOF > ${WORK_DIR}$HOST_PROJECT_DIR_NAME/projects/$TENANT_PROJECT_ID/workload-identity-user.yaml
 apiVersion: iam.cnrm.cloud.google.com/v1beta1
 kind: IAMPartialPolicy
 metadata:
@@ -114,7 +114,7 @@ You could see that we use the annotation `config.kubernetes.io/depends-on`, [sin
 ## Define Tenant project namespace and ConfigConnectorContext
 
 ```Bash
-cat <<EOF > ~/$HOST_PROJECT_DIR_NAME/config-sync/projects/$TENANT_PROJECT_ID/namespace.yaml
+cat <<EOF > ${WORK_DIR}$HOST_PROJECT_DIR_NAME/projects/$TENANT_PROJECT_ID/namespace.yaml
 apiVersion: v1
 kind: Namespace
 metadata:
@@ -125,7 +125,7 @@ EOF
 ```
 
 ```Bash
-cat <<EOF > ~/$HOST_PROJECT_DIR_NAME/config-sync/projects/$TENANT_PROJECT_ID/config-connector-context.yaml
+cat <<EOF > ${WORK_DIR}$HOST_PROJECT_DIR_NAME/projects/$TENANT_PROJECT_ID/config-connector-context.yaml
 apiVersion: core.cnrm.cloud.google.com/v1beta1
 kind: ConfigConnectorContext
 metadata:
@@ -141,7 +141,7 @@ EOF
 ## Deploy Kubernetes manifests
 
 ```Bash
-cd ~/$HOST_PROJECT_DIR_NAME/
+cd ${WORK_DIR}$HOST_PROJECT_DIR_NAME/
 git add . && git commit -m "Setting up Tenant namespace/project" && git push origin main
 ```
 
@@ -154,22 +154,12 @@ graph TD;
   ConfigConnectorContext-->IAMServiceAccount
 {{< /mermaid >}}
 
-List the GCP resources created:
+List the GitHub runs for the **Host project configs** repository:
 ```Bash
-gcloud projects describe $TENANT_PROJECT_ID
-gcloud iam service-accounts describe $TENANT_PROJECT_SA_EMAIL \
-    --project $HOST_PROJECT_ID
+cd ${WORK_DIR}$HOST_PROJECT_DIR_NAME && gh run list
 ```
 
-List the GitHub runs for the **Host project configs** repository `cd ~/$HOST_PROJECT_DIR_NAME && gh run list`:
-```Plaintext
-STATUS  NAME                                      WORKFLOW  BRANCH  EVENT  ID          ELAPSED  AGE
-✓       Setting up Tenant namespace/project       ci        main    push   1960908849  1m12s    1m
-✓       Billing API in Host project               ci        main    push   1960889246  1m0s     8m
-✓       Initial commit                            ci        main    push   1960885850  1m8s     9m
-```
-
-List the Kubernetes resources managed by Config Sync in **Config Controller** for the **Host project configs** repository:
+List the Kubernetes resources managed by Config Sync in **Config Controller** for the **Host project configs** repository, and wait for the `status` `SYNCED`:
 ```Bash
 gcloud alpha anthos config sync repo describe \
     --project $HOST_PROJECT_ID \
@@ -177,24 +167,19 @@ gcloud alpha anthos config sync repo describe \
     --sync-name root-sync \
     --sync-namespace config-management-system
 ```
-```Plaintext
-getting 1 RepoSync and RootSync from krmapihost-configcontroller
-┌───────────────────────────────────────┬────────────────────────┬─────────────────────────────────┬──────────────────────┐
-│                 GROUP                 │          KIND          │               NAME              │      NAMESPACE       │
-├───────────────────────────────────────┼────────────────────────┼─────────────────────────────────┼──────────────────────┤
-│                                       │ Namespace              │ config-control                  │                      │
-│                                       │ Namespace              │ acm-workshop-464-tenant            │                      │
-│ core.cnrm.cloud.google.com            │ ConfigConnectorContext │ configconnectorcontext          │ acm-workshop-464-tenant │
-│ iam.cnrm.cloud.google.com             │ IAMServiceAccount      │ acm-workshop-464-tenant            │ config-control       │
-│ iam.cnrm.cloud.google.com             │ IAMPartialPolicy       │ acm-workshop-464-tenant-sa-wi-user │ config-control       │
-│ resourcemanager.cnrm.cloud.google.com │ Project                │ acm-workshop-464-tenant            │ config-control       │
-│ serviceusage.cnrm.cloud.google.com    │ Service                │ cloudbilling.googleapis.com     │ config-control       │
-└───────────────────────────────────────┴────────────────────────┴─────────────────────────────────┴──────────────────────┘
+
+List the Google Cloud resources created:
+```Bash
+gcloud projects describe $TENANT_PROJECT_ID
+gcloud iam service-accounts describe $TENANT_PROJECT_SA_EMAIL \
+    --project $HOST_PROJECT_ID
 ```
 
-## Resolve Tenant project creation
+## Resolve Tenant project creation issue
 
-Here, if you skipped the assignment of the `billing.user` role earlier while you were setting up your Config Controller instance, you will have an error with the creation of the `Project`. A simple way to make sure you don't have any error is to run this command below:
+If you see your Google Cloud Project successfully created by running this command ``, you don't need to read the rest of this section, you could move ahead with the next section.
+
+Iff you skipped the assignment of the `billing.user` role earlier while you were setting up your Config Controller instance, you will have an error with the creation of the `Project`. A simple way to make sure you don't have any error is to run this command below:
 ```Bash
 kubectl get gcpproject -n config-control
 ```

@@ -19,7 +19,7 @@ source ${WORK_DIR}acm-workshop-variables.sh
 
 Define the [Artifact Registry resource](https://cloud.google.com/config-connector/docs/reference/resource-docs/artifactregistry/artifactregistryrepository):
 ```Bash
-cat <<EOF > ~/$TENANT_PROJECT_DIR_NAME/config-sync/artifactregistry.yaml
+cat <<EOF > ~/$TENANT_PROJECT_DIR_NAME/artifactregistry.yaml
 apiVersion: artifactregistry.cnrm.cloud.google.com/v1beta1
 kind: ArtifactRegistryRepository
 metadata:
@@ -34,7 +34,7 @@ EOF
 ## Define Artifact Registry reader role
 
 ```Bash
-cat <<EOF > ~/$TENANT_PROJECT_DIR_NAME/config-sync/artifactregistry-reader.yaml
+cat <<EOF > ~/$TENANT_PROJECT_DIR_NAME/artifactregistry-reader.yaml
 apiVersion: iam.cnrm.cloud.google.com/v1beta1
 kind: IAMPolicyMember
 metadata:
@@ -88,7 +88,7 @@ graph TD;
   IAMPolicyMember-->IAMServiceAccount
 {{< /mermaid >}}
 
-List the GCP resources created:
+List the Google Cloud resources created:
 ```Bash
 gcloud projects get-iam-policy $TENANT_PROJECT_ID \
     --filter="bindings.members:${GKE_SA}@${TENANT_PROJECT_ID}.iam.gserviceaccount.com" \

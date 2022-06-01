@@ -22,7 +22,7 @@ https://cloud.google.com/config-connector/docs/reference/resource-docs/compute/c
 
 Define the Ingress Gateway's Cloud Armor rules:
 ```Bash
-cat <<EOF > ~/$TENANT_PROJECT_DIR_NAME/config-sync/cloud-armor.yaml
+cat <<EOF > ~/$TENANT_PROJECT_DIR_NAME/cloud-armor.yaml
 apiVersion: compute.cnrm.cloud.google.com/v1beta1
 kind: ComputeSecurityPolicy
 metadata:
@@ -94,7 +94,7 @@ gcloud compute security-policies update ${SECURITY_POLICY_NAME} \
 Not directly related to Cloud Armor, but let's define an SSL policy which will allow us to set an HTTP to HTTPS redirect on the `Ingress`.
 
 ```Bash
-cat <<EOF > ~/$TENANT_PROJECT_DIR_NAME/config-sync/ssl-policy.yaml
+cat <<EOF > ~/$TENANT_PROJECT_DIR_NAME/ssl-policy.yaml
 apiVersion: compute.cnrm.cloud.google.com/v1beta1
 kind: ComputeSSLPolicy
 metadata:
@@ -144,7 +144,7 @@ graph TD;
   IAMPolicyMember-->IAMServiceAccount
 {{< /mermaid >}}
 
-List the GCP resources created:
+List the Google Cloud resources created:
 ```Bash
 gcloud compute security-policies list \
     --project $TENANT_PROJECT_ID

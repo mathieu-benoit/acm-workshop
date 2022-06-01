@@ -20,7 +20,7 @@ https://cloud.google.com/service-mesh/docs/anthos-service-mesh-proxy-injection
 
 Define the `namespaces-automatic-sidecar-injection-label` `Constraint` based on the [`K8sRequiredLabels`](https://cloud.devsite.corp.google.com/anthos-config-management/docs/reference/constraint-template-library#k8srequiredlabels) `ConstraintTemplate` for `Namespaces`:
 ```Bash
-cat <<EOF > ~/$GKE_CONFIGS_DIR_NAME/config-sync/policies/constraints/namespaces-automatic-sidecar-injection-label.yaml
+cat <<EOF > ~/$GKE_CONFIGS_DIR_NAME/policies/constraints/namespaces-automatic-sidecar-injection-label.yaml
 apiVersion: constraints.gatekeeper.sh/v1beta1
 kind: K8sRequiredLabels
 metadata:
@@ -52,7 +52,7 @@ EOF
 
 Define the `pods-sidecar-injection-annotation` `Constraint` based on the [`AsmSidecarInjection`](https://cloud.devsite.corp.google.com/anthos-config-management/docs/reference/constraint-template-library#asmsidecarinjection) `ConstraintTemplate` for `Pods`:
 ```Bash
-cat <<EOF > ~/$GKE_CONFIGS_DIR_NAME/config-sync/policies/constraints/pods-sidecar-injection-annotation.yaml
+cat <<EOF > ~/$GKE_CONFIGS_DIR_NAME/policies/constraints/pods-sidecar-injection-annotation.yaml
 apiVersion: constraints.gatekeeper.sh/v1beta1
 kind: AsmSidecarInjection
 metadata:
@@ -74,7 +74,7 @@ EOF
 
 Define the `namespaces-managed-dataplance-annotation` `Constraint` based on the [`K8sRequiredAnnotations`](https://cloud.devsite.corp.google.com/anthos-config-management/docs/reference/constraint-template-library#k8srequiredannotations) `ConstraintTemplate` for `Namespaces`:
 ```Bash
-cat <<EOF > ~/$GKE_CONFIGS_DIR_NAME/config-sync/policies/constraints/namespaces-managed-dataplance-annotation.yaml
+cat <<EOF > ~/$GKE_CONFIGS_DIR_NAME/policies/constraints/namespaces-managed-dataplance-annotation.yaml
 apiVersion: constraints.gatekeeper.sh/v1beta1
 kind: K8sRequiredAnnotations
 metadata:
@@ -109,7 +109,7 @@ EOF
 
 Define the `mesh-level-strict-mtls` `Constraint` based on the [`AsmPeerAuthnMeshStrictMtls`](https://cloud.devsite.corp.google.com/anthos-config-management/docs/reference/constraint-template-library#asmpeerauthnmeshstrictmtls) `ConstraintTemplate`:
 ```Bash
-cat <<EOF > ~/$GKE_CONFIGS_DIR_NAME/config-sync/policies/constraints/mesh-level-strict-mtls.yaml
+cat <<EOF > ~/$GKE_CONFIGS_DIR_NAME/policies/constraints/mesh-level-strict-mtls.yaml
 apiVersion: constraints.gatekeeper.sh/v1beta1
 kind: AsmPeerAuthnMeshStrictMtls
 metadata:
@@ -124,7 +124,7 @@ EOF
 
 Define the `peerauthentication-strict-mtls` `Constraint` based on the [`AsmPeerAuthnStrictMtls`](https://cloud.devsite.corp.google.com/anthos-config-management/docs/reference/constraint-template-library#asmpeerauthnstrictmtls) `ConstraintTemplate` for `PeerAuthentications`:
 ```Bash
-cat <<EOF > ~/$GKE_CONFIGS_DIR_NAME/config-sync/policies/constraints/peerauthentication-strict-mtls.yaml
+cat <<EOF > ~/$GKE_CONFIGS_DIR_NAME/policies/constraints/peerauthentication-strict-mtls.yaml
 apiVersion: constraints.gatekeeper.sh/v1beta1
 kind: AsmPeerAuthnStrictMtls
 metadata:
@@ -145,7 +145,7 @@ EOF
 
 Define the `destination-rule-tls-enabled` `Constraint` based on the [`DestinationRuleTLSEnabled`](https://cloud.devsite.corp.google.com/anthos-config-management/docs/reference/constraint-template-library#destinationruletlsenabled) `ConstraintTemplate` for `DestinationRules`:
 ```Bash
-cat <<EOF > ~/$GKE_CONFIGS_DIR_NAME/config-sync/policies/constraints/destinationrule-tls-enabled.yaml
+cat <<EOF > ~/$GKE_CONFIGS_DIR_NAME/policies/constraints/destinationrule-tls-enabled.yaml
 apiVersion: constraints.gatekeeper.sh/v1beta1
 kind: DestinationRuleTLSEnabled
 metadata:
@@ -167,7 +167,7 @@ https://istio.io/latest/docs/reference/config/security/authorization-policy/
 
 Define the `default-deny-authorization-policies` `Constraint` based on the [`AsmAuthzPolicyDefaultDeny`](https://cloud.devsite.corp.google.com/anthos-config-management/docs/reference/constraint-template-library#asmauthzpolicydefaultdeny) `ConstraintTemplate` for `DestinationRules`:
 ```Bash
-cat <<EOF > ~/$GKE_CONFIGS_DIR_NAME/config-sync/policies/constraints/default-deny-authorization-policies.yaml
+cat <<EOF > ~/$GKE_CONFIGS_DIR_NAME/policies/constraints/default-deny-authorization-policies.yaml
 apiVersion: constraints.gatekeeper.sh/v1beta1
 kind: AsmAuthzPolicyDefaultDeny
 metadata:
@@ -182,7 +182,7 @@ EOF
 
 Define the `authz-source-principals-not-all` `Constraint` based on the [`AsmAuthzPolicyEnforceSourcePrincipals`](https://cloud.devsite.corp.google.com/anthos-config-management/docs/reference/constraint-template-library#asmauthzpolicyenforcesourceprincipals) `ConstraintTemplate` for `DestinationRules`:
 ```Bash
-cat <<EOF > ~/$GKE_CONFIGS_DIR_NAME/config-sync/policies/constraints/authz-source-principals-not-all.yaml
+cat <<EOF > ~/$GKE_CONFIGS_DIR_NAME/policies/constraints/authz-source-principals-not-all.yaml
 apiVersion: constraints.gatekeeper.sh/v1beta1
 kind: AsmAuthzPolicyEnforceSourcePrincipals
 metadata:
@@ -202,7 +202,7 @@ EOF
 
 Define the `authz-source-principals-prefix-not-default` `Constraint` based on the [`AsmAuthzPolicyDisallowedPrefix`](https://cloud.devsite.corp.google.com/anthos-config-management/docs/reference/constraint-template-library#asmauthzpolicydisallowedprefix) `ConstraintTemplate` for `AuthorizationPolicies`:
 ```Bash
-cat <<EOF > ~/$GKE_CONFIGS_DIR_NAME/config-sync/policies/constraints/authz-source-principals-prefix-not-default.yaml
+cat <<EOF > ~/$GKE_CONFIGS_DIR_NAME/policies/constraints/authz-source-principals-prefix-not-default.yaml
 apiVersion: constraints.gatekeeper.sh/v1beta1
 kind: AsmAuthzPolicyDisallowedPrefix
 metadata:
@@ -225,7 +225,7 @@ EOF
 
 Update the previously defined `config-referential-constraints` `Config`:
 ```Bash
-cat <<EOF > ~/$GKE_CONFIGS_DIR_NAME/config-sync/gatekeeper-system/config-referential-constraints.yaml
+cat <<EOF > ~/$GKE_CONFIGS_DIR_NAME/gatekeeper-system/config-referential-constraints.yaml
 apiVersion: config.gatekeeper.sh/v1alpha1
 kind: Config
 metadata:

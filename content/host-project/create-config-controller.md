@@ -18,7 +18,7 @@ echo "export CONFIG_CONTROLLER_NETWORK=default" >> ${WORK_DIR}acm-workshop-varia
 source ${WORK_DIR}acm-workshop-variables.sh
 ```
 {{% notice info %}}
-`europe-north1`, `australia-southeast1`, `us-east1`, `us-central1`, `northamerica-northeast1`, `northamerica-northeast2`, `asia-northeast1` and `asia-northeast2` are the supported regions for now for Config Controller.
+We are creating the Config Controller instance in `us-east1` but other regions are also supported: `europe-north1`, `australia-southeast1`, `us-central1`, `northamerica-northeast1`, `northamerica-northeast2`, `asia-northeast1` and `asia-northeast2`.
 {{% /notice %}}
 
 ## Create the Config Controller instance
@@ -114,7 +114,7 @@ In some specific scenario, you may not be able to accomplish this step. You coul
 
 ## Check deployments
 
-List the GCP resources created:
+List the Google Cloud resources created:
 ```Bash
 gcloud anthos config controller list \
     --project $HOST_PROJECT_ID
@@ -145,19 +145,3 @@ gcloud organizations get-iam-policy $FOLDER_OR_ORG_ID \
 ```
 {{% /tab %}}
 {{< /tabs >}}
-
-```Plaintext
-NAME                                                                       LOCATION  STATE
-projects/acm-workshop-463/locations/us-east1/krmApiHosts/configcontroller  us-east1  RUNNING
-ROLE
-roles/resourcemanager.projectCreator
-ROLE
-roles/billing.user
-ROLE
-roles/iam.serviceAccountAdmin
-roles/serviceusage.serviceUsageAdmin
-```
-```Plaintext
-ROLE
-roles/resourcemanager.projectCreator
-```

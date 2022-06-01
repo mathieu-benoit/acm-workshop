@@ -42,9 +42,9 @@ Currently, you can't access the GKE cluster via `kubectl` commands because it's 
 ```
 As an example, you could get your local IP address by running this command: `curl -4 ifconfig.co`.
 
-The associated file to update manually is here: `~/$TENANT_PROJECT_DIR_NAME/config-sync/gke-cluster.yaml`, and you could then run this command to actually deploy this change in Config Controller:
+The associated file to update manually is here: `~/$TENANT_PROJECT_DIR_NAME/gke-cluster.yaml`, and you could then run this command to actually deploy this change in Config Controller:
 ```Bash
-kubectl apply -f ~/$TENANT_PROJECT_DIR_NAME/config-sync/gke-cluster.yaml
+kubectl apply -f ~/$TENANT_PROJECT_DIR_NAME/gke-cluster.yaml
 ```
 
 We don't need that for the workshop as we are deploying all the Kubernetes resources via GitOps with Config Sync, but this could be handy if you need to debug some deployments from your local machine as an example.
@@ -52,15 +52,15 @@ We don't need that for the workshop as we are deploying all the Kubernetes resou
 You could rollback this local change if you want:
 ```Bash
 cd ~/$TENANT_PROJECT_DIR_NAME
-git checkout ~/$TENANT_PROJECT_DIR_NAME/config-sync/gke-cluster.yaml
-kubectl apply -f ~/$TENANT_PROJECT_DIR_NAME/config-sync/gke-cluster.yaml
+git checkout ~/$TENANT_PROJECT_DIR_NAME/gke-cluster.yaml
+kubectl apply -f ~/$TENANT_PROJECT_DIR_NAME/gke-cluster.yaml
 ```
 
 ## Validate Policies
 
 Let's define a `Deployment` violating the `deployment-required-labels` `Constraint` previously created:
 ```Bash
-cat <<EOF > ~/$GKE_CONFIGS_DIR_NAME/config-sync/nginx-test.yaml
+cat <<EOF > ~/$GKE_CONFIGS_DIR_NAME/nginx-test.yaml
 apiVersion: apps/v1
 kind: Deployment
 metadata:
@@ -95,5 +95,5 @@ If you change the label `test: nginx` by `app: nginx` and re-run this the above 
 
 You could rollback this local change if you want:
 ```Bash
-rm ~/$GKE_CONFIGS_DIR_NAME/config-sync/nginx-test.yaml
+rm ~/$GKE_CONFIGS_DIR_NAME/nginx-test.yaml
 ```

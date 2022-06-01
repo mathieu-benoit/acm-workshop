@@ -18,7 +18,7 @@ source ${WORK_DIR}acm-workshop-variables.sh
 ## Define VPC and Subnet
 
 ```Bash
-cat <<EOF > ~/$TENANT_PROJECT_DIR_NAME/config-sync/vpc.yaml
+cat <<EOF > ~/$TENANT_PROJECT_DIR_NAME/vpc.yaml
 apiVersion: compute.cnrm.cloud.google.com/v1beta1
 kind: ComputeNetwork
 metadata:
@@ -31,7 +31,7 @@ EOF
 ```
 
 ```Bash
-cat <<EOF > ~/$TENANT_PROJECT_DIR_NAME/config-sync/subnet.yaml
+cat <<EOF > ~/$TENANT_PROJECT_DIR_NAME/subnet.yaml
 apiVersion: compute.cnrm.cloud.google.com/v1beta1
 kind: ComputeSubnetwork
 metadata:
@@ -55,7 +55,7 @@ EOF
 ## Define Cloud NAT
 
 ```Bash
-cat <<EOF > ~/$TENANT_PROJECT_DIR_NAME/config-sync/router.yaml
+cat <<EOF > ~/$TENANT_PROJECT_DIR_NAME/router.yaml
 apiVersion: compute.cnrm.cloud.google.com/v1beta1
 kind: ComputeRouter
 metadata:
@@ -71,7 +71,7 @@ EOF
 ```
 
 ```Bash
-cat <<EOF > ~/$TENANT_PROJECT_DIR_NAME/config-sync/router-nat.yaml
+cat <<EOF > ~/$TENANT_PROJECT_DIR_NAME/router-nat.yaml
 apiVersion: compute.cnrm.cloud.google.com/v1beta1
 kind: ComputeRouterNAT
 metadata:
@@ -111,7 +111,7 @@ graph TD;
   ComputeRouter-->ComputeNetwork
 {{< /mermaid >}}
 
-List the GCP resources created:
+List the Google Cloud resources created:
 ```Bash
 gcloud compute networks list \
     --project $TENANT_PROJECT_ID

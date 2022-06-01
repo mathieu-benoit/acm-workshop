@@ -19,7 +19,7 @@ source ${WORK_DIR}acm-workshop-variables.sh
 
 Define the GKE cluster with empty node pool:
 ```Bash
-cat <<EOF > ~/$TENANT_PROJECT_DIR_NAME/config-sync/gke-cluster.yaml
+cat <<EOF > ~/$TENANT_PROJECT_DIR_NAME/gke-cluster.yaml
 apiVersion: container.cnrm.cloud.google.com/v1beta1
 kind: ContainerCluster
 metadata:
@@ -76,7 +76,7 @@ EOF
 
 Define the GKE primary node pool's service account:
 ```Bash
-cat <<EOF > ~/$TENANT_PROJECT_DIR_NAME/config-sync/gke-primary-pool-sa.yaml
+cat <<EOF > ~/$TENANT_PROJECT_DIR_NAME/gke-primary-pool-sa.yaml
 apiVersion: iam.cnrm.cloud.google.com/v1beta1
 kind: IAMServiceAccount
 metadata:
@@ -89,7 +89,7 @@ EOF
 
 Define the `logging.logWriter`, `monitoring.metricWriter` and `monitoring.viewer` roles with an [`IAMPolicyMember`](https://cloud.google.com/config-connector/docs/reference/resource-docs/iam/iampolicymember) resource for the GKE primary node pool's service account:
 ```Bash
-cat <<EOF > ~/$TENANT_PROJECT_DIR_NAME/config-sync/log-writer-gke-sa.yaml
+cat <<EOF > ~/$TENANT_PROJECT_DIR_NAME/log-writer-gke-sa.yaml
 apiVersion: iam.cnrm.cloud.google.com/v1beta1
 kind: IAMPolicyMember
 metadata:
@@ -107,7 +107,7 @@ spec:
     external: ${TENANT_PROJECT_ID}
   role: roles/logging.logWriter
 EOF
-cat <<EOF > ~/$TENANT_PROJECT_DIR_NAME/config-sync/metric-writer-gke-sa.yaml
+cat <<EOF > ~/$TENANT_PROJECT_DIR_NAME/metric-writer-gke-sa.yaml
 apiVersion: iam.cnrm.cloud.google.com/v1beta1
 kind: IAMPolicyMember
 metadata:
@@ -125,7 +125,7 @@ spec:
     external: ${TENANT_PROJECT_ID}
   role: roles/monitoring.metricWriter
 EOF
-cat <<EOF > ~/$TENANT_PROJECT_DIR_NAME/config-sync/monitoring-viewer-gke-sa.yaml
+cat <<EOF > ~/$TENANT_PROJECT_DIR_NAME/monitoring-viewer-gke-sa.yaml
 apiVersion: iam.cnrm.cloud.google.com/v1beta1
 kind: IAMPolicyMember
 metadata:
@@ -143,7 +143,7 @@ spec:
     external: ${TENANT_PROJECT_ID}
   role: roles/monitoring.viewer
 EOF
-cat <<EOF > ~/$TENANT_PROJECT_DIR_NAME/config-sync/cloudtrace-agent-gke-sa.yaml
+cat <<EOF > ~/$TENANT_PROJECT_DIR_NAME/cloudtrace-agent-gke-sa.yaml
 apiVersion: iam.cnrm.cloud.google.com/v1beta1
 kind: IAMPolicyMember
 metadata:
@@ -167,7 +167,7 @@ EOF
 
 Define the GKE primary node pool:
 ```Bash
-cat <<EOF > ~/$TENANT_PROJECT_DIR_NAME/config-sync/gke-primary-pool.yaml
+cat <<EOF > ~/$TENANT_PROJECT_DIR_NAME/gke-primary-pool.yaml
 apiVersion: container.cnrm.cloud.google.com/v1beta1
 kind: ContainerNodePool
 metadata:
@@ -225,7 +225,7 @@ graph TD;
   ContainerCluster-->ComputeSubnetwork
 {{< /mermaid >}}
 
-List the GCP resources created:
+List the Google Cloud resources created:
 ```Bash
 gcloud projects get-iam-policy $TENANT_PROJECT_ID \
     --filter="bindings.members:${GKE_SA}@${TENANT_PROJECT_ID}.iam.gserviceaccount.com" \

@@ -30,7 +30,7 @@ GKE_PLATFORM_REPO_URL=$(gh repo view --json url --jq .url)
 
 Define a `RepoSync` linking this Git repository:
 ```Bash
-cat <<EOF > ~/$HOST_PROJECT_DIR_NAME/config-sync/projects/$TENANT_PROJECT_ID/gke-config-repo-sync.yaml
+cat <<EOF > ~/$HOST_PROJECT_DIR_NAME/projects/$TENANT_PROJECT_ID/gke-config-repo-sync.yaml
 apiVersion: configsync.gke.io/v1beta1
 kind: RepoSync
 metadata:
@@ -48,7 +48,7 @@ EOF
 ```
 
 ```Bash
-cat <<EOF > ~/$HOST_PROJECT_DIR_NAME/config-sync/projects/$TENANT_PROJECT_ID/gke-config-repo-sync-role-binding.yaml
+cat <<EOF > ~/$HOST_PROJECT_DIR_NAME/projects/$TENANT_PROJECT_ID/gke-config-repo-sync-role-binding.yaml
 apiVersion: rbac.authorization.k8s.io/v1
 kind: RoleBinding
 metadata:

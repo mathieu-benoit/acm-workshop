@@ -16,7 +16,7 @@ source ${WORK_DIR}acm-workshop-variables.sh
 
 Define the `Constraint` based on the [`K8sAllowedRepos`](https://cloud.devsite.corp.google.com/anthos-config-management/docs/reference/constraint-template-library#k8sallowedrepos) `ConstraintTemplate` for `Pods`:
 ```Bash
-cat <<EOF > ~/$GKE_CONFIGS_DIR_NAME/config-sync/policies/constraints/pod-allowed-container-registries.yaml
+cat <<EOF > ~/$GKE_CONFIGS_DIR_NAME/policies/constraints/pod-allowed-container-registries.yaml
 apiVersion: constraints.gatekeeper.sh/v1beta1
 kind: K8sAllowedRepos
 metadata:

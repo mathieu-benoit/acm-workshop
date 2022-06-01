@@ -18,7 +18,7 @@ source ${WORK_DIR}acm-workshop-variables.sh
 
 Define the ACM [`GKEHubFeature`](https://cloud.google.com/config-connector/docs/reference/resource-docs/gkehub/gkehubfeature) resource:
 ```Bash
-cat <<EOF > ~/$TENANT_PROJECT_DIR_NAME/config-sync/gke-hub-feature-acm.yaml
+cat <<EOF > ~/$TENANT_PROJECT_DIR_NAME/gke-hub-feature-acm.yaml
 apiVersion: gkehub.cnrm.cloud.google.com/v1beta1
 kind: GKEHubFeature
 metadata:
@@ -36,7 +36,7 @@ The `resourceID` must be `configmanagement` if you want to use Anthos Config Man
 {{% /notice %}}
 
 ```Bash
-cat <<EOF > ~/$TENANT_PROJECT_DIR_NAME/config-sync/gke-hub-membership.yaml
+cat <<EOF > ~/$TENANT_PROJECT_DIR_NAME/gke-hub-membership.yaml
 apiVersion: gkehub.cnrm.cloud.google.com/v1beta1
 kind: GKEHubMembership
 metadata:
@@ -70,7 +70,7 @@ GKE_CONFIGS_REPO_URL=$(gh repo view --json url --jq .url)
 ## Define RootSync with this GitHub repository 
 
 ```Bash
-cat <<EOF > ~/$TENANT_PROJECT_DIR_NAME/config-sync/gke-acm-membership.yaml
+cat <<EOF > ~/$TENANT_PROJECT_DIR_NAME/gke-acm-membership.yaml
 apiVersion: gkehub.cnrm.cloud.google.com/v1beta1
 kind: GKEHubFeatureMembership
 metadata:
@@ -115,7 +115,7 @@ We explicitly set the Policy Controller's `templateLibraryInstalled` field to `t
 https://cloud.google.com/anthos-config-management/docs/how-to/monitoring-multi-repo
 
 ```Bash
-cat <<EOF > ~/$TENANT_PROJECT_DIR_NAME/config-sync/config-sync-monitoring-workload-identity-user.yaml
+cat <<EOF > ~/$TENANT_PROJECT_DIR_NAME/config-sync-monitoring-workload-identity-user.yaml
 apiVersion: iam.cnrm.cloud.google.com/v1beta1
 kind: IAMPartialPolicy
 metadata:
