@@ -23,7 +23,7 @@ https://cloud.google.com/config-connector/docs/reference/resource-docs/compute/c
 
 Define the Ingress Gateway's Cloud Armor rules:
 ```Bash
-cat <<EOF > ~/$TENANT_PROJECT_DIR_NAME/cloud-armor.yaml
+cat <<EOF > ${WORK_DIR}$TENANT_PROJECT_DIR_NAME/cloud-armor.yaml
 apiVersion: compute.cnrm.cloud.google.com/v1beta1
 kind: ComputeSecurityPolicy
 metadata:
@@ -77,19 +77,6 @@ EOF
 
 https://cloud.google.com/armor/docs/rule-tuning#preconfigured_rules
 
-## Deploy Kubernetes manifests
-
-```Bash
-cd ~/$TENANT_PROJECT_DIR_NAME/
-git add . && git commit -m "Ingress Gateway's Cloud Armor rules" && git push origin main
-```
-
-```Bash
-gcloud compute security-policies update ${SECURITY_POLICY_NAME} \
-  --project ${TENANT_PROJECT_ID}
-  --log-level=VERBOSE
-```
-
 ## Define SSL policy
 
 Not directly related to Cloud Armor, but let's define an SSL policy which will allow us to set an HTTP to HTTPS redirect on the `Ingress`.
@@ -110,8 +97,8 @@ EOF
 ## Deploy Kubernetes manifests
 
 ```Bash
-cd ~/$TENANT_PROJECT_DIR_NAME/
-git add . && git commit -m "Ingress Gateway's SSL policy" && git push origin main
+cd ${WORK_DIR}$TENANT_PROJECT_DIR_NAME/
+git add . && git commit -m "Ingress Gateway's Cloud Armor rules and SSL policy" && git push origin main
 ```
 
 ## Check deployments
@@ -145,32 +132,6 @@ graph TD;
   IAMPolicyMember-->IAMServiceAccount
 {{< /mermaid >}}
 
-List the Google Cloud resources created:
-```Bash
-gcloud compute security-policies list \
-    --project $TENANT_PROJECT_ID
-gcloud compute ssl-policies list \
-    --project $TENANT_PROJECT_ID
-```
-```Plaintext
-NAME
-gke-asm-ingressgateway
-NAME                    PROFILE     MIN_TLS_VERSION
-gke-asm-ingressgateway  COMPATIBLE  TLS_1_0
-```
-
-List the GitHub runs for the **Tenant project configs** repository `cd ~/$TENANT_PROJECT_DIR_NAME && gh run list`:
-```Plaintext
-STATUS  NAME                                                                                              WORKFLOW  BRANCH  EVENT  ID          ELAPSED  AGE
-✓       Ingress Gateway's SSL policy                                                                      ci        main    push   1975187062  53s      13m
-✓       Ingress Gateway's public static IP address                                                        ci        main    push   1974996579  59s      1h
-✓       ASM MCP for Tenant project                                                                           ci        main    push   1972180913  8m20s    23h
-✓       GitOps for GKE cluster configs                                                                    ci        main    push   1970974465  53s      1d
-✓       GKE cluster, primary nodepool and SA for Tenant project                                              ci        main    push   1963473275  1m16s    2d
-✓       Network for Tenant project                                                                           ci        main    push   1961289819  1m13s    2d
-✓       Initial commit                                                                                    ci        main    push   1961170391  56s      2d
-```
-
 List the Kubernetes resources managed by Config Sync in **Config Controller** for the **Tenant project configs** repository:
 ```Bash
 gcloud alpha anthos config sync repo describe \
@@ -179,30 +140,26 @@ gcloud alpha anthos config sync repo describe \
     --sync-name repo-sync \
     --sync-namespace $TENANT_PROJECT_ID
 ```
-```Plaintext
-getting 1 RepoSync and RootSync from krmapihost-configcontroller
-┌────────────────────────────────────────┬────────────────────────────┬───────────────────────────────────────────┬──────────────────────┐
-│                 GROUP                  │            KIND            │                    NAME                   │      NAMESPACE       │
-├────────────────────────────────────────┼────────────────────────────┼───────────────────────────────────────────┼──────────────────────┤
-│ artifactregistry.cnrm.cloud.google.com │ ArtifactRegistryRepository │ containers                                │ acm-workshop-464-tenant │
-│ compute.cnrm.cloud.google.com          │ ComputeSecurityPolicy      │ gke-asm-ingressgateway                    │ acm-workshop-464-tenant │
-│ compute.cnrm.cloud.google.com          │ ComputeRouter              │ gke                                       │ acm-workshop-464-tenant │
-│ compute.cnrm.cloud.google.com          │ ComputeSSLPolicy           │ gke-asm-ingressgateway                    │ acm-workshop-464-tenant │
-│ compute.cnrm.cloud.google.com          │ ComputeSubnetwork          │ gke                                       │ acm-workshop-464-tenant │
-│ compute.cnrm.cloud.google.com          │ ComputeRouterNAT           │ gke                                       │ acm-workshop-464-tenant │
-│ compute.cnrm.cloud.google.com          │ ComputeAddress             │ gke-asm-ingressgateway                    │ acm-workshop-464-tenant │
-│ compute.cnrm.cloud.google.com          │ ComputeNetwork             │ gke                                       │ acm-workshop-464-tenant │
-│ container.cnrm.cloud.google.com        │ ContainerNodePool          │ primary                                   │ acm-workshop-464-tenant │
-│ container.cnrm.cloud.google.com        │ ContainerCluster           │ gke                                       │ acm-workshop-464-tenant │
-│ gkehub.cnrm.cloud.google.com           │ GKEHubFeature              │ configmanagement                          │ acm-workshop-464-tenant │
-│ gkehub.cnrm.cloud.google.com           │ GKEHubFeatureMembership    │ gke-acm-membership                        │ acm-workshop-464-tenant │
-│ gkehub.cnrm.cloud.google.com           │ GKEHubFeature              │ servicemesh                               │ acm-workshop-464-tenant │
-│ gkehub.cnrm.cloud.google.com           │ GKEHubMembership           │ gke-hub-membership                        │ acm-workshop-464-tenant │
-│ iam.cnrm.cloud.google.com              │ IAMPartialPolicy           │ gke-primary-pool-sa-cs-monitoring-wi-user │ acm-workshop-464-tenant │
-│ iam.cnrm.cloud.google.com              │ IAMServiceAccount          │ gke-primary-pool                          │ acm-workshop-464-tenant │
-│ iam.cnrm.cloud.google.com              │ IAMPolicyMember            │ log-writer                                │ acm-workshop-464-tenant │
-│ iam.cnrm.cloud.google.com              │ IAMPolicyMember            │ monitoring-viewer                         │ acm-workshop-464-tenant │
-│ iam.cnrm.cloud.google.com              │ IAMPolicyMember            │ metric-writer                             │ acm-workshop-464-tenant │
-│ iam.cnrm.cloud.google.com              │ IAMPolicyMember            │ artifactregistry-reader                   │ acm-workshop-464-tenant │
-└────────────────────────────────────────┴────────────────────────────┴───────────────────────────────────────────┴──────────────────────┘
+Wait and re-run this command above until you see `"status": "SYNCED"` for this `RepoSync`. All the `managed_resources` listed should have `STATUS: Current` as well.
+
+List the GitHub runs for the **Tenant project configs** repository:
+```Bash
+cd ${WORK_DIR}$TENANT_PROJECT_DIR_NAME && gh run list
+```
+
+List the Google Cloud resources created:
+```Bash
+gcloud compute security-policies list \
+    --project $TENANT_PROJECT_ID
+gcloud compute ssl-policies list \
+    --project $TENANT_PROJECT_ID
+```
+
+## Enable Cloud Armor logging
+
+We also want to configure the Cloud Armor logging, it's not supported yet to do that via Config Connector, so we do that via this `gcloud` command:
+```Bash
+gcloud compute security-policies update ${SECURITY_POLICY_NAME} \
+    --project ${TENANT_PROJECT_ID} \
+    --log-level=VERBOSE
 ```
