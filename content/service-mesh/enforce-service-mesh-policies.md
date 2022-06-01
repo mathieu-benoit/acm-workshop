@@ -9,6 +9,7 @@ _{{< param description >}}_
 
 Initialize variables:
 ```Bash
+WORK_DIR=~/
 source ${WORK_DIR}acm-workshop-variables.sh
 echo "export INGRESS_GATEWAY_NAMESPACE=asm-ingress" >> ${WORK_DIR}acm-workshop-variables.sh
 source ${WORK_DIR}acm-workshop-variables.sh

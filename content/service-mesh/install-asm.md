@@ -9,6 +9,7 @@ _{{< param description >}}_
 
 Initialize variables:
 ```Bash
+WORK_DIR=~/
 source ${WORK_DIR}acm-workshop-variables.sh
 ASM_CHANNEL=rapid
 ASM_LABEL=asm-managed

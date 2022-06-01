@@ -9,6 +9,7 @@ _{{< param description >}}_
 
 Define variables:
 ```Bash
+WORK_DIR=~/
 source ${WORK_DIR}acm-workshop-variables.sh
 echo "export TENANT_PROJECT_DIR_NAME=acm-workshop-tenant-project-repo" >> ${WORK_DIR}acm-workshop-variables.sh
 source ${WORK_DIR}acm-workshop-variables.sh

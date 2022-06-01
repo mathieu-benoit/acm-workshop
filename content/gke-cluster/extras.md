@@ -9,6 +9,7 @@ Do you want more optional exercises? Here you are!
 
 Initialize variables:
 ```Bash
+WORK_DIR=~/
 source ${WORK_DIR}acm-workshop-variables.sh
 ```
 

@@ -9,6 +9,7 @@ _{{< param description >}}_
 
 Initialize variables:
 ```Bash
+WORK_DIR=~/
 source ${WORK_DIR}acm-workshop-variables.sh
 SECURITY_POLICY_NAME=$GKE_NAME-asm-ingressgateway
 echo "export SECURITY_POLICY_NAME=${SECURITY_POLICY_NAME}" >> ${WORK_DIR}acm-workshop-variables.sh

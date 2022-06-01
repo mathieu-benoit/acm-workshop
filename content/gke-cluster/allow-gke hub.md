@@ -9,6 +9,7 @@ _{{< param description >}}_
 
 Define variables:
 ```Bash
+WORK_DIR=~/
 source ${WORK_DIR}acm-workshop-variables.sh
 ```
 

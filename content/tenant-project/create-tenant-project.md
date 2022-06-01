@@ -11,6 +11,7 @@ In this section, you will create the Tenant project.
 
 Define variables:
 ```Bash
+WORK_DIR=~/
 source ${WORK_DIR}acm-workshop-variables.sh
 TENANT_PROJECT_ID=acm-workshop-${RANDOM_SUFFIX}-tenant
 echo "export TENANT_PROJECT_ID=${TENANT_PROJECT_ID}" >> ${WORK_DIR}acm-workshop-variables.sh

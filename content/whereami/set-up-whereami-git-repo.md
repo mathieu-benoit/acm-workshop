@@ -9,6 +9,7 @@ _{{< param description >}}_
 
 Initialize variables:
 ```Bash
+WORK_DIR=~/
 source ${WORK_DIR}acm-workshop-variables.sh
 echo "export WHEREAMI_NAMESPACE=whereami" >> ${WORK_DIR}acm-workshop-variables.sh
 echo "export WHERE_AMI_DIR_NAME=acm-workshop-whereami-repo" >> ${WORK_DIR}acm-workshop-variables.sh

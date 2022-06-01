@@ -12,6 +12,7 @@ In this section, you will set up the primary Git repository of the Config Contro
 
 Define variables:
 ```Bash
+WORK_DIR=~/
 source ${WORK_DIR}acm-workshop-variables.sh
 echo "export HOST_PROJECT_DIR_NAME=acm-workshop-org-repo" >> ${WORK_DIR}acm-workshop-variables.sh
 source ${WORK_DIR}acm-workshop-variables.sh

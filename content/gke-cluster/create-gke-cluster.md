@@ -9,6 +9,7 @@ _{{< param description >}}_
 
 Initialize variables:
 ```Bash
+WORK_DIR=~/
 source ${WORK_DIR}acm-workshop-variables.sh
 echo "export TENANT_PROJECT_NUMBER=$(gcloud projects describe $TENANT_PROJECT_ID --format='get(projectNumber)')" >> ${WORK_DIR}acm-workshop-variables.sh
 echo "export GKE_SA=gke-primary-pool" >> ${WORK_DIR}acm-workshop-variables.sh

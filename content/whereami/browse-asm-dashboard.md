@@ -8,6 +8,12 @@ _{{< param description >}}_
 
 In this section, you will browse the Anthos Servie Mesh dashboards in the Google Cloud console in order to get more insights for your applications in terms of topology, security, health and performance.
 
+Initialize variables:
+```Bash
+WORK_DIR=~/
+source ${WORK_DIR}acm-workshop-variables.sh
+```
+
 ## Anthos Security view
 
 In the Google Cloud console, you could navigate to _Anthos > Security > Policy Audit_ and filter by the `whereami` namespace to see that the 3 security features _Kubernetes Network policy_, _Service access control_ and _mTLS status_ are enabled in green:

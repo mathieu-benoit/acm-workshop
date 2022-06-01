@@ -11,6 +11,7 @@ In this section, you will secure the access by TLS to the Memorystore (redis) in
 
 Initialize variables:
 ```Bash
+WORK_DIR=~/
 source ${WORK_DIR}acm-workshop-variables.sh
 echo "export CART_MEMORYSTORE_HOST=${REDIS_NAME}.memorystore-redis.${ONLINEBOUTIQUE_NAMESPACE}" >> ${WORK_DIR}acm-workshop-variables.sh
 source ${WORK_DIR}acm-workshop-variables.sh
