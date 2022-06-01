@@ -154,3 +154,24 @@ List the Google Cloud resources created:
 gcloud container fleet mesh describe \
     --project $TENANT_PROJECT_ID
 ```
+
+For the result of the last command, in order to make sure the Managed ASM is successfully installed you should see something like this:
+```Plaintext
+createTime: '2022-06-01T13:09:24.580141475Z'
+labels:
+  managed-by-cnrm: 'true'
+membershipStates:
+  projects/561098358875/locations/global/memberships/gke:
+    servicemesh:
+      controlPlaneManagement:
+        state: DISABLED
+    state:
+      code: OK
+      description: 'Revision(s) ready for use: asm-managed-rapid.'
+      updateTime: '2022-06-01T21:23:29.751309908Z'
+name: projects/acm-workshop-742-tenant/locations/global/features/servicemesh
+resourceState:
+  state: ACTIVE
+spec: {}
+updateTime: '2022-06-01T21:23:39.459742087Z'
+```
