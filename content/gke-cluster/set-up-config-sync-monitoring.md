@@ -17,7 +17,7 @@ source ${WORK_DIR}acm-workshop-variables.sh
 https://cloud.google.com/anthos-config-management/docs/how-to/monitoring-multi-repo
 
 ```Bash
-cat <<EOF > ~/$GKE_CONFIGS_DIR_NAME/config-sync-monitoring.yaml
+cat <<EOF > ${WORK_DIR}$GKE_CONFIGS_DIR_NAME/config-sync-monitoring.yaml
 apiVersion: v1
 kind: ServiceAccount
 metadata:
@@ -31,20 +31,13 @@ EOF
 ## Deploy Kubernetes manifests
 
 ```Bash
-cd ~/$GKE_CONFIGS_DIR_NAME/
+cd ${WORK_DIR}$GKE_CONFIGS_DIR_NAME/
 git add . && git commit -m "Config Sync monitoring" && git push origin main
 ```
 
 ## Check deployments
 
-List the GitHub runs for the **GKE cluster configs** repository `cd ~/$GKE_CONFIGS_DIR_NAME && gh run list`:
-```Plaintext
-STATUS  NAME                    WORKFLOW  BRANCH  EVENT  ID          ELAPSED  AGE
-✓       Config Sync monitoring  ci        main    push   1971296656  1m9s     16m
-✓       Initial commit          ci        main    push   1970951731  57s      1h
-```
-
-List the Kubernetes resources managed by Config Sync in the **GKE cluster** for the **GKE cluster configs** repository:
+List the Kubernetes resources managed by Config Sync in **GKE cluster** for the **GKE cluster configs** repository:
 ```Bash
 gcloud alpha anthos config sync repo describe \
     --project $TENANT_PROJECT_ID \
@@ -52,12 +45,9 @@ gcloud alpha anthos config sync repo describe \
     --sync-name root-sync \
     --sync-namespace config-management-system
 ```
-```Plaintext
-getting 1 RepoSync and RootSync from gke-hub-membership
-┌───────┬────────────────┬──────────────────────────────┬──────────────────────────────┐
-│ GROUP │      KIND      │             NAME             │          NAMESPACE           │
-├───────┼────────────────┼──────────────────────────────┼──────────────────────────────┤
-│       │ Namespace      │ config-management-monitoring │                              │
-│       │ ServiceAccount │ default                      │ config-management-monitoring │
-└───────┴────────────────┴──────────────────────────────┴──────────────────────────────┘
+Wait and re-run this command above until you see `"status": "SYNCED"` for this `RepoSync`. All the `managed_resources` listed should have `STATUS: Current` as well.
+
+List the GitHub runs for the **GKE cluster configs** repository:
+```Bash
+cd ${WORK_DIR}$GKE_CONFIGS_DIR_NAME && gh run list
 ```
