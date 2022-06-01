@@ -16,7 +16,7 @@ source ${WORK_DIR}acm-workshop-variables.sh
 
 Define the `Constraint` based on the [`K8sAllowedRepos`](https://cloud.devsite.corp.google.com/anthos-config-management/docs/reference/constraint-template-library#k8sallowedrepos) `ConstraintTemplate` for `Pods`:
 ```Bash
-cat <<EOF > ~/$GKE_CONFIGS_DIR_NAME/policies/constraints/pod-allowed-container-registries.yaml
+cat <<EOF > ${WORK_DIR}$GKE_CONFIGS_DIR_NAME/policies/constraints/pod-allowed-container-registries.yaml
 apiVersion: constraints.gatekeeper.sh/v1beta1
 kind: K8sAllowedRepos
 metadata:
@@ -45,23 +45,13 @@ EOF
 ## Deploy Kubernetes manifests
 
 ```Bash
-cd ~/$GKE_CONFIGS_DIR_NAME/ && git add . && git commit -m "Policies for Artifact Registry"
+cd ${WORK_DIR}$GKE_CONFIGS_DIR_NAME/ && git add . && git commit -m "Policies for Artifact Registry"
 git push origin main
 ```
 
 ## Check deployments
 
-List the GitHub runs for the **GKE cluster configs** repository `cd ~/$GKE_CONFIGS_DIR_NAME && gh run list`:
-```Plaintext
-STATUS  NAME                                                  WORKFLOW  BRANCH  EVENT  ID          ELAPSED  AGE
-✓       Enforce Container Registries Policies in GKE cluster  ci        main    push   1972138349  55s      4m
-✓       Policies for NetworkPolicy resources                  ci        main    push   1971716019  1m14s    2h
-✓       Network Policies logging                              ci        main    push   1971353547  1m1s     4h
-✓       Config Sync monitoring                                ci        main    push   1971296656  1m9s     5h
-✓       Initial commit                                        ci        main    push   1970951731  57s      6h
-```
-
-List the Kubernetes resources managed by Config Sync in the **GKE cluster** for the **GKE cluster configs** repository:
+List the Kubernetes resources managed by Config Sync in **GKE cluster** for the **GKE cluster configs** repository:
 ```Bash
 gcloud alpha anthos config sync repo describe \
     --project $TENANT_PROJECT_ID \
@@ -69,18 +59,9 @@ gcloud alpha anthos config sync repo describe \
     --sync-name root-sync \
     --sync-namespace config-management-system
 ```
-```Plaintext
-getting 1 RepoSync and RootSync from gke-hub-membership
-┌───────────────────────────┬────────────────────┬──────────────────────────────┬──────────────────────────────┐
-│           GROUP           │        KIND        │             NAME             │          NAMESPACE           │
-├───────────────────────────┼────────────────────┼──────────────────────────────┼──────────────────────────────┤
-│                           │ Namespace          │ config-management-monitoring │                              │
-│ constraints.gatekeeper.sh │ K8sAllowedRepos    │ allowed-container-registries │                              │
-│ constraints.gatekeeper.sh │ K8sRequiredLabels  │ namespace-required-labels    │                              │
-│ constraints.gatekeeper.sh │ K8sRequiredLabels  │ deployment-required-labels   │                              │
-│ networking.gke.io         │ NetworkLogging     │ default                      │                              │
-│ templates.gatekeeper.sh   │ ConstraintTemplate │ k8sallowedrepos              │                              │
-│ templates.gatekeeper.sh   │ ConstraintTemplate │ k8srequiredlabels            │                              │
-│                           │ ServiceAccount     │ default                      │ config-management-monitoring │
-└───────────────────────────┴────────────────────┴──────────────────────────────┴──────────────────────────────┘
+Wait and re-run this command above until you see `"status": "SYNCED"` for this `RepoSync`. All the `managed_resources` listed should have `STATUS: Current` as well.
+
+List the GitHub runs for the **GKE cluster configs** repository:
+```Bash
+cd ${WORK_DIR}$GKE_CONFIGS_DIR_NAME && gh run list
 ```
