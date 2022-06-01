@@ -154,11 +154,6 @@ graph TD;
   ConfigConnectorContext-->IAMServiceAccount
 {{< /mermaid >}}
 
-List the GitHub runs for the **Host project configs** repository:
-```Bash
-cd ${WORK_DIR}$HOST_PROJECT_DIR_NAME && gh run list
-```
-
 List the Kubernetes resources managed by Config Sync in **Config Controller** for the **Host project configs** repository:
 ```Bash
 gcloud alpha anthos config sync repo describe \
@@ -168,6 +163,11 @@ gcloud alpha anthos config sync repo describe \
     --sync-namespace config-management-system
 ```
 Wait and re-run this command above until you see `"status": "SYNCED"` for this `RootSync`. All the `managed_resources` listed should have `STATUS: Current` as well.
+
+List the GitHub runs for the **Host project configs** repository:
+```Bash
+cd ${WORK_DIR}$HOST_PROJECT_DIR_NAME && gh run list
+```
 
 List the Google Cloud resources created:
 ```Bash

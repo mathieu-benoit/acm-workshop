@@ -1,7 +1,7 @@
 ---
 title: "Set up Network"
 weight: 1
-description: "Duration: 15 min | Persona: Platform Admin"
+description: "Duration: 5 min | Persona: Platform Admin"
 tags: ["kcc", "platform-admin"]
 ---
 ![Platform Admin](/images/platform-admin.png)
@@ -18,7 +18,7 @@ source ${WORK_DIR}acm-workshop-variables.sh
 ## Define VPC and Subnet
 
 ```Bash
-cat <<EOF > ~/$TENANT_PROJECT_DIR_NAME/vpc.yaml
+cat <<EOF > ${WORK_DIR}$TENANT_PROJECT_DIR_NAME/vpc.yaml
 apiVersion: compute.cnrm.cloud.google.com/v1beta1
 kind: ComputeNetwork
 metadata:
@@ -31,7 +31,7 @@ EOF
 ```
 
 ```Bash
-cat <<EOF > ~/$TENANT_PROJECT_DIR_NAME/subnet.yaml
+cat <<EOF > ${WORK_DIR}$TENANT_PROJECT_DIR_NAME/subnet.yaml
 apiVersion: compute.cnrm.cloud.google.com/v1beta1
 kind: ComputeSubnetwork
 metadata:
@@ -55,7 +55,7 @@ EOF
 ## Define Cloud NAT
 
 ```Bash
-cat <<EOF > ~/$TENANT_PROJECT_DIR_NAME/router.yaml
+cat <<EOF > ${WORK_DIR}$TENANT_PROJECT_DIR_NAME/router.yaml
 apiVersion: compute.cnrm.cloud.google.com/v1beta1
 kind: ComputeRouter
 metadata:
@@ -71,7 +71,7 @@ EOF
 ```
 
 ```Bash
-cat <<EOF > ~/$TENANT_PROJECT_DIR_NAME/router-nat.yaml
+cat <<EOF > ${WORK_DIR}$TENANT_PROJECT_DIR_NAME/router-nat.yaml
 apiVersion: compute.cnrm.cloud.google.com/v1beta1
 kind: ComputeRouterNAT
 metadata:
@@ -96,7 +96,7 @@ EOF
 ## Deploy Kubernetes manifests
 
 ```Bash
-cd ~/$TENANT_PROJECT_DIR_NAME/
+cd ${WORK_DIR}$TENANT_PROJECT_DIR_NAME/
 git add . && git commit -m "Network for Tenant project" && git push origin main
 ```
 
@@ -111,6 +111,21 @@ graph TD;
   ComputeRouter-->ComputeNetwork
 {{< /mermaid >}}
 
+List the Kubernetes resources managed by Config Sync in **Config Controller** for the **Tenant project configs** repository:
+```Bash
+gcloud alpha anthos config sync repo describe \
+    --project $HOST_PROJECT_ID \
+    --managed-resources all \
+    --sync-name repo-sync \
+    --sync-namespace $TENANT_PROJECT_ID
+```
+Wait and re-run this command above until you see `"status": "SYNCED"` for this `RepoSync`. All the `managed_resources` listed should have `STATUS: Current` as well.
+
+List the GitHub runs for the **Tenant project configs** repository:
+```Bash
+cd ${WORK_DIR}$TENANT_PROJECT_DIR_NAME && gh run list
+```
+
 List the Google Cloud resources created:
 ```Bash
 gcloud compute networks list \
@@ -123,41 +138,4 @@ gcloud compute routers nats list \
     --router $GKE_NAME \
     --region $GKE_LOCATION \
     --project $TENANT_PROJECT_ID
-```
-```Plaintext
-NAME  SUBNET_MODE  BGP_ROUTING_MODE  IPV4_RANGE  GATEWAY_IPV4
-gke   CUSTOM       REGIONAL
-NAME  REGION    NETWORK  RANGE        STACK_TYPE  IPV6_ACCESS_TYPE  IPV6_CIDR_RANGE  EXTERNAL_IPV6_CIDR_RANGE
-gke   us-east4  gke      10.2.0.0/20  IPV4_ONLY
-NAME  REGION    NETWORK
-gke   us-east4  gke
-NAME  NAT_IP_ALLOCATE_OPTION  SOURCE_SUBNETWORK_IP_RANGES_TO_NAT
-gke   AUTO_ONLY               LIST_OF_SUBNETWORKS
-```
-
-List the GitHub runs for the **Tenant project configs** repository `cd ~/$TENANT_PROJECT_DIR_NAME && gh run list`:
-```Plaintext
-STATUS  NAME                        WORKFLOW  BRANCH  EVENT  ID          ELAPSED  AGE
-✓       Network for Tenant project  ci        main    push   1961289819  10s      1m
-✓       Initial commit              ci        main    push   1961170391  56s      41m
-```
-
-List the Kubernetes resources managed by Config Sync in **Config Controller** for the **Tenant project configs** repository:
-```Bash
-gcloud alpha anthos config sync repo describe \
-    --project $HOST_PROJECT_ID \
-    --managed-resources all \
-    --sync-name repo-sync \
-    --sync-namespace $TENANT_PROJECT_ID
-```
-```Plaintext
-getting 1 RepoSync and RootSync from krmapihost-configcontroller
-┌────────────────────────────────────────┬────────────────────────────┬───────────────────────────────────────────┬──────────────────────┐
-│                 GROUP                  │            KIND            │                    NAME                   │      NAMESPACE       │
-├────────────────────────────────────────┼────────────────────────────┼───────────────────────────────────────────┼──────────────────────┤
-│ compute.cnrm.cloud.google.com          │ ComputeRouterNAT           │ gke                                       │ acm-workshop-464-tenant │
-│ compute.cnrm.cloud.google.com          │ ComputeNetwork             │ gke                                       │ acm-workshop-464-tenant │
-│ compute.cnrm.cloud.google.com          │ ComputeRouter              │ gke                                       │ acm-workshop-464-tenant │
-│ compute.cnrm.cloud.google.com          │ ComputeSubnetwork          │ gke                                       │ acm-workshop-464-tenant │
-└────────────────────────────────────────┴────────────────────────────┴───────────────────────────────────────────┴──────────────────────┘
 ```
