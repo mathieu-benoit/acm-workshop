@@ -1,6 +1,6 @@
 ---
 title: "Personas"
-weight: 3
+weight: 2
 tags: ["apps-operator", "org-admin", "platform-admin"]
 ---
 3 personas are involved:

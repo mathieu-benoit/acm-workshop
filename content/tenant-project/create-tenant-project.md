@@ -177,60 +177,98 @@ gcloud iam service-accounts describe $TENANT_PROJECT_SA_EMAIL \
 
 ## Resolve Tenant project creation issue
 
-If you see your Google Cloud Project successfully created by running this command ``, you don't need to read the rest of this section, you could move ahead with the next section.
+Let's make sure that the Tenant project has been successfully created.
 
-Iff you skipped the assignment of the `billing.user` role earlier while you were setting up your Config Controller instance, you will have an error with the creation of the `Project`. A simple way to make sure you don't have any error is to run this command below:
+Run this command below:
 ```Bash
 kubectl get gcpproject -n config-control
 ```
 
-If the output is similar to this below, you are good:
+If the output is similar to this below (`STATUS` `UpToDate`), you are good and you could move forward to the next page:
 ```Plaintext
 NAMESPACE        NAME                     AGE     READY   STATUS     STATUS AGE
 config-control   acm-workshop-464-tenant  24m     True    UpToDate   21m
 ```
 
-But if you have this output below, that's where you will need to take actions:
+But if you have this output below (`STATUS` `UpdateFailed`), that's where you will need to take actions:
 ```Plaintext
 NAMESPACE        NAME                     AGE     READY   STATUS        STATUS AGE
 config-control   acm-workshop-464-tenant  24m     True    UpdateFailed  21m
 ```
 
-With a closer look at the error by running this command `kubectl descibe gcpproject -n config-control`, you may see one the two errors below:
-
-### The caller does not have permission, forbidden
-
-If you have this error:
-```Plaintext
-Update call failed: error applying desired state: summary: Error setting billing account "XXX" for project "projects/acm-workshop-464-tenant": googleapi: Error 403: The caller does not have permission, forbidden
-```
-
-You can resolve this issue by running by yourself this command below:
+Run this command below to have a closer look at the details of the error:
 ```Bash
-gcloud beta billing projects link $TENANT_PROJECT_ID \
-    --billing-account $BILLING_ACCOUNT_ID
+kubectl describe gcpproject -n config-control
 ```
 
-If you can't run the command above, the alternative is having someone in your organization (Billing Account or Organization admins) running it for you.
-
-As Config Connector is still reconciling the resources, if you successfully ran this command, the error will disappear. You can run again the command `kubectl get gcpproject -n config-control` to make sure about that.
-
-### Missing permission billing.resourceAssociations.create
-
-If you have this error:
+The error you may have could be similar to:
 ```Plaintext
 Update call failed: error applying desired state: summary: failed pre-requisites: missing permission on "billingAccounts/XXX": billing.resourceAssociations.create
 ```
 
-You can resolve this issue by redeploying (edit + commit) the `Project` resource by removing this part:
-```YAML
-  billingAccountRef:
-    external: "${BILLING_ACCOUNT_ID}"
+We will resolve this issue by redeploying the `Project` resource by removing the `billingAccountRef` part.
+
+Update the GCP project either at the Folder level or the Organization level:
+{{< tabs groupId="org-level">}}
+{{% tab name="Folder level" %}}
+At the Folder level:
+```Bash
+cat <<EOF > ${WORK_DIR}$HOST_PROJECT_DIR_NAME/projects/$TENANT_PROJECT_ID/project.yaml
+apiVersion: resourcemanager.cnrm.cloud.google.com/v1beta1
+kind: Project
+metadata:
+  annotations:
+    cnrm.cloud.google.com/auto-create-network: "false"
+  name: ${TENANT_PROJECT_ID}
+  namespace: config-control
+spec:
+  name: ${TENANT_PROJECT_ID}
+  folderRef:
+    external: "${FOLDER_OR_ORG_ID}"
+  resourceID: ${TENANT_PROJECT_ID}
+EOF
+```
+{{% /tab %}}
+{{% tab name="Org level" %}}
+At the Organization level:
+```Bash
+cat <<EOF > ${WORK_DIR}$HOST_PROJECT_DIR_NAME/projects/$TENANT_PROJECT_ID/project.yaml
+apiVersion: resourcemanager.cnrm.cloud.google.com/v1beta1
+kind: Project
+metadata:
+  annotations:
+    cnrm.cloud.google.com/auto-create-network: "false"
+  name: ${TENANT_PROJECT_ID}
+  namespace: config-control
+spec:
+  name: ${TENANT_PROJECT_ID}
+  organizationRef:
+    external: "${FOLDER_OR_ORG_ID}"
+  resourceID: ${TENANT_PROJECT_ID}
+EOF
 ```
 
-As Config Connector is still reconciling the resources, if you successfully redeployed the `Project` resource, the error will disappear. You can run again the command `kubectl get gcpproject -n config-control` to make sure about that.
+Re-deploy the `Project` resource:
+```Bash
+cd ${WORK_DIR}$HOST_PROJECT_DIR_NAME/
+git add . && git commit -m "Remove the billingAccountRef in order to create Tenant Project" && git push origin main
+```
 
-Then what you have to do is to manually assigned the Billing Account to this project by running by yourself this command below:
+Wait for `status` `SYNCED` with this command:
+```Bash
+gcloud alpha anthos config sync repo describe \
+    --project $HOST_PROJECT_ID \
+    --managed-resources all \
+    --sync-name root-sync \
+    --sync-namespace config-management-system
+```
+
+And then, check that the Google Cloud project is created:
+```Bash
+gcloud projects describe $TENANT_PROJECT_ID
+```
+
+Then what you have to do is to manually assign the Billing Account to this project by running by yourself this command below:
 ```Bash
 gcloud beta billing projects link $TENANT_PROJECT_ID \
     --billing-account $BILLING_ACCOUNT_ID

@@ -142,7 +142,7 @@ Because it's the first `git commit` of this workshop, if you don't have your own
 
 ## Check deployments
 
-List the GitHub runs for the Host project configs repository:
+List the GitHub runs for the **Host project configs** repository:
 ```Bash
 cd ${WORK_DIR}$HOST_PROJECT_DIR_NAME && gh run list
 ```

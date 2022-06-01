@@ -1,6 +1,6 @@
 ---
 title: "Agenda"
-weight: 2
+weight: 3
 tags: ["apps-operator", "org-admin", "platform-admin"]
 ---
 1. Host project
