@@ -147,7 +147,7 @@ List the GitHub runs for the **Host project configs** repository:
 cd ${WORK_DIR}$HOST_PROJECT_DIR_NAME && gh run list
 ```
 
-List the Kubernetes resources managed by Config Sync in **Config Controller** for the **Host project configs** repository, and wait for the `status` `SYNCED`:
+List the Kubernetes resources managed by Config Sync in **Config Controller** for the **Host project configs** repository:
 ```Bash
 gcloud alpha anthos config sync repo describe \
     --project $HOST_PROJECT_ID \
@@ -155,3 +155,4 @@ gcloud alpha anthos config sync repo describe \
     --sync-name root-sync \
     --sync-namespace config-management-system
 ```
+Wait and re-run this command above until you see `"status": "SYNCED"` for this `RootSync`. All the `managed_resources` listed should have `STATUS: Current` as well.

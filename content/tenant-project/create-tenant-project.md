@@ -159,7 +159,7 @@ List the GitHub runs for the **Host project configs** repository:
 cd ${WORK_DIR}$HOST_PROJECT_DIR_NAME && gh run list
 ```
 
-List the Kubernetes resources managed by Config Sync in **Config Controller** for the **Host project configs** repository, and wait for the `status` `SYNCED`:
+List the Kubernetes resources managed by Config Sync in **Config Controller** for the **Host project configs** repository:
 ```Bash
 gcloud alpha anthos config sync repo describe \
     --project $HOST_PROJECT_ID \
@@ -167,6 +167,7 @@ gcloud alpha anthos config sync repo describe \
     --sync-name root-sync \
     --sync-namespace config-management-system
 ```
+Wait and re-run this command above until you see `"status": "SYNCED"` for this `RootSync`. All the `managed_resources` listed should have `STATUS: Current` as well.
 
 List the Google Cloud resources created:
 ```Bash
@@ -186,14 +187,14 @@ kubectl get gcpproject -n config-control
 
 If the output is similar to this below (`STATUS` `UpToDate`), you are good and you could move forward to the next page:
 ```Plaintext
-NAMESPACE        NAME                     AGE     READY   STATUS     STATUS AGE
-config-control   acm-workshop-464-tenant  24m     True    UpToDate   21m
+NAME                      AGE   READY   STATUS     STATUS AGE
+acm-workshop-742-tenant   50m   True    UpToDate   47m
 ```
 
 But if you have this output below (`STATUS` `UpdateFailed`), that's where you will need to take actions:
 ```Plaintext
-NAMESPACE        NAME                     AGE     READY   STATUS        STATUS AGE
-config-control   acm-workshop-464-tenant  24m     True    UpdateFailed  21m
+NAME                      AGE   READY   STATUS        STATUS AGE
+acm-workshop-742-tenant   50m   True    UpdateFailed  47m
 ```
 
 Run this command below to have a closer look at the details of the error:

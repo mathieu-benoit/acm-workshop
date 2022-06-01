@@ -16,7 +16,7 @@ source ${WORK_DIR}acm-workshop-variables.sh
 
 Define the `ConstraintTemplate` resource:
 ```Bash
-cat <<EOF > ~/$HOST_PROJECT_DIR_NAME/policies/templates/limitlocations.yaml
+cat <<EOF > ${WORK_DIR}$HOST_PROJECT_DIR_NAME/policies/templates/limitlocations.yaml
 apiVersion: templates.gatekeeper.sh/v1
 kind: ConstraintTemplate
 metadata:
@@ -64,7 +64,7 @@ EOF
 
 Define the `Constraint` resource:
 ```Bash
-cat <<EOF > ~/$HOST_PROJECT_DIR_NAME/policies/constraints/allowed-locations.yaml
+cat <<EOF > ${WORK_DIR}$HOST_PROJECT_DIR_NAME/policies/constraints/allowed-locations.yaml
 apiVersion: constraints.gatekeeper.sh/v1beta1
 kind: LimitLocations
 metadata:
@@ -89,23 +89,11 @@ EOF
 ## Deploy Kubernetes manifests
 
 ```Bash
-cd ~/$HOST_PROJECT_DIR_NAME/
+cd ${WORK_DIR}$HOST_PROJECT_DIR_NAME/
 git add . && git commit -m "Enforce policies for Tenant project" && git push origin main
 ```
 
 ## Check deployments
-
-Here is what you should have at this stage:
-
-List the GitHub runs for the **Host project configs** repository `cd ~/$HOST_PROJECT_DIR_NAME && gh run list`:
-```Plaintext
-STATUS  NAME                                      WORKFLOW  BRANCH  EVENT  ID          ELAPSED  AGE
-✓       Enforce policies for Tenant project       ci        main    push   1960968253  1m4s     1m
-✓       GitOps for Tenant project                 ci        main    push   1960959789  1m5s     3m
-✓       Setting up Tenant namespace/project       ci        main    push   1960908849  1m12s    18m
-✓       Billing API in Host project               ci        main    push   1960889246  1m0s     25m
-✓       Initial commit                            ci        main    push   1960885850  1m8s     26m
-```
 
 List the Kubernetes resources managed by Config Sync in **Config Controller** for the **Host project configs** repository:
 ```Bash
@@ -115,21 +103,9 @@ gcloud alpha anthos config sync repo describe \
     --sync-name root-sync \
     --sync-namespace config-management-system
 ```
-```Plaintext
-getting 1 RepoSync and RootSync from krmapihost-configcontroller
-┌───────────────────────────────────────┬────────────────────────┬────────────────────────────────────┬──────────────────────┐
-│                 GROUP                 │          KIND          │                NAME                │      NAMESPACE       │
-├───────────────────────────────────────┼────────────────────────┼────────────────────────────────────┼──────────────────────┤
-│                                       │ Namespace              │ acm-workshop-464-tenant               │                      │
-│                                       │ Namespace              │ config-control                     │                      │
-│ constraints.gatekeeper.sh             │ LimitLocations         │ allowed-locations                  │                      │
-│ templates.gatekeeper.sh               │ ConstraintTemplate     │ limitlocations                     │                      │
-│ configsync.gke.io                     │ RepoSync               │ repo-sync                          │ acm-workshop-464-tenant │
-│ core.cnrm.cloud.google.com            │ ConfigConnectorContext │ configconnectorcontext             │ acm-workshop-464-tenant │
-│ rbac.authorization.k8s.io             │ RoleBinding            │ syncs-repo                         │ acm-workshop-464-tenant │
-│ iam.cnrm.cloud.google.com             │ IAMServiceAccount      │ acm-workshop-464-tenant               │ config-control       │
-│ iam.cnrm.cloud.google.com             │ IAMPartialPolicy       │ acm-workshop-464-tenant-sa-wi-user    │ config-control       │
-│ resourcemanager.cnrm.cloud.google.com │ Project                │ acm-workshop-464-tenant               │ config-control       │
-│ serviceusage.cnrm.cloud.google.com    │ Service                │ cloudbilling.googleapis.com        │ config-control       │
-└───────────────────────────────────────┴────────────────────────┴────────────────────────────────────┴──────────────────────┘
+Wait and re-run this command above until you see `"status": "SYNCED"` for this `RootSync`. All the `managed_resources` listed should have `STATUS: Current` as well.
+
+List the GitHub runs for the **Host project configs** repository:
+```Bash
+cd ${WORK_DIR}$HOST_PROJECT_DIR_NAME && gh run list
 ```
