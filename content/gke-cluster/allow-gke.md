@@ -87,7 +87,7 @@ spec:
 EOF
 ```
 
-## Define GKE API
+## Define API
 
 Define the GKE API [`Service`](https://cloud.google.com/config-connector/docs/reference/resource-docs/serviceusage/service) resource for the Tenant project:
 ```Bash
@@ -107,9 +107,6 @@ spec:
   resourceID: container.googleapis.com
 EOF
 ```
-{{% notice info %}}
-We are enabling the GCP services APIs from the Org Admin, it allows more control and governance over which GCP services APIs the Platform Admin could use or not. If you want to give more autonomy to the Platform Admin, you could grant the `serviceusage.serviceUsageAdmin` role to the associated service account.
-{{% /notice %}}
 
 ## Deploy Kubernetes manifests
 

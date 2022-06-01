@@ -13,7 +13,7 @@ WORK_DIR=~/
 source ${WORK_DIR}acm-workshop-variables.sh
 ```
 
-## Define Mesh API
+## Define API
 
 Define the Mesh API [`Service`](https://cloud.google.com/config-connector/docs/reference/resource-docs/serviceusage/service) resource in the Tenant project:
 ```Bash

@@ -13,7 +13,7 @@ WORK_DIR=~/
 source ${WORK_DIR}acm-workshop-variables.sh
 ```
 
-## Define GKE Hub admin role
+## Define role
 
 Define the `gkehub.admin` role with an [`IAMPolicyMember`](https://cloud.google.com/config-connector/docs/reference/resource-docs/iam/iampolicymember) for the Tenant project's service account:
 ```Bash
@@ -36,7 +36,7 @@ spec:
 EOF
 ```
 
-## Define GKE and GKE Hub APIs
+## Define APIs
 
 Define the GKE and GKE Hub APIs [`Service`](https://cloud.google.com/config-connector/docs/reference/resource-docs/serviceusage/service) resources for the Tenant project:
 ```Bash

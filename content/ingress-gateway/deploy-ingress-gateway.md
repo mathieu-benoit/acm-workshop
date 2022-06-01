@@ -18,13 +18,13 @@ source ${WORK_DIR}acm-workshop-variables.sh
 
 Create a dedicated folder for the ASM Ingress Gateway in the GKE configs's Git repo:
 ```Bash
-mkdir ~/$GKE_CONFIGS_DIR_NAME/$INGRESS_GATEWAY_NAMESPACE
+mkdir ${WORK_DIR}$GKE_CONFIGS_DIR_NAME/$INGRESS_GATEWAY_NAMESPACE
 ```
 
 ## Define Namespace
 
 ```Bash
-cat <<EOF > ~/$GKE_CONFIGS_DIR_NAME/$INGRESS_GATEWAY_NAMESPACE/namespace.yaml
+cat <<EOF > ${WORK_DIR}$GKE_CONFIGS_DIR_NAME/$INGRESS_GATEWAY_NAMESPACE/namespace.yaml
 apiVersion: v1
 kind: Namespace
 metadata:
@@ -40,7 +40,7 @@ EOF
 ## Define Deployment
 
 ```Bash
-cat <<EOF > ~/$GKE_CONFIGS_DIR_NAME/$INGRESS_GATEWAY_NAMESPACE/deployment.yaml
+cat <<EOF > ${WORK_DIR}$GKE_CONFIGS_DIR_NAME/$INGRESS_GATEWAY_NAMESPACE/deployment.yaml
 apiVersion: apps/v1
 kind: Deployment
 metadata:
@@ -99,7 +99,7 @@ EOF
 ```
 
 ```Bash
-cat <<EOF > ~/$GKE_CONFIGS_DIR_NAME/$INGRESS_GATEWAY_NAMESPACE/service-account.yaml
+cat <<EOF > ${WORK_DIR}$GKE_CONFIGS_DIR_NAME/$INGRESS_GATEWAY_NAMESPACE/service-account.yaml
 apiVersion: v1
 kind: ServiceAccount
 metadata:
@@ -109,7 +109,7 @@ EOF
 ```
 
 ```Bash
-cat <<EOF > ~/$GKE_CONFIGS_DIR_NAME/$INGRESS_GATEWAY_NAMESPACE/read-secrets-role.yaml
+cat <<EOF > ${WORK_DIR}$GKE_CONFIGS_DIR_NAME/$INGRESS_GATEWAY_NAMESPACE/read-secrets-role.yaml
 # Set up roles to allow reading credentials for TLS
 apiVersion: rbac.authorization.k8s.io/v1
 kind: Role
@@ -124,7 +124,7 @@ EOF
 ```
 
 ```Bash
-cat <<EOF > ~/$GKE_CONFIGS_DIR_NAME/$INGRESS_GATEWAY_NAMESPACE/service-account-role-binding.yaml
+cat <<EOF > ${WORK_DIR}$GKE_CONFIGS_DIR_NAME/$INGRESS_GATEWAY_NAMESPACE/service-account-role-binding.yaml
 apiVersion: rbac.authorization.k8s.io/v1
 kind: RoleBinding
 metadata:
@@ -143,7 +143,7 @@ EOF
 ## Define Service and Ingress
 
 ```Bash
-cat <<EOF > ~/$GKE_CONFIGS_DIR_NAME/$INGRESS_GATEWAY_NAMESPACE/backend-config.yaml
+cat <<EOF > ${WORK_DIR}$GKE_CONFIGS_DIR_NAME/$INGRESS_GATEWAY_NAMESPACE/backend-config.yaml
 apiVersion: cloud.google.com/v1
 kind: BackendConfig
 metadata:
@@ -160,7 +160,7 @@ EOF
 ```
 
 ```Bash
-cat <<EOF > ~/$GKE_CONFIGS_DIR_NAME/$INGRESS_GATEWAY_NAMESPACE/frontend-config.yaml
+cat <<EOF > ${WORK_DIR}$GKE_CONFIGS_DIR_NAME/$INGRESS_GATEWAY_NAMESPACE/frontend-config.yaml
 apiVersion: networking.gke.io/v1beta1
 kind: FrontendConfig
 metadata:
@@ -175,7 +175,7 @@ EOF
 ```
 
 ```Bash
-cat <<EOF > ~/$GKE_CONFIGS_DIR_NAME/$INGRESS_GATEWAY_NAMESPACE/service.yaml
+cat <<EOF > ${WORK_DIR}$GKE_CONFIGS_DIR_NAME/$INGRESS_GATEWAY_NAMESPACE/service.yaml
 apiVersion: v1
 kind: Service
 metadata:
@@ -206,7 +206,7 @@ EOF
 ```
 
 ```Bash
-cat <<EOF > ~/$GKE_CONFIGS_DIR_NAME/$INGRESS_GATEWAY_NAMESPACE/ingress.yaml
+cat <<EOF > ${WORK_DIR}$GKE_CONFIGS_DIR_NAME/$INGRESS_GATEWAY_NAMESPACE/ingress.yaml
 apiVersion: networking.k8s.io/v1
 kind: Ingress
 metadata:
@@ -238,7 +238,7 @@ EOF
 ## Define Gateway
 
 ```Bash
-cat <<EOF > ~/$GKE_CONFIGS_DIR_NAME/$INGRESS_GATEWAY_NAMESPACE/gateway.yaml
+cat <<EOF > ${WORK_DIR}$GKE_CONFIGS_DIR_NAME/$INGRESS_GATEWAY_NAMESPACE/gateway.yaml
 apiVersion: networking.istio.io/v1alpha3
 kind: Gateway
 metadata:
@@ -263,27 +263,13 @@ We define a [shared `Gateway`](https://istio.io/latest/docs/setup/additional-set
 ## Deploy Kubernetes manifests
 
 ```Bash
-cd ~/$GKE_CONFIGS_DIR_NAME/
+cd ${WORK_DIR}$GKE_CONFIGS_DIR_NAME/
 git add . && git commit -m "ASM Ingress Gateway in GKE cluster" && git push origin main
 ```
 
 ## Check deployments
 
-List the GitHub runs for the **GKE cluster configs** repository `cd ~/$GKE_CONFIGS_DIR_NAME && gh run list`:
-```Plaintext
-STATUS  NAME                                                  WORKFLOW  BRANCH  EVENT  ID          ELAPSED  AGE
-✓       ASM Ingress Gateway in GKE cluster                    ci        main    push   1975240395  1m14s    2m
-✓       Enforce ASM/Istio Policies in GKE cluster             ci        main    push   1972244827  59s      23h
-✓       ASM configs (mTLS, Sidecar, etc.) in GKE cluster      ci        main    push   1972234050  56s      23h
-✓       ASM MCP for GKE cluster                               ci        main    push   1972185200  1m8s     23h
-✓       Enforce Container Registries Policies in GKE cluster  ci        main    push   1972138349  55s      23h
-✓       Policies for NetworkPolicy resources                  ci        main    push   1971716019  1m14s    1d
-✓       Network Policies logging                              ci        main    push   1971353547  1m1s     1d
-✓       Config Sync monitoring                                ci        main    push   1971296656  1m9s     1d
-✓       Initial commit                                        ci        main    push   1970951731  57s      1d
-```
-
-List the Kubernetes resources managed by Config Sync in the **GKE cluster** for the **GKE cluster configs** repository:
+List the Kubernetes resources managed by Config Sync in **GKE cluster** for the **GKE cluster configs** repository:
 ```Bash
 gcloud alpha anthos config sync repo describe \
     --project $TENANT_PROJECT_ID \
@@ -291,41 +277,9 @@ gcloud alpha anthos config sync repo describe \
     --sync-name root-sync \
     --sync-namespace config-management-system
 ```
-```Plaintext
-getting 1 RepoSync and RootSync from gke-hub-membership
-┌───────────────────────────┬───────────────────────────┬─────────────────────────────────┬──────────────────────────────┐
-│           GROUP           │            KIND           │               NAME              │          NAMESPACE           │
-├───────────────────────────┼───────────────────────────┼─────────────────────────────────┼──────────────────────────────┤
-│                           │ Namespace                 │ istio-system                    │                              │
-│                           │ Namespace                 │ config-management-monitoring    │                              │
-│                           │ Namespace                 │ asm-ingress                     │                              │
-│ constraints.gatekeeper.sh │ K8sRequiredLabels         │ deployment-required-labels      │                              │
-│ constraints.gatekeeper.sh │ DestinationRuleTLSEnabled │ destination-rule-tls-enabled    │                              │
-│ constraints.gatekeeper.sh │ PolicyStrictOnly          │ policy-strict-only              │                              │
-│ constraints.gatekeeper.sh │ K8sRequiredLabels         │ namespace-required-labels       │                              │
-│ constraints.gatekeeper.sh │ AllowedServicePortName    │ allowed-service-port-names      │                              │
-│ constraints.gatekeeper.sh │ SourceNotAllAuthz         │ defined-authz-source-principals │                              │
-│ constraints.gatekeeper.sh │ K8sRequiredLabels         │ automatic-sidecar-injection     │                              │
-│ constraints.gatekeeper.sh │ K8sAllowedRepos           │ allowed-container-registries    │                              │
-│ networking.gke.io         │ NetworkLogging            │ default                         │                              │
-│ templates.gatekeeper.sh   │ ConstraintTemplate        │ allowedserviceportname          │                              │
-│ templates.gatekeeper.sh   │ ConstraintTemplate        │ k8srequiredlabels               │                              │
-│ templates.gatekeeper.sh   │ ConstraintTemplate        │ k8sallowedrepos                 │                              │
-│ templates.gatekeeper.sh   │ ConstraintTemplate        │ policystrictonly                │                              │
-│ templates.gatekeeper.sh   │ ConstraintTemplate        │ sourcenotallauthz               │                              │
-│ templates.gatekeeper.sh   │ ConstraintTemplate        │ destinationruletlsenabled       │                              │
-│                           │ ServiceAccount            │ asm-ingressgateway              │ asm-ingress                  │
-│                           │ Service                   │ asm-ingressgateway              │ asm-ingress                  │
-│ apps                      │ Deployment                │ asm-ingressgateway              │ asm-ingress                  │
-│ cloud.google.com          │ BackendConfig             │ asm-ingressgateway              │ asm-ingress                  │
-│ networking.gke.io         │ FrontendConfig            │ asm-ingressgateway              │ asm-ingress                  │
-│ networking.istio.io       │ Gateway                   │ asm-ingressgateway              │ asm-ingress                  │
-│ networking.k8s.io         │ Ingress                   │ asm-ingressgateway              │ asm-ingress                  │
-│ rbac.authorization.k8s.io │ Role                      │ asm-ingressgateway              │ asm-ingress                  │
-│ rbac.authorization.k8s.io │ RoleBinding               │ asm-ingressgateway              │ asm-ingress                  │
-│                           │ ServiceAccount            │ default                         │ config-management-monitoring │
-│                           │ ConfigMap                 │ istio-asm-managed-rapid         │ istio-system                 │
-│ mesh.cloud.google.com     │ ControlPlaneRevision      │ asm-managed-rapid               │ istio-system                 │
-│ security.istio.io         │ PeerAuthentication        │ default                         │ istio-system                 │
-└───────────────────────────┴───────────────────────────┴─────────────────────────────────┴──────────────────────────────┘
+Wait and re-run this command above until you see `"status": "SYNCED"` for this `RepoSync`. All the `managed_resources` listed should have `STATUS: Current` as well.
+
+List the GitHub runs for the **GKE cluster configs** repository:
+```Bash
+cd ${WORK_DIR}$GKE_CONFIGS_DIR_NAME && gh run list
 ```

@@ -36,6 +36,30 @@ spec:
 EOF
 ```
 
+## Define API
+
+Define the Compute Engine API [`Service`](https://cloud.google.com/config-connector/docs/reference/resource-docs/serviceusage/service) resource for the Tenant project:
+```Bash
+cat <<EOF > ${WORK_DIR}$HOST_PROJECT_DIR_NAME/projects/$TENANT_PROJECT_ID/compute-service.yaml
+apiVersion: serviceusage.cnrm.cloud.google.com/v1beta1
+kind: Service
+metadata:
+  annotations:
+    cnrm.cloud.google.com/deletion-policy: "abandon"
+    cnrm.cloud.google.com/disable-dependent-services: "false"
+    config.kubernetes.io/depends-on: resourcemanager.cnrm.cloud.google.com/namespaces/config-control/Project/${TENANT_PROJECT_ID}
+  name: ${TENANT_PROJECT_ID}-compute
+  namespace: config-control
+spec:
+  projectRef:
+    name: ${TENANT_PROJECT_ID}
+  resourceID: compute.googleapis.com
+EOF
+```
+{{% notice info %}}
+Throughout this workshop, we are enabling the Google Cloud services APIs from the **Org Admin**, it allows more control and governance over which Google Cloud services APIs the **Platform Admin** could use or not.
+{{% /notice %}}
+
 ## Deploy Kubernetes manifests
 
 ```Bash
