@@ -249,6 +249,8 @@ spec:
   resourceID: ${TENANT_PROJECT_ID}
 EOF
 ```
+{{% /tab %}}
+{{< /tabs >}}
 
 Re-deploy the `Project` resource:
 ```Bash
