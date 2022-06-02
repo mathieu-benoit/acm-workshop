@@ -30,7 +30,7 @@ apiVersion: v1
 kind: Namespace
 metadata:
   annotations:
-    mesh.cloud.google.com/proxy: '{"managed":"true"}'
+    mesh.cloud.google.com/proxy: '{"managed": true}'
   labels:
     name: ${WHEREAMI_NAMESPACE}
     istio-injection: enabled

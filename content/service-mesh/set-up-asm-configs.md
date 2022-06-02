@@ -63,19 +63,14 @@ Here we are locking down [mutual TLS to `STRICT` for the entire mesh](https://is
 
 ## Define Sidecar Mesh-wide
 
-Create a dedicated `istio-config` folder in the GKE configs's Git repo:
+Define the default `Sidecar` in the `istio-system` `Namespace`:
 ```Bash
-mkdir ${WORK_DIR}$GKE_CONFIGS_DIR_NAME/istio-config
-```
-
-Define the `istio-config` namespace:
-```Bash
-cat <<EOF > ${WORK_DIR}$GKE_CONFIGS_DIR_NAME/istio-config/sidecar.yaml
+cat <<EOF > ${WORK_DIR}$GKE_CONFIGS_DIR_NAME/istio-system/sidecar.yaml
 apiVersion: networking.istio.io/v1alpha3
 kind: Sidecar
 metadata:
   name: default
-  namespace: istio-config
+  namespace: istio-system
 spec:
   egress:
   - hosts:
@@ -87,9 +82,9 @@ EOF
 A [`Sidecar`](https://istio.io/latest/docs/reference/config/networking/sidecar/) configuration in the `MeshConfig` root namespace will be applied by default to all namespaces.
 {{% /notice %}}
 
-## Define default deny AuthorizationPolicy Mesh-wide
+## Define default deny-all AuthorizationPolicy Mesh-wide
 
-Define `deny` `AuthorizationPolicy` resource:
+Define the default `deny-all` `AuthorizationPolicy` in the `istio-system` `Namespace`:
 ```Bash
 cat <<EOF > ${WORK_DIR}$GKE_CONFIGS_DIR_NAME/istio-system/authorizationpolicy_denyall.yaml
 apiVersion: security.istio.io/v1beta1

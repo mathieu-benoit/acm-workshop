@@ -73,13 +73,13 @@ spec:
 EOF
 ```
 
-Define the `namespaces-managed-dataplance-annotation` `Constraint` based on the [`K8sRequiredAnnotations`](https://cloud.devsite.corp.google.com/anthos-config-management/docs/reference/constraint-template-library#k8srequiredannotations) `ConstraintTemplate` for `Namespaces`:
+Define the `namespaces-managed-dataplane-annotation` `Constraint` based on the [`K8sRequiredAnnotations`](https://cloud.devsite.corp.google.com/anthos-config-management/docs/reference/constraint-template-library#k8srequiredannotations) `ConstraintTemplate` for `Namespaces`:
 ```Bash
-cat <<EOF > ${WORK_DIR}$GKE_CONFIGS_DIR_NAME/policies/constraints/namespaces-managed-dataplance-annotation.yaml
+cat <<EOF > ${WORK_DIR}$GKE_CONFIGS_DIR_NAME/policies/constraints/namespaces-managed-dataplane-annotation.yaml
 apiVersion: constraints.gatekeeper.sh/v1beta1
 kind: K8sRequiredAnnotations
 metadata:
-  name: namespaces-managed-dataplance-annotation
+  name: namespaces-managed-dataplane-annotation
 spec:
   enforcementAction: deny
   match:
