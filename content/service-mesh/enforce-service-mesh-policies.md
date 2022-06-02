@@ -46,6 +46,7 @@ spec:
     - kube-system
     - resource-group-system
   parameters:
+    labels:
     - allowedRegex: enabled
       key: istio-injection
 EOF
