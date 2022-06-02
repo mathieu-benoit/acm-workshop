@@ -2,7 +2,7 @@
 title: "Browse ASM dashboard"
 weight: 7
 description: "Duration: 5 min | Persona: Platform Admin"
-tags: ["asm", "platform-admin", "security-tips"]
+tags: ["asm", "monitoring", "platform-admin", "security-tips"]
 ---
 ![Platform Admin](/images/platform-admin.png)
 _{{< param description >}}_
