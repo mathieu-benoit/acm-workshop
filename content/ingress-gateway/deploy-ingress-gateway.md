@@ -277,9 +277,24 @@ gcloud alpha anthos config sync repo describe \
     --sync-name root-sync \
     --sync-namespace config-management-system
 ```
-Wait and re-run this command above until you see `"status": "SYNCED"` for this `RepoSync`. All the `managed_resources` listed should have `STATUS: Current` as well.
+Wait and re-run this command above until you see `"status": "SYNCED"` for this `RepoSync`.
+
+In the list of the `managed_resources` listed, you shouldn't see the `asm-ingress` `Namespace` or any related Kubernetes objects just defined and deployed above. And that's on purpose. Policy Controller is blocking the deployment of this `asm-ingress` `Namespace` because we don't have any `NetworkPolicies` yet in this `Namespace` and the 
+
+There is different way to check this, here what you could do is opening the details of this `` `Constraint` to see the details of the violation at the very bottom of the description of this object:
+```Plaintext
+...
+totalViolations: 1
+  violations:
+  - enforcementAction: deny
+    kind: Namespace
+    message: Namespace <asm-ingress> does not have a NetworkPolicy
+    name: asm-ingress
+```
 
 List the GitHub runs for the **GKE cluster configs** repository:
 ```Bash
 cd ${WORK_DIR}$GKE_CONFIGS_DIR_NAME && gh run list
 ```
+
+The next section will deploy the `NetworkPolicies` in order to fix this issue.

@@ -40,7 +40,6 @@ spec:
     - default
     - gatekeeper-system
     - istio-system
-    - istio-config
     - kube-node-lease
     - kube-public
     - kube-system
@@ -104,7 +103,6 @@ spec:
     - default
     - gatekeeper-system
     - istio-system
-    - istio-config
     - kube-node-lease
     - kube-public
     - kube-system

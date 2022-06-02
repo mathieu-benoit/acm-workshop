@@ -79,7 +79,7 @@ spec:
 EOF
 ```
 {{% notice tip %}}
-A [`Sidecar`](https://istio.io/latest/docs/reference/config/networking/sidecar/) configuration in the `MeshConfig` root namespace will be applied by default to all namespaces.
+A [`Sidecar`](https://istio.io/latest/docs/reference/config/networking/sidecar/) configuration in the `istio-system` `Namespace` will be applied by default to all `Namespaces`.
 {{% /notice %}}
 
 ## Define default deny-all AuthorizationPolicy Mesh-wide
