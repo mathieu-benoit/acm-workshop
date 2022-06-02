@@ -90,7 +90,7 @@ kind: K8sRequireNamespaceNetworkPolicies
 metadata:
   name: namespaces-required-networkpolicies
 spec:
-  enforcementAction: deny
+  enforcementAction: dryrun
   match:
     kinds:
     - apiGroups:

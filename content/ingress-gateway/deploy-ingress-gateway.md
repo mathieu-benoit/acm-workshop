@@ -277,11 +277,16 @@ gcloud alpha anthos config sync repo describe \
     --sync-name root-sync \
     --sync-namespace config-management-system
 ```
-Wait and re-run this command above until you see `"status": "SYNCED"` for this `RepoSync`.
+Wait and re-run this command above until you see `"status": "SYNCED"` for this `RepoSync`.  All the `managed_resources` listed should have `STATUS: Current` as well.
 
-In the list of the `managed_resources` listed, you shouldn't see the `asm-ingress` `Namespace` or any related Kubernetes objects just defined and deployed above. And that's on purpose. Policy Controller is blocking the deployment of this `asm-ingress` `Namespace` because we don't have any `NetworkPolicies` yet in this `Namespace` and the 
+In the list of the `managed_resources` listed, you shouldn't see the `asm-ingress` `Namespace` or any related Kubernetes objects just defined and deployed above. And that's on purpose. Policy Controller is blocking the deployment of this `asm-ingress` `Namespace` because we don't have any `NetworkPolicies` yet in this `Namespace` and the `namespaces-required-networkpolicies` `Constraint` is blocking this.
 
-There is different way to check this, here what you could do is opening the details of this `` `Constraint` to see the details of the violation at the very bottom of the description of this object:
+At this stage, the `namespaces-required-networkpolicies` `Constraint` should complain because we haven't yet deployed any `NetworkPolicies` in the `asm-ingress` `Namespace. There is different ways to see the detail of the violation. Here we will navigate to the **Object browser** features of GKE from within the Google Cloud Console. Click on the link displayed by the command below:
+```Bash
+echo -e "https://console.cloud.google.com/kubernetes/object/constraints.gatekeeper.sh/k8srequirenamespacenetworkpolicies/${GKE_LOCATION}/${GKE_NAME}/namespaces-required-networkpolicies?apiVersion=v1beta1&project=${TENANT_PROJECT_ID}"
+```
+
+At the very bottom of the object's description you should see:
 ```Plaintext
 ...
 totalViolations: 1
@@ -292,9 +297,9 @@ totalViolations: 1
     name: asm-ingress
 ```
 
+The next section will deploy the `NetworkPolicies` in order to fix this issue.
+
 List the GitHub runs for the **GKE cluster configs** repository:
 ```Bash
 cd ${WORK_DIR}$GKE_CONFIGS_DIR_NAME && gh run list
 ```
-
-The next section will deploy the `NetworkPolicies` in order to fix this issue.
