@@ -1,6 +1,6 @@
 ---
 title: "Deploy NetworkPolicies"
-weight: 5
+weight: 4
 description: "Duration: 5 min | Persona: Apps Operator"
 tags: ["apps-operator", "security-tips"]
 ---
@@ -17,7 +17,7 @@ source ${WORK_DIR}acm-workshop-variables.sh
 
 Define fine granular `NetworkPolicies`:
 ```Bash
-cat <<EOF > ~/$WHERE_AMI_DIR_NAME/base/networkpolicy_denyall.yaml
+cat <<EOF > ${WORK_DIR}$WHERE_AMI_DIR_NAME/base/networkpolicy_denyall.yaml
 apiVersion: networking.k8s.io/v1
 kind: NetworkPolicy
 metadata:
@@ -28,7 +28,7 @@ spec:
   - Ingress
   - Egress
 EOF
-cat <<EOF > ~/$WHERE_AMI_DIR_NAME/base/networkpolicy_whereami.yaml
+cat <<EOF > ${WORK_DIR}$WHERE_AMI_DIR_NAME/base/networkpolicy_whereami.yaml
 apiVersion: networking.k8s.io/v1
 kind: NetworkPolicy
 metadata:
@@ -58,7 +58,7 @@ EOF
 
 Update the Kustomize base overlay:
 ```Bash
-cd ~/$WHERE_AMI_DIR_NAME/base
+cd ${WORK_DIR}$WHERE_AMI_DIR_NAME/base
 kustomize edit add resource networkpolicy_denyall.yaml
 kustomize edit add resource networkpolicy_whereami.yaml
 ```
@@ -66,21 +66,13 @@ kustomize edit add resource networkpolicy_whereami.yaml
 ## Deploy Kubernetes manifests
 
 ```Bash
-cd ~/$WHERE_AMI_DIR_NAME/
+cd ${WORK_DIR}$WHERE_AMI_DIR_NAME/
 git add . && git commit -m "Whereami NetworkPolicies" && git push origin main
 ```
 
 ## Check deployments
 
-List the GitHub runs for the **Whereami app** repository `cd ~/$WHERE_AMI_DIR_NAME && gh run list`:
-```Plaintext
-STATUS  NAME                       WORKFLOW  BRANCH  EVENT  ID          ELAPSED  AGE
-✓       Whereami Network Policies  ci        main    push   1976593659  1m1s     1m
-✓       Whereami app               ci        main    push   1976257627  1m1s     2h
-✓       Initial commit             ci        main    push   1975324083  1m5s     10h
-```
-
-List the Kubernetes resources managed by Config Sync in the **GKE cluster** for the **Whereami app** repository:
+List the Kubernetes resources managed by Config Sync in **GKE cluster** for the **Whereami app** repository:
 ```Bash
 gcloud alpha anthos config sync repo describe \
     --project $TENANT_PROJECT_ID \
@@ -88,19 +80,22 @@ gcloud alpha anthos config sync repo describe \
     --sync-name repo-sync \
     --sync-namespace $WHEREAMI_NAMESPACE
 ```
+Wait and re-run this command above until you see `"status": "SYNCED"` for this `RepoSync`. All the `managed_resources` listed should have `STATUS: Current` as well.
+
+The `namespaces-required-networkpolicies` `Constraint` shouldn't complain anymore. Click on the link displayed by the command below:
+```Bash
+echo -e "https://console.cloud.google.com/kubernetes/object/constraints.gatekeeper.sh/k8srequirenamespacenetworkpolicies/${GKE_LOCATION}/${GKE_NAME}/namespaces-required-networkpolicies?apiVersion=v1beta1&project=${TENANT_PROJECT_ID}"
+```
+
+At the very bottom of the object's description you should now see:
 ```Plaintext
-getting 1 RepoSync and RootSync from gke-hub-membership
-┌─────────────────────┬────────────────┬────────────────────┬───────────┐
-│        GROUP        │      KIND      │        NAME        │ NAMESPACE │
-├─────────────────────┼────────────────┼────────────────────┼───────────┤
-│                     │ ConfigMap      │ whereami-configmap │ whereami  │
-│                     │ ServiceAccount │ whereami-ksa       │ whereami  │
-│                     │ Service        │ whereami           │ whereami  │
-│ apps                │ Deployment     │ whereami           │ whereami  │
-│ networking.istio.io │ VirtualService │ whereami           │ whereami  │
-│ networking.k8s.io   │ NetworkPolicy  │ whereami           │ whereami  │
-│ networking.k8s.io   │ NetworkPolicy  │ denyall            │ whereami  │
-└─────────────────────┴────────────────┴────────────────────┴───────────┘
+...
+totalViolations: 0
+```
+
+List the GitHub runs for the **Whereami app** repository:
+```Bash
+cd ${WORK_DIR}$WHERE_AMI_DIR_NAME && gh run list
 ```
 
 ## Check the Whereami app
@@ -110,4 +105,4 @@ Navigate to the Whereami app, click on the link displayed by the command below:
 echo -e "https://${WHERE_AMI_INGRESS_GATEWAY_HOST_NAME}"
 ```
 
-You should still have the Whereami app working successfully.
+You should receive the error: `RBAC: access denied`. This is because the default deny-all `AuthorizationPolicy` has been applied to the entire mesh. In the next section you will apply a fine granular `AuthorizationPolicy` for the Whereami app in order to get it working.

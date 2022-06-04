@@ -17,7 +17,7 @@ source ${WORK_DIR}acm-workshop-variables.sh
 
 Get the upstream Kubernetes manifests:
 ```Bash
-cd ~/$WHERE_AMI_DIR_NAME
+cd ${WORK_DIR}$WHERE_AMI_DIR_NAME
 kpt pkg get https://github.com/GoogleCloudPlatform/kubernetes-engine-samples/whereami/k8s
 mv k8s upstream
 ```
@@ -29,7 +29,7 @@ Create Kustomize base overlay files:
 mkdir ~/$WHERE_AMI_DIR_NAME/base
 cd ~/$WHERE_AMI_DIR_NAME/base
 kustomize create --resources ../upstream
-cat <<EOF >> ~/$WHERE_AMI_DIR_NAME/base/kustomization.yaml
+cat <<EOF >> ${WORK_DIR}$WHERE_AMI_DIR_NAME/base/kustomization.yaml
 configMapGenerator:
 - name: whereami-configmap
   behavior: merge
@@ -53,7 +53,7 @@ Here we are disabling tracing from the upstream files as well as changing the `S
 
 Define the `VirtualService` resource in order to establish the Ingress Gateway routing to the Whereami app:
 ```Bash
-cat <<EOF > ~/$WHERE_AMI_DIR_NAME/base/virtualservice.yaml
+cat <<EOF > ${WORK_DIR}$WHERE_AMI_DIR_NAME/base/virtualservice.yaml
 apiVersion: networking.istio.io/v1alpha3
 kind: VirtualService
 metadata:
@@ -74,14 +74,14 @@ EOF
 
 Update the Kustomize base overlay:
 ```Bash
-cd ~/$WHERE_AMI_DIR_NAME/base
+cd ${WORK_DIR}$WHERE_AMI_DIR_NAME/base
 kustomize edit add resource virtualservice.yaml
 ```
 
 ## Define Staging namespace overlay
 
 ```Bash
-cd ~/$WHERE_AMI_DIR_NAME/staging
+cd ${WORK_DIR}$WHERE_AMI_DIR_NAME/staging
 kustomize edit add resource ../base
 kustomize edit set namespace $WHEREAMI_NAMESPACE
 ```
@@ -91,7 +91,7 @@ The `kustomization.yaml` file was already existing from the [GitHub repository t
 
 Update the Kustomize base overlay in order to set proper `hosts` value in the `VirtualService` resource:
 ```Bash
-cat <<EOF >> ~/$WHERE_AMI_DIR_NAME/staging/kustomization.yaml
+cat <<EOF >> ${WORK_DIR}$WHERE_AMI_DIR_NAME/staging/kustomization.yaml
 patchesJson6902:
 - target:
     kind: VirtualService
@@ -107,20 +107,13 @@ EOF
 ## Deploy Kubernetes manifests
 
 ```Bash
-cd ~/$WHERE_AMI_DIR_NAME/
+cd ${WORK_DIR}$WHERE_AMI_DIR_NAME/
 git add . && git commit -m "Whereami app" && git push origin main
 ```
 
 ## Check deployments
 
-List the GitHub runs for the **Whereami app** repository `cd ~/$WHERE_AMI_DIR_NAME && gh run list`:
-```Plaintext
-STATUS  NAME            WORKFLOW  BRANCH  EVENT  ID          ELAPSED  AGE
-✓       Whereami app    ci        main    push   1976257627  1m1s     2h
-✓       Initial commit  ci        main    push   1975324083  1m5s     10h
-```
-
-List the Kubernetes resources managed by Config Sync in the **GKE cluster** for the **Whereami app** repository:
+List the Kubernetes resources managed by Config Sync in **GKE cluster** for the **Whereami app** repository:
 ```Bash
 gcloud alpha anthos config sync repo describe \
     --project $TENANT_PROJECT_ID \
@@ -128,24 +121,27 @@ gcloud alpha anthos config sync repo describe \
     --sync-name repo-sync \
     --sync-namespace $WHEREAMI_NAMESPACE
 ```
-```Plaintext
-getting 1 RepoSync and RootSync from gke-hub-membership
-┌─────────────────────┬────────────────┬────────────────────┬───────────┐
-│        GROUP        │      KIND      │        NAME        │ NAMESPACE │
-├─────────────────────┼────────────────┼────────────────────┼───────────┤
-│                     │ ServiceAccount │ whereami-ksa       │ whereami  │
-│                     │ ConfigMap      │ whereami-configmap │ whereami  │
-│                     │ Service        │ whereami           │ whereami  │
-│ apps                │ Deployment     │ whereami           │ whereami  │
-│ networking.istio.io │ VirtualService │ whereami           │ whereami  │
-└─────────────────────┴────────────────┴────────────────────┴───────────┘
-```
+Wait and re-run this command above until you see `"status": "SYNCED"` for this `RepoSync`. All the `managed_resources` listed should have `STATUS: Current` as well.
 
-## Check the Whereami app
-
-Navigate to the Whereami app, click on the link displayed by the command below:
+At this stage, the `namespaces-required-networkpolicies` `Constraint` should complain because we haven't yet deployed any `NetworkPolicies` in the `whereami` `Namespace. There is different ways to see the detail of the violation. Here, we will navigate to the **Object browser** feature of GKE from within the Google Cloud Console. Click on the link displayed by the command below:
 ```Bash
-echo -e "https://${WHERE_AMI_INGRESS_GATEWAY_HOST_NAME}"
+echo -e "https://console.cloud.google.com/kubernetes/object/constraints.gatekeeper.sh/k8srequirenamespacenetworkpolicies/${GKE_LOCATION}/${GKE_NAME}/namespaces-required-networkpolicies?apiVersion=v1beta1&project=${TENANT_PROJECT_ID}"
 ```
 
-You should receive the error: `RBAC: access denied`. This is because the default deny-all `AuthorizationPolicy` has been applied to the entire mesh. In the next section you will apply a fine granular `AuthorizationPolicy` for the Whereami app in order to get it working.
+At the very bottom of the object's description you should see:
+```Plaintext
+...
+totalViolations: 1
+  violations:
+  - enforcementAction: dryrun
+    kind: Namespace
+    message: Namespace <whereami> does not have a NetworkPolicy
+    name: whereami
+```
+
+The next section will deploy the `NetworkPolicies` in the `whereami` `Namespace` in order to fix this issue.
+
+List the GitHub runs for the **Whereami app** repository:
+```Bash
+cd ${WORK_DIR}$WHERE_AMI_DIR_NAME && gh run list
+```

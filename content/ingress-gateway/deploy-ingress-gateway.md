@@ -289,7 +289,7 @@ At the very bottom of the object's description you should see:
 ...
 totalViolations: 1
   violations:
-  - enforcementAction: deny
+  - enforcementAction: dryrun
     kind: Namespace
     message: Namespace <asm-ingress> does not have a NetworkPolicy
     name: asm-ingress
