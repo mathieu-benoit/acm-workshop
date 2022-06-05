@@ -17,7 +17,7 @@ source ${WORK_DIR}acm-workshop-variables.sh
 
 ## Create FQDN
 
-Create an FQDN with Cloud Ednpoints for Whereami:
+Create an FQDN with Cloud Endpoints for Whereami:
 ```Bash
 cat <<EOF > ${WORK_DIR}dns-spec.yaml
 swagger: "2.0"

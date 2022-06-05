@@ -41,7 +41,7 @@ echo -e "https://console.cloud.google.com/anthos/services?project=${TENANT_PROJE
 Select the `whereami` app and select **--> Go to service dashboard**:
 ![Anthos Service Mesh Monitoring overview for Whereami](/images/whereami-service-mesh-monitoring-overview.png)
 
-From there you will access to a lot more monitoring features out of the box, feel free to discover these features and play with them.
+From there you will have access to a lot more monitoring features out of the box, feel free to discover these features and play with them.
 
 One feature to call out is the **Security** tab where you could get more insights about the `AuthorizationPolicy` of the Whereami app:
 ![Anthos Service Mesh Monitoring security for Whereami](/images/whereami-service-mesh-monitoring-security.png)
