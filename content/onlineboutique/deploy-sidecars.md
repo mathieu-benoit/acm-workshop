@@ -1,6 +1,6 @@
 ---
 title: "Deploy Sidecars"
-weight: 10
+weight: 4
 description: "Duration: 5 min | Persona: Apps Operator"
 tags: ["asm", "apps-operator"]
 ---
@@ -13,64 +13,69 @@ WORK_DIR=~/
 source ${WORK_DIR}acm-workshop-variables.sh
 ```
 
+Before deploying the `Sidecars`, let's see the endpoints that the `cartservice` app can reach out by default:
+```Bash
+istioctl proxy-config clusters $(kubectl -n $ONLINEBOUTIQUE_NAMESPACE get pod -l app=cartservice -o jsonpath={.items[0].metadata.name}) \
+    -n $ONLINEBOUTIQUE_NAMESPACE
+```
+```Plaintext
+SERVICE FQDN                                               PORT      SUBSET     DIRECTION     TYPE             DESTINATION RULE
+                                                           7070      -          inbound       ORIGINAL_DST
+BlackHoleCluster                                           -         -          -             STATIC
+InboundPassthroughClusterIpv4                              -         -          -             ORIGINAL_DST
+PassthroughCluster                                         -         -          -             ORIGINAL_DST
+adservice.onlineboutique.svc.cluster.local                 9555      -          outbound      EDS
+agent                                                      -         -          -             STATIC
+cartservice.onlineboutique.svc.cluster.local               7070      -          outbound      EDS
+checkoutservice.onlineboutique.svc.cluster.local           5050      -          outbound      EDS
+currencyservice.onlineboutique.svc.cluster.local           7000      -          outbound      EDS
+emailservice.onlineboutique.svc.cluster.local              5000      -          outbound      EDS
+frontend.onlineboutique.svc.cluster.local                  80        -          outbound      EDS
+paymentservice.onlineboutique.svc.cluster.local            50051     -          outbound      EDS
+productcatalogservice.onlineboutique.svc.cluster.local     3550      -          outbound      EDS
+prometheus_stats                                           -         -          -             STATIC
+recommendationservice.onlineboutique.svc.cluster.local     8080      -          outbound      EDS
+redis-cart.onlineboutique.svc.cluster.local                6379      -          outbound      EDS
+sds-grpc                                                   -         -          -             STATIC
+shippingservice.onlineboutique.svc.cluster.local           50051     -          outbound      EDS
+xds-grpc                                                   -         -          -             STATIC
+```
+
 ## Prepare upstream Kubernetes manifests
 
 Prepare the upstream Kubernetes manifests:
 ```Bash
-cd ~/$ONLINE_BOUTIQUE_DIR_NAME/upstream
+cd ${WORK_DIR}$ONLINE_BOUTIQUE_DIR_NAME/upstream
 kpt pkg get https://github.com/GoogleCloudPlatform/anthos-service-mesh-samples.git/docs/online-boutique-asm-manifests/sidecars@main
 ```
 
 ## Update the Kustomize base overlay
 
 ```Bash
-cd ~/$ONLINE_BOUTIQUE_DIR_NAME/base
+cd ${WORK_DIR}$ONLINE_BOUTIQUE_DIR_NAME/base
 kustomize edit add component ../upstream/sidecars/all
 ```
 
 ## Update Staging namespace overlay
 
 ```Bash
-cd ~/$ONLINE_BOUTIQUE_DIR_NAME/staging
+cd ${WORK_DIR}$ONLINE_BOUTIQUE_DIR_NAME/staging
 mkdir sidecars
 cp -r ../upstream/sidecars/for-namespace/ sidecars/.
 sed -i "s/ONLINEBOUTIQUE_NAMESPACE/${ONLINEBOUTIQUE_NAMESPACE}/g" sidecars/for-namespace/kustomization.yaml
 kustomize edit add component sidecars/for-namespace
-kustomize edit add component ../upstream/sidecars/for-memorystore
-cd sidecars
-cat <<EOF >> kustomization.yaml
-patchesJson6902:
-- target:
-    kind: Sidecar
-    name: cartservice
-  patch: |-
-    - op: replace
-      path: /spec/egress/0/hosts
-      value:
-        - "istio-system/*"
-        - "./${CART_MEMORYSTORE_HOST}"
-EOF
 ```
 
 ## Deploy Kubernetes manifests
 
 ```Bash
-cd ~/$ONLINE_BOUTIQUE_DIR_NAME/
+cd ${WORK_DIR}$ONLINE_BOUTIQUE_DIR_NAME/
 git add . && git commit -m "Online Boutique Sidecars" && git push origin main
 ```
 
 ## Check deployments
 
-List the GitHub runs for the **Online Boutique app** repository `cd ~/$ONLINE_BOUTIQUE_DIR_NAME && gh run list`:
-```Plaintext
-STATUS  NAME                              WORKFLOW  BRANCH  EVENT  ID          ELAPSED  AGE
-✓       Online Boutique Sidecar           ci        main    push   1978491894  9s       1m
-✓       Online Boutique Network Policies  ci        main    push   1978459522  54s      11m
-✓       Online Boutique apps              ci        main    push   1978432931  1m3s     19m
-✓       Initial commit                    ci        main    push   1976979782  54s      10h
-```
-
-List the Kubernetes resources managed by Config Sync in the **GKE cluster** for the **Online Boutique app** repository:
+List the Kubernetes resources managed by Config Sync in **GKE cluster** for the **Online Boutique apps** repository:
 ```Bash
 gcloud alpha anthos config sync repo describe \
     --project $TENANT_PROJECT_ID \
@@ -78,64 +83,32 @@ gcloud alpha anthos config sync repo describe \
     --sync-name repo-sync \
     --sync-namespace $ONLINEBOUTIQUE_NAMESPACE
 ```
-```Plaintext
-getting 1 RepoSync and RootSync from gke-hub-membership
-┌─────────────────────┬────────────────┬───────────────────────┬────────────────┐
-│        GROUP        │      KIND      │          NAME         │   NAMESPACE    │
-├─────────────────────┼────────────────┼───────────────────────┼────────────────┤
-│                     │ Service        │ productcatalogservice │ onlineboutique │
-│                     │ Service        │ checkoutservice       │ onlineboutique │
-│                     │ Service        │ cartservice           │ onlineboutique │
-│                     │ Service        │ frontend              │ onlineboutique │
-│                     │ Service        │ adservice             │ onlineboutique │
-│                     │ Service        │ recommendationservice │ onlineboutique │
-│                     │ Service        │ paymentservice        │ onlineboutique │
-│                     │ Service        │ currencyservice       │ onlineboutique │
-│                     │ Service        │ shippingservice       │ onlineboutique │
-│                     │ Service        │ emailservice          │ onlineboutique │
-│ apps                │ Deployment     │ cartservice           │ onlineboutique │
-│ apps                │ Deployment     │ frontend              │ onlineboutique │
-│ apps                │ Deployment     │ recommendationservice │ onlineboutique │
-│ apps                │ Deployment     │ shippingservice       │ onlineboutique │
-│ apps                │ Deployment     │ paymentservice        │ onlineboutique │
-│ apps                │ Deployment     │ productcatalogservice │ onlineboutique │
-│ apps                │ Deployment     │ loadgenerator         │ onlineboutique │
-│ apps                │ Deployment     │ checkoutservice       │ onlineboutique │
-│ apps                │ Deployment     │ emailservice          │ onlineboutique │
-│ apps                │ Deployment     │ adservice             │ onlineboutique │
-│ apps                │ Deployment     │ currencyservice       │ onlineboutique │
-│ networking.istio.io │ Sidecar        │ adservice             │ onlineboutique │
-│ networking.istio.io │ Sidecar        │ paymentservice        │ onlineboutique │
-│ networking.istio.io │ Sidecar        │ currencyservice       │ onlineboutique │
-│ networking.istio.io │ Sidecar        │ emailservice          │ onlineboutique │
-│ networking.istio.io │ Sidecar        │ cartservice           │ onlineboutique │
-│ networking.istio.io │ Sidecar        │ frontend              │ onlineboutique │
-│ networking.istio.io │ Sidecar        │ loadgenerator         │ onlineboutique │
-│ networking.istio.io │ Sidecar        │ checkoutservice       │ onlineboutique │
-│ networking.istio.io │ Sidecar        │ recommendationservice │ onlineboutique │
-│ networking.istio.io │ VirtualService │ frontend              │ onlineboutique │
-│ networking.istio.io │ Sidecar        │ productcatalogservice │ onlineboutique │
-│ networking.istio.io │ Sidecar        │ shippingservice       │ onlineboutique │
-│ networking.k8s.io   │ NetworkPolicy  │ emailservice          │ onlineboutique │
-│ networking.k8s.io   │ NetworkPolicy  │ frontend              │ onlineboutique │
-│ networking.k8s.io   │ NetworkPolicy  │ currencyservice       │ onlineboutique │
-│ networking.k8s.io   │ NetworkPolicy  │ checkoutservice       │ onlineboutique │
-│ networking.k8s.io   │ NetworkPolicy  │ shippingservice       │ onlineboutique │
-│ networking.k8s.io   │ NetworkPolicy  │ loadgenerator         │ onlineboutique │
-│ networking.k8s.io   │ NetworkPolicy  │ denyall               │ onlineboutique │
-│ networking.k8s.io   │ NetworkPolicy  │ recommendationservice │ onlineboutique │
-│ networking.k8s.io   │ NetworkPolicy  │ productcatalogservice │ onlineboutique │
-│ networking.k8s.io   │ NetworkPolicy  │ cartservice           │ onlineboutique │
-│ networking.k8s.io   │ NetworkPolicy  │ adservice             │ onlineboutique │
-│ networking.k8s.io   │ NetworkPolicy  │ paymentservice        │ onlineboutique │
-└─────────────────────┴────────────────┴───────────────────────┴────────────────┘
+Wait and re-run this command above until you see `"status": "SYNCED"` for this `RepoSync`. All the `managed_resources` listed should have `STATUS: Current` as well.
+
+List the GitHub runs for the **Online Boutique apps** repository:
+```Bash
+cd ${WORK_DIR}$ONLINE_BOUTIQUE_DIR_NAME && gh run list
 ```
+
+Let's now see the endpoints that the `cartservice` app can reach out after we deployed the `Sidecars`:
+```Bash
+istioctl proxy-config clusters $(kubectl -n $ONLINEBOUTIQUE_NAMESPACE get pod -l app=cartservice -o jsonpath={.items[0].metadata.name}) \
+    -n $ONLINEBOUTIQUE_NAMESPACE
+```
+```Plaintext
+SERVICE FQDN                                    PORT     SUBSET     DIRECTION     TYPE             DESTINATION RULE
+                                                7070     -          inbound       ORIGINAL_DST
+BlackHoleCluster                                -        -          -             STATIC
+InboundPassthroughClusterIpv4                   -        -          -             ORIGINAL_DST
+PassthroughCluster                              -        -          -             ORIGINAL_DST
+agent                                           -        -          -             STATIC
+prometheus_stats                                -        -          -             STATIC
+redis-cart.onlineboutique.svc.cluster.local     6379     -          outbound      EDS
+sds-grpc                                        -        -          -             STATIC
+xds-grpc                                        -        -          -             STATIC
+```
+You could now see that you don't see anymore other endpoints that the `cartservice` app is communicating with. That's great CPU/Memory resources usage optimization!
 
 ## Check the Online Boutique apps
 
-Navigate to the Online Boutique apps, click on the link displayed by the command below:
-```Bash
-echo -e "https://${ONLINE_BOUTIQUE_INGRESS_GATEWAY_HOST_NAME}"
-```
-
-You should still have the Online Boutique apps working successfully.
+We still have the issue previously described with the Online Boutique website, let's fix the `NetworkPolicies` with the next section.

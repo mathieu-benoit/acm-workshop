@@ -11,7 +11,8 @@ Initialize variables:
 ```Bash
 WORK_DIR=~/
 source ${WORK_DIR}acm-workshop-variables.sh
-echo "export CONTAINER_REGISTRY_NAME=containers" >> ${WORK_DIR}acm-workshop-variables.sh
+CONTAINER_REGISTRY_NAME=containers
+echo "export CONTAINER_REGISTRY_NAME=${CONTAINER_REGISTRY_NAME}" >> ${WORK_DIR}acm-workshop-variables.sh
 echo "export CONTAINER_REGISTRY_REPOSITORY=${GKE_LOCATION}-docker.pkg.dev/${TENANT_PROJECT_ID}/${CONTAINER_REGISTRY_NAME}" >> ${WORK_DIR}acm-workshop-variables.sh
 source ${WORK_DIR}acm-workshop-variables.sh
 ```

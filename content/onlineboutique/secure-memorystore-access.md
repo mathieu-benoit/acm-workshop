@@ -1,11 +1,16 @@
 ---
 title: "Secure Memorystore access"
-weight: 8
+weight: 12
 description: "Duration: 10 min | Persona: Apps Operator"
 tags: ["apps-operator", "asm", "security-tips"]
+hidden: true
 ---
 ![Apps Operator](/images/apps-operator.png)
 _{{< param description >}}_
+
+{{% notice warning %}}
+This section is under construction and is not working currently, this page is hidden. Do not use it yet.
+{{% /notice %}}
 
 In this section, you will secure the access by TLS to the Memorystore (redis) instance from the OnlineBoutique's `cartservice` appl, without updating the source code of the app, just with Istio's capabilities.
 
@@ -17,7 +22,7 @@ echo "export CART_MEMORYSTORE_HOST=${REDIS_NAME}.memorystore-redis.${ONLINEBOUTI
 source ${WORK_DIR}acm-workshop-variables.sh
 ```
 {{% notice info %}}
-The `CART_MEMORYSTORE_HOST` has been built in order to explicitly represent the Memorystore endpoint on an Istio perspective. This name will be leveraged in 3 Istio resources: `ServiceEntry`, `DestinationRule` and `Sidecar`.
+The `CART_MEMORYSTORE_HOST` has been built in order to explicitly represent the Memorystore (redis) endpoint on an Istio perspective. This name will be leveraged in 3 Istio resources: `ServiceEntry`, `DestinationRule` and `Sidecar`.
 {{% /notice %}}
 
 ## Update Staging namespace overlay
@@ -32,7 +37,7 @@ gcloud redis instances describe $REDIS_NAME --region=$GKE_LOCATION --project=$TE
 
 Update the Online Boutique apps with the new Memorystore (redis) connection information:
 ```Bash
-cd ~/$ONLINE_BOUTIQUE_DIR_NAME/staging
+cd ${WORK_DIR}$ONLINE_BOUTIQUE_DIR_NAME/staging
 cp -r ../upstream/base/for-memorystore/ .
 sed -i "s/REDIS_IP/${REDIS_IP}/g;s/REDIS_PORT/${REDIS_PORT}/g" for-memorystore/kustomization.yaml
 kustomize edit add component for-memorystore
@@ -43,7 +48,7 @@ This will change the `REDIS_ADDR` environment variable of the `cartservice` to p
 
 Define the `Secret` with the Certificate Authority:
 ```Bash
-cd ~/$ONLINE_BOUTIQUE_DIR_NAME/staging/for-memorystore
+cd ${WORK_DIR}$ONLINE_BOUTIQUE_DIR_NAME/staging/for-memorystore
 kubectl create secret generic $REDIS_TLS_CERT_NAME --from-file=${WORK_DIR}${REDIS_TLS_CERT_NAME}.pem -n $ONLINEBOUTIQUE_NAMESPACE --dry-run=client -o yaml > memorystore-redis-tls-secret.yaml
 kustomize edit add resource memorystore-redis-tls-secret.yaml
 ```
@@ -53,7 +58,7 @@ The certificate value will be exposed in the `Secret` manifest in the Git reposi
 
 Define the `ServiceEntry` and `DestinationRule` in order to configure the TLS connection outside of the mesh and the cluster, pointing to the Memorystore (redis) instance:
 ```Bash
-cd ~/$ONLINE_BOUTIQUE_DIR_NAME/staging/for-memorystore
+cd ${WORK_DIR}$ONLINE_BOUTIQUE_DIR_NAME/staging/for-memorystore
 cat <<EOF >> memorystore-redis-tls-serviceentry.yaml
 apiVersion: networking.istio.io/v1beta1
 kind: ServiceEntry
@@ -93,7 +98,7 @@ kustomize edit add resource memorystore-redis-tls-destinationrule.yaml
 
 Update the `cartservice` `Deployment` in order to be able to load the TLS configuration for the sidecar proxy:
 ```Bash
-cd ~/$ONLINE_BOUTIQUE_DIR_NAME/staging/for-memorystore
+cd ${WORK_DIR}$ONLINE_BOUTIQUE_DIR_NAME/staging/for-memorystore
 cat <<EOF >> kustomization.yaml
 patches:
   - patch: |-
@@ -105,43 +110,52 @@ patches:
         template:
           metadata:
             annotations:
-              sidecar.istio.io/userVolumeMount: "[{"name":"${REDIS_TLS_CERT_NAME}", "mountPath":"/etc/certs", "readonly":true}]"
-              sidecar.istio.io/userVolume: "[{"name":"${REDIS_TLS_CERT_NAME}", "secret":{"secretName":"${REDIS_TLS_CERT_NAME}"}}]"
-              proxy.istio.io/config: "{"holdApplicationUntilProxyStarts":true}"
+              sidecar.istio.io/userVolumeMount: '[{"name": "redis-cert", "mountPath": "/etc/certs", "readonly": true}]'
+              sidecar.istio.io/userVolume: '[{"name": "redis-cert", "secret": {"secretName": "redis-cert"}}]'
+              proxy.istio.io/config: '{"holdApplicationUntilProxyStarts": true}'
 EOF
 ```
 
-Lastly, by waiting the release of Online Boutique v0.3.8, we need to patch the container image of the `cartservice` app with a temporary public image:
+Update the previously deployed `Sidecars`, `NetworkPolicies` and `AuthorizationPolicies`:
 ```Bash
-cd ~/$ONLINE_BOUTIQUE_DIR_NAME/base
+cd ${WORK_DIR}$ONLINE_BOUTIQUE_DIR_NAME/staging
+kustomize edit add component ../upstream/sidecars/for-memorystore
 cat <<EOF >> kustomization.yaml
 patchesJson6902:
 - target:
-    kind: Deployment
+    kind: Sidecar
     name: cartservice
   patch: |-
     - op: replace
-      path: /spec/template/spec/containers/0/image
-      value: us-east4-docker.pkg.dev/mygke-200/containers/boutique/cartservice:redis7
+      path: /spec/egress/0/hosts
+      value:
+        - "istio-system/*"
+        - "./${CART_MEMORYSTORE_HOST}"
 EOF
+cd ${WORK_DIR}$ONLINE_BOUTIQUE_DIR_NAME/base
+cat <<EOF >> network-policies/kustomization.yaml
+patchesStrategicMerge:
+- |-
+  apiVersion: networking.k8s.io/v1
+  kind: NetworkPolicy
+  metadata:
+    name: redis-cart
+  \$patch: delete
+EOF
+kustomize edit add component ../upstream/service-accounts/for-memorystore
+kustomize edit add component ../upstream/authorization-policies/for-memorystore
 ```
 
 ## Deploy Kubernetes manifests
 
 ```Bash
 cd ~/$ONLINE_BOUTIQUE_DIR_NAME/
-git add . && git commit -m "Secure Memorystore access" && git push origin main
+git add . && git commit -m "Secure Memorystore (redis) access" && git push origin main
 ```
 
 ## Check deployments
 
 List the GitHub runs for the **Online Boutique app** repository `cd ~/$ONLINE_BOUTIQUE_DIR_NAME && gh run list`:
-```Plaintext
-STATUS  NAME                              WORKFLOW  BRANCH  EVENT  ID          ELAPSED  AGE
-✓       Online Boutique Network Policies  ci        main    push   1978459522  54s      2m
-✓       Online Boutique apps              ci        main    push   1978432931  1m3s     10m
-✓       Initial commit                    ci        main    push   1976979782  54s      10h
-```
 
 List the Kubernetes resources managed by Config Sync in **GKE cluster** for the **Online Boutique app** repository:
 ```Bash
@@ -151,46 +165,6 @@ gcloud alpha anthos config sync repo describe \
     --sync-name repo-sync \
     --sync-namespace $ONLINEBOUTIQUE_NAMESPACE
 ```
-```Plaintext
-getting 1 RepoSync and RootSync from gke-hub-membership
-┌─────────────────────┬────────────────┬───────────────────────┬────────────────┐
-│        GROUP        │      KIND      │          NAME         │   NAMESPACE    │
-├─────────────────────┼────────────────┼───────────────────────┼────────────────┤
-│                     │ Service        │ productcatalogservice │ onlineboutique │
-│                     │ Service        │ adservice             │ onlineboutique │
-│                     │ Service        │ checkoutservice       │ onlineboutique │
-│                     │ Service        │ recommendationservice │ onlineboutique │
-│                     │ Service        │ cartservice           │ onlineboutique │
-│                     │ Service        │ shippingservice       │ onlineboutique │
-│                     │ Service        │ emailservice          │ onlineboutique │
-│                     │ Service        │ paymentservice        │ onlineboutique │
-│                     │ Service        │ currencyservice       │ onlineboutique │
-│                     │ Service        │ frontend              │ onlineboutique │
-│ apps                │ Deployment     │ paymentservice        │ onlineboutique │
-│ apps                │ Deployment     │ productcatalogservice │ onlineboutique │
-│ apps                │ Deployment     │ shippingservice       │ onlineboutique │
-│ apps                │ Deployment     │ recommendationservice │ onlineboutique │
-│ apps                │ Deployment     │ frontend              │ onlineboutique │
-│ apps                │ Deployment     │ emailservice          │ onlineboutique │
-│ apps                │ Deployment     │ checkoutservice       │ onlineboutique │
-│ apps                │ Deployment     │ adservice             │ onlineboutique │
-│ apps                │ Deployment     │ currencyservice       │ onlineboutique │
-│ apps                │ Deployment     │ cartservice           │ onlineboutique │
-│ networking.istio.io │ VirtualService │ frontend              │ onlineboutique │
-│ networking.k8s.io   │ NetworkPolicy  │ recommendationservice │ onlineboutique │
-│ networking.k8s.io   │ NetworkPolicy  │ paymentservice        │ onlineboutique │
-│ networking.k8s.io   │ NetworkPolicy  │ loadgenerator         │ onlineboutique │
-│ networking.k8s.io   │ NetworkPolicy  │ emailservice          │ onlineboutique │
-│ networking.k8s.io   │ NetworkPolicy  │ cartservice           │ onlineboutique │
-│ networking.k8s.io   │ NetworkPolicy  │ checkoutservice       │ onlineboutique │
-│ networking.k8s.io   │ NetworkPolicy  │ productcatalogservice │ onlineboutique │
-│ networking.k8s.io   │ NetworkPolicy  │ frontend              │ onlineboutique │
-│ networking.k8s.io   │ NetworkPolicy  │ currencyservice       │ onlineboutique │
-│ networking.k8s.io   │ NetworkPolicy  │ adservice             │ onlineboutique │
-│ networking.k8s.io   │ NetworkPolicy  │ denyall               │ onlineboutique │
-│ networking.k8s.io   │ NetworkPolicy  │ shippingservice       │ onlineboutique │
-└─────────────────────┴────────────────┴───────────────────────┴────────────────┘
-```
 
 ## Check the Online Boutique apps
 
@@ -199,4 +173,4 @@ Navigate to the Online Boutique apps, click on the link displayed by the command
 echo -e "https://${ONLINE_BOUTIQUE_INGRESS_GATEWAY_HOST_NAME}"
 ```
 
-You should still have the Online Boutique apps working successfully.
+You should still have the Online Boutique apps working successfully, but now with an external redis database with encryption in-transit between this Memorystore (redis) database and the `cartservice`.

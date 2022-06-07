@@ -17,17 +17,6 @@ source ${WORK_DIR}acm-workshop-variables.sh
 
 Define fine granular `NetworkPolicies`:
 ```Bash
-cat <<EOF > ${WORK_DIR}$WHERE_AMI_DIR_NAME/base/networkpolicy_denyall.yaml
-apiVersion: networking.k8s.io/v1
-kind: NetworkPolicy
-metadata:
-  name: denyall
-spec:
-  podSelector: {}
-  policyTypes:
-  - Ingress
-  - Egress
-EOF
 cat <<EOF > ${WORK_DIR}$WHERE_AMI_DIR_NAME/base/networkpolicy_whereami.yaml
 apiVersion: networking.k8s.io/v1
 kind: NetworkPolicy
@@ -59,7 +48,6 @@ EOF
 Update the Kustomize base overlay:
 ```Bash
 cd ${WORK_DIR}$WHERE_AMI_DIR_NAME/base
-kustomize edit add resource networkpolicy_denyall.yaml
 kustomize edit add resource networkpolicy_whereami.yaml
 ```
 
@@ -81,17 +69,6 @@ gcloud alpha anthos config sync repo describe \
     --sync-namespace $WHEREAMI_NAMESPACE
 ```
 Wait and re-run this command above until you see `"status": "SYNCED"` for this `RepoSync`. All the `managed_resources` listed should have `STATUS: Current` as well.
-
-The `namespaces-required-networkpolicies` `Constraint` shouldn't complain anymore. Click on the link displayed by the command below:
-```Bash
-echo -e "https://console.cloud.google.com/kubernetes/object/constraints.gatekeeper.sh/k8srequirenamespacenetworkpolicies/${GKE_LOCATION}/${GKE_NAME}/namespaces-required-networkpolicies?apiVersion=v1beta1&project=${TENANT_PROJECT_ID}"
-```
-
-At the very bottom of the object's description you should now see:
-```Plaintext
-...
-totalViolations: 0
-```
 
 List the GitHub runs for the **Whereami app** repository:
 ```Bash

@@ -84,7 +84,7 @@ EOF
 
 Define the `namespaces-required-networkpolicies` `Constraint` based on the [`K8sRequireNamespaceNetworkPolicies`](https://cloud.devsite.corp.google.com/anthos-config-management/docs/reference/constraint-template-library#k8srequirenamespacenetworkpolicies) `ConstraintTemplate` for `Namespaces`. This `Constraint` requires that any `Namespaces` defined in the cluster has a `NetworkPolicy`:
 ```Bash
-cat <<EOF > ${WORK_DIR}$GKE_CONFIGS_DIR_NAME/policies/constraints/namespaces-required-labels.yaml
+cat <<EOF > ${WORK_DIR}$GKE_CONFIGS_DIR_NAME/policies/constraints/namespaces-required-networkpolicies.yaml
 apiVersion: constraints.gatekeeper.sh/v1beta1
 kind: K8sRequireNamespaceNetworkPolicies
 metadata:
@@ -110,7 +110,7 @@ spec:
 EOF
 ```
 
-### Define Gatekeeper config for Referrential `Constraints`
+### Define Gatekeeper config for Referrential Constraints
 
 Create the `gatekeeper-system` folder:
 ```Bash

@@ -1,6 +1,6 @@
 ---
 title: "Deploy NetworkPolicies"
-weight: 9
+weight: 5
 description: "Duration: 5 min | Persona: Apps Operator"
 tags: ["apps-operator", "security-tips"]
 ---
@@ -17,7 +17,7 @@ source ${WORK_DIR}acm-workshop-variables.sh
 
 Get the upstream Kubernetes manifests:
 ```Bash
-cd ~/$ONLINE_BOUTIQUE_DIR_NAME/upstream
+cd ${WORK_DIR}$ONLINE_BOUTIQUE_DIR_NAME/upstream
 kpt pkg get https://github.com/GoogleCloudPlatform/microservices-demo.git/docs/network-policies@main
 cd network-policies
 kustomize create --autodetect
@@ -27,18 +27,11 @@ kustomize edit remove resource Kptfile
 ## Update the Kustomize base overlay
 
 ```Bash
-cd ~/$ONLINE_BOUTIQUE_DIR_NAME/base
+cd ${WORK_DIR}$ONLINE_BOUTIQUE_DIR_NAME/base
 mkdir network-policies
 cat <<EOF >> network-policies/kustomization.yaml
 apiVersion: kustomize.config.k8s.io/v1alpha1
 kind: Component
-patchesStrategicMerge:
-- |-
-  apiVersion: networking.k8s.io/v1
-  kind: NetworkPolicy
-  metadata:
-    name: redis-cart
-  \$patch: delete
 patchesJson6902:
 - target:
     kind: NetworkPolicy
@@ -68,21 +61,13 @@ kustomize edit add component network-policies
 ## Deploy Kubernetes manifests
 
 ```Bash
-cd ~/$ONLINE_BOUTIQUE_DIR_NAME/
+cd ${WORK_DIR}$ONLINE_BOUTIQUE_DIR_NAME/
 git add . && git commit -m "Online Boutique NetworkPolicies" && git push origin main
 ```
 
 ## Check deployments
 
-List the GitHub runs for the **Online Boutique app** repository `cd ~/$ONLINE_BOUTIQUE_DIR_NAME && gh run list`:
-```Plaintext
-STATUS  NAME                              WORKFLOW  BRANCH  EVENT  ID          ELAPSED  AGE
-✓       Online Boutique Network Policies  ci        main    push   1978459522  54s      2m
-✓       Online Boutique apps              ci        main    push   1978432931  1m3s     10m
-✓       Initial commit                    ci        main    push   1976979782  54s      10h
-```
-
-List the Kubernetes resources managed by Config Sync in the **GKE cluster** for the **Online Boutique app** repository:
+List the Kubernetes resources managed by Config Sync in **GKE cluster** for the **Online Boutique apps** repository:
 ```Bash
 gcloud alpha anthos config sync repo describe \
     --project $TENANT_PROJECT_ID \
@@ -90,52 +75,23 @@ gcloud alpha anthos config sync repo describe \
     --sync-name repo-sync \
     --sync-namespace $ONLINEBOUTIQUE_NAMESPACE
 ```
-```Plaintext
-getting 1 RepoSync and RootSync from gke-hub-membership
-┌─────────────────────┬────────────────┬───────────────────────┬────────────────┐
-│        GROUP        │      KIND      │          NAME         │   NAMESPACE    │
-├─────────────────────┼────────────────┼───────────────────────┼────────────────┤
-│                     │ Service        │ productcatalogservice │ onlineboutique │
-│                     │ Service        │ adservice             │ onlineboutique │
-│                     │ Service        │ checkoutservice       │ onlineboutique │
-│                     │ Service        │ recommendationservice │ onlineboutique │
-│                     │ Service        │ cartservice           │ onlineboutique │
-│                     │ Service        │ shippingservice       │ onlineboutique │
-│                     │ Service        │ emailservice          │ onlineboutique │
-│                     │ Service        │ paymentservice        │ onlineboutique │
-│                     │ Service        │ currencyservice       │ onlineboutique │
-│                     │ Service        │ frontend              │ onlineboutique │
-│ apps                │ Deployment     │ paymentservice        │ onlineboutique │
-│ apps                │ Deployment     │ productcatalogservice │ onlineboutique │
-│ apps                │ Deployment     │ shippingservice       │ onlineboutique │
-│ apps                │ Deployment     │ recommendationservice │ onlineboutique │
-│ apps                │ Deployment     │ frontend              │ onlineboutique │
-│ apps                │ Deployment     │ emailservice          │ onlineboutique │
-│ apps                │ Deployment     │ checkoutservice       │ onlineboutique │
-│ apps                │ Deployment     │ adservice             │ onlineboutique │
-│ apps                │ Deployment     │ currencyservice       │ onlineboutique │
-│ apps                │ Deployment     │ cartservice           │ onlineboutique │
-│ networking.istio.io │ VirtualService │ frontend              │ onlineboutique │
-│ networking.k8s.io   │ NetworkPolicy  │ recommendationservice │ onlineboutique │
-│ networking.k8s.io   │ NetworkPolicy  │ paymentservice        │ onlineboutique │
-│ networking.k8s.io   │ NetworkPolicy  │ loadgenerator         │ onlineboutique │
-│ networking.k8s.io   │ NetworkPolicy  │ emailservice          │ onlineboutique │
-│ networking.k8s.io   │ NetworkPolicy  │ cartservice           │ onlineboutique │
-│ networking.k8s.io   │ NetworkPolicy  │ checkoutservice       │ onlineboutique │
-│ networking.k8s.io   │ NetworkPolicy  │ productcatalogservice │ onlineboutique │
-│ networking.k8s.io   │ NetworkPolicy  │ frontend              │ onlineboutique │
-│ networking.k8s.io   │ NetworkPolicy  │ currencyservice       │ onlineboutique │
-│ networking.k8s.io   │ NetworkPolicy  │ adservice             │ onlineboutique │
-│ networking.k8s.io   │ NetworkPolicy  │ denyall               │ onlineboutique │
-│ networking.k8s.io   │ NetworkPolicy  │ shippingservice       │ onlineboutique │
-└─────────────────────┴────────────────┴───────────────────────┴────────────────┘
+Wait and re-run this command above until you see `"status": "SYNCED"` for this `RepoSync`. All the `managed_resources` listed should have `STATUS: Current` as well.
+
+List the GitHub runs for the **Online Boutique apps** repository:
+```Bash
+cd ${WORK_DIR}$ONLINE_BOUTIQUE_DIR_NAME && gh run list
 ```
 
 ## Check the Online Boutique apps
+
+Open the list of the **Workloads** deployed in the GKE cluster, you will now see that all the Online Boutique apps are working. Click on the link displayed by the command below:
+```Bash
+echo -e "https://console.cloud.google.com/kubernetes/workload/overview?project=${TENANT_PROJECT_ID}"
+```
 
 Navigate to the Online Boutique apps, click on the link displayed by the command below:
 ```Bash
 echo -e "https://${ONLINE_BOUTIQUE_INGRESS_GATEWAY_HOST_NAME}"
 ```
 
-You should still have the Online Boutique apps working successfully.
+You should receive the error: `RBAC: access denied`. This is because the default deny-all `AuthorizationPolicy` has been applied to the entire mesh. In the next section you will apply fine granular `AuthorizationPolicies` for the Online Boutique apps in order to get them working.

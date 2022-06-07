@@ -279,7 +279,7 @@ gcloud alpha anthos config sync repo describe \
 ```
 Wait and re-run this command above until you see `"status": "SYNCED"` for this `RepoSync`.  All the `managed_resources` listed should have `STATUS: Current` as well.
 
-At this stage, the `namespaces-required-networkpolicies` `Constraint` should complain because we haven't yet deployed any `NetworkPolicies` in the `asm-ingress` `Namespace. There is different ways to see the detail of the violation. Here, we will navigate to the **Object browser** feature of GKE from within the Google Cloud Console. Click on the link displayed by the command below:
+At this stage, the `namespaces-required-networkpolicies` `Constraint` should silently (`dryrun`) complain because we haven't yet deployed any `NetworkPolicies` in the `asm-ingress` `Namespace`. There is different ways to see the detail of the violation. Here, we will navigate to the **Object browser** feature of GKE from within the Google Cloud Console. Click on the link displayed by the command below:
 ```Bash
 echo -e "https://console.cloud.google.com/kubernetes/object/constraints.gatekeeper.sh/k8srequirenamespacenetworkpolicies/${GKE_LOCATION}/${GKE_NAME}/namespaces-required-networkpolicies?apiVersion=v1beta1&project=${TENANT_PROJECT_ID}"
 ```

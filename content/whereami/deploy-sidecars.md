@@ -82,7 +82,7 @@ List the GitHub runs for the **Whereami app** repository:
 cd ${WORK_DIR}$WHERE_AMI_DIR_NAME && gh run list
 ```
 
-Let's now see the endpoints that the Whereami app can reach out after we deployed this `Sidecar`:
+Let's now see the endpoints that the `whereami` app can reach out after we deployed this `Sidecar`:
 ```Bash
 istioctl proxy-config clusters $(kubectl -n $WHEREAMI_NAMESPACE get pod -l app=whereami -o jsonpath={.items[0].metadata.name}) \
     -n $WHEREAMI_NAMESPACE
@@ -98,7 +98,7 @@ prometheus_stats                  -        -          -             STATIC
 sds-grpc                          -        -          -             STATIC
 xds-grpc                          -        -          -             STATIC
 ```
-You could now see that you don't see anymore other endpoints that the Whereami app is not communicating with. Great CPU/Memory resources usage optimization!
+You could now see that you don't see anymore other endpoints that the `whereami` app is communicating with. That's great CPU/Memory resources usage optimization!
 
 ## Check the Whereami app
 

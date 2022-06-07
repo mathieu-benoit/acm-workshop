@@ -39,7 +39,8 @@ spec:
     - us-docker.pkg.dev/google-samples/containers/gke/whereami
     - gcr.io/google-samples/microservices-demo
     - busybox #not ideal, but temporary (loadgenerator's initContainer)
-    #- ${CONTAINER_REGISTRY_REPOSITORY}
+    - redis
+    - ${CONTAINER_REGISTRY_REPOSITORY}
 EOF
 ```
 
