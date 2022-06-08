@@ -26,8 +26,8 @@ mv k8s upstream
 
 Create Kustomize base overlay files:
 ```Bash
-mkdir ~/$WHERE_AMI_DIR_NAME/base
-cd ~/$WHERE_AMI_DIR_NAME/base
+mkdir ${WORK_DIR}$WHERE_AMI_DIR_NAME/base
+cd ${WORK_DIR}$WHERE_AMI_DIR_NAME/base
 kustomize create --resources ../upstream
 cat <<EOF >> ${WORK_DIR}$WHERE_AMI_DIR_NAME/base/kustomization.yaml
 configMapGenerator:

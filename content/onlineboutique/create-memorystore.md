@@ -17,7 +17,7 @@ source ${WORK_DIR}acm-workshop-variables.sh
 
 Create a folder dedicated for any resources related Online Boutique specifically: 
 ```Bash
-mkdir ~/$TENANT_PROJECT_DIR_NAME/$ONLINEBOUTIQUE_NAMESPACE
+mkdir ${WORK_DIR}$TENANT_PROJECT_DIR_NAME/$ONLINEBOUTIQUE_NAMESPACE
 ```
 
 ## Define Memorystore (redis)

@@ -82,7 +82,7 @@ https://cloud.google.com/armor/docs/rule-tuning#preconfigured_rules
 Not directly related to Cloud Armor, but let's define an SSL policy which will allow us to set an HTTP to HTTPS redirect on the `Ingress`.
 
 ```Bash
-cat <<EOF > ~/$TENANT_PROJECT_DIR_NAME/ssl-policy.yaml
+cat <<EOF > ${WORK_DIR}$TENANT_PROJECT_DIR_NAME/ssl-policy.yaml
 apiVersion: compute.cnrm.cloud.google.com/v1beta1
 kind: ComputeSSLPolicy
 metadata:

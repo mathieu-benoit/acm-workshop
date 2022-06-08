@@ -55,21 +55,25 @@ kustomize edit add component ../upstream/authorization-policies/for-memorystore
 ## Deploy Kubernetes manifests
 
 ```Bash
-cd ~/$ONLINE_BOUTIQUE_DIR_NAME/
+cd ${WORK_DIR}$ONLINE_BOUTIQUE_DIR_NAME/
 git add . && git commit -m "Secure Memorystore (redis) access" && git push origin main
 ```
 
 ## Check deployments
 
-List the GitHub runs for the **Online Boutique app** repository `cd ~/$ONLINE_BOUTIQUE_DIR_NAME && gh run list`:
-
-List the Kubernetes resources managed by Config Sync in **GKE cluster** for the **Online Boutique app** repository:
+List the Kubernetes resources managed by Config Sync in **GKE cluster** for the **Online Boutique apps** repository:
 ```Bash
 gcloud alpha anthos config sync repo describe \
     --project $TENANT_PROJECT_ID \
     --managed-resources all \
     --sync-name repo-sync \
     --sync-namespace $ONLINEBOUTIQUE_NAMESPACE
+```
+Wait and re-run this command above until you see `"status": "SYNCED"` for this `RepoSync`. All the `managed_resources` listed should have `STATUS: Current` as well.
+
+List the GitHub runs for the **Online Boutique apps** repository:
+```Bash
+cd ${WORK_DIR}$ONLINE_BOUTIQUE_DIR_NAME && gh run list
 ```
 
 ## Check the Online Boutique apps
