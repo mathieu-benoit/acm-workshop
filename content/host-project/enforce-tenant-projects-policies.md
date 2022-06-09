@@ -19,7 +19,7 @@ source ${WORK_DIR}acm-workshop-variables.sh
 
 Define the `namespaces-required-project-id-annotation` `Constraint` based on the `K8sRequiredAnnotations` `ConstraintTemplate` for `Namespaces`:
 ```Bash
-cat <<EOF > ${WORK_DIR}$GKE_CONFIGS_DIR_NAME/policies/constraints/namespaces-required-project-id-annotation.yaml
+cat <<EOF > ${WORK_DIR}$HOST_PROJECT_DIR_NAME/policies/constraints/namespaces-required-project-id-annotation.yaml
 apiVersion: constraints.gatekeeper.sh/v1beta1
 kind: K8sRequiredAnnotations
 metadata:
@@ -157,4 +157,16 @@ Wait and re-run this command above until you see `"status": "SYNCED"` for this `
 List the GitHub runs for the **Host project configs** repository:
 ```Bash
 cd ${WORK_DIR}$HOST_PROJECT_DIR_NAME && gh run list
+```
+
+## Test the policies
+
+If you try to create a `Namespace` without any `ConfigConnectorContext`:
+```Bash
+kubectl create namespace test
+```
+You will get this error confirming that the `Constraints` are in place:
+```Plaintext
+Error from server (Forbidden): admission webhook "validation.gatekeeper.sh" denied the request: [namespaces-required-configconnectorcontext] Namespace <test> does not have a ConfigConnectorContext
+[namespaces-required-project-id-annotation] you must provide annotation(s): {"cnrm.cloud.google.com/project-id"}
 ```
