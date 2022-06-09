@@ -7,23 +7,23 @@ tags: ["org-admin", "policies", "security-tips"]
 ![Org Admin](/images/org-admin.png)
 _{{< param description >}}_
 
+In this section you will enforce policies to guarantee that any `Namespaces` in the ConfigController instance defining any Tenant project should have the ProjectId annotation as well as should contain its own `ConfigConnectorContext` object in order to leverage the [namespaced mode of Config Connector](https://cloud.google.com/config-connector/docs/how-to/advanced-install#namespaced-mode).
+
 Initialize variables:
 ```Bash
 WORK_DIR=~/
 source ${WORK_DIR}acm-workshop-variables.sh
 ```
 
-In this section you will enforce policies to guarantee that any `Namespaces` in the ConfigController instance defining any Tenant project should have the ProjectId annotation as well as should contain its own `ConfigConnectorContext` object in order to leverage the [namespaced mode of Config Connector](https://cloud.google.com/config-connector/docs/how-to/advanced-install#namespaced-mode).
-
 ## Define the "Require ProjectId annotation for Namespaces" policy
 
-Define the `namespaces-required-annotations` `Constraint` based on the `K8sRequiredAnnotations` `ConstraintTemplate` for `Namespaces`:
+Define the `namespaces-required-project-id-annotation` `Constraint` based on the `K8sRequiredAnnotations` `ConstraintTemplate` for `Namespaces`:
 ```Bash
-cat <<EOF > ${WORK_DIR}$GKE_CONFIGS_DIR_NAME/policies/constraints/namespaces-required-annotations.yaml
+cat <<EOF > ${WORK_DIR}$GKE_CONFIGS_DIR_NAME/policies/constraints/namespaces-required-project-id-annotation.yaml
 apiVersion: constraints.gatekeeper.sh/v1beta1
 kind: K8sRequiredAnnotations
 metadata:
-  name: namespaces-required-annotations
+  name: namespaces-required-project-id-annotation
 spec:
   enforcementAction: deny
   match:
