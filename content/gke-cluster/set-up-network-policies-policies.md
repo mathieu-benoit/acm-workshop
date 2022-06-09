@@ -110,21 +110,11 @@ spec:
 EOF
 ```
 
-### Define Gatekeeper config for Referrential Constraints
+Because this is [constraint is referential](https://cloud.google.com/anthos-config-management/docs/how-to/creating-constraints#referential) (look at `NetworkPolicy` in `Namespace`), we need to define an associated `Config` in the `gatekeeper-system` `Namespace`:
 
 Create the `gatekeeper-system` folder:
 ```Bash
 mkdir ${WORK_DIR}$GKE_CONFIGS_DIR_NAME/gatekeeper-system
-```
-
-Define the `gatekeeper-system` `Namespace`:
-```Bash
-cat <<EOF > ${WORK_DIR}$GKE_CONFIGS_DIR_NAME/gatekeeper-system/namespace.yaml
-apiVersion: v1
-kind: Namespace
-metadata:
-  name: gatekeeper-system
-EOF
 ```
 
 Define the `config-referential-constraints` `Config`:

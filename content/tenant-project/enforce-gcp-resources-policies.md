@@ -1,5 +1,5 @@
 ---
-title: "Enforce Tenant project policies"
+title: "Enforce GCP resources policies"
 weight: 3
 description: "Duration: 5 min | Persona: Org Admin"
 tags: ["org-admin", "policies", "security-tips"]
@@ -75,7 +75,7 @@ spec:
   match:
     kinds:
       - apiGroups:
-          - '*'
+          - '*.cnrm.cloud.google.com'
         kinds:
           - '*'
   parameters:
@@ -91,7 +91,7 @@ EOF
 
 ```Bash
 cd ${WORK_DIR}$HOST_PROJECT_DIR_NAME/
-git add . && git commit -m "Enforce policies for Tenant project" && git push origin main
+git add . && git commit -m "Enforce policies for GCP resources" && git push origin main
 ```
 
 ## Check deployments
