@@ -1,6 +1,6 @@
 ---
 title: "Enforce Tenant projects policies"
-weight: 3
+weight: 4
 description: "Duration: 5 min | Persona: Org Admin"
 tags: ["org-admin", "policies", "security-tips"]
 ---
