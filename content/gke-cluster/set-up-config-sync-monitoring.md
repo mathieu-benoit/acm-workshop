@@ -65,9 +65,9 @@ gcloud monitoring dashboards create \
     --project ${TENANT_PROJECT_ID}
 ```
 
-Navigate to the list of your Cloud MOnitoring Dashboard:
+Navigate to the list of your Cloud Monitoring dashboards. Click on the link displayed by the command below:
 ```Bash
-echo -e "https://pantheon.corp.google.com/monitoring/dashboards?project=${TENANT_PROJECT_ID}"
+echo -e "https://console.cloud.google.com/monitoring/dashboards?project=${TENANT_PROJECT_ID}"
 ```
 
 Open the **Config Sync** dashboard just created. 
