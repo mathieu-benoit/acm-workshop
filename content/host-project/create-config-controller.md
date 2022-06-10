@@ -19,7 +19,7 @@ echo "export CONFIG_CONTROLLER_NETWORK=default" >> ${WORK_DIR}acm-workshop-varia
 source ${WORK_DIR}acm-workshop-variables.sh
 ```
 {{% notice info %}}
-We are creating the Config Controller instance in `us-east1` but other regions are also supported: `europe-north1`, `australia-southeast1`, `us-central1`, `northamerica-northeast1`, `northamerica-northeast2`, `asia-northeast1` and `asia-northeast2`.
+We are creating the Config Controller instance in `us-east1` but other regions are also supported: `europe-north1`, `europe-west1`, `europe-west3`, `australia-southeast1`, `australia-southeast2`, `us-central1`, `northamerica-northeast1`, `northamerica-northeast2`, `asia-northeast1` and `asia-northeast2`.
 {{% /notice %}}
 
 ## Create the Config Controller instance
