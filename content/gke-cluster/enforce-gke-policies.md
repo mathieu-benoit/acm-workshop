@@ -2,10 +2,12 @@
 title: "Enforce GKE policies"
 weight: 2
 description: "Duration: 5 min | Persona: Org Admin"
-tags: ["org-admin", "policies", "security-tips"]
+tags: ["asm", "org-admin", "policies", "security-tips"]
 ---
 ![Org Admin](/images/org-admin.png)
 _{{< param description >}}_
+
+In this section, you will set up policies in order to enforce governance against the Kubernetes manifests defining your GKE cluster. This will guarantee that the best practices in term of security are respected.
 
 Define variables:
 ```Bash
@@ -117,6 +119,28 @@ spec:
         kinds:
           - ContainerCluster
           - ContainerNodePool
+EOF
+```
+
+Define the `gke-clusters-require-asm-label` `Constraint` based on the `K8sRequiredLabels` `ConstraintTemplate` just created:
+```Bash
+cat <<EOF > ${WORK_DIR}$HOST_PROJECT_DIR_NAME/policies/constraints/gke-clusters-require-asm-label.yaml
+apiVersion: constraints.gatekeeper.sh/v1beta1
+kind: K8sRequiredLabels
+metadata:
+  name: gke-clusters-require-asm-label
+spec:
+  enforcementAction: deny
+  match:
+    kinds:
+      - apiGroups:
+          - container.cnrm.cloud.google.com
+        kinds:
+          - ContainerCluster
+  parameters:
+    labels:
+    - allowedRegex: proj-*
+      key: mesh_id
 EOF
 ```
 
