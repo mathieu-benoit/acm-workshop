@@ -54,3 +54,22 @@ List the GitHub runs for the **GKE cluster configs** repository:
 ```Bash
 cd ${WORK_DIR}$GKE_CONFIGS_DIR_NAME && gh run list
 ```
+
+## Create a sample Config Sync dashboard
+
+Create a Config Sync dashboard based on a predefined template:
+```Bash
+curl -o ${WORK_DIR}ConfigSync-Dashboard.json https://raw.githubusercontent.com/GoogleCloudPlatform/monitoring-dashboard-samples/master/dashboards/anthos-config-management/ACM-ConfigSync.json
+gcloud monitoring dashboards create \
+    --config-from-file=${WORK_DIR}ConfigSync-Dashboard.json \
+    --project ${TENANT_PROJECT_ID}
+```
+
+Navigate to the list of your Cloud MOnitoring Dashboard:
+```Bash
+echo -e "https://pantheon.corp.google.com/monitoring/dashboards?project=${TENANT_PROJECT_ID}"
+```
+
+Open the **Config Sync** dashboard just created. 
+
+You won't have yet any data as we haven't yet synchronized any resources yet in the GKE cluster. You could come back to this dashboard as we are moving forward with this workshop.

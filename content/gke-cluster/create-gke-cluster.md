@@ -261,3 +261,4 @@ gcloud container node-pools list \
     --project $TENANT_PROJECT_ID \
     --region $GKE_LOCATION
 ```
+Wait and re-run this command above until you see the resources created.

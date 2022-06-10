@@ -102,3 +102,4 @@ gcloud projects get-iam-policy $TENANT_PROJECT_ID \
     --flatten="bindings[].members" \
     --format="table(bindings.role)"
 ```
+Wait and re-run this command above until you see the resources created.

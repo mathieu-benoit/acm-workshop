@@ -91,7 +91,7 @@ kind: RequireNamespaceConfigConnectorContext
 metadata:
   name: namespaces-required-configconnectorcontext
 spec:
-  enforcementAction: deny
+  enforcementAction: dryrun
   match:
     kinds:
     - apiGroups:

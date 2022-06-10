@@ -1,5 +1,5 @@
 ---
-title: "Allow GKE Hub"
+title: "Allow Fleet"
 weight: 4
 description: "Duration: 5 min | Persona: Org Admin"
 tags: ["kcc", "org-admin"]
@@ -40,7 +40,7 @@ EOF
 
 ## Define APIs
 
-Define the GKE and GKE Hub APIs [`Service`](https://cloud.google.com/config-connector/docs/reference/resource-docs/serviceusage/service) resources for the Tenant project:
+Define the GKE and Fleet APIs [`Service`](https://cloud.google.com/config-connector/docs/reference/resource-docs/serviceusage/service) resources for the Tenant project:
 ```Bash
 cat <<EOF > ${WORK_DIR}$HOST_PROJECT_DIR_NAME/projects/$TENANT_PROJECT_ID/gke-hub-service.yaml
 apiVersion: serviceusage.cnrm.cloud.google.com/v1beta1
@@ -78,7 +78,7 @@ EOF
 
 ```Bash
 cd ~/$HOST_PROJECT_DIR_NAME/
-git add . && git commit -m "Allow GKE Hub for Tenant project" && git push origin main
+git add . && git commit -m "Allow Fleet for Tenant project" && git push origin main
 ```
 
 ## Check deployments
@@ -127,3 +127,4 @@ gcloud projects get-iam-policy $TENANT_PROJECT_ID \
     --flatten="bindings[].members" \
     --format="table(bindings.role)"
 ```
+Wait and re-run this command above until you see the resources created.

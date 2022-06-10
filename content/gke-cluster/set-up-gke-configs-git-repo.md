@@ -135,6 +135,7 @@ spec:
       members:
         - member: serviceAccount:${TENANT_PROJECT_ID}.svc.id.goog[config-management-monitoring/default]
 EOF
+```
 
 ## Deploy Kubernetes manifests
 
@@ -204,3 +205,4 @@ gcloud container fleet memberships list \
 gcloud beta container fleet config-management status \
     --project $TENANT_PROJECT_ID
 ```
+Wait and re-run this command above until you see the resources created.
