@@ -7,6 +7,8 @@ tags: ["kcc", "platform-admin", "security-tips"]
 ![Platform Admin](/images/platform-admin.png)
 _{{< param description >}}_
 
+In this section, you will set up Cloud Armor preconfigured WAF rules such as: SQL injection, local/remote file inclusion, etc.
+
 Initialize variables:
 ```Bash
 WORK_DIR=~/

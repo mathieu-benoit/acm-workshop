@@ -7,6 +7,8 @@ tags: ["asm", "platform-admin", "policies", "security-tips"]
 ![Platform Admin](/images/platform-admin.png)
 _{{< param description >}}_
 
+In this section, you will enforce policies in order to make sure that your clusters, namespaces and apps are well configured to be secured by your Service Mesh.
+
 Initialize variables:
 ```Bash
 WORK_DIR=~/

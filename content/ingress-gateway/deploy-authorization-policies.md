@@ -7,6 +7,8 @@ tags: ["asm", "platform-admin", "security-tips"]
 ![Platform Admin](/images/platform-admin.png)
 _{{< param description >}}_
 
+In this section, you will deploy granular and specific `AuthorizationPolicies` for the Ingress Gateway namespace.
+
 Initialize variables:
 ```Bash
 WORK_DIR=~/

@@ -7,6 +7,8 @@ tags: ["asm", "platform-admin", "security-tips"]
 ![Platform Admin](/images/platform-admin.png)
 _{{< param description >}}_
 
+In this section, you will set up some configurations in order to get more insights with Cloud Trace and use the `distroless` image for your sidecar proxies.
+
 Initialize variables:
 ```Bash
 WORK_DIR=~/

@@ -7,6 +7,8 @@ tags: ["asm", "apps-operator"]
 ![Apps Operator](/images/apps-operator.png)
 _{{< param description >}}_
 
+In this section, you will deploy a fine granular `Sidecar` in order to optimize the resources (CPU/Memory) usage of the Online Boutique apps's sidecar proxies. At the end of this section you will still have the policies violation you faced earlier, but no worries, you will fix it in the next section.
+
 Initialize variables:
 ```Bash
 WORK_DIR=~/

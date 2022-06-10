@@ -7,6 +7,8 @@ tags: ["kcc", "platform-admin"]
 ![Platform Admin](/images/platform-admin.png)
 _{{< param description >}}_
 
+In this section, you will set up 
+
 Initialize variables:
 ```Bash
 WORK_DIR=~/

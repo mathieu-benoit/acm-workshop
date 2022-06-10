@@ -7,6 +7,8 @@ tags: ["asm", "platform-admin", "security-tips"]
 ![Platform Admin](/images/platform-admin.png)
 _{{< param description >}}_
 
+In this section, you will deploy a secured Ingress Gateway (unprivileged container, managed certificates, Cloud Armor, etc.) in its dedicated namespace in the GKE cluster.
+
 Initialize variables:
 ```Bash
 WORK_DIR=~/

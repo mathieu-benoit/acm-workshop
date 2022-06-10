@@ -7,6 +7,8 @@ tags: ["kcc", "platform-admin"]
 ![Platform Admin](/images/platform-admin.png)
 _{{< param description >}}_
 
+In this section, you will set up Config Sync and Policy Controller for the GKE cluster. You will also configure a main/root GitHub repository for this GKE cluster.
+
 Define variables:
 ```Bash
 WORK_DIR=~/
@@ -133,7 +135,6 @@ spec:
       members:
         - member: serviceAccount:${TENANT_PROJECT_ID}.svc.id.goog[config-management-monitoring/default]
 EOF
-```
 
 ## Deploy Kubernetes manifests
 

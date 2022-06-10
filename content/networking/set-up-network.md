@@ -7,6 +7,8 @@ tags: ["kcc", "platform-admin"]
 ![Platform Admin](/images/platform-admin.png)
 _{{< param description >}}_
 
+In this section, you will set up the VPC, subnet and Cloud NAT which will be used by the GKE cluster later.
+
 Initialize variables:
 ```Bash
 WORK_DIR=~/

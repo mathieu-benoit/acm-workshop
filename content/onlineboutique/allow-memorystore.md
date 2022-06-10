@@ -7,6 +7,8 @@ tags: ["kcc", "org-admin"]
 ![Org Admin](/images/org-admin.png)
 _{{< param description >}}_
 
+In this section, you will enable and grant the appropriate APIs in the Tenant project and the IAM role for the Tenant project's service account. This will allow later this service account to provision Memorystore (redis) instances.
+
 Initialize variables:
 ```Bash
 WORK_DIR=~/
@@ -61,7 +63,7 @@ EOF
 
 ```Bash
 cd ${WORK_DIR}$HOST_PROJECT_DIR_NAME/
-git add . && git commit -m "Allow Memorystore for Tenant project" && git push origin main
+git add . && git commit -m "Allow Memorystore (redis) for Tenant project" && git push origin main
 ```
 
 ## Check deployments

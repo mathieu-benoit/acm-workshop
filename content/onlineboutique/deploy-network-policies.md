@@ -7,6 +7,8 @@ tags: ["apps-operator", "security-tips"]
 ![Apps Operator](/images/apps-operator.png)
 _{{< param description >}}_
 
+In this section, you will deploy granular and specific `NetworkPolicies` for the Online Boutique namespace. This will fix the policies violation you faced earlier. At the end you will catch another issue that you will resolve in the next section.
+
 Initialize variables:
 ```Bash
 WORK_DIR=~/

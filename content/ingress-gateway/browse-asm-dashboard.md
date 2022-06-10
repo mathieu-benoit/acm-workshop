@@ -7,7 +7,7 @@ tags: ["asm", "monitoring", "platform-admin", "security-tips"]
 ![Platform Admin](/images/platform-admin.png)
 _{{< param description >}}_
 
-In this section, you will browse the Anthos Service Mesh dashboards in the Google Cloud console in order to get more insights for your applications in terms of topology, security, health and performance.
+In this section, you will browse the Service Mesh dashboards in the Google Cloud console in order to get more insights for your applications in terms of topology, security, health and performance.
 
 Initialize variables:
 ```Bash

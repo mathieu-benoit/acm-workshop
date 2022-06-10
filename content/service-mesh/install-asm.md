@@ -7,6 +7,8 @@ tags: ["asm", "kcc", "platform-admin", "security-tips"]
 ![Platform Admin](/images/platform-admin.png)
 _{{< param description >}}_
 
+In this section, you will install a Managed Service Mesh for your GKE cluster. This will opt your cluster in a specific channel in order to get the upgrades handled by Google for the managed control plane.
+
 Initialize variables:
 ```Bash
 WORK_DIR=~/

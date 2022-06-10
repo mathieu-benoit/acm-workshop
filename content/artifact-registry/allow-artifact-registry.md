@@ -7,6 +7,8 @@ tags: ["kcc", "org-admin", "security-tips"]
 ![Org Admin](/images/org-admin.png)
 _{{< param description >}}_
 
+In this section, you will enable and grant the appropriate APIs in the Tenant project and the IAM role for the Tenant project's service account. This will allow later this service account to provision the Artifact Registry to have your private container images. You will also the [containers analysis and scanning features](https://cloud.google.com/container-analysis/docs/automated-scanning-howto) of Artifact Registry.
+
 Initialize variables:
 ```Bash
 WORK_DIR=~/

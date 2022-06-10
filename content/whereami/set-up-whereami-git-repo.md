@@ -7,6 +7,8 @@ tags: ["asm", "platform-admin", "shift-left"]
 ![Platform Admin](/images/platform-admin.png)
 _{{< param description >}}_
 
+In this section, you will set up a dedicated GitHub repository which will contain all the Kubernetes manifests of the Whereami app. You will also have the opportunity to catch and fix a policies violation.
+
 Initialize variables:
 ```Bash
 WORK_DIR=~/

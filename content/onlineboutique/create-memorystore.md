@@ -7,6 +7,8 @@ tags: ["kcc", "platform-admin"]
 ![Platform Admin](/images/platform-admin.png)
 _{{< param description >}}_
 
+In this section, you will create a Memorystore (redis) instance for the Online Boutique's `cartservice` app to connect to.
+
 Initialize variables:
 ```Bash
 WORK_DIR=~/

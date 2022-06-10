@@ -7,6 +7,8 @@ tags: ["kcc", "platform-admin", "security-tips"]
 ![Platform Admin](/images/platform-admin.png)
 _{{< param description >}}_
 
+In this section, you will set up a secured GKE cluster including features like: workload identity, least privilege service account for the nodes, Dataplane V2, private nodes, confidential and shielded nodes, etc.
+
 Initialize variables:
 ```Bash
 WORK_DIR=~/

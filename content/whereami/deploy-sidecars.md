@@ -7,6 +7,8 @@ tags: ["apps-operator", "asm"]
 ![Apps Operator](/images/apps-operator.png)
 _{{< param description >}}_
 
+In this section, you will deploy a fine granular `Sidecar` in order to optimize the resources (CPU/Memory) usage of the Whereami app's sidecar proxy.
+
 Initialize variables:
 ```Bash
 WORK_DIR=~/

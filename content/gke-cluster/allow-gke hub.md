@@ -7,6 +7,8 @@ tags: ["kcc", "org-admin"]
 ![Org Admin](/images/org-admin.png)
 _{{< param description >}}_
 
+In this section, you will enable and grant the appropriate APIs in the Tenant project and the IAM role for the Tenant project's service account. This will allow later this service account to provision the [Fleet](https://cloud.google.com/anthos/fleet-management/docs/fleet-concepts) features.
+
 Define variables:
 ```Bash
 WORK_DIR=~/

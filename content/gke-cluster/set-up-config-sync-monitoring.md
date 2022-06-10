@@ -7,6 +7,8 @@ tags: ["platform-admin"]
 ![Platform Admin](/images/platform-admin.png)
 _{{< param description >}}_
 
+In this section, you will finalize the setup for the Config Sync's monitoring.
+
 Define variables:
 ```Bash
 WORK_DIR=~/

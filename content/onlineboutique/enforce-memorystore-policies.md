@@ -7,6 +7,8 @@ tags: ["org-admin", "policies", "security-tips"]
 ![Org Admin](/images/org-admin.png)
 _{{< param description >}}_
 
+In this section, you will set up policies in order to enforce governance against the Kubernetes manifests defining your Memorystore (redis) instances.
+
 Initialize variables:
 ```Bash
 WORK_DIR=~/

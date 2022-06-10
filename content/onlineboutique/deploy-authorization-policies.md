@@ -1,11 +1,13 @@
 ---
 title: "Deploy AuthorizationPolicies"
-weight: 5
+weight: 6
 description: "Duration: 5 min | Persona: Apps Operator"
 tags: ["apps-operator", "asm", "security-tips"]
 ---
 ![Apps Operator](/images/apps-operator.png)
 _{{< param description >}}_
+
+In this section, you will deploy granular and specific `AuthorizationPolicies` for the Online Boutique namespace. At the end that's where you will finally have a working Whereami app :)
 
 Initialize variables:
 ```Bash

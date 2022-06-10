@@ -7,6 +7,8 @@ tags: ["apps-operator", "asm"]
 ![Apps Operator](/images/apps-operator.png)
 _{{< param description >}}_
 
+In this section, you will deploy via Kustomize the Whereami app in the dedicated namespace.
+
 Initialize variables:
 ```Bash
 WORK_DIR=~/

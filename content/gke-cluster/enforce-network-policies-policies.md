@@ -1,11 +1,13 @@
 ---
-title: "Set up NetworkPolicies policies"
+title: "Enforce NetworkPolicies policies"
 weight: 7
 description: "Duration: 5 min | Persona: Platform Admin"
 tags: ["platform-admin", "policies", "security-tips"]
 ---
 ![Platform Admin](/images/platform-admin.png)
 _{{< param description >}}_
+
+In this section, you will enforce policies in order to make sure that your clusters has well defined `NetworkPolicies`.
 
 Define variables:
 ```Bash

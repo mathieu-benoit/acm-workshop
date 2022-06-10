@@ -1,11 +1,13 @@
 ---
-title: "Deploy NetworkPolicies"
-weight: 4
+title: "Deploy AuthorizationPolicy"
+weight: 5
 description: "Duration: 5 min | Persona: Apps Operator"
-tags: ["apps-operator", "security-tips"]
+tags: ["apps-operator", "asm", "security-tips"]
 ---
 ![Apps Operator](/images/apps-operator.png)
 _{{< param description >}}_
+
+In this section, you will deploy a granular and specific `AuthorizationPolicy` for the Whereami namespace. At the end that's where you will finally have a working Whereami app :)
 
 Initialize variables:
 ```Bash
@@ -13,49 +15,44 @@ WORK_DIR=~/
 source ${WORK_DIR}acm-workshop-variables.sh
 ```
 
-## Define NetworkPolicies
+## Define AuthorizationPolicy
 
-Define fine granular `NetworkPolicies`:
+Define a fine granular `AuthorizationPolicy`:
 ```Bash
-cat <<EOF > ${WORK_DIR}$WHERE_AMI_DIR_NAME/base/networkpolicy_whereami.yaml
-apiVersion: networking.k8s.io/v1
-kind: NetworkPolicy
+cat <<EOF > ${WORK_DIR}$WHERE_AMI_DIR_NAME/base/authorizationpolicy_whereami.yaml
+apiVersion: security.istio.io/v1beta1
+kind: AuthorizationPolicy
 metadata:
   name: whereami
 spec:
-  podSelector:
+  selector:
     matchLabels:
       app: whereami
-  policyTypes:
-  - Ingress
-  - Egress
-  ingress:
+  rules:
   - from:
-    - namespaceSelector:
-        matchLabels:
-          name: ${INGRESS_GATEWAY_NAMESPACE}
-      podSelector:
-        matchLabels:
-          app: ${INGRESS_GATEWAY_NAME}
-    ports:
-    - port: 8080
-      protocol: TCP
-  egress:
-  - {}
+    - source:
+        principals:
+        - cluster.local/ns/${INGRESS_GATEWAY_NAMESPACE}/sa/${INGRESS_GATEWAY_NAME}
+    to:
+    - operation:
+        ports:
+        - "8080"
+        methods:
+        - GET
 EOF
 ```
 
 Update the Kustomize base overlay:
 ```Bash
 cd ${WORK_DIR}$WHERE_AMI_DIR_NAME/base
-kustomize edit add resource networkpolicy_whereami.yaml
+kustomize edit add resource authorizationpolicy_whereami.yaml
 ```
 
 ## Deploy Kubernetes manifests
 
 ```Bash
 cd ${WORK_DIR}$WHERE_AMI_DIR_NAME/
-git add . && git commit -m "Whereami NetworkPolicies" && git push origin main
+git add . && git commit -m "Whereami AuthorizationPolicy" && git push origin main
 ```
 
 ## Check deployments
@@ -82,4 +79,4 @@ Navigate to the Whereami app, click on the link displayed by the command below:
 echo -e "https://${WHERE_AMI_INGRESS_GATEWAY_HOST_NAME}"
 ```
 
-You should receive the error: `RBAC: access denied`. This is because the default deny-all `AuthorizationPolicy` has been applied to the entire mesh. In the next section you will apply a fine granular `AuthorizationPolicy` for the Whereami app in order to get it working.
+You should now have the Whereami app working successfully. Congrats!

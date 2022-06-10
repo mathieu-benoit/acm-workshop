@@ -7,6 +7,8 @@ tags: ["org-admin", "security-tips"]
 ![Org Admin](/images/org-admin.png)
 _{{< param description >}}_
 
+In this section, you will set up a dedicated GitHub repository containing all the Kubernetes manifests which will be deployed by Config Sync and Config Connector in order to provision the Google Cloud services.
+
 Define variables:
 ```Bash
 WORK_DIR=~/

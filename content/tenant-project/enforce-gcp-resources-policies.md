@@ -7,6 +7,8 @@ tags: ["org-admin", "policies", "security-tips"]
 ![Org Admin](/images/org-admin.png)
 _{{< param description >}}_
 
+In this section, you will set up policies in order to enforce governance against the Kubernetes manifests defining your Google Cloud services. As an example, you will limit the locations available for the Google Cloud services.
+
 Initialize variables:
 ```Bash
 WORK_DIR=~/

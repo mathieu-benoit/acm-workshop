@@ -7,7 +7,7 @@ tags: ["kcc", "org-admin"]
 ![Org Admin](/images/org-admin.png)
 _{{< param description >}}_
 
-In this section, you will create the Tenant project. 
+In this section, you will create the Tenant project. The Tenant project will contain all the Google Cloud resources needed in this workshop.
 
 Define variables:
 ```Bash
