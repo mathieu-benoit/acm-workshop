@@ -109,3 +109,12 @@ List the GitHub runs for the **Host project configs** repository:
 ```Bash
 cd ${WORK_DIR}$HOST_PROJECT_DIR_NAME && gh run list
 ```
+
+List the Google Cloud resources created:
+```Bash
+gcloud services list \
+    --enabled \
+    --project ${TENANT_PROJECT_ID} \
+    | grep -E 'mesh|anthos'
+```
+Wait and re-run this command above until you see the resources created.

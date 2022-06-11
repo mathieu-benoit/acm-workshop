@@ -15,11 +15,7 @@ WORK_DIR=~/
 source ${WORK_DIR}acm-workshop-variables.sh
 ```
 
-Before deploying the `Sidecars`, let's see the endpoints that the `cartservice` app can reach out by default:
-```Bash
-istioctl proxy-config clusters $(kubectl -n $ONLINEBOUTIQUE_NAMESPACE get pod -l app=cartservice -o jsonpath={.items[0].metadata.name}) \
-    -n $ONLINEBOUTIQUE_NAMESPACE
-```
+By default, each application in the `onlineboutique` `Namespace` can reach to all the endpoints in the mesh. The list of these endpoints with could be listed by the command `istioctl proxy-config clusters`. Here is the output if you would have run this command for the `cartservice` app:
 ```Plaintext
 SERVICE FQDN                                               PORT      SUBSET     DIRECTION     TYPE             DESTINATION RULE
                                                            7070      -          inbound       ORIGINAL_DST
@@ -92,11 +88,7 @@ List the GitHub runs for the **Online Boutique apps** repository:
 cd ${WORK_DIR}$ONLINE_BOUTIQUE_DIR_NAME && gh run list
 ```
 
-Let's now see the endpoints that the `cartservice` app can reach out after we deployed the `Sidecars`:
-```Bash
-istioctl proxy-config clusters $(kubectl -n $ONLINEBOUTIQUE_NAMESPACE get pod -l app=cartservice -o jsonpath={.items[0].metadata.name}) \
-    -n $ONLINEBOUTIQUE_NAMESPACE
-```
+The endpoints that the `cartservice` app can reach is now reduced:
 ```Plaintext
 SERVICE FQDN                                    PORT     SUBSET     DIRECTION     TYPE             DESTINATION RULE
                                                 7070     -          inbound       ORIGINAL_DST
@@ -109,7 +101,7 @@ redis-cart.onlineboutique.svc.cluster.local     6379     -          outbound    
 sds-grpc                                        -        -          -             STATIC
 xds-grpc                                        -        -          -             STATIC
 ```
-You could now see that you don't see anymore other endpoints that the `cartservice` app is communicating with. That's great CPU/Memory resources usage optimization!
+You could now see that you don't see anymore other endpoints that the `cartservice` app is communicating with. That's a great CPU/Memory resources usage optimization!
 
 ## Check the Online Boutique apps
 

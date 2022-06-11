@@ -96,6 +96,7 @@ gcloud endpoints services list \
 gcloud compute ssl-certificates list \
     --project $TENANT_PROJECT_ID
 ```
+Wait and re-run this command above until you see the resources created.
 {{% notice note %}}
 Wait for the `ManagedCertificate` to be provisioned. This usually takes about 30 minutes.
 {{% /notice %}}

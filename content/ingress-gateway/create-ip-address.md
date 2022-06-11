@@ -86,8 +86,10 @@ cd ${WORK_DIR}$TENANT_PROJECT_DIR_NAME && gh run list
 List the Google Cloud resources created:
 ```Bash
 gcloud compute addresses list \
-    --project $TENANT_PROJECT_ID
+    --project $TENANT_PROJECT_ID \
+    | grep ${INGRESS_GATEWAY_PUBLIC_IP_NAME}
 ```
+Wait and re-run this command above until you see the resources created.
 
 ## Get the provisioned IP address
 

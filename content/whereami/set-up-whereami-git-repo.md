@@ -132,7 +132,7 @@ totalViolations: 1
 
 Another way to see the `Constraints` violations is to evaluate as early as possible the `Constraints` against the Kubernetes manifests before they are actually applied in the Kubernetes cluster. When you created the GitHub repository for the Online Boutique apps, you used a predefined template containing a GitHub actions workflow running Continuous Integration checks for every commit. See the content of this file by running this command:
 ```Bash
-cat ${WORK_DIR}$ONLINE_BOUTIQUE_DIR_NAME/.github/workflows/ci.yml
+cat ${WORK_DIR}$GKE_CONFIGS_DIR_NAME/.github/workflows/ci.yml
 ```
 {{% notice info %}}
 We are leveraging the [Kpt's `gatekeeper` function](https://catalog.kpt.dev/gatekeeper/v0.2/) in order to accomplish this. Another way to do that could be to leverage the [`gator test`](https://open-policy-agent.github.io/gatekeeper/website/docs/gator/#the-gator-test-subcommand) command too.
@@ -187,7 +187,7 @@ gcloud alpha anthos config sync repo describe \
     --sync-name root-sync \
     --sync-namespace config-management-system
 ```
-Wait and re-run this command above until you see `"status": "ERROR"` for this `RepoSync`. All the `managed_resources` listed should have `STATUS: Current` as well.
+Wait and re-run this command above until you see `"status": "SYNCED"` for this `RootSync`. All the `managed_resources` listed should have `STATUS: Current` as well.
 
 List the GitHub runs for the **GKE cluster configs** repository:
 ```Bash

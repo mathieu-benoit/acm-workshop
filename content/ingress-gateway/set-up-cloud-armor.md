@@ -156,6 +156,7 @@ gcloud compute security-policies list \
 gcloud compute ssl-policies list \
     --project $TENANT_PROJECT_ID
 ```
+Wait and re-run this command above until you see the resources created.
 
 ## Enable Cloud Armor logging
 

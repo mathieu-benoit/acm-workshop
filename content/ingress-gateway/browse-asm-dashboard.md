@@ -18,9 +18,11 @@ source ${WORK_DIR}acm-workshop-variables.sh
 ## Anthos Security view
 
 In the Google Cloud console, you could navigate to _Anthos > Security > Policy Audit_ and filter by the `asm-ingress` `Namespace` to see that the 3 security features _Kubernetes Network policy_, _Service access control_ and _mTLS status_ are enabled in green:
-![Anthos Security view in Google Cloud console for ASM Ingress Gateway](/images/asm-ingressgateway-anthos-security-view.png)
 
 Click on the link displayed by the command below:
 ```Bash
 echo -e "https://console.cloud.google.com/anthos/security/policy-summary?project=${TENANT_PROJECT_ID}"
 ```
+
+Select the `asm-ingress` namespace on the **Policy audit** tab:
+![Anthos Security view in Google Cloud console for ASM Ingress Gateway](/images/asm-ingressgateway-anthos-security-view.png)

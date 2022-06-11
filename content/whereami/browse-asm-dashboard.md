@@ -18,12 +18,14 @@ source ${WORK_DIR}acm-workshop-variables.sh
 ## Anthos Security
 
 In the Google Cloud console, you could navigate to _Anthos > Security > Policy Audit_ and filter by the `whereami` `Namespace` to see that the 3 security features _Kubernetes Network policy_, _Service access control_ and _mTLS status_ are enabled in green:
-![Anthos Security overview for Whereami](/images/whereami-anthos-security-overview.png)
 
 Click on the link displayed by the command below:
 ```Bash
 echo -e "https://console.cloud.google.com/anthos/security/policy-summary?project=${TENANT_PROJECT_ID}"
 ```
+
+Select the `whereami` namespace on the **Policy audit** tab:
+![Anthos Security overview for Whereami](/images/whereami-anthos-security-overview.png)
 
 Select the `whereami` **Workload** to open a more details view:
 ![Anthos Security details for Whereami](/images/whereami-anthos-security-details.png)

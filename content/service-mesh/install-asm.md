@@ -177,3 +177,8 @@ resourceState:
 spec: {}
 updateTime: '2022-06-01T21:23:39.459742087Z'
 ```
+Wait and re-run this command above until you see the resources created (`state.code: OK`).
+
+{{% notice note %}}
+The Managed ASM provisioning could take around 5-10 min.
+{{% /notice %}}

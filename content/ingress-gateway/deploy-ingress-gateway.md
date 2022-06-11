@@ -2,7 +2,7 @@
 title: "Deploy Ingress Gateway"
 weight: 4
 description: "Duration: 15 min | Persona: Platform Admin"
-tags: ["asm", "platform-admin", "security-tips"]
+tags: ["asm", "platform-admin", "security-tips", "shift-left"]
 ---
 ![Platform Admin](/images/platform-admin.png)
 _{{< param description >}}_
@@ -112,7 +112,6 @@ EOF
 
 ```Bash
 cat <<EOF > ${WORK_DIR}$GKE_CONFIGS_DIR_NAME/$INGRESS_GATEWAY_NAMESPACE/read-secrets-role.yaml
-# Set up roles to allow reading credentials for TLS
 apiVersion: rbac.authorization.k8s.io/v1
 kind: Role
 metadata:
@@ -297,9 +296,27 @@ totalViolations: 1
     name: asm-ingress
 ```
 
-The next section will deploy the `NetworkPolicies` in the `asm-ingress` `Namespace` in order to fix this issue.
+## Shift-left Policies evaluation
 
-List the GitHub runs for the **GKE cluster configs** repository:
+Another way to see the `Constraints` violations is to evaluate as early as possible the `Constraints` against the Kubernetes manifests before they are actually applied in the Kubernetes cluster. When you created the GitHub repository for GKE cluster configs, you used a predefined template containing a GitHub actions workflow running Continuous Integration checks for every commit. See the content of this file by running this command:
 ```Bash
-cd ${WORK_DIR}$GKE_CONFIGS_DIR_NAME && gh run list
+cat ${WORK_DIR}$GKE_CONFIGS_DIR_NAME/.github/workflows/ci.yml
 ```
+{{% notice info %}}
+We are leveraging the [Kpt's `gatekeeper` function](https://catalog.kpt.dev/gatekeeper/v0.2/) in order to accomplish this. Another way to do that could be to leverage the [`gator test`](https://open-policy-agent.github.io/gatekeeper/website/docs/gator/#the-gator-test-subcommand) command too.
+{{% /notice %}}
+
+See the details of the last GitHub actions run:
+```Bash
+cd ${WORK_DIR}$GKE_CONFIGS_DIR_NAME
+gh run view $(gh run list -L 1 --json databaseId --jq .[].databaseId) --log | grep violatedConstraint
+```
+The output contains the details of the error:
+```Plaintext
+build   gatekeeper      2022-06-11T02:24:28.5280656Z     [info] v1/Namespace/asm-ingress: Namespace <asm-ingress> does not have a NetworkPolicy violatedConstraint: namespaces-required-networkpolicies
+```
+{{% notice tip %}}
+In the context of this workshop, we are doing direct commits in the `main` branch but it's highly encouraged that you follow the Git flow process by creating branches and opening pull requests. With this process in place and this GitHub actions definition, your pull requests will be blocked if there is any `Constraint` violations and won't be merged into `main` branch. This will avoid any issues when actually deploying the Kubernetes manifests in the Kubernetes cluster.
+{{% /notice %}}
+
+The next section will deploy the `NetworkPolicies` in the `asm-ingress` `Namespace` in order to fix this issue.

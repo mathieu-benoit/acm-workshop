@@ -109,11 +109,8 @@ cd ${WORK_DIR}$TENANT_PROJECT_DIR_NAME && gh run list
 
 List the Google Cloud resources created:
 ```Bash
-gcloud projects get-iam-policy $TENANT_PROJECT_ID \
-    --filter="bindings.members:${GKE_SA}@${TENANT_PROJECT_ID}.iam.gserviceaccount.com" \
-    --flatten="bindings[].members" \
-    --format="table(bindings.role)"
 gcloud artifacts repositories get-iam-policy $CONTAINER_REGISTRY_NAME \
+    --project $TENANT_PROJECT_ID \
     --location $GKE_LOCATION \
     --filter="bindings.members:${GKE_SA}@${TENANT_PROJECT_ID}.iam.gserviceaccount.com" \
     --flatten="bindings[].members" \
@@ -121,3 +118,4 @@ gcloud artifacts repositories get-iam-policy $CONTAINER_REGISTRY_NAME \
 gcloud artifacts repositories list \
     --project $TENANT_PROJECT_ID
 ```
+Wait and re-run this command above until you see the resources created.

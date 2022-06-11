@@ -32,11 +32,6 @@ mkdir ${WORK_DIR}$WHERE_AMI_DIR_NAME/base
 cd ${WORK_DIR}$WHERE_AMI_DIR_NAME/base
 kustomize create --resources ../upstream
 cat <<EOF >> ${WORK_DIR}$WHERE_AMI_DIR_NAME/base/kustomization.yaml
-configMapGenerator:
-- name: whereami-configmap
-  behavior: merge
-  literals:
-  - TRACE_SAMPLING_RATIO="0"
 patchesJson6902:
 - target:
     kind: Service
@@ -48,7 +43,7 @@ patchesJson6902:
 EOF
 ```
 {{% notice info %}}
-Here we are disabling tracing from the upstream files as well as changing the `Service` `type` to `ClusterIP`.
+Here we are changing the `Service` `type` to `ClusterIP`.
 {{% /notice %}}
 
 ## Define VirtualService

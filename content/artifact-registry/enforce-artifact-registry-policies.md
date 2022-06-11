@@ -49,8 +49,8 @@ EOF
 ## Deploy Kubernetes manifests
 
 ```Bash
-cd ${WORK_DIR}$GKE_CONFIGS_DIR_NAME/ && git add . && git commit -m "Policies for Artifact Registry"
-git push origin main
+cd ${WORK_DIR}$GKE_CONFIGS_DIR_NAME/
+git add . && git commit -m "Policies for Artifact Registry" && git push origin main
 ```
 
 ## Check deployments

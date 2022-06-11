@@ -1,6 +1,6 @@
 ---
 title: "Deploy NetworkPolicy"
-weight: 4
+weight: 5
 description: "Duration: 5 min | Persona: Apps Operator"
 tags: ["apps-operator", "security-tips"]
 ---
@@ -78,6 +78,11 @@ cd ${WORK_DIR}$WHERE_AMI_DIR_NAME && gh run list
 ```
 
 ## Check the Whereami app
+
+Open the list of the **Workloads** deployed in the GKE cluster, you will now see that all the Online Boutique apps are working. Click on the link displayed by the command below:
+```Bash
+echo -e "https://console.cloud.google.com/kubernetes/workload/overview?project=${TENANT_PROJECT_ID}"
+```
 
 Navigate to the Whereami app, click on the link displayed by the command below:
 ```Bash

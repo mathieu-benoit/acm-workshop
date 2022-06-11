@@ -7,7 +7,7 @@ tags: ["kcc", "org-admin"]
 ![Org Admin](/images/org-admin.png)
 _{{< param description >}}_
 
-In this section, you will enable and grant the appropriate APIs in the Tenant project and the IAM role for the Tenant project's service account. This will allow later this service account to provision Cloud Armor.
+In this section, you will grant the appropriate IAM role for the Tenant project's service account. This will allow later this service account to provision Cloud Armor.
 
 Initialize variables:
 ```Bash
@@ -97,5 +97,7 @@ List the Google Cloud resources created:
 gcloud projects get-iam-policy $TENANT_PROJECT_ID \
     --filter="bindings.members:${TENANT_PROJECT_SA_EMAIL}" \
     --flatten="bindings[].members" \
-    --format="table(bindings.role)"
+    --format="table(bindings.role)" \
+    | grep securityAdmin
 ```
+Wait and re-run this command above until you see the resources created.
