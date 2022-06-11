@@ -2,7 +2,7 @@
 title: "Set up NetworkPolicies logging"
 weight: 6
 description: "Duration: 5 min | Persona: Platform Admin"
-tags: ["platform-admin", "security-tips"]
+tags: ["gke", "platform-admin", "security-tips"]
 ---
 ![Platform Admin](/images/platform-admin.png)
 _{{< param description >}}_

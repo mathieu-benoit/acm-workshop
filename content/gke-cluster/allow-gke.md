@@ -2,7 +2,7 @@
 title: "Allow GKE"
 weight: 1
 description: "Duration: 5 min | Persona: Org Admin"
-tags: ["kcc", "org-admin"]
+tags: ["gke", "kcc", "org-admin"]
 ---
 ![Org Admin](/images/org-admin.png)
 _{{< param description >}}_

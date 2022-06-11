@@ -38,7 +38,6 @@ spec:
     - gcr.io
     - k8s.gcr.io
     - gke.gcr.io
-    - us-docker.pkg.dev/google-samples/containers/gke/whereami
     - gcr.io/google-samples/microservices-demo
     - busybox #not ideal, but temporary (loadgenerator's initContainer)
     - redis

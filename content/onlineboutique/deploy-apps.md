@@ -1,5 +1,5 @@
 ---
-title: "Deploy Online Boutique apps"
+title: "Deploy apps"
 weight: 3
 description: "Duration: 5 min | Persona: Apps Operator"
 tags: ["apps-operator", "asm"]

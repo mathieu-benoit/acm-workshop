@@ -62,7 +62,7 @@ EOF
 We are enabling the GCP services APIs from the Org Admin, it allows more control and governance over which GCP services APIs the Platform Admin could use or not. If you want to give more autonomy to the Platform Admin, you could grant the `serviceusage.serviceUsageAdmin` role to the associated service account.
 {{% /notice %}}
 
-Define the [Container Scanning](https://cloud.google.com/container-analysis/docs/automated-scanning-howto) APIs [`Service`](https://cloud.google.com/config-connector/docs/reference/resource-docs/serviceusage/service) resource for the Tenant project:
+Define the [Container scanning](https://cloud.google.com/container-analysis/docs/automated-scanning-howto) APIs [`Service`](https://cloud.google.com/config-connector/docs/reference/resource-docs/serviceusage/service) resource for the Tenant project:
 ```Bash
 cat <<EOF > ${WORK_DIR}$HOST_PROJECT_DIR_NAME/projects/$TENANT_PROJECT_ID/containeranalysis-service.yaml
 apiVersion: serviceusage.cnrm.cloud.google.com/v1beta1
@@ -95,6 +95,31 @@ spec:
   resourceID: containerscanning.googleapis.com
 EOF
 ```
+{{% notice info %}}
+Container Analysis performs vulnerability scans on container images in Artifact Registry and Container Registry, and it monitors the vulnerability information to keep it up to date. This process comprises two main tasks: scanning and continuous analysis.
+{{% /notice %}}
+
+Define the [On-demand scanning](https://cloud.google.com/container-analysis/docs/automated-scanning-howto) APIs [`Service`](https://cloud.google.com/config-connector/docs/reference/resource-docs/serviceusage/service) resource for the Tenant project:
+```Bash
+cat <<EOF > ${WORK_DIR}$HOST_PROJECT_DIR_NAME/projects/$TENANT_PROJECT_ID/ondemandscanning-service.yaml
+apiVersion: serviceusage.cnrm.cloud.google.com/v1beta1
+kind: Service
+metadata:
+  annotations:
+    cnrm.cloud.google.com/deletion-policy: "abandon"
+    cnrm.cloud.google.com/disable-dependent-services: "false"
+    config.kubernetes.io/depends-on: resourcemanager.cnrm.cloud.google.com/namespaces/config-control/Project/${TENANT_PROJECT_ID}
+  name: ${TENANT_PROJECT_ID}-ondemandscanning
+  namespace: config-control
+spec:
+  projectRef:
+    name: ${TENANT_PROJECT_ID}
+  resourceID: ondemandscanning.googleapis.com
+EOF
+```
+{{% notice info %}}
+On-demand scanning lets you scan container images locally on your computer or in your registry, using the gcloud CLI. This gives you the flexibility to customize your CI/CD pipeline, depending on when you need to access the vulnerability results. In this workshop, you will try out this feature with its associated `gcloud` command.
+{{% /notice %}}
 
 ## Deploy Kubernetes manifests
 
@@ -152,7 +177,7 @@ List the Google Cloud resources created:
 gcloud services list \
     --enabled \
     --project ${TENANT_PROJECT_ID} \
-    | grep -E 'containerscanning|containeranalysis|artifactregistry'
+    | grep -E 'containerscanning|containeranalysis|artifactregistry|ondemandscanning'
 gcloud projects get-iam-policy $TENANT_PROJECT_ID \
     --filter="bindings.members:${TENANT_PROJECT_SA_EMAIL}" \
     --flatten="bindings[].members" \

@@ -1,6 +1,6 @@
 ---
-title: "Deploy Whereami app"
-weight: 3
+title: "Deploy app"
+weight: 4
 description: "Duration: 10 min | Persona: Apps Operator"
 tags: ["apps-operator", "asm"]
 ---
@@ -86,10 +86,17 @@ kustomize edit set namespace $WHEREAMI_NAMESPACE
 The `kustomization.yaml` file was already existing from the [GitHub repository template](https://github.com/mathieu-benoit/config-sync-app-template-repo/blob/main/staging/kustomization.yaml) used when we created the `Whereami` app repository.
 {{% /notice %}}
 
-Update the Kustomize base overlay in order to set proper `hosts` value in the `VirtualService` resource:
+Update the Kustomize base overlay in order to set the private container image and the proper `hosts` value in the `VirtualService` resource:
 ```Bash
 cat <<EOF >> ${WORK_DIR}$WHERE_AMI_DIR_NAME/staging/kustomization.yaml
 patchesJson6902:
+- target:
+    kind: Deployment
+    name: whereami
+  patch: |-
+    - op: replace
+      path: /spec/template/spec/containers/0/image
+      value: ${PRIVATE_WHEREAMI_IMAGE_NAME}
 - target:
     kind: VirtualService
     name: whereami

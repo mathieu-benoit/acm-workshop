@@ -2,7 +2,7 @@
 title: "Enforce GKE policies"
 weight: 2
 description: "Duration: 5 min | Persona: Org Admin"
-tags: ["asm", "org-admin", "policies", "security-tips"]
+tags: ["asm", "gke", "org-admin", "policies", "security-tips"]
 ---
 ![Org Admin](/images/org-admin.png)
 _{{< param description >}}_
