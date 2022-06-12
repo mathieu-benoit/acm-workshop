@@ -1,6 +1,6 @@
 ---
 title: "Deploy apps"
-weight: 3
+weight: 4
 description: "Duration: 5 min | Persona: Apps Operator"
 tags: ["apps-operator", "asm"]
 ---
@@ -44,14 +44,14 @@ patchesStrategicMerge:
 EOF
 ```
 {{% notice info %}}
-Here, we are removing the upstream `Namespace` resource as we already defined it in a previous section while configuring the associated Config Sync's `RepoSync` setup.
+We are removing the upstream `Namespace` resource as we already defined it in a previous section while configuring the associated Config Sync's `RepoSync` setup.
 {{% /notice %}}
 
-You could browse the files in the `${WORK_DIR}$ONLINE_BOUTIQUE_DIR_NAME/upstream/base` folder, along with the `Namespace`, `Deployment` and `Service` for the OnlineBoutique apps, you could see the  `VirtualService` resource which will allow to establish the Ingress Gateway routing to the OnlineBoutique app. The `spec.hosts` value is `"*"` but in the following part you will replace this value by the actual DNS of the OnlineBoutique solution (i.e. `ONLINE_BOUTIQUE_INGRESS_GATEWAY_HOST_NAME`) defined in a previous section.
+You could browse the files in the `${WORK_DIR}$ONLINE_BOUTIQUE_DIR_NAME/upstream/base` folder, along with the `Namespace`, `Deployment` and `Service` for the OnlineBoutique apps, you could see the `VirtualService` resource which will allow to establish the Ingress Gateway routing to the OnlineBoutique app. The `spec.hosts` value is `"*"` but in the following part you will replace this value by the actual DNS of the OnlineBoutique solution (i.e. `ONLINE_BOUTIQUE_INGRESS_GATEWAY_HOST_NAME`) defined in a previous section.
 
 ## Define Staging namespace overlay
 
-Here are the updates for the overlay files needed to define the Staging namespace:
+Update the overlay files needed to define the Staging namespace:
 ```Bash
 cd ${WORK_DIR}$ONLINE_BOUTIQUE_DIR_NAME/staging
 kustomize edit add resource ../base
@@ -59,6 +59,101 @@ kustomize edit set namespace $ONLINEBOUTIQUE_NAMESPACE
 cp -r ../upstream/base/for-virtualservice-host/ .
 sed -i "s/HOST_NAME/${ONLINE_BOUTIQUE_INGRESS_GATEWAY_HOST_NAME}/g" for-virtualservice-host/kustomization.yaml
 kustomize edit add component for-virtualservice-host
+```
+
+Update the `Deployments`'s container images to point to the private Artifact Registry:
+```Bash
+cd ${WORK_DIR}$ONLINE_BOUTIQUE_DIR_NAME/staging
+cat <<EOF >> ${WORK_DIR}$ONLINE_BOUTIQUE_DIR_NAME/staging/kustomization.yaml
+patchesJson6902:
+- target:
+    kind: Deployment
+    name: adservice
+  patch: |-
+    - op: replace
+      path: /spec/template/spec/containers/0/image
+      value: ${PRIVATE_ONLINE_BOUTIQUE_REGISTRY}/adservice:${ONLINE_BOUTIQUE_VERSION}
+- target:
+    kind: Deployment
+    name: cartservice
+  patch: |-
+    - op: replace
+      path: /spec/template/spec/containers/0/image
+      value: ${PRIVATE_ONLINE_BOUTIQUE_REGISTRY}/cartservice:${ONLINE_BOUTIQUE_VERSION}
+- target:
+    kind: Deployment
+    name: checkoutservice
+  patch: |-
+    - op: replace
+      path: /spec/template/spec/containers/0/image
+      value: ${PRIVATE_ONLINE_BOUTIQUE_REGISTRY}/checkoutservice:${ONLINE_BOUTIQUE_VERSION}
+- target:
+    kind: Deployment
+    name: currencyservice
+  patch: |-
+    - op: replace
+      path: /spec/template/spec/containers/0/image
+      value: ${PRIVATE_ONLINE_BOUTIQUE_REGISTRY}/currencyservice:${ONLINE_BOUTIQUE_VERSION}
+- target:
+    kind: Deployment
+    name: emailservice
+  patch: |-
+    - op: replace
+      path: /spec/template/spec/containers/0/image
+      value: ${PRIVATE_ONLINE_BOUTIQUE_REGISTRY}/emailservice:${ONLINE_BOUTIQUE_VERSION}
+- target:
+    kind: Deployment
+    name: frontend
+  patch: |-
+    - op: replace
+      path: /spec/template/spec/containers/0/image
+      value: ${PRIVATE_ONLINE_BOUTIQUE_REGISTRY}/frontend:${ONLINE_BOUTIQUE_VERSION}
+- target:
+    kind: Deployment
+    name: loadgenerator
+  patch: |-
+    - op: replace
+      path: /spec/template/spec/initContainers/0/image
+      value: ${PRIVATE_ONLINE_BOUTIQUE_REGISTRY}/busybox:latest
+    - op: replace
+      path: /spec/template/spec/containers/0/image
+      value: ${PRIVATE_ONLINE_BOUTIQUE_REGISTRY}/loadgenerator:${ONLINE_BOUTIQUE_VERSION}
+- target:
+    kind: Deployment
+    name: paymentservice
+  patch: |-
+    - op: replace
+      path: /spec/template/spec/containers/0/image
+      value: ${PRIVATE_ONLINE_BOUTIQUE_REGISTRY}/paymentservice:${ONLINE_BOUTIQUE_VERSION}
+- target:
+    kind: Deployment
+    name: productcatalogservice
+  patch: |-
+    - op: replace
+      path: /spec/template/spec/containers/0/image
+      value: ${PRIVATE_ONLINE_BOUTIQUE_REGISTRY}/productcatalogservice:${ONLINE_BOUTIQUE_VERSION}
+- target:
+    kind: Deployment
+    name: recommendationservice
+  patch: |-
+    - op: replace
+      path: /spec/template/spec/containers/0/image
+      value: ${PRIVATE_ONLINE_BOUTIQUE_REGISTRY}/recommendationservice:${ONLINE_BOUTIQUE_VERSION}
+- target:
+    kind: Deployment
+    name: shippingservice
+  patch: |-
+    - op: replace
+      path: /spec/template/spec/containers/0/image
+      value: ${PRIVATE_ONLINE_BOUTIQUE_REGISTRY}/shippingservice:${ONLINE_BOUTIQUE_VERSION}
+- target:
+    kind: Deployment
+    name: redis-cart
+  patch: |-
+    - op: replace
+      path: /spec/template/spec/containers/0/image
+      value: ${PRIVATE_ONLINE_BOUTIQUE_REGISTRY}/redis:alpine
+EOF
 ```
 
 ## Deploy Kubernetes manifests

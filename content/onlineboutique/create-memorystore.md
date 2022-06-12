@@ -13,7 +13,7 @@ Initialize variables:
 ```Bash
 WORK_DIR=~/
 source ${WORK_DIR}acm-workshop-variables.sh
-echo "export REDIS_NAME=cart" >> ${WORK_DIR}acm-workshop-variables.sh
+echo "export REDIS_NAME=cart2" >> ${WORK_DIR}acm-workshop-variables.sh
 source ${WORK_DIR}acm-workshop-variables.sh
 ```
 
@@ -41,7 +41,6 @@ spec:
   redisVersion: REDIS_6_X
   region: ${GKE_LOCATION}
   tier: BASIC
-  transitEncryptionMode: SERVER_AUTHENTICATION
 EOF
 ```
 

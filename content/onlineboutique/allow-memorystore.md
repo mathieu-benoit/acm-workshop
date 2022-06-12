@@ -120,5 +120,6 @@ List the Google Cloud resources created:
 gcloud projects get-iam-policy $TENANT_PROJECT_ID \
     --filter="bindings.members:${TENANT_PROJECT_SA_EMAIL}" \
     --flatten="bindings[].members" \
-    --format="table(bindings.role)"
+    --format="table(bindings.role)" \
+    | grep redis
 ```

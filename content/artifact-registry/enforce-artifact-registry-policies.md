@@ -35,15 +35,16 @@ spec:
   parameters:
     repos:
     - auto
-    - gcr.io
-    - k8s.gcr.io
+    - gcr.io/config-management-release
+    - gcr.io/gke-release
     - gke.gcr.io
-    - gcr.io/google-samples/microservices-demo
-    - busybox #not ideal, but temporary (loadgenerator's initContainer)
-    - redis
+    - k8s.gcr.io
     - ${CONTAINER_REGISTRY_REPOSITORY}
 EOF
 ```
+{{% notice tip %}}
+We are restricting the source of the container images in the GKE cluster. Only system container images and the images from your own private Artifact Registry can be deployed in your GKE cluster.
+{{% /notice %}}
 
 ## Deploy Kubernetes manifests
 
