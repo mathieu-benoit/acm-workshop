@@ -50,11 +50,6 @@ spec:
           input.review.object.spec.authorizedNetworkRef.name == "default"
           msg := sprintf("Memorystore (redis) %s's VPC shouldn't be default.", [input.review.object.metadata.name])
         }
-        violation[{"msg":msg}] {
-          input.review.object.kind == "RedisInstance"
-          not input.review.object.spec.transitEncryptionMode == "SERVER_AUTHENTICATION"
-          msg := sprintf("Memorystore (redis) %s's transit encryption mode should be set to SERVER_AUTHENTICATION.", [input.review.object.metadata.name])
-        }
 EOF
 ```
 
