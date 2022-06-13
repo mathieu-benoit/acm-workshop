@@ -1,5 +1,5 @@
 ---
-title: "Monitor apps"
+title: "Monitor apps security"
 weight: 3
 description: "Duration: 5 min | Persona: Apps Operator"
 tags: ["asm", "apps-operator", "monitoring", "security-tips"]
