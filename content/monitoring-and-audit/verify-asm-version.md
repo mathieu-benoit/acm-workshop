@@ -7,7 +7,7 @@ tags: ["asm", "monitoring", "platform-admin"]
 ![Platform Admin](/images/platform-admin.png)
 _{{< param description >}}_
 
-In this section, you will the versions of both: the control plane and data plane of ASM.
+In this section, you will verify in the Google Cloud console the versions of both: the control plane and data plane of ASM.
 
 Initialize variables:
 ```Bash
