@@ -101,6 +101,33 @@ EOF
 ```
 
 ```Bash
+cat <<EOF > ${WORK_DIR}$GKE_CONFIGS_DIR_NAME/$INGRESS_GATEWAY_NAMESPACE/hpa.yaml
+apiVersion: autoscaling/v2
+kind: HorizontalPodAutoscaler
+metadata:
+  name: ${INGRESS_GATEWAY_NAME}
+  namespace: ${INGRESS_GATEWAY_NAMESPACE}
+spec:
+  maxReplicas: 5
+  metrics:
+  - type: Resource
+    resource:
+      name: cpu
+      target:
+        type: Utilization
+        averageUtilization: 80
+  minReplicas: 3
+  scaleTargetRef:
+    apiVersion: apps/v1
+    kind: Deployment
+    name: ${INGRESS_GATEWAY_NAME}
+EOF
+```
+{{% notice tip %}}
+Note that we are configuring the `replicas` in the `HorizontalPodAutoscaler` and not via the `Deployment` itself, this is a best practice to avoid any conflict with the dynamic value of the `Deployment` `replicas` actually in the Kubernetes cluster managed by the `HorizontalPodAutoscaler` resource.
+{{% /notice %}}
+
+```Bash
 cat <<EOF > ${WORK_DIR}$GKE_CONFIGS_DIR_NAME/$INGRESS_GATEWAY_NAMESPACE/service-account.yaml
 apiVersion: v1
 kind: ServiceAccount
