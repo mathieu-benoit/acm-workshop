@@ -2,7 +2,7 @@
 title: "Set up Online Boutique's Git repo"
 weight: 2
 description: "Duration: 10 min | Persona: Platform Admin"
-tags: ["asm", "platform-admin", "shift-left"]
+tags: ["asm", "gitops-tips", "platform-admin", "shift-left"]
 ---
 ![Platform Admin](/images/platform-admin.png)
 _{{< param description >}}_

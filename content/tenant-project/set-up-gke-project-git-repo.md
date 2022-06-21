@@ -2,7 +2,7 @@
 title: "Set up Tenant project's Git repo"
 weight: 2
 description: "Duration: 5 min | Persona: Org Admin"
-tags: ["org-admin", "security-tips"]
+tags: ["gitops-tips", "org-admin", "security-tips"]
 ---
 ![Org Admin](/images/org-admin.png)
 _{{< param description >}}_

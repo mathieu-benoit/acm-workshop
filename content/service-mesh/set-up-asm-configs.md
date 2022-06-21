@@ -2,7 +2,7 @@
 title: "Set up ASM configs"
 weight: 3
 description: "Duration: 5 min | Persona: Platform Admin"
-tags: ["asm", "platform-admin", "security-tips"]
+tags: ["asm", "gitops-tips", "platform-admin", "security-tips"]
 ---
 ![Platform Admin](/images/platform-admin.png)
 _{{< param description >}}_
@@ -98,7 +98,7 @@ spec: {}
 EOF
 ```
 
-## Define new ClusterRole with Istio capabilities for ConfigSync
+## Define new ClusterRole with Istio capabilities for Config Sync
 
 Define the extended [`edit` user-facing role](https://kubernetes.io/docs/reference/access-authn-authz/rbac/#user-facing-roles) with more Istio resources capabilities:
 ```Bash
