@@ -7,13 +7,14 @@ tags: ["kcc", "platform-admin"]
 ![Platform Admin](/images/platform-admin.png)
 _{{< param description >}}_
 
-In this section, you will create a Memorystore (redis) instance for the Online Boutique's `cartservice` app to connect to.
+In this section, you will create a Memorystore (redis) instance for the Online Boutique's `cartservice` app to connect to. We will also create a second Memorystore (redis) with TLS enabled.
 
 Initialize variables:
 ```Bash
 WORK_DIR=~/
 source ${WORK_DIR}acm-workshop-variables.sh
-echo "export REDIS_NAME=cart2" >> ${WORK_DIR}acm-workshop-variables.sh
+echo "export REDIS_NAME=cart" >> ${WORK_DIR}acm-workshop-variables.sh
+echo "export REDIS_TLS_NAME=cart-tls" >> ${WORK_DIR}acm-workshop-variables.sh
 source ${WORK_DIR}acm-workshop-variables.sh
 ```
 
@@ -41,6 +42,29 @@ spec:
   redisVersion: REDIS_6_X
   region: ${GKE_LOCATION}
   tier: BASIC
+EOF
+```
+
+## Define Memorystore (redis) with TLS enabled
+
+Define the [Memorystore (redis) resource](https://cloud.google.com/config-connector/docs/reference/resource-docs/redis/redisinstance) with TLS enabled:
+```Bash
+cat <<EOF > ${WORK_DIR}$TENANT_PROJECT_DIR_NAME/$ONLINEBOUTIQUE_NAMESPACE/memorystore-tls.yaml
+apiVersion: redis.cnrm.cloud.google.com/v1beta1
+kind: RedisInstance
+metadata:
+  name: ${REDIS_TLS_NAME}
+  namespace: ${TENANT_PROJECT_ID}
+  annotations:
+    config.kubernetes.io/depends-on: compute.cnrm.cloud.google.com/namespaces/${TENANT_PROJECT_ID}/ComputeNetwork/${GKE_NAME}
+spec:
+  authorizedNetworkRef:
+    name: ${GKE_NAME}
+  memorySizeGb: 1
+  redisVersion: REDIS_6_X
+  region: ${GKE_LOCATION}
+  tier: BASIC
+  transitEncryptionMode: SERVER_AUTHENTICATION
 EOF
 ```
 

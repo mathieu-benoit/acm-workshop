@@ -3,14 +3,9 @@ title: "Secure Memorystore access"
 weight: 12
 description: "Duration: 10 min | Persona: Apps Operator"
 tags: ["apps-operator", "asm", "security-tips"]
-hidden: true
 ---
 ![Apps Operator](/images/apps-operator.png)
 _{{< param description >}}_
-
-{{% notice warning %}}
-This section is under construction and is not working currently, this page is hidden. Do not use it yet.
-{{% /notice %}}
 
 In this section, you will secure the access by TLS to the Memorystore (redis) instance from the OnlineBoutique's `cartservice` appl, without updating the source code of the app, just with Istio's capabilities.
 
@@ -29,21 +24,20 @@ The `CART_MEMORYSTORE_HOST` has been built in order to explicitly represent the 
 
 Get Memorystore (redis) connection information:
 ```Bash
-export REDIS_IP=$(gcloud redis instances describe $REDIS_NAME --region=$GKE_LOCATION --project=$TENANT_PROJECT_ID --format='get(host)')
-export REDIS_PORT=$(gcloud redis instances describe $REDIS_NAME --region=$GKE_LOCATION --project=$TENANT_PROJECT_ID --format='get(port)')
+export REDIS_TLS_IP=$(gcloud redis instances describe $REDIS_TLS_NAME --region=$GKE_LOCATION --project=$TENANT_PROJECT_ID --format='get(host)')
+export REDIS_TLS_PORT=$(gcloud redis instances describe $REDIS_TLS_NAME --region=$GKE_LOCATION --project=$TENANT_PROJECT_ID --format='get(port)')
 export REDIS_TLS_CERT_NAME=redis-cert
-gcloud redis instances describe $REDIS_NAME --region=$GKE_LOCATION --project=$TENANT_PROJECT_ID --format='get(serverCaCerts[0].cert)' > ${WORK_DIR}${REDIS_TLS_CERT_NAME}.pem
+gcloud redis instances describe $REDIS_TLS_NAME --region=$GKE_LOCATION --project=$TENANT_PROJECT_ID --format='get(serverCaCerts[0].cert)' > ${WORK_DIR}${REDIS_TLS_CERT_NAME}.pem
 ```
 
 Update the Online Boutique apps with the new Memorystore (redis) connection information:
 ```Bash
 cd ${WORK_DIR}$ONLINE_BOUTIQUE_DIR_NAME/staging
 cp -r ../upstream/base/for-memorystore/ .
-sed -i "s/REDIS_IP/${REDIS_IP}/g;s/REDIS_PORT/${REDIS_PORT}/g" for-memorystore/kustomization.yaml
-kustomize edit add component for-memorystore
+sed -i "s/REDIS_IP/${REDIS_TLS_IP}/g;s/REDIS_PORT/${REDIS_TLS_PORT}/g" for-memorystore/kustomization.yaml
 ```
 {{% notice info %}}
-This will change the `REDIS_ADDR` environment variable of the `cartservice` to point to the Memorystore (redis) instance as well as removing the `Deployment` and the `Service` of the default in-cluster `redis` database container.
+This will change the `REDIS_ADDR` environment variable of the `cartservice` to point to the Memorystore (redis) instance with TLS enabled.
 {{% /notice %}}
 
 Define the `Secret` with the Certificate Authority:
@@ -68,13 +62,13 @@ spec:
   hosts:
   - ${CART_MEMORYSTORE_HOST}
   addresses:
-  - ${REDIS_IP}/32
+  - ${REDIS_TLS_IP}/32
   endpoints:
-  - address: ${REDIS_IP}
+  - address: ${REDIS_TLS_IP}
   location: MESH_EXTERNAL
   resolution: STATIC
   ports:
-  - number: ${REDIS_PORT}
+  - number: ${REDIS_TLS_PORT}
     name: tcp-redis
     protocol: TCP
 EOF
@@ -116,12 +110,10 @@ patches:
 EOF
 ```
 
-Update the previously deployed `Sidecars`, `NetworkPolicies` and `AuthorizationPolicies`:
+Update the previously deployed `Sidecars`:
 ```Bash
 cd ${WORK_DIR}$ONLINE_BOUTIQUE_DIR_NAME/staging
-kustomize edit add component ../upstream/sidecars/for-memorystore
 cat <<EOF >> kustomization.yaml
-patchesJson6902:
 - target:
     kind: Sidecar
     name: cartservice
@@ -132,18 +124,6 @@ patchesJson6902:
         - "istio-system/*"
         - "./${CART_MEMORYSTORE_HOST}"
 EOF
-cd ${WORK_DIR}$ONLINE_BOUTIQUE_DIR_NAME/base
-cat <<EOF >> network-policies/kustomization.yaml
-patchesStrategicMerge:
-- |-
-  apiVersion: networking.k8s.io/v1
-  kind: NetworkPolicy
-  metadata:
-    name: redis-cart
-  \$patch: delete
-EOF
-kustomize edit add component ../upstream/service-accounts/for-memorystore
-kustomize edit add component ../upstream/authorization-policies/for-memorystore
 ```
 
 ## Deploy Kubernetes manifests

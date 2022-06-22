@@ -117,12 +117,14 @@ rules:
   - "virtualservices"
   - "authorizationpolicies"
   - "sidecars"
+  - "serviceentries"
+  - "destinationrules"
   verbs:
   - "*"
 EOF
 ```
 {{% notice tip %}}
-Later in this workshop, for each app namespace, we will define a Config Sync's `RepoSync` which will be bound to the `edit` `ClusterRole`. With that new extension, it will allow each namespace to deploy Istio resources such as `Sidecar`, `VirtualService` and `AuthorizationPolicy` while meeting with the least privilege principle requirement.
+Later in this workshop, for each app namespace, we will define a Config Sync's `RepoSync` which will be bound to the `edit` `ClusterRole`. With that new extension, it will allow each namespace to deploy Istio resources such as `Sidecar`, `VirtualService`, `AuthorizationPolicy`, `ServiceEntry` and `DestinationRule` while meeting with the least privilege principle requirement.
 {{% /notice %}}
 
 ## Deploy Kubernetes manifests
