@@ -70,13 +70,6 @@ spec:
         env:
         - name: ISTIO_META_UNPRIVILEGED_POD
           value: "true"
-        ports:
-        - containerPort: 15021
-          protocol: TCP
-        - containerPort: 8080
-          protocol: TCP
-        - containerPort: 8443
-          protocol: TCP
         resources:
           limits:
             cpu: 2000m
