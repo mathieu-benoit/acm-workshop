@@ -13,7 +13,7 @@ WORKDIR /site
 COPY . .
 RUN hugo -v -s /site -d /site/public
 
-FROM nginxinc/nginx-unprivileged:1.21.6-alpine as nginx-unprivileged-without-curl
+FROM nginxinc/nginx-unprivileged:1.23.0-alpine as nginx-unprivileged-without-curl
 USER root
 RUN apk del curl
 
