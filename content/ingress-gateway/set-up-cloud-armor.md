@@ -48,25 +48,25 @@ spec:
     description: "XSS"
     match:
       expr:
-        expression: "evaluatePreconfiguredExpr('xss-stable')"
+        expression: "evaluatePreconfiguredExpr('xss-v33-canary')"
     priority: 1000
   - action: deny(403)
     description: "SQL injection levels 1 and 2"
     match:
       expr:
-        expression: "evaluatePreconfiguredExpr('sqli-stable', ['owasp-crs-v030001-id942251-sqli', 'owasp-crs-v030001-id942420-sqli', 'owasp-crs-v030001-id942431-sqli', 'owasp-crs-v030001-id942460-sqli', 'owasp-crs-v030001-id942421-sqli', 'owasp-crs-v030001-id942432-sqli'])"
+        expression: "evaluatePreconfiguredExpr('sqli-v33-canary', ['owasp-crs-v030301-id942251-sqli', 'owasp-crs-v030301-id942490-sqli', 'owasp-crs-v030301-id942420-sqli', 'owasp-crs-v030301-id942431-sqli', 'owasp-crs-v030301-id942460-sqli', 'owasp-crs-v030301-id942511-sqli', 'owasp-crs-v030301-id942421-sqli', 'owasp-crs-v030301-id942432-sqli'])"
     priority: 2000
   - action: deny(403)
     description: "Local file inclusion"
     match:
       expr:
-        expression: "evaluatePreconfiguredExpr('lfi-stable')"
+        expression: "evaluatePreconfiguredExpr('lfi-v33-canary')"
     priority: 3000
   - action: deny(403)
     description: "Remote file inclusion"
     match:
       expr:
-        expression: "evaluatePreconfiguredExpr('rfi-stable')"
+        expression: "evaluatePreconfiguredExpr('rfi-v33-canary')"
     priority: 4000
   - action: deny(403)
     description: "CVE-2021-44228 and CVE-2021-45046"
