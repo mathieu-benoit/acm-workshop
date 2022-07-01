@@ -137,6 +137,30 @@ spec:
 EOF
 ```
 
+## Define Policy Controller Monitoring
+
+https://cloud.google.com/anthos-config-management/docs/how-to/monitoring-policy-controller#monitor_with
+
+```Bash
+cat <<EOF > ${WORK_DIR}$TENANT_PROJECT_DIR_NAME/policy-controller-monitoring-workload-identity-user.yaml
+apiVersion: iam.cnrm.cloud.google.com/v1beta1
+kind: IAMPartialPolicy
+metadata:
+  name: ${GKE_SA}-sa-pc-monitoring-wi-user
+  namespace: ${TENANT_PROJECT_ID}
+  annotations:
+    config.kubernetes.io/depends-on: iam.cnrm.cloud.google.com/namespaces/${TENANT_PROJECT_ID}/IAMServiceAccount/${GKE_SA}
+spec:
+  resourceRef:
+    name: ${GKE_SA}
+    kind: IAMServiceAccount
+  bindings:
+    - role: roles/iam.workloadIdentityUser
+      members:
+        - member: serviceAccount:${TENANT_PROJECT_ID}.svc.id.goog[gatekeeper-system/gatekeeper-admin]
+EOF
+```
+
 ## Deploy Kubernetes manifests
 
 ```Bash

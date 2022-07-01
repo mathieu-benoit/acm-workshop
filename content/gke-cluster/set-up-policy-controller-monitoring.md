@@ -1,5 +1,5 @@
 ---
-title: "Set up Config Sync Monitoring"
+title: "Set up Policy Controller Monitoring"
 weight: 6
 description: "Duration: 5 min | Persona: Platform Admin"
 tags: ["platform-admin"]
@@ -7,7 +7,7 @@ tags: ["platform-admin"]
 ![Platform Admin](/images/platform-admin.png)
 _{{< param description >}}_
 
-In this section, you will finalize the setup for the Config Sync's monitoring.
+In this section, you will finalize the setup for the Policy Controller's monitoring.
 
 Define variables:
 ```Bash
@@ -15,17 +15,17 @@ WORK_DIR=~/
 source ${WORK_DIR}acm-workshop-variables.sh
 ```
 
-## Define Config Sync Monitoring
+## Define Policy Controller Monitoring
 
-https://cloud.google.com/anthos-config-management/docs/how-to/monitoring-multi-repo
+https://cloud.google.com/anthos-config-management/docs/how-to/monitoring-policy-controller#monitor_with
 
 ```Bash
-cat <<EOF > ${WORK_DIR}$GKE_CONFIGS_DIR_NAME/config-sync-monitoring-sa.yaml
+cat <<EOF > ${WORK_DIR}$GKE_CONFIGS_DIR_NAME/policy-controller-monitoring-sa.yaml
 apiVersion: v1
 kind: ServiceAccount
 metadata:
-  name: default
-  namespace: config-management-monitoring
+  name: gatekeeper-admin
+  namespace: gatekeeper-system
   annotations:
     iam.gke.io/gcp-service-account: $GKE_SA@$TENANT_PROJECT_ID.iam.gserviceaccount.com
 EOF
@@ -35,7 +35,7 @@ EOF
 
 ```Bash
 cd ${WORK_DIR}$GKE_CONFIGS_DIR_NAME/
-git add . && git commit -m "Config Sync monitoring" && git push origin main
+git add . && git commit -m "Policy Controller monitoring" && git push origin main
 ```
 
 ## Check deployments
@@ -55,13 +55,13 @@ List the GitHub runs for the **GKE cluster configs** repository:
 cd ${WORK_DIR}$GKE_CONFIGS_DIR_NAME && gh run list
 ```
 
-## Create a sample Config Sync dashboard
+## Create a sample Policy Controller dashboard
 
-Create a Config Sync dashboard based on a predefined template:
+Create a Policy Controller dashboard based on a predefined template:
 ```Bash
-curl -o ${WORK_DIR}ConfigSync-Dashboard.json https://raw.githubusercontent.com/GoogleCloudPlatform/monitoring-dashboard-samples/master/dashboards/anthos-config-management/ACM-ConfigSync.json
+curl -o ${WORK_DIR}PolicyController-Dashboard.json https://raw.githubusercontent.com/GoogleCloudPlatform/monitoring-dashboard-samples/master/dashboards/anthos-config-management/ACM-PolicyController.json
 gcloud monitoring dashboards create \
-    --config-from-file=${WORK_DIR}ConfigSync-Dashboard.json \
+    --config-from-file=${WORK_DIR}PolicyController-Dashboard.json \
     --project ${TENANT_PROJECT_ID}
 ```
 
@@ -70,6 +70,6 @@ Navigate to the list of your Cloud Monitoring dashboards. Click on the link disp
 echo -e "https://console.cloud.google.com/monitoring/dashboards?project=${TENANT_PROJECT_ID}"
 ```
 
-Open the **Config Sync** dashboard just created. 
+Open the **Policy Controller** dashboard just created. 
 
 You won't have yet any data as we haven't yet synchronized any resources yet in the GKE cluster. You could come back to this dashboard as we are moving forward with this workshop.
