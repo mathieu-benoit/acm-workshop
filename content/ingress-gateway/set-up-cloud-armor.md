@@ -35,6 +35,8 @@ spec:
   adaptiveProtectionConfig:
     layer7DdosDefenseConfig:
       enable: true
+  advancedOptionsConfig:
+    logLevel: VERBOSE
   rule:
   - action: allow
     description: "Default rule"
@@ -157,12 +159,3 @@ gcloud compute ssl-policies list \
     --project $TENANT_PROJECT_ID
 ```
 Wait and re-run this command above until you see the resources created.
-
-## Enable Cloud Armor logging
-
-We also want to configure the Cloud Armor logging, it's not supported yet to do that via Config Connector, so we do that via this `gcloud` command:
-```Bash
-gcloud compute security-policies update ${SECURITY_POLICY_NAME} \
-    --project ${TENANT_PROJECT_ID} \
-    --log-level=VERBOSE
-```
