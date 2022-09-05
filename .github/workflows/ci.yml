@@ -22,8 +22,8 @@ jobs:
           submodules: true
       - uses: google-github-actions/auth@v0.8.1
         with:
-          workload_identity_provider: 'projects/561098358875/locations/global/workloadIdentityPools/container-images-builder-wi-pool/providers/container-images-builder-wi-pool'
-          service_account: 'container-images-builder@acm-workshop-742-tenant.iam.gserviceaccount.com'
+          workload_identity_provider: '${{ secrets.WORKLOAD_IDENTITY_PROVIDER }}'
+          service_account: '${{ secrets.CONTAINER_IMAGE_BUILDER_SERVICE_ACCOUNT_ID }}'
           token_format: 'access_token'
       - uses: google-github-actions/setup-gcloud@v0.6.0
         with:
