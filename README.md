@@ -72,4 +72,6 @@ gh auth login --web
 gh secret set CONTAINER_REGISTRY_PROJECT_ID -b"${projectId}"
 gh secret set CONTAINER_REGISTRY_NAME -b"${artifactRegistryName}"
 gh secret set CONTAINER_REGISTRY_HOST_NAME -b"${artifactRegistryLocation}-docker.pkg.dev"
+gh secret set CONTAINER_IMAGE_BUILDER_SERVICE_ACCOUNT_ID -b"${saId}"
+gh secret set WORKLOAD_IDENTITY_PROVIDER -b"${providerId}"
 ```
