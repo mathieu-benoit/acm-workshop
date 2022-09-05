@@ -63,7 +63,7 @@ jobs:
           echo "IMAGE_SIZE=$imageSize"
       - name: dockle
         run: |
-          docker run -v /var/run/docker.sock:/var/run/docker.sock --rm goodwithtech/dockle:latest --exit-code 1 --exit-level fatal ${IMAGE_NAME}
+          docker run -v /var/run/docker.sock:/var/run/docker.sock --rm goodwithtech/dockle:latest -ak KEY_SHA512 --exit-code 1 --exit-level fatal ${IMAGE_NAME}
       - name: run trivy vulnerability scanner
         uses: aquasecurity/trivy-action@0.7.1
         with:
