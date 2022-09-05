@@ -17,30 +17,58 @@ docker run -d -p 8080:8080 acm-workshop
 projectId=FIXME
 gcloud config set project $projectId
 
-# Setup Service account
-saName=acm-workshop-gha-cr-push
-saId=$saName@$projectId.iam.gserviceaccount.com
-gcloud iam service-accounts create $saName \
-    --display-name=$saName
-gcloud iam service-accounts keys create ~/tmp/$saName.json \
-    --iam-account $saId
+# Create the Service Account
+saName=container-images-builder
+gcloud iam service-accounts create $saName
+saId="${saName}@${projectId}.iam.gserviceaccount.com"
 
-# Setup Artifact Registry
-artifactRegistryName=FIXME
-artifactRegistryLocation=FIXME
+# Enable the IAM Credentials API
+gcloud services enable iamcredentials.googleapis.com
+
+# Create a Workload Identity Pool
+poolName=container-images-builder-wi-pool
+gcloud iam workload-identity-pools create $poolName \
+  --location global \
+  --display-name $poolName
+poolId=$(gcloud iam workload-identity-pools describe $poolName \
+  --location global \
+  --format='get(name)')
+
+# Create a Workload Identity Provider with GitHub actions in that pool:
+attributeMappingScope=repository
+gcloud iam workload-identity-pools providers create-oidc $poolName \
+  --location global \
+  --workload-identity-pool $poolName \
+  --display-name $poolName \
+  --attribute-mapping "google.subject=assertion.${attributeMappingScope},attribute.actor=assertion.actor,attribute.aud=assertion.aud,attribute.repository=assertion.repository" \
+  --issuer-uri "https://token.actions.githubusercontent.com"
+providerId=$(gcloud iam workload-identity-pools providers describe $poolName \
+  --location global \
+  --workload-identity-pool $poolName \
+  --format='get(name)')
+
+# Allow authentications from the Workload Identity Provider to impersonate the Service Account created above
+gitHubRepoName="mathieu-benoit/acm-workshop"
+gcloud iam service-accounts add-iam-policy-binding $saId \
+  --role "roles/iam.workloadIdentityUser" \
+  --member "principalSet://iam.googleapis.com/${poolId}/attribute.${attributeMappingScope}/${gitHubRepoName}"
+
+# Allow the GSA to write container images in Artifact Registry
+artifactRegistryName=containers # FIXME
+location=us-east4 # FIXME
 gcloud artifacts repositories add-iam-policy-binding $artifactRegistryName \
-    --project $projectId \
-    --location $artifactRegistryLocation \
+    --location $location \
     --member "serviceAccount:$saId" \
     --role roles/artifactregistry.writer
+
+# Allow the GSA to scan container images on-demand
+gcloud services enable ondemandscanning.googleapis.com
 gcloud projects add-iam-policy-binding $projectId \
     --member=serviceAccount:$saId \
     --role=roles/ondemandscanning.admin
 
 # Setup GitHub actions variables
 gh auth login --web
-gh secret set CONTAINER_REGISTRY_PUSH_PRIVATE_KEY < ~/tmp/$saName.json
-rm ~/tmp/$saName.json
 gh secret set CONTAINER_REGISTRY_PROJECT_ID -b"${projectId}"
 gh secret set CONTAINER_REGISTRY_NAME -b"${artifactRegistryName}"
 gh secret set CONTAINER_REGISTRY_HOST_NAME -b"${artifactRegistryLocation}-docker.pkg.dev"
