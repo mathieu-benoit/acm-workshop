@@ -13,7 +13,7 @@ jobs:
   job:
     runs-on: ubuntu-20.04
     steps:
-      - uses: actions/checkout@v2.4.0
+      - uses: actions/checkout@v3.0.2
         with:
           submodules: true
       - uses: google-github-actions/auth@v0.4.4
