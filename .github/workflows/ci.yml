@@ -38,7 +38,6 @@ jobs:
       - name: sign-in to artifact registry
         run: |
           gcloud auth configure-docker ${{ secrets.CONTAINER_REGISTRY_HOST_NAME }} --quiet
-          # echo '${{ steps.auth.outputs.access_token }}' | docker login -u oauth2accesstoken --password-stdin ${{ secrets.CONTAINER_REGISTRY_HOST_NAME }}
       - name: manage base images
         run: |
           # Grab the build base image in our private registry
