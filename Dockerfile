@@ -21,3 +21,4 @@ FROM nginx-unprivileged-without-curl
 USER 1000
 COPY config/nginx.conf /etc/nginx/conf.d/default.conf
 COPY --from=build /site/public /usr/share/nginx/html
+
