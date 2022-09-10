@@ -109,31 +109,8 @@ git add . && git commit -m "Ingress Gateway's Cloud Armor rules and SSL policy" 
 
 {{< mermaid >}}
 graph TD;
-  ComputeNetwork-.->Project
-  IAMServiceAccount-.->Project
-  GKEHubFeature-.->Project
-  ArtifactRegistryRepository-.->Project
-  GKEHubFeature-.->Project
-  ComputeAddress-.->Project
   ComputeSecurityPolicy-.->Project
   ComputeSSLPolicy-.->Project
-  ComputeSubnetwork-->ComputeNetwork
-  ComputeRouterNAT-->ComputeSubnetwork
-  ComputeRouterNAT-->ComputeRouter
-  ComputeRouter-->ComputeNetwork
-  ContainerNodePool-->ContainerCluster
-  ContainerNodePool-->IAMServiceAccount
-  IAMPolicyMember-->IAMServiceAccount
-  IAMPolicyMember-->IAMServiceAccount
-  IAMPolicyMember-->IAMServiceAccount
-  IAMPolicyMember-->IAMServiceAccount
-  IAMPartialPolicy-->IAMServiceAccount
-  ContainerCluster-->ComputeSubnetwork
-  GKEHubFeatureMembership-->GKEHubMembership
-  GKEHubFeatureMembership-->GKEHubFeature
-  GKEHubMembership-->ContainerCluster
-  IAMPolicyMember-->ArtifactRegistryRepository
-  IAMPolicyMember-->IAMServiceAccount
 {{< /mermaid >}}
 
 List the Kubernetes resources managed by Config Sync in **Config Controller** for the **Tenant project configs** repository:

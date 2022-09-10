@@ -214,20 +214,18 @@ git add . && git commit -m "GKE cluster, primary nodepool and SA for Tenant proj
 
 {{< mermaid >}}
 graph TD;
-  ComputeNetwork-.->Project
   IAMServiceAccount-.->Project
-  ComputeSubnetwork-->ComputeNetwork
-  ComputeRouterNAT-->ComputeSubnetwork
-  ComputeRouterNAT-->ComputeRouter
-  ComputeRouter-->ComputeNetwork
   ContainerNodePool-->ContainerCluster
   ContainerNodePool-->IAMServiceAccount
   IAMPolicyMember-->IAMServiceAccount
+  IAMPolicyMember-.->Project
   IAMPolicyMember-->IAMServiceAccount
+  IAMPolicyMember-.->Project
   IAMPolicyMember-->IAMServiceAccount
+  IAMPolicyMember-.->Project
   IAMPolicyMember-->IAMServiceAccount
-  IAMPartialPolicy-->IAMServiceAccount
-  ContainerCluster-->ComputeSubnetwork
+  IAMPolicyMember-.->Project
+  ContainerCluster-.->ComputeSubnetwork
 {{< /mermaid >}}
 
 List the Kubernetes resources managed by Config Sync in **Config Controller** for the **Tenant project configs** repository:

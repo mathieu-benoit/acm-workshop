@@ -70,34 +70,9 @@ git add . && git commit -m "Allow Memorystore (redis) for Tenant project" && git
 
 {{< mermaid >}}
 graph TD;
-  IAMServiceAccount-->Project
-  IAMPartialPolicy-->IAMServiceAccount
-  ConfigConnectorContext-->IAMServiceAccount
-  IAMPolicyMember-->IAMServiceAccount
-  IAMPolicyMember-->Project
-  IAMPolicyMember-->IAMServiceAccount
-  IAMPolicyMember-->Project
-  IAMPolicyMember-->IAMServiceAccount
-  IAMPolicyMember-->Project
-  IAMPolicyMember-->IAMServiceAccount
-  IAMPolicyMember-->Project
-  IAMPolicyMember-->IAMServiceAccount
-  IAMPolicyMember-->Project
-  Service-->Project
-  IAMPolicyMember-->IAMServiceAccount
-  IAMPolicyMember-->Project
-  Service-->Project
-  Service-->Project
-  IAMPolicyMember-->IAMServiceAccount
-  IAMPolicyMember-->Project
-  Service-->Project
-  Service-->Project
-  Service-->Project
-  Service-->Project
-  IAMPolicyMember-->IAMServiceAccount
-  IAMPolicyMember-->Project
-  Service-->Project
-  IAMPolicyMember-->IAMServiceAccount
+  Service-.->Project
+  IAMPolicyMember-.->Project
+  IAMPolicyMember-.->IAMServiceAccount
 {{< /mermaid >}}
 
 List the Kubernetes resources managed by Config Sync in **Config Controller** for the **Host project configs** repository:

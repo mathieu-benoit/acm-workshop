@@ -73,11 +73,8 @@ git add . && git commit -m "Allow Networking for Tenant project" && git push ori
 
 {{< mermaid >}}
 graph TD;
-  IAMServiceAccount-->Project
-  IAMPartialPolicy-->IAMServiceAccount
-  ConfigConnectorContext-->IAMServiceAccount
-  IAMPolicyMember-->IAMServiceAccount
-  IAMPolicyMember-->Project
+  IAMPolicyMember-.->Project
+  IAMPolicyMember-.->Service
 {{< /mermaid >}}
 
 List the Kubernetes resources managed by Config Sync in **Config Controller** for the **Host project configs** repository:

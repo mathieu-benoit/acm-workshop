@@ -172,24 +172,13 @@ git add . && git commit -m "GitOps for GKE cluster configs" && git push origin m
 
 {{< mermaid >}}
 graph TD;
-  ComputeNetwork-.->Project
-  IAMServiceAccount-.->Project
   GKEHubFeature-.->Project
-  ComputeSubnetwork-->ComputeNetwork
-  ComputeRouterNAT-->ComputeSubnetwork
-  ComputeRouterNAT-->ComputeRouter
-  ComputeRouter-->ComputeNetwork
-  ContainerNodePool-->ContainerCluster
-  ContainerNodePool-->IAMServiceAccount
-  IAMPolicyMember-->IAMServiceAccount
-  IAMPolicyMember-->IAMServiceAccount
-  IAMPolicyMember-->IAMServiceAccount
-  IAMPolicyMember-->IAMServiceAccount
-  IAMPartialPolicy-->IAMServiceAccount
-  ContainerCluster-->ComputeSubnetwork
   GKEHubFeatureMembership-->GKEHubMembership
   GKEHubFeatureMembership-->GKEHubFeature
+  GKEHubFeatureMembership-.->Project
   GKEHubMembership-->ContainerCluster
+  IAMPartialPolicy-.->IAMServiceAccount
+  IAMPartialPolicy-.->IAMServiceAccount
 {{< /mermaid >}}
 
 List the Kubernetes resources managed by Config Sync in **Config Controller** for the **Tenant project configs** repository:

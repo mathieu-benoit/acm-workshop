@@ -69,30 +69,8 @@ git add . && git commit -m "Allow ASM for Tenant project" && git push origin mai
 
 {{< mermaid >}}
 graph TD;
-  IAMServiceAccount-->Project
-  IAMPartialPolicy-->IAMServiceAccount
-  ConfigConnectorContext-->IAMServiceAccount
-  IAMPolicyMember-->IAMServiceAccount
-  IAMPolicyMember-->Project
-  IAMPolicyMember-->IAMServiceAccount
-  IAMPolicyMember-->Project
-  IAMPolicyMember-->IAMServiceAccount
-  IAMPolicyMember-->Project
-  IAMPolicyMember-->IAMServiceAccount
-  IAMPolicyMember-->Project
-  IAMPolicyMember-->IAMServiceAccount
-  IAMPolicyMember-->Project
-  Service-->Project
-  IAMPolicyMember-->IAMServiceAccount
-  IAMPolicyMember-->Project
-  Service-->Project
-  Service-->Project
-  IAMPolicyMember-->IAMServiceAccount
-  IAMPolicyMember-->Project
-  Service-->Project
-  Service-->Project
-  Service-->Project
-  Service-->Project
+  Service-.->Project
+  Service-.->Project
 {{< /mermaid >}}
 
 List the Kubernetes resources managed by Config Sync in **Config Controller** for the **Host project configs** repository:
