@@ -38,9 +38,10 @@ gcloud services enable krmapihosting.googleapis.com \
 
 Create the Config Controller instance:
 ```Bash
-gcloud anthos config controller create $CONFIG_CONTROLLER_NAME \
+gcloud alpha anthos config controller create $CONFIG_CONTROLLER_NAME \
     --location $CONFIG_CONTROLLER_LOCATION \
-    --network $CONFIG_CONTROLLER_NETWORK
+    --network $CONFIG_CONTROLLER_NETWORK \
+    --full-management
 ```
 {{% notice tip %}}
 As a security best practice you could provision your Config Controller instance with the `--man-block $(curl -4 ifconfig.co)/32` parameter. We are not doing this in this workshop to avoid any issues with Cloud Shell which is allocating a new IP address as soon as the session expired.
