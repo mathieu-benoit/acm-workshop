@@ -125,7 +125,7 @@ gcloud alpha anthos config sync repo describe \
     --sync-name repo-sync \
     --sync-namespace $WHEREAMI_NAMESPACE
 ```
-Wait and re-run this command above until you see `"status": "SYNCED"` for this `RepoSync`. All the `managed_resources` listed should have `STATUS: Current` as well.
+Wait and re-run this command above until you see `"status": "SYNCED"`. All the `managed_resources` listed should have `STATUS: Current` as well.
 
 We haven't yet deployed any `NetworkPolicies` in the `whereami` `Namespace`, the `namespaces-required-networkpolicies` `Constraint` should still complain. Click on the link displayed by the command below:
 ```Bash

@@ -236,7 +236,7 @@ gcloud alpha anthos config sync repo describe \
     --sync-name repo-sync \
     --sync-namespace $TENANT_PROJECT_ID
 ```
-Wait and re-run this command above until you see `"status": "SYNCED"` for this `RepoSync`. All the `managed_resources` listed should have `STATUS: Current` as well.
+Wait and re-run this command above until you see `"status": "SYNCED"`. All the `managed_resources` listed should have `STATUS: Current` as well.
 {{% notice note %}}
 The creation of the `ContainerCluster` and `ContainerNodePool` can take ~15 mins.
 {{% /notice %}}
