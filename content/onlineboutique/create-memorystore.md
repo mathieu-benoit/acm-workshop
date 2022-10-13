@@ -7,7 +7,7 @@ tags: ["kcc", "platform-admin"]
 ![Platform Admin](/images/platform-admin.png)
 _{{< param description >}}_
 
-In this section, you will create a Memorystore (redis) instance for the Online Boutique's `cartservice` app to connect to. We will also create a second Memorystore (redis) with TLS enabled.
+In this section, you will create a Memorystore (redis) instance for the Online Boutique's `cartservice` app to connect to. We will also create a second Memorystore (redis) with TLS enabled which will be leveraged in another section.
 
 Initialize variables:
 ```Bash

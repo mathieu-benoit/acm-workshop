@@ -7,7 +7,7 @@ tags: ["apps-operator", "asm", "security-tips"]
 ![Apps Operator](/images/apps-operator.png)
 _{{< param description >}}_
 
-In this section, you will secure the access by TLS to the Memorystore (redis) instance from the OnlineBoutique's `cartservice` appl, without updating the source code of the app, just with Istio's capabilities.
+In this section, you will [secure the access by TLS to the Memorystore (redis) instance from the OnlineBoutique's `cartservice` app](https://medium.com/google-cloud/64b71969318d), without updating the source code of the app, just with Istio's capabilities.
 
 Initialize variables:
 ```Bash

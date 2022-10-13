@@ -77,7 +77,7 @@ EOF
 
 ## Define GKE primary node pool's service account
 
-Define the GKE primary node pool's service account:
+Define the GKE primary node pool's [Google Service Account](https://cloud.google.com/config-connector/docs/reference/resource-docs/iam/iamserviceaccount):
 ```Bash
 cat <<EOF > ${WORK_DIR}$TENANT_PROJECT_DIR_NAME/gke-primary-pool-sa.yaml
 apiVersion: iam.cnrm.cloud.google.com/v1beta1
