@@ -73,16 +73,20 @@ cat <<EOF > ${WORK_DIR}$GKE_CONFIGS_DIR_NAME/istio-system/control-plane-configs.
 apiVersion: mesh.cloud.google.com/v1beta1
 kind: ControlPlaneRevision
 metadata:
-  name: ${ASM_VERSION}
-  namespace: istio-system
+  annotations:
+    mesh.cloud.google.com/proxy: '{"managed":"true"}'
   labels:
     mesh.cloud.google.com/managed-cni-enabled: "true"
+  name: ${ASM_VERSION}
+  namespace: istio-system
 spec:
-  type: managed_service
   channel: ${ASM_CHANNEL}
+  type: managed_service
 EOF
 ```
 {{% notice tip %}}
+We are using the `mesh.cloud.google.com/proxy: '{"managed": true}'` annotation, with that the sidecar proxies and injected gateways are automatically updated by Google in conjunction with the managed control plane by restarting workloads to re-inject new versions of the proxy.
+
 We are using `mesh.cloud.google.com/managed-cni-enabled: "true"` in order to leverage the Istio CNI has a best practice for security and performance perspectives. It's also mandatory when using the Managed Data Plane feature of ASM.
 {{% /notice %}}
 
@@ -149,23 +153,28 @@ gcloud container fleet mesh describe \
 
 For the result of the last command, in order to make sure the Managed ASM is successfully installed you should see something like this:
 ```Plaintext
-createTime: '2022-06-01T13:09:24.580141475Z'
+createTime: '2022-10-13T19:15:10.687192154Z'
 labels:
   managed-by-cnrm: 'true'
 membershipStates:
-  projects/561098358875/locations/global/memberships/gke:
+  projects/395418408248/locations/global/memberships/gke:
     servicemesh:
       controlPlaneManagement:
         state: DISABLED
+      dataPlaneManagement:
+        details:
+        - code: OK
+          details: Service is running.
+        state: ACTIVE
     state:
       code: OK
       description: 'Revision(s) ready for use: asm-managed-rapid.'
-      updateTime: '2022-06-01T21:23:29.751309908Z'
-name: projects/acm-workshop-742-tenant/locations/global/features/servicemesh
+      updateTime: '2022-10-13T20:17:09.521883163Z'
+name: projects/acm-workshop-296-tenant/locations/global/features/servicemesh
 resourceState:
   state: ACTIVE
 spec: {}
-updateTime: '2022-06-01T21:23:39.459742087Z'
+updateTime: '2022-10-13T20:17:18.403520963Z'
 ```
 Wait and re-run this command above until you see the resources created (`state.code: OK`).
 

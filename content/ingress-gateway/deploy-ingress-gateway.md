@@ -30,8 +30,6 @@ cat <<EOF > ${WORK_DIR}$GKE_CONFIGS_DIR_NAME/$INGRESS_GATEWAY_NAMESPACE/namespac
 apiVersion: v1
 kind: Namespace
 metadata:
-  annotations:
-    mesh.cloud.google.com/proxy: '{"managed": true}'
   labels:
     name: ${INGRESS_GATEWAY_NAMESPACE}
     istio-injection: enabled

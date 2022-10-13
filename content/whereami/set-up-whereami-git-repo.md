@@ -31,8 +31,6 @@ cat <<EOF > ${WORK_DIR}$GKE_CONFIGS_DIR_NAME/repo-syncs/$WHEREAMI_NAMESPACE/name
 apiVersion: v1
 kind: Namespace
 metadata:
-  annotations:
-    mesh.cloud.google.com/proxy: '{"managed": true}'
   labels:
     name: ${WHEREAMI_NAMESPACE}
     istio-injection: enabled

@@ -75,38 +75,6 @@ spec:
 EOF
 ```
 
-Define the `namespaces-managed-dataplane-annotation` `Constraint` based on the [`K8sRequiredAnnotations`](https://cloud.devsite.corp.google.com/anthos-config-management/docs/reference/constraint-template-library#k8srequiredannotations) `ConstraintTemplate` for `Namespaces`:
-```Bash
-cat <<EOF > ${WORK_DIR}$GKE_CONFIGS_DIR_NAME/policies/constraints/namespaces-managed-dataplane-annotation.yaml
-apiVersion: constraints.gatekeeper.sh/v1beta1
-kind: K8sRequiredAnnotations
-metadata:
-  name: namespaces-managed-dataplane-annotation
-spec:
-  enforcementAction: deny
-  match:
-    kinds:
-    - apiGroups:
-      - ""
-      kinds:
-      - Namespace
-    excludedNamespaces:
-    - config-management-monitoring
-    - config-management-system
-    - default
-    - gatekeeper-system
-    - istio-system
-    - kube-node-lease
-    - kube-public
-    - kube-system
-    - resource-group-system
-  parameters:
-    annotations:
-    - allowedRegex: '{"managed": true}'
-      key: mesh.cloud.google.com/proxy
-EOF
-```
-
 ## Define "STRICT mTLS in the Mesh" policies
 
 Define the `mesh-level-strict-mtls` `Constraint` based on the [`AsmPeerAuthnMeshStrictMtls`](https://cloud.devsite.corp.google.com/anthos-config-management/docs/reference/constraint-template-library#asmpeerauthnmeshstrictmtls) `ConstraintTemplate`:
