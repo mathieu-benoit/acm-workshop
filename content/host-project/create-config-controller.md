@@ -24,17 +24,20 @@ We are creating the Config Controller instance in `us-east1` but other regions a
 
 ## Create the Config Controller instance
 
+Enable the required Google Cloud APIs:
+```Bash
+gcloud services enable \
+    compute.googleapis.com \
+    krmapihosting.googleapis.com \
+    cloudresourcemanager.googleapis.com
+```
+
 If you don't have a default network in your project, create one by running the following command:
 ```Bash
 gcloud compute networks create $CONFIG_CONTROLLER_NETWORK \
     --subnet-mode=auto
 ```
-
-Enable the required Google Cloud APIs:
-```Bash
-gcloud services enable krmapihosting.googleapis.com \
-    cloudresourcemanager.googleapis.com
-```
+If you get an error telling you that the default network already exists, you can ignore it.
 
 Create the Config Controller instance:
 ```Bash
