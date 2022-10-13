@@ -113,54 +113,6 @@ We explicitly set the Config Management's `version` field with the current versi
 We explicitly set the Policy Controller's `templateLibraryInstalled` field to `true`, in order to install the [default library of `ConstraintTemplates`](https://cloud.google.com/anthos-config-management/docs/reference/constraint-template-library).
 {{% /notice %}}
 
-## Define Config Sync Monitoring
-
-https://cloud.google.com/anthos-config-management/docs/how-to/monitoring-multi-repo
-
-```Bash
-cat <<EOF > ${WORK_DIR}$TENANT_PROJECT_DIR_NAME/config-sync-monitoring-workload-identity-user.yaml
-apiVersion: iam.cnrm.cloud.google.com/v1beta1
-kind: IAMPartialPolicy
-metadata:
-  name: ${GKE_SA}-sa-cs-monitoring-wi-user
-  namespace: ${TENANT_PROJECT_ID}
-  annotations:
-    config.kubernetes.io/depends-on: iam.cnrm.cloud.google.com/namespaces/${TENANT_PROJECT_ID}/IAMServiceAccount/${GKE_SA}
-spec:
-  resourceRef:
-    name: ${GKE_SA}
-    kind: IAMServiceAccount
-  bindings:
-    - role: roles/iam.workloadIdentityUser
-      members:
-        - member: serviceAccount:${TENANT_PROJECT_ID}.svc.id.goog[config-management-monitoring/default]
-EOF
-```
-
-## Define Policy Controller Monitoring
-
-https://cloud.google.com/anthos-config-management/docs/how-to/monitoring-policy-controller#monitor_with
-
-```Bash
-cat <<EOF > ${WORK_DIR}$TENANT_PROJECT_DIR_NAME/policy-controller-monitoring-workload-identity-user.yaml
-apiVersion: iam.cnrm.cloud.google.com/v1beta1
-kind: IAMPartialPolicy
-metadata:
-  name: ${GKE_SA}-sa-pc-monitoring-wi-user
-  namespace: ${TENANT_PROJECT_ID}
-  annotations:
-    config.kubernetes.io/depends-on: iam.cnrm.cloud.google.com/namespaces/${TENANT_PROJECT_ID}/IAMServiceAccount/${GKE_SA}
-spec:
-  resourceRef:
-    name: ${GKE_SA}
-    kind: IAMServiceAccount
-  bindings:
-    - role: roles/iam.workloadIdentityUser
-      members:
-        - member: serviceAccount:${TENANT_PROJECT_ID}.svc.id.goog[gatekeeper-system/gatekeeper-admin]
-EOF
-```
-
 ## Deploy Kubernetes manifests
 
 ```Bash
@@ -177,8 +129,6 @@ graph TD;
   GKEHubFeatureMembership-->GKEHubFeature
   GKEHubFeatureMembership-.->Project
   GKEHubMembership-->ContainerCluster
-  IAMPartialPolicy-.->IAMServiceAccount
-  IAMPartialPolicy-.->IAMServiceAccount
 {{< /mermaid >}}
 
 List the Kubernetes resources managed by Config Sync in **Config Controller** for the **Tenant project configs** repository:

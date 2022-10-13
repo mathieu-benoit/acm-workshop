@@ -1,6 +1,6 @@
 ---
 title: "Set up NetworkPolicies logging"
-weight: 6
+weight: 7
 description: "Duration: 5 min | Persona: Platform Admin"
 tags: ["gke", "platform-admin", "security-tips"]
 ---
