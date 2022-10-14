@@ -55,9 +55,9 @@ gcloud iam service-accounts add-iam-policy-binding $saId \
 
 # Allow the GSA to write container images in Artifact Registry
 artifactRegistryName=containers # FIXME
-location=us-east4 # FIXME
+artifactRegistryLocation=us-east4 # FIXME
 gcloud artifacts repositories add-iam-policy-binding $artifactRegistryName \
-    --location $location \
+    --location $artifactRegistryLocation \
     --member "serviceAccount:$saId" \
     --role roles/artifactregistry.writer
 
