@@ -167,6 +167,5 @@ kubectl create namespace test
 ```
 You will get this error confirming that the `Constraints` are in place:
 ```Plaintext
-Error from server (Forbidden): admission webhook "validation.gatekeeper.sh" denied the request: [namespaces-required-configconnectorcontext] Namespace <test> does not have a ConfigConnectorContext
-[namespaces-required-project-id-annotation] you must provide annotation(s): {"cnrm.cloud.google.com/project-id"}
+Error from server (Forbidden): admission webhook "validation.gatekeeper.sh" denied the request: [namespaces-required-project-id-annotation] you must provide annotation(s): {"cnrm.cloud.google.com/project-id"}
 ```

@@ -83,8 +83,6 @@ spec:
   parameters:
     locations:
       - "northamerica-northeast1"
-      - "northamerica-northeast2"
-      - "us-east4"
       - "global"
 EOF
 ```
