@@ -14,12 +14,12 @@ Define variables:
 WORK_DIR=~/
 source ${WORK_DIR}acm-workshop-variables.sh
 echo "export CONFIG_CONTROLLER_NAME=configcontroller" >> ${WORK_DIR}acm-workshop-variables.sh
-echo "export CONFIG_CONTROLLER_LOCATION=us-east1" >> ${WORK_DIR}acm-workshop-variables.sh
+echo "export CONFIG_CONTROLLER_LOCATION=northamerica-northeast1" >> ${WORK_DIR}acm-workshop-variables.sh
 echo "export CONFIG_CONTROLLER_NETWORK=default" >> ${WORK_DIR}acm-workshop-variables.sh
 source ${WORK_DIR}acm-workshop-variables.sh
 ```
 {{% notice info %}}
-We are creating the Config Controller instance in `us-east1` but other regions are also supported: `europe-north1`, `europe-west1`, `europe-west3`, `australia-southeast1`, `australia-southeast2`, `us-central1`, `northamerica-northeast1`, `northamerica-northeast2`, `asia-northeast1` and `asia-northeast2`.
+We are creating the Config Controller instance in `northamerica-northeast1` because that's the [greenest Google Cloud region (Low CO2)](https://cloud.google.com/sustainability/region-carbon) in the regions supported by Config Controller: `europe-north1`, `europe-west1`, `europe-west3`, `australia-southeast1`, `australia-southeast2`, `us-east1`, `us-central1`, `northamerica-northeast1`, `northamerica-northeast2`, `asia-northeast1` and `asia-northeast2`.
 {{% /notice %}}
 
 ## Create the Config Controller instance
