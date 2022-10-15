@@ -13,7 +13,7 @@ Initialize variables:
 ```Bash
 WORK_DIR=~/
 source ${WORK_DIR}acm-workshop-variables.sh
-WHEREAMI_VERSION=v1.2.11
+WHEREAMI_VERSION=v1.2.12
 PRIVATE_WHEREAMI_IMAGE_NAME=$CONTAINER_REGISTRY_REPOSITORY/whereami:$WHEREAMI_VERSION
 echo "export PRIVATE_WHEREAMI_IMAGE_NAME=${PRIVATE_WHEREAMI_IMAGE_NAME}" >> ${WORK_DIR}acm-workshop-variables.sh
 source ${WORK_DIR}acm-workshop-variables.sh
@@ -24,6 +24,7 @@ Copy the public image to your private registry:
 UPSTREAM_WHEREAMI_IMAGE_NAME=us-docker.pkg.dev/google-samples/containers/gke/whereami:$WHEREAMI_VERSION
 docker pull $UPSTREAM_WHEREAMI_IMAGE_NAME
 docker tag $UPSTREAM_WHEREAMI_IMAGE_NAME $PRIVATE_WHEREAMI_IMAGE_NAME
+gcloud auth configure-docker $CONTAINER_REGISTRY_HOST_NAME --quiet
 docker push $PRIVATE_WHEREAMI_IMAGE_NAME
 ```
 

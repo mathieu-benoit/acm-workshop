@@ -15,7 +15,9 @@ WORK_DIR=~/
 source ${WORK_DIR}acm-workshop-variables.sh
 CONTAINER_REGISTRY_NAME=containers
 echo "export CONTAINER_REGISTRY_NAME=${CONTAINER_REGISTRY_NAME}" >> ${WORK_DIR}acm-workshop-variables.sh
-echo "export CONTAINER_REGISTRY_REPOSITORY=${GKE_LOCATION}-docker.pkg.dev/${TENANT_PROJECT_ID}/${CONTAINER_REGISTRY_NAME}" >> ${WORK_DIR}acm-workshop-variables.sh
+CONTAINER_REGISTRY_HOST_NAME=${GKE_LOCATION}-docker.pkg.dev
+echo "export CONTAINER_REGISTRY_HOST_NAME=${CONTAINER_REGISTRY_HOST_NAME}" >> ${WORK_DIR}acm-workshop-variables.sh
+echo "export CONTAINER_REGISTRY_REPOSITORY=${CONTAINER_REGISTRY_HOST_NAME}/${TENANT_PROJECT_ID}/${CONTAINER_REGISTRY_NAME}" >> ${WORK_DIR}acm-workshop-variables.sh
 source ${WORK_DIR}acm-workshop-variables.sh
 ```
 
