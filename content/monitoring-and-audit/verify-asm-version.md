@@ -1,6 +1,6 @@
 ---
 title: "Verify ASM version"
-weight: 2
+weight: 1
 description: "Duration: 5 min | Persona: Platform Admin"
 tags: ["asm", "monitoring", "platform-admin"]
 ---

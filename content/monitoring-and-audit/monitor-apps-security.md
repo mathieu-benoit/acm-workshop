@@ -1,13 +1,13 @@
 ---
 title: "Monitor apps security"
-weight: 3
+weight: 2
 description: "Duration: 5 min | Persona: Apps Operator"
-tags: ["asm", "apps-operator", "monitoring", "security-tips"]
+tags: ["apps-operator", "asm", "monitoring", "security-tips"]
 ---
 ![Apps Operator](/images/apps-operator.png)
 _{{< param description >}}_
 
-In this section, you will monitor security features of your apps in the Google Cloud console.
+In this section, you will monitor security features such as Network Policies and Service requests of your apps in the Google Cloud console.
 
 Initialize variables:
 ```Bash

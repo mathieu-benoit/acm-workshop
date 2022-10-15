@@ -89,7 +89,7 @@ spec:
 EOF
 ```
 
-## Define API
+## Define APIs
 
 Define the GKE API [`Service`](https://cloud.google.com/config-connector/docs/reference/resource-docs/serviceusage/service) resource for the Tenant project:
 ```Bash
@@ -110,11 +110,30 @@ spec:
 EOF
 ```
 
+Later in the workshop, you can optionally leverage the GKE Security Posture features ([Scan workloads configurations](https://cloud.google.com/kubernetes-engine/docs/how-to/protect-workload-configuration) and [Scan container images for known vulnerabilities](https://cloud.google.com/kubernetes-engine/docs/how-to/security-posture-vulnerability-scanning)) in order to scan the configurations of your GKE workloads. Define the GKE Security Posture API [`Service`](https://cloud.google.com/config-connector/docs/reference/resource-docs/serviceusage/service) resource for the Tenant project:
+```Bash
+cat <<EOF > ${WORK_DIR}$HOST_PROJECT_DIR_NAME/projects/$TENANT_PROJECT_ID/containersecurity-service.yaml
+apiVersion: serviceusage.cnrm.cloud.google.com/v1beta1
+kind: Service
+metadata:
+  annotations:
+    cnrm.cloud.google.com/deletion-policy: "abandon"
+    cnrm.cloud.google.com/disable-dependent-services: "false"
+    config.kubernetes.io/depends-on: resourcemanager.cnrm.cloud.google.com/namespaces/config-control/Project/${TENANT_PROJECT_ID}
+  name: ${TENANT_PROJECT_ID}-containersecurity
+  namespace: config-control
+spec:
+  projectRef:
+    name: ${TENANT_PROJECT_ID}
+  resourceID: containersecurity.googleapis.com
+EOF
+```
+
 ## Deploy Kubernetes manifests
 
 ```Bash
 cd ${WORK_DIR}$HOST_PROJECT_DIR_NAME/
-git add . && git commit -m "Allow GKE for Tenant project" && git push origin main
+git add . && git commit -m "Allow GKE and GKE Security Posture for Tenant project" && git push origin main
 ```
 
 ## Check deployments
@@ -129,6 +148,7 @@ graph TD;
   IAMPolicyMember-.->Project
   IAMPolicyMember-.->IAMServiceAccount
   IAMPolicyMember-.->Project
+  Service-.->Project
   Service-.->Project
 {{< /mermaid >}}
 

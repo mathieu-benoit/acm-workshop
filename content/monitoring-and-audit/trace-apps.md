@@ -1,6 +1,6 @@
 ---
 title: "Trace apps"
-weight: 5
+weight: 4
 description: "Duration: 5 min | Persona: Apps Operator"
 tags: ["asm", "apps-operator", "monitoring"]
 ---
