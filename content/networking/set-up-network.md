@@ -13,7 +13,6 @@ Initialize variables:
 ```Bash
 WORK_DIR=~/
 source ${WORK_DIR}acm-workshop-variables.sh
-echo "export GKE_LOCATION=us-east4" >> ${WORK_DIR}acm-workshop-variables.sh
 echo "export GKE_NAME=gke" >> ${WORK_DIR}acm-workshop-variables.sh
 source ${WORK_DIR}acm-workshop-variables.sh
 ```
