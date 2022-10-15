@@ -47,6 +47,9 @@ cd ${WORK_DIR}$WHERE_AMI_DIR_NAME
 git pull
 git checkout main
 WHERE_AMI_REPO_URL=$(gh repo view --json url --jq .url)
+WHERE_AMI_REPO_NAME_WITH_OWNER=$(gh repo view --json nameWithOwner --jq .nameWithOwner)
+echo "export WHERE_AMI_REPO_NAME_WITH_OWNER=${WHERE_AMI_REPO_NAME_WITH_OWNER}" >> ${WORK_DIR}acm-workshop-variables.sh
+source ${WORK_DIR}acm-workshop-variables.sh
 ```
 
 ## Define RepoSync
