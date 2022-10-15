@@ -19,7 +19,7 @@ source ${WORK_DIR}acm-workshop-variables.sh
 
 ### Require labels for Namespaces and Pods
 
-As a best practice and in order to get the `NetworkPolicies` working in this workshop, we need to guarantee that that any `Namespaces` have a `name` label and `Pods` have an `app` label.
+As a best practice and in order to get the `NetworkPolicies` working in this workshop, we need to guarantee that any `Namespaces` have a label `name` and `Pods` have a label `app`.
 
 Define the `namespaces-required-labels` `Constraint` based on the [`K8sRequiredLabels`](https://cloud.devsite.corp.google.com/anthos-config-management/docs/reference/constraint-template-library#k8srequiredlabels) `ConstraintTemplate` for `Namespaces`:
 ```Bash

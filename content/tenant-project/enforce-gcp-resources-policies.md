@@ -13,7 +13,12 @@ Initialize variables:
 ```Bash
 WORK_DIR=~/
 source ${WORK_DIR}acm-workshop-variables.sh
+echo "export GKE_LOCATION=northamerica-northeast1" >> ${WORK_DIR}acm-workshop-variables.sh
+source ${WORK_DIR}acm-workshop-variables.sh
 ```
+{{% notice info %}}
+We are defining the `GKE_LOCATION` in `northamerica-northeast1` this will be used later for the location of the VPC, GKE, Artifact Registry, etc. in the Tenant project. We are using this region because that's the [greenest Google Cloud region (Low CO2)](https://cloud.google.com/sustainability/region-carbon) in the regions supported by [GKE Confidential Nodes](https://cloud.google.com/kubernetes-engine/docs/how-to/confidential-gke-nodes#availability) used in this workshop.
+{{% /notice %}}
 
 ## Define "Allowed GCP locations" policies
 
