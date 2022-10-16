@@ -22,7 +22,7 @@ tags: ["apps-operator", "org-admin", "platform-admin"]
     1. As Org Admin, allow Fleet for Tenant project
     1. As Platform Admin, set up GKE configs's Git repo in Tenant project
     1. As Platform Admin, enforce policies for `NetworkPolicies`
-    1. As Platform Admin, set up `NetworkPolicy` logging in GKE cluster
+    1. As Platform Admin, set up `NetworkPolicies` logging in GKE cluster
 1. Artifact Registry
     1. As Org Admin, allow Artifact Registry for Tenant project
     1. As Platform Admin, create Artifact Registry in Tenant project and allow GKE cluster to pull containers
@@ -42,9 +42,9 @@ tags: ["apps-operator", "org-admin", "platform-admin"]
 1. Whereami app
     1. As Platform Admin, set up DNS for the Whereami app
     1. As Platform Admin, set up the Whereami app's Git repo in GKE cluster
+    1. As Apps Operator, deploy `NetworkPolicies` for the Whereami namespace in GKE cluster
     1. As Apps Operator, copy Whereami container in private Artifact Registry
     1. As Apps Operator, deploy the Whereami app
-    1. As Apps Operator, deploy `NetworkPolicies` for the Whereami namespace in GKE cluster
     1. As Apps Operator, deploy `AuthorizationPolicies` for the Whereami namespace in GKE cluster
     1. As Apps Operator, deploy `Sidecars` for the Whereami namespace in GKE cluster
 1. Online Boutique apps

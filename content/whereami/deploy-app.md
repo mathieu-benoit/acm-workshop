@@ -1,6 +1,6 @@
 ---
 title: "Deploy app"
-weight: 4
+weight: 5
 description: "Duration: 10 min | Persona: Apps Operator"
 tags: ["apps-operator", "asm"]
 ---
@@ -24,13 +24,12 @@ kpt pkg get https://github.com/GoogleCloudPlatform/kubernetes-engine-samples/whe
 mv k8s upstream
 ```
 
-## Create base overlay
+## Update base overlay
 
-Create Kustomize base overlay files:
+Update the Kustomize base overlay:
 ```Bash
-mkdir ${WORK_DIR}$WHERE_AMI_DIR_NAME/base
 cd ${WORK_DIR}$WHERE_AMI_DIR_NAME/base
-kustomize create --resources ../upstream
+kustomize edit add resource ../upstream
 cat <<EOF >> ${WORK_DIR}$WHERE_AMI_DIR_NAME/base/kustomization.yaml
 patchesJson6902:
 - target:
@@ -43,7 +42,7 @@ patchesJson6902:
 EOF
 ```
 {{% notice info %}}
-Here we are changing the `Service` `type` to `ClusterIP`.
+Here we are changing the `Service` `type` to `ClusterIP` because the Whereami app will be exposed by the Ingress Gateway.
 {{% /notice %}}
 
 ## Define VirtualService
@@ -75,18 +74,9 @@ cd ${WORK_DIR}$WHERE_AMI_DIR_NAME/base
 kustomize edit add resource virtualservice.yaml
 ```
 
-## Define Staging namespace overlay
+## Update Staging namespace overlay
 
-```Bash
-cd ${WORK_DIR}$WHERE_AMI_DIR_NAME/staging
-kustomize edit add resource ../base
-kustomize edit set namespace $WHEREAMI_NAMESPACE
-```
-{{% notice info %}}
-The `kustomization.yaml` file was already existing from the [GitHub repository template](https://github.com/mathieu-benoit/config-sync-app-template-repo/blob/main/staging/kustomization.yaml) used when we created the `Whereami` app repository.
-{{% /notice %}}
-
-Update the Kustomize base overlay in order to set the private container image and the proper `hosts` value in the `VirtualService` resource:
+Update the Staging Kustomize overlay in order to set the private container image and the proper `hosts` value in the `VirtualService` resource:
 ```Bash
 cat <<EOF >> ${WORK_DIR}$WHERE_AMI_DIR_NAME/staging/kustomization.yaml
 patchesJson6902:
@@ -118,6 +108,8 @@ git add . && git commit -m "Whereami app" && git push origin main
 ## Check deployments
 
 List the Kubernetes resources managed by Config Sync in **GKE cluster** for the **Whereami app** repository:
+{{< tabs groupId="cs-status-ui">}}
+{{% tab name="gcloud" %}}
 ```Bash
 gcloud alpha anthos config sync repo describe \
     --project $TENANT_PROJECT_ID \
@@ -125,27 +117,27 @@ gcloud alpha anthos config sync repo describe \
     --sync-name repo-sync \
     --sync-namespace $WHEREAMI_NAMESPACE
 ```
-Wait and re-run this command above until you see `"status": "SYNCED"`. All the `managed_resources` listed should have `STATUS: Current` as well.
-
-We haven't yet deployed any `NetworkPolicies` in the `whereami` `Namespace`, the `namespaces-required-networkpolicies` `Constraint` should still complain. Click on the link displayed by the command below:
+Wait and re-run this command above until you see `"status": "SYNCED"`.
+{{% /tab %}}
+{{% tab name="UI" %}}
+Alternatively, you could also see this from within the Cloud Console, by clicking on this link:
 ```Bash
-echo -e "https://console.cloud.google.com/kubernetes/object/constraints.gatekeeper.sh/k8srequirenamespacenetworkpolicies/${GKE_LOCATION}/${GKE_NAME}/namespaces-required-networkpolicies?apiVersion=v1beta1&project=${TENANT_PROJECT_ID}"
+echo -e "https://console.cloud.google.com/kubernetes/config_management/status?clusterName=${GKE_NAME}&id=${GKE_NAME}&project=${TENANT_PROJECT_ID}"
 ```
+Wait until you see the `Sync status` column as `SYNCED`. And then you can also click on `View resources` to see the details.
+{{% /tab %}}
+{{< /tabs >}}
 
-At the very bottom of the object's description you should still see:
-```Plaintext
-...
-totalViolations: 1
-  violations:
-  - enforcementAction: dryrun
-    kind: Namespace
-    message: Namespace <whereami> does not have a NetworkPolicy
-    name: whereami
-```
+## Check the Whereami app
 
-The next section will deploy the `NetworkPolicies` in the `whereami` `Namespace` in order to fix this issue.
-
-List the GitHub runs for the **Whereami app** repository:
+Open the list of the **Workloads** deployed in the GKE cluster, you will see that the Whereami app is successfully deployed. Click on the link displayed by the command below:
 ```Bash
-cd ${WORK_DIR}$WHERE_AMI_DIR_NAME && gh run list
+echo -e "https://console.cloud.google.com/kubernetes/workload/overview?project=${TENANT_PROJECT_ID}"
 ```
+
+Navigate to the Whereami app, click on the link displayed by the command below:
+```Bash
+echo -e "https://${WHERE_AMI_INGRESS_GATEWAY_HOST_NAME}"
+```
+
+You should receive the error: `RBAC: access denied`. This is because the default deny-all `AuthorizationPolicy` has been applied to the entire mesh. In the next section you will apply a fine granular `AuthorizationPolicy` for the Whereami app in order to get it working.
