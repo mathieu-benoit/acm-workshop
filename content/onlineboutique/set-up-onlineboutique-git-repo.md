@@ -19,6 +19,7 @@ source ${WORK_DIR}acm-workshop-variables.sh
 ```
 
 ```Bash
+mkdir -p ${WORK_DIR}$GKE_CONFIGS_DIR_NAME/repo-syncs
 mkdir ${WORK_DIR}$GKE_CONFIGS_DIR_NAME/repo-syncs/$ONLINEBOUTIQUE_NAMESPACE
 ```
 
