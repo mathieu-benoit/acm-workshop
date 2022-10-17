@@ -20,21 +20,14 @@ echo "export PRIVATE_ONLINE_BOUTIQUE_REGISTRY=${PRIVATE_ONLINE_BOUTIQUE_REGISTRY
 source ${WORK_DIR}acm-workshop-variables.sh
 ```
 
-Copy the public image to your private registry:
+Copy the public container images to your private registry:
 ```Bash
 UPSTREAM_ONLINE_BOUTIQUE_REGISTRY=gcr.io/google-samples/microservices-demo
 SERVICES="adservice cartservice checkoutservice currencyservice emailservice frontend loadgenerator paymentservice productcatalogservice recommendationservice shippingservice"
-for s in $SERVICES; do docker pull $UPSTREAM_ONLINE_BOUTIQUE_REGISTRY/$s:$ONLINE_BOUTIQUE_VERSION; docker tag $UPSTREAM_ONLINE_BOUTIQUE_REGISTRY/$s:$ONLINE_BOUTIQUE_VERSION $PRIVATE_ONLINE_BOUTIQUE_REGISTRY/$s:$ONLINE_BOUTIQUE_VERSION; docker push $PRIVATE_ONLINE_BOUTIQUE_REGISTRY/$s:$ONLINE_BOUTIQUE_VERSION; done
-docker pull redis:alpine
-docker tag redis:alpine $PRIVATE_ONLINE_BOUTIQUE_REGISTRY/redis:alpine
-docker push $PRIVATE_ONLINE_BOUTIQUE_REGISTRY/redis:alpine
-docker pull busybox:latest
-docker tag busybox:latest $PRIVATE_ONLINE_BOUTIQUE_REGISTRY/busybox:latest
-docker push $PRIVATE_ONLINE_BOUTIQUE_REGISTRY/busybox:latest
+for s in $SERVICES; do crane copy $UPSTREAM_ONLINE_BOUTIQUE_REGISTRY/$s:$ONLINE_BOUTIQUE_VERSION $PRIVATE_ONLINE_BOUTIQUE_REGISTRY/$s:$ONLINE_BOUTIQUE_VERSION; done
+crane copy redis:alpine $PRIVATE_ONLINE_BOUTIQUE_REGISTRY/redis:alpine
+crane copy busybox:latest $PRIVATE_ONLINE_BOUTIQUE_REGISTRY/busybox:latest
 ```
-{{% notice note %}}
-The copy of these container images into your private registry can take about 5 min.
-{{% /notice %}}
 
 List the container images in your private registry:
 ```Bash

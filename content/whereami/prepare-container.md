@@ -19,13 +19,11 @@ echo "export PRIVATE_WHEREAMI_IMAGE_NAME=${PRIVATE_WHEREAMI_IMAGE_NAME}" >> ${WO
 source ${WORK_DIR}acm-workshop-variables.sh
 ```
 
-Copy the public image to your private registry:
+Copy the public container image to your private registry:
 ```Bash
 UPSTREAM_WHEREAMI_IMAGE_NAME=us-docker.pkg.dev/google-samples/containers/gke/whereami:$WHEREAMI_VERSION
-docker pull $UPSTREAM_WHEREAMI_IMAGE_NAME
-docker tag $UPSTREAM_WHEREAMI_IMAGE_NAME $PRIVATE_WHEREAMI_IMAGE_NAME
 gcloud auth configure-docker $CONTAINER_REGISTRY_HOST_NAME --quiet
-docker push $PRIVATE_WHEREAMI_IMAGE_NAME
+crane copy $UPSTREAM_WHEREAMI_IMAGE_NAME $PRIVATE_WHEREAMI_IMAGE_NAME
 ```
 
 List the container images in your private registry:
