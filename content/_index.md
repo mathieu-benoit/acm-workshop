@@ -28,3 +28,5 @@ After the workshop, you will be able to:
 With this workshop, here is what you will accomplish, from scratch:
 
 ![Workshop Architecture diagram](/images/architecture.png)
+
+_Recently tested by the author with GKE 1.24.3-gke.2100, ASM 1.14.4-asm.2 and ACM 1.13.0._
