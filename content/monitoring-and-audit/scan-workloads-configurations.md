@@ -30,6 +30,10 @@ Then you have to wait a little bit while these features are being enabled on you
 
 > Audit in progress. It can take up to 15 minutes to complete.
 
-Eventually, when the audit is done, you will be able to see the report of the vulnerabilities found. The **Workload configuration audit** will come first, **Workload vulnerability audit** will be generated later. 
+When the audit is done, you will be able to see the report of the vulnerabilities found. The **Workload configuration audit** will come first, **Workload vulnerability audit** will be generated later. 
 
 ![GKE Security Posture report](/images/gke-security-posture-report.png)
+
+You will also be able to see in details the associated concerns:
+
+![GKE Security Posture concerns](/images/gke-security-posture-concerns.png)
