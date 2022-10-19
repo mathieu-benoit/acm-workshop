@@ -7,7 +7,7 @@ tags: ["apps-operator", "security-tips"]
 ![Apps Operator](/images/apps-operator.png)
 _{{< param description >}}_
 
-In this section, you will deploy granular and specific `NetworkPolicies` for the Whereami namespace. This will fix the policies violation you faced earlier. At the end you will catch another issue that you will resolve in the next section.
+In this section, you will deploy granular and specific `NetworkPolicies` for the Whereami namespace. This will fix the policies violation you faced earlier.
 
 Initialize variables:
 ```Bash
@@ -94,7 +94,7 @@ kustomize edit add resource ../base
 kustomize edit set namespace $WHEREAMI_NAMESPACE
 ```
 {{% notice info %}}
-The `kustomization.yaml` file was already existing from the [GitHub repository template](https://github.com/mathieu-benoit/config-sync-app-template-repo/blob/main/staging/kustomization.yaml) used when we created the `Whereami` app repository.
+The `kustomization.yaml` file was already existing from the [GitHub repository template](https://github.com/mathieu-benoit/config-sync-app-template-repo/blob/main/staging/kustomization.yaml) used when we created the **Whereami app** repository.
 {{% /notice %}}
 
 ## Deploy Kubernetes manifests

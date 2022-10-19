@@ -1,13 +1,13 @@
 ---
 title: "Deploy AuthorizationPolicies"
-weight: 7
+weight: 6
 description: "Duration: 5 min | Persona: Apps Operator"
 tags: ["apps-operator", "asm", "security-tips"]
 ---
 ![Apps Operator](/images/apps-operator.png)
 _{{< param description >}}_
 
-In this section, you will deploy granular and specific `AuthorizationPolicies` for the Online Boutique namespace. At the end that's where you will finally have a working Whereami app :)
+In this section, you will deploy granular and specific `AuthorizationPolicies` for the Online Boutique namespace. At the end that's where you will finally have working Online Boutique apps :)
 
 Initialize variables:
 ```Bash
@@ -20,7 +20,6 @@ source ${WORK_DIR}acm-workshop-variables.sh
 Get the upstream Kubernetes manifests:
 ```Bash
 cd ${WORK_DIR}$ONLINE_BOUTIQUE_DIR_NAME/upstream
-kpt pkg get https://github.com/GoogleCloudPlatform/anthos-service-mesh-samples.git/docs/online-boutique-asm-manifests/service-accounts@main
 kpt pkg get https://github.com/GoogleCloudPlatform/anthos-service-mesh-samples.git/docs/online-boutique-asm-manifests/authorization-policies@main
 ```
 
@@ -28,7 +27,7 @@ kpt pkg get https://github.com/GoogleCloudPlatform/anthos-service-mesh-samples.g
 
 ```Bash
 cd ${WORK_DIR}$ONLINE_BOUTIQUE_DIR_NAME/base
-kustomize edit add component ../upstream/service-accounts/all
+kustomize edit add component ../upstream/components/service-accounts
 kustomize edit add component ../upstream/authorization-policies/all
 ```
 
@@ -55,6 +54,8 @@ git add . && git commit -m "Online Boutique AuthorizationPolicies" && git push o
 ## Check deployments
 
 List the Kubernetes resources managed by Config Sync in **GKE cluster** for the **Online Boutique apps** repository:
+{{< tabs groupId="cs-status-ui">}}
+{{% tab name="gcloud" %}}
 ```Bash
 gcloud alpha anthos config sync repo describe \
     --project $TENANT_PROJECT_ID \
@@ -62,11 +63,27 @@ gcloud alpha anthos config sync repo describe \
     --sync-name repo-sync \
     --sync-namespace $ONLINEBOUTIQUE_NAMESPACE
 ```
-Wait and re-run this command above until you see `"status": "SYNCED"`. All the `managed_resources` listed should have `STATUS: Current` as well.
+Wait and re-run this command above until you see `"status": "SYNCED"`.
+{{% /tab %}}
+{{% tab name="UI" %}}
+Alternatively, you could also see this from within the Cloud Console, by clicking on this link:
+```Bash
+echo -e "https://console.cloud.google.com/kubernetes/config_management/status?clusterName=${GKE_NAME}&id=${GKE_NAME}&project=${TENANT_PROJECT_ID}"
+```
+Wait until you see the `Sync status` column as `SYNCED`. And then you can also click on `View resources` to see the details.
+{{% /tab %}}
+{{< /tabs >}}
 
 List the GitHub runs for the **Online Boutique apps** repository:
 ```Bash
 cd ${WORK_DIR}$ONLINE_BOUTIQUE_DIR_NAME && gh run list
+```
+
+## Check the Online Boutique apps
+
+Navigate to the Online Boutique apps, click on the link displayed by the command below:
+```Bash
+echo -e "https://${ONLINE_BOUTIQUE_INGRESS_GATEWAY_HOST_NAME}"
 ```
 
 You should now have the Online Boutique apps working successfully. Congrats!

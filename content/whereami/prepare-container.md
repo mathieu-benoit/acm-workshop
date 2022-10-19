@@ -36,6 +36,7 @@ gcloud artifacts docker images list $CONTAINER_REGISTRY_REPOSITORY \
 ```Bash
 gcloud artifacts docker images scan $PRIVATE_WHEREAMI_IMAGE_NAME \
     --project ${TENANT_PROJECT_ID} \
+    --remote \
     --format='value(response.scan)' > ${WORK_DIR}scan_id.txt
 gcloud artifacts docker images list-vulnerabilities $(cat ${WORK_DIR}scan_id.txt) \
     --project ${TENANT_PROJECT_ID} \

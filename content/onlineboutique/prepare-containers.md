@@ -1,6 +1,6 @@
 ---
 title: "Prepare containers"
-weight: 3
+weight: 4
 description: "Duration: 5 min | Persona: Apps Operator"
 tags: ["apps-operator", "security-tips", "shift-left"]
 ---
@@ -39,6 +39,7 @@ gcloud artifacts docker images list $CONTAINER_REGISTRY_REPOSITORY \
 ```Bash
 gcloud artifacts docker images scan $PRIVATE_ONLINE_BOUTIQUE_REGISTRY/cartservice:$ONLINE_BOUTIQUE_VERSION \
     --project ${TENANT_PROJECT_ID} \
+    --remote \
     --format='value(response.scan)' > ${WORK_DIR}scan_id.txt
 gcloud artifacts docker images list-vulnerabilities $(cat ${WORK_DIR}scan_id.txt) \
     --project ${TENANT_PROJECT_ID} \

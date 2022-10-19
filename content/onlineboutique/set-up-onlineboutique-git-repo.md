@@ -7,7 +7,7 @@ tags: ["asm", "gitops-tips", "platform-admin", "shift-left"]
 ![Platform Admin](/images/platform-admin.png)
 _{{< param description >}}_
 
-In this section, you will set up a dedicated GitHub repository which will contain all the Kubernetes manifests of the Online Boutique apps. You will also have the opportunity to catch and fix a policies violation.
+In this section, you will set up a dedicated GitHub repository which will contain all the Kubernetes manifests of the Online Boutique apps. You will also have the opportunity to catch a policies violation.
 
 Initialize variables:
 ```Bash
@@ -159,76 +159,3 @@ build   gatekeeper      2022-06-06T00:53:51.7286839Z     [info] v1/Namespace/onl
 {{% notice tip %}}
 In the context of this workshop, we are doing direct commits in the `main` branch but it's highly encouraged that you follow the Git flow process by creating branches and opening pull requests. With this process in place and this GitHub actions definition, your pull requests will be blocked if there is any `Constraint` violations and won't be merged into `main` branch. This will avoid any issues when actually deploying the Kubernetes manifests in the Kubernetes cluster.
 {{% /notice %}}
-
-## Deploy default NetworkPolicy
-
-Let's deploy a default `deny-all` `NetworkPolicy` in the `onlineboutique` `Namespace` in order to fix this `Constraint` violation.
-
-Define a default `deny-all` `NetworkPolicy`:
-```Bash
-cat <<EOF > ${WORK_DIR}$GKE_CONFIGS_DIR_NAME/repo-syncs/$ONLINEBOUTIQUE_NAMESPACE/network-policy-deny-all.yaml
-apiVersion: networking.k8s.io/v1
-kind: NetworkPolicy
-metadata:
-  name: deny-all
-  namespace: ${ONLINEBOUTIQUE_NAMESPACE}
-spec:
-  podSelector: {}
-  policyTypes:
-  - Ingress
-  - Egress
-EOF
-```
-
-Deploy this Kubernetes manifest:
-```Bash
-cd ${WORK_DIR}$GKE_CONFIGS_DIR_NAME/
-git add . && git commit -m "Default deny-all NetworkPolicy for Online Boutique" && git push origin main
-```
-
-## Check deployments
-
-List the Kubernetes resources managed by Config Sync in **GKE cluster** for the **GKE cluster configs** repository:
-{{< tabs groupId="cs-status-ui">}}
-{{% tab name="gcloud" %}}
-```Bash
-gcloud alpha anthos config sync repo describe \
-    --project $TENANT_PROJECT_ID \
-    --managed-resources all \
-    --sync-name root-sync \
-    --sync-namespace config-management-system
-```
-Wait and re-run this command above until you see `"status": "SYNCED"`.
-{{% /tab %}}
-{{% tab name="UI" %}}
-Alternatively, you could also see this from within the Cloud Console, by clicking on this link:
-```Bash
-echo -e "https://console.cloud.google.com/kubernetes/config_management/status?clusterName=${GKE_NAME}&id=${GKE_NAME}&project=${TENANT_PROJECT_ID}"
-```
-Wait until you see the `Sync status` column as `SYNCED`. And then you can also click on `View resources` to see the details.
-{{% /tab %}}
-{{< /tabs >}}
-
-List the GitHub runs for the **GKE cluster configs** repository:
-```Bash
-cd ${WORK_DIR}$GKE_CONFIGS_DIR_NAME && gh run list
-```
-
-List the Kubernetes resources managed by Config Sync in **GKE cluster** for the **Online Boutique apps** repository:
-```Bash
-gcloud alpha anthos config sync repo describe \
-    --project $TENANT_PROJECT_ID \
-    --managed-resources all \
-    --sync-name repo-sync \
-    --sync-namespace $ONLINEBOUTIQUE_NAMESPACE
-```
-Wait and re-run this command above until you see `"status": "SYNCED"`. All the `managed_resources` listed should have `STATUS: Current` as well.
-
-You will deploy the `NetworkPolicies` in the `onlineboutique` `Namespace` in the following sections in order to fix this issue.
-
-List the GitHub runs for the **Online Boutique apps** repository:
-```Bash
-cd ${WORK_DIR}$ONLINE_BOUTIQUE_DIR_NAME && gh run list
-```
-
-If you check again with the previous **Check Policies violation**, you won't see any `Constraint` violations now.
