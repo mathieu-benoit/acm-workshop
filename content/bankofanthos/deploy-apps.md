@@ -310,7 +310,7 @@ Open the list of the **Workloads** deployed in the GKE cluster, you will see tha
 echo -e "https://console.cloud.google.com/kubernetes/workload/overview?project=${TENANT_PROJECT_ID}"
 ```
 
-`Does not have minimum availability` - `balancereader` / `ledgerwriter` / `transactionhistory`
+There you will see on `balancereader`,  `ledgerwriter`, `transactionhistory` workloads this error message: `Does not have minimum availability`. We will fix these errors in the next section.
 
 Navigate to the Bank of Anthos apps, click on the link displayed by the command below:
 ```Bash
