@@ -15,13 +15,7 @@ WORK_DIR=~/
 source ${WORK_DIR}acm-workshop-variables.sh
 ```
 
-[Managed Anthos Service Mesh](https://cloud.google.com/service-mesh/docs/managed/configure-managed-anthos-service-mesh) is a Google-managed control plane and an optional data plane that you simply configure. Google handles their reliability, upgrades, scaling and security for you.
-
-When we installed Anthos Service Mesh earlier in this workshop, we chose a specific [release channel](https://cloud.google.com/service-mesh/docs/managed/select-a-release-channel#available_release_channels). Anthos Service Mesh release channels are similar conceptually to GKE release channels but are independent of GKE release channels. Google automatically manages the version and upgrade cadence for each release channel.
-
-In Ingress Gateway and Bank of Anthos namespaces, we also enabled the Google-managed data plane. When [Google-managed data plane](https://cloud.google.com/service-mesh/docs/managed/auto-control-plane-with-fleet#managed-data-plane) is enabled, the sidecar proxies and injected gateways are automatically upgraded in conjunction with the managed control plane.
-
-With both features, managed control plane and managed data plane, you don't have to worry anymore about Istio version upgrades.
+[Managed Anthos Service Mesh](https://cloud.google.com/service-mesh/docs/managed/configure-managed-anthos-service-mesh) is a Google-managed control plane and data plane that you simply configure. Google handles their reliability, upgrades, scaling and security for you.
 
 You can view the versions of the control plane (`revision` column below) and data plane (`proxy-version` column below) in Metrics Explorer. Click on the link displayed by the command below:
 ```Bash

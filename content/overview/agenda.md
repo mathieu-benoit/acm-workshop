@@ -50,16 +50,24 @@ tags: ["apps-operator", "org-admin", "platform-admin"]
 1. Online Boutique apps
     1. As Platform Admin, set up DNS for the Online Boutique app
     1. As Platform Admin, set up the Online Boutique apps's Git repo in GKE cluster
+    1. As Apps Operator, deploy `NetworkPolicies` for the Online Boutique namespace in GKE cluster
     1. As Apps Operator, copy Online Boutique containers in private Artifact Registry
     1. As Apps Operator, deploy the Online Boutique apps
-    1. As Apps Operator, deploy `Sidecars` for the Online Boutique namespace in GKE cluster
-    1. As Apps Operator, deploy `NetworkPolicies` for the Online Boutique namespace in GKE cluster
     1. As Apps Operator, deploy `AuthorizationPolicies` for the Online Boutique namespace in GKE cluster
+    1. As Apps Operator, deploy `Sidecars` for the Online Boutique namespace in GKE cluster
     1. As Org Admin, allow Memorystore (redis) for Tenant project
     1. As Org Admin, enforce policies for Memorystore (redis) resources
     1. As Platform Admin, create Memorystore (redis) instances with and without TLS in Tenant project
     1. As Apps Operator, configure Online Boutique apps to use Memorystore (redis) instance
     1. As Apps Operator, secure Online Boutique apps to access Memorystore (redis) instance via TLS
+1. Bank of Anthos apps
+    1. As Platform Admin, set up DNS for the Bank of Anthos app
+    1. As Platform Admin, set up the Bank of Anthos apps's Git repo in GKE cluster
+    1. As Apps Operator, deploy `NetworkPolicies` for the Bank of Anthos namespace in GKE cluster
+    1. As Apps Operator, copy Bank of Anthos containers in private Artifact Registry
+    1. As Apps Operator, deploy the Bank of Anthos apps
+    1. As Apps Operator, deploy `AuthorizationPolicies` for the Bank of Anthos namespace in GKE cluster
+    1. As Apps Operator, deploy `Sidecars` for the Bank of Anthos namespace in GKE cluster
 1. Monitoring & Audit
     1. As Platform Admin, verify ASM versions
     1. As Apps Operator, monitor apps security

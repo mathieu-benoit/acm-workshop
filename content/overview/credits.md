@@ -5,7 +5,8 @@ weight: 5
 Different contents have been leveraged in order to make and inpsire this workshop, here is the list of them:
 - [Exposing service mesh applications through GKE Ingress](https://cloud.google.com/architecture/exposing-service-mesh-apps-through-gke-ingress) - Alex Mattson, Ameer Abbas and Mark Church
 - [Whereami app](https://github.com/GoogleCloudPlatform/kubernetes-engine-samples/tree/main/whereami) - Alex Mattson
-- [OnlineBoutique apps](https://github.com/GoogleCloudPlatform/microservices-demo) - Megan O'Keefe and Nim Jayawardena
+- [Online Boutique apps](https://github.com/GoogleCloudPlatform/microservices-demo) - Megan O'Keefe and Nim Jayawardena
+- [Bank of Anthos apps](https://github.com/GoogleCloudPlatform/bank-of-anthos) - Megan O'Keefe and Olivier Bourgeois
 - [Kubernetes Network Policies recipes](https://github.com/ahmetb/kubernetes-network-policy-recipes) - Ahmet Alp Balkan
 - [Managing microservice architectures with Anthos Service Mesh](https://youtu.be/OeevDBEDAIA) - Ameer Abbas
 - [Organizing Teams for GitOps and Cloud Native Deployments](https://youtu.be/Kl4-f1d_viY) - Sandeep Parikh

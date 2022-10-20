@@ -27,7 +27,8 @@ After the workshop, you will be able to:
 - Deploy Infrastructure, Configs and Applications via Kubernetes manifests, via GitOps
 - Define clear roles and responsabilities between Org Admin, Platform Admin and Apps Operator
 - Set up a Managed ASM on GKE with a secure Ingress Gateway behind a HTTPS GCLB and Cloud Armor
-- Deploy sample apps such as Whereami and Online Boutique with security best practices including `NetworkPolicies`, `Sidecars` and `AuthorizationPolicies`.
+- Deploy sample apps such as Whereami, Online Boutique and Bank of Anthos with security best practices including `NetworkPolicies`, `Sidecars` and `AuthorizationPolicies`.
+- Use external managed databases such as Memorystore (Redis) for Online Boutique
 
 With this workshop, here is what you will accomplish, from scratch:
 
@@ -39,3 +40,4 @@ Recently tested with:
 - ACM 1.13.0
 - Whereami 1.2.12
 - Online Boutique 0.4.0
+- Bank of Anthos 0.5.8

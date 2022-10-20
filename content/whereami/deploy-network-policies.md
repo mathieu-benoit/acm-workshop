@@ -33,7 +33,6 @@ apiVersion: networking.k8s.io/v1
 kind: NetworkPolicy
 metadata:
   name: deny-all
-  namespace: ${WHEREAMI_NAMESPACE}
 spec:
   podSelector: {}
   policyTypes:
