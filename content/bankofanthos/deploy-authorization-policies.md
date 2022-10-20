@@ -9,4 +9,4 @@ _{{< param description >}}_
 
 In this section, you will deploy granular and specific `AuthorizationPolicies` for the Bank of Anthos namespace. At the end that's where you will finally have working Bank of Anthos apps :)
 
-_Coming, stay tuned!_
+_Coming soon, stay tuned!_

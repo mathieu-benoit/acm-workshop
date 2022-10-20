@@ -7,6 +7,6 @@ tags: ["asm", "apps-operator"]
 ![Apps Operator](/images/apps-operator.png)
 _{{< param description >}}_
 
-In this section, you will deploy fine granular `Sidecars` in order to optimize the resources (CPU/Memory) usage of the Online Boutique apps's sidecar proxies. By default, each application in the `onlineboutique` `Namespace` can reach to all the endpoints in the mesh. The `Sidecar` resource allows to reduce that list to the strict minimum of which endpoints it needs to communicate with.
+In this section, you will deploy fine granular `Sidecars` in order to optimize the resources (CPU/Memory) usage of the Bank of Anthos apps's sidecar proxies. By default, each application in the `bankofanthos` `Namespace` can reach to all the endpoints in the mesh. The `Sidecar` resource allows to reduce that list to the strict minimum of which endpoints it needs to communicate with.
 
-_Coming, stay tuned!_
+_Coming soon, stay tuned!_
