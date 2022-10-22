@@ -128,6 +128,11 @@ Wait until you see the `Sync status` column as `SYNCED`. And then you can also c
 {{% /tab %}}
 {{< /tabs >}}
 
+List the GitHub runs for the **Whereami app** repository:
+```Bash
+cd ${WORK_DIR}$WHERE_AMI_DIR_NAME && gh run list
+```
+
 ## Check the Whereami app
 
 Open the list of the **Workloads** deployed in the GKE cluster, you will see that the Whereami app is successfully deployed. Click on the link displayed by the command below:

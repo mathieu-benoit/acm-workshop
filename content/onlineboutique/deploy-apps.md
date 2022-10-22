@@ -198,6 +198,11 @@ Wait until you see the `Sync status` column as `SYNCED`. And then you can also c
 {{% /tab %}}
 {{< /tabs >}}
 
+List the GitHub runs for the **Online Boutique apps** repository:
+```Bash
+cd ${WORK_DIR}$ONLINE_BOUTIQUE_DIR_NAME && gh run list
+```
+
 ## Check the Online Boutique apps
 
 Open the list of the **Workloads** deployed in the GKE cluster, you will see that the Online Boutique apps is successfully deployed. Click on the link displayed by the command below:
