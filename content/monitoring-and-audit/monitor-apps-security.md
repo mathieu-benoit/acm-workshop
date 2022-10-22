@@ -30,4 +30,29 @@ Select the `frontend` **Workload** to open a more detailed view:
 
 From this view you could gain more visibility about **Inbound denials** or **Outbound denials** for both **Network policy requests** (`NetworkPolicies`) or **Service requests** (`AuthorizationPolicies`).
 
-You could explore the `whereami` or `asm-ingress` `Namespace` too.
+You could also leverage the `gcloud` commands below to get such insights.
+
+Run this command to get the **Service requests** denied for the last hour for the `onlineboutique` `Namespace`:
+```Bash
+filter="resource.type=\"k8s_container\" "\
+"logName=\"projects/${TENANT_PROJECT_ID}/logs/server-accesslog-stackdriver\" "\
+"(httpRequest.status=\"403\" OR labels.response_details=\"AuthzDenied\") "\
+"labels.destination_namespace=\"${ONLINEBOUTIQUE_NAMESPACE}\""
+
+resource.type="k8s_container" logName="projects/acm-workshop-216-tenant/logs/server-accesslog-stackdriver" (httpRequest.status=403 OR labels.response_details="AuthzDenied") labels.destination_canonical_service="balancereader" labels.destination_namespace="bankofanthos"
+
+gcloud logging read --project $TENANT_PROJECT_ID --freshness 1h "$filter"
+```
+
+Run this command to get the **Network policy requests** denied for the last hour for the `onlineboutique` `Namespace`:
+```Bash
+filter="resource.type=\"k8s_node\" "\
+"logName=\"projects/${TENANT_PROJECT_ID}/logs/policy-action\" "\
+"jsonPayload.disposition=\"deny\" "\
+"jsonPayload.dest.pod_namespace=\"${ONLINEBOUTIQUE_NAMESPACE}\" "\
+"resource.labels.cluster_name=\"${GKE_NAME}\""
+
+gcloud logging read --project $TENANT_PROJECT_ID --freshness 1h "$filter"
+```
+
+You could explore all of this for all the other `Namespaces` too.
