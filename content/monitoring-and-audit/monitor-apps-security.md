@@ -39,8 +39,6 @@ filter="resource.type=\"k8s_container\" "\
 "(httpRequest.status=\"403\" OR labels.response_details=\"AuthzDenied\") "\
 "labels.destination_namespace=\"${ONLINEBOUTIQUE_NAMESPACE}\""
 
-resource.type="k8s_container" logName="projects/acm-workshop-216-tenant/logs/server-accesslog-stackdriver" (httpRequest.status=403 OR labels.response_details="AuthzDenied") labels.destination_canonical_service="balancereader" labels.destination_namespace="bankofanthos"
-
 gcloud logging read --project $TENANT_PROJECT_ID --freshness 1h "$filter"
 ```
 
