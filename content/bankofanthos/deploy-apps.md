@@ -305,16 +305,16 @@ Wait until you see the `Sync status` column as `SYNCED`. And then you can also c
 
 ## Check the Bank of Anthos apps
 
-Open the list of the **Workloads** deployed in the GKE cluster, you will see that the Bank of Anthos apps is successfully deployed. Click on the link displayed by the command below:
+Open the list of the **Workloads** deployed in the GKE cluster, click on the link displayed by the command below:
 ```Bash
 echo -e "https://console.cloud.google.com/kubernetes/workload/overview?project=${TENANT_PROJECT_ID}"
 ```
 
-There you will see on `balancereader`,  `ledgerwriter`, `transactionhistory` workloads this error message: `Does not have minimum availability`. We will fix these errors in the next section.
+There, you will see on the `balancereader`,  `ledgerwriter`, `transactionhistory` workloads this error message: `Does not have minimum availability`. We will fix these errors in the next section.
 
 Navigate to the Bank of Anthos apps, click on the link displayed by the command below:
 ```Bash
 echo -e "https://${BANK_OF_ANTHOS_INGRESS_GATEWAY_HOST_NAME}"
 ```
 
-You should receive the error: `RBAC: access denied`. This is because the default deny-all `AuthorizationPolicy` has been applied to the entire mesh. In the next section you will apply a fine granular `AuthorizationPolicy` for the Bank of Anthos apps in order to get fix this.
+You should receive the error: `RBAC: access denied`. This is because the default deny-all `AuthorizationPolicy` has been applied to the entire mesh. In the next section you will apply a fine granular `AuthorizationPolicy` for the Bank of Anthos apps in order to fix this.
