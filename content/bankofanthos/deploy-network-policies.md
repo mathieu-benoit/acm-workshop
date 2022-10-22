@@ -79,6 +79,9 @@ spec:
     - podSelector:
         matchLabels:
           app: frontend
+    - podSelector:
+        matchLabels:
+          app: ledgerwriter
     ports:
     - port: 8080
       protocol: TCP
