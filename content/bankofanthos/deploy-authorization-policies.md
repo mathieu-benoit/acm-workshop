@@ -223,6 +223,7 @@ spec:
     - operation:
         methods:
         - GET
+        - POST
         paths:
         - /contacts/*
         ports:
