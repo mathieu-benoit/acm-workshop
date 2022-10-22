@@ -39,5 +39,5 @@ Recently tested with:
 - ASM 1.14.4-asm.2
 - ACM 1.13.0
 - Whereami 1.2.12
-- Online Boutique 0.4.0
-- Bank of Anthos 0.5.8
+- Online Boutique 0.4.1
+- Bank of Anthos 0.5.9
