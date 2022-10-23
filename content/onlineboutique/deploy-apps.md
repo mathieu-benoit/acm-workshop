@@ -66,7 +66,7 @@ kustomize edit add resource virtualservice.yaml
 
 ## Update the Staging namespace overlay
 
-Update the Staging Kustomize overlay with the proper `hosts` value in the `VirtualService` and with the `Deployments`'s container images to point to the private Artifact Registry:
+Update the Staging Kustomize overlay with the proper `hosts` value in the `VirtualService`
 ```Bash
 cat <<EOF >> ${WORK_DIR}$ONLINE_BOUTIQUE_DIR_NAME/staging/kustomization.yaml
 patchesJson6902:
@@ -78,6 +78,16 @@ patchesJson6902:
       path: /spec/hosts
       value:
         - ${ONLINE_BOUTIQUE_INGRESS_GATEWAY_HOST_NAME}
+EOF
+```
+
+Update the Staging Kustomize overlay with the `Deployments`'s container images pointing to the private Artifact Registry: 
+```Bash
+mkdir ${WORK_DIR}$ONLINE_BOUTIQUE_DIR_NAME/staging/container-images
+cat <<EOF > ${WORK_DIR}$ONLINE_BOUTIQUE_DIR_NAME/staging/container-images/kustomization.yaml
+apiVersion: kustomize.config.k8s.io/v1alpha1
+kind: Component
+patchesJson6902:
 - target:
     kind: Deployment
     name: adservice
@@ -166,6 +176,8 @@ patchesJson6902:
       path: /spec/template/spec/containers/0/image
       value: ${PRIVATE_ONLINE_BOUTIQUE_REGISTRY}/redis:alpine
 EOF
+cd ${WORK_DIR}$ONLINE_BOUTIQUE_DIR_NAME/staging
+kustomize edit add component container-images
 ```
 
 ## Deploy Kubernetes manifests
