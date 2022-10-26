@@ -208,7 +208,7 @@ metadata:
     ${INGRESS_GATEWAY_LABEL}
 spec:
   ports:
-  - name: http-status
+  - name: tcp-status
     port: 15021
     protocol: TCP
     targetPort: 15021
