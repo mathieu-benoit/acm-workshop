@@ -26,15 +26,15 @@ export REDIS_PORT=$(gcloud redis instances describe $REDIS_NAME --region=$GKE_LO
 Update the Online Boutique apps with the new Memorystore (redis) connection information:
 ```Bash
 cd ${WORK_DIR}$ONLINE_BOUTIQUE_DIR_NAME/staging
-cp -r ../upstream/base/for-memorystore/ .
-sed -i "s/REDIS_IP/${REDIS_IP}/g;s/REDIS_PORT/${REDIS_PORT}/g" for-memorystore/kustomization.yaml
-kustomize edit add component for-memorystore
+cp -r ../upstream/components/memorystore/ .
+sed -i "s/REDIS_CONNECTION_STRING/${REDIS_IP}:${REDIS_PORT}/g" memorystore/kustomization.yaml
+kustomize edit add component memorystore
 ```
 {{% notice info %}}
 This will change the `REDIS_ADDR` environment variable of the `cartservice` to point to the Memorystore (redis) instance as well as removing the `Deployment` and the `Service` of the default in-cluster `redis` database container.
 {{% /notice %}}
 
-Update the previously deployed `Sidecars`, `NetworkPolicies` and `AuthorizationPolicies`:
+Update the previously deployed `NetworkPolicies`:
 ```Bash
 cd ${WORK_DIR}$ONLINE_BOUTIQUE_DIR_NAME/staging
 kustomize edit add component ../upstream/sidecars/for-memorystore
@@ -48,15 +48,41 @@ patchesStrategicMerge:
     name: redis-cart
   \$patch: delete
 EOF
-kustomize edit add component ../upstream/service-accounts/for-memorystore
-kustomize edit add component ../upstream/authorization-policies/for-memorystore
+```
+
+Update the previously deployed `Sidecars`, `NetworkPolicies`, `ServiceAccounts` and `AuthorizationPolicies`:
+```Bash
+cd ${WORK_DIR}$ONLINE_BOUTIQUE_DIR_NAME/staging
+kustomize edit add component ../upstream/sidecars/for-memorystore
+cd ${WORK_DIR}$ONLINE_BOUTIQUE_DIR_NAME/base
+cat <<EOF >> network-policies/kustomization.yaml
+patchesStrategicMerge:
+- |-
+  apiVersion: networking.k8s.io/v1
+  kind: NetworkPolicy
+  metadata:
+    name: redis-cart
+  \$patch: delete
+- |-
+  apiVersion: security.istio.io/v1beta1
+  kind: AuthorizationPolicy
+  metadata:
+    name: redis-cart
+  $patch: delete
+- |-
+  apiVersion: v1
+  kind: ServiceAccount
+  metadata:
+    name: redis-cart
+  $patch: delete
+EOF
 ```
 
 ## Deploy Kubernetes manifests
 
 ```Bash
 cd ${WORK_DIR}$ONLINE_BOUTIQUE_DIR_NAME/
-git add . && git commit -m "Secure Memorystore (redis) access" && git push origin main
+git add . && git commit -m "Use Memorystore (redis)" && git push origin main
 ```
 
 ## Check deployments
