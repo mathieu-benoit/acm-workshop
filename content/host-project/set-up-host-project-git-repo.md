@@ -53,7 +53,7 @@ spec:
 EOF
 ```
 {{% notice info %}}
-We explicitly set the Policy Controller's `referentialRulesEnabled` field to `true` and `referentialRulesEnabled` field to `true`, the other are enabled by default.
+We explicitly set the Policy Controller's `referentialRulesEnabled` field to `true` and `logDeniesEnabled` field to `true`, the other are enabled by default.
 {{% /notice %}}
 
 ## Define the Host project's Git repository
