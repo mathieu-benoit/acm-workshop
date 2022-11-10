@@ -34,29 +34,11 @@ kustomize edit add component memorystore
 This will change the `REDIS_ADDR` environment variable of the `cartservice` to point to the Memorystore (redis) instance as well as removing the `Deployment` and the `Service` of the default in-cluster `redis` database container.
 {{% /notice %}}
 
-Update the previously deployed `NetworkPolicies`:
-```Bash
-cd ${WORK_DIR}$ONLINE_BOUTIQUE_DIR_NAME/staging
-kustomize edit add component ../upstream/sidecars/for-memorystore
-cd ${WORK_DIR}$ONLINE_BOUTIQUE_DIR_NAME/base
-cat <<EOF >> network-policies/kustomization.yaml
-patchesStrategicMerge:
-- |-
-  apiVersion: networking.k8s.io/v1
-  kind: NetworkPolicy
-  metadata:
-    name: redis-cart
-  \$patch: delete
-EOF
-```
-
 Update the previously deployed `Sidecars`, `NetworkPolicies`, `ServiceAccounts` and `AuthorizationPolicies`:
 ```Bash
-cd ${WORK_DIR}$ONLINE_BOUTIQUE_DIR_NAME/staging
-kustomize edit add component ../upstream/sidecars/for-memorystore
 cd ${WORK_DIR}$ONLINE_BOUTIQUE_DIR_NAME/base
-cat <<EOF >> network-policies/kustomization.yaml
-patchesStrategicMerge:
+kustomize edit add component ../upstream/sidecars/for-memorystore
+cat <<EOF >> kustomization.yaml
 - |-
   apiVersion: networking.k8s.io/v1
   kind: NetworkPolicy
@@ -68,13 +50,7 @@ patchesStrategicMerge:
   kind: AuthorizationPolicy
   metadata:
     name: redis-cart
-  $patch: delete
-- |-
-  apiVersion: v1
-  kind: ServiceAccount
-  metadata:
-    name: redis-cart
-  $patch: delete
+  \$patch: delete
 EOF
 ```
 
