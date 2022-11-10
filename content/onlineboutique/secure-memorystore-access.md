@@ -33,8 +33,8 @@ gcloud redis instances describe $REDIS_TLS_NAME --region=$GKE_LOCATION --project
 Update the Online Boutique apps with the new Memorystore (redis) connection information:
 ```Bash
 cd ${WORK_DIR}$ONLINE_BOUTIQUE_DIR_NAME/staging
-cp -r ../upstream/base/for-memorystore/ .
-sed -i "s/REDIS_IP/${REDIS_TLS_IP}/g;s/REDIS_PORT/${REDIS_TLS_PORT}/g" for-memorystore/kustomization.yaml
+cp -r ../upstream/components/memorystore/ .
+sed -i "s/REDIS_CONNECTION_STRING/${REDIS_TLS_IP}:${REDIS_TLS_PORT}/g" memorystore/kustomization.yaml
 ```
 {{% notice info %}}
 This will change the `REDIS_ADDR` environment variable of the `cartservice` to point to the Memorystore (redis) instance with TLS enabled.
@@ -42,7 +42,7 @@ This will change the `REDIS_ADDR` environment variable of the `cartservice` to p
 
 Define the `Secret` with the Certificate Authority:
 ```Bash
-cd ${WORK_DIR}$ONLINE_BOUTIQUE_DIR_NAME/staging/for-memorystore
+cd ${WORK_DIR}$ONLINE_BOUTIQUE_DIR_NAME/staging/memorystore
 kubectl create secret generic $REDIS_TLS_CERT_NAME --from-file=${WORK_DIR}${REDIS_TLS_CERT_NAME}.pem -n $ONLINEBOUTIQUE_NAMESPACE --dry-run=client -o yaml > memorystore-redis-tls-secret.yaml
 kustomize edit add resource memorystore-redis-tls-secret.yaml
 ```
@@ -52,7 +52,7 @@ The certificate value will be exposed in the `Secret` manifest in the Git reposi
 
 Define the `ServiceEntry` and `DestinationRule` in order to configure the TLS connection outside of the mesh and the cluster, pointing to the Memorystore (redis) instance:
 ```Bash
-cd ${WORK_DIR}$ONLINE_BOUTIQUE_DIR_NAME/staging/for-memorystore
+cd ${WORK_DIR}$ONLINE_BOUTIQUE_DIR_NAME/staging/memorystore
 cat <<EOF >> memorystore-redis-tls-serviceentry.yaml
 apiVersion: networking.istio.io/v1beta1
 kind: ServiceEntry
@@ -92,7 +92,7 @@ kustomize edit add resource memorystore-redis-tls-destinationrule.yaml
 
 Update the `cartservice` `Deployment` in order to be able to load the TLS configuration for the sidecar proxy:
 ```Bash
-cd ${WORK_DIR}$ONLINE_BOUTIQUE_DIR_NAME/staging/for-memorystore
+cd ${WORK_DIR}$ONLINE_BOUTIQUE_DIR_NAME/staging/memorystore
 cat <<EOF >> kustomization.yaml
 patches:
   - patch: |-
@@ -112,8 +112,9 @@ EOF
 
 Update the previously deployed `Sidecars`:
 ```Bash
-cd ${WORK_DIR}$ONLINE_BOUTIQUE_DIR_NAME/staging
+cd ${WORK_DIR}$ONLINE_BOUTIQUE_DIR_NAME/staging/memorystore
 cat <<EOF >> kustomization.yaml
+patchesJson6902:
 - target:
     kind: Sidecar
     name: cartservice
