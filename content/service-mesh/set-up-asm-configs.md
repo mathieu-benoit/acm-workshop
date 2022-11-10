@@ -13,6 +13,18 @@ Initialize variables:
 ```Bash
 WORK_DIR=~/
 source ${WORK_DIR}acm-workshop-variables.sh
+ASM_VERSION=asm-managed-rapid
+echo "export ASM_VERSION=${ASM_VERSION}" >> ${WORK_DIR}acm-workshop-variables.sh
+source ${WORK_DIR}acm-workshop-variables.sh
+```
+{{% notice info %}}
+`ASM_VERSION` is set to `asm-managed-rapid` because the Managed ASM is following the GKE's channel: `rapid`.
+{{% /notice %}}
+```
+
+Create a dedicated `istio-system` folder in the GKE configs's Git repo:
+```Bash
+mkdir ${WORK_DIR}$GKE_CONFIGS_DIR_NAME/istio-system
 ```
 
 ## Define ASM configs Mesh-wide

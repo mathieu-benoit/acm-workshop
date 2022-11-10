@@ -46,8 +46,6 @@ kind: Deployment
 metadata:
   name: ${INGRESS_GATEWAY_NAME}
   namespace: ${INGRESS_GATEWAY_NAMESPACE}
-  annotations:
-    config.kubernetes.io/depends-on: mesh.cloud.google.com/namespaces/istio-system/ControlPlaneRevision/${ASM_VERSION}
 spec:
   selector:
     matchLabels:
