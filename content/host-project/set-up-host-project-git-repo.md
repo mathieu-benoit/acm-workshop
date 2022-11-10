@@ -34,9 +34,9 @@ gcloud compute routers nats create $CONFIG_CONTROLLER_NAT_CONFIG_NAME \
     --auto-allocate-nat-external-ips
 ```
 
-## Enable multi-repositories
+## Customize Policy Controller
 
-Deploy the multi-repositories setup for the Config Controller's Config Management component:
+Customize setup for the Config Controller's Config Management component:
 ```Bash
 cat << EOF | kubectl apply -f -
 apiVersion: configmanagement.gke.io/v1
@@ -53,13 +53,8 @@ spec:
 EOF
 ```
 {{% notice info %}}
-We explicitly set the Policy Controller's `templateLibraryInstalled` field to `true`, in order to install the [default library of `ConstraintTemplates`](https://cloud.google.com/anthos-config-management/docs/reference/constraint-template-library).
+We explicitly set the Policy Controller's `referentialRulesEnabled` field to `true` and `referentialRulesEnabled` field to `true`, the other are enabled by default.
 {{% /notice %}}
-
-Let's wait for the multi-repositories configs to be deployed:
-```Bash
-kubectl wait --for condition=established crd rootsyncs.configsync.gke.io
-```
 
 ## Define the Host project's Git repository
 
