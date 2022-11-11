@@ -28,16 +28,16 @@ After the workshop, you will be able to:
 - Define clear roles and responsabilities between Org Admin, Platform Admin and Apps Operator
 - Set up a Managed ASM on GKE with a secure Ingress Gateway behind a HTTPS GCLB and Cloud Armor
 - Deploy sample apps such as Whereami, Online Boutique and Bank of Anthos with security best practices including `NetworkPolicies`, `Sidecars` and `AuthorizationPolicies`.
-- Use external managed databases such as Memorystore (Redis) for Online Boutique
+- Use external managed databases such as Memorystore (Redis) and Spanner for Online Boutique
 
 With this workshop, here is what you will accomplish, from scratch:
 
 ![Workshop Architecture diagram](/images/architecture.png)
 
 Recently tested with:
-- GKE 1.24.3-gke.2100
+- GKE 1.24.4-gke.800
 - ASM 1.14.4-asm.2
-- ACM 1.13.0
+- ACM 1.13.1
 - Whereami 1.2.12
 - Online Boutique 0.4.1
 - Bank of Anthos 0.5.9
