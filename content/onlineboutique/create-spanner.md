@@ -131,6 +131,9 @@ git add . && git commit -m "Spanner instance and database and configure cartserv
 graph TD;
   SpannerInstance-.->Project
   SpannerDatabase-->SpannerInstance
+  IAMServiceAccount-.->Project
+  IAMPolicyMember-->SpannerDatabase
+  IAMPolicyMember-->IAMServiceAccount
 {{< /mermaid >}}
 
 List the Kubernetes resources managed by Config Sync in **Config Controller** for the **Tenant project configs** repository:
@@ -155,4 +158,10 @@ gcloud spanner instances list \
 gcloud spanner databases list \
     --instance $SPANNER_INSTANCE_NAME \
     --project=$TENANT_PROJECT_ID
+gcloud spanner databases get-iam-policy $SPANNER_DATABASE_NAME \
+    --project $TENANT_PROJECT_ID \
+    --instance $SPANNER_INSTANCE_NAME
+    --filter="bindings.members:${SPANNER_DATABASE_USER_GSA_NAME}@${TENANT_PROJECT_ID}.iam.gserviceaccount.com" \
+    --flatten="bindings[].members" \
+    --format="table(bindings.role)"
 ```
