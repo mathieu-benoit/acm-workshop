@@ -7,7 +7,7 @@ tags: ["kcc", "platform-admin"]
 ![Platform Admin](/images/platform-admin.png)
 _{{< param description >}}_
 
-In this section, you will create a Spanner instance and database for the Online Boutique's `cartservice` app to connect to.
+In this section, you will create a Spanner instance and database for the Online Boutique's `cartservice` app to connect to. You will also configure the associated `cartservice`'s Google Service account to have fine granular read access to the Spanner database via Workload Identity.
 
 Initialize variables:
 ```Bash
@@ -15,6 +15,7 @@ WORK_DIR=~/
 source ${WORK_DIR}acm-workshop-variables.sh
 echo "export SPANNER_INSTANCE_NAME=onlineboutique" >> ${WORK_DIR}acm-workshop-variables.sh
 echo "export SPANNER_DATABASE_NAME=carts" >> ${WORK_DIR}acm-workshop-variables.sh
+echo "export SPANNER_DATABASE_USER_GSA_NAME=spanner-db-user" >> ${WORK_DIR}acm-workshop-variables.sh
 source ${WORK_DIR}acm-workshop-variables.sh
 ```
 
@@ -69,30 +70,51 @@ cat <<EOF > ${WORK_DIR}$TENANT_PROJECT_DIR_NAME/$ONLINEBOUTIQUE_NAMESPACE/spanne
 apiVersion: iam.cnrm.cloud.google.com/v1beta1
 kind: IAMServiceAccount
 metadata:
-  name: spanner-db-user
+  name: ${SPANNER_DATABASE_USER_GSA_NAME}
   namespace: ${TENANT_PROJECT_ID}
 spec:
-  displayName: spanner-db-user
+  displayName: ${SPANNER_DATABASE_USER_GSA_NAME}
 EOF
 ```
 
 ```Bash
-cat <<EOF > ${WORK_DIR}$HOST_PROJECT_DIR_NAME/projects/$TENANT_PROJECT_ID/workload-identity-user.yaml
+cat <<EOF > ${WORK_DIR}$TENANT_PROJECT_DIR_NAME/$ONLINEBOUTIQUE_NAMESPACE/spanner-db-user.yaml
+apiVersion: iam.cnrm.cloud.google.com/v1beta1
+kind: IAMPolicyMember
+metadata:
+  name: ${SPANNER_DATABASE_USER_GSA_NAME}
+  namespace: ${TENANT_PROJECT_ID}
+  annotations:
+    config.kubernetes.io/depends-on: iam.cnrm.cloud.google.com/namespaces/${TENANT_PROJECT_ID}/IAMServiceAccount/${SPANNER_DATABASE_USER_GSA_NAME},spanner.cnrm.cloud.google.com/namespaces/${TENANT_PROJECT_ID}/SpannerDatabase/${SPANNER_DATABASE_NAME}
+spec:
+  memberFrom:
+    serviceAccountRef:
+      name: ${SPANNER_DATABASE_USER_GSA_NAME}
+      namespace: ${TENANT_PROJECT_ID}
+  resourceRef:
+    kind: SpannerDatabase
+    name: ${SPANNER_DATABASE_NAME}
+  role: roles/spanner.databaseUser
+EOF
+```
+
+```Bash
+cat <<EOF > ${WORK_DIR}$TENANT_PROJECT_DIR_NAME/$ONLINEBOUTIQUE_NAMESPACE/spanner-db-user-workload-identity-user.yaml
 apiVersion: iam.cnrm.cloud.google.com/v1beta1
 kind: IAMPartialPolicy
 metadata:
-  name: ${TENANT_PROJECT_ID}-sa-wi-user
-  namespace: config-control
+  name: ${SPANNER_DATABASE_USER_GSA_NAME}
+  namespace: ${TENANT_PROJECT_ID}
   annotations:
-    config.kubernetes.io/depends-on: iam.cnrm.cloud.google.com/namespaces/config-control/IAMServiceAccount/${TENANT_PROJECT_ID}
+    config.kubernetes.io/depends-on: iam.cnrm.cloud.google.com/namespaces/${TENANT_PROJECT_ID}/IAMServiceAccount/${SPANNER_DATABASE_USER_GSA_NAME}
 spec:
   resourceRef:
-    name: ${TENANT_PROJECT_ID}
+    name: ${SPANNER_DATABASE_USER_GSA_NAME}
     kind: IAMServiceAccount
   bindings:
     - role: roles/iam.workloadIdentityUser
       members:
-        - member: serviceAccount:${HOST_PROJECT_ID}.svc.id.goog[cnrm-system/cnrm-controller-manager-${TENANT_PROJECT_ID}]
+        - member: serviceAccount:${TENANT_PROJECT_ID}.svc.id.goog[${ONLINEBOUTIQUE_NAMESPACE}/cartservice]
 EOF
 ```
 
@@ -100,7 +122,7 @@ EOF
 
 ```Bash
 cd ${WORK_DIR}$TENANT_PROJECT_DIR_NAME/
-git add . && git commit -m "Spanner instance and database" && git push origin main
+git add . && git commit -m "Spanner instance and database and configure cartservice's gsa" && git push origin main
 ```
 
 ## Check deployments
