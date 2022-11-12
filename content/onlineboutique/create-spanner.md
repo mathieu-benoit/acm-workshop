@@ -36,7 +36,7 @@ metadata:
   namespace: ${TENANT_PROJECT_ID}
 spec:
   config: regional-${GKE_LOCATION}
-  displayName: ${SPANNER_INSTANCE_NAME} spanner instance
+  displayName: ${SPANNER_INSTANCE_NAME}
   numNodes: 2
 EOF
 ```
