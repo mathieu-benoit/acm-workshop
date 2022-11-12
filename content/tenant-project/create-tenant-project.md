@@ -135,7 +135,9 @@ metadata:
   annotations:
     config.kubernetes.io/depends-on: iam.cnrm.cloud.google.com/namespaces/config-control/IAMServiceAccount/${TENANT_PROJECT_ID}
 spec:
+  billingProject: ${TENANT_PROJECT_ID}
   googleServiceAccount: ${TENANT_PROJECT_SA_EMAIL}
+  requestProjectPolicy: BILLING_PROJECT
 EOF
 ```
 
