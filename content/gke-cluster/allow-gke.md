@@ -91,6 +91,25 @@ EOF
 
 ## Define APIs
 
+Define the Cloud Resources Manager API [`Service`](https://cloud.google.com/config-connector/docs/reference/resource-docs/serviceusage/service) resource for the Tenant project:
+```Bash
+cat <<EOF > ${WORK_DIR}$HOST_PROJECT_DIR_NAME/projects/$TENANT_PROJECT_ID/cloudresourcemanager-service.yaml
+apiVersion: serviceusage.cnrm.cloud.google.com/v1beta1
+kind: Service
+metadata:
+  annotations:
+    cnrm.cloud.google.com/deletion-policy: "abandon"
+    cnrm.cloud.google.com/disable-dependent-services: "false"
+    config.kubernetes.io/depends-on: resourcemanager.cnrm.cloud.google.com/namespaces/config-control/Project/${TENANT_PROJECT_ID}
+  name: ${TENANT_PROJECT_ID}-cloudresourcemanager
+  namespace: config-control
+spec:
+  projectRef:
+    name: ${TENANT_PROJECT_ID}
+  resourceID: cloudresourcemanager.googleapis.com
+EOF
+```
+
 Define the GKE API [`Service`](https://cloud.google.com/config-connector/docs/reference/resource-docs/serviceusage/service) resource for the Tenant project:
 ```Bash
 cat <<EOF > ${WORK_DIR}$HOST_PROJECT_DIR_NAME/projects/$TENANT_PROJECT_ID/container-service.yaml
@@ -148,6 +167,7 @@ graph TD;
   IAMPolicyMember-.->Project
   IAMPolicyMember-.->IAMServiceAccount
   IAMPolicyMember-.->Project
+  Service-.->Project
   Service-.->Project
   Service-.->Project
 {{< /mermaid >}}
