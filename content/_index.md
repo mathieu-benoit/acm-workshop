@@ -36,7 +36,7 @@ With this workshop, here is what you will accomplish, from scratch:
 
 Recently tested with:
 - GKE 1.24.4-gke.800
-- ASM 1.14.4-asm.2
+- ASM 1.15.3-asm.1
 - ACM 1.13.1
 - Whereami 1.2.12
 - Online Boutique 0.4.1
