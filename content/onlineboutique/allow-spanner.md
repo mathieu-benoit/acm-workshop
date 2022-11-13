@@ -1,13 +1,13 @@
 ---
-title: "Allow Memorystore"
-weight: 8
+title: "Allow Spanner"
+weight: 13
 description: "Duration: 5 min | Persona: Org Admin"
 tags: ["kcc", "org-admin"]
 ---
 ![Org Admin](/images/org-admin.png)
 _{{< param description >}}_
 
-In this section, you will enable and grant the appropriate APIs in the Tenant project and the IAM role for the Tenant project's service account. This will allow later this service account to provision Memorystore (redis) instances.
+In this section, you will enable and grant the appropriate APIs in the Tenant project and the IAM role for the Tenant project's service account. This will allow later this service account to provision a Spanner instance.
 
 Initialize variables:
 ```Bash
@@ -17,9 +17,9 @@ source ${WORK_DIR}acm-workshop-variables.sh
 
 ## Define API
 
-Define the Memorystore (redis) API [`Service`](https://cloud.google.com/config-connector/docs/reference/resource-docs/serviceusage/service) resource for the Tenant project:
+Define the Spanner API [`Service`](https://cloud.google.com/config-connector/docs/reference/resource-docs/serviceusage/service) resource for the Tenant project:
 ```Bash
-cat <<EOF > ${WORK_DIR}$HOST_PROJECT_DIR_NAME/projects/$TENANT_PROJECT_ID/redis-service.yaml
+cat <<EOF > ${WORK_DIR}$HOST_PROJECT_DIR_NAME/projects/$TENANT_PROJECT_ID/spanner-service.yaml
 apiVersion: serviceusage.cnrm.cloud.google.com/v1beta1
 kind: Service
 metadata:
@@ -27,24 +27,24 @@ metadata:
     cnrm.cloud.google.com/deletion-policy: "abandon"
     cnrm.cloud.google.com/disable-dependent-services: "false"
     config.kubernetes.io/depends-on: resourcemanager.cnrm.cloud.google.com/namespaces/config-control/Project/${TENANT_PROJECT_ID}
-  name: ${TENANT_PROJECT_ID}-redis
+  name: ${TENANT_PROJECT_ID}-spanner
   namespace: config-control
 spec:
   projectRef:
     name: ${TENANT_PROJECT_ID}
-  resourceID: redis.googleapis.com
+  resourceID: spanner.googleapis.com
 EOF
 ```
 
 ## Define role
 
-Define the `redis.admin` role with an [`IAMPolicyMember`](https://cloud.google.com/config-connector/docs/reference/resource-docs/iam/iampolicymember) for the Tenant project's service account:
+Define the `spanner.admin` role with an [`IAMPolicyMember`](https://cloud.google.com/config-connector/docs/reference/resource-docs/iam/iampolicymember) for the Tenant project's service account:
 ```Bash
-cat <<EOF > ${WORK_DIR}$HOST_PROJECT_DIR_NAME/projects/$TENANT_PROJECT_ID/redis-admin.yaml
+cat <<EOF > ${WORK_DIR}$HOST_PROJECT_DIR_NAME/projects/$TENANT_PROJECT_ID/spanner-admin.yaml
 apiVersion: iam.cnrm.cloud.google.com/v1beta1
 kind: IAMPolicyMember
 metadata:
-  name: redis-admin-${TENANT_PROJECT_ID}
+  name: spanner-admin-${TENANT_PROJECT_ID}
   namespace: config-control
   annotations:
     config.kubernetes.io/depends-on: iam.cnrm.cloud.google.com/namespaces/config-control/IAMServiceAccount/${TENANT_PROJECT_ID},resourcemanager.cnrm.cloud.google.com/namespaces/config-control/Project/${TENANT_PROJECT_ID}
@@ -52,7 +52,7 @@ spec:
   memberFrom:
     serviceAccountRef:
       name: ${TENANT_PROJECT_ID}
-  role: roles/redis.admin
+  role: roles/spanner.admin
   resourceRef:
     kind: Project
     external: projects/${TENANT_PROJECT_ID}
@@ -63,7 +63,7 @@ EOF
 
 ```Bash
 cd ${WORK_DIR}$HOST_PROJECT_DIR_NAME/
-git add . && git commit -m "Allow Memorystore (redis) for Tenant project" && git push origin main
+git add . && git commit -m "Allow Spanner for Tenant project" && git push origin main
 ```
 
 ## Check deployments
@@ -95,10 +95,10 @@ List the Google Cloud resources created:
 gcloud services list \
     --enabled \
     --project ${TENANT_PROJECT_ID} \
-    | grep -E 'redis'
+    | grep -E 'spanner'
 gcloud projects get-iam-policy $TENANT_PROJECT_ID \
     --filter="bindings.members:${TENANT_PROJECT_SA_EMAIL}" \
     --flatten="bindings[].members" \
     --format="table(bindings.role)" \
-    | grep redis
+    | grep spanner
 ```

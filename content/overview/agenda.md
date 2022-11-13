@@ -60,6 +60,9 @@ tags: ["apps-operator", "org-admin", "platform-admin"]
     1. As Platform Admin, create Memorystore (redis) instances with and without TLS in Tenant project
     1. As Apps Operator, configure Online Boutique apps to use Memorystore (redis) instance
     1. As Apps Operator, secure Online Boutique apps to access Memorystore (redis) instance via TLS
+    1. As Org Admin, allow Spanner for Tenant project
+    1. As Platform Admin, create Spanner instance in Tenant project
+    1. As Apps Operator, configure Online Boutique apps to use Spanner instance
 1. Bank of Anthos apps
     1. As Platform Admin, set up DNS for the Bank of Anthos app
     1. As Platform Admin, set up the Bank of Anthos apps's Git repo in GKE cluster

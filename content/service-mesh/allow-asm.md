@@ -90,6 +90,6 @@ List the Google Cloud resources created:
 gcloud services list \
     --enabled \
     --project ${TENANT_PROJECT_ID} \
-    | grep -E 'mesh|anthos'
+    | grep -E 'mesh|cloudtrace'
 ```
 Wait and re-run this command above until you see the resources created.
