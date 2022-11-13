@@ -160,7 +160,7 @@ gcloud spanner databases list \
     --project=$TENANT_PROJECT_ID
 gcloud spanner databases get-iam-policy $SPANNER_DATABASE_NAME \
     --project $TENANT_PROJECT_ID \
-    --instance $SPANNER_INSTANCE_NAME
+    --instance $SPANNER_INSTANCE_NAME \
     --filter="bindings.members:${SPANNER_DATABASE_USER_GSA_NAME}@${TENANT_PROJECT_ID}.iam.gserviceaccount.com" \
     --flatten="bindings[].members" \
     --format="table(bindings.role)"
