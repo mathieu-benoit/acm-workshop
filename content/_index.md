@@ -40,4 +40,4 @@ Recently tested with:
 - ACM 1.13.1
 - Whereami 1.2.12
 - Online Boutique 0.4.1
-- Bank of Anthos 0.5.9
+- Bank of Anthos 0.5.10

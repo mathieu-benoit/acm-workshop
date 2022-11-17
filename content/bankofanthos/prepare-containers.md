@@ -13,7 +13,7 @@ Initialize variables:
 ```Bash
 WORK_DIR=~/
 source ${WORK_DIR}acm-workshop-variables.sh
-BANK_OF_ANTHOS_VERSION=$(curl -s https://api.github.com/repos/GoogleCloudPlatform/bank-of-anthos/releases | jq -r '[.[]] | .[0].tag_name')
+BANK_OF_ANTHOS_VERSION=v0.5.10
 echo "export BANK_OF_ANTHOS_VERSION=${BANK_OF_ANTHOS_VERSION}" >> ${WORK_DIR}acm-workshop-variables.sh
 PRIVATE_BANK_OF_ANTHOS_REGISTRY=$CONTAINER_REGISTRY_REPOSITORY/bankofanthos
 echo "export PRIVATE_BANK_OF_ANTHOS_REGISTRY=${PRIVATE_BANK_OF_ANTHOS_REGISTRY}" >> ${WORK_DIR}acm-workshop-variables.sh
