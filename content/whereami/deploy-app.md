@@ -21,6 +21,7 @@ Get the upstream Kubernetes manifests:
 ```Bash
 cd ${WORK_DIR}$WHERE_AMI_DIR_NAME
 kpt pkg get https://github.com/GoogleCloudPlatform/kubernetes-engine-samples/whereami/k8s
+rm k8s/Kptfile
 mv k8s upstream
 ```
 

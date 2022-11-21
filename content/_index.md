@@ -38,6 +38,6 @@ Recently tested with:
 - GKE 1.24.4-gke.800
 - ASM 1.15.3-asm.1
 - ACM 1.13.1
-- Whereami 1.2.12
+- Whereami 1.2.13
 - Online Boutique 0.4.1
 - Bank of Anthos 0.5.10
