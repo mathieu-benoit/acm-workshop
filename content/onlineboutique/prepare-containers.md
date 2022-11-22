@@ -13,7 +13,7 @@ Initialize variables:
 ```Bash
 WORK_DIR=~/
 source ${WORK_DIR}acm-workshop-variables.sh
-ONLINE_BOUTIQUE_VERSION=$(curl -s https://api.github.com/repos/GoogleCloudPlatform/microservices-demo/releases | jq -r '[.[]] | .[0].tag_name')
+ONLINE_BOUTIQUE_VERSION=v0.4.2
 echo "export ONLINE_BOUTIQUE_VERSION=${ONLINE_BOUTIQUE_VERSION}" >> ${WORK_DIR}acm-workshop-variables.sh
 PRIVATE_ONLINE_BOUTIQUE_REGISTRY=$CONTAINER_REGISTRY_REPOSITORY/onlineboutique
 echo "export PRIVATE_ONLINE_BOUTIQUE_REGISTRY=${PRIVATE_ONLINE_BOUTIQUE_REGISTRY}" >> ${WORK_DIR}acm-workshop-variables.sh
