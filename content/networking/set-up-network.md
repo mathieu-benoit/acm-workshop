@@ -19,11 +19,14 @@ source ${WORK_DIR}acm-workshop-variables.sh
 
 ## Define VPC and Subnet
 
+Define the [VPC](https://cloud.google.com/config-connector/docs/reference/resource-docs/compute/computenetwork):
 ```Bash
 cat <<EOF > ${WORK_DIR}$TENANT_PROJECT_DIR_NAME/vpc.yaml
 apiVersion: compute.cnrm.cloud.google.com/v1beta1
 kind: ComputeNetwork
 metadata:
+  annotations:
+    cnrm.cloud.google.com/project-id: ${TENANT_PROJECT_ID}
   name: ${GKE_NAME}
   namespace: ${TENANT_PROJECT_ID}
 spec:
@@ -32,6 +35,7 @@ spec:
 EOF
 ```
 
+Define the [Subnet](https://cloud.google.com/config-connector/docs/reference/resource-docs/compute/computesubnetwork):
 ```Bash
 cat <<EOF > ${WORK_DIR}$TENANT_PROJECT_DIR_NAME/subnet.yaml
 apiVersion: compute.cnrm.cloud.google.com/v1beta1
