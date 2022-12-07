@@ -20,7 +20,7 @@ source ${WORK_DIR}acm-workshop-variables.sh
 
 ## Define GKE cluster
 
-Define the GKE cluster with empty node pool:
+Define the [GKE cluster](https://cloud.google.com/config-connector/docs/reference/resource-docs/container/containercluster) with empty node pool:
 ```Bash
 cat <<EOF > ${WORK_DIR}$TENANT_PROJECT_DIR_NAME/gke-cluster.yaml
 apiVersion: container.cnrm.cloud.google.com/v1beta1
@@ -29,6 +29,7 @@ metadata:
   name: ${GKE_NAME}
   namespace: ${TENANT_PROJECT_ID}
   annotations:
+    cnrm.cloud.google.com/project-id: ${TENANT_PROJECT_ID}
     cnrm.cloud.google.com/remove-default-node-pool: "true"
     config.kubernetes.io/depends-on: compute.cnrm.cloud.google.com/namespaces/${TENANT_PROJECT_ID}/ComputeSubnetwork/${GKE_NAME}
   labels:
@@ -83,6 +84,8 @@ cat <<EOF > ${WORK_DIR}$TENANT_PROJECT_DIR_NAME/gke-primary-pool-sa.yaml
 apiVersion: iam.cnrm.cloud.google.com/v1beta1
 kind: IAMServiceAccount
 metadata:
+  annotations:
+    cnrm.cloud.google.com/project-id: ${TENANT_PROJECT_ID}
   name: ${GKE_SA}
   namespace: ${TENANT_PROJECT_ID}
 spec:

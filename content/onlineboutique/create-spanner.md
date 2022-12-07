@@ -32,6 +32,8 @@ cat <<EOF > ${WORK_DIR}$TENANT_PROJECT_DIR_NAME/$ONLINEBOUTIQUE_NAMESPACE/spanne
 apiVersion: spanner.cnrm.cloud.google.com/v1beta1
 kind: SpannerInstance
 metadata:
+  annotations:
+    cnrm.cloud.google.com/project-id: ${TENANT_PROJECT_ID}
   name: ${SPANNER_INSTANCE_NAME}
   namespace: ${TENANT_PROJECT_ID}
 spec:
@@ -70,6 +72,8 @@ cat <<EOF > ${WORK_DIR}$TENANT_PROJECT_DIR_NAME/$ONLINEBOUTIQUE_NAMESPACE/spanne
 apiVersion: iam.cnrm.cloud.google.com/v1beta1
 kind: IAMServiceAccount
 metadata:
+  annotations:
+    cnrm.cloud.google.com/project-id: ${TENANT_PROJECT_ID}
   name: ${SPANNER_DATABASE_USER_GSA_NAME}
   namespace: ${TENANT_PROJECT_ID}
 spec:

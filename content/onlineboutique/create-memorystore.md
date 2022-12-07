@@ -31,10 +31,11 @@ cat <<EOF > ${WORK_DIR}$TENANT_PROJECT_DIR_NAME/$ONLINEBOUTIQUE_NAMESPACE/memory
 apiVersion: redis.cnrm.cloud.google.com/v1beta1
 kind: RedisInstance
 metadata:
+  annotations:
+    cnrm.cloud.google.com/project-id: ${TENANT_PROJECT_ID}
+    config.kubernetes.io/depends-on: compute.cnrm.cloud.google.com/namespaces/${TENANT_PROJECT_ID}/ComputeNetwork/${GKE_NAME}
   name: ${REDIS_NAME}
   namespace: ${TENANT_PROJECT_ID}
-  annotations:
-    config.kubernetes.io/depends-on: compute.cnrm.cloud.google.com/namespaces/${TENANT_PROJECT_ID}/ComputeNetwork/${GKE_NAME}
 spec:
   authorizedNetworkRef:
     name: ${GKE_NAME}
@@ -53,10 +54,11 @@ cat <<EOF > ${WORK_DIR}$TENANT_PROJECT_DIR_NAME/$ONLINEBOUTIQUE_NAMESPACE/memory
 apiVersion: redis.cnrm.cloud.google.com/v1beta1
 kind: RedisInstance
 metadata:
+  annotations:
+    cnrm.cloud.google.com/project-id: ${TENANT_PROJECT_ID}
+    config.kubernetes.io/depends-on: compute.cnrm.cloud.google.com/namespaces/${TENANT_PROJECT_ID}/ComputeNetwork/${GKE_NAME}
   name: ${REDIS_TLS_NAME}
   namespace: ${TENANT_PROJECT_ID}
-  annotations:
-    config.kubernetes.io/depends-on: compute.cnrm.cloud.google.com/namespaces/${TENANT_PROJECT_ID}/ComputeNetwork/${GKE_NAME}
 spec:
   authorizedNetworkRef:
     name: ${GKE_NAME}

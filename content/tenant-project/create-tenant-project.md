@@ -119,8 +119,6 @@ cat <<EOF > ${WORK_DIR}$HOST_PROJECT_DIR_NAME/projects/$TENANT_PROJECT_ID/namesp
 apiVersion: v1
 kind: Namespace
 metadata:
-  annotations:
-    cnrm.cloud.google.com/project-id: ${TENANT_PROJECT_ID}
   name: ${TENANT_PROJECT_ID}
 EOF
 ```
