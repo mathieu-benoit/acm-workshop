@@ -181,7 +181,6 @@ metadata:
 spec:
   clusterRef:
     name: ${GKE_NAME}
-  initialNodeCount: 1
   location: ${GKE_LOCATION}
   management:
     autoRepair: true
@@ -200,6 +199,7 @@ spec:
       enableSecureBoot: true
     serviceAccountRef:
       name: ${GKE_SA}
+  nodeCount: 3
 EOF
 ```
 
