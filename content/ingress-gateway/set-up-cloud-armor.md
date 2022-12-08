@@ -21,14 +21,14 @@ source ${WORK_DIR}acm-workshop-variables.sh
 
 ## Define Cloud Armor rules
 
-https://cloud.google.com/config-connector/docs/reference/resource-docs/compute/computesecuritypolicy
-
-Define the Ingress Gateway's Cloud Armor rules:
+Define the Ingress Gateway's [Cloud Armor rules](https://cloud.google.com/config-connector/docs/reference/resource-docs/compute/computesecuritypolicy):
 ```Bash
 cat <<EOF > ${WORK_DIR}$TENANT_PROJECT_DIR_NAME/cloud-armor.yaml
 apiVersion: compute.cnrm.cloud.google.com/v1beta1
 kind: ComputeSecurityPolicy
 metadata:
+  annotations:
+    cnrm.cloud.google.com/project-id: ${TENANT_PROJECT_ID}
   name: ${SECURITY_POLICY_NAME}
   namespace: ${TENANT_PROJECT_ID}
 spec:
@@ -83,13 +83,15 @@ https://cloud.google.com/armor/docs/rule-tuning#preconfigured_rules
 
 ## Define SSL policy
 
-Not directly related to Cloud Armor, but let's define an SSL policy which will allow us to set an HTTP to HTTPS redirect on the `Ingress`.
+Not directly related to Cloud Armor, but let's define an [SSL policy](https://cloud.google.com/config-connector/docs/reference/resource-docs/compute/computesslpolicy) which will allow us to set an HTTP to HTTPS redirect on the `Ingress`.
 
 ```Bash
 cat <<EOF > ${WORK_DIR}$TENANT_PROJECT_DIR_NAME/ssl-policy.yaml
 apiVersion: compute.cnrm.cloud.google.com/v1beta1
 kind: ComputeSSLPolicy
 metadata:
+  annotations:
+    cnrm.cloud.google.com/project-id: ${TENANT_PROJECT_ID}
   name: ${SSL_POLICY_NAME}
   namespace: ${TENANT_PROJECT_ID}
 spec:

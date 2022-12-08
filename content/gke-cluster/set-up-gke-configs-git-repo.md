@@ -46,6 +46,7 @@ metadata:
   name: ${GKE_NAME}
   namespace: ${TENANT_PROJECT_ID}
   annotations:
+    cnrm.cloud.google.com/project-id: ${TENANT_PROJECT_ID}
     config.kubernetes.io/depends-on: container.cnrm.cloud.google.com/namespaces/${TENANT_PROJECT_ID}/ContainerCluster/${GKE_NAME}
 spec:
   location: global

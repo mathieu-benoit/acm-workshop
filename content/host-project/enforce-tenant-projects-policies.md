@@ -7,49 +7,12 @@ tags: ["org-admin", "policies", "security-tips"]
 ![Org Admin](/images/org-admin.png)
 _{{< param description >}}_
 
-In this section you will enforce policies to guarantee that any `Namespaces` in the ConfigController instance defining any Tenant project should have the ProjectId annotation as well as should contain its own `ConfigConnectorContext` object in order to leverage the [namespaced mode of Config Connector](https://cloud.google.com/config-connector/docs/how-to/advanced-install#namespaced-mode).
+In this section you will enforce policies to guarantee that any `Namespaces` in the ConfigController instance defining any Tenant project should contain its own `ConfigConnectorContext` object in order to leverage the [namespaced mode of Config Connector](https://cloud.google.com/config-connector/docs/how-to/advanced-install#namespaced-mode).
 
 Initialize variables:
 ```Bash
 WORK_DIR=~/
 source ${WORK_DIR}acm-workshop-variables.sh
-```
-
-## Define the "Require ProjectId annotation for Namespaces" policy
-
-Define the `namespaces-required-project-id-annotation` `Constraint` based on the `K8sRequiredAnnotations` `ConstraintTemplate` for `Namespaces`:
-```Bash
-cat <<EOF > ${WORK_DIR}$HOST_PROJECT_DIR_NAME/policies/constraints/namespaces-required-project-id-annotation.yaml
-apiVersion: constraints.gatekeeper.sh/v1beta1
-kind: K8sRequiredAnnotations
-metadata:
-  name: namespaces-required-project-id-annotation
-spec:
-  enforcementAction: deny
-  match:
-    kinds:
-    - apiGroups:
-      - ""
-      kinds:
-      - Namespace
-    excludedNamespaces:
-    - cnrm-system
-    - config-control
-    - config-management-monitoring
-    - config-management-system
-    - configconnector-operator-system
-    - default
-    - gatekeeper-system
-    - krmapihosting-monitoring
-    - krmapihosting-system
-    - kube-node-lease
-    - kube-public
-    - kube-system
-    - resource-group-system
-  parameters:
-    annotations:
-    - key: cnrm.cloud.google.com/project-id
-EOF
 ```
 
 ## Define the "Require ConfigConnectorContext for Namespaces" policies
@@ -157,15 +120,4 @@ Wait and re-run this command above until you see `"status": "SYNCED"`. All the `
 List the GitHub runs for the **Host project configs** repository:
 ```Bash
 cd ${WORK_DIR}$HOST_PROJECT_DIR_NAME && gh run list
-```
-
-## Test the policies
-
-If you try to create a `Namespace` without any `ConfigConnectorContext`:
-```Bash
-kubectl create namespace test
-```
-You will get this error confirming that the `Constraints` are in place:
-```Plaintext
-Error from server (Forbidden): admission webhook "validation.gatekeeper.sh" denied the request: [namespaces-required-project-id-annotation] you must provide annotation(s): {"cnrm.cloud.google.com/project-id"}
 ```

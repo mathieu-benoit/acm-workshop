@@ -29,6 +29,8 @@ cat <<EOF > ${WORK_DIR}$TENANT_PROJECT_DIR_NAME/artifactregistry.yaml
 apiVersion: artifactregistry.cnrm.cloud.google.com/v1beta1
 kind: ArtifactRegistryRepository
 metadata:
+  annotations:
+    cnrm.cloud.google.com/project-id: ${TENANT_PROJECT_ID}
   name: ${CONTAINER_REGISTRY_NAME}
   namespace: ${TENANT_PROJECT_ID}
 spec:
