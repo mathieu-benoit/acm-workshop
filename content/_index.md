@@ -35,9 +35,9 @@ With this workshop, here is what you will accomplish, from scratch:
 ![Workshop Architecture diagram](/images/architecture.png)
 
 Recently tested with:
-- GKE 1.24.5-gke.600
+- GKE 1.25.3-gke.800
 - ASM MCP 1.15.3-asm.2 + MDP 1.15.3-asm.1
-- ACM 1.13.1
+- ACM 1.14.0
 - Whereami 1.2.13
-- Online Boutique 0.4.2
+- Online Boutique 0.5.0
 - Bank of Anthos 0.5.10
