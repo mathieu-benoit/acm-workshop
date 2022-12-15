@@ -122,8 +122,8 @@ jobs:
           gcloud auth configure-docker ${{ secrets.CONTAINER_REGISTRY_HOST_NAME }} --quiet
       - name: package chart
         run: |
-          helm package chart/ --version 1.0.0+${APP_VERSION} --app-version ${APP_VERSION}
+          helm package chart/ --version 1.0.0-${APP_VERSION} --app-version ${APP_VERSION}
       - name: push chart in artifact registry
         if: ${{ github.event_name == 'push' }}
         run: |
-          helm push ${CHART_NAME}-1.0.0+${APP_VERSION}.tgz oci://${CHART_BASE_NAME}
+          helm push ${CHART_NAME}-1.0.0-${APP_VERSION}.tgz oci://${CHART_BASE_NAME}
