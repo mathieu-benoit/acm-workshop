@@ -45,6 +45,9 @@ spec:
   confidentialNodes:
     enabled: true
   datapathProvider: ADVANCED_DATAPATH
+  dnsConfig:
+    clusterDns: clouddns
+    clusterDnsScope: cluster
   enableShieldedNodes: true
   initialNodeCount: 1
   ipAllocationPolicy:
