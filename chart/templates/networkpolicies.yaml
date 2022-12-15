@@ -1,0 +1,38 @@
+{{- if .Values.networkPolicies.create }}
+apiVersion: networking.k8s.io/v1
+kind: NetworkPolicy
+metadata:
+  name: deny-all
+  namespace: {{ .Release.Namespace }}
+spec:
+  podSelector: {}
+  policyTypes:
+  - Ingress
+  - Egress
+---
+apiVersion: networking.k8s.io/v1
+kind: NetworkPolicy
+metadata:
+  name: {{ .Values.name }}
+  namespace: {{ .Release.Namespace }}
+spec:
+  podSelector:
+    matchLabels:
+      app: {{ .Values.name }}
+  policyTypes:
+  - Ingress
+  - Egress
+  ingress:
+  - from:
+    - namespaceSelector:
+        matchLabels:
+          name: {{ .Values.virtualService.gateway.namespace }}
+      podSelector:
+        matchLabels:
+          {{ .Values.virtualService.gateway.labelKey }}: {{ .Values.virtualService.gateway.labelValue }}
+    ports:
+     - port: {{ .Values.container.port }}
+       protocol: TCP
+  egress:
+  - {}
+{{- end }}

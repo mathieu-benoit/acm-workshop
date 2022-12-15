@@ -1,0 +1,22 @@
+{{- if .Values.authorizationPolicies.create }}
+apiVersion: security.istio.io/v1beta1
+kind: AuthorizationPolicy
+metadata:
+  name: {{ .Values.name }}
+  namespace: {{ .Release.Namespace }}
+spec:
+  selector:
+    matchLabels:
+      app: {{ .Values.name }}
+  rules:
+  - from:
+    - source:
+        principals:
+        - cluster.local/ns/{{ .Values.virtualService.gateway.namespace }}/sa/{{ .Values.virtualService.gateway.name }}
+    to:
+    - operation:
+        methods:
+        - GET
+        ports:
+        - {{ .Values.container.port | quote }}
+{{- end }}

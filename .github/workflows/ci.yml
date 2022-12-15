@@ -14,7 +14,7 @@ on:
 env:
   SEVERITY: CRITICAL
 jobs:
-  job:
+  container:
     runs-on: ubuntu-22.04
     steps:
       - uses: actions/checkout@v3.2.0
@@ -88,7 +88,41 @@ jobs:
           gcloud artifacts docker images scan ${IMAGE_NAME} --format='value(response.scan)' > scan_id.txt
           gcloud artifacts docker images list-vulnerabilities $(cat scan_id.txt) --format='table(vulnerability.effectiveSeverity, vulnerability.cvssScore, noteName, vulnerability.packageIssue[0].affectedPackage, vulnerability.packageIssue[0].affectedVersion.name, vulnerability.packageIssue[0].fixedVersion.name)'
           gcloud artifacts docker images list-vulnerabilities $(cat scan_id.txt) --format='value(vulnerability.effectiveSeverity)' | if grep -Fxq ${{ env.SEVERITY }}; then echo 'Failed vulnerability check' && exit 1; else exit 0; fi
-      - name: push image in container registry
+      - name: push image in artifact registry
         if: ${{ github.event_name == 'push' }}
         run: |
           docker push ${IMAGE_NAME}
+  chart:
+    runs-on: ubuntu-22.04
+    steps:
+      - uses: actions/checkout@v3.2.0
+        with:
+          submodules: true
+      - name: prepare environment variables
+        run: |
+          shortSha=`echo ${GITHUB_SHA} | cut -c1-7`
+          echo "CHART_VERSION=$shortSha" >> $GITHUB_ENV
+          chartBaseName=${{ secrets.CONTAINER_REGISTRY_HOST_NAME }}/${{ secrets.CONTAINER_REGISTRY_PROJECT_ID }}/${{ secrets.CHART_REGISTRY_NAME }}
+          echo "CHART_BASE_NAME=$chartBaseName" >> $GITHUB_ENV
+          echo "CHART_NAME=acm-workshop" >> $GITHUB_ENV
+      - name: helm lint
+        run: |
+          helm lint chart/ --strict
+      - uses: google-github-actions/auth@v1.0.0
+        with:
+          workload_identity_provider: '${{ secrets.WORKLOAD_IDENTITY_POOL_PROVIDER }}'
+          service_account: '${{ secrets.CONTAINER_IMAGE_BUILDER_SERVICE_ACCOUNT_ID }}'
+          token_format: 'access_token'
+      - uses: google-github-actions/setup-gcloud@v1.0.1
+        with:
+          version: latest
+      - name: sign-in to artifact registry
+        run: |
+          gcloud auth configure-docker ${{ secrets.CONTAINER_REGISTRY_HOST_NAME }} --quiet
+      - name: package chart
+        run: |
+          helm package chart/ --version ${CHART_VERSION} --app-version ${CHART_VERSION}
+      - name: push chart in artifact registry
+        if: ${{ github.event_name == 'push' }}
+        run: |
+          helm push ${CHART_NAME}-${CHART_VERSION}.tgz oci://${CHART_BASE_NAME}

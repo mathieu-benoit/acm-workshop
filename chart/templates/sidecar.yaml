@@ -1,0 +1,14 @@
+{{- if .Values.sidecars.create }}
+apiVersion: networking.istio.io/v1beta1
+kind: Sidecar
+metadata:
+  name: default
+  namespace: {{ .Release.Namespace }}
+spec:
+  workloadSelector:
+    labels:
+      app: {{ .Values.name }}
+  egress:
+  - hosts:
+    - "istio-system/*"
+{{- end }}

@@ -1,0 +1,37 @@
+# Default values for onlineboutique.
+# This is a YAML-formatted file.
+# Declare variables to be passed into your templates.
+
+name: acm-workshop
+
+container:
+  image:
+    repository: "northamerica-northeast1-docker.pkg.dev/acm-workshop-216-tenant/containers"
+    # Overrides the image tag whose default is the chart appVersion.
+    tag: ""
+  port: 8080
+
+networkPolicies:
+  # Specifies if the NetworkPolicies are created or not.
+  create: true
+
+sidecars:
+  # Specifies if the Sidecars are created or not.
+  create: true
+
+authorizationPolicies:
+  # Specifies if the AuthorizationPolicies are created or not.
+  create: true
+
+service:
+  external: false
+  port: 80
+
+virtualService:
+  create: true
+  host: acm-workshop.alwaysupalwayson.com
+  gateway:
+    name: asm-ingressgateway
+    namespace: asm-ingress
+    labelKey: asm
+    labelValue: ingressgateway

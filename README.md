@@ -54,9 +54,14 @@ gcloud iam service-accounts add-iam-policy-binding $saId \
   --member "principalSet://iam.googleapis.com/${poolId}/attribute.${attributeMappingScope}/${gitHubRepoName}"
 
 # Allow the GSA to write container images in Artifact Registry
-artifactRegistryName=containers # FIXME
+artifactRegistryContainersRepository=containers # FIXME
+artifactRegistryChartsRepository=charts # FIXME
 artifactRegistryLocation=us-east4 # FIXME
-gcloud artifacts repositories add-iam-policy-binding $artifactRegistryName \
+gcloud artifacts repositories add-iam-policy-binding $artifactRegistryContainersRepository \
+    --location $artifactRegistryLocation \
+    --member "serviceAccount:$saId" \
+    --role roles/artifactregistry.writer
+gcloud artifacts repositories add-iam-policy-binding $artifactRegistryChartsRepository \
     --location $artifactRegistryLocation \
     --member "serviceAccount:$saId" \
     --role roles/artifactregistry.writer
@@ -70,7 +75,8 @@ gcloud projects add-iam-policy-binding $projectId \
 # Setup GitHub actions variables
 gh auth login --web
 gh secret set CONTAINER_REGISTRY_PROJECT_ID -b"${projectId}"
-gh secret set CONTAINER_REGISTRY_NAME -b"${artifactRegistryName}"
+gh secret set CONTAINER_REGISTRY_NAME -b"${artifactRegistryContainersRepository}"
+gh secret set CHART_REGISTRY_NAME -b"${artifactRegistryChartsRepository}"
 gh secret set CONTAINER_REGISTRY_HOST_NAME -b"${artifactRegistryLocation}-docker.pkg.dev"
 gh secret set CONTAINER_IMAGE_BUILDER_SERVICE_ACCOUNT_ID -b"${saId}"
 gh secret set WORKLOAD_IDENTITY_POOL_PROVIDER -b"${providerId}"
