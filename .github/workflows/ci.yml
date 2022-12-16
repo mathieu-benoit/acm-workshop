@@ -109,6 +109,9 @@ jobs:
       - name: helm lint
         run: |
           helm lint chart/ --strict
+          helm template . > helm-output.yaml
+          kustomize create --resources helm-output.yaml
+          kustomize build .
       - uses: google-github-actions/auth@v1.0.0
         with:
           workload_identity_provider: '${{ secrets.WORKLOAD_IDENTITY_POOL_PROVIDER }}'
