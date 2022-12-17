@@ -65,7 +65,6 @@ jobs:
           echo "IMAGE_SIZE=$imageSize"
       - name: dockle
         run: |
-          cd app
           docker run -v /var/run/docker.sock:/var/run/docker.sock --rm goodwithtech/dockle:latest -ak KEY_SHA512 --exit-code 1 --exit-level fatal ${IMAGE_NAME}
       - name: run trivy vulnerability scanner
         uses: aquasecurity/trivy-action@0.8.0
@@ -80,7 +79,6 @@ jobs:
           sarif_file: 'trivy-results.sarif'
       - name: run container locally as a test
         run: |
-          cd app
           docker run -d -p 8080:8080 --read-only --cap-drop=ALL --user=1000 ${IMAGE_NAME}
       - name: gcloud scan
         run: |
@@ -97,8 +95,6 @@ jobs:
     runs-on: ubuntu-22.04
     steps:
       - uses: actions/checkout@v3.2.0
-        with:
-          submodules: true
       - name: prepare environment variables
         run: |
           shortSha=`echo ${GITHUB_SHA} | cut -c1-7`
