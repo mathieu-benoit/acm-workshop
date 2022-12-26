@@ -1,6 +1,6 @@
 ---
 title: "Create Memorystore"
-weight: 10
+weight: 3
 description: "Duration: 10 min | Persona: Platform Admin"
 tags: ["kcc", "platform-admin"]
 ---

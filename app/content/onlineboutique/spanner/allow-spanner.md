@@ -1,6 +1,6 @@
 ---
 title: "Allow Spanner"
-weight: 13
+weight: 1
 description: "Duration: 5 min | Persona: Org Admin"
 tags: ["kcc", "org-admin"]
 ---

@@ -1,6 +1,6 @@
 ---
 title: "Create Spanner"
-weight: 14
+weight: 2
 description: "Duration: 10 min | Persona: Platform Admin"
 tags: ["kcc", "platform-admin"]
 ---

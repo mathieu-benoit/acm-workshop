@@ -1,6 +1,6 @@
 ---
 title: "Use Memorystore"
-weight: 11
+weight: 4
 description: "Duration: 10 min | Persona: Apps Operator"
 tags: ["apps-operator"]
 ---

@@ -1,6 +1,6 @@
 ---
 title: "Enforce Memorystore policies"
-weight: 9
+weight: 2
 description: "Duration: 5 min | Persona: Org Admin"
 tags: ["org-admin", "policies", "security-tips"]
 ---

@@ -1,6 +1,6 @@
 ---
 title: "Use Spanner"
-weight: 15
+weight: 3
 description: "Duration: 10 min | Persona: Apps Operator"
 tags: ["apps-operator"]
 ---
