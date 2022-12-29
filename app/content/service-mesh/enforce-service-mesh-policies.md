@@ -21,13 +21,19 @@ source ${WORK_DIR}acm-workshop-variables.sh
 
 https://cloud.google.com/service-mesh/docs/anthos-service-mesh-proxy-injection
 
-Define the `namespaces-automatic-sidecar-injection-label` `Constraint` based on the [`K8sRequiredLabels`](https://cloud.devsite.corp.google.com/anthos-config-management/docs/reference/constraint-template-library#k8srequiredlabels) `ConstraintTemplate` for `Namespaces`:
+Define the `namespaces-automatic-sidecar-injection-label` `Constraint` based on the [`K8sRequiredLabels`](https://cloud.google.com/anthos-config-management/docs/reference/constraint-template-library#k8srequiredlabels) `ConstraintTemplate` for `Namespaces`:
 ```Bash
 cat <<EOF > ${WORK_DIR}$GKE_CONFIGS_DIR_NAME/policies/constraints/namespaces-automatic-sidecar-injection-label.yaml
 apiVersion: constraints.gatekeeper.sh/v1beta1
 kind: K8sRequiredLabels
 metadata:
   name: namespaces-automatic-sidecar-injection-label
+  annotations:
+    policycontroller.gke.io/constraintData: |
+      "{
+        description: 'Requires Namespaces to have the "istio-injection" label in order to be included in the Service Mesh.',
+        remediation: 'Any Namespaces should have the "istio-injection" label with the "enabled" value.'
+      }"
 spec:
   enforcementAction: deny
   match:
@@ -53,13 +59,19 @@ spec:
 EOF
 ```
 
-Define the `pods-sidecar-injection-annotation` `Constraint` based on the [`AsmSidecarInjection`](https://cloud.devsite.corp.google.com/anthos-config-management/docs/reference/constraint-template-library#asmsidecarinjection) `ConstraintTemplate` for `Pods`:
+Define the `pods-sidecar-injection-annotation` `Constraint` based on the [`AsmSidecarInjection`](https://cloud.google.com/anthos-config-management/docs/reference/constraint-template-library#asmsidecarinjection) `ConstraintTemplate` for `Pods`:
 ```Bash
 cat <<EOF > ${WORK_DIR}$GKE_CONFIGS_DIR_NAME/policies/constraints/pods-sidecar-injection-annotation.yaml
 apiVersion: constraints.gatekeeper.sh/v1beta1
 kind: AsmSidecarInjection
 metadata:
   name: pods-sidecar-injection-annotation
+  annotations:
+    policycontroller.gke.io/constraintData: |
+      "{
+        description: 'Enforce the istio proxy sidecar always been injected to workload pods.',
+        remediation: 'Any Pods shouldn't have the "sidecar.istio.io/inject" annotation set to "false".'
+      }"
 spec:
   enforcementAction: deny
   match:
@@ -77,13 +89,19 @@ EOF
 
 ## Define "STRICT mTLS in the Mesh" policies
 
-Define the `mesh-level-strict-mtls` `Constraint` based on the [`AsmPeerAuthnMeshStrictMtls`](https://cloud.devsite.corp.google.com/anthos-config-management/docs/reference/constraint-template-library#asmpeerauthnmeshstrictmtls) `ConstraintTemplate`:
+Define the `mesh-level-strict-mtls` `Constraint` based on the [`AsmPeerAuthnMeshStrictMtls`](https://cloud.google.com/anthos-config-management/docs/reference/constraint-template-library#asmpeerauthnmeshstrictmtls) `ConstraintTemplate`:
 ```Bash
 cat <<EOF > ${WORK_DIR}$GKE_CONFIGS_DIR_NAME/policies/constraints/mesh-level-strict-mtls.yaml
 apiVersion: constraints.gatekeeper.sh/v1beta1
 kind: AsmPeerAuthnMeshStrictMtls
 metadata:
   name: mesh-level-strict-mtls
+  annotations:
+    policycontroller.gke.io/constraintData: |
+      "{
+        description: 'Enforce the mesh level strict mtls PeerAuthentication.',
+        remediation: 'The istio-system namespace should have a default PeerAuthentication with STRICT mTLS.'
+      }"
 spec:
   enforcementAction: deny
   parameters:
@@ -92,13 +110,19 @@ spec:
 EOF
 ```
 
-Define the `peerauthentication-strict-mtls` `Constraint` based on the [`AsmPeerAuthnStrictMtls`](https://cloud.devsite.corp.google.com/anthos-config-management/docs/reference/constraint-template-library#asmpeerauthnstrictmtls) `ConstraintTemplate` for `PeerAuthentications`:
+Define the `peerauthentication-strict-mtls` `Constraint` based on the [`AsmPeerAuthnStrictMtls`](https://cloud.google.com/anthos-config-management/docs/reference/constraint-template-library#asmpeerauthnstrictmtls) `ConstraintTemplate` for `PeerAuthentications`:
 ```Bash
 cat <<EOF > ${WORK_DIR}$GKE_CONFIGS_DIR_NAME/policies/constraints/peerauthentication-strict-mtls.yaml
 apiVersion: constraints.gatekeeper.sh/v1beta1
 kind: AsmPeerAuthnStrictMtls
 metadata:
   name: peerauthentication-strict-mtls
+  annotations:
+    policycontroller.gke.io/constraintData: |
+      "{
+        description: 'Enforce all PeerAuthentications cannot overwrite strict mtls.',
+        remediation: 'Any PeerAuthentications should have STRICT mTLS.'
+      }"
 spec:
   enforcementAction: deny
   match:
@@ -113,13 +137,19 @@ spec:
 EOF
 ```
 
-Define the `destination-rule-tls-enabled` `Constraint` based on the [`DestinationRuleTLSEnabled`](https://cloud.devsite.corp.google.com/anthos-config-management/docs/reference/constraint-template-library#destinationruletlsenabled) `ConstraintTemplate` for `DestinationRules`:
+Define the `destination-rule-tls-enabled` `Constraint` based on the [`DestinationRuleTLSEnabled`](https://cloud.google.com/anthos-config-management/docs/reference/constraint-template-library#destinationruletlsenabled) `ConstraintTemplate` for `DestinationRules`:
 ```Bash
 cat <<EOF > ${WORK_DIR}$GKE_CONFIGS_DIR_NAME/policies/constraints/destinationrule-tls-enabled.yaml
 apiVersion: constraints.gatekeeper.sh/v1beta1
 kind: DestinationRuleTLSEnabled
 metadata:
   name: destinationrule-tls-enabled
+  annotations:
+    policycontroller.gke.io/constraintData: |
+      "{
+        description: 'Prohibits disabling TLS for all hosts and host subsets in Istio DestinationRules.',
+        remediation: 'Any DestinationRules should not disable TLS.'
+      }"
 spec:
   enforcementAction: deny
   match:
@@ -135,13 +165,19 @@ EOF
 
 https://istio.io/latest/docs/reference/config/security/authorization-policy/
 
-Define the `default-deny-authorization-policies` `Constraint` based on the [`AsmAuthzPolicyDefaultDeny`](https://cloud.devsite.corp.google.com/anthos-config-management/docs/reference/constraint-template-library#asmauthzpolicydefaultdeny) `ConstraintTemplate` for `DestinationRules`:
+Define the `default-deny-authorization-policies` `Constraint` based on the [`AsmAuthzPolicyDefaultDeny`](https://cloud.google.com/anthos-config-management/docs/reference/constraint-template-library#asmauthzpolicydefaultdeny) `ConstraintTemplate` for `DestinationRules`:
 ```Bash
 cat <<EOF > ${WORK_DIR}$GKE_CONFIGS_DIR_NAME/policies/constraints/default-deny-authorization-policies.yaml
 apiVersion: constraints.gatekeeper.sh/v1beta1
 kind: AsmAuthzPolicyDefaultDeny
 metadata:
   name: default-deny-authorization-policies
+  annotations:
+    policycontroller.gke.io/constraintData: |
+      "{
+        description: 'Enforce the mesh level default deny AuthorizationPolicy. Reference to https://istio.io/latest/docs/ops/best-practices/security/#use-default-deny-patterns.',
+        remediation: 'The istio-system namespace should have a default deny-all AuthorizationPolicy for the entire mesh.'
+      }"
 spec:
   enforcementAction: deny
   parameters:
@@ -150,13 +186,19 @@ spec:
 EOF
 ```
 
-Define the `authz-source-principals-not-all` `Constraint` based on the [`AsmAuthzPolicyEnforceSourcePrincipals`](https://cloud.devsite.corp.google.com/anthos-config-management/docs/reference/constraint-template-library#asmauthzpolicyenforcesourceprincipals) `ConstraintTemplate` for `DestinationRules`:
+Define the `authz-source-principals-not-all` `Constraint` based on the [`AsmAuthzPolicyEnforceSourcePrincipals`](https://cloud.google.com/anthos-config-management/docs/reference/constraint-template-library#asmauthzpolicyenforcesourceprincipals) `ConstraintTemplate` for `DestinationRules`:
 ```Bash
 cat <<EOF > ${WORK_DIR}$GKE_CONFIGS_DIR_NAME/policies/constraints/authz-source-principals-not-all.yaml
 apiVersion: constraints.gatekeeper.sh/v1beta1
 kind: AsmAuthzPolicyEnforceSourcePrincipals
 metadata:
   name: authz-source-principals-not-all
+  annotations:
+    policycontroller.gke.io/constraintData: |
+      "{
+        description: 'Requires that Istio AuthorizationPolicy "from" field, when defined, has source principles, which must be set to something other than "*".',
+        remediation: 'Any AuthorizationPolicies shouldn't define the "from" field with "*".'
+      }"
 spec:
   enforcementAction: deny
   match:
@@ -170,13 +212,19 @@ spec:
 EOF
 ```
 
-Define the `authz-source-principals-prefix-not-default` `Constraint` based on the [`AsmAuthzPolicyDisallowedPrefix`](https://cloud.devsite.corp.google.com/anthos-config-management/docs/reference/constraint-template-library#asmauthzpolicydisallowedprefix) `ConstraintTemplate` for `AuthorizationPolicies`:
+Define the `authz-source-principals-prefix-not-default` `Constraint` based on the [`AsmAuthzPolicyDisallowedPrefix`](https://cloud.google.com/anthos-config-management/docs/reference/constraint-template-library#asmauthzpolicydisallowedprefix) `ConstraintTemplate` for `AuthorizationPolicies`:
 ```Bash
 cat <<EOF > ${WORK_DIR}$GKE_CONFIGS_DIR_NAME/policies/constraints/authz-source-principals-prefix-not-default.yaml
 apiVersion: constraints.gatekeeper.sh/v1beta1
 kind: AsmAuthzPolicyDisallowedPrefix
 metadata:
   name: authz-source-principals-prefix-not-default
+  annotations:
+    policycontroller.gke.io/constraintData: |
+      "{
+        description: 'Requires that principals and namespaces in Istio AuthorizationPolicy rules not have a prefix from a specified list.',
+        remediation: 'Any AuthorizationPolicies shouldn't have the principal as "default".'
+      }"
 spec:
   enforcementAction: deny
   match:

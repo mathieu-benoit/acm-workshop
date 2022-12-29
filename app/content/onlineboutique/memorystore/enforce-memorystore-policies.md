@@ -60,6 +60,12 @@ apiVersion: constraints.gatekeeper.sh/v1beta1
 kind: LimitMemorystoreRedis
 metadata:
   name: allowed-memorystore-redis
+  annotations:
+    policycontroller.gke.io/constraintData: |
+      "{
+        description: 'Requires RedisInstances to use mandatory and security features.',
+        remediation: 'Any RedisInstances should use mandatory and security features.'
+      }"
 spec:
   enforcementAction: deny
   match:

@@ -53,6 +53,12 @@ apiVersion: constraints.gatekeeper.sh/v1beta1
 kind: RequireNamespaceConfigConnectorContext
 metadata:
   name: namespaces-required-configconnectorcontext
+  annotations:
+    policycontroller.gke.io/constraintData: |
+      "{
+        description: 'Requires Namespaces to have a ConfigConnectorContext in order to leverage Config Connector.',
+        remediation: 'Any Namespaces should have a ConfigConnectorContext.'
+      }"
 spec:
   enforcementAction: dryrun
   match:

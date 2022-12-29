@@ -72,6 +72,12 @@ apiVersion: constraints.gatekeeper.sh/v1beta1
 kind: AllowedKccResources
 metadata:
   name: allowedkccresources
+  annotations:
+    policycontroller.gke.io/constraintData: |
+      "{
+        description: 'Requires Config Connector resources kind to be in the specified list.',
+        remediation: 'Any Config Connector resources kind should be in the specified list, they are the only Config Connector resources kind allowed.'
+      }"
 spec:
   enforcementAction: deny
   parameters:
@@ -157,6 +163,12 @@ apiVersion: constraints.gatekeeper.sh/v1beta1
 kind: LimitLocations
 metadata:
   name: allowed-locations
+  annotations:
+    policycontroller.gke.io/constraintData: |
+      "{
+        description: 'Requires Config Connector resources location to be in the specified list.',
+        remediation: 'Any Config Connector resources location should be in the specified list, they are the only Config Connector resources location allowed.'
+      }"
 spec:
   enforcementAction: deny
   parameters:

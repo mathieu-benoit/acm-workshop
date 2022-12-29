@@ -21,13 +21,19 @@ source ${WORK_DIR}acm-workshop-variables.sh
 
 As a best practice and in order to get the `NetworkPolicies` working in this workshop, we need to guarantee that any `Namespaces` have a label `name` and `Pods` have a label `app`.
 
-Define the `namespaces-required-labels` `Constraint` based on the [`K8sRequiredLabels`](https://cloud.devsite.corp.google.com/anthos-config-management/docs/reference/constraint-template-library#k8srequiredlabels) `ConstraintTemplate` for `Namespaces`:
+Define the `namespaces-required-labels` `Constraint` based on the [`K8sRequiredLabels`](https://cloud.google.com/anthos-config-management/docs/reference/constraint-template-library#k8srequiredlabels) `ConstraintTemplate` for `Namespaces`:
 ```Bash
 cat <<EOF > ${WORK_DIR}$GKE_CONFIGS_DIR_NAME/policies/constraints/namespaces-required-labels.yaml
 apiVersion: constraints.gatekeeper.sh/v1beta1
 kind: K8sRequiredLabels
 metadata:
   name: namespaces-required-labels
+  annotations:
+    policycontroller.gke.io/constraintData: |
+      "{
+        description: 'Requires Namespaces to have the "name" label in order to leverage the namespaceSelector feature of NetworkPolicies.',
+        remediation: 'Any Namespaces should have the "name" label.'
+      }"
 spec:
   enforcementAction: deny
   match:
@@ -52,13 +58,19 @@ spec:
 EOF
 ```
 
-Define the `pods-required-labels` `Constraint` based on the [`K8sRequiredLabels`](https://cloud.devsite.corp.google.com/anthos-config-management/docs/reference/constraint-template-library#k8srequiredlabels) `ConstraintTemplate` for `Pods`:
+Define the `pods-required-labels` `Constraint` based on the [`K8sRequiredLabels`](https://cloud.google.com/anthos-config-management/docs/reference/constraint-template-library#k8srequiredlabels) `ConstraintTemplate` for `Pods`:
 ```Bash
 cat <<EOF > ${WORK_DIR}$GKE_CONFIGS_DIR_NAME/policies/constraints/pods-required-labels.yaml
 apiVersion: constraints.gatekeeper.sh/v1beta1
 kind: K8sRequiredLabels
 metadata:
   name: pods-required-labels
+  annotations:
+    policycontroller.gke.io/constraintData: |
+      "{
+        description: 'Requires Pods to have the name "app" in order to leverage the podSelector feature of NetworkPolicies.',
+        remediation: 'Any Pods should have the "app" label.'
+      }"
 spec:
   enforcementAction: deny
   match:
@@ -84,13 +96,19 @@ EOF
 
 ### Require NetworkPolicies in Namespaces
 
-Define the `namespaces-required-networkpolicies` `Constraint` based on the [`K8sRequireNamespaceNetworkPolicies`](https://cloud.devsite.corp.google.com/anthos-config-management/docs/reference/constraint-template-library#k8srequirenamespacenetworkpolicies) `ConstraintTemplate` for `Namespaces`. This `Constraint` requires that any `Namespaces` defined in the cluster has a `NetworkPolicy`:
+Define the `namespaces-required-networkpolicies` `Constraint` based on the [`K8sRequireNamespaceNetworkPolicies`](https://cloud.google.com/anthos-config-management/docs/reference/constraint-template-library#k8srequirenamespacenetworkpolicies) `ConstraintTemplate` for `Namespaces`. This `Constraint` requires that any `Namespaces` defined in the cluster has a `NetworkPolicy`:
 ```Bash
 cat <<EOF > ${WORK_DIR}$GKE_CONFIGS_DIR_NAME/policies/constraints/namespaces-required-networkpolicies.yaml
 apiVersion: constraints.gatekeeper.sh/v1beta1
 kind: K8sRequireNamespaceNetworkPolicies
 metadata:
   name: namespaces-required-networkpolicies
+  annotations:
+    policycontroller.gke.io/constraintData: |
+      "{
+        description: 'Requires that every namespace defined in the cluster has NetworkPolicies.',
+        remediation: 'Any namespace should have NetworkPolicies. It's highly recommended to have at least a first default deny-all and then one fine granular NetworkPolicy per app.'
+      }"
 spec:
   enforcementAction: dryrun
   match:

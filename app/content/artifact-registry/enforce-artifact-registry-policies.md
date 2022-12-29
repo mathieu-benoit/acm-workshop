@@ -17,13 +17,19 @@ source ${WORK_DIR}acm-workshop-variables.sh
 
 ## Define "Allowed container registries" policy
 
-Define the `Constraint` based on the [`K8sAllowedRepos`](https://cloud.devsite.corp.google.com/anthos-config-management/docs/reference/constraint-template-library#k8sallowedrepos) `ConstraintTemplate` for `Pods`:
+Define the `Constraint` based on the [`K8sAllowedRepos`](https://cloud.google.com/anthos-config-management/docs/reference/constraint-template-library#k8sallowedrepos) `ConstraintTemplate` for `Pods`:
 ```Bash
 cat <<EOF > ${WORK_DIR}$GKE_CONFIGS_DIR_NAME/policies/constraints/pod-allowed-container-registries.yaml
 apiVersion: constraints.gatekeeper.sh/v1beta1
 kind: K8sAllowedRepos
 metadata:
   name: pod-allowed-container-registries
+  annotations:
+    policycontroller.gke.io/constraintData: |
+      "{
+        description: 'Requires container images to begin with a string from the specified list.',
+        remediation: 'Any container images should begin with a string from the specified list, they are the only container registries allowed.'
+      }"
 spec:
   enforcementAction: deny
   match:

@@ -110,6 +110,12 @@ apiVersion: constraints.gatekeeper.sh/v1beta1
 kind: GkeClusterRequirement
 metadata:
   name: gke-clusters-requirements
+  annotations:
+    policycontroller.gke.io/constraintData: |
+      "{
+        description: 'Requires ContainerClusters and ContainerNodePools to use mandatory and security features.',
+        remediation: 'Any ContainerClusters and ContainerNodePools should use mandatory and security features.'
+      }"
 spec:
   enforcementAction: deny
   match:
@@ -129,6 +135,12 @@ apiVersion: constraints.gatekeeper.sh/v1beta1
 kind: K8sRequiredLabels
 metadata:
   name: gke-clusters-require-asm-label
+  annotations:
+    policycontroller.gke.io/constraintData: |
+      "{
+        description: 'Requires ContainerClusters to have the "mesh_id" label in order to leverage the ASM UI features.',
+        remediation: 'Any ContainerClusters should have the "mesh_id" label with the value like "proj-*", where "*" is the Project Number.'
+      }"
 spec:
   enforcementAction: deny
   match:
