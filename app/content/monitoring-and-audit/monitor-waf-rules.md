@@ -15,12 +15,14 @@ WORK_DIR=~/
 source ${WORK_DIR}acm-workshop-variables.sh
 ```
 
-Using logging, you can view every request evaluated by a Google Cloud Armor security policy and the outcome or action taken.
-
 In the Google Cloud console, navigate to _Network Security > Cloud Armor_ service. Click on the link displayed by the command below:
 ```Bash
 echo -e "https://console.cloud.google.com/net-security/securitypolicies/details/${SECURITY_POLICY_NAME}?project=${TENANT_PROJECT_ID}"
 ```
+
+![Cloud Armor rules](/images/cloud-armor-rules.png)
+
+Using Cloud Logging, you can view every request evaluated by a Google Cloud Armor security policy and the outcome or action taken.
 
 Select the **Logs** tab and click on **View policy logs**. From here, change _Last 1 hour_ by **Last 7 days** (top left) and enable the **Show query** toggle (top right):
 

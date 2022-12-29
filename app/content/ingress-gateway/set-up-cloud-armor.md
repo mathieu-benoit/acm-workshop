@@ -53,10 +53,10 @@ spec:
         expression: "evaluatePreconfiguredExpr('xss-v33-canary')"
     priority: 1000
   - action: deny(403)
-    description: "SQL injection levels 1 and 2"
+    description: "SQL injection level 1"
     match:
       expr:
-        expression: "evaluatePreconfiguredExpr('sqli-v33-canary', ['owasp-crs-v030301-id942251-sqli', 'owasp-crs-v030301-id942490-sqli', 'owasp-crs-v030301-id942420-sqli', 'owasp-crs-v030301-id942431-sqli', 'owasp-crs-v030301-id942460-sqli', 'owasp-crs-v030301-id942511-sqli', 'owasp-crs-v030301-id942421-sqli', 'owasp-crs-v030301-id942432-sqli'])"
+        expression: "evaluatePreconfiguredWaf('sqli-v33-canary', {'sensitivity': 1})"
     priority: 2000
   - action: deny(403)
     description: "Local file inclusion"
@@ -76,6 +76,54 @@ spec:
       expr:
         expression: "evaluatePreconfiguredExpr('cve-canary')"
     priority: 12345
+  - action: deny(403)
+    description: "Remote code execution"
+    match:
+      expr:
+        expression: "evaluatePreconfiguredExpr('rce-v33-canary')"
+    priority: 5000
+  - action: deny(403)
+    description: "Method enforcement"
+    match:
+      expr:
+        expression: "evaluatePreconfiguredExpr('methodenforcement-v33-canary')"
+    priority: 6000
+  - action: deny(403)
+    description: "Scanner detection"
+    match:
+      expr:
+        expression: "evaluatePreconfiguredExpr('scannerdetection-v33-canary')"
+    priority: 7000
+  - action: deny(403)
+    description: "Protocol attack"
+    match:
+      expr:
+        expression: "evaluatePreconfiguredExpr('protocolattack-v33-canary')"
+    priority: 8000
+  - action: deny(403)
+    description: "PHP injection attack"
+    match:
+      expr:
+        expression: "evaluatePreconfiguredExpr('php-v33-canary')"
+    priority: 9000
+  - action: deny(403)
+    description: "Session fixation attack"
+    match:
+      expr:
+        expression: "evaluatePreconfiguredExpr('sessionfixation-v33-canary')"
+    priority: 10000
+  - action: deny(403)
+    description: "Java attack"
+    match:
+      expr:
+        expression: "evaluatePreconfiguredExpr('java-v33-canary')"
+    priority: 11000
+  - action: deny(403)
+    description: "NodeJS attack"
+    match:
+      expr:
+        expression: "evaluatePreconfiguredExpr('nodejs-v33-canary')"
+    priority: 12000
 EOF
 ```
 
