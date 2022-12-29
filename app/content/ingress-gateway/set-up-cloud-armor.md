@@ -127,7 +127,9 @@ spec:
 EOF
 ```
 
-https://cloud.google.com/armor/docs/rule-tuning#preconfigured_rules
+{{% notice info %}}
+Here we are leveraging the [Cloud Armor preconfigured WAF rules](https://cloud.google.com/armor/docs/waf-rules): `xss`, `sqli`, `lfi`, `rfi`, `cve`, `rce`, `methodenforcement`, `scannerdetection`, `protocolattack`, `php`, `sessionfixation`, `java` and `nodejs`. All of them in `canary` version to have the latest version and ModSecurity Core Rule Set (CRS) 3.3. For `sqli`, we are only using sensitivity level 1 otherwise the Bank of Anthos is not working properly.
+{{% /notice %}}
 
 ## Define SSL policy
 
