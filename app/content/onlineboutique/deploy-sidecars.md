@@ -1,13 +1,13 @@
 ---
 title: "Deploy Sidecars"
-weight: 7
+weight: 8
 description: "Duration: 5 min | Persona: Apps Operator"
 tags: ["asm", "apps-operator"]
 ---
 ![Apps Operator](/images/apps-operator.png)
 _{{< param description >}}_
 
-In this section, you will deploy fine granular `Sidecars` in order to optimize the resources (CPU/Memory) usage of the Online Boutique apps's sidecar proxies. By default, each application in the `onlineboutique` `Namespace` can reach to all the endpoints in the mesh. The `Sidecar` resource allows to reduce that list to the strict minimum of which endpoints it needs to communicate with.
+In this section, you will deploy fine granular `Sidecars` in order to optimize the resources (CPU/Memory) usage of the Online Boutique apps's sidecar proxies. By default, each application in the Online Boutique namespace can reach to all the endpoints in the mesh. The `Sidecar` resource allows to reduce that list to the strict minimum of which endpoints it needs to communicate with.
 
 Initialize variables:
 ```Bash
@@ -15,64 +15,82 @@ WORK_DIR=~/
 source ${WORK_DIR}acm-workshop-variables.sh
 ```
 
-## Prepare upstream Kubernetes manifests
+## Update `RepoSync` to deploy the Online Boutique's Helm chart
 
-Prepare the upstream Kubernetes manifests:
+Define the `RepoSync` to deploy the Online Boutique's Helm chart with the `Sidecars`:
 ```Bash
-cd ${WORK_DIR}$ONLINE_BOUTIQUE_DIR_NAME/upstream
-kpt pkg get https://github.com/GoogleCloudPlatform/anthos-service-mesh-samples.git/docs/online-boutique-asm-manifests/sidecars@main
+cat <<EOF > ${WORK_DIR}$GKE_CONFIGS_DIR_NAME/repo-syncs/$ONLINEBOUTIQUE_NAMESPACE/repo-sync.yaml
+apiVersion: configsync.gke.io/v1beta1
+kind: RepoSync
+metadata:
+  name: repo-sync
+  namespace: ${ONLINEBOUTIQUE_NAMESPACE}
+spec:
+  sourceFormat: unstructured
+  sourceType: helm
+  helm:
+    repo: oci://${CHART_REGISTRY_REPOSITORY}
+    chart: ${ONLINEBOUTIQUE_NAMESPACE}
+    version: ${ONLINE_BOUTIQUE_VERSION:1}
+    releaseName: ${ONLINEBOUTIQUE_NAMESPACE}
+    auth: gcpserviceaccount
+    gcpServiceAccountEmail: ${HELM_CHARTS_READER_GSA_NAME}@${PROJECT_ID}.iam.gserviceaccount.com
+    values:
+      cartDatabase:
+        inClusterRedis:
+          publicRepository: false
+      images:
+        repository: ${PRIVATE_ONLINE_BOUTIQUE_REGISTRY}
+        tag: ${ONLINE_BOUTIQUE_VERSION}
+      nativeGrpcHealthCheck: true
+      seccompProfile:
+        enable: true
+      loadGenerator:
+        checkFrontendInitContainer: false
+      frontend:
+        externalService: false
+        virtualService:
+          create: true
+          gateway:
+            name: ${INGRESS_GATEWAY_NAME}
+            namespace: ${INGRESS_GATEWAY_NAMESPACE}
+            labelKey: asm
+            labelValue: ingressgateway
+          hosts:
+          - ${ONLINE_BOUTIQUE_INGRESS_GATEWAY_HOST_NAME}
+      serviceAccounts:
+        create: true
+      authorizationPolicies:
+        create: true
+      networkPolicies:
+        create: true
+      sidecars:
+        create: true
+EOF
 ```
 
-## Update the Kustomize base overlay
-
-```Bash
-cd ${WORK_DIR}$ONLINE_BOUTIQUE_DIR_NAME/base
-kustomize edit add component ../upstream/sidecars/all
-```
-
-## Update Staging namespace overlay
-
-```Bash
-cd ${WORK_DIR}$ONLINE_BOUTIQUE_DIR_NAME/staging
-mkdir sidecars
-cp -r ../upstream/sidecars/for-namespace/ sidecars/.
-sed -i "s/ONLINEBOUTIQUE_NAMESPACE/${ONLINEBOUTIQUE_NAMESPACE}/g" sidecars/for-namespace/kustomization.yaml
-kustomize edit add component sidecars/for-namespace
-```
+{{% notice info %}}
+In order to deploy the fine granular `Sidecars`, one per app, we just updated the list of `values` of the Online Boutique's Helm chart previously configured, with `sidecars.create: true`.
+{{% /notice %}}
 
 ## Deploy Kubernetes manifests
 
 ```Bash
-cd ${WORK_DIR}$ONLINE_BOUTIQUE_DIR_NAME/
+cd ${WORK_DIR}$GKE_CONFIGS_DIR_NAME/
 git add . && git commit -m "Online Boutique Sidecars" && git push origin main
 ```
 
 ## Check deployments
 
-List the Kubernetes resources managed by Config Sync in **GKE cluster** for the **Online Boutique apps** repository:
-{{< tabs groupId="cs-status-ui">}}
-{{% tab name="gcloud" %}}
+List the Kubernetes resources managed by Config Sync in **GKE cluster** for the **Online Boutique apps** repository from within the Cloud Console, by clicking on this link:
 ```Bash
-gcloud alpha anthos config sync repo describe \
-    --project $TENANT_PROJECT_ID \
-    --managed-resources all \
-    --sync-name repo-sync \
-    --sync-namespace $ONLINEBOUTIQUE_NAMESPACE
+echo -e "https://console.cloud.google.com/kubernetes/config_management/packages?project=${TENANT_PROJECT_ID}"
 ```
-Wait and re-run this command above until you see `"status": "SYNCED"`.
-{{% /tab %}}
-{{% tab name="UI" %}}
-Alternatively, you could also see this from within the Cloud Console, by clicking on this link:
-```Bash
-echo -e "https://console.cloud.google.com/kubernetes/config_management/status?clusterName=${GKE_NAME}&id=${GKE_NAME}&project=${TENANT_PROJECT_ID}"
-```
-Wait until you see the `Sync status` column as `SYNCED`. And then you can also click on `View resources` to see the details.
-{{% /tab %}}
-{{< /tabs >}}
+Wait until you see the `Sync status` column as `Synced` and the `Reconcile status` column as `Current`.
 
 List the GitHub runs for the **Online Boutique apps** repository:
 ```Bash
-cd ${WORK_DIR}$ONLINE_BOUTIQUE_DIR_NAME && gh run list
+cd ${WORK_DIR}$GKE_CONFIGS_DIR_NAME && gh run list
 ```
 
 ## Check the Online Boutique apps

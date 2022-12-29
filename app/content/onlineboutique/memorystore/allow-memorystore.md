@@ -7,7 +7,7 @@ tags: ["kcc", "org-admin"]
 ![Org Admin](/images/org-admin.png)
 _{{< param description >}}_
 
-In this section, you will enable and grant the appropriate APIs in the Tenant project and the IAM role for the Tenant project's service account. This will allow later this service account to provision Memorystore (redis) instances.
+In this section, you will enable and grant the appropriate APIs in the Tenant project and the IAM role for the Tenant project's service account. This will allow later this service account to provision Memorystore (Redis) instances.
 
 Initialize variables:
 ```Bash
@@ -17,7 +17,7 @@ source ${WORK_DIR}acm-workshop-variables.sh
 
 ## Define API
 
-Define the Memorystore (redis) API [`Service`](https://cloud.google.com/config-connector/docs/reference/resource-docs/serviceusage/service) resource for the Tenant project:
+Define the Memorystore (Redis) API [`Service`](https://cloud.google.com/config-connector/docs/reference/resource-docs/serviceusage/service) resource for the Tenant project:
 ```Bash
 cat <<EOF > ${WORK_DIR}$HOST_PROJECT_DIR_NAME/projects/$TENANT_PROJECT_ID/redis-service.yaml
 apiVersion: serviceusage.cnrm.cloud.google.com/v1beta1
@@ -63,7 +63,7 @@ EOF
 
 ```Bash
 cd ${WORK_DIR}$HOST_PROJECT_DIR_NAME/
-git add . && git commit -m "Allow Memorystore (redis) for Tenant project" && git push origin main
+git add . && git commit -m "Allow Memorystore (Redis) for Tenant project" && git push origin main
 ```
 
 ## Check deployments

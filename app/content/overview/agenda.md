@@ -55,11 +55,11 @@ tags: ["apps-operator", "org-admin", "platform-admin"]
     1. As Apps Operator, deploy the Online Boutique apps
     1. As Apps Operator, deploy `AuthorizationPolicies` for the Online Boutique namespace in GKE cluster
     1. As Apps Operator, deploy `Sidecars` for the Online Boutique namespace in GKE cluster
-    1. As Org Admin, allow Memorystore (redis) for Tenant project
-    1. As Org Admin, enforce policies for Memorystore (redis) resources
-    1. As Platform Admin, create Memorystore (redis) instances with and without TLS in Tenant project
-    1. As Apps Operator, configure Online Boutique apps to use Memorystore (redis) instance
-    1. As Apps Operator, secure Online Boutique apps to access Memorystore (redis) instance via TLS
+    1. As Org Admin, allow Memorystore (Redis) for Tenant project
+    1. As Org Admin, enforce policies for Memorystore (Redis) resources
+    1. As Platform Admin, create Memorystore (Redis) instances with and without TLS in Tenant project
+    1. As Apps Operator, configure Online Boutique apps to use Memorystore (Redis) instance
+    1. As Apps Operator, secure Online Boutique apps to access Memorystore (Redis) instance via TLS
     1. As Org Admin, allow Spanner for Tenant project
     1. As Platform Admin, create Spanner instance in Tenant project
     1. As Apps Operator, configure Online Boutique apps to use Spanner instance

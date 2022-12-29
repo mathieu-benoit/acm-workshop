@@ -7,7 +7,7 @@ tags: ["apps-operator", "asm", "security-tips"]
 ![Apps Operator](/images/apps-operator.png)
 _{{< param description >}}_
 
-In this section, you will deploy granular and specific `AuthorizationPolicies` for the Online Boutique namespace. At the end that's where you will finally have working Online Boutique apps :)
+In this section, you will see how to track the `AuthorizationPolicies` deny logs and then you will deploy granular and specific `AuthorizationPolicies` for the Online Boutique namespace.
 
 Initialize variables:
 ```Bash
@@ -15,68 +15,82 @@ WORK_DIR=~/
 source ${WORK_DIR}acm-workshop-variables.sh
 ```
 
-## Get upstream Kubernetes manifests
+The current error: `RBAC: access denied`, is because the default deny-all `AuthorizationPolicy` has been applied to the entire mesh, but we haven't yet deployed any fine granular `AuthorizationPolicies` in the Online Boutique's `Namespace`.
 
-Get the upstream Kubernetes manifests:
+FIXME
+
+## Update `RepoSync` to deploy the Online Boutique's Helm chart
+
+Define the `RepoSync` to deploy the Online Boutique's Helm chart with both the `AuthorizationPolicies` and `ServiceAccounts`:
 ```Bash
-cd ${WORK_DIR}$ONLINE_BOUTIQUE_DIR_NAME/upstream
-kpt pkg get https://github.com/GoogleCloudPlatform/anthos-service-mesh-samples.git/docs/online-boutique-asm-manifests/authorization-policies@main
+cat <<EOF > ${WORK_DIR}$GKE_CONFIGS_DIR_NAME/repo-syncs/$ONLINEBOUTIQUE_NAMESPACE/repo-sync.yaml
+apiVersion: configsync.gke.io/v1beta1
+kind: RepoSync
+metadata:
+  name: repo-sync
+  namespace: ${ONLINEBOUTIQUE_NAMESPACE}
+spec:
+  sourceFormat: unstructured
+  sourceType: helm
+  helm:
+    repo: oci://${CHART_REGISTRY_REPOSITORY}
+    chart: ${ONLINEBOUTIQUE_NAMESPACE}
+    version: ${ONLINE_BOUTIQUE_VERSION:1}
+    releaseName: ${ONLINEBOUTIQUE_NAMESPACE}
+    auth: gcpserviceaccount
+    gcpServiceAccountEmail: ${HELM_CHARTS_READER_GSA_NAME}@${PROJECT_ID}.iam.gserviceaccount.com
+    values:
+      cartDatabase:
+        inClusterRedis:
+          publicRepository: false
+      images:
+        repository: ${PRIVATE_ONLINE_BOUTIQUE_REGISTRY}
+        tag: ${ONLINE_BOUTIQUE_VERSION}
+      nativeGrpcHealthCheck: true
+      seccompProfile:
+        enable: true
+      loadGenerator:
+        checkFrontendInitContainer: false
+      frontend:
+        externalService: false
+        virtualService:
+          create: true
+          gateway:
+            name: ${INGRESS_GATEWAY_NAME}
+            namespace: ${INGRESS_GATEWAY_NAMESPACE}
+            labelKey: asm
+            labelValue: ingressgateway
+          hosts:
+          - ${ONLINE_BOUTIQUE_INGRESS_GATEWAY_HOST_NAME}
+      serviceAccounts:
+        create: true
+      authorizationPolicies:
+        create: true
+EOF
 ```
 
-## Update the Kustomize base overlay
-
-```Bash
-cd ${WORK_DIR}$ONLINE_BOUTIQUE_DIR_NAME/base
-kustomize edit add component ../upstream/components/service-accounts
-kustomize edit add component ../upstream/authorization-policies/all
-```
-
-## Update Staging namespace overlay
-
-```Bash
-cd ${WORK_DIR}$ONLINE_BOUTIQUE_DIR_NAME/staging
-mkdir authorization-policies
-cp -r ../upstream/authorization-policies/for-namespace/ authorization-policies/.
-sed -i "s/ONLINEBOUTIQUE_NAMESPACE/${ONLINEBOUTIQUE_NAMESPACE}/g" authorization-policies/for-namespace/kustomization.yaml
-kustomize edit add component authorization-policies/for-namespace
-cp -r ../upstream/authorization-policies/for-ingress-gateway/ authorization-policies/.
-sed -i "s/ONLINEBOUTIQUE_NAMESPACE/${ONLINEBOUTIQUE_NAMESPACE}/g;s/INGRESS_GATEWAY_NAMESPACE/${INGRESS_GATEWAY_NAMESPACE}/g;s/INGRESS_GATEWAY_NAME/${INGRESS_GATEWAY_NAME}/g" authorization-policies/for-ingress-gateway/kustomization.yaml
-kustomize edit add component authorization-policies/for-ingress-gateway
-```
+{{% notice info %}}
+In order to deploy the fine granular `AuthorizationPolicies` and `ServiceAccounts`, one of each per app, we just updated the list of `values` of the Online Boutique's Helm chart previously configured, with `serviceAccounts.create: true` and `authorizationPolicies.create: true`.
+{{% /notice %}}
 
 ## Deploy Kubernetes manifests
 
 ```Bash
-cd ${WORK_DIR}$ONLINE_BOUTIQUE_DIR_NAME/
-git add . && git commit -m "Online Boutique AuthorizationPolicies" && git push origin main
+cd ${WORK_DIR}$GKE_CONFIGS_DIR_NAME/
+git add . && git commit -m "Online Boutique AuthorizationPolicies and ServiceAccounts" && git push origin main
 ```
 
 ## Check deployments
 
-List the Kubernetes resources managed by Config Sync in **GKE cluster** for the **Online Boutique apps** repository:
-{{< tabs groupId="cs-status-ui">}}
-{{% tab name="gcloud" %}}
+List the Kubernetes resources managed by Config Sync in **GKE cluster** for the **Online Boutique apps** repository from within the Cloud Console, by clicking on this link:
 ```Bash
-gcloud alpha anthos config sync repo describe \
-    --project $TENANT_PROJECT_ID \
-    --managed-resources all \
-    --sync-name repo-sync \
-    --sync-namespace $ONLINEBOUTIQUE_NAMESPACE
+echo -e "https://console.cloud.google.com/kubernetes/config_management/packages?project=${TENANT_PROJECT_ID}"
 ```
-Wait and re-run this command above until you see `"status": "SYNCED"`.
-{{% /tab %}}
-{{% tab name="UI" %}}
-Alternatively, you could also see this from within the Cloud Console, by clicking on this link:
-```Bash
-echo -e "https://console.cloud.google.com/kubernetes/config_management/status?clusterName=${GKE_NAME}&id=${GKE_NAME}&project=${TENANT_PROJECT_ID}"
-```
-Wait until you see the `Sync status` column as `SYNCED`. And then you can also click on `View resources` to see the details.
-{{% /tab %}}
-{{< /tabs >}}
+Wait until you see the `Sync status` column as `Synced` and the `Reconcile status` column as `Current`.
 
 List the GitHub runs for the **Online Boutique apps** repository:
 ```Bash
-cd ${WORK_DIR}$ONLINE_BOUTIQUE_DIR_NAME && gh run list
+cd ${WORK_DIR}$GKE_CONFIGS_DIR_NAME && gh run list
 ```
 
 ## Check the Online Boutique apps

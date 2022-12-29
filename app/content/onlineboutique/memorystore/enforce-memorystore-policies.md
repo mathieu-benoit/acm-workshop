@@ -7,7 +7,7 @@ tags: ["org-admin", "policies", "security-tips"]
 ![Org Admin](/images/org-admin.png)
 _{{< param description >}}_
 
-In this section, you will set up policies in order to enforce governance against the Kubernetes manifests defining your Memorystore (redis) instances.
+In this section, you will set up policies in order to enforce governance against the Kubernetes manifests defining your Memorystore (Redis) instances.
 
 Initialize variables:
 ```Bash
@@ -25,7 +25,7 @@ kind: ConstraintTemplate
 metadata:
   name: limitmemorystoreredis
   annotations:
-    description: "Requirements for any Memorystore (redis) instance."
+    description: "Requirements for any Memorystore (Redis) instance."
 spec:
   crd:
     spec:
@@ -38,17 +38,17 @@ spec:
         violation[{"msg":msg}] {
           input.review.object.kind == "RedisInstance"
           not input.review.object.spec.redisVersion == "REDIS_6_X"
-          msg := sprintf("Memorystore (redis) %s's version should be REDIS_6_X instead of %s.", [input.review.object.metadata.name, input.review.object.spec.redisVersion])
+          msg := sprintf("Memorystore (Redis) %s's version should be REDIS_6_X instead of %s.", [input.review.object.metadata.name, input.review.object.spec.redisVersion])
         }
         violation[{"msg":msg}] {
           input.review.object.kind == "RedisInstance"
           not input.review.object.spec.authorizedNetworkRef
-          msg := sprintf("Memorystore (redis) %s's VPC shouldn't be default.", [input.review.object.metadata.name])
+          msg := sprintf("Memorystore (Redis) %s's VPC shouldn't be default.", [input.review.object.metadata.name])
         }
         violation[{"msg":msg}] {
           input.review.object.kind == "RedisInstance"
           input.review.object.spec.authorizedNetworkRef.name == "default"
-          msg := sprintf("Memorystore (redis) %s's VPC shouldn't be default.", [input.review.object.metadata.name])
+          msg := sprintf("Memorystore (Redis) %s's VPC shouldn't be default.", [input.review.object.metadata.name])
         }
 EOF
 ```

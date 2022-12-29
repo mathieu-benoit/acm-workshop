@@ -7,7 +7,7 @@ tags: ["apps-operator"]
 ![Apps Operator](/images/apps-operator.png)
 _{{< param description >}}_
 
-In this section, you will update the OnlineBoutique's `cartservice` app in order to point to the Memorystore (redis) instance previously created.
+In this section, you will update the OnlineBoutique's `cartservice` app in order to point to the Memorystore (Redis) instance previously created.
 
 Initialize variables:
 ```Bash
@@ -15,67 +15,88 @@ WORK_DIR=~/
 source ${WORK_DIR}acm-workshop-variables.sh
 ```
 
-## Update Staging namespace overlay
+## Update `RepoSync` to deploy the Online Boutique's Helm chart
 
-Get Memorystore (redis) connection information:
+Get Memorystore (Redis) connection information:
 ```Bash
-export REDIS_IP=$(gcloud redis instances describe $REDIS_NAME --region=$GKE_LOCATION --project=$TENANT_PROJECT_ID --format='get(host)')
-export REDIS_PORT=$(gcloud redis instances describe $REDIS_NAME --region=$GKE_LOCATION --project=$TENANT_PROJECT_ID --format='get(port)')
+export REDIS_IP=$(gcloud redis instances describe $REDIS_NAME --region $GKE_LOCATION --project $TENANT_PROJECT_ID --format='get(host)')
+export REDIS_PORT=$(gcloud redis instances describe $REDIS_NAME --region $GKE_LOCATION --project $TENANT_PROJECT_ID --format='get(port)')
 ```
 
-Update the Online Boutique apps with the new Memorystore (redis) connection information:
+Define the `RepoSync` to deploy the Online Boutique's Helm chart with the `cartservice` pointing to the Memorystore (Redis) database:
 ```Bash
-cd ${WORK_DIR}$ONLINE_BOUTIQUE_DIR_NAME/staging
-cp -r ../upstream/components/memorystore/ .
-sed -i "s/REDIS_CONNECTION_STRING/${REDIS_IP}:${REDIS_PORT}/g" memorystore/kustomization.yaml
-kustomize edit add component memorystore
+cat <<EOF > ${WORK_DIR}$GKE_CONFIGS_DIR_NAME/repo-syncs/$ONLINEBOUTIQUE_NAMESPACE/repo-sync.yaml
+apiVersion: configsync.gke.io/v1beta1
+kind: RepoSync
+metadata:
+  name: repo-sync
+  namespace: ${ONLINEBOUTIQUE_NAMESPACE}
+spec:
+  sourceFormat: unstructured
+  sourceType: helm
+  helm:
+    repo: oci://${CHART_REGISTRY_REPOSITORY}
+    chart: ${ONLINEBOUTIQUE_NAMESPACE}
+    version: ${ONLINE_BOUTIQUE_VERSION:1}
+    releaseName: ${ONLINEBOUTIQUE_NAMESPACE}
+    auth: gcpserviceaccount
+    gcpServiceAccountEmail: ${HELM_CHARTS_READER_GSA_NAME}@${PROJECT_ID}.iam.gserviceaccount.com
+    values:
+      cartDatabase:
+        inClusterRedis:
+          create: false
+        connectionString: ${REDIS_IP}:${REDIS_PORT}
+      images:
+        repository: ${PRIVATE_ONLINE_BOUTIQUE_REGISTRY}
+        tag: ${ONLINE_BOUTIQUE_VERSION}
+      nativeGrpcHealthCheck: true
+      seccompProfile:
+        enable: true
+      loadGenerator:
+        checkFrontendInitContainer: false
+      frontend:
+        externalService: false
+        virtualService:
+          create: true
+          gateway:
+            name: ${INGRESS_GATEWAY_NAME}
+            namespace: ${INGRESS_GATEWAY_NAMESPACE}
+            labelKey: asm
+            labelValue: ingressgateway
+          hosts:
+          - ${ONLINE_BOUTIQUE_INGRESS_GATEWAY_HOST_NAME}
+      serviceAccounts:
+        create: true
+      authorizationPolicies:
+        create: true
+      networkPolicies:
+        create: true
+      sidecars:
+        create: true
 ```
+
 {{% notice info %}}
-This will change the `REDIS_ADDR` environment variable of the `cartservice` to point to the Memorystore (redis) instance as well as removing the `Deployment` and the `Service` of the default in-cluster `redis` database container.
+This will change the `REDIS_ADDR` environment variable of the `cartservice` to point to the Memorystore (Redis) database as well as removing the `Deployment` and the `Service` of the default in-cluster `redis` database.
 {{% /notice %}}
-
-Update the previously deployed `Sidecars`, `NetworkPolicies`, `ServiceAccounts` and `AuthorizationPolicies`:
-```Bash
-cd ${WORK_DIR}$ONLINE_BOUTIQUE_DIR_NAME/base
-kustomize edit add component ../upstream/sidecars/for-memorystore
-cat <<EOF >> kustomization.yaml
-- |-
-  apiVersion: networking.k8s.io/v1
-  kind: NetworkPolicy
-  metadata:
-    name: redis-cart
-  \$patch: delete
-- |-
-  apiVersion: security.istio.io/v1beta1
-  kind: AuthorizationPolicy
-  metadata:
-    name: redis-cart
-  \$patch: delete
-EOF
-```
 
 ## Deploy Kubernetes manifests
 
 ```Bash
-cd ${WORK_DIR}$ONLINE_BOUTIQUE_DIR_NAME/
-git add . && git commit -m "Use Memorystore (redis)" && git push origin main
+cd ${WORK_DIR}$GKE_CONFIGS_DIR_NAME/
+git add . && git commit -m "Use Memorystore (Redis)" && git push origin main
 ```
 
 ## Check deployments
 
-List the Kubernetes resources managed by Config Sync in **GKE cluster** for the **Online Boutique apps** repository:
+List the Kubernetes resources managed by Config Sync in **GKE cluster** for the **Online Boutique apps** repository from within the Cloud Console, by clicking on this link:
 ```Bash
-gcloud alpha anthos config sync repo describe \
-    --project $TENANT_PROJECT_ID \
-    --managed-resources all \
-    --sync-name repo-sync \
-    --sync-namespace $ONLINEBOUTIQUE_NAMESPACE
+echo -e "https://console.cloud.google.com/kubernetes/config_management/packages?project=${TENANT_PROJECT_ID}"
 ```
-Wait and re-run this command above until you see `"status": "SYNCED"`. All the `managed_resources` listed should have `STATUS: Current` as well.
+Wait until you see the `Sync status` column as `Synced` and the `Reconcile status` column as `Current`.
 
 List the GitHub runs for the **Online Boutique apps** repository:
 ```Bash
-cd ${WORK_DIR}$ONLINE_BOUTIQUE_DIR_NAME && gh run list
+cd ${WORK_DIR}$GKE_CONFIGS_DIR_NAME && gh run list
 ```
 
 ## Check the Online Boutique apps
@@ -85,4 +106,4 @@ Navigate to the Online Boutique apps, click on the link displayed by the command
 echo -e "https://${ONLINE_BOUTIQUE_INGRESS_GATEWAY_HOST_NAME}"
 ```
 
-You should still have the Online Boutique apps working successfully, but now with an external Memorystore (redis) database.
+You should still have the Online Boutique apps working successfully, but now with an external Memorystore (Redis) database.

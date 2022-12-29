@@ -8,4 +8,4 @@ Use Spanner.
 
 {{% children showhidden="false" description="true" style="h4" %}}
 
-![Online Boutique overview](/images/onlineboutique-overview.png?width=50pc)
+![Online Boutique with Spanner](/images/onlineboutique-spanner.png?width=50pc)

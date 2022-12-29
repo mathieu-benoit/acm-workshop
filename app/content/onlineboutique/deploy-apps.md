@@ -7,7 +7,7 @@ tags: ["apps-operator", "asm"]
 ![Apps Operator](/images/apps-operator.png)
 _{{< param description >}}_
 
-In this section, you will deploy the Online Boutique apps.
+In this section, you will deploy the Online Boutique apps, via Config Sync and its Helm chart.
 
 Initialize variables:
 ```Bash
@@ -15,204 +15,80 @@ WORK_DIR=~/
 source ${WORK_DIR}acm-workshop-variables.sh
 ```
 
-## Update base overlay
+## Define `RepoSync` to deploy the Online Boutique's Helm chart
 
-Update the Kustomize base overlay:
+Define the `RepoSync` to deploy the Online Boutique's Helm chart:
 ```Bash
-cd ${WORK_DIR}$ONLINE_BOUTIQUE_DIR_NAME/base
-kustomize edit add resource ../upstream/base
-cat <<EOF >> ${WORK_DIR}$ONLINE_BOUTIQUE_DIR_NAME/base/kustomization.yaml
-patchesStrategicMerge:
-- |-
-  apiVersion: v1
-  kind: Service
-  metadata:
-    name: frontend-external
-  \$patch: delete
+cat <<EOF > ${WORK_DIR}$GKE_CONFIGS_DIR_NAME/repo-syncs/$ONLINEBOUTIQUE_NAMESPACE/repo-sync.yaml
+apiVersion: configsync.gke.io/v1beta1
+kind: RepoSync
+metadata:
+  name: repo-sync
+  namespace: ${ONLINEBOUTIQUE_NAMESPACE}
+spec:
+  sourceFormat: unstructured
+  sourceType: helm
+  helm:
+    repo: oci://${CHART_REGISTRY_REPOSITORY}
+    chart: ${ONLINEBOUTIQUE_NAMESPACE}
+    version: ${ONLINE_BOUTIQUE_VERSION:1}
+    releaseName: ${ONLINEBOUTIQUE_NAMESPACE}
+    auth: gcpserviceaccount
+    gcpServiceAccountEmail: ${HELM_CHARTS_READER_GSA_NAME}@${PROJECT_ID}.iam.gserviceaccount.com
+    values:
+      cartDatabase:
+        inClusterRedis:
+          publicRepository: false
+      images:
+        repository: ${PRIVATE_ONLINE_BOUTIQUE_REGISTRY}
+        tag: ${ONLINE_BOUTIQUE_VERSION}
+      nativeGrpcHealthCheck: true
+      seccompProfile:
+        enable: true
+      loadGenerator:
+        checkFrontendInitContainer: false
+      frontend:
+        externalService: false
+        virtualService:
+          create: true
+          gateway:
+            name: ${INGRESS_GATEWAY_NAME}
+            namespace: ${INGRESS_GATEWAY_NAMESPACE}
+            labelKey: asm
+            labelValue: ingressgateway
+          hosts:
+          - ${ONLINE_BOUTIQUE_INGRESS_GATEWAY_HOST_NAME}
 EOF
 ```
+
 {{% notice info %}}
 Here we are deleting the `Service` `frontend-external` because the `frontend` app will be exposed by the Ingress Gateway.
 {{% /notice %}}
 
-## Define VirtualService
+Define the `VirtualService` resource in order to establish the Ingress Gateway routing to the Online Boutique apps.
 
-Define the `VirtualService` resource in order to establish the Ingress Gateway routing to the Online Boutique apps:
-```Bash
-cat <<EOF > ${WORK_DIR}$ONLINE_BOUTIQUE_DIR_NAME/base/virtualservice.yaml
-apiVersion: networking.istio.io/v1alpha3
-kind: VirtualService
-metadata:
-  name: frontend
-spec:
-  hosts:
-  - "*"
-  gateways:
-  - ${INGRESS_GATEWAY_NAMESPACE}/${INGRESS_GATEWAY_NAME}
-  http:
-  - route:
-    - destination:
-        host: frontend
-        port:
-          number: 80
-EOF
-```
+Update the Staging Kustomize overlay with the proper `hosts` value in the `VirtualService`.
 
-Update the Kustomize base overlay:
-```Bash
-cd ${WORK_DIR}$ONLINE_BOUTIQUE_DIR_NAME/base
-kustomize edit add resource virtualservice.yaml
-```
-
-## Update the Staging namespace overlay
-
-Update the Staging Kustomize overlay with the proper `hosts` value in the `VirtualService`
-```Bash
-cat <<EOF >> ${WORK_DIR}$ONLINE_BOUTIQUE_DIR_NAME/staging/kustomization.yaml
-patchesJson6902:
-- target:
-    kind: VirtualService
-    name: frontend
-  patch: |-
-    - op: replace
-      path: /spec/hosts
-      value:
-        - ${ONLINE_BOUTIQUE_INGRESS_GATEWAY_HOST_NAME}
-EOF
-```
-
-Update the Staging Kustomize overlay with the `Deployments`'s container images pointing to the private Artifact Registry: 
-```Bash
-mkdir ${WORK_DIR}$ONLINE_BOUTIQUE_DIR_NAME/staging/container-images
-cat <<EOF > ${WORK_DIR}$ONLINE_BOUTIQUE_DIR_NAME/staging/container-images/kustomization.yaml
-apiVersion: kustomize.config.k8s.io/v1alpha1
-kind: Component
-patchesJson6902:
-- target:
-    kind: Deployment
-    name: adservice
-  patch: |-
-    - op: replace
-      path: /spec/template/spec/containers/0/image
-      value: ${PRIVATE_ONLINE_BOUTIQUE_REGISTRY}/adservice:${ONLINE_BOUTIQUE_VERSION}
-- target:
-    kind: Deployment
-    name: cartservice
-  patch: |-
-    - op: replace
-      path: /spec/template/spec/containers/0/image
-      value: ${PRIVATE_ONLINE_BOUTIQUE_REGISTRY}/cartservice:${ONLINE_BOUTIQUE_VERSION}
-- target:
-    kind: Deployment
-    name: checkoutservice
-  patch: |-
-    - op: replace
-      path: /spec/template/spec/containers/0/image
-      value: ${PRIVATE_ONLINE_BOUTIQUE_REGISTRY}/checkoutservice:${ONLINE_BOUTIQUE_VERSION}
-- target:
-    kind: Deployment
-    name: currencyservice
-  patch: |-
-    - op: replace
-      path: /spec/template/spec/containers/0/image
-      value: ${PRIVATE_ONLINE_BOUTIQUE_REGISTRY}/currencyservice:${ONLINE_BOUTIQUE_VERSION}
-- target:
-    kind: Deployment
-    name: emailservice
-  patch: |-
-    - op: replace
-      path: /spec/template/spec/containers/0/image
-      value: ${PRIVATE_ONLINE_BOUTIQUE_REGISTRY}/emailservice:${ONLINE_BOUTIQUE_VERSION}
-- target:
-    kind: Deployment
-    name: frontend
-  patch: |-
-    - op: replace
-      path: /spec/template/spec/containers/0/image
-      value: ${PRIVATE_ONLINE_BOUTIQUE_REGISTRY}/frontend:${ONLINE_BOUTIQUE_VERSION}
-- target:
-    kind: Deployment
-    name: loadgenerator
-  patch: |-
-    - op: replace
-      path: /spec/template/spec/initContainers/0/image
-      value: ${PRIVATE_ONLINE_BOUTIQUE_REGISTRY}/busybox:latest
-    - op: replace
-      path: /spec/template/spec/containers/0/image
-      value: ${PRIVATE_ONLINE_BOUTIQUE_REGISTRY}/loadgenerator:${ONLINE_BOUTIQUE_VERSION}
-- target:
-    kind: Deployment
-    name: paymentservice
-  patch: |-
-    - op: replace
-      path: /spec/template/spec/containers/0/image
-      value: ${PRIVATE_ONLINE_BOUTIQUE_REGISTRY}/paymentservice:${ONLINE_BOUTIQUE_VERSION}
-- target:
-    kind: Deployment
-    name: productcatalogservice
-  patch: |-
-    - op: replace
-      path: /spec/template/spec/containers/0/image
-      value: ${PRIVATE_ONLINE_BOUTIQUE_REGISTRY}/productcatalogservice:${ONLINE_BOUTIQUE_VERSION}
-- target:
-    kind: Deployment
-    name: recommendationservice
-  patch: |-
-    - op: replace
-      path: /spec/template/spec/containers/0/image
-      value: ${PRIVATE_ONLINE_BOUTIQUE_REGISTRY}/recommendationservice:${ONLINE_BOUTIQUE_VERSION}
-- target:
-    kind: Deployment
-    name: shippingservice
-  patch: |-
-    - op: replace
-      path: /spec/template/spec/containers/0/image
-      value: ${PRIVATE_ONLINE_BOUTIQUE_REGISTRY}/shippingservice:${ONLINE_BOUTIQUE_VERSION}
-- target:
-    kind: Deployment
-    name: redis-cart
-  patch: |-
-    - op: replace
-      path: /spec/template/spec/containers/0/image
-      value: ${PRIVATE_ONLINE_BOUTIQUE_REGISTRY}/redis:alpine
-EOF
-cd ${WORK_DIR}$ONLINE_BOUTIQUE_DIR_NAME/staging
-kustomize edit add component container-images
-```
+Update the Staging Kustomize overlay with the `Deployments`'s container images pointing to the private Artifact Registry.
 
 ## Deploy Kubernetes manifests
 
 ```Bash
-cd ${WORK_DIR}$ONLINE_BOUTIQUE_DIR_NAME/
+cd ${WORK_DIR}$GKE_CONFIGS_DIR_NAME/
 git add . && git commit -m "Online Boutique apps" && git push origin main
 ```
 
 ## Check deployments
 
-List the Kubernetes resources managed by Config Sync in **GKE cluster** for the **Online Boutique apps** repository:
-{{< tabs groupId="cs-status-ui">}}
-{{% tab name="gcloud" %}}
+List the Kubernetes resources managed by Config Sync in **GKE cluster** for the **Online Boutique apps** repository from within the Cloud Console, by clicking on this link:
 ```Bash
-gcloud alpha anthos config sync repo describe \
-    --project $TENANT_PROJECT_ID \
-    --managed-resources all \
-    --sync-name repo-sync \
-    --sync-namespace $ONLINEBOUTIQUE_NAMESPACE
+echo -e "https://console.cloud.google.com/kubernetes/config_management/packages?project=${TENANT_PROJECT_ID}"
 ```
-Wait and re-run this command above until you see `"status": "SYNCED"`.
-{{% /tab %}}
-{{% tab name="UI" %}}
-Alternatively, you could also see this from within the Cloud Console, by clicking on this link:
-```Bash
-echo -e "https://console.cloud.google.com/kubernetes/config_management/status?clusterName=${GKE_NAME}&id=${GKE_NAME}&project=${TENANT_PROJECT_ID}"
-```
-Wait until you see the `Sync status` column as `SYNCED`. And then you can also click on `View resources` to see the details.
-{{% /tab %}}
-{{< /tabs >}}
+Wait until you see the `Sync status` column as `Synced` and the `Reconcile status` column as `Current`.
 
 List the GitHub runs for the **Online Boutique apps** repository:
 ```Bash
-cd ${WORK_DIR}$ONLINE_BOUTIQUE_DIR_NAME && gh run list
+cd ${WORK_DIR}$GKE_CONFIGS_DIR_NAME && gh run list
 ```
 
 ## Check the Online Boutique apps
@@ -227,4 +103,4 @@ Navigate to the Online Boutique apps, click on the link displayed by the command
 echo -e "https://${ONLINE_BOUTIQUE_INGRESS_GATEWAY_HOST_NAME}"
 ```
 
-You should receive the error: `RBAC: access denied`. This is because the default deny-all `AuthorizationPolicy` has been applied to the entire mesh. In the next section you will apply a fine granular `AuthorizationPolicy` for the Online Boutique apps in order to get fix this.
+You should see the error: `RBAC: access denied`. In the next section, you will see how to track this error and how to fix it.

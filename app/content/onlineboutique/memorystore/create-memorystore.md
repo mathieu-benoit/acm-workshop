@@ -7,7 +7,7 @@ tags: ["kcc", "platform-admin"]
 ![Platform Admin](/images/platform-admin.png)
 _{{< param description >}}_
 
-In this section, you will create a Memorystore (redis) instance for the Online Boutique's `cartservice` app to connect to. We will also create a second Memorystore (redis) with TLS enabled which will be leveraged in another section.
+In this section, you will create a Memorystore (Redis) instance for the Online Boutique's `cartservice` app to connect to. We will also create a second Memorystore (Redis) with TLS enabled which will be leveraged in another section.
 
 Initialize variables:
 ```Bash
@@ -23,9 +23,9 @@ Create a folder dedicated for any resources related Online Boutique specifically
 mkdir ${WORK_DIR}$TENANT_PROJECT_DIR_NAME/$ONLINEBOUTIQUE_NAMESPACE
 ```
 
-## Define Memorystore (redis)
+## Define Memorystore (Redis)
 
-Define the [Memorystore (redis) resource](https://cloud.google.com/config-connector/docs/reference/resource-docs/redis/redisinstance):
+Define the [Memorystore (Redis) resource](https://cloud.google.com/config-connector/docs/reference/resource-docs/redis/redisinstance):
 ```Bash
 cat <<EOF > ${WORK_DIR}$TENANT_PROJECT_DIR_NAME/$ONLINEBOUTIQUE_NAMESPACE/memorystore.yaml
 apiVersion: redis.cnrm.cloud.google.com/v1beta1
@@ -46,9 +46,9 @@ spec:
 EOF
 ```
 
-## Define Memorystore (redis) with TLS enabled
+## Define Memorystore (Redis) with TLS enabled
 
-Define the [Memorystore (redis) resource](https://cloud.google.com/config-connector/docs/reference/resource-docs/redis/redisinstance) with TLS enabled:
+Define the [Memorystore (Redis) resource](https://cloud.google.com/config-connector/docs/reference/resource-docs/redis/redisinstance) with TLS enabled:
 ```Bash
 cat <<EOF > ${WORK_DIR}$TENANT_PROJECT_DIR_NAME/$ONLINEBOUTIQUE_NAMESPACE/memorystore-tls.yaml
 apiVersion: redis.cnrm.cloud.google.com/v1beta1
@@ -74,7 +74,7 @@ EOF
 
 ```Bash
 cd ${WORK_DIR}$TENANT_PROJECT_DIR_NAME/
-git add . && git commit -m "Memorystore (redis) instance" && git push origin main
+git add . && git commit -m "Memorystore (Redis) instance" && git push origin main
 ```
 
 ## Check deployments

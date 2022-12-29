@@ -8,4 +8,4 @@ Use Memorystore (Redis).
 
 {{% children showhidden="false" description="true" style="h4" %}}
 
-![Online Boutique overview](/images/onlineboutique-overview.png?width=50pc)
+![Online Boutique with Memorystore](/images/onlineboutique-memorystore.png?width=50pc)
