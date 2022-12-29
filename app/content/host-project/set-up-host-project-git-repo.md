@@ -50,6 +50,7 @@ spec:
     logDeniesEnabled: true
     referentialRulesEnabled: true
     templateLibraryInstalled: true
+  preventDrift: true
 EOF
 ```
 {{% notice info %}}

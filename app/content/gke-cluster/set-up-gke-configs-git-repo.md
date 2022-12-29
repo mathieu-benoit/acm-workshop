@@ -93,6 +93,7 @@ spec:
   configmanagement:
     configSync:
       sourceFormat: unstructured
+      preventDrift: true
       git:
         policyDir: .
         secretType: none
