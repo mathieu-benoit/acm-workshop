@@ -54,9 +54,9 @@ gcloud iam service-accounts add-iam-policy-binding $saId \
   --member "principalSet://iam.googleapis.com/${poolId}/attribute.${attributeMappingScope}/${gitHubRepoName}"
 
 # Allow the GSA to write container images in Artifact Registry
-artifactRegistryContainersRepository=containers # FIXME
-artifactRegistryChartsRepository=charts # FIXME
-artifactRegistryLocation=us-east4 # FIXME
+artifactRegistryContainersRepository=containers
+artifactRegistryChartsRepository=charts
+artifactRegistryLocation=northamerica-northeast1
 gcloud artifacts repositories add-iam-policy-binding $artifactRegistryContainersRepository \
     --location $artifactRegistryLocation \
     --member "serviceAccount:$saId" \
