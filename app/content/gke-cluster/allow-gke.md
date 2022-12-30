@@ -17,7 +17,7 @@ source ${WORK_DIR}acm-workshop-variables.sh
 
 ## Define roles
 
-Define the `container.admin`, `iam.serviceAccountAdmin`, `resourcemanager.projectIamAdmin` and `iam.serviceAccountUser` roles with an [`IAMPolicyMember`](https://cloud.google.com/config-connector/docs/reference/resource-docs/iam/iampolicymember) resource for the Tenant project's service account:
+Define the `container.admin`, `iam.serviceAccountAdmin`, `resourcemanager.projectIamAdmin`, `iam.serviceAccountUser` and `serviceusage.serviceUsageConsumer` roles with an [`IAMPolicyMember`](https://cloud.google.com/config-connector/docs/reference/resource-docs/iam/iampolicymember) resource for the Tenant project's service account:
 ```Bash
 cat <<EOF > ${WORK_DIR}$HOST_PROJECT_DIR_NAME/projects/$TENANT_PROJECT_ID/container-admin.yaml
 apiVersion: iam.cnrm.cloud.google.com/v1beta1
@@ -87,6 +87,23 @@ spec:
     kind: Project
     external: projects/${TENANT_PROJECT_ID}
 EOF
+cat <<EOF > ${WORK_DIR}$HOST_PROJECT_DIR_NAME/projects/$TENANT_PROJECT_ID/serviceusage-consumer.yaml
+apiVersion: iam.cnrm.cloud.google.com/v1beta1
+kind: IAMPolicyMember
+metadata:
+  name: serviceusage-consumer-${TENANT_PROJECT_ID}
+  namespace: config-control
+  annotations:
+    config.kubernetes.io/depends-on: iam.cnrm.cloud.google.com/namespaces/config-control/IAMServiceAccount/${TENANT_PROJECT_ID},resourcemanager.cnrm.cloud.google.com/namespaces/config-control/Project/${TENANT_PROJECT_ID}
+spec:
+  memberFrom:
+    serviceAccountRef:
+      name: ${TENANT_PROJECT_ID}
+  role: roles/serviceusage.serviceUsageConsumer
+  resourceRef:
+    kind: Project
+    external: projects/${TENANT_PROJECT_ID}
+EOF
 ```
 
 ## Define APIs
@@ -129,6 +146,25 @@ spec:
 EOF
 ```
 
+Define the DNS API [`Service`](https://cloud.google.com/config-connector/docs/reference/resource-docs/serviceusage/service) resource for the Tenant project in order to leverage the [Cloud DNS feature of GKE](https://cloud.google.com/kubernetes-engine/docs/how-to/cloud-dns):
+```Bash
+cat <<EOF > ${WORK_DIR}$HOST_PROJECT_DIR_NAME/projects/$TENANT_PROJECT_ID/dns-service.yaml
+apiVersion: serviceusage.cnrm.cloud.google.com/v1beta1
+kind: Service
+metadata:
+  annotations:
+    cnrm.cloud.google.com/deletion-policy: "abandon"
+    cnrm.cloud.google.com/disable-dependent-services: "false"
+    config.kubernetes.io/depends-on: resourcemanager.cnrm.cloud.google.com/namespaces/config-control/Project/${TENANT_PROJECT_ID}
+  name: ${TENANT_PROJECT_ID}-dns
+  namespace: config-control
+spec:
+  projectRef:
+    name: ${TENANT_PROJECT_ID}
+  resourceID: dns.googleapis.com
+EOF
+```
+
 Later in the workshop, you can optionally leverage the GKE Security Posture features ([Scan workloads configurations](https://cloud.google.com/kubernetes-engine/docs/how-to/protect-workload-configuration) and [Scan container images for known vulnerabilities](https://cloud.google.com/kubernetes-engine/docs/how-to/security-posture-vulnerability-scanning)) in order to scan the configurations of your GKE workloads. Define the GKE Security Posture API [`Service`](https://cloud.google.com/config-connector/docs/reference/resource-docs/serviceusage/service) resource for the Tenant project:
 ```Bash
 cat <<EOF > ${WORK_DIR}$HOST_PROJECT_DIR_NAME/projects/$TENANT_PROJECT_ID/containersecurity-service.yaml
@@ -167,12 +203,24 @@ graph TD;
   IAMPolicyMember-.->Project
   IAMPolicyMember-.->IAMServiceAccount
   IAMPolicyMember-.->Project
+  IAMPolicyMember-.->IAMServiceAccount
+  IAMPolicyMember-.->Project
   Service-.->Project
   Service-.->Project
   Service-.->Project
 {{< /mermaid >}}
 
 List the Kubernetes resources managed by Config Sync in **Config Controller** for the **Host project configs** repository:
+{{< tabs groupId="cs-status-ui">}}
+{{% tab name="UI" %}}
+Run this command and click on this link:
+```Bash
+echo -e "https://console.cloud.google.com/kubernetes/config_management/packages?project=${HOST_PROJECT_ID}"
+```
+Wait until you see the `Sync status` column as `Synced` and the `Reconcile status` column as `Current`.
+{{% /tab %}}
+{{% tab name="gcloud" %}}
+Run this command:
 ```Bash
 gcloud alpha anthos config sync repo describe \
     --project $HOST_PROJECT_ID \
@@ -180,7 +228,9 @@ gcloud alpha anthos config sync repo describe \
     --sync-name root-sync \
     --sync-namespace config-management-system
 ```
-Wait and re-run this command above until you see `"status": "SYNCED"`. All the `managed_resources` listed should have `STATUS: Current` as well.
+Wait and re-run this command above until you see `"status": "SYNCED"`. All the `managed_resources` listed should have `STATUS: Current` too.
+{{% /tab %}}
+{{< /tabs >}}
 
 List the GitHub runs for the **Host project configs** repository:
 ```Bash

@@ -7,7 +7,7 @@ tags: ["gitops-tips", "org-admin", "security-tips"]
 ![Org Admin](/images/org-admin.png)
 _{{< param description >}}_
 
-In this section, you will set up a dedicated GitHub repository containing all the Kubernetes manifests which will be deployed by Config Sync and Config Connector in order to provision the Google Cloud services.
+In this section, you will set up a dedicated GitHub repository containing all the Kubernetes manifests which will be deployed by Config Sync and Config Connector in order to provision the Google Cloud services in the Tenant project.
 
 Define variables:
 ```Bash
@@ -81,6 +81,16 @@ git add . && git commit -m "GitOps for Tenant project" && git push origin main
 ## Check deployments
 
 List the Kubernetes resources managed by Config Sync in **Config Controller** for the **Host project configs** repository:
+{{< tabs groupId="cs-status-ui">}}
+{{% tab name="UI" %}}
+Run this command and click on this link:
+```Bash
+echo -e "https://console.cloud.google.com/kubernetes/config_management/packages?project=${HOST_PROJECT_ID}"
+```
+Wait until you see the `Sync status` column as `Synced` and the `Reconcile status` column as `Current`.
+{{% /tab %}}
+{{% tab name="gcloud" %}}
+Run this command:
 ```Bash
 gcloud alpha anthos config sync repo describe \
     --project $HOST_PROJECT_ID \
@@ -88,7 +98,9 @@ gcloud alpha anthos config sync repo describe \
     --sync-name root-sync \
     --sync-namespace config-management-system
 ```
-Wait and re-run this command above until you see `"status": "SYNCED"`. All the `managed_resources` listed should have `STATUS: Current` as well.
+Wait and re-run this command above until you see `"status": "SYNCED"`. All the `managed_resources` listed should have `STATUS: Current` too.
+{{% /tab %}}
+{{< /tabs >}}
 
 List the GitHub runs for the **Host project configs** repository:
 ```Bash

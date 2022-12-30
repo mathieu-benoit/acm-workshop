@@ -2,7 +2,7 @@
 title: "Set up Whereami's Git repo"
 weight: 2
 description: "Duration: 10 min | Persona: Platform Admin"
-tags: ["asm", "gitops-tips", "platform-admin", "shift-left"]
+tags: ["asm", "gitops-tips", "platform-admin"]
 ---
 ![Platform Admin](/images/platform-admin.png)
 _{{< param description >}}_
@@ -136,26 +136,3 @@ totalViolations: 1
     message: Namespace <whereami> does not have a NetworkPolicy
     name: whereami
 ```
-
-## Shift-left Policies evaluation
-
-Another way to see the `Constraints` violations is to evaluate as early as possible the `Constraints` against the Kubernetes manifests before they are actually applied in the Kubernetes cluster. When you created the GitHub repository for the Online Boutique apps, you used a predefined template containing a GitHub actions workflow running Continuous Integration checks for every commit. See the content of this file by running this command:
-```Bash
-cat ${WORK_DIR}$GKE_CONFIGS_DIR_NAME/.github/workflows/ci.yml
-```
-{{% notice info %}}
-We are leveraging the [Kpt's `gatekeeper` function](https://catalog.kpt.dev/gatekeeper/v0.2/) in order to accomplish this. Another way to do that could be to leverage the [`gator test`](https://open-policy-agent.github.io/gatekeeper/website/docs/gator/#the-gator-test-subcommand) command too.
-{{% /notice %}}
-
-See the details of the last GitHub actions run:
-```Bash
-cd ${WORK_DIR}$GKE_CONFIGS_DIR_NAME
-gh run view $(gh run list -L 1 --json databaseId --jq .[].databaseId) --log | grep violatedConstraint
-```
-The output contains the details of the error:
-```Plaintext
-build   gatekeeper      2022-06-06T00:53:51.7286839Z     [info] v1/Namespace/whereami: Namespace <whereami> does not have a NetworkPolicy violatedConstraint: namespaces-required-networkpolicies
-```
-{{% notice tip %}}
-In the context of this workshop, we are doing direct commits in the `main` branch but it's highly encouraged that you follow the Git flow by creating branches and opening pull requests. With this process in place and this GitHub actions definition, your pull requests will be blocked if there is any `Constraint` violations and won't be merged into `main` branch. This will avoid any issues when actually deploying the Kubernetes manifests in the Kubernetes cluster.
-{{% /notice %}}

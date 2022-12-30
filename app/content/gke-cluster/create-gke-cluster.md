@@ -36,8 +36,6 @@ metadata:
     mesh_id: proj-${TENANT_PROJECT_NUMBER}
 spec:
   addonsConfig:
-    dnsCacheConfig:
-      enabled: true
     gcePersistentDiskCsiDriverConfig:
       enabled: true
     httpLoadBalancing:
@@ -46,8 +44,8 @@ spec:
     enabled: true
   datapathProvider: ADVANCED_DATAPATH
   dnsConfig:
-    clusterDns: clouddns
-    clusterDnsScope: cluster
+    clusterDns: CLOUD_DNS
+    clusterDnsScope: CLUSTER_SCOPE
   enableShieldedNodes: true
   initialNodeCount: 1
   ipAllocationPolicy:
@@ -180,7 +178,7 @@ cat <<EOF > ${WORK_DIR}$TENANT_PROJECT_DIR_NAME/gke-primary-pool.yaml
 apiVersion: container.cnrm.cloud.google.com/v1beta1
 kind: ContainerNodePool
 metadata:
-  name: primary
+  name: ${GKE_NAME}-primary
   namespace: ${TENANT_PROJECT_ID}
   annotations:
     config.kubernetes.io/depends-on: container.cnrm.cloud.google.com/namespaces/${TENANT_PROJECT_ID}/ContainerCluster/${GKE_NAME}
@@ -235,6 +233,16 @@ graph TD;
 {{< /mermaid >}}
 
 List the Kubernetes resources managed by Config Sync in **Config Controller** for the **Tenant project configs** repository:
+{{< tabs groupId="cs-status-ui">}}
+{{% tab name="UI" %}}
+Run this command and click on this link:
+```Bash
+echo -e "https://console.cloud.google.com/kubernetes/config_management/packages?project=${HOST_PROJECT_ID}"
+```
+Wait until you see the `Sync status` column as `Synced` and the `Reconcile status` column as `Current`.
+{{% /tab %}}
+{{% tab name="gcloud" %}}
+Run this command:
 ```Bash
 gcloud alpha anthos config sync repo describe \
     --project $HOST_PROJECT_ID \
@@ -242,7 +250,10 @@ gcloud alpha anthos config sync repo describe \
     --sync-name repo-sync \
     --sync-namespace $TENANT_PROJECT_ID
 ```
-Wait and re-run this command above until you see `"status": "SYNCED"`. All the `managed_resources` listed should have `STATUS: Current` as well.
+Wait and re-run this command above until you see `"status": "SYNCED"`. All the `managed_resources` listed should have `STATUS: Current` too.
+{{% /tab %}}
+{{< /tabs >}}
+
 {{% notice note %}}
 The creation of the `ContainerCluster` and `ContainerNodePool` can take ~15 mins.
 {{% /notice %}}

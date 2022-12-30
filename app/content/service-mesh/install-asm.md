@@ -1,7 +1,7 @@
 ---
 title: "Install ASM"
 weight: 2
-description: "Duration: 10 min | Persona: Platform Admin"
+description: "Duration: 15 min | Persona: Platform Admin"
 tags: ["asm", "kcc", "platform-admin", "security-tips"]
 ---
 ![Platform Admin](/images/platform-admin.png)
@@ -76,6 +76,16 @@ graph TD;
 {{< /mermaid >}}
 
 List the Kubernetes resources managed by Config Sync in **Config Controller** for the **Tenant project configs** repository:
+{{< tabs groupId="cs-status-ui">}}
+{{% tab name="UI" %}}
+Run this command and click on this link:
+```Bash
+echo -e "https://console.cloud.google.com/kubernetes/config_management/packages?project=${HOST_PROJECT_ID}"
+```
+Wait until you see the `Sync status` column as `Synced` and the `Reconcile status` column as `Current`.
+{{% /tab %}}
+{{% tab name="gcloud" %}}
+Run this command:
 ```Bash
 gcloud alpha anthos config sync repo describe \
     --project $HOST_PROJECT_ID \
@@ -83,7 +93,9 @@ gcloud alpha anthos config sync repo describe \
     --sync-name repo-sync \
     --sync-namespace $TENANT_PROJECT_ID
 ```
-Wait and re-run this command above until you see `"status": "SYNCED"`. All the `managed_resources` listed should have `STATUS: Current` as well.
+Wait and re-run this command above until you see `"status": "SYNCED"`. All the `managed_resources` listed should have `STATUS: Current` too.
+{{% /tab %}}
+{{< /tabs >}}
 
 List the GitHub runs for the **Tenant project configs** repository:
 ```Bash
@@ -98,14 +110,21 @@ gcloud container fleet mesh describe \
 
 For the result of the last command, in order to make sure the Managed ASM is successfully installed you should see something like this:
 ```Plaintext
-createTime: '2022-10-13T19:15:10.687192154Z'
+createTime: '2022-12-30T05:07:47.372234169Z'
 labels:
   managed-by-cnrm: 'true'
+membershipSpecs:
+  projects/827641929724/locations/global/memberships/gke:
+    mesh:
+      management: MANAGEMENT_AUTOMATIC
 membershipStates:
-  projects/395418408248/locations/global/memberships/gke:
+  projects/827641929724/locations/global/memberships/gke:
     servicemesh:
       controlPlaneManagement:
-        state: DISABLED
+        details:
+        - code: REVISION_READY
+          details: 'Ready: asm-managed-rapid'
+        state: ACTIVE
       dataPlaneManagement:
         details:
         - code: OK
@@ -114,15 +133,17 @@ membershipStates:
     state:
       code: OK
       description: 'Revision(s) ready for use: asm-managed-rapid.'
-      updateTime: '2022-10-13T20:17:09.521883163Z'
-name: projects/acm-workshop-296-tenant/locations/global/features/servicemesh
+      updateTime: '2022-12-30T05:20:57.379679757Z'
+name: projects/acm-workshop-618-tenant/locations/global/features/servicemesh
 resourceState:
   state: ACTIVE
 spec: {}
-updateTime: '2022-10-13T20:17:18.403520963Z'
+state:
+  state: {}
+updateTime: '2022-12-30T05:21:02.601258121Z'
 ```
-Wait and re-run this command above until you see the resources created (`state.code: OK`).
+Wait and re-run this command above until you see both `controlPlaneManagement` and `dataPlaneManagement` with `state: ACTIVE`.
 
 {{% notice note %}}
-The Managed ASM provisioning could take around 5-10 min.
+The Managed ASM provisioning could take around ~10 min.
 {{% /notice %}}

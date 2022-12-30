@@ -37,7 +37,9 @@ If you don't have a default network in your project, create one by running the f
 gcloud compute networks create $CONFIG_CONTROLLER_NETWORK \
     --subnet-mode=auto
 ```
+{{% notice note %}}
 If you get an error telling you that the default network already exists, you can ignore it.
+{{% /notice %}}
 
 Create the Config Controller instance:
 ```Bash

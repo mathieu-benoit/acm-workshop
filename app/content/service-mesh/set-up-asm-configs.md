@@ -20,7 +20,6 @@ source ${WORK_DIR}acm-workshop-variables.sh
 {{% notice info %}}
 `ASM_VERSION` is set to `asm-managed-rapid` because the Managed ASM is following the GKE's channel: `rapid`.
 {{% /notice %}}
-```
 
 Create a dedicated `istio-system` folder in the GKE configs's Git repo:
 ```Bash
@@ -150,7 +149,15 @@ git add . && git commit -m "ASM Mesh configs in GKE cluster" && git push origin 
 
 List the Kubernetes resources managed by Config Sync in **GKE cluster** for the **GKE cluster configs** repository:
 {{< tabs groupId="cs-status-ui">}}
+{{% tab name="UI" %}}
+Run this command and click on this link:
+```Bash
+echo -e "https://console.cloud.google.com/kubernetes/config_management/packages?project=${TENANT_PROJECT_ID}"
+```
+Wait until you see the `Sync status` column as `Synced` and the `Reconcile status` column as `Current`.
+{{% /tab %}}
 {{% tab name="gcloud" %}}
+Run this command:
 ```Bash
 gcloud alpha anthos config sync repo describe \
     --project $TENANT_PROJECT_ID \
@@ -159,13 +166,6 @@ gcloud alpha anthos config sync repo describe \
     --sync-namespace config-management-system
 ```
 Wait and re-run this command above until you see `"status": "SYNCED"`.
-{{% /tab %}}
-{{% tab name="UI" %}}
-Alternatively, you could also see this from within the Cloud Console, by clicking on this link:
-```Bash
-echo -e "https://console.cloud.google.com/kubernetes/config_management/status?clusterName=${GKE_NAME}&id=${GKE_NAME}&project=${TENANT_PROJECT_ID}"
-```
-Wait until you see the `Sync status` column as `SYNCED`. And then you can also click on `View resources` to see the details.
 {{% /tab %}}
 {{< /tabs >}}
 

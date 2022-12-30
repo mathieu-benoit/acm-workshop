@@ -2,7 +2,7 @@
 title: "Deploy Ingress Gateway"
 weight: 4
 description: "Duration: 15 min | Persona: Platform Admin"
-tags: ["asm", "gke", "platform-admin", "security-tips", "shift-left"]
+tags: ["asm", "gke", "platform-admin", "security-tips"]
 ---
 ![Platform Admin](/images/platform-admin.png)
 _{{< param description >}}_
@@ -288,7 +288,15 @@ git add . && git commit -m "ASM Ingress Gateway in GKE cluster" && git push orig
 
 List the Kubernetes resources managed by Config Sync in **GKE cluster** for the **GKE cluster configs** repository:
 {{< tabs groupId="cs-status-ui">}}
+{{% tab name="UI" %}}
+Run this command and click on this link:
+```Bash
+echo -e "https://console.cloud.google.com/kubernetes/config_management/packages?project=${TENANT_PROJECT_ID}"
+```
+Wait until you see the `Sync status` column as `Synced` and the `Reconcile status` column as `Current`.
+{{% /tab %}}
 {{% tab name="gcloud" %}}
+Run this command:
 ```Bash
 gcloud alpha anthos config sync repo describe \
     --project $TENANT_PROJECT_ID \
@@ -298,52 +306,4 @@ gcloud alpha anthos config sync repo describe \
 ```
 Wait and re-run this command above until you see `"status": "SYNCED"`.
 {{% /tab %}}
-{{% tab name="UI" %}}
-Alternatively, you could also see this from within the Cloud Console, by clicking on this link:
-```Bash
-echo -e "https://console.cloud.google.com/kubernetes/config_management/status?clusterName=${GKE_NAME}&id=${GKE_NAME}&project=${TENANT_PROJECT_ID}"
-```
-Wait until you see the `Sync status` column as `SYNCED`. And then you can also click on `View resources` to see the details.
-{{% /tab %}}
 {{< /tabs >}}
-
-At this stage, the `namespaces-required-networkpolicies` `Constraint` should silently (`dryrun`) complain because we haven't yet deployed any `NetworkPolicies` in the `asm-ingress` `Namespace`. There is different ways to see the detail of the violation. Here, we will navigate to the **Object browser** feature of GKE from within the Google Cloud Console. Click on the link displayed by the command below:
-```Bash
-echo -e "https://console.cloud.google.com/kubernetes/object/constraints.gatekeeper.sh/k8srequirenamespacenetworkpolicies/${GKE_LOCATION}/${GKE_NAME}/namespaces-required-networkpolicies?apiVersion=v1beta1&project=${TENANT_PROJECT_ID}"
-```
-
-At the very bottom of the object's description you should see:
-```Plaintext
-...
-totalViolations: 1
-  violations:
-  - enforcementAction: dryrun
-    kind: Namespace
-    message: Namespace <asm-ingress> does not have a NetworkPolicy
-    name: asm-ingress
-```
-
-## Shift-left Policies evaluation
-
-Another way to see the `Constraints` violations is to evaluate as early as possible the `Constraints` against the Kubernetes manifests before they are actually applied in the Kubernetes cluster. When you created the GitHub repository for GKE cluster configs, you used a predefined template containing a GitHub actions workflow running Continuous Integration checks for every commit. See the content of this file by running this command:
-```Bash
-cat ${WORK_DIR}$GKE_CONFIGS_DIR_NAME/.github/workflows/ci.yml
-```
-{{% notice info %}}
-We are leveraging the [Kpt's `gatekeeper` function](https://catalog.kpt.dev/gatekeeper/v0.2/) in order to accomplish this. Another way to do that could be to leverage the [`gator test`](https://open-policy-agent.github.io/gatekeeper/website/docs/gator/#the-gator-test-subcommand) command too.
-{{% /notice %}}
-
-See the details of the last GitHub actions run:
-```Bash
-cd ${WORK_DIR}$GKE_CONFIGS_DIR_NAME
-gh run view $(gh run list -L 1 --json databaseId --jq .[].databaseId) --log | grep violatedConstraint
-```
-The output contains the details of the error:
-```Plaintext
-build   gatekeeper      2022-06-11T02:24:28.5280656Z     [info] v1/Namespace/asm-ingress: Namespace <asm-ingress> does not have a NetworkPolicy violatedConstraint: namespaces-required-networkpolicies
-```
-{{% notice tip %}}
-In the context of this workshop, we are doing direct commits in the `main` branch but it's highly encouraged that you follow the Git flow process by creating branches and opening pull requests. With this process in place and this GitHub actions definition, your pull requests will be blocked if there is any `Constraint` violations and won't be merged into `main` branch. This will avoid any issues when actually deploying the Kubernetes manifests in the Kubernetes cluster.
-{{% /notice %}}
-
-The next section will deploy the `NetworkPolicies` in the `asm-ingress` `Namespace` in order to fix this issue.
