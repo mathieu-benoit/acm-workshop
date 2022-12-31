@@ -27,3 +27,7 @@ On the default **Dashboard** tab, you will find something similar to:
 Then if you go on the **Violations** tab, you will find something similar to:
 
 ![Policy Controller Violations UI for GKE cluster](/images/policy-controller-violations-ui-gke.png)
+
+At the end of the workshop, we have fixed all the violations, but here below is an example of how a violation shows up:
+
+![Policy Controller Violations UI example for GKE cluster](/images/policy-controller-violations-ui-example-gke.png)
