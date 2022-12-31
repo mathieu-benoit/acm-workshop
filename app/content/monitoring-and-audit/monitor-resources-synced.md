@@ -7,7 +7,7 @@ tags: ["apps-operator", "gitops-tips", "monitoring"]
 ![Apps Operator](/images/apps-operator.png)
 _{{< param description >}}_
 
-In this section, in the Google Cloud Console you will monitor the resources synced by Config Sync for both the Config Controller in the Host project and the GKE cluster in the Tenant project.
+In this section, in the Google Cloud Console you will monitor the resources synced by Config Sync for both the Config Controller instance in the Host project and the GKE cluster in the Tenant project.
 
 Initialize variables:
 ```Bash

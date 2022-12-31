@@ -1,19 +1,30 @@
 ---
 title: "Deploy AuthorizationPolicies"
-weight: 6
+weight: 5
 description: "Duration: 5 min | Persona: Apps Operator"
 tags: ["apps-operator", "asm", "security-tips"]
 ---
 ![Apps Operator](/images/apps-operator.png)
 _{{< param description >}}_
 
-In this section, you will deploy granular and specific `ServiceAccounts` and `AuthorizationPolicies` for the Bank of Anthos namespace. At the end that's where you will finally have working Bank of Anthos apps :)
+In this section, you will see how to track the `AuthorizationPolicies` issue and then you will deploy granular and specific `ServiceAccounts` and `AuthorizationPolicies` for the Bank of Anthos namespace to fix this issue.
 
 Initialize variables:
 ```Bash
 WORK_DIR=~/
 source ${WORK_DIR}acm-workshop-variables.sh
 ```
+
+## See the `AuthorizationPolicies` issue
+
+See the `AuthorizationPolicies` issue in the **GKE cluster** for the Bank of Anthos namespace, by running this command and click on this link:
+```Bash
+echo -e "https://console.cloud.google.com/anthos/security/workload-view/Deployment/${GKE_LOCATION}/${GKE_NAME}/${BANKOFANTHOS_NAMESPACE}/frontend?project=${TENANT_PROJECT_ID}"
+```
+
+Under the **Service requests** section on this page, you will see some **Inbound denials**. If you click on **View logs** you will be able to see via Cloud Logging the details of the errors. That's where you will the logs with `status: 403` and `response_details: "AuthzDenied"`.
+
+Let's fix it!
 
 ## Define `ServiceAccounts`
 
@@ -371,7 +382,15 @@ git add . && git commit -m "Bank of Anthos AuthorizationPolicies" && git push or
 
 List the Kubernetes resources managed by Config Sync in **GKE cluster** for the **Bank of Anthos apps** repository:
 {{< tabs groupId="cs-status-ui">}}
+{{% tab name="UI" %}}
+Run this command and click on this link:
+```Bash
+echo -e "https://console.cloud.google.com/kubernetes/config_management/packages?project=${TENANT_PROJECT_ID}"
+```
+Wait until you see the `Sync status` column as `Synced` and the `Reconcile status` column as `Current`.
+{{% /tab %}}
 {{% tab name="gcloud" %}}
+Run this command:
 ```Bash
 gcloud alpha anthos config sync repo describe \
     --project $TENANT_PROJECT_ID \
@@ -381,13 +400,6 @@ gcloud alpha anthos config sync repo describe \
 ```
 Wait and re-run this command above until you see `"status": "SYNCED"`.
 {{% /tab %}}
-{{% tab name="UI" %}}
-Alternatively, you could also see this from within the Cloud Console, by clicking on this link:
-```Bash
-echo -e "https://console.cloud.google.com/kubernetes/config_management/status?clusterName=${GKE_NAME}&id=${GKE_NAME}&project=${TENANT_PROJECT_ID}"
-```
-Wait until you see the `Sync status` column as `SYNCED`. And then you can also click on `View resources` to see the details.
-{{% /tab %}}
 {{< /tabs >}}
 
 List the GitHub runs for the **Bank of Anthos apps** repository:
@@ -395,18 +407,11 @@ List the GitHub runs for the **Bank of Anthos apps** repository:
 cd ${WORK_DIR}$BANK_OF_ANTHOS_DIR_NAME && gh run list
 ```
 
-## Check the Bank of Anthos apps
+## Check the Bank of Anthos website
 
-Open the list of the **Workloads** deployed in the GKE cluster, by clicking on the link displayed by the command below:
-```Bash
-echo -e "https://console.cloud.google.com/kubernetes/workload/overview?project=${TENANT_PROJECT_ID}"
-```
-
-There you will see on all the workloads this error message: `Pods have warnings`. We will fix these errors in the next section.
-
-Navigate to the Bank of Anthos apps, click on the link displayed by the command below:
+Navigate to the Bank of Anthos website, click on the link displayed by the command below:
 ```Bash
 echo -e "https://${BANK_OF_ANTHOS_INGRESS_GATEWAY_HOST_NAME}"
 ```
 
-You should now see the Bank of Anthos home page working. But if you try to login, you will get an error. This is because all the workloads are not yet successfully deployed. In the next section you will apply a fine granular `Sidecars` for the Bank of Anthos apps in order to fix this.
+You should now have the Bank of Anthos website working successfully. Congrats!

@@ -88,3 +88,8 @@ gcloud alpha anthos config sync repo describe \
 Wait and re-run this command above until you see `"status": "SYNCED"`.
 {{% /tab %}}
 {{< /tabs >}}
+
+List the GitHub runs for the **GKE cluster configs** repository:
+```Bash
+cd ${WORK_DIR}$GKE_CONFIGS_DIR_NAME && gh run list
+```

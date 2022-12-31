@@ -170,7 +170,15 @@ git add . && git commit -m "Bank of Anthos Sidecars" && git push origin main
 
 List the Kubernetes resources managed by Config Sync in **GKE cluster** for the **Bank of Anthos apps** repository:
 {{< tabs groupId="cs-status-ui">}}
+{{% tab name="UI" %}}
+Run this command and click on this link:
+```Bash
+echo -e "https://console.cloud.google.com/kubernetes/config_management/packages?project=${TENANT_PROJECT_ID}"
+```
+Wait until you see the `Sync status` column as `Synced` and the `Reconcile status` column as `Current`.
+{{% /tab %}}
 {{% tab name="gcloud" %}}
+Run this command:
 ```Bash
 gcloud alpha anthos config sync repo describe \
     --project $TENANT_PROJECT_ID \
@@ -179,13 +187,6 @@ gcloud alpha anthos config sync repo describe \
     --sync-namespace $BANKOFANTHOS_NAMESPACE
 ```
 Wait and re-run this command above until you see `"status": "SYNCED"`.
-{{% /tab %}}
-{{% tab name="UI" %}}
-Alternatively, you could also see this from within the Cloud Console, by clicking on this link:
-```Bash
-echo -e "https://console.cloud.google.com/kubernetes/config_management/status?clusterName=${GKE_NAME}&id=${GKE_NAME}&project=${TENANT_PROJECT_ID}"
-```
-Wait until you see the `Sync status` column as `SYNCED`. And then you can also click on `View resources` to see the details.
 {{% /tab %}}
 {{< /tabs >}}
 
@@ -196,14 +197,9 @@ cd ${WORK_DIR}$BANK_OF_ANTHOS_DIR_NAME && gh run list
 
 ## Check the Bank of Anthos apps
 
-Open the list of the **Workloads** deployed in the GKE cluster, you will now see that the Bank of Anthos apps are successfully deployed. Click on the link displayed by the command below:
-```Bash
-echo -e "https://console.cloud.google.com/kubernetes/workload/overview?project=${TENANT_PROJECT_ID}"
-```
-
-Navigate to the Bank of Anthos apps, click on the link displayed by the command below:
+Navigate to the Bank of Anthos website, click on the link displayed by the command below:
 ```Bash
 echo -e "https://${BANK_OF_ANTHOS_INGRESS_GATEWAY_HOST_NAME}"
 ```
 
-You should now have the Bank of Anthos website working successfully. Congrats!
+You should still have the Bank of Anthos website working successfully.

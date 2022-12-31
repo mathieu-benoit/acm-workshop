@@ -1,6 +1,6 @@
 ---
 title: "Deploy apps"
-weight: 5
+weight: 4
 description: "Duration: 5 min | Persona: Apps Operator"
 tags: ["apps-operator", "asm"]
 ---
@@ -28,11 +28,13 @@ curl -L https://raw.githubusercontent.com/GoogleCloudPlatform/bank-of-anthos/mai
 kustomize create --autodetect
 ```
 
-## Update base overlay
+## Create base overlay
 
-Update the Kustomize base overlay:
+Create Kustomize base overlay files:
 ```Bash
+mkdir ${WORK_DIR}$BANK_OF_ANTHOS_DIR_NAME/base
 cd ${WORK_DIR}$BANK_OF_ANTHOS_DIR_NAME/base
+kustomize create
 kustomize edit add resource ../upstream
 cat <<EOF >> ${WORK_DIR}$BANK_OF_ANTHOS_DIR_NAME/base/kustomization.yaml
 patchesJson6902:
@@ -77,6 +79,17 @@ Update the Kustomize base overlay:
 cd ${WORK_DIR}$BANK_OF_ANTHOS_DIR_NAME/base
 kustomize edit add resource virtualservice.yaml
 ```
+
+## Define Staging namespace overlay
+
+```Bash
+cd ${WORK_DIR}$BANK_OF_ANTHOS_DIR_NAME/staging
+kustomize edit add resource ../base
+kustomize edit set namespace $BANKOFANTHOS_NAMESPACE
+```
+{{% notice info %}}
+The `kustomization.yaml` file was already existing from the [GitHub repository template](https://github.com/mathieu-benoit/config-sync-app-template-repo/blob/main/staging/kustomization.yaml) used when we created the **Bank of Anthos app** repository.
+{{% /notice %}}
 
 ## Update the Staging namespace overlay
 
@@ -284,7 +297,15 @@ git add . && git commit -m "Bank of Anthos apps" && git push origin main
 
 List the Kubernetes resources managed by Config Sync in **GKE cluster** for the **Bank of Anthos apps** repository:
 {{< tabs groupId="cs-status-ui">}}
+{{% tab name="UI" %}}
+Run this command and click on this link:
+```Bash
+echo -e "https://console.cloud.google.com/kubernetes/config_management/packages?project=${TENANT_PROJECT_ID}"
+```
+Wait until you see the `Sync status` column as `Synced` and the `Reconcile status` column as `Current`.
+{{% /tab %}}
 {{% tab name="gcloud" %}}
+Run this command:
 ```Bash
 gcloud alpha anthos config sync repo describe \
     --project $TENANT_PROJECT_ID \
@@ -294,13 +315,6 @@ gcloud alpha anthos config sync repo describe \
 ```
 Wait and re-run this command above until you see `"status": "SYNCED"`.
 {{% /tab %}}
-{{% tab name="UI" %}}
-Alternatively, you could also see this from within the Cloud Console, by clicking on this link:
-```Bash
-echo -e "https://console.cloud.google.com/kubernetes/config_management/status?clusterName=${GKE_NAME}&id=${GKE_NAME}&project=${TENANT_PROJECT_ID}"
-```
-Wait until you see the `Sync status` column as `SYNCED`. And then you can also click on `View resources` to see the details.
-{{% /tab %}}
 {{< /tabs >}}
 
 List the GitHub runs for the **Bank of Anthos apps** repository:
@@ -308,18 +322,11 @@ List the GitHub runs for the **Bank of Anthos apps** repository:
 cd ${WORK_DIR}$BANK_OF_ANTHOS_DIR_NAME && gh run list
 ```
 
-## Check the Bank of Anthos apps
+## Check the Bank of Anthos website
 
-Open the list of the **Workloads** deployed in the GKE cluster, click on the link displayed by the command below:
-```Bash
-echo -e "https://console.cloud.google.com/kubernetes/workload/overview?project=${TENANT_PROJECT_ID}"
-```
-
-There, you will see on the `balancereader`,  `ledgerwriter`, `transactionhistory` workloads this error message: `Does not have minimum availability`. We will fix these errors in the next section.
-
-Navigate to the Bank of Anthos apps, click on the link displayed by the command below:
+Navigate to the Bank of Anthos website, click on the link displayed by the command below:
 ```Bash
 echo -e "https://${BANK_OF_ANTHOS_INGRESS_GATEWAY_HOST_NAME}"
 ```
 
-You should receive the error: `RBAC: access denied`. This is because the default deny-all `AuthorizationPolicy` has been applied to the entire mesh. In the next section you will apply a fine granular `AuthorizationPolicy` for the Bank of Anthos apps in order to fix this.
+You should see the error: `RBAC: access denied`. In the next section, you will see how to track this error and how to fix it.
