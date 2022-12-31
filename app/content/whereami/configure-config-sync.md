@@ -1,5 +1,5 @@
 ---
-title: "Set up Whereami's Git repo"
+title: "Configure Config Sync"
 weight: 2
 description: "Duration: 10 min | Persona: Platform Admin"
 tags: ["asm", "gitops-tips", "platform-admin"]
@@ -7,7 +7,7 @@ tags: ["asm", "gitops-tips", "platform-admin"]
 ![Platform Admin](/images/platform-admin.png)
 _{{< param description >}}_
 
-In this section, you will set up a dedicated GitHub repository which will contain all the Kubernetes manifests of the Whereami app. You will also have the opportunity to catch a policies violation.
+In this section, you will configure Config Sync to sync the resources in the Whereami `Namespace` via its associated `RepoSync` and `RoleBinding`.
 
 Initialize variables:
 ```Bash
@@ -95,14 +95,22 @@ We are using the [`edit` user-facing role](https://kubernetes.io/docs/reference/
 
 ```Bash
 cd ${WORK_DIR}$GKE_CONFIGS_DIR_NAME/
-git add . && git commit -m "GitOps for Whereami app" && git push origin main
+git add . && git commit -m "Configure Config Sync for Whereami" && git push origin main
 ```
 
 ## Check deployments
 
 List the Kubernetes resources managed by Config Sync in **GKE cluster** for the **GKE cluster configs** repository:
 {{< tabs groupId="cs-status-ui">}}
+{{% tab name="UI" %}}
+Run this command and click on this link:
+```Bash
+echo -e "https://console.cloud.google.com/kubernetes/config_management/packages?project=${TENANT_PROJECT_ID}"
+```
+Wait until you see the `Sync status` column as `Synced` and the `Reconcile status` column as `Current`.
+{{% /tab %}}
 {{% tab name="gcloud" %}}
+Run this command:
 ```Bash
 gcloud alpha anthos config sync repo describe \
     --project $TENANT_PROJECT_ID \
@@ -112,27 +120,4 @@ gcloud alpha anthos config sync repo describe \
 ```
 Wait and re-run this command above until you see `"status": "SYNCED"`.
 {{% /tab %}}
-{{% tab name="UI" %}}
-Alternatively, you could also see this from within the Cloud Console, by clicking on this link:
-```Bash
-echo -e "https://console.cloud.google.com/kubernetes/config_management/status?clusterName=${GKE_NAME}&id=${GKE_NAME}&project=${TENANT_PROJECT_ID}"
-```
-Wait until you see the `Sync status` column as `SYNCED`. And then you can also click on `View resources` to see the details.
-{{% /tab %}}
 {{< /tabs >}}
-
-At this stage, the `namespaces-required-networkpolicies` `Constraint` should silently (`dryrun`) complain because we haven't yet deployed any `NetworkPolicies` in the `whereami` `Namespace`. There is different ways to see the detail of the violation. Here, we will navigate to the **Object browser** feature of GKE from within the Google Cloud Console. Click on the link displayed by the command below:
-```Bash
-echo -e "https://console.cloud.google.com/kubernetes/object/constraints.gatekeeper.sh/k8srequirenamespacenetworkpolicies/${GKE_LOCATION}/${GKE_NAME}/namespaces-required-networkpolicies?apiVersion=v1beta1&project=${TENANT_PROJECT_ID}"
-```
-
-At the very bottom of the object's description you should see:
-```Plaintext
-...
-totalViolations: 1
-  violations:
-  - enforcementAction: dryrun
-    kind: Namespace
-    message: Namespace <whereami> does not have a NetworkPolicy
-    name: whereami
-```

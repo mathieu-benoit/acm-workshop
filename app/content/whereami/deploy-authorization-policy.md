@@ -1,19 +1,30 @@
 ---
 title: "Deploy AuthorizationPolicy"
-weight: 7
+weight: 5
 description: "Duration: 5 min | Persona: Apps Operator"
 tags: ["apps-operator", "asm", "security-tips"]
 ---
 ![Apps Operator](/images/apps-operator.png)
 _{{< param description >}}_
 
-In this section, you will deploy a granular and specific `AuthorizationPolicy` for the Whereami namespace. At the end that's where you will finally have a working Whereami app :)
+In this section, you will see how to track the `AuthorizationPolicies` issue and then you will deploy granular and specific `AuthorizationPolicies` for the Whereami namespace to fix this issue.
 
 Initialize variables:
 ```Bash
 WORK_DIR=~/
 source ${WORK_DIR}acm-workshop-variables.sh
 ```
+
+## See the `AuthorizationPolicies` issue
+
+See the `AuthorizationPolicies` issue in the **GKE cluster** for the Whereami app, by running this command and click on this link:
+```Bash
+echo -e "https://console.cloud.google.com/anthos/security/workload-view/Deployment/${GKE_LOCATION}/${GKE_NAME}/${WHEREAMI_NAMESPACE}/whereami?project=${TENANT_PROJECT_ID}"
+```
+
+Under the **Service requests** section on this page, you will see some **Inbound denials** depending on how many times you tried to refresh the Whereami app endpoint. If you click on **View logs** you will be able to see via Cloud Logging the details of the errors. That's where you will the logs with `status: 403` and `response_details: "AuthzDenied"`.
+
+Let's fix it!
 
 ## Define AuthorizationPolicy
 
@@ -59,7 +70,15 @@ git add . && git commit -m "Whereami AuthorizationPolicy" && git push origin mai
 
 List the Kubernetes resources managed by Config Sync in **GKE cluster** for the **Whereami app** repository:
 {{< tabs groupId="cs-status-ui">}}
+{{% tab name="UI" %}}
+Run this command and click on this link:
+```Bash
+echo -e "https://console.cloud.google.com/kubernetes/config_management/packages?project=${TENANT_PROJECT_ID}"
+```
+Wait until you see the `Sync status` column as `Synced` and the `Reconcile status` column as `Current`.
+{{% /tab %}}
 {{% tab name="gcloud" %}}
+Run this command:
 ```Bash
 gcloud alpha anthos config sync repo describe \
     --project $TENANT_PROJECT_ID \
@@ -68,13 +87,6 @@ gcloud alpha anthos config sync repo describe \
     --sync-namespace $WHEREAMI_NAMESPACE
 ```
 Wait and re-run this command above until you see `"status": "SYNCED"`.
-{{% /tab %}}
-{{% tab name="UI" %}}
-Alternatively, you could also see this from within the Cloud Console, by clicking on this link:
-```Bash
-echo -e "https://console.cloud.google.com/kubernetes/config_management/status?clusterName=${GKE_NAME}&id=${GKE_NAME}&project=${TENANT_PROJECT_ID}"
-```
-Wait until you see the `Sync status` column as `SYNCED`. And then you can also click on `View resources` to see the details.
 {{% /tab %}}
 {{< /tabs >}}
 

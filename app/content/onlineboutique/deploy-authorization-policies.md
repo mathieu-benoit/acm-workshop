@@ -7,7 +7,7 @@ tags: ["apps-operator", "asm", "security-tips"]
 ![Apps Operator](/images/apps-operator.png)
 _{{< param description >}}_
 
-In this section, you will see how to track the `AuthorizationPolicies` deny logs and then you will deploy granular and specific `AuthorizationPolicies` for the Online Boutique namespace.
+In this section, you will see how to track the `AuthorizationPolicies` issue and then you will deploy granular and specific `AuthorizationPolicies` for the Online Boutique namespace to fix this issue.
 
 Initialize variables:
 ```Bash

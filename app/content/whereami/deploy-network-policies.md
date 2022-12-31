@@ -1,13 +1,13 @@
 ---
 title: "Deploy NetworkPolicies"
-weight: 3
+weight: 6
 description: "Duration: 5 min | Persona: Apps Operator"
 tags: ["apps-operator", "security-tips"]
 ---
 ![Apps Operator](/images/apps-operator.png)
 _{{< param description >}}_
 
-In this section, you will deploy granular and specific `NetworkPolicies` for the Whereami namespace. This will fix the policies violation you faced earlier.
+In this section, you will see the Policy Controller violation regarding to the missing `NetworkPolicies` in the Whereami namespace. Then, you will fix this violation by deploying the associated resources.
 
 Initialize variables:
 ```Bash
@@ -15,16 +15,18 @@ WORK_DIR=~/
 source ${WORK_DIR}acm-workshop-variables.sh
 ```
 
-## Create base overlay
+## See the Policy Controller violations
 
-Create Kustomize base overlay files:
+See the Policy Controller violations in the **GKE cluster**, by running this command and click on this link:
 ```Bash
-mkdir ${WORK_DIR}$WHERE_AMI_DIR_NAME/base
-cd ${WORK_DIR}$WHERE_AMI_DIR_NAME/base
-kustomize create
+echo -e "https://console.cloud.google.com/kubernetes/policy_controller/dashboard?project=${TENANT_PROJECT_ID}"
 ```
 
-## Deploy default deny-all NetworkPolicy
+You will see that the `K8sRequireNamespaceNetworkPolicies` `Constraint` has this violation: `Namespace <whereami> does not have a NetworkPolicy`.
+
+Let's fix it!
+
+## Define a default deny-all NetworkPolicy
 
 Define a default `deny-all` `NetworkPolicy`:
 ```Bash
@@ -85,17 +87,6 @@ cd ${WORK_DIR}$WHERE_AMI_DIR_NAME/base
 kustomize edit add resource networkpolicy_whereami.yaml
 ```
 
-## Define Staging namespace overlay
-
-```Bash
-cd ${WORK_DIR}$WHERE_AMI_DIR_NAME/staging
-kustomize edit add resource ../base
-kustomize edit set namespace $WHEREAMI_NAMESPACE
-```
-{{% notice info %}}
-The `kustomization.yaml` file was already existing from the [GitHub repository template](https://github.com/mathieu-benoit/config-sync-app-template-repo/blob/main/staging/kustomization.yaml) used when we created the **Whereami app** repository.
-{{% /notice %}}
-
 ## Deploy Kubernetes manifests
 
 ```Bash
@@ -107,7 +98,15 @@ git add . && git commit -m "Whereami NetworkPolicies" && git push origin main
 
 List the Kubernetes resources managed by Config Sync in **GKE cluster** for the **Whereami app** repository:
 {{< tabs groupId="cs-status-ui">}}
+{{% tab name="UI" %}}
+Run this command and click on this link:
+```Bash
+echo -e "https://console.cloud.google.com/kubernetes/config_management/packages?project=${TENANT_PROJECT_ID}"
+```
+Wait until you see the `Sync status` column as `Synced` and the `Reconcile status` column as `Current`.
+{{% /tab %}}
 {{% tab name="gcloud" %}}
+Run this command:
 ```Bash
 gcloud alpha anthos config sync repo describe \
     --project $TENANT_PROJECT_ID \
@@ -117,27 +116,23 @@ gcloud alpha anthos config sync repo describe \
 ```
 Wait and re-run this command above until you see `"status": "SYNCED"`.
 {{% /tab %}}
-{{% tab name="UI" %}}
-Alternatively, you could also see this from within the Cloud Console, by clicking on this link:
-```Bash
-echo -e "https://console.cloud.google.com/kubernetes/config_management/status?clusterName=${GKE_NAME}&id=${GKE_NAME}&project=${TENANT_PROJECT_ID}"
-```
-Wait until you see the `Sync status` column as `SYNCED`. And then you can also click on `View resources` to see the details.
-{{% /tab %}}
 {{< /tabs >}}
 
-The `namespaces-required-networkpolicies` `Constraint` shouldn't complain anymore. Click on the link displayed by the command below:
+See the Policy Controller `Constraints` without any violations in the **GKE cluster**, by running this command and click on this link:
 ```Bash
-echo -e "https://console.cloud.google.com/kubernetes/object/constraints.gatekeeper.sh/k8srequirenamespacenetworkpolicies/${GKE_LOCATION}/${GKE_NAME}/namespaces-required-networkpolicies?apiVersion=v1beta1&project=${TENANT_PROJECT_ID}"
-```
-
-At the very bottom of the object's description you should now see:
-```Plaintext
-...
-totalViolations: 0
+echo -e "https://console.cloud.google.com/kubernetes/policy_controller/dashboard?project=${TENANT_PROJECT_ID}"
 ```
 
 List the GitHub runs for the **Whereami app** repository:
 ```Bash
 cd ${WORK_DIR}$WHERE_AMI_DIR_NAME && gh run list
 ```
+
+## Check the Whereami app
+
+Navigate to the Whereami app, click on the link displayed by the command below:
+```Bash
+echo -e "https://${WHERE_AMI_INGRESS_GATEWAY_HOST_NAME}"
+```
+
+You should still have the Whereami app working successfully.
