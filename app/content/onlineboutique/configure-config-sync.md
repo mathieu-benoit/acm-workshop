@@ -13,8 +13,6 @@ Initialize variables:
 ```Bash
 WORK_DIR=~/
 source ${WORK_DIR}acm-workshop-variables.sh
-echo "export ONLINEBOUTIQUE_NAMESPACE=onlineboutique" >> ${WORK_DIR}acm-workshop-variables.sh
-source ${WORK_DIR}acm-workshop-variables.sh
 ```
 
 ```Bash
@@ -67,4 +65,26 @@ cd ${WORK_DIR}$GKE_CONFIGS_DIR_NAME/
 git add . && git commit -m "Configure Config Sync for Online Boutique" && git push origin main
 ```
 
-FIXME
+## Check deployments
+
+List the Kubernetes resources managed by Config Sync in **GKE cluster** for the **GKE cluster configs** repository:
+{{< tabs groupId="cs-status-ui">}}
+{{% tab name="UI" %}}
+Run this command and click on this link:
+```Bash
+echo -e "https://console.cloud.google.com/kubernetes/config_management/packages?project=${TENANT_PROJECT_ID}"
+```
+Wait until you see the `Sync status` column as `Synced` and the `Reconcile status` column as `Current`.
+{{% /tab %}}
+{{% tab name="gcloud" %}}
+Run this command:
+```Bash
+gcloud alpha anthos config sync repo describe \
+    --project $TENANT_PROJECT_ID \
+    --managed-resources all \
+    --sync-name root-sync \
+    --sync-namespace config-management-system
+```
+Wait and re-run this command above until you see `"status": "SYNCED"`.
+{{% /tab %}}
+{{< /tabs >}}

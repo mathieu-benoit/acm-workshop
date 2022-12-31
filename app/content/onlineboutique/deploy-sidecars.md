@@ -34,7 +34,7 @@ spec:
     version: ${ONLINE_BOUTIQUE_VERSION:1}
     releaseName: ${ONLINEBOUTIQUE_NAMESPACE}
     auth: gcpserviceaccount
-    gcpServiceAccountEmail: ${HELM_CHARTS_READER_GSA_NAME}@${PROJECT_ID}.iam.gserviceaccount.com
+    gcpServiceAccountEmail: ${HELM_CHARTS_READER_GSA}@${TENANT_PROJECT_ID}.iam.gserviceaccount.com
     values:
       cartDatabase:
         inClusterRedis:
@@ -82,22 +82,38 @@ git add . && git commit -m "Online Boutique Sidecars" && git push origin main
 
 ## Check deployments
 
-List the Kubernetes resources managed by Config Sync in **GKE cluster** for the **Online Boutique apps** repository from within the Cloud Console, by clicking on this link:
+List the Kubernetes resources managed by Config Sync in **GKE cluster** for the **Online Boutique apps** repository:
+{{< tabs groupId="cs-status-ui">}}
+{{% tab name="UI" %}}
+Run this command and click on this link:
 ```Bash
 echo -e "https://console.cloud.google.com/kubernetes/config_management/packages?project=${TENANT_PROJECT_ID}"
 ```
 Wait until you see the `Sync status` column as `Synced` and the `Reconcile status` column as `Current`.
+{{% /tab %}}
+{{% tab name="gcloud" %}}
+Run this command:
+```Bash
+gcloud alpha anthos config sync repo describe \
+    --project $TENANT_PROJECT_ID \
+    --managed-resources all \
+    --sync-name repo-sync \
+    --sync-namespace $ONLINEBOUTIQUE_NAMESPACE
+```
+Wait and re-run this command above until you see `"status": "SYNCED"`.
+{{% /tab %}}
+{{< /tabs >}}
 
-List the GitHub runs for the **Online Boutique apps** repository:
+List the GitHub runs for the **GKE cluster configs** repository:
 ```Bash
 cd ${WORK_DIR}$GKE_CONFIGS_DIR_NAME && gh run list
 ```
 
-## Check the Online Boutique apps
+## Check the Online Boutique website
 
-Navigate to the Online Boutique apps, click on the link displayed by the command below:
+Navigate to the Online Boutique website, click on the link displayed by the command below:
 ```Bash
 echo -e "https://${ONLINE_BOUTIQUE_INGRESS_GATEWAY_HOST_NAME}"
 ```
 
-You should still have the Online Boutique apps working successfully.
+You should still have the Online Boutique website working successfully.

@@ -45,7 +45,7 @@ gcloud artifacts docker images list $CONTAINER_REGISTRY_REPOSITORY \
 
 [Scan the `cartservice` container image](https://cloud.google.com/container-analysis/docs/on-demand-scanning-howto):
 ```Bash
-gcloud artifacts docker images scan $PRIVATE_ONLINE_BOUTIQUE_REGISTRY/cartservice:$ONLINE_BOUTIQUE_VERSION \
+gcloud artifacts docker images scan $PRIVATE_ONLINE_BOUTIQUE_REGISTRY/cartservice:$ONLINE_BOUTIQUE_VERSION-native-grpc-probes \
     --project ${TENANT_PROJECT_ID} \
     --remote \
     --format='value(response.scan)' > ${WORK_DIR}scan_id.txt

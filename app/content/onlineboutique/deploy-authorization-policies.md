@@ -15,9 +15,16 @@ WORK_DIR=~/
 source ${WORK_DIR}acm-workshop-variables.sh
 ```
 
-The current error: `RBAC: access denied`, is because the default deny-all `AuthorizationPolicy` has been applied to the entire mesh, but we haven't yet deployed any fine granular `AuthorizationPolicies` in the Online Boutique's `Namespace`.
+## See the `AuthorizationPolicies` issue
 
-FIXME 
+See the `AuthorizationPolicies` issue in the **GKE cluster** for the Online Boutique apps, by running this command and click on this link:
+```Bash
+echo -e "https://console.cloud.google.com/anthos/security/workload-view/Deployment/${GKE_LOCATION}/${GKE_NAME}/${ONLINEBOUTIQUE_NAMESPACE}/frontend?project=${TENANT_PROJECT_ID}"
+```
+
+Under the **Service requests** section on this page, you will see some **Inbound denials**. If you click on **View logs** you will be able to see via Cloud Logging the details of the errors. That's where you will the logs with `status: 403` and `response_details: "AuthzDenied"`.
+
+Let's fix it!
 
 ## Update `RepoSync` to deploy the Online Boutique's Helm chart
 
@@ -38,7 +45,7 @@ spec:
     version: ${ONLINE_BOUTIQUE_VERSION:1}
     releaseName: ${ONLINEBOUTIQUE_NAMESPACE}
     auth: gcpserviceaccount
-    gcpServiceAccountEmail: ${HELM_CHARTS_READER_GSA_NAME}@${PROJECT_ID}.iam.gserviceaccount.com
+    gcpServiceAccountEmail: ${HELM_CHARTS_READER_GSA}@${TENANT_PROJECT_ID}.iam.gserviceaccount.com
     values:
       cartDatabase:
         inClusterRedis:
@@ -82,22 +89,38 @@ git add . && git commit -m "Online Boutique AuthorizationPolicies and ServiceAcc
 
 ## Check deployments
 
-List the Kubernetes resources managed by Config Sync in **GKE cluster** for the **Online Boutique apps** repository from within the Cloud Console, by clicking on this link:
+List the Kubernetes resources managed by Config Sync in **GKE cluster** for the **Online Boutique apps** repository:
+{{< tabs groupId="cs-status-ui">}}
+{{% tab name="UI" %}}
+Run this command and click on this link:
 ```Bash
 echo -e "https://console.cloud.google.com/kubernetes/config_management/packages?project=${TENANT_PROJECT_ID}"
 ```
 Wait until you see the `Sync status` column as `Synced` and the `Reconcile status` column as `Current`.
+{{% /tab %}}
+{{% tab name="gcloud" %}}
+Run this command:
+```Bash
+gcloud alpha anthos config sync repo describe \
+    --project $TENANT_PROJECT_ID \
+    --managed-resources all \
+    --sync-name repo-sync \
+    --sync-namespace $ONLINEBOUTIQUE_NAMESPACE
+```
+Wait and re-run this command above until you see `"status": "SYNCED"`.
+{{% /tab %}}
+{{< /tabs >}}
 
-List the GitHub runs for the **Online Boutique apps** repository:
+List the GitHub runs for the **GKE cluster configs** repository:
 ```Bash
 cd ${WORK_DIR}$GKE_CONFIGS_DIR_NAME && gh run list
 ```
 
-## Check the Online Boutique apps
+## Check the Online Boutique website
 
-Navigate to the Online Boutique apps, click on the link displayed by the command below:
+Navigate to the Online Boutique website, click on the link displayed by the command below:
 ```Bash
 echo -e "https://${ONLINE_BOUTIQUE_INGRESS_GATEWAY_HOST_NAME}"
 ```
 
-You should now have the Online Boutique apps working successfully. Congrats!
+You should now have the Online Boutique website working successfully. Congrats!

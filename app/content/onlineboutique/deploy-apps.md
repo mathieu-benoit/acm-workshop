@@ -34,7 +34,7 @@ spec:
     version: ${ONLINE_BOUTIQUE_VERSION:1}
     releaseName: ${ONLINEBOUTIQUE_NAMESPACE}
     auth: gcpserviceaccount
-    gcpServiceAccountEmail: ${HELM_CHARTS_READER_GSA_NAME}@${PROJECT_ID}.iam.gserviceaccount.com
+    gcpServiceAccountEmail: ${HELM_CHARTS_READER_GSA}@${TENANT_PROJECT_ID}.iam.gserviceaccount.com
     values:
       cartDatabase:
         inClusterRedis:
@@ -62,14 +62,8 @@ EOF
 ```
 
 {{% notice info %}}
-Here we are deleting the `Service` `frontend-external` because the `frontend` app will be exposed by the Ingress Gateway.
+Here we are deleting the `Service` `frontend-external` because the `frontend` app will be exposed by the Ingress Gateway. The associated `VirtualService` will be generated in order to establish the link between the Ingress Gateway and the Online Boutique's `frontend` app. We are also updating the container image repository to use our own private Artifact Registry. Finally, we are also leveraging more secure feature such as `nativeGrpcHealthCheck` and `seccompProfile`. You could read more [here](https://medium.com/google-cloud/246119e46d53) about all the options the Online Boutique's Helm chart exposes.
 {{% /notice %}}
-
-Define the `VirtualService` resource in order to establish the Ingress Gateway routing to the Online Boutique apps.
-
-Update the Staging Kustomize overlay with the proper `hosts` value in the `VirtualService`.
-
-Update the Staging Kustomize overlay with the `Deployments`'s container images pointing to the private Artifact Registry.
 
 ## Deploy Kubernetes manifests
 
@@ -80,23 +74,34 @@ git add . && git commit -m "Online Boutique apps" && git push origin main
 
 ## Check deployments
 
-List the Kubernetes resources managed by Config Sync in **GKE cluster** for the **Online Boutique apps** repository from within the Cloud Console, by clicking on this link:
+List the Kubernetes resources managed by Config Sync in **GKE cluster** for the **Online Boutique apps** repository:
+{{< tabs groupId="cs-status-ui">}}
+{{% tab name="UI" %}}
+Run this command and click on this link:
 ```Bash
 echo -e "https://console.cloud.google.com/kubernetes/config_management/packages?project=${TENANT_PROJECT_ID}"
 ```
 Wait until you see the `Sync status` column as `Synced` and the `Reconcile status` column as `Current`.
+{{% /tab %}}
+{{% tab name="gcloud" %}}
+Run this command:
+```Bash
+gcloud alpha anthos config sync repo describe \
+    --project $TENANT_PROJECT_ID \
+    --managed-resources all \
+    --sync-name repo-sync \
+    --sync-namespace $ONLINEBOUTIQUE_NAMESPACE
+```
+Wait and re-run this command above until you see `"status": "SYNCED"`.
+{{% /tab %}}
+{{< /tabs >}}
 
-List the GitHub runs for the **Online Boutique apps** repository:
+List the GitHub runs for the **GKE cluster configs** repository:
 ```Bash
 cd ${WORK_DIR}$GKE_CONFIGS_DIR_NAME && gh run list
 ```
 
 ## Check the Online Boutique apps
-
-Open the list of the **Workloads** deployed in the GKE cluster, you will see that the Online Boutique apps is successfully deployed. Click on the link displayed by the command below:
-```Bash
-echo -e "https://console.cloud.google.com/kubernetes/workload/overview?project=${TENANT_PROJECT_ID}"
-```
 
 Navigate to the Online Boutique apps, click on the link displayed by the command below:
 ```Bash
