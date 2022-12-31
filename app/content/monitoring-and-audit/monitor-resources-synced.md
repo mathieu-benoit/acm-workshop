@@ -39,8 +39,8 @@ echo -e "https://console.cloud.google.com/kubernetes/config_management/dashboard
 
 On the default **Dashboard** tab, you will find something similar to:
 
-![Config Sync Dashboard UI for Config Controller instance](/images/config-sync-dashboard-ui-gke.png)
+![Config Sync Dashboard UI for GKE cluster](/images/config-sync-dashboard-ui-gke.png)
 
 Then if you go on the **Packages** tab, you will find something similar to:
 
-![Config Sync Packages UI for Config Controller instance](/images/config-sync-packages-ui-gke.png)
+![Config Sync Packages UI for GKE cluster](/images/config-sync-packages-ui-gke.png)
