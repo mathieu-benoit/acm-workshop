@@ -17,7 +17,7 @@ source ${WORK_DIR}acm-workshop-variables.sh
 
 The current error: `RBAC: access denied`, is because the default deny-all `AuthorizationPolicy` has been applied to the entire mesh, but we haven't yet deployed any fine granular `AuthorizationPolicies` in the Online Boutique's `Namespace`.
 
-FIXME
+FIXME 
 
 ## Update `RepoSync` to deploy the Online Boutique's Helm chart
 
