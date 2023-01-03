@@ -52,6 +52,7 @@ spec:
     - kube-public
     - kube-system
     - resource-group-system
+    - poco-trial
   parameters:
     labels:
     - key: name
@@ -88,6 +89,7 @@ spec:
     - kube-public
     - kube-system
     - resource-group-system
+    - poco-trial
   parameters:
     labels:
     - key: app
