@@ -2,7 +2,7 @@
 title: "Deploy NetworkPolicies"
 weight: 6
 description: "Duration: 5 min | Persona: Apps Operator"
-tags: ["apps-operator", "policies", "security-tips"]
+tags: ["apps-operator", "helm", "policies", "security-tips"]
 ---
 ![Apps Operator](/images/apps-operator.png)
 _{{< param description >}}_

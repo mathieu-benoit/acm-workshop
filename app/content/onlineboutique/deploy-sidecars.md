@@ -2,7 +2,7 @@
 title: "Deploy Sidecars"
 weight: 8
 description: "Duration: 5 min | Persona: Apps Operator"
-tags: ["asm", "apps-operator"]
+tags: ["asm", "apps-operator", "helm"]
 ---
 ![Apps Operator](/images/apps-operator.png)
 _{{< param description >}}_

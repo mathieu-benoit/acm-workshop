@@ -18,11 +18,6 @@ echo "export REDIS_TLS_NAME=cart-tls" >> ${WORK_DIR}acm-workshop-variables.sh
 source ${WORK_DIR}acm-workshop-variables.sh
 ```
 
-Create a folder dedicated for any resources related Online Boutique specifically: 
-```Bash
-mkdir ${WORK_DIR}$TENANT_PROJECT_DIR_NAME/$ONLINEBOUTIQUE_NAMESPACE
-```
-
 ## Define Memorystore (Redis)
 
 Define the [Memorystore (Redis) resource](https://cloud.google.com/config-connector/docs/reference/resource-docs/redis/redisinstance):
@@ -88,6 +83,16 @@ graph TD;
 {{< /mermaid >}}
 
 List the Kubernetes resources managed by Config Sync in **Config Controller** for the **Tenant project configs** repository:
+{{< tabs groupId="cs-status-ui">}}
+{{% tab name="UI" %}}
+Run this command and click on this link:
+```Bash
+echo -e "https://console.cloud.google.com/kubernetes/config_management/packages?project=${HOST_PROJECT_ID}"
+```
+Wait until you see the `Sync status` column as `Synced` and the `Reconcile status` column as `Current`.
+{{% /tab %}}
+{{% tab name="gcloud" %}}
+Run this command:
 ```Bash
 gcloud alpha anthos config sync repo describe \
     --project $HOST_PROJECT_ID \
@@ -95,7 +100,13 @@ gcloud alpha anthos config sync repo describe \
     --sync-name repo-sync \
     --sync-namespace $TENANT_PROJECT_ID
 ```
-Wait and re-run this command above until you see `"status": "SYNCED"`. All the `managed_resources` listed should have `STATUS: Current` as well.
+Wait and re-run this command above until you see `"status": "SYNCED"`. All the `managed_resources` listed should have `STATUS: Current` too.
+{{% /tab %}}
+{{< /tabs >}}
+
+{{% notice note %}}
+The creation of the `RedisInstance` can take ~10 mins.
+{{% /notice %}}
 
 List the GitHub runs for the **Tenant project configs** repository:
 ```Bash

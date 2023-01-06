@@ -2,7 +2,7 @@
 title: "Use Spanner"
 weight: 3
 description: "Duration: 10 min | Persona: Apps Operator"
-tags: ["apps-operator"]
+tags: ["apps-operator", "helm"]
 ---
 ![Apps Operator](/images/apps-operator.png)
 _{{< param description >}}_

@@ -2,7 +2,7 @@
 title: "Prepare containers and chart"
 weight: 4
 description: "Duration: 5 min | Persona: Apps Operator"
-tags: ["apps-operator", "security-tips"]
+tags: ["apps-operator", "helm", "security-tips"]
 ---
 ![Apps Operator](/images/apps-operator.png)
 _{{< param description >}}_
