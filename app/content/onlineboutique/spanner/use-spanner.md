@@ -70,7 +70,7 @@ spec:
         create: true
         annotationsOnlyForCartservice: true
         annotations:
-        - iam.gke.io/gcp-service-account: ${SPANNER_DB_USER_GSA_ID}
+          iam.gke.io/gcp-service-account: ${SPANNER_DB_USER_GSA_ID}
       authorizationPolicies:
         create: true
       networkPolicies:
