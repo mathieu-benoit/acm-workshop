@@ -54,7 +54,8 @@ spec:
         connectionString: ${REDIS_TLS_IP}:${REDIS_TLS_PORT}
         externalRedisTlsOrigination:
           enable: true
-          certificate: "${REDIS_TLS_CERT}"
+          certificate: |
+$(echo -e "${REDIS_TLS_CERT}" | sed 's/^/            /')
           endpointAddress: ${REDIS_TLS_IP}
           endpointPort: ${REDIS_TLS_PORT}
       images:
