@@ -98,6 +98,8 @@ spec:
     - IAMPartialPolicy
     - IAMPolicyMember
     - IAMServiceAccount
+    - MonitoringAlertPolicy
+    - MonitoringNotificationChannel
     - MonitoringUptimeCheckConfig
     - Project
     - RedisInstance

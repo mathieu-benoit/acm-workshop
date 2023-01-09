@@ -7,7 +7,7 @@ tags: ["kcc", "monitoring", "org-admin"]
 ![Org Admin](/images/org-admin.png)
 _{{< param description >}}_
 
-In this section, you will grant the appropriate the IAM role for the Tenant project's service account. This will allow later this service account to provision some monitoring features.
+In this section, you will grant the appropriate the IAM roles for the Tenant project's service account. This will allow later this service account to provision some monitoring features.
 
 Initialize variables:
 ```Bash
@@ -15,7 +15,7 @@ WORK_DIR=~/
 source ${WORK_DIR}acm-workshop-variables.sh
 ```
 
-## Define role
+## Define roles
 
 Define the `monitoring.uptimeCheckConfigEditor` role with an [`IAMPolicyMember`](https://cloud.google.com/config-connector/docs/reference/resource-docs/iam/iampolicymember) for the Tenant project's service account:
 ```Bash
@@ -32,6 +32,48 @@ spec:
     serviceAccountRef:
       name: ${TENANT_PROJECT_ID}
   role: roles/monitoring.uptimeCheckConfigEditor
+  resourceRef:
+    kind: Project
+    external: projects/${TENANT_PROJECT_ID}
+EOF
+```
+
+Define the `monitoring.notificationChannelEditor` role with an [`IAMPolicyMember`](https://cloud.google.com/config-connector/docs/reference/resource-docs/iam/iampolicymember) for the Tenant project's service account:
+```Bash
+cat <<EOF > ${WORK_DIR}$HOST_PROJECT_DIR_NAME/projects/$TENANT_PROJECT_ID/notification-channel-editor.yaml
+apiVersion: iam.cnrm.cloud.google.com/v1beta1
+kind: IAMPolicyMember
+metadata:
+  name: notification-channel-editor-${TENANT_PROJECT_ID}
+  namespace: config-control
+  annotations:
+    config.kubernetes.io/depends-on: iam.cnrm.cloud.google.com/namespaces/config-control/IAMServiceAccount/${TENANT_PROJECT_ID},resourcemanager.cnrm.cloud.google.com/namespaces/config-control/Project/${TENANT_PROJECT_ID}
+spec:
+  memberFrom:
+    serviceAccountRef:
+      name: ${TENANT_PROJECT_ID}
+  role: roles/monitoring.notificationChannelEditor
+  resourceRef:
+    kind: Project
+    external: projects/${TENANT_PROJECT_ID}
+EOF
+```
+
+Define the `monitoring.alertPolicyEditor` role with an [`IAMPolicyMember`](https://cloud.google.com/config-connector/docs/reference/resource-docs/iam/iampolicymember) for the Tenant project's service account:
+```Bash
+cat <<EOF > ${WORK_DIR}$HOST_PROJECT_DIR_NAME/projects/$TENANT_PROJECT_ID/alert-policy-editor.yaml
+apiVersion: iam.cnrm.cloud.google.com/v1beta1
+kind: IAMPolicyMember
+metadata:
+  name: alert-policy-editor-${TENANT_PROJECT_ID}
+  namespace: config-control
+  annotations:
+    config.kubernetes.io/depends-on: iam.cnrm.cloud.google.com/namespaces/config-control/IAMServiceAccount/${TENANT_PROJECT_ID},resourcemanager.cnrm.cloud.google.com/namespaces/config-control/Project/${TENANT_PROJECT_ID}
+spec:
+  memberFrom:
+    serviceAccountRef:
+      name: ${TENANT_PROJECT_ID}
+  role: roles/monitoring.alertPolicyEditor
   resourceRef:
     kind: Project
     external: projects/${TENANT_PROJECT_ID}
@@ -85,6 +127,6 @@ gcloud projects get-iam-policy $TENANT_PROJECT_ID \
     --filter="bindings.members:${TENANT_PROJECT_SA_EMAIL}" \
     --flatten="bindings[].members" \
     --format="table(bindings.role)" \
-    | grep uptimeCheckConfigEditor
+    | grep -E 'uptimeCheckConfigEditor|notificationChannelEditor|alertPolicyEditor'
 ```
 Wait and re-run this command above until you see the resources created.
