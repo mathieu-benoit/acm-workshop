@@ -1,6 +1,6 @@
 ---
 title: "Prepare containers and chart"
-weight: 4
+weight: 5
 description: "Duration: 5 min | Persona: Apps Operator"
 tags: ["apps-operator", "helm", "security-tips"]
 ---

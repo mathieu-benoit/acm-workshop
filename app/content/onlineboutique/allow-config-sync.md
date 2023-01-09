@@ -1,6 +1,6 @@
 ---
 title: "Allow Config Sync"
-weight: 2
+weight: 3
 description: "Duration: 5 min | Persona: Platform Admin"
 tags: ["gitops-tips", "platform-admin"]
 ---

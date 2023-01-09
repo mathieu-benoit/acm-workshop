@@ -1,6 +1,6 @@
 ---
 title: "Deploy apps"
-weight: 5
+weight: 6
 description: "Duration: 5 min | Persona: Apps Operator"
 tags: ["apps-operator", "asm", "helm"]
 ---

@@ -1,6 +1,6 @@
 ---
 title: "Deploy Sidecar"
-weight: 7
+weight: 8
 description: "Duration: 5 min | Persona: Apps Operator"
 tags: ["apps-operator", "asm"]
 ---

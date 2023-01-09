@@ -1,6 +1,6 @@
 ---
 title: "Configure Config Sync"
-weight: 2
+weight: 3
 description: "Duration: 10 min | Persona: Platform Admin"
 tags: ["asm", "gitops-tips", "platform-admin"]
 ---
