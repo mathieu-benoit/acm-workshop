@@ -2,7 +2,7 @@
 title: "Memorystore"
 chapter: true
 description: "Use Memorystore (Redis)"
-weight: 8
+weight: 10
 ---
 Use Memorystore (Redis).
 
