@@ -30,7 +30,7 @@ metadata:
   name: uptimecheckconfig-${BANKOFANTHOS_NAMESPACE}
 spec:
   projectRef:
-    external: projects/${TENANT_PROJECT_ID}
+    name: ${TENANT_PROJECT_ID}
   displayName: ${BANKOFANTHOS_NAMESPACE}
   period: 900s
   timeout: 5s

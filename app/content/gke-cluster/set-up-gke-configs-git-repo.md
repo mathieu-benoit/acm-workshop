@@ -29,7 +29,7 @@ metadata:
   namespace: ${TENANT_PROJECT_ID}
 spec:
   projectRef:
-    external: ${TENANT_PROJECT_ID}
+    name: ${TENANT_PROJECT_ID}
   location: global
   resourceID: configmanagement
 EOF
@@ -84,7 +84,7 @@ metadata:
     config.kubernetes.io/depends-on: gkehub.cnrm.cloud.google.com/namespaces/${TENANT_PROJECT_ID}/GKEHubMembership/${GKE_NAME},gkehub.cnrm.cloud.google.com/namespaces/${TENANT_PROJECT_ID}/GKEHubFeature/configmanagement
 spec:
   projectRef:
-    external: ${TENANT_PROJECT_ID}
+    name: ${TENANT_PROJECT_ID}
   location: global
   membershipRef:
     name: ${GKE_NAME}

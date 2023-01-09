@@ -30,7 +30,7 @@ metadata:
   name: uptimecheckconfig-${ONLINEBOUTIQUE_NAMESPACE}
 spec:
   projectRef:
-    external: projects/${TENANT_PROJECT_ID}
+    name: ${TENANT_PROJECT_ID}
   displayName: ${ONLINEBOUTIQUE_NAMESPACE}
   period: 900s
   timeout: 5s
