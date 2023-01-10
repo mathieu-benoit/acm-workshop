@@ -35,7 +35,7 @@ With this workshop, here is what you will accomplish, from scratch:
 ![Workshop Architecture diagram](/images/architecture.png)
 
 Recently tested with:
-- GKE 1.25.4-gke.1600
+- GKE 1.25.4-gke.2100
 - ASM MCP 1.15.3-asm.2 + MDP 1.15.3-asm.1
 - ACM 1.14.0
 - Whereami 1.2.14
