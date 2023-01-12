@@ -132,7 +132,7 @@ spec:
           app: loadgenerator
     - namespaceSelector:
         matchLabels:
-          name: ${INGRESS_GATEWAY_NAMESPACE}
+          kubernetes.io/metadata.name: ${INGRESS_GATEWAY_NAMESPACE}
       podSelector:
         matchLabels:
           app: ${INGRESS_GATEWAY_NAME}
