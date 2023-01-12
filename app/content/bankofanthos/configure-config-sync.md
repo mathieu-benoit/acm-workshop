@@ -32,7 +32,6 @@ apiVersion: v1
 kind: Namespace
 metadata:
   labels:
-    name: ${BANKOFANTHOS_NAMESPACE}
     istio-injection: enabled
   name: ${BANKOFANTHOS_NAMESPACE}
 EOF

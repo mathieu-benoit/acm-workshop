@@ -32,7 +32,6 @@ apiVersion: v1
 kind: Namespace
 metadata:
   labels:
-    name: ${WHEREAMI_NAMESPACE}
     istio-injection: enabled
   name: ${WHEREAMI_NAMESPACE}
 EOF

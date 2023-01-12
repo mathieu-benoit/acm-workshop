@@ -31,7 +31,6 @@ apiVersion: v1
 kind: Namespace
 metadata:
   labels:
-    name: ${INGRESS_GATEWAY_NAMESPACE}
     istio-injection: enabled
   name: ${INGRESS_GATEWAY_NAMESPACE}
 EOF
