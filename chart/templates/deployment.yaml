@@ -21,6 +21,8 @@ spec:
         runAsGroup: 1000
         runAsNonRoot: true
         runAsUser: 1000
+        seccompProfile:
+          type: RuntimeDefault
       containers:
         - name: {{ .Values.name }}
           securityContext:
@@ -30,8 +32,6 @@ spec:
                 - ALL
             privileged: false
             readOnlyRootFilesystem: true
-            seccompProfile:
-              type: RuntimeDefault
           image: {{ .Values.container.image.repository }}/{{ .Values.name }}:{{ .Values.container.image.tag | default .Chart.AppVersion }}
           imagePullPolicy: IfNotPresent
           ports:
