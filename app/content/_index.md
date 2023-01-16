@@ -36,7 +36,7 @@ With this workshop, here is what you will accomplish, from scratch:
 
 Recently tested with:
 - GKE 1.25.4-gke.2100
-- ASM MCP 1.15.3-asm.2 + MDP 1.15.3-asm.1
+- ASM MCP 1.15.4-asm.1 + MDP 1.15.3-asm.1
 - ACM 1.14.0
 - Whereami 1.2.14
 - Online Boutique 0.5.0
