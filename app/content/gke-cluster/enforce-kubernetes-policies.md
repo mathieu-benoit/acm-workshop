@@ -1,5 +1,5 @@
 ---
-title: "Enforce NetworkPolicies policies"
+title: "Enforce Kubernetes policies"
 weight: 6
 description: "Duration: 5 min | Persona: Platform Admin"
 tags: ["platform-admin", "policies", "security-tips"]
@@ -7,7 +7,7 @@ tags: ["platform-admin", "policies", "security-tips"]
 ![Platform Admin](/images/platform-admin.png)
 _{{< param description >}}_
 
-In this section, you will enforce policies in order to make sure that your clusters has well defined `NetworkPolicies`.
+In this section, you will enforce Kubernetes policies for Pod Security Admission (PSA) and `NetworkPolicies`.
 
 Define variables:
 ```Bash
@@ -15,19 +15,65 @@ WORK_DIR=~/
 source ${WORK_DIR}acm-workshop-variables.sh
 ```
 
+## Enforce Pod Security Admission (PSA) policies
+
+As best practice we will ensure that any `Namespaces` enables the [Pod Security Admission (PSA)](https://kubernetes.io/docs/concepts/security/pod-security-admission/) feature.
+
+Define the `namespaces-required-psa-label` `Constraint` based on the [`K8sRequiredLabels`](https://cloud.google.com/anthos-config-management/docs/latest/reference/constraint-template-library#k8srequiredlabels) `ConstraintTemplate` for `Namespaces`:
+```Bash
+cat <<EOF > ${WORK_DIR}$GKE_CONFIGS_DIR_NAME/policies/constraints/namespaces-required-psa-label.yaml
+apiVersion: constraints.gatekeeper.sh/v1beta1
+kind: K8sRequiredLabels
+metadata:
+  name: namespaces-required-psa-label
+  annotations:
+    policycontroller.gke.io/constraintData: |
+      "{
+        description: 'Requires Namespaces to have the "pod-security.kubernetes.io/enforce" label with either the value "baseline" or "restricted".',
+        remediation: 'Any Namespaces should have the "pod-security.kubernetes.io/enforce" label with either the value "baseline" or "restricted".'
+      }"
+spec:
+  enforcementAction: deny
+  match:
+    kinds:
+    - apiGroups:
+      - ""
+      kinds:
+      - Namespace
+    excludedNamespaces:
+    - config-management-monitoring
+    - config-management-system
+    - default
+    - gatekeeper-system
+    - istio-system
+    - kube-node-lease
+    - kube-public
+    - kube-system
+    - resource-group-system
+    - poco-trial
+  parameters:
+    labels:
+    - key: pod-security.kubernetes.io/enforce
+      allowedRegex: (baseline|restricted)
+EOF
+```
+{{% notice note %}}
+As of now, only the `asm-ingress` and `onlineboutique` namespaces support `restricted`. On the other hand, the `whereami` and `bankofanthos` namespaces only support `baseline`. We are authorizing both here.
+{{% /notice %}}
+
 ## Enforce NetworkPolicies policies
 
 ### Require labels for Namespaces and Pods
 
 As a best practice and in order to get the `NetworkPolicies` working in this workshop, we need to guarantee that any `Namespaces` have a label `name` and `Pods` have a label `app`.
 
-Define the `namespaces-required-labels` `Constraint` based on the [`K8sRequiredLabels`](https://cloud.google.com/anthos-config-management/docs/reference/constraint-template-library#k8srequiredlabels) `ConstraintTemplate` for `Namespaces`:
+Define the `namespaces-required-name-label` `Constraint` based on the [`K8sRequiredLabels`](https://cloud.google.com/anthos-config-management/docs/reference/constraint-template-library#k8srequiredlabels) `ConstraintTemplate` for `Namespaces`:
 ```Bash
-cat <<EOF > ${WORK_DIR}$GKE_CONFIGS_DIR_NAME/policies/constraints/namespaces-required-labels.yaml
+cat <<EOF > ${WORK_DIR}$GKE_CONFIGS_DIR_NAME/policies/constraints/namespaces-required-name-label.yaml
 apiVersion: constraints.gatekeeper.sh/v1beta1
 kind: K8sRequiredLabels
 metadata:
-  name: namespaces-required-labels
+  name: namespaces-required-name-label
   annotations:
     policycontroller.gke.io/constraintData: |
       "{
@@ -59,13 +105,13 @@ spec:
 EOF
 ```
 
-Define the `pods-required-labels` `Constraint` based on the [`K8sRequiredLabels`](https://cloud.google.com/anthos-config-management/docs/reference/constraint-template-library#k8srequiredlabels) `ConstraintTemplate` for `Pods`:
+Define the `pods-required-app-label` `Constraint` based on the [`K8sRequiredLabels`](https://cloud.google.com/anthos-config-management/docs/reference/constraint-template-library#k8srequiredlabels) `ConstraintTemplate` for `Pods`:
 ```Bash
-cat <<EOF > ${WORK_DIR}$GKE_CONFIGS_DIR_NAME/policies/constraints/pods-required-labels.yaml
+cat <<EOF > ${WORK_DIR}$GKE_CONFIGS_DIR_NAME/policies/constraints/pods-required-app-label.yaml
 apiVersion: constraints.gatekeeper.sh/v1beta1
 kind: K8sRequiredLabels
 metadata:
-  name: pods-required-labels
+  name: pods-required-app-label
   annotations:
     policycontroller.gke.io/constraintData: |
       "{
@@ -163,7 +209,7 @@ EOF
 
 ```Bash
 cd ${WORK_DIR}$GKE_CONFIGS_DIR_NAME/
-git add . && git commit -m "Policies for NetworkPolicies" && git push origin main
+git add . && git commit -m "Policies for Kubernetes resources" && git push origin main
 ```
 
 ## Check deployments

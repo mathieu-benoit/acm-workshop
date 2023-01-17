@@ -2,7 +2,7 @@
 title: "Configure Config Sync"
 weight: 4
 description: "Duration: 5 min | Persona: Platform Admin"
-tags: ["asm", "gitops-tips", "platform-admin"]
+tags: ["asm", "gitops-tips", "platform-admin", "security-tips"]
 ---
 ![Platform Admin](/images/platform-admin.png)
 _{{< param description >}}_
@@ -31,9 +31,13 @@ metadata:
   labels:
     name: ${ONLINEBOUTIQUE_NAMESPACE}
     istio-injection: enabled
+    pod-security.kubernetes.io/enforce: restricted
   name: ${ONLINEBOUTIQUE_NAMESPACE}
 EOF
 ```
+{{% notice note %}}
+In addition to the `istio-injection` to include this `Namespace` into our Service Mesh, we are also adding the `pod-security.kubernetes.io/enforce` label as the `restricted` [Pod Security Standards policy](https://kubernetes.io/docs/concepts/security/pod-security-standards/).
+{{% /notice %}}
 
 ## Allo Config Sync to sync Istio resources
 

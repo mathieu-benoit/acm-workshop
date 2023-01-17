@@ -2,7 +2,7 @@
 title: "Configure Config Sync"
 weight: 3
 description: "Duration: 10 min | Persona: Platform Admin"
-tags: ["asm", "gitops-tips", "platform-admin"]
+tags: ["asm", "gitops-tips", "platform-admin", "security-tips"]
 ---
 ![Platform Admin](/images/platform-admin.png)
 _{{< param description >}}_
@@ -34,9 +34,13 @@ metadata:
   labels:
     name: ${WHEREAMI_NAMESPACE}
     istio-injection: enabled
+    pod-security.kubernetes.io/enforce: baseline
   name: ${WHEREAMI_NAMESPACE}
 EOF
 ```
+{{% notice note %}}
+In addition to the `istio-injection` to include this `Namespace` into our Service Mesh, we are also adding the `pod-security.kubernetes.io/enforce` label as the `baseline` [Pod Security Standards policy](https://kubernetes.io/docs/concepts/security/pod-security-standards/).
+{{% /notice %}}
 
 ## Create GitHub repository
 
