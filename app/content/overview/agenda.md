@@ -23,7 +23,7 @@ tags: ["apps-operator", "org-admin", "platform-admin"]
     1. As Platform Admin, create GKE cluster in Tenant project
     1. As Org Admin, allow Fleet for Tenant project
     1. As Platform Admin, set up GKE configs's Git repo in Tenant project
-    1. As Platform Admin, enforce policies for `NetworkPolicies`
+    1. As Platform Admin, enforce Kubernetes policies with Pod Security Admission (PSA) and `NetworkPolicies`
     1. As Platform Admin, set up `NetworkPolicies` logging in GKE cluster
 1. Artifact Registry
     1. As Org Admin, allow Artifact Registry for Tenant project

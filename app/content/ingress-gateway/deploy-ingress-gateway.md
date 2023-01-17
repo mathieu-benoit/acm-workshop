@@ -33,9 +33,13 @@ metadata:
   labels:
     name: ${INGRESS_GATEWAY_NAMESPACE}
     istio-injection: enabled
+    pod-security.kubernetes.io/enforce: restricted
   name: ${INGRESS_GATEWAY_NAMESPACE}
 EOF
 ```
+{{% notice note %}}
+In addition to the `istio-injection` to include this `Namespace` into our Service Mesh, we are also adding the `pod-security.kubernetes.io/enforce` label as the `restricted` [Pod Security Standards policy](https://kubernetes.io/docs/concepts/security/pod-security-standards/).
+{{% /notice %}}
 
 ## Define Deployment
 
@@ -77,7 +81,7 @@ spec:
           allowPrivilegeEscalation: false
           capabilities:
             drop:
-            - all
+            - ALL
           privileged: false
           readOnlyRootFilesystem: true
       securityContext:
@@ -85,6 +89,8 @@ spec:
         runAsGroup: 1337
         runAsNonRoot: true
         runAsUser: 1337
+        seccompProfile:
+          type: RuntimeDefault
       serviceAccountName: ${INGRESS_GATEWAY_NAME}
 EOF
 ```
