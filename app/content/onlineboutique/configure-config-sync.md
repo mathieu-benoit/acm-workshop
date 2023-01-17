@@ -29,7 +29,6 @@ apiVersion: v1
 kind: Namespace
 metadata:
   labels:
-    name: ${ONLINEBOUTIQUE_NAMESPACE}
     istio-injection: enabled
     pod-security.kubernetes.io/enforce: restricted
   name: ${ONLINEBOUTIQUE_NAMESPACE}

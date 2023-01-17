@@ -32,7 +32,6 @@ apiVersion: v1
 kind: Namespace
 metadata:
   labels:
-    name: ${BANKOFANTHOS_NAMESPACE}
     istio-injection: enabled
     pod-security.kubernetes.io/enforce: baseline
   name: ${BANKOFANTHOS_NAMESPACE}
