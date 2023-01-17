@@ -26,7 +26,7 @@ spec:
   - from:
     - namespaceSelector:
         matchLabels:
-          name: {{ .Values.virtualService.gateway.namespace }}
+          kubernetes.io/metadata.name: {{ .Values.virtualService.gateway.namespace }}
       podSelector:
         matchLabels:
           {{ .Values.virtualService.gateway.labelKey }}: {{ .Values.virtualService.gateway.labelValue }}
