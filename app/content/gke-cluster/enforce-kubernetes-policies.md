@@ -65,45 +65,7 @@ As of now, only the `asm-ingress` and `onlineboutique` namespaces support `restr
 
 ### Require labels for Namespaces and Pods
 
-As a best practice and in order to get the `NetworkPolicies` working in this workshop, we need to guarantee that any `Namespaces` have a label `name` and `Pods` have a label `app`.
-
-Define the `namespaces-required-name-label` `Constraint` based on the [`K8sRequiredLabels`](https://cloud.google.com/anthos-config-management/docs/reference/constraint-template-library#k8srequiredlabels) `ConstraintTemplate` for `Namespaces`:
-```Bash
-cat <<EOF > ${WORK_DIR}$GKE_CONFIGS_DIR_NAME/policies/constraints/namespaces-required-name-label.yaml
-apiVersion: constraints.gatekeeper.sh/v1beta1
-kind: K8sRequiredLabels
-metadata:
-  name: namespaces-required-name-label
-  annotations:
-    policycontroller.gke.io/constraintData: |
-      "{
-        description: 'Requires Namespaces to have the "name" label in order to leverage the namespaceSelector feature of NetworkPolicies.',
-        remediation: 'Any Namespaces should have the "name" label.'
-      }"
-spec:
-  enforcementAction: deny
-  match:
-    kinds:
-    - apiGroups:
-      - ""
-      kinds:
-      - Namespace
-    excludedNamespaces:
-    - config-management-monitoring
-    - config-management-system
-    - default
-    - gatekeeper-system
-    - istio-system
-    - kube-node-lease
-    - kube-public
-    - kube-system
-    - resource-group-system
-    - poco-trial
-  parameters:
-    labels:
-    - key: name
-EOF
-```
+As a best practice and in order to get the `NetworkPolicies` working in this workshop, we need to guarantee that any `Pods` have a label `app`.
 
 Define the `pods-required-app-label` `Constraint` based on the [`K8sRequiredLabels`](https://cloud.google.com/anthos-config-management/docs/reference/constraint-template-library#k8srequiredlabels) `ConstraintTemplate` for `Pods`:
 ```Bash
@@ -141,6 +103,9 @@ spec:
     - key: app
 EOF
 ```
+{{% notice note %}}
+Complementary to this, on `Namespaces` the [`kubernetes.io/metadata.name` label](https://kubernetes.io/docs/concepts/overview/working-with-objects/namespaces/#automatic-labelling) automatically set by Kubernetes 1.22+ will be leveraged.
+{{% /notice %}}
 
 ### Require NetworkPolicies in Namespaces
 

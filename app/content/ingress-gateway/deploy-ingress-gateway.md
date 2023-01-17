@@ -31,7 +31,6 @@ apiVersion: v1
 kind: Namespace
 metadata:
   labels:
-    name: ${INGRESS_GATEWAY_NAMESPACE}
     istio-injection: enabled
     pod-security.kubernetes.io/enforce: restricted
   name: ${INGRESS_GATEWAY_NAMESPACE}
