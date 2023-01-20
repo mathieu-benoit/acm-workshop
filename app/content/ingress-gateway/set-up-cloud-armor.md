@@ -53,10 +53,10 @@ spec:
         expression: "evaluatePreconfiguredExpr('xss-v33-canary')"
     priority: 1000
   - action: deny(403)
-    description: "SQL injection level 1"
+    description: "SQL injection level 2"
     match:
       expr:
-        expression: "evaluatePreconfiguredWaf('sqli-v33-canary', {'sensitivity': 1})"
+        expression: "evaluatePreconfiguredWaf('sqli-v33-canary', {'sensitivity': 2, 'opt_out_rule_ids': ['owasp-crs-v030301-id942200-sqli', 'owasp-crs-v030301-id942260-sqli', 'owasp-crs-v030301-id942430-sqli']})"
     priority: 2000
   - action: deny(403)
     description: "Local file inclusion"
@@ -126,9 +126,8 @@ spec:
     priority: 12000
 EOF
 ```
-
 {{% notice info %}}
-Here we are leveraging the [Cloud Armor preconfigured WAF rules](https://cloud.google.com/armor/docs/waf-rules): `xss`, `sqli`, `lfi`, `rfi`, `cve`, `rce`, `methodenforcement`, `scannerdetection`, `protocolattack`, `php`, `sessionfixation`, `java` and `nodejs`. All of them in `canary` version to have the latest version and ModSecurity Core Rule Set (CRS) 3.3. For `sqli`, we are only using sensitivity level 1 otherwise the Bank of Anthos is not working properly.
+Here we are leveraging the [Cloud Armor preconfigured WAF rules](https://cloud.google.com/armor/docs/waf-rules): `xss`, `sqli`, `lfi`, `rfi`, `cve`, `rce`, `methodenforcement`, `scannerdetection`, `protocolattack`, `php`, `sessionfixation`, `java` and `nodejs`. All of them in `canary` version to have the latest version and ModSecurity Core Rule Set (CRS) 3.3. For `sqli`, we are only using sensitivity level 2 and exluding some of its rules, otherwise the Bank of Anthos is not working properly.
 {{% /notice %}}
 
 ## Define SSL policy
