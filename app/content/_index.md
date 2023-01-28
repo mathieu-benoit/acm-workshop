@@ -37,7 +37,7 @@ With this workshop, here is what you will accomplish, from scratch:
 Recently tested with:
 - GKE 1.25.5-gke.1500
 - ASM MCP 1.15.4-asm.2 + MDP 1.15.4-asm.2
-- ACM 1.14.0
+- ACM 1.14.1
 - Whereami 1.2.14
 - Online Boutique 0.5.0
 - Bank of Anthos 0.5.10
