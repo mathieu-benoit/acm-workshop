@@ -17,5 +17,8 @@ Different contents have been leveraged in order to make and inpsire this worksho
 - Hybrid SME Academy Labs - Megan O'Keefe, Dan Sanche and Sandeep Parikh
 - Anthos Multicloud Workshop - Kent Hua, Aaron Rueth and Ameer Abbas
 - [Istio Sidecar resource to reduce memory overhead](https://youtu.be/JcfLUHdntN4) - Christian Posta
+- [Securing Redis with Istio TLS origination](https://samos-it.com/posts/securing-redis-istio-tls-origniation-termination.html) - Sam Stoelinga
+- [Preventing Privileged pods using Pod Security Admission / Standards](https://samos-it.com/posts/Preventing-Privileged-pods-using-Pod-Security-Admission-Standards.html) - Sam Stoelinga
+- [Validating Admission Policies](https://sched.co/182Q6) - Joe Betz
 
 Thank you to their authors!
