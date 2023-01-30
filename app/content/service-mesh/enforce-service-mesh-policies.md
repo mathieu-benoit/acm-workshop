@@ -240,6 +240,30 @@ spec:
 EOF
 ```
 
+## Define K8sBlockAllIngress policy
+
+Define the `block-all-ingress` `Constraint` based on the [`K8sBlockAllIngress`](https://cloud.google.com/anthos-config-management/docs/latest/reference/constraint-template-library#k8sblockallingress) `ConstraintTemplate` to only allow public ingress from the ASM Ingress Gateway:
+```Bash
+cat <<EOF > ${WORK_DIR}$GKE_CONFIGS_DIR_NAME/policies/constraints/block-all-ingress.yaml
+apiVersion: constraints.gatekeeper.sh/v1beta1
+kind: K8sBlockAllIngress
+metadata:
+  name: block-all-ingress
+  annotations:
+    policycontroller.gke.io/constraintData: |
+      "{
+        description: 'Disallows the creation of Ingress objects (Ingress, Gateway, and Service types of NodePort and LoadBalancer).',
+        remediation: 'Any Ingress objects (Ingress, Gateway, and Service) should go through the ASM Ingress Gateway instead.'
+      }"
+spec:
+  enforcementAction: deny
+  match:
+    excludedNamespaces:
+    - kube-system # default-http-backend as NodePort
+    - ${INGRESS_GATEWAY_NAMESPACE} # asm-ingressgateway as LoadBalancer
+EOF
+```
+
 ## Update Gatekeeper config for Referrential `Constraints`
 
 Update the previously defined `config-referential-constraints` `Config`:
