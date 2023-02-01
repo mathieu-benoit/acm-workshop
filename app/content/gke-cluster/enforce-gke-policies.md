@@ -103,7 +103,7 @@ spec:
 EOF
 ```
 
-Define the `gke-clusters-requirements` `Constraint` based on the `GkeClusterRequirement` `ConstraintTemplate` just created:
+Define the `gke-clusters-requirements` `Constraint` based on the `GkeClusterRequirement` `ConstraintTemplate` just defined:
 ```Bash
 cat <<EOF > ${WORK_DIR}$HOST_PROJECT_DIR_NAME/policies/constraints/gke-clusters-requirements.yaml
 apiVersion: constraints.gatekeeper.sh/v1beta1
@@ -128,7 +128,7 @@ spec:
 EOF
 ```
 
-Define the `gke-clusters-require-asm-label` `Constraint` based on the `K8sRequiredLabels` `ConstraintTemplate` just created:
+Define the `gke-clusters-require-asm-label` `Constraint` based on the [`K8sRequiredLabels`](https://cloud.google.com/anthos-config-management/docs/reference/constraint-template-library#k8srequiredlabels) `ConstraintTemplate`:
 ```Bash
 cat <<EOF > ${WORK_DIR}$HOST_PROJECT_DIR_NAME/policies/constraints/gke-clusters-require-asm-label.yaml
 apiVersion: constraints.gatekeeper.sh/v1beta1

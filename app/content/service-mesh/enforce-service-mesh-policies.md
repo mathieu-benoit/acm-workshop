@@ -264,6 +264,73 @@ spec:
 EOF
 ```
 
+## Define VirtualServiceWithHost policy
+
+Define the `ConstraintTemplate`:
+```bash
+cat <<EOF > ${WORK_DIR}$GKE_CONFIGS_DIR_NAME/policies/templates/virtualservicewithhost.yaml
+apiVersion: templates.gatekeeper.sh/v1
+kind: ConstraintTemplate
+metadata:
+  name: virtualservicewithhost
+  annotations:
+    description: "VirtualService shouldn't define the hosts with *."
+spec:
+  crd:
+    spec:
+      names:
+        kind: VirtualServiceWithHost
+  targets:
+    - target: admission.k8s.gatekeeper.sh
+      rego: |-
+        package virtualservicewithhost
+        # spec.hosts does not exist
+        violation[{"msg": msg}] {
+          is_virtualservice(input.review.kind)
+          not contains_hosts(input.review.object.spec)
+          msg := "hosts does not exist"
+        }
+        # spec.hosts does not contain '*'
+        violation[{"msg": msg}] {
+          is_virtualservice(input.review.kind)
+          principal := input.review.object.spec.hosts[_]
+          principal == "*"
+          msg := "hosts[] cannot be '*'"
+        }
+        is_virtualservice(kind) {
+          kind.kind == "VirtualService"
+          kind.group == "networking.istio.io"
+        }
+        contains_hosts(spec) {
+          spec.hosts
+        }
+EOF
+```
+
+Define the `virtual-service-with-host` `Constraint` based on the `VirtualServiceWithHost` `ConstraintTemplate` just defined:
+```Bash
+cat <<EOF > ${WORK_DIR}$GKE_CONFIGS_DIR_NAME/policies/constraints/virtual-service-with-host.yaml
+apiVersion: constraints.gatekeeper.sh/v1beta1
+kind: VirtualServiceWithHost
+metadata:
+  name: virtual-service-with-host
+  annotations:
+    policycontroller.gke.io/constraintData: |
+      "{
+        description: 'Requires that Istio VirtualService "hosts" must be set to something other than "*".',
+        remediation: 'Any VirtualService shouldn't define the "hosts" with "*".'
+      }"
+spec:
+  enforcementAction: deny
+  match:
+    kinds:
+    - apiGroups:
+      - networking.istio.io
+      kinds:
+      - VirtualService
+EOF
+```
+
 ## Update Gatekeeper config for Referrential `Constraints`
 
 Update the previously defined `config-referential-constraints` `Config`:
