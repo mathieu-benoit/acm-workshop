@@ -1,0 +1,43 @@
+name: ci-simple
+permissions:
+  contents: read
+on:
+  push:
+    branches:
+      - main
+    paths-ignore:
+      - 'README.md'
+      - '.github/dependabot.yml'
+  pull_request:
+jobs:
+  container:
+    runs-on: ubuntu-22.04
+    steps:
+      - uses: actions/checkout@v3.3.0
+        with:
+          submodules: true
+      - name: prepare environment variables
+        run: |
+          shortSha=`echo ${GITHUB_SHA} | cut -c1-7`
+          echo "IMAGE_NAME=acm-workshop:$shortSha" >> $GITHUB_ENV
+      - name: build container
+        run: |
+          cd app
+          docker build --tag ${IMAGE_NAME} .
+      - name: dockle
+        run: |
+          docker run -v /var/run/docker.sock:/var/run/docker.sock --rm goodwithtech/dockle:latest -ak KEY_SHA512 --exit-code 1 --exit-level fatal ${IMAGE_NAME}
+      - name: run container locally as a test
+        run: |
+          docker run -d -p 8080:8080 --read-only --cap-drop=ALL --user=1000 ${IMAGE_NAME}
+  chart:
+    needs: container
+    runs-on: ubuntu-22.04
+    steps:
+      - uses: actions/checkout@v3.3.0
+      - name: helm lint
+        run: |
+          helm lint chart/ --strict
+          helm template chart/ > helm-output.yaml
+          kustomize create --resources helm-output.yaml
+          kustomize build .
