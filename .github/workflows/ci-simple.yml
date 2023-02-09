@@ -2,12 +2,6 @@ name: ci-simple
 permissions:
   contents: read
 on:
-  push:
-    branches:
-      - main
-    paths-ignore:
-      - 'README.md'
-      - '.github/dependabot.yml'
   pull_request:
 jobs:
   container:
