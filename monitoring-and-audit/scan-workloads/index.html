@@ -8,20 +8,20 @@
     <meta name="description" content="Duration: 5 min | Persona: Apps Operator">
     <meta name="author" content="Mathieu Benoit">
     <title>Scan workloads :: </title>
-    <link href="/acm-workshop/images/favicon.png?1676005875" rel="icon" type="image/png">
+    <link href="/acm-workshop/images/favicon.png?1676005989" rel="icon" type="image/png">
     <!-- https://github.com/filamentgroup/loadCSS/blob/master/README.md#how-to-use -->
-    <link href="/acm-workshop/css/fontawesome-all.min.css?1676005875" rel="stylesheet" media="print" onload="this.media='all';this.onload=null;"><noscript><link href="/acm-workshop/css/fontawesome-all.min.css?1676005875" rel="stylesheet"></noscript>
-    <link href="/acm-workshop/css/auto-complete.css?1676005875" rel="stylesheet" media="print" onload="this.media='all';this.onload=null;"><noscript><link href="/acm-workshop/css/auto-complete.css?1676005875" rel="stylesheet"></noscript>
-    <link href="/acm-workshop/css/perfect-scrollbar.min.css?1676005875" rel="stylesheet">
-    <link href="/acm-workshop/css/nucleus.css?1676005875" rel="stylesheet">
-    <link href="/acm-workshop/css/fonts.css?1676005875" rel="stylesheet" media="print" onload="this.media='all';this.onload=null;"><noscript><link href="/acm-workshop/css/fonts.css?1676005875" rel="stylesheet"></noscript>
-    <link href="/acm-workshop/css/theme.css?1676005875" rel="stylesheet">
-    <link href="/acm-workshop/css/theme-mine.css?1676005875" rel="stylesheet" id="variant-style">
-    <link href="/acm-workshop/css/ie.css?1676005875" rel="stylesheet">
-    <link href="/acm-workshop/css/variant.css?1676005875" rel="stylesheet">
-    <link href="/acm-workshop/css/print.css?1676005875" rel="stylesheet" media="print">
-    <script src="/acm-workshop/js/url.js?1676005875"></script>
-    <script src="/acm-workshop/js/variant.js?1676005875"></script>
+    <link href="/acm-workshop/css/fontawesome-all.min.css?1676005989" rel="stylesheet" media="print" onload="this.media='all';this.onload=null;"><noscript><link href="/acm-workshop/css/fontawesome-all.min.css?1676005989" rel="stylesheet"></noscript>
+    <link href="/acm-workshop/css/auto-complete.css?1676005989" rel="stylesheet" media="print" onload="this.media='all';this.onload=null;"><noscript><link href="/acm-workshop/css/auto-complete.css?1676005989" rel="stylesheet"></noscript>
+    <link href="/acm-workshop/css/perfect-scrollbar.min.css?1676005989" rel="stylesheet">
+    <link href="/acm-workshop/css/nucleus.css?1676005989" rel="stylesheet">
+    <link href="/acm-workshop/css/fonts.css?1676005989" rel="stylesheet" media="print" onload="this.media='all';this.onload=null;"><noscript><link href="/acm-workshop/css/fonts.css?1676005989" rel="stylesheet"></noscript>
+    <link href="/acm-workshop/css/theme.css?1676005989" rel="stylesheet">
+    <link href="/acm-workshop/css/theme-mine.css?1676005989" rel="stylesheet" id="variant-style">
+    <link href="/acm-workshop/css/ie.css?1676005989" rel="stylesheet">
+    <link href="/acm-workshop/css/variant.css?1676005989" rel="stylesheet">
+    <link href="/acm-workshop/css/print.css?1676005989" rel="stylesheet" media="print">
+    <script src="/acm-workshop/js/url.js?1676005989"></script>
+    <script src="/acm-workshop/js/variant.js?1676005989"></script>
     <script>
       // hack to let hugo tell us how to get to the root when using relativeURLs, it needs to be called *url= for it to do its magic:
       // https://github.com/gohugoio/hugo/blob/145b3fcce35fbac25c7033c91c1b7ae6d1179da8/transform/urlreplacers/absurlreplacer.go#L72
@@ -51,7 +51,7 @@ if (!doNotTrack) {
 </script>
 
   </head>
-  <body class="mobile-support html" data-url="/acm-workshop/monitoring-and-audit/scan-workloads/index.html">
+  <body class="mobile-support html disableInlineCopyToClipboard" data-url="/acm-workshop/monitoring-and-audit/scan-workloads/index.html">
     <div id="body" class="default-animation">
       <div id="sidebar-overlay"></div>
       <div id="toc-overlay"></div>
@@ -98,10 +98,10 @@ if (!doNotTrack) {
 <h1 id="scan-workloads">Scan workloads</h1>
 
 <p>
-<a href="#image-346182ebc6fe7a9ef0c7e100eeb68d72" class="lightbox-link">
+<a href="#image-592b7f7f1fac606132c7998b80d7bd05" class="lightbox-link">
 <img src="/images/apps-operator.png" alt="Apps Operator" style="height: auto; width: auto;" loading="lazy">
 </a>
-<a href="javascript:history.back();" class="lightbox" id="image-346182ebc6fe7a9ef0c7e100eeb68d72">
+<a href="javascript:history.back();" class="lightbox" id="image-592b7f7f1fac606132c7998b80d7bd05">
 <img src="/images/apps-operator.png" alt="Apps Operator" class="lightbox-image" loading="lazy">
 </a>
 <em>Duration: 5 min | Persona: Apps Operator</em></p>
@@ -117,10 +117,10 @@ if (!doNotTrack) {
 <div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-Bash" data-lang="Bash"><span style="display:flex;"><span>echo -e <span style="color:#e6db74">&#34;https://console.cloud.google.com/kubernetes/security/dashboard?project=</span><span style="color:#e6db74">${</span>TENANT_PROJECT_ID<span style="color:#e6db74">}</span><span style="color:#e6db74">&#34;</span>
 </span></span></code></pre></div><p>On the default <strong>Dashboard</strong> tab, find the <strong>GKE Posture settings</strong> tile. And for both features <strong>Workload configuration audit</strong> and <strong>Workload vulnerability audit</strong>, click on one of the <strong>Seclect clusters</strong> button, select your GKE cluster and click on the <strong>Turn on audit</strong> button.</p>
 <p>
-<a href="#image-93a2e2bd8b8030fc499624689857c641" class="lightbox-link">
+<a href="#image-02b96d0db4d275c5ec8f2ae46bc2d0c3" class="lightbox-link">
 <img src="/images/gke-security-posture-enablement.png" alt="Enable GKE Security Posture" style="height: auto; width: auto;" loading="lazy">
 </a>
-<a href="javascript:history.back();" class="lightbox" id="image-93a2e2bd8b8030fc499624689857c641">
+<a href="javascript:history.back();" class="lightbox" id="image-02b96d0db4d275c5ec8f2ae46bc2d0c3">
 <img src="/images/gke-security-posture-enablement.png" alt="Enable GKE Security Posture" class="lightbox-image" loading="lazy">
 </a></p>
 <p>Then you have to wait a little bit while these features are being enabled on your GKE cluster and eventually the audit will start:</p>
@@ -129,18 +129,18 @@ if (!doNotTrack) {
 </blockquote>
 <p>When the audit is done, you will be able to see the report of the vulnerabilities found. The <strong>Workload configuration audit</strong> will come first, <strong>Workload vulnerability audit</strong> will be generated later.</p>
 <p>
-<a href="#image-72f9acf0b6a85af7f06e7d772b4849c0" class="lightbox-link">
+<a href="#image-9b2bb7920b9aa5936a010618ea0c3079" class="lightbox-link">
 <img src="/images/gke-security-posture-report.png" alt="GKE Security Posture report" style="height: auto; width: auto;" loading="lazy">
 </a>
-<a href="javascript:history.back();" class="lightbox" id="image-72f9acf0b6a85af7f06e7d772b4849c0">
+<a href="javascript:history.back();" class="lightbox" id="image-9b2bb7920b9aa5936a010618ea0c3079">
 <img src="/images/gke-security-posture-report.png" alt="GKE Security Posture report" class="lightbox-image" loading="lazy">
 </a></p>
 <p>You will also be able to see in details the associated concerns:</p>
 <p>
-<a href="#image-338a15622d04507b525e8ab3f20b6329" class="lightbox-link">
+<a href="#image-d65b57b9170334185f0563b9bfe0ed08" class="lightbox-link">
 <img src="/images/gke-security-posture-concerns.png" alt="GKE Security Posture concerns" style="height: auto; width: auto;" loading="lazy">
 </a>
-<a href="javascript:history.back();" class="lightbox" id="image-338a15622d04507b525e8ab3f20b6329">
+<a href="javascript:history.back();" class="lightbox" id="image-d65b57b9170334185f0563b9bfe0ed08">
 <img src="/images/gke-security-posture-concerns.png" alt="GKE Security Posture concerns" class="lightbox-image" loading="lazy">
 </a></p>
 
@@ -328,8 +328,8 @@ if (!doNotTrack) {
         </div>
       </div>
     </aside>
-    <script src="/acm-workshop/js/clipboard.min.js?1676005875" defer></script>
-    <script src="/acm-workshop/js/perfect-scrollbar.min.js?1676005875" defer></script>
-    <script src="/acm-workshop/js/theme.js?1676005875" defer></script>
+    <script src="/acm-workshop/js/clipboard.min.js?1676005989" defer></script>
+    <script src="/acm-workshop/js/perfect-scrollbar.min.js?1676005989" defer></script>
+    <script src="/acm-workshop/js/theme.js?1676005989" defer></script>
   </body>
 </html>
