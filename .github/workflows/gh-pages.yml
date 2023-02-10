@@ -23,7 +23,7 @@ jobs:
       - name: Build
         run: |
           cd app
-          hugo --minify --baseURL "https://mathieu-benoit.github.io/acm-workshop"
+          hugo --baseURL "https://mathieu-benoit.github.io/acm-workshop"
       - name: Deploy
         uses: peaceiris/actions-gh-pages@v3
         if: github.ref == 'refs/heads/main'
