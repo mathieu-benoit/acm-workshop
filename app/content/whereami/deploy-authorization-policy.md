@@ -4,7 +4,7 @@ weight: 6
 description: "Duration: 5 min | Persona: Apps Operator"
 tags: ["apps-operator", "asm", "security-tips"]
 ---
-![Apps Operator](/images/apps-operator.png)
+![Apps Operator](https://github.com/mathieu-benoit/my-images/raw/main/acm-workshop/apps-operator.png)
 _{{< param description >}}_
 
 In this section, you will see how to track the `AuthorizationPolicies` issue and then you will deploy granular and specific `AuthorizationPolicies` for the Whereami namespace to fix this issue.

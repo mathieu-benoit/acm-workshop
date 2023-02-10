@@ -4,7 +4,7 @@ weight: 2
 description: "Duration: 5 min | Persona: Apps Operator"
 tags: ["apps-operator", "asm", "monitoring", "security-tips"]
 ---
-![Apps Operator](/images/apps-operator.png)
+![Apps Operator](https://github.com/mathieu-benoit/my-images/raw/main/acm-workshop/apps-operator.png)
 _{{< param description >}}_
 
 In this section, you will monitor security features such as Network Policies and Service requests of your apps in the Google Cloud console.
@@ -23,10 +23,10 @@ echo -e "https://console.cloud.google.com/anthos/security/policy-summary?project
 ```
 
 Select the `onlineboutique` `Namespace` on the **Policy audit** tab:
-![Anthos Security overview for Online Boutique](/images/anthos-security-view.png)
+![Anthos Security overview for Online Boutique](https://github.com/mathieu-benoit/my-images/raw/main/acm-workshop/anthos-security-view.png)
 
 Select the `frontend` **Workload** to open a more detailed view:
-![Anthos Security details for Online Boutique](/images/anthos-security-details.png)
+![Anthos Security details for Online Boutique](https://github.com/mathieu-benoit/my-images/raw/main/acm-workshop/anthos-security-details.png)
 
 From this view you could gain more visibility about **Inbound denials** or **Outbound denials** for both **Network policy requests** (`NetworkPolicies`) or **Service requests** (`AuthorizationPolicies`).
 

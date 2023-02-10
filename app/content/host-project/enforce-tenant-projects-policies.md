@@ -4,7 +4,7 @@ weight: 4
 description: "Duration: 5 min | Persona: Org Admin"
 tags: ["org-admin", "policies", "security-tips"]
 ---
-![Org Admin](/images/org-admin.png)
+![Org Admin](https://github.com/mathieu-benoit/my-images/raw/main/acm-workshop/org-admin.png)
 _{{< param description >}}_
 
 In this section you will enforce policies to guarantee that any `Namespaces` in the ConfigController instance defining any Tenant project should contain its own `ConfigConnectorContext` object in order to leverage the [namespaced mode of Config Connector](https://cloud.google.com/config-connector/docs/how-to/advanced-install#namespaced-mode).

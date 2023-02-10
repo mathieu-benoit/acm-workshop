@@ -7,4 +7,4 @@ Set up the Whereami app.
 
 {{% children showhidden="false" description="true" style="h4" %}}
 
-![Whereami overview](/images/whereami-overview.png?width=50pc)
+![Whereami overview](https://github.com/mathieu-benoit/my-images/raw/main/acm-workshop/whereami-overview.png?width=50pc)

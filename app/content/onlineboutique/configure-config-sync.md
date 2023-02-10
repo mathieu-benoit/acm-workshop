@@ -4,7 +4,7 @@ weight: 4
 description: "Duration: 5 min | Persona: Platform Admin"
 tags: ["asm", "gitops-tips", "platform-admin", "security-tips"]
 ---
-![Platform Admin](/images/platform-admin.png)
+![Platform Admin](https://github.com/mathieu-benoit/my-images/raw/main/acm-workshop/platform-admin.png)
 _{{< param description >}}_
 
 In this section, you will configure Config Sync to sync the resources in the Online Boutique `Namespace` via its associated `RoleBinding`.

@@ -4,7 +4,7 @@ weight: 3
 description: "Duration: 5 min | Persona: Org Admin"
 tags: ["org-admin", "policies", "security-tips"]
 ---
-![Org Admin](/images/org-admin.png)
+![Org Admin](https://github.com/mathieu-benoit/my-images/raw/main/acm-workshop/org-admin.png)
 _{{< param description >}}_
 
 In this section, you will set up policies in order to enforce governance against the Kubernetes manifests defining your Google Cloud services. As an example, you will limit the locations and the kind available for the Google Cloud services.

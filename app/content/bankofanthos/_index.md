@@ -7,4 +7,4 @@ Set up the Bank of Anthos apps.
 
 {{% children showhidden="false" description="true" style="h4" %}}
 
-![Bank of Anthosoverview](/images/bankofanthos-overview.png?width=50pc)
+![Bank of Anthosoverview](https://github.com/mathieu-benoit/my-images/raw/main/acm-workshop/bankofanthos-overview.png?width=50pc)

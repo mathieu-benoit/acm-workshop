@@ -4,7 +4,7 @@ weight: 5
 description: "Duration: 10 min | Persona: Platform Admin"
 tags: ["gitops-tips", "kcc", "platform-admin"]
 ---
-![Platform Admin](/images/platform-admin.png)
+![Platform Admin](https://github.com/mathieu-benoit/my-images/raw/main/acm-workshop/platform-admin.png)
 _{{< param description >}}_
 
 In this section, you will set up Config Sync and Policy Controller for the GKE cluster. You will also configure a main/root GitHub repository for this GKE cluster.

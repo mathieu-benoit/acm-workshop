@@ -4,7 +4,7 @@ weight: 3
 description: "Duration: 5 min | Persona: Platform Admin"
 tags: ["gitops-tips", "platform-admin"]
 ---
-![Platform Admin](/images/platform-admin.png)
+![Platform Admin](https://github.com/mathieu-benoit/my-images/raw/main/acm-workshop/platform-admin.png)
 _{{< param description >}}_
 
 In this section, you will bind the workload identity capability from the Online Boutique's `RepoSync` Kubernetes Service Account to the Artifact Registry reader Google Service Account created earlier.

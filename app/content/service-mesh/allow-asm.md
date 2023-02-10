@@ -4,7 +4,7 @@ weight: 1
 description: "Duration: 5 min | Persona: Org Admin"
 tags: ["asm", "kcc", "org-admin"]
 ---
-![Org Admin](/images/org-admin.png)
+![Org Admin](https://github.com/mathieu-benoit/my-images/raw/main/acm-workshop/org-admin.png)
 _{{< param description >}}_
 
 In this section, you will enable and grant the appropriate APIs in the Tenant project and the IAM role for the Tenant project's service account to allow later this service account configure a Service Mesh for your GKE cluster. You will also enable the Anthos API in order to leverage the Service Mesh feature from within the Google Cloud console.

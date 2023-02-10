@@ -4,7 +4,7 @@ weight: 1
 description: "Duration: 5 min | Persona: Platform Admin"
 tags: ["gitops-tips", "kcc", "platform-admin"]
 ---
-![Platform Admin](/images/platform-admin.png)
+![Platform Admin](https://github.com/mathieu-benoit/my-images/raw/main/acm-workshop/platform-admin.png)
 _{{< param description >}}_
 
 In this section, you will set up the VPC, subnet and Cloud NAT which will be used by the GKE cluster later.

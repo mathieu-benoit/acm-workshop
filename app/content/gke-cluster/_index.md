@@ -7,4 +7,4 @@ Set up the GKE cluster.
 
 {{% children showhidden="false" description="true" style="h4" %}}
 
-![GKE cluster overview](/images/gke-cluster-overview.png?width=50pc)
+![GKE cluster overview](https://github.com/mathieu-benoit/my-images/raw/main/acm-workshop/gke-cluster-overview.png?width=50pc)

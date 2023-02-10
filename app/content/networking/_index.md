@@ -7,4 +7,4 @@ Set up the Networking in the Tenant project.
 
 {{% children showhidden="false" description="true" style="h4" %}}
 
-![Networking overview](/images/networking-overview.png?width=50pc)
+![Networking overview](https://github.com/mathieu-benoit/my-images/raw/main/acm-workshop/networking-overview.png?width=50pc)

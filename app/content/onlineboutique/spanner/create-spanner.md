@@ -4,7 +4,7 @@ weight: 2
 description: "Duration: 10 min | Persona: Platform Admin"
 tags: ["kcc", "platform-admin"]
 ---
-![Platform Admin](/images/platform-admin.png)
+![Platform Admin](https://github.com/mathieu-benoit/my-images/raw/main/acm-workshop/platform-admin.png)
 _{{< param description >}}_
 
 In this section, you will create a Spanner instance and database for the Online Boutique's `cartservice` app to connect to. You will also configure the associated `cartservice`'s Google Service account to have fine granular read access to the Spanner database via Workload Identity.

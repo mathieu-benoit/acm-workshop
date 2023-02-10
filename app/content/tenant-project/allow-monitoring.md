@@ -4,7 +4,7 @@ weight: 4
 description: "Duration: 2 min | Persona: Org Admin"
 tags: ["kcc", "monitoring", "org-admin"]
 ---
-![Org Admin](/images/org-admin.png)
+![Org Admin](https://github.com/mathieu-benoit/my-images/raw/main/acm-workshop/org-admin.png)
 _{{< param description >}}_
 
 In this section, you will grant the appropriate the IAM roles for the Tenant project's service account. This will allow later this service account to provision some monitoring features.

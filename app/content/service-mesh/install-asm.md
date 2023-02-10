@@ -4,7 +4,7 @@ weight: 2
 description: "Duration: 15 min | Persona: Platform Admin"
 tags: ["asm", "kcc", "platform-admin", "security-tips"]
 ---
-![Platform Admin](/images/platform-admin.png)
+![Platform Admin](https://github.com/mathieu-benoit/my-images/raw/main/acm-workshop/platform-admin.png)
 _{{< param description >}}_
 
 In this section, you will install a Managed Service Mesh for your GKE cluster. This will opt your cluster in a specific channel in order to get the upgrades handled by Google for the managed control plane and managed data plane.

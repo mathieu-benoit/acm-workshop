@@ -4,7 +4,7 @@ weight: 3
 description: "Duration: 10 min | Persona: Platform Admin"
 tags: ["kcc", "platform-admin"]
 ---
-![Platform Admin](/images/platform-admin.png)
+![Platform Admin](https://github.com/mathieu-benoit/my-images/raw/main/acm-workshop/platform-admin.png)
 _{{< param description >}}_
 
 In this section, you will create a Memorystore (Redis) instance for the Online Boutique's `cartservice` app to connect to. We will also create a second Memorystore (Redis) with TLS enabled which will be leveraged in another section.

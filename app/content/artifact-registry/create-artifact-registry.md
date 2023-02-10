@@ -4,7 +4,7 @@ weight: 2
 description: "Duration: 5 min | Persona: Platform Admin"
 tags: ["gitops-tips", "kcc", "platform-admin"]
 ---
-![Platform Admin](/images/platform-admin.png)
+![Platform Admin](https://github.com/mathieu-benoit/my-images/raw/main/acm-workshop/platform-admin.png)
 _{{< param description >}}_
 
 In this section, you will set up your own private Artifact Registry to store both all the container images and the Helm charts required for this workshop. You will also grant viewer access to both: the GKE's GSA and Config Sync's GSA.

@@ -4,7 +4,7 @@ weight: 4
 description: "Duration: 10 min | Persona: Apps Operator"
 tags: ["apps-operator", "helm"]
 ---
-![Apps Operator](/images/apps-operator.png)
+![Apps Operator](https://github.com/mathieu-benoit/my-images/raw/main/acm-workshop/apps-operator.png)
 _{{< param description >}}_
 
 In this section, you will update the OnlineBoutique's `cartservice` app in order to point to the Memorystore (Redis) instance previously created.

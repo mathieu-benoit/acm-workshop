@@ -4,7 +4,7 @@ weight: 2
 description: "Duration: 20 min | Persona: Org Admin"
 tags: ["org-admin"]
 ---
-![Org Admin](/images/org-admin.png)
+![Org Admin](https://github.com/mathieu-benoit/my-images/raw/main/acm-workshop/org-admin.png)
 _{{< param description >}}_
 
 In this section, you will create your Config Controller instance. You will also add the least privilege Google Cloud roles to its associated service account. This Config Controller instance will allow throughout this workshop to deploy any infrastructure via Kubernetes manifests.

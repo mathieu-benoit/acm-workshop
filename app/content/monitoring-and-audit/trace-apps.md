@@ -4,7 +4,7 @@ weight: 4
 description: "Duration: 5 min | Persona: Apps Operator"
 tags: ["asm", "apps-operator", "monitoring"]
 ---
-![Apps Operator](/images/apps-operator.png)
+![Apps Operator](https://github.com/mathieu-benoit/my-images/raw/main/acm-workshop/apps-operator.png)
 _{{< param description >}}_
 
 In this section, you will trace your apps in order to follow a request through your Service Mesh, observe the network calls and profile your system end to end.
@@ -21,6 +21,6 @@ echo -e "https://console.cloud.google.com/traces/list?project=${TENANT_PROJECT_I
 ```
 
 Select one of the Online Boutique's `frontend` app's requests:
-![Anthos Service Mesh Monitoring overview](/images/cloud-trace.png)
+![Anthos Service Mesh Monitoring overview](https://github.com/mathieu-benoit/my-images/raw/main/acm-workshop/cloud-trace.png)
 
 From there you will have access to a lot more details about the different calls, trace logs, etc.

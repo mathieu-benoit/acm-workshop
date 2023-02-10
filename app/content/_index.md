@@ -32,7 +32,7 @@ After the workshop, you will be able to:
 
 With this workshop, here is what you will accomplish, from scratch:
 
-![Workshop Architecture diagram](/images/architecture.png)
+![Workshop Architecture diagram](https://github.com/mathieu-benoit/my-images/raw/main/acm-workshop/architecture.png)
 
 Recently tested with:
 - GKE 1.25.5-gke.1500

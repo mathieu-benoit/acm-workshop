@@ -4,7 +4,7 @@ weight: 1
 description: "Duration: 5 min | Persona: Org Admin"
 tags: ["org-admin"]
 ---
-![Org Admin](/images/org-admin.png)
+![Org Admin](https://github.com/mathieu-benoit/my-images/raw/main/acm-workshop/org-admin.png)
 _{{< param description >}}_
 
 In this section, you will create the Host project. This Google Cloud project will host the Config Controller instance later.

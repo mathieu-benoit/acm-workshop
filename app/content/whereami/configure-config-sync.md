@@ -4,7 +4,7 @@ weight: 3
 description: "Duration: 10 min | Persona: Platform Admin"
 tags: ["asm", "gitops-tips", "platform-admin", "security-tips"]
 ---
-![Platform Admin](/images/platform-admin.png)
+![Platform Admin](https://github.com/mathieu-benoit/my-images/raw/main/acm-workshop/platform-admin.png)
 _{{< param description >}}_
 
 In this section, you will configure Config Sync to sync the resources in the Whereami `Namespace` via its associated `RepoSync` and `RoleBinding`.

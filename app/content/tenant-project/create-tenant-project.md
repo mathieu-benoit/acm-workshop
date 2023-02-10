@@ -4,7 +4,7 @@ weight: 1
 description: "Duration: 10 min | Persona: Org Admin"
 tags: ["kcc", "org-admin"]
 ---
-![Org Admin](/images/org-admin.png)
+![Org Admin](https://github.com/mathieu-benoit/my-images/raw/main/acm-workshop/org-admin.png)
 _{{< param description >}}_
 
 In this section, you will create the Tenant project. The Tenant project will contain all the Google Cloud resources needed in this workshop.

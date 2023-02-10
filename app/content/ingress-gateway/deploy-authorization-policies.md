@@ -4,7 +4,7 @@ weight: 6
 description: "Duration: 5 min | Persona: Platform Admin"
 tags: ["asm", "platform-admin", "security-tips"]
 ---
-![Platform Admin](/images/platform-admin.png)
+![Platform Admin](https://github.com/mathieu-benoit/my-images/raw/main/acm-workshop/platform-admin.png)
 _{{< param description >}}_
 
 In this section, you will deploy granular and specific `AuthorizationPolicies` for the Ingress Gateway namespace.

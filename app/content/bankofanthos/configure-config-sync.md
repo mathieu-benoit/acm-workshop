@@ -4,7 +4,7 @@ weight: 3
 description: "Duration: 10 min | Persona: Platform Admin"
 tags: ["asm", "gitops-tips", "platform-admin", "security-tips"]
 ---
-![Platform Admin](/images/platform-admin.png)
+![Platform Admin](https://github.com/mathieu-benoit/my-images/raw/main/acm-workshop/platform-admin.png)
 _{{< param description >}}_
 
 In this section, you will set up a dedicated GitHub repository which will contain all the Kubernetes manifests of the Bank of Anthos apps. You will also have the opportunity to catch a policies violation.

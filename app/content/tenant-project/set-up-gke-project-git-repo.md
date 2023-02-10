@@ -4,7 +4,7 @@ weight: 2
 description: "Duration: 5 min | Persona: Org Admin"
 tags: ["gitops-tips", "org-admin", "security-tips"]
 ---
-![Org Admin](/images/org-admin.png)
+![Org Admin](https://github.com/mathieu-benoit/my-images/raw/main/acm-workshop/org-admin.png)
 _{{< param description >}}_
 
 In this section, you will set up a dedicated GitHub repository containing all the Kubernetes manifests which will be deployed by Config Sync and Config Connector in order to provision the Google Cloud services in the Tenant project.

@@ -4,7 +4,7 @@ weight: 5
 description: "Duration: 5 min | Persona: Platform Admin"
 tags: ["platform-admin", "security-tips", "policies"]
 ---
-![Platform Admin](/images/platform-admin.png)
+![Platform Admin](https://github.com/mathieu-benoit/my-images/raw/main/acm-workshop/platform-admin.png)
 _{{< param description >}}_
 
 In this section, you will see the Policy Controller violation regarding to the missing `NetworkPolicies` in the Ingress Gateway. Finally, you will fix this violation by deploying the associated resources.

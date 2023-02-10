@@ -4,7 +4,7 @@ weight: 5
 description: "Duration: 5 min | Persona: Apps Operator"
 tags: ["apps-operator", "helm", "security-tips"]
 ---
-![Apps Operator](/images/apps-operator.png)
+![Apps Operator](https://github.com/mathieu-benoit/my-images/raw/main/acm-workshop/apps-operator.png)
 _{{< param description >}}_
 
 In this section, you will copy the Online Boutique apps container images and the Helm chart in your private Artifact Registry. You will also scan one container image.

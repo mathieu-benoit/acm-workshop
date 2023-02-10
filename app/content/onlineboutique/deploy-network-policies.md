@@ -4,7 +4,7 @@ weight: 8
 description: "Duration: 5 min | Persona: Apps Operator"
 tags: ["apps-operator", "helm", "policies", "security-tips"]
 ---
-![Apps Operator](/images/apps-operator.png)
+![Apps Operator](https://github.com/mathieu-benoit/my-images/raw/main/acm-workshop/apps-operator.png)
 _{{< param description >}}_
 
 In this section, you will see the Policy Controller violation regarding to the missing `NetworkPolicies` in the Online Boutique namespace. Then, you will fix this violation by deploying the associated resources.

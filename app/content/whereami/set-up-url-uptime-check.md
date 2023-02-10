@@ -4,7 +4,7 @@ weight: 2
 description: "Duration: 10 min | Persona: Platform Admin"
 tags: ["kcc", "monitoring", "platform-admin"]
 ---
-![Platform Admin](/images/platform-admin.png)
+![Platform Admin](https://github.com/mathieu-benoit/my-images/raw/main/acm-workshop/platform-admin.png)
 _{{< param description >}}_
 
 In this section, you will set up an uptime check on the Whereami URL.

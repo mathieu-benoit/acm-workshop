@@ -4,7 +4,7 @@ weight: 4
 description: "Duration: 5 min | Persona: Org Admin"
 tags: ["kcc", "org-admin"]
 ---
-![Org Admin](/images/org-admin.png)
+![Org Admin](https://github.com/mathieu-benoit/my-images/raw/main/acm-workshop/org-admin.png)
 _{{< param description >}}_
 
 In this section, you will enable and grant the appropriate APIs in the Tenant project and the IAM role for the Tenant project's service account. This will allow later this service account to provision the [Fleet](https://cloud.google.com/anthos/fleet-management/docs/fleet-concepts) features.

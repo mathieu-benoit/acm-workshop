@@ -4,7 +4,7 @@ weight: 1
 description: "Duration: 5 min | Persona: Platform Admin"
 tags: ["kcc", "platform-admin"]
 ---
-![Platform Admin](/images/platform-admin.png)
+![Platform Admin](https://github.com/mathieu-benoit/my-images/raw/main/acm-workshop/platform-admin.png)
 _{{< param description >}}_
 
 In this section, you will create a public IP address in order to expose all your applications in your Service Mesh thanks to an Ingress Gateway you will configure.
