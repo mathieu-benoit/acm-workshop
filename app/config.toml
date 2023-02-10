@@ -1,4 +1,4 @@
-baseurl = "/"
+baseurl = "https://mathieu-benoit.github.io/acm-workshop/"
 languageCode = "en-us"
 defaultContentLanguage = "en"
 theme = "hugo-theme-relearn"
