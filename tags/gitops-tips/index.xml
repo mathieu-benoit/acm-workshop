@@ -1,37 +1,123 @@
-<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>gitops-tips on</title><link>https://mathieu-benoit.github.io/acm-workshop/tags/gitops-tips/index.html</link><description>Recent content in gitops-tips on</description><generator>Hugo -- gohugo.io</generator><language>en-us</language><atom:link href="https://mathieu-benoit.github.io/acm-workshop/tags/gitops-tips/index.xml" rel="self" type="application/rss+xml"/><item><title>Set up Network</title><link>https://mathieu-benoit.github.io/acm-workshop/networking/set-up-network/index.html</link><pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate><guid>https://mathieu-benoit.github.io/acm-workshop/networking/set-up-network/index.html</guid><description>Duration: 5 min | Persona: Platform Admin
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>gitops-tips on </title>
+    <link>https://mathieu-benoit.github.io/acm-workshop/tags/gitops-tips/index.html</link>
+    <description>Recent content in gitops-tips on </description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-us</language><atom:link href="https://mathieu-benoit.github.io/acm-workshop/tags/gitops-tips/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Set up Network</title>
+      <link>https://mathieu-benoit.github.io/acm-workshop/networking/set-up-network/index.html</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      <guid>https://mathieu-benoit.github.io/acm-workshop/networking/set-up-network/index.html</guid>
+      <description>Duration: 5 min | Persona: Platform Admin
 In this section, you will set up the VPC, subnet and Cloud NAT which will be used by the GKE cluster later.
 Initialize variables:
 WORK_DIR=~/ source ${WORK_DIR}acm-workshop-variables.sh echo &amp;#34;export GKE_NAME=gke&amp;#34; &amp;gt;&amp;gt; ${WORK_DIR}acm-workshop-variables.sh source ${WORK_DIR}acm-workshop-variables.sh Define VPC and Subnet Define the VPC:
-cat &amp;lt;&amp;lt;EOF &amp;gt; ${WORK_DIR}$TENANT_PROJECT_DIR_NAME/vpc.yaml apiVersion: compute.cnrm.cloud.google.com/v1beta1 kind: ComputeNetwork metadata: annotations: cnrm.cloud.google.com/project-id: ${TENANT_PROJECT_ID} name: ${GKE_NAME} namespace: ${TENANT_PROJECT_ID} spec: routingMode: REGIONAL autoCreateSubnetworks: false EOF Define the Subnet:</description></item><item><title>Create Artifact Registry</title><link>https://mathieu-benoit.github.io/acm-workshop/artifact-registry/create-artifact-registry/index.html</link><pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate><guid>https://mathieu-benoit.github.io/acm-workshop/artifact-registry/create-artifact-registry/index.html</guid><description>Duration: 5 min | Persona: Platform Admin
+cat &amp;lt;&amp;lt;EOF &amp;gt; ${WORK_DIR}$TENANT_PROJECT_DIR_NAME/vpc.yaml apiVersion: compute.cnrm.cloud.google.com/v1beta1 kind: ComputeNetwork metadata: annotations: cnrm.cloud.google.com/project-id: ${TENANT_PROJECT_ID} name: ${GKE_NAME} namespace: ${TENANT_PROJECT_ID} spec: routingMode: REGIONAL autoCreateSubnetworks: false EOF Define the Subnet:</description>
+    </item>
+    <item>
+      <title>Create Artifact Registry</title>
+      <link>https://mathieu-benoit.github.io/acm-workshop/artifact-registry/create-artifact-registry/index.html</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      <guid>https://mathieu-benoit.github.io/acm-workshop/artifact-registry/create-artifact-registry/index.html</guid>
+      <description>Duration: 5 min | Persona: Platform Admin
 In this section, you will set up your own private Artifact Registry to store both all the container images and the Helm charts required for this workshop. You will also grant viewer access to both: the GKE&amp;rsquo;s GSA and Config Sync&amp;rsquo;s GSA.
 Initialize variables:
-WORK_DIR=~/ source ${WORK_DIR}acm-workshop-variables.sh CONTAINER_REGISTRY_NAME=containers echo &amp;#34;export CONTAINER_REGISTRY_NAME=${CONTAINER_REGISTRY_NAME}&amp;#34; &amp;gt;&amp;gt; ${WORK_DIR}acm-workshop-variables.sh CHART_REGISTRY_NAME=charts echo &amp;#34;export CHART_REGISTRY_NAME=${CHART_REGISTRY_NAME}&amp;#34; &amp;gt;&amp;gt; ${WORK_DIR}acm-workshop-variables.sh CONTAINER_REGISTRY_HOST_NAME=${GKE_LOCATION}-docker.pkg.dev echo &amp;#34;export CONTAINER_REGISTRY_HOST_NAME=${CONTAINER_REGISTRY_HOST_NAME}&amp;#34; &amp;gt;&amp;gt; ${WORK_DIR}acm-workshop-variables.</description></item><item><title>Set up Tenant project's Git repo</title><link>https://mathieu-benoit.github.io/acm-workshop/tenant-project/set-up-gke-project-git-repo/index.html</link><pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate><guid>https://mathieu-benoit.github.io/acm-workshop/tenant-project/set-up-gke-project-git-repo/index.html</guid><description>Duration: 5 min | Persona: Org Admin
+WORK_DIR=~/ source ${WORK_DIR}acm-workshop-variables.sh CONTAINER_REGISTRY_NAME=containers echo &amp;#34;export CONTAINER_REGISTRY_NAME=${CONTAINER_REGISTRY_NAME}&amp;#34; &amp;gt;&amp;gt; ${WORK_DIR}acm-workshop-variables.sh CHART_REGISTRY_NAME=charts echo &amp;#34;export CHART_REGISTRY_NAME=${CHART_REGISTRY_NAME}&amp;#34; &amp;gt;&amp;gt; ${WORK_DIR}acm-workshop-variables.sh CONTAINER_REGISTRY_HOST_NAME=${GKE_LOCATION}-docker.pkg.dev echo &amp;#34;export CONTAINER_REGISTRY_HOST_NAME=${CONTAINER_REGISTRY_HOST_NAME}&amp;#34; &amp;gt;&amp;gt; ${WORK_DIR}acm-workshop-variables.</description>
+    </item>
+    <item>
+      <title>Set up Tenant project&#39;s Git repo</title>
+      <link>https://mathieu-benoit.github.io/acm-workshop/tenant-project/set-up-gke-project-git-repo/index.html</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      <guid>https://mathieu-benoit.github.io/acm-workshop/tenant-project/set-up-gke-project-git-repo/index.html</guid>
+      <description>Duration: 5 min | Persona: Org Admin
 In this section, you will set up a dedicated GitHub repository containing all the Kubernetes manifests which will be deployed by Config Sync and Config Connector in order to provision the Google Cloud services in the Tenant project.
 Define variables:
-WORK_DIR=~/ source ${WORK_DIR}acm-workshop-variables.sh echo &amp;#34;export TENANT_PROJECT_DIR_NAME=acm-workshop-tenant-project-repo&amp;#34; &amp;gt;&amp;gt; ${WORK_DIR}acm-workshop-variables.sh source ${WORK_DIR}acm-workshop-variables.sh Create GitHub repository Create a dedicated GitHub repository to store any Kubernetes manifests associated to the Tenant project:</description></item><item><title>Allow Config Sync</title><link>https://mathieu-benoit.github.io/acm-workshop/onlineboutique/allow-config-sync/index.html</link><pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate><guid>https://mathieu-benoit.github.io/acm-workshop/onlineboutique/allow-config-sync/index.html</guid><description>Duration: 5 min | Persona: Platform Admin
+WORK_DIR=~/ source ${WORK_DIR}acm-workshop-variables.sh echo &amp;#34;export TENANT_PROJECT_DIR_NAME=acm-workshop-tenant-project-repo&amp;#34; &amp;gt;&amp;gt; ${WORK_DIR}acm-workshop-variables.sh source ${WORK_DIR}acm-workshop-variables.sh Create GitHub repository Create a dedicated GitHub repository to store any Kubernetes manifests associated to the Tenant project:</description>
+    </item>
+    <item>
+      <title>Allow Config Sync</title>
+      <link>https://mathieu-benoit.github.io/acm-workshop/onlineboutique/allow-config-sync/index.html</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      <guid>https://mathieu-benoit.github.io/acm-workshop/onlineboutique/allow-config-sync/index.html</guid>
+      <description>Duration: 5 min | Persona: Platform Admin
 In this section, you will bind the workload identity capability from the Online Boutique&amp;rsquo;s RepoSync Kubernetes Service Account to the Artifact Registry reader Google Service Account created earlier.
 Initialize variables:
-WORK_DIR=~/ source ${WORK_DIR}acm-workshop-variables.sh echo &amp;#34;export ONLINEBOUTIQUE_NAMESPACE=onlineboutique&amp;#34; &amp;gt;&amp;gt; ${WORK_DIR}acm-workshop-variables.sh source ${WORK_DIR}acm-workshop-variables.sh mkdir ${WORK_DIR}$TENANT_PROJECT_DIR_NAME/$ONLINEBOUTIQUE_NAMESPACE Bind the Artifact Registry reader GSA to the Online Boutique&amp;rsquo;s RepoSync cat &amp;lt;&amp;lt;EOF &amp;gt; ${WORK_DIR}$TENANT_PROJECT_DIR_NAME/$ONLINEBOUTIQUE_NAMESPACE/artifactregistry-charts-reader-workload-identity-user.yaml apiVersion: iam.cnrm.cloud.google.com/v1beta1 kind: IAMPartialPolicy metadata: name: ${HELM_CHARTS_READER_GSA}-${ONLINEBOUTIQUE_NAMESPACE} namespace: ${TENANT_PROJECT_ID} annotations: config.</description></item><item><title>Configure Config Sync</title><link>https://mathieu-benoit.github.io/acm-workshop/bankofanthos/configure-config-sync/index.html</link><pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate><guid>https://mathieu-benoit.github.io/acm-workshop/bankofanthos/configure-config-sync/index.html</guid><description>Duration: 10 min | Persona: Platform Admin
+WORK_DIR=~/ source ${WORK_DIR}acm-workshop-variables.sh echo &amp;#34;export ONLINEBOUTIQUE_NAMESPACE=onlineboutique&amp;#34; &amp;gt;&amp;gt; ${WORK_DIR}acm-workshop-variables.sh source ${WORK_DIR}acm-workshop-variables.sh mkdir ${WORK_DIR}$TENANT_PROJECT_DIR_NAME/$ONLINEBOUTIQUE_NAMESPACE Bind the Artifact Registry reader GSA to the Online Boutique&amp;rsquo;s RepoSync cat &amp;lt;&amp;lt;EOF &amp;gt; ${WORK_DIR}$TENANT_PROJECT_DIR_NAME/$ONLINEBOUTIQUE_NAMESPACE/artifactregistry-charts-reader-workload-identity-user.yaml apiVersion: iam.cnrm.cloud.google.com/v1beta1 kind: IAMPartialPolicy metadata: name: ${HELM_CHARTS_READER_GSA}-${ONLINEBOUTIQUE_NAMESPACE} namespace: ${TENANT_PROJECT_ID} annotations: config.</description>
+    </item>
+    <item>
+      <title>Configure Config Sync</title>
+      <link>https://mathieu-benoit.github.io/acm-workshop/bankofanthos/configure-config-sync/index.html</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      <guid>https://mathieu-benoit.github.io/acm-workshop/bankofanthos/configure-config-sync/index.html</guid>
+      <description>Duration: 10 min | Persona: Platform Admin
 In this section, you will set up a dedicated GitHub repository which will contain all the Kubernetes manifests of the Bank of Anthos apps. You will also have the opportunity to catch a policies violation.
 Initialize variables:
-WORK_DIR=~/ source ${WORK_DIR}acm-workshop-variables.sh echo &amp;#34;export BANKOFANTHOS_NAMESPACE=bankofanthos&amp;#34; &amp;gt;&amp;gt; ${WORK_DIR}acm-workshop-variables.sh echo &amp;#34;export BANK_OF_ANTHOS_DIR_NAME=acm-workshop-bankofanthos-repo&amp;#34; &amp;gt;&amp;gt; ${WORK_DIR}acm-workshop-variables.sh source ${WORK_DIR}acm-workshop-variables.sh mkdir -p ${WORK_DIR}$GKE_CONFIGS_DIR_NAME/repo-syncs mkdir ${WORK_DIR}$GKE_CONFIGS_DIR_NAME/repo-syncs/$BANKOFANTHOS_NAMESPACE Define Namespace Define a dedicated Namespace for the Bank of Anthos apps:</description></item><item><title>Configure Config Sync</title><link>https://mathieu-benoit.github.io/acm-workshop/whereami/configure-config-sync/index.html</link><pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate><guid>https://mathieu-benoit.github.io/acm-workshop/whereami/configure-config-sync/index.html</guid><description>Duration: 10 min | Persona: Platform Admin
+WORK_DIR=~/ source ${WORK_DIR}acm-workshop-variables.sh echo &amp;#34;export BANKOFANTHOS_NAMESPACE=bankofanthos&amp;#34; &amp;gt;&amp;gt; ${WORK_DIR}acm-workshop-variables.sh echo &amp;#34;export BANK_OF_ANTHOS_DIR_NAME=acm-workshop-bankofanthos-repo&amp;#34; &amp;gt;&amp;gt; ${WORK_DIR}acm-workshop-variables.sh source ${WORK_DIR}acm-workshop-variables.sh mkdir -p ${WORK_DIR}$GKE_CONFIGS_DIR_NAME/repo-syncs mkdir ${WORK_DIR}$GKE_CONFIGS_DIR_NAME/repo-syncs/$BANKOFANTHOS_NAMESPACE Define Namespace Define a dedicated Namespace for the Bank of Anthos apps:</description>
+    </item>
+    <item>
+      <title>Configure Config Sync</title>
+      <link>https://mathieu-benoit.github.io/acm-workshop/whereami/configure-config-sync/index.html</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      <guid>https://mathieu-benoit.github.io/acm-workshop/whereami/configure-config-sync/index.html</guid>
+      <description>Duration: 10 min | Persona: Platform Admin
 In this section, you will configure Config Sync to sync the resources in the Whereami Namespace via its associated RepoSync and RoleBinding.
 Initialize variables:
 WORK_DIR=~/ source ${WORK_DIR}acm-workshop-variables.sh echo &amp;#34;export WHEREAMI_NAMESPACE=whereami&amp;#34; &amp;gt;&amp;gt; ${WORK_DIR}acm-workshop-variables.sh echo &amp;#34;export WHERE_AMI_DIR_NAME=acm-workshop-whereami-repo&amp;#34; &amp;gt;&amp;gt; ${WORK_DIR}acm-workshop-variables.sh source ${WORK_DIR}acm-workshop-variables.sh mkdir -p ${WORK_DIR}$GKE_CONFIGS_DIR_NAME/repo-syncs mkdir ${WORK_DIR}$GKE_CONFIGS_DIR_NAME/repo-syncs/$WHEREAMI_NAMESPACE Create Namespace Define a dedicated Namespace for the Whereami app:
-cat &amp;lt;&amp;lt;EOF &amp;gt; ${WORK_DIR}$GKE_CONFIGS_DIR_NAME/repo-syncs/$WHEREAMI_NAMESPACE/namespace.yaml apiVersion: v1 kind: Namespace metadata: labels: istio-injection: enabled pod-security.</description></item><item><title>Set up ASM configs</title><link>https://mathieu-benoit.github.io/acm-workshop/service-mesh/set-up-asm-configs/index.html</link><pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate><guid>https://mathieu-benoit.github.io/acm-workshop/service-mesh/set-up-asm-configs/index.html</guid><description>Duration: 5 min | Persona: Platform Admin
+cat &amp;lt;&amp;lt;EOF &amp;gt; ${WORK_DIR}$GKE_CONFIGS_DIR_NAME/repo-syncs/$WHEREAMI_NAMESPACE/namespace.yaml apiVersion: v1 kind: Namespace metadata: labels: istio-injection: enabled pod-security.</description>
+    </item>
+    <item>
+      <title>Set up ASM configs</title>
+      <link>https://mathieu-benoit.github.io/acm-workshop/service-mesh/set-up-asm-configs/index.html</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      <guid>https://mathieu-benoit.github.io/acm-workshop/service-mesh/set-up-asm-configs/index.html</guid>
+      <description>Duration: 5 min | Persona: Platform Admin
 In this section, you will set up some configurations in order to get more insights with Cloud Trace and use the distroless image for your sidecar proxies.
 Initialize variables:
 WORK_DIR=~/ source ${WORK_DIR}acm-workshop-variables.sh ASM_VERSION=asm-managed-rapid echo &amp;#34;export ASM_VERSION=${ASM_VERSION}&amp;#34; &amp;gt;&amp;gt; ${WORK_DIR}acm-workshop-variables.sh source ${WORK_DIR}acm-workshop-variables.sh Info ASM_VERSION is set to asm-managed-rapid because the Managed ASM is following the GKE&amp;rsquo;s channel: rapid.
-Create a dedicated istio-system folder in the GKE configs&amp;rsquo;s Git repo:</description></item><item><title>Set up Host project's Git repo</title><link>https://mathieu-benoit.github.io/acm-workshop/host-project/set-up-host-project-git-repo/index.html</link><pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate><guid>https://mathieu-benoit.github.io/acm-workshop/host-project/set-up-host-project-git-repo/index.html</guid><description>Duration: 10 min | Persona: Org Admin
-In this section, you will set up the primary Git repository of the Config Controller instance in order to have in place a GitOps approach to deploy your infrastructure in Google Cloud. You will also configure a Cloud NAT to this Config Controller instance to give it access to the Internet (GitHub repositories) in Egress. Finally, you will enable the cloudbilling API in the Host project, which will allow the assignment of the Billing Account Id to any Google Cloud project Config Controller will create.</description></item><item><title>Configure Config Sync</title><link>https://mathieu-benoit.github.io/acm-workshop/onlineboutique/configure-config-sync/index.html</link><pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate><guid>https://mathieu-benoit.github.io/acm-workshop/onlineboutique/configure-config-sync/index.html</guid><description>Duration: 5 min | Persona: Platform Admin
+Create a dedicated istio-system folder in the GKE configs&amp;rsquo;s Git repo:</description>
+    </item>
+    <item>
+      <title>Set up Host project&#39;s Git repo</title>
+      <link>https://mathieu-benoit.github.io/acm-workshop/host-project/set-up-host-project-git-repo/index.html</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      <guid>https://mathieu-benoit.github.io/acm-workshop/host-project/set-up-host-project-git-repo/index.html</guid>
+      <description>Duration: 10 min | Persona: Org Admin
+In this section, you will set up the primary Git repository of the Config Controller instance in order to have in place a GitOps approach to deploy your infrastructure in Google Cloud. You will also configure a Cloud NAT to this Config Controller instance to give it access to the Internet (GitHub repositories) in Egress. Finally, you will enable the cloudbilling API in the Host project, which will allow the assignment of the Billing Account Id to any Google Cloud project Config Controller will create.</description>
+    </item>
+    <item>
+      <title>Configure Config Sync</title>
+      <link>https://mathieu-benoit.github.io/acm-workshop/onlineboutique/configure-config-sync/index.html</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      <guid>https://mathieu-benoit.github.io/acm-workshop/onlineboutique/configure-config-sync/index.html</guid>
+      <description>Duration: 5 min | Persona: Platform Admin
 In this section, you will configure Config Sync to sync the resources in the Online Boutique Namespace via its associated RoleBinding.
 Initialize variables:
 WORK_DIR=~/ source ${WORK_DIR}acm-workshop-variables.sh mkdir -p ${WORK_DIR}$GKE_CONFIGS_DIR_NAME/repo-syncs mkdir ${WORK_DIR}$GKE_CONFIGS_DIR_NAME/repo-syncs/$ONLINEBOUTIQUE_NAMESPACE Define Namespace Define a dedicated Namespace for the Online Boutique apps:
-cat &amp;lt;&amp;lt;EOF &amp;gt; ${WORK_DIR}$GKE_CONFIGS_DIR_NAME/repo-syncs/$ONLINEBOUTIQUE_NAMESPACE/namespace.yaml apiVersion: v1 kind: Namespace metadata: labels: istio-injection: enabled pod-security.kubernetes.io/enforce: restricted name: ${ONLINEBOUTIQUE_NAMESPACE} EOF Note In addition to the istio-injection to include this Namespace into our Service Mesh, we are also adding the pod-security.</description></item><item><title>Set up GKE configs's Git repo</title><link>https://mathieu-benoit.github.io/acm-workshop/gke-cluster/set-up-gke-configs-git-repo/index.html</link><pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate><guid>https://mathieu-benoit.github.io/acm-workshop/gke-cluster/set-up-gke-configs-git-repo/index.html</guid><description>Duration: 10 min | Persona: Platform Admin
+cat &amp;lt;&amp;lt;EOF &amp;gt; ${WORK_DIR}$GKE_CONFIGS_DIR_NAME/repo-syncs/$ONLINEBOUTIQUE_NAMESPACE/namespace.yaml apiVersion: v1 kind: Namespace metadata: labels: istio-injection: enabled pod-security.kubernetes.io/enforce: restricted name: ${ONLINEBOUTIQUE_NAMESPACE} EOF Note In addition to the istio-injection to include this Namespace into our Service Mesh, we are also adding the pod-security.</description>
+    </item>
+    <item>
+      <title>Set up GKE configs&#39;s Git repo</title>
+      <link>https://mathieu-benoit.github.io/acm-workshop/gke-cluster/set-up-gke-configs-git-repo/index.html</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      <guid>https://mathieu-benoit.github.io/acm-workshop/gke-cluster/set-up-gke-configs-git-repo/index.html</guid>
+      <description>Duration: 10 min | Persona: Platform Admin
 In this section, you will set up Config Sync and Policy Controller for the GKE cluster. You will also configure a main/root GitHub repository for this GKE cluster.
 Define variables:
 WORK_DIR=~/ source ${WORK_DIR}acm-workshop-variables.sh echo &amp;#34;export GKE_CONFIGS_DIR_NAME=acm-workshop-gke-configs-repo&amp;#34; &amp;gt;&amp;gt; ${WORK_DIR}acm-workshop-variables.sh source ${WORK_DIR}acm-workshop-variables.sh Define ACM GKEHubFeature Define the ACM GKEHubFeature resource:
-cat &amp;lt;&amp;lt;EOF &amp;gt; ${WORK_DIR}$TENANT_PROJECT_DIR_NAME/gke-hub-feature-acm.yaml apiVersion: gkehub.cnrm.cloud.google.com/v1beta1 kind: GKEHubFeature metadata: name: configmanagement namespace: ${TENANT_PROJECT_ID} spec: projectRef: name: ${TENANT_PROJECT_ID} location: global resourceID: configmanagement EOF Note The resourceID must be configmanagement if you want to use Anthos Config Management feature.</description></item><item><title>Monitor resources synced</title><link>https://mathieu-benoit.github.io/acm-workshop/monitoring-and-audit/monitor-resources-synced/index.html</link><pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate><guid>https://mathieu-benoit.github.io/acm-workshop/monitoring-and-audit/monitor-resources-synced/index.html</guid><description>Duration: 5 min | Persona: Apps Operator
+cat &amp;lt;&amp;lt;EOF &amp;gt; ${WORK_DIR}$TENANT_PROJECT_DIR_NAME/gke-hub-feature-acm.yaml apiVersion: gkehub.cnrm.cloud.google.com/v1beta1 kind: GKEHubFeature metadata: name: configmanagement namespace: ${TENANT_PROJECT_ID} spec: projectRef: name: ${TENANT_PROJECT_ID} location: global resourceID: configmanagement EOF Note The resourceID must be configmanagement if you want to use Anthos Config Management feature.</description>
+    </item>
+    <item>
+      <title>Monitor resources synced</title>
+      <link>https://mathieu-benoit.github.io/acm-workshop/monitoring-and-audit/monitor-resources-synced/index.html</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      <guid>https://mathieu-benoit.github.io/acm-workshop/monitoring-and-audit/monitor-resources-synced/index.html</guid>
+      <description>Duration: 5 min | Persona: Apps Operator
 In this section, in the Google Cloud Console you will monitor the resources synced by Config Sync for both the Config Controller instance in the Host project and the GKE cluster in the Tenant project.
 Initialize variables:
-WORK_DIR=~/ source ${WORK_DIR}acm-workshop-variables.sh Monitor the resources synced by Config Sync in the Config Controller instance in the Host project Click on the link displayed by the command below:</description></item></channel></rss>
+WORK_DIR=~/ source ${WORK_DIR}acm-workshop-variables.sh Monitor the resources synced by Config Sync in the Config Controller instance in the Host project Click on the link displayed by the command below:</description>
+    </item>
+  </channel>
+</rss>

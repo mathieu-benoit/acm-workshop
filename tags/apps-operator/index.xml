@@ -1,88 +1,279 @@
-<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>apps-operator on</title><link>https://mathieu-benoit.github.io/acm-workshop/tags/apps-operator/index.html</link><description>Recent content in apps-operator on</description><generator>Hugo -- gohugo.io</generator><language>en-us</language><atom:link href="https://mathieu-benoit.github.io/acm-workshop/tags/apps-operator/index.xml" rel="self" type="application/rss+xml"/><item><title>Monitor apps security</title><link>https://mathieu-benoit.github.io/acm-workshop/monitoring-and-audit/monitor-apps-security/index.html</link><pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate><guid>https://mathieu-benoit.github.io/acm-workshop/monitoring-and-audit/monitor-apps-security/index.html</guid><description>Duration: 5 min | Persona: Apps Operator
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>apps-operator on </title>
+    <link>https://mathieu-benoit.github.io/acm-workshop/tags/apps-operator/index.html</link>
+    <description>Recent content in apps-operator on </description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-us</language><atom:link href="https://mathieu-benoit.github.io/acm-workshop/tags/apps-operator/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Monitor apps security</title>
+      <link>https://mathieu-benoit.github.io/acm-workshop/monitoring-and-audit/monitor-apps-security/index.html</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      <guid>https://mathieu-benoit.github.io/acm-workshop/monitoring-and-audit/monitor-apps-security/index.html</guid>
+      <description>Duration: 5 min | Persona: Apps Operator
 In this section, you will monitor security features such as Network Policies and Service requests of your apps in the Google Cloud console.
 Initialize variables:
-WORK_DIR=~/ source ${WORK_DIR}acm-workshop-variables.sh In the Google Cloud console, navigate to Anthos &amp;gt; Security &amp;gt; Policy Audit and filter for example by onlineboutique Namespace to see that the 3 security features Kubernetes Network policy, Service access control and mTLS status are enabled in green:</description></item><item><title>Personas</title><link>https://mathieu-benoit.github.io/acm-workshop/overview/personas/index.html</link><pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate><guid>https://mathieu-benoit.github.io/acm-workshop/overview/personas/index.html</guid><description>3 personas are involved:
+WORK_DIR=~/ source ${WORK_DIR}acm-workshop-variables.sh In the Google Cloud console, navigate to Anthos &amp;gt; Security &amp;gt; Policy Audit and filter for example by onlineboutique Namespace to see that the 3 security features Kubernetes Network policy, Service access control and mTLS status are enabled in green:</description>
+    </item>
+    <item>
+      <title>Personas</title>
+      <link>https://mathieu-benoit.github.io/acm-workshop/overview/personas/index.html</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      <guid>https://mathieu-benoit.github.io/acm-workshop/overview/personas/index.html</guid>
+      <description>3 personas are involved:
 Org Admin Platform Admin Apps Operator Here are the needs of each persona:
-Info The Developer persona is not involved in this workshop for the reason that they should focus on the code of their apps. The Apps Operator persona is responsible to set up the Continuous Integration part to build and push the container images associated to any apps the Developers are building. With this workshop we are not covering this part, we are assuming that the container images are already built, the Apps Operator persona will take it from here in this workshop and will configure the Continuous Deployment part.</description></item><item><title>Agenda</title><link>https://mathieu-benoit.github.io/acm-workshop/overview/agenda/index.html</link><pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate><guid>https://mathieu-benoit.github.io/acm-workshop/overview/agenda/index.html</guid><description> Host project As Org Admin, create a Host project As Org Admin, create a Config Controller instance As Org Admin, set up Host project&amp;rsquo;s Git repo As Org Admin, enforce policies for tenant projects Tenant project As Org Admin, set up the Tenant project As Org Admin, set up the Tenant project&amp;rsquo;s Git repo As Org Admin, enforce policies for Google Cloud resources As Org Admin, allow Monitoring for Tenant project As Platform Admin, set up Monitoring in Tenant project Networking As Org Admin, allow Networking for Tenant project As Platform Admin, set up Network in Tenant project GKE cluster As Org Admin, allow GKE for Tenant project As Org Admin, enforce policies for GKE cluster resources As Platform Admin, create GKE cluster in Tenant project As Org Admin, allow Fleet for Tenant project As Platform Admin, set up GKE configs&amp;rsquo;s Git repo in Tenant project As Platform Admin, enforce Kubernetes policies with Pod Security Admission (PSA) and NetworkPolicies As Platform Admin, set up NetworkPolicies logging in GKE cluster Artifact Registry As Org Admin, allow Artifact Registry for Tenant project As Platform Admin, create Artifact Registry in Tenant project and allow GKE cluster to pull containers As Platform Admin, enforce policies for Artifact Registry (allowed container registries) Service Mesh As Org Admin, allow ASM for Tenant project As Platform Admin, install Managed ASM in GKE cluster As Platform Admin, set up ASM configs in GKE cluster As Platform Admin, enforce policies for ASM Ingress Gateway As Platform Admin, create the Public static IP address for the Ingress Gateway As Org Admin, allow Cloud Armor for Tenant project As Platform Admin, set up Cloud Armor in Tenant project As Platform Admin, deploy the Ingress Gateway linked to Cloud Armor in GKE cluster As Platform Admin, deploy NetworkPolicies for the Ingress Gateway namespace in GKE cluster As Platform Admin, deploy AuthorizationPolicies for the Ingress Gateway namespace in GKE cluster Whereami app As Platform Admin, set up DNS for the Whereami app As Platform Admin, set up URL uptime check on the Whereami app As Platform Admin, configure Config Sync for the Whereami app in GKE cluster As Apps Operator, copy Whereami container in private Artifact Registry As Apps Operator, deploy the Whereami app in GKE cluster As Apps Operator, deploy AuthorizationPolicies for the Whereami namespace in GKE cluster As Apps Operator, deploy NetworkPolicies for the Whereami namespace in GKE cluster As Apps Operator, deploy Sidecars for the Whereami namespace in GKE cluster Online Boutique apps As Platform Admin, set up DNS for the Online Boutique website As Platform Admin, set up URL uptime check on the Online Boutique website As Platform Admin, allow Config Sync for the Online Boutique apps in GKE cluster As Platform Admin, configure Config Sync for the Online Boutique apps in GKE cluster As Apps Operator, copy Online Boutique containers in private Artifact Registry As Apps Operator, deploy the Online Boutique apps in GKE cluster As Apps Operator, deploy AuthorizationPolicies for the Online Boutique namespace in GKE cluster As Apps Operator, deploy NetworkPolicies for the Online Boutique namespace in GKE cluster As Apps Operator, deploy Sidecars for the Online Boutique namespace in GKE cluster Memorystore (Redis) As Org Admin, allow Memorystore (Redis) for Tenant project As Org Admin, enforce policies for Memorystore (Redis) resources As Platform Admin, create Memorystore (Redis) instances with and without TLS in Tenant project As Apps Operator, configure Online Boutique apps to use Memorystore (Redis) instance As Apps Operator, secure Online Boutique apps to access Memorystore (Redis) instance via TLS Spanner As Org Admin, allow Spanner for Tenant project As Platform Admin, create Spanner instance in Tenant project As Apps Operator, configure Online Boutique apps to use Spanner instance Bank of Anthos apps As Platform Admin, set up DNS for the Bank of Anthos website As Platform Admin, set up URL uptime check on the Bank of Anthos website As Platform Admin, configure Config Sync for the Bank of Anthos apps in GKE cluster As Apps Operator, copy Bank of Anthos containers in private Artifact Registry As Apps Operator, deploy the Bank of Anthos apps in GKE cluster As Apps Operator, deploy AuthorizationPolicies for the Bank of Anthos namespace in GKE cluster As Apps Operator, deploy NetworkPolicies for the Bank of Anthos namespace in GKE cluster As Apps Operator, deploy Sidecars for the Bank of Anthos namespace in GKE cluster Monitoring &amp;amp; Audit As Platform Admin, verify ASM versions As Apps Operator, monitor apps security As Apps Operator, monitor apps health As Apps Operator, trace apps As Apps Operator, monitor Cloud Armor (WAF) rules As Apps Operator, scan workloads and configurations As Apps Operator, monitor resources synced by Config Sync As Apps Operator, monitor policies violations by Policy Controller As Apps Operator, monitor URLs uptime checks</description></item><item><title>Monitor apps health</title><link>https://mathieu-benoit.github.io/acm-workshop/monitoring-and-audit/monitor-apps-health/index.html</link><pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate><guid>https://mathieu-benoit.github.io/acm-workshop/monitoring-and-audit/monitor-apps-health/index.html</guid><description>Duration: 5 min | Persona: Apps Operator
+Info The Developer persona is not involved in this workshop for the reason that they should focus on the code of their apps. The Apps Operator persona is responsible to set up the Continuous Integration part to build and push the container images associated to any apps the Developers are building. With this workshop we are not covering this part, we are assuming that the container images are already built, the Apps Operator persona will take it from here in this workshop and will configure the Continuous Deployment part.</description>
+    </item>
+    <item>
+      <title>Agenda</title>
+      <link>https://mathieu-benoit.github.io/acm-workshop/overview/agenda/index.html</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      <guid>https://mathieu-benoit.github.io/acm-workshop/overview/agenda/index.html</guid>
+      <description> Host project As Org Admin, create a Host project As Org Admin, create a Config Controller instance As Org Admin, set up Host project&amp;rsquo;s Git repo As Org Admin, enforce policies for tenant projects Tenant project As Org Admin, set up the Tenant project As Org Admin, set up the Tenant project&amp;rsquo;s Git repo As Org Admin, enforce policies for Google Cloud resources As Org Admin, allow Monitoring for Tenant project As Platform Admin, set up Monitoring in Tenant project Networking As Org Admin, allow Networking for Tenant project As Platform Admin, set up Network in Tenant project GKE cluster As Org Admin, allow GKE for Tenant project As Org Admin, enforce policies for GKE cluster resources As Platform Admin, create GKE cluster in Tenant project As Org Admin, allow Fleet for Tenant project As Platform Admin, set up GKE configs&amp;rsquo;s Git repo in Tenant project As Platform Admin, enforce Kubernetes policies with Pod Security Admission (PSA) and NetworkPolicies As Platform Admin, set up NetworkPolicies logging in GKE cluster Artifact Registry As Org Admin, allow Artifact Registry for Tenant project As Platform Admin, create Artifact Registry in Tenant project and allow GKE cluster to pull containers As Platform Admin, enforce policies for Artifact Registry (allowed container registries) Service Mesh As Org Admin, allow ASM for Tenant project As Platform Admin, install Managed ASM in GKE cluster As Platform Admin, set up ASM configs in GKE cluster As Platform Admin, enforce policies for ASM Ingress Gateway As Platform Admin, create the Public static IP address for the Ingress Gateway As Org Admin, allow Cloud Armor for Tenant project As Platform Admin, set up Cloud Armor in Tenant project As Platform Admin, deploy the Ingress Gateway linked to Cloud Armor in GKE cluster As Platform Admin, deploy NetworkPolicies for the Ingress Gateway namespace in GKE cluster As Platform Admin, deploy AuthorizationPolicies for the Ingress Gateway namespace in GKE cluster Whereami app As Platform Admin, set up DNS for the Whereami app As Platform Admin, set up URL uptime check on the Whereami app As Platform Admin, configure Config Sync for the Whereami app in GKE cluster As Apps Operator, copy Whereami container in private Artifact Registry As Apps Operator, deploy the Whereami app in GKE cluster As Apps Operator, deploy AuthorizationPolicies for the Whereami namespace in GKE cluster As Apps Operator, deploy NetworkPolicies for the Whereami namespace in GKE cluster As Apps Operator, deploy Sidecars for the Whereami namespace in GKE cluster Online Boutique apps As Platform Admin, set up DNS for the Online Boutique website As Platform Admin, set up URL uptime check on the Online Boutique website As Platform Admin, allow Config Sync for the Online Boutique apps in GKE cluster As Platform Admin, configure Config Sync for the Online Boutique apps in GKE cluster As Apps Operator, copy Online Boutique containers in private Artifact Registry As Apps Operator, deploy the Online Boutique apps in GKE cluster As Apps Operator, deploy AuthorizationPolicies for the Online Boutique namespace in GKE cluster As Apps Operator, deploy NetworkPolicies for the Online Boutique namespace in GKE cluster As Apps Operator, deploy Sidecars for the Online Boutique namespace in GKE cluster Memorystore (Redis) As Org Admin, allow Memorystore (Redis) for Tenant project As Org Admin, enforce policies for Memorystore (Redis) resources As Platform Admin, create Memorystore (Redis) instances with and without TLS in Tenant project As Apps Operator, configure Online Boutique apps to use Memorystore (Redis) instance As Apps Operator, secure Online Boutique apps to access Memorystore (Redis) instance via TLS Spanner As Org Admin, allow Spanner for Tenant project As Platform Admin, create Spanner instance in Tenant project As Apps Operator, configure Online Boutique apps to use Spanner instance Bank of Anthos apps As Platform Admin, set up DNS for the Bank of Anthos website As Platform Admin, set up URL uptime check on the Bank of Anthos website As Platform Admin, configure Config Sync for the Bank of Anthos apps in GKE cluster As Apps Operator, copy Bank of Anthos containers in private Artifact Registry As Apps Operator, deploy the Bank of Anthos apps in GKE cluster As Apps Operator, deploy AuthorizationPolicies for the Bank of Anthos namespace in GKE cluster As Apps Operator, deploy NetworkPolicies for the Bank of Anthos namespace in GKE cluster As Apps Operator, deploy Sidecars for the Bank of Anthos namespace in GKE cluster Monitoring &amp;amp; Audit As Platform Admin, verify ASM versions As Apps Operator, monitor apps security As Apps Operator, monitor apps health As Apps Operator, trace apps As Apps Operator, monitor Cloud Armor (WAF) rules As Apps Operator, scan workloads and configurations As Apps Operator, monitor resources synced by Config Sync As Apps Operator, monitor policies violations by Policy Controller As Apps Operator, monitor URLs uptime checks </description>
+    </item>
+    <item>
+      <title>Monitor apps health</title>
+      <link>https://mathieu-benoit.github.io/acm-workshop/monitoring-and-audit/monitor-apps-health/index.html</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      <guid>https://mathieu-benoit.github.io/acm-workshop/monitoring-and-audit/monitor-apps-health/index.html</guid>
+      <description>Duration: 5 min | Persona: Apps Operator
 In this section, you will navigate to the topology of your Service Mesh as well as monitor your apps in terms of security, health and performance.
 Initialize variables:
-WORK_DIR=~/ source ${WORK_DIR}acm-workshop-variables.sh In the Google Cloud console, navigate to Anthos &amp;gt; Service Mesh &amp;gt; Topology to see the topology graph of your Service Mesh: Click on the link displayed by the command below:</description></item><item><title>Use Spanner</title><link>https://mathieu-benoit.github.io/acm-workshop/onlineboutique/spanner/use-spanner/index.html</link><pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate><guid>https://mathieu-benoit.github.io/acm-workshop/onlineboutique/spanner/use-spanner/index.html</guid><description>Duration: 10 min | Persona: Apps Operator
+WORK_DIR=~/ source ${WORK_DIR}acm-workshop-variables.sh In the Google Cloud console, navigate to Anthos &amp;gt; Service Mesh &amp;gt; Topology to see the topology graph of your Service Mesh: Click on the link displayed by the command below:</description>
+    </item>
+    <item>
+      <title>Use Spanner</title>
+      <link>https://mathieu-benoit.github.io/acm-workshop/onlineboutique/spanner/use-spanner/index.html</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      <guid>https://mathieu-benoit.github.io/acm-workshop/onlineboutique/spanner/use-spanner/index.html</guid>
+      <description>Duration: 10 min | Persona: Apps Operator
 In this section, you will update the OnlineBoutique&amp;rsquo;s cartservice app in order to point to the Spanner database previously created.
 Initialize variables:
 WORK_DIR=~/ source ${WORK_DIR}acm-workshop-variables.sh Update RepoSync to deploy the Online Boutique&amp;rsquo;s Helm chart Get the Spanner database connection information:
-export SPANNER_CONNECTION_STRING=projects/${TENANT_PROJECT_ID}/instances/${SPANNER_INSTANCE_NAME}/databases/${SPANNER_DATABASE_NAME} export SPANNER_DB_USER_GSA_ID=${SPANNER_DATABASE_USER_GSA_NAME}@${TENANT_PROJECT_ID}.iam.gserviceaccount.com Define the RepoSync to deploy the Online Boutique&amp;rsquo;s Helm chart with the cartservice pointing to the Spanner database:</description></item><item><title>Prepare container</title><link>https://mathieu-benoit.github.io/acm-workshop/whereami/prepare-container/index.html</link><pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate><guid>https://mathieu-benoit.github.io/acm-workshop/whereami/prepare-container/index.html</guid><description>Duration: 5 min | Persona: Apps Operator
+export SPANNER_CONNECTION_STRING=projects/${TENANT_PROJECT_ID}/instances/${SPANNER_INSTANCE_NAME}/databases/${SPANNER_DATABASE_NAME} export SPANNER_DB_USER_GSA_ID=${SPANNER_DATABASE_USER_GSA_NAME}@${TENANT_PROJECT_ID}.iam.gserviceaccount.com Define the RepoSync to deploy the Online Boutique&amp;rsquo;s Helm chart with the cartservice pointing to the Spanner database:</description>
+    </item>
+    <item>
+      <title>Prepare container</title>
+      <link>https://mathieu-benoit.github.io/acm-workshop/whereami/prepare-container/index.html</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      <guid>https://mathieu-benoit.github.io/acm-workshop/whereami/prepare-container/index.html</guid>
+      <description>Duration: 5 min | Persona: Apps Operator
 In this section, you will copy the Whereami app container in your private Artifact Registry. You will also scan this container image.
 Initialize variables:
 WORK_DIR=~/ source ${WORK_DIR}acm-workshop-variables.sh WHEREAMI_VERSION=v1.2.14 PRIVATE_WHEREAMI_IMAGE_NAME=$CONTAINER_REGISTRY_REPOSITORY/whereami:$WHEREAMI_VERSION echo &amp;#34;export PRIVATE_WHEREAMI_IMAGE_NAME=${PRIVATE_WHEREAMI_IMAGE_NAME}&amp;#34; &amp;gt;&amp;gt; ${WORK_DIR}acm-workshop-variables.sh source ${WORK_DIR}acm-workshop-variables.sh Copy the public container image to your private registry:
-UPSTREAM_WHEREAMI_IMAGE_NAME=us-docker.pkg.dev/google-samples/containers/gke/whereami:$WHEREAMI_VERSION gcloud auth configure-docker $CONTAINER_REGISTRY_HOST_NAME --quiet crane copy $UPSTREAM_WHEREAMI_IMAGE_NAME $PRIVATE_WHEREAMI_IMAGE_NAME List the container images in your private registry:</description></item><item><title>Prepare containers</title><link>https://mathieu-benoit.github.io/acm-workshop/bankofanthos/prepare-containers/index.html</link><pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate><guid>https://mathieu-benoit.github.io/acm-workshop/bankofanthos/prepare-containers/index.html</guid><description>Duration: 5 min | Persona: Apps Operator
+UPSTREAM_WHEREAMI_IMAGE_NAME=us-docker.pkg.dev/google-samples/containers/gke/whereami:$WHEREAMI_VERSION gcloud auth configure-docker $CONTAINER_REGISTRY_HOST_NAME --quiet crane copy $UPSTREAM_WHEREAMI_IMAGE_NAME $PRIVATE_WHEREAMI_IMAGE_NAME List the container images in your private registry:</description>
+    </item>
+    <item>
+      <title>Prepare containers</title>
+      <link>https://mathieu-benoit.github.io/acm-workshop/bankofanthos/prepare-containers/index.html</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      <guid>https://mathieu-benoit.github.io/acm-workshop/bankofanthos/prepare-containers/index.html</guid>
+      <description>Duration: 5 min | Persona: Apps Operator
 In this section, you will copy the Bank of Anthos apps containers in your private Artifact Registry. You will also scan one container image.
 Initialize variables:
 WORK_DIR=~/ source ${WORK_DIR}acm-workshop-variables.sh BANK_OF_ANTHOS_VERSION=v0.5.10 echo &amp;#34;export BANK_OF_ANTHOS_VERSION=${BANK_OF_ANTHOS_VERSION}&amp;#34; &amp;gt;&amp;gt; ${WORK_DIR}acm-workshop-variables.sh PRIVATE_BANK_OF_ANTHOS_REGISTRY=$CONTAINER_REGISTRY_REPOSITORY/bankofanthos echo &amp;#34;export PRIVATE_BANK_OF_ANTHOS_REGISTRY=${PRIVATE_BANK_OF_ANTHOS_REGISTRY}&amp;#34; &amp;gt;&amp;gt; ${WORK_DIR}acm-workshop-variables.sh source ${WORK_DIR}acm-workshop-variables.sh Copy the public container images to your private registry:
-UPSTREAM_BANK_OF_ANTHOS_REGISTRY=gcr.io/bank-of-anthos-ci SERVICES=&amp;#34;accounts-db balancereader contacts frontend ledger-db ledgerwriter loadgenerator transactionhistory userservice&amp;#34; for s in $SERVICES; do crane copy $UPSTREAM_BANK_OF_ANTHOS_REGISTRY/$s:$BANK_OF_ANTHOS_VERSION $PRIVATE_BANK_OF_ANTHOS_REGISTRY/$s:$BANK_OF_ANTHOS_VERSION; done List the container images in your private registry:</description></item><item><title>Trace apps</title><link>https://mathieu-benoit.github.io/acm-workshop/monitoring-and-audit/trace-apps/index.html</link><pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate><guid>https://mathieu-benoit.github.io/acm-workshop/monitoring-and-audit/trace-apps/index.html</guid><description>Duration: 5 min | Persona: Apps Operator
+UPSTREAM_BANK_OF_ANTHOS_REGISTRY=gcr.io/bank-of-anthos-ci SERVICES=&amp;#34;accounts-db balancereader contacts frontend ledger-db ledgerwriter loadgenerator transactionhistory userservice&amp;#34; for s in $SERVICES; do crane copy $UPSTREAM_BANK_OF_ANTHOS_REGISTRY/$s:$BANK_OF_ANTHOS_VERSION $PRIVATE_BANK_OF_ANTHOS_REGISTRY/$s:$BANK_OF_ANTHOS_VERSION; done List the container images in your private registry:</description>
+    </item>
+    <item>
+      <title>Trace apps</title>
+      <link>https://mathieu-benoit.github.io/acm-workshop/monitoring-and-audit/trace-apps/index.html</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      <guid>https://mathieu-benoit.github.io/acm-workshop/monitoring-and-audit/trace-apps/index.html</guid>
+      <description>Duration: 5 min | Persona: Apps Operator
 In this section, you will trace your apps in order to follow a request through your Service Mesh, observe the network calls and profile your system end to end.
 Initialize variables:
 WORK_DIR=~/ source ${WORK_DIR}acm-workshop-variables.sh In the Google Cloud console, navigate to Trace service. Click on the link displayed by the command below:
-echo -e &amp;#34;https://console.cloud.google.com/traces/list?project=${TENANT_PROJECT_ID}&amp;#34; Select one of the Online Boutique&amp;rsquo;s frontend app&amp;rsquo;s requests: From there you will have access to a lot more details about the different calls, trace logs, etc.</description></item><item><title>Use Memorystore</title><link>https://mathieu-benoit.github.io/acm-workshop/onlineboutique/memorystore/use-memorystore/index.html</link><pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate><guid>https://mathieu-benoit.github.io/acm-workshop/onlineboutique/memorystore/use-memorystore/index.html</guid><description>Duration: 10 min | Persona: Apps Operator
+echo -e &amp;#34;https://console.cloud.google.com/traces/list?project=${TENANT_PROJECT_ID}&amp;#34; Select one of the Online Boutique&amp;rsquo;s frontend app&amp;rsquo;s requests: From there you will have access to a lot more details about the different calls, trace logs, etc.</description>
+    </item>
+    <item>
+      <title>Use Memorystore</title>
+      <link>https://mathieu-benoit.github.io/acm-workshop/onlineboutique/memorystore/use-memorystore/index.html</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      <guid>https://mathieu-benoit.github.io/acm-workshop/onlineboutique/memorystore/use-memorystore/index.html</guid>
+      <description>Duration: 10 min | Persona: Apps Operator
 In this section, you will update the OnlineBoutique&amp;rsquo;s cartservice app in order to point to the Memorystore (Redis) instance previously created.
 Initialize variables:
 WORK_DIR=~/ source ${WORK_DIR}acm-workshop-variables.sh Update RepoSync to deploy the Online Boutique&amp;rsquo;s Helm chart Get Memorystore (Redis) connection information:
-export REDIS_IP=$(gcloud redis instances describe $REDIS_NAME --region $GKE_LOCATION --project $TENANT_PROJECT_ID --format=&amp;#39;get(host)&amp;#39;) export REDIS_PORT=$(gcloud redis instances describe $REDIS_NAME --region $GKE_LOCATION --project $TENANT_PROJECT_ID --format=&amp;#39;get(port)&amp;#39;) Define the RepoSync to deploy the Online Boutique&amp;rsquo;s Helm chart with the cartservice pointing to the Memorystore (Redis) database:</description></item><item><title>Deploy app</title><link>https://mathieu-benoit.github.io/acm-workshop/whereami/deploy-app/index.html</link><pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate><guid>https://mathieu-benoit.github.io/acm-workshop/whereami/deploy-app/index.html</guid><description>Duration: 10 min | Persona: Apps Operator
+export REDIS_IP=$(gcloud redis instances describe $REDIS_NAME --region $GKE_LOCATION --project $TENANT_PROJECT_ID --format=&amp;#39;get(host)&amp;#39;) export REDIS_PORT=$(gcloud redis instances describe $REDIS_NAME --region $GKE_LOCATION --project $TENANT_PROJECT_ID --format=&amp;#39;get(port)&amp;#39;) Define the RepoSync to deploy the Online Boutique&amp;rsquo;s Helm chart with the cartservice pointing to the Memorystore (Redis) database:</description>
+    </item>
+    <item>
+      <title>Deploy app</title>
+      <link>https://mathieu-benoit.github.io/acm-workshop/whereami/deploy-app/index.html</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      <guid>https://mathieu-benoit.github.io/acm-workshop/whereami/deploy-app/index.html</guid>
+      <description>Duration: 10 min | Persona: Apps Operator
 In this section, you will deploy the Whereami app.
 Initialize variables:
 WORK_DIR=~/ source ${WORK_DIR}acm-workshop-variables.sh Get upstream Kubernetes manifests Get the upstream Kubernetes manifests:
 cd ${WORK_DIR}$WHERE_AMI_DIR_NAME kpt pkg get https://github.com/GoogleCloudPlatform/kubernetes-engine-samples/whereami/k8s rm k8s/Kptfile mv k8s upstream Create base overlay Create Kustomize base overlay files:
-mkdir ${WORK_DIR}$WHERE_AMI_DIR_NAME/base cd ${WORK_DIR}$WHERE_AMI_DIR_NAME/base kustomize create kustomize edit add resource ../upstream cat &amp;lt;&amp;lt;EOF &amp;gt;&amp;gt; ${WORK_DIR}$WHERE_AMI_DIR_NAME/base/kustomization.yaml patchesJson6902: - target: kind: Service name: whereami patch: |- - op: replace path: /spec/type value: ClusterIP EOF Info Here we are changing the Service type to ClusterIP because the Whereami app will be exposed by the Ingress Gateway.</description></item><item><title>Deploy apps</title><link>https://mathieu-benoit.github.io/acm-workshop/bankofanthos/deploy-apps/index.html</link><pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate><guid>https://mathieu-benoit.github.io/acm-workshop/bankofanthos/deploy-apps/index.html</guid><description>Duration: 5 min | Persona: Apps Operator
+mkdir ${WORK_DIR}$WHERE_AMI_DIR_NAME/base cd ${WORK_DIR}$WHERE_AMI_DIR_NAME/base kustomize create kustomize edit add resource ../upstream cat &amp;lt;&amp;lt;EOF &amp;gt;&amp;gt; ${WORK_DIR}$WHERE_AMI_DIR_NAME/base/kustomization.yaml patchesJson6902: - target: kind: Service name: whereami patch: |- - op: replace path: /spec/type value: ClusterIP EOF Info Here we are changing the Service type to ClusterIP because the Whereami app will be exposed by the Ingress Gateway.</description>
+    </item>
+    <item>
+      <title>Deploy apps</title>
+      <link>https://mathieu-benoit.github.io/acm-workshop/bankofanthos/deploy-apps/index.html</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      <guid>https://mathieu-benoit.github.io/acm-workshop/bankofanthos/deploy-apps/index.html</guid>
+      <description>Duration: 5 min | Persona: Apps Operator
 In this section, you will deploy the Bank of Anthos apps.
 Initialize variables:
 WORK_DIR=~/ source ${WORK_DIR}acm-workshop-variables.sh Get upstream Kubernetes manifests Get the upstream Kubernetes manifests:
 cd ${WORK_DIR}$BANK_OF_ANTHOS_DIR_NAME kpt pkg get https://github.com/GoogleCloudPlatform/bank-of-anthos/kubernetes-manifests mv kubernetes-manifests upstream cd upstream rm Kptfile curl -L https://raw.githubusercontent.com/GoogleCloudPlatform/bank-of-anthos/main/extras/jwt/jwt-secret.yaml &amp;gt; jwt-secret.yaml kustomize create --autodetect Create base overlay Create Kustomize base overlay files:
-mkdir ${WORK_DIR}$BANK_OF_ANTHOS_DIR_NAME/base cd ${WORK_DIR}$BANK_OF_ANTHOS_DIR_NAME/base kustomize create kustomize edit add resource .</description></item><item><title>Prepare containers and chart</title><link>https://mathieu-benoit.github.io/acm-workshop/onlineboutique/prepare-containers-and-chart/index.html</link><pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate><guid>https://mathieu-benoit.github.io/acm-workshop/onlineboutique/prepare-containers-and-chart/index.html</guid><description>Duration: 5 min | Persona: Apps Operator
+mkdir ${WORK_DIR}$BANK_OF_ANTHOS_DIR_NAME/base cd ${WORK_DIR}$BANK_OF_ANTHOS_DIR_NAME/base kustomize create kustomize edit add resource .</description>
+    </item>
+    <item>
+      <title>Prepare containers and chart</title>
+      <link>https://mathieu-benoit.github.io/acm-workshop/onlineboutique/prepare-containers-and-chart/index.html</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      <guid>https://mathieu-benoit.github.io/acm-workshop/onlineboutique/prepare-containers-and-chart/index.html</guid>
+      <description>Duration: 5 min | Persona: Apps Operator
 In this section, you will copy the Online Boutique apps container images and the Helm chart in your private Artifact Registry. You will also scan one container image.
 Initialize variables:
 WORK_DIR=~/ source ${WORK_DIR}acm-workshop-variables.sh ONLINE_BOUTIQUE_VERSION=v0.5.0 echo &amp;#34;export ONLINE_BOUTIQUE_VERSION=${ONLINE_BOUTIQUE_VERSION}&amp;#34; &amp;gt;&amp;gt; ${WORK_DIR}acm-workshop-variables.sh PRIVATE_ONLINE_BOUTIQUE_REGISTRY=$CONTAINER_REGISTRY_REPOSITORY/onlineboutique echo &amp;#34;export PRIVATE_ONLINE_BOUTIQUE_REGISTRY=${PRIVATE_ONLINE_BOUTIQUE_REGISTRY}&amp;#34; &amp;gt;&amp;gt; ${WORK_DIR}acm-workshop-variables.sh source ${WORK_DIR}acm-workshop-variables.sh Prepare the container images Copy the public container images to your private registry:
-UPSTREAM_ONLINE_BOUTIQUE_CONTAINER_REGISTRY=gcr.io/google-samples/microservices-demo HTTP_SERVICES=&amp;#34;frontend loadgenerator&amp;#34; TAG=$ONLINE_BOUTIQUE_VERSION for s in $HTTP_SERVICES; do crane copy $UPSTREAM_ONLINE_BOUTIQUE_CONTAINER_REGISTRY/$s:$TAG $PRIVATE_ONLINE_BOUTIQUE_REGISTRY/$s:$TAG; done GRPC_SERVICES=&amp;#34;adservice cartservice checkoutservice currencyservice emailservice paymentservice productcatalogservice recommendationservice shippingservice&amp;#34; TAG=$ONLINE_BOUTIQUE_VERSION-native-grpc-probes for s in $GRPC_SERVICES; do crane copy $UPSTREAM_ONLINE_BOUTIQUE_CONTAINER_REGISTRY/$s:$TAG $PRIVATE_ONLINE_BOUTIQUE_REGISTRY/$s:$TAG; done crane copy redis:alpine $PRIVATE_ONLINE_BOUTIQUE_REGISTRY/redis:alpine Tip We are making the copy of the gRPC services supporting the native Kubernetes health probes in order to get the associated optimized images, learn more about this here.</description></item><item><title>Secure Memorystore access</title><link>https://mathieu-benoit.github.io/acm-workshop/onlineboutique/memorystore/secure-memorystore-access/index.html</link><pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate><guid>https://mathieu-benoit.github.io/acm-workshop/onlineboutique/memorystore/secure-memorystore-access/index.html</guid><description>Duration: 10 min | Persona: Apps Operator
+UPSTREAM_ONLINE_BOUTIQUE_CONTAINER_REGISTRY=gcr.io/google-samples/microservices-demo HTTP_SERVICES=&amp;#34;frontend loadgenerator&amp;#34; TAG=$ONLINE_BOUTIQUE_VERSION for s in $HTTP_SERVICES; do crane copy $UPSTREAM_ONLINE_BOUTIQUE_CONTAINER_REGISTRY/$s:$TAG $PRIVATE_ONLINE_BOUTIQUE_REGISTRY/$s:$TAG; done GRPC_SERVICES=&amp;#34;adservice cartservice checkoutservice currencyservice emailservice paymentservice productcatalogservice recommendationservice shippingservice&amp;#34; TAG=$ONLINE_BOUTIQUE_VERSION-native-grpc-probes for s in $GRPC_SERVICES; do crane copy $UPSTREAM_ONLINE_BOUTIQUE_CONTAINER_REGISTRY/$s:$TAG $PRIVATE_ONLINE_BOUTIQUE_REGISTRY/$s:$TAG; done crane copy redis:alpine $PRIVATE_ONLINE_BOUTIQUE_REGISTRY/redis:alpine Tip We are making the copy of the gRPC services supporting the native Kubernetes health probes in order to get the associated optimized images, learn more about this here.</description>
+    </item>
+    <item>
+      <title>Secure Memorystore access</title>
+      <link>https://mathieu-benoit.github.io/acm-workshop/onlineboutique/memorystore/secure-memorystore-access/index.html</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      <guid>https://mathieu-benoit.github.io/acm-workshop/onlineboutique/memorystore/secure-memorystore-access/index.html</guid>
+      <description>Duration: 10 min | Persona: Apps Operator
 In this section, you will secure the access by TLS to the Memorystore (Redis) instance from the OnlineBoutique&amp;rsquo;s cartservice app, without updating the source code of the app, just with Istio&amp;rsquo;s capabilities.
 Initialize variables:
-WORK_DIR=~/ source ${WORK_DIR}acm-workshop-variables.sh echo &amp;#34;export CART_MEMORYSTORE_HOST=${REDIS_NAME}.memorystore-redis.${ONLINEBOUTIQUE_NAMESPACE}&amp;#34; &amp;gt;&amp;gt; ${WORK_DIR}acm-workshop-variables.sh source ${WORK_DIR}acm-workshop-variables.sh Info The CART_MEMORYSTORE_HOST has been built in order to explicitly represent the Memorystore (Redis) endpoint on an Istio perspective.</description></item><item><title>Deploy apps</title><link>https://mathieu-benoit.github.io/acm-workshop/onlineboutique/deploy-apps/index.html</link><pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate><guid>https://mathieu-benoit.github.io/acm-workshop/onlineboutique/deploy-apps/index.html</guid><description>Duration: 5 min | Persona: Apps Operator
+WORK_DIR=~/ source ${WORK_DIR}acm-workshop-variables.sh echo &amp;#34;export CART_MEMORYSTORE_HOST=${REDIS_NAME}.memorystore-redis.${ONLINEBOUTIQUE_NAMESPACE}&amp;#34; &amp;gt;&amp;gt; ${WORK_DIR}acm-workshop-variables.sh source ${WORK_DIR}acm-workshop-variables.sh Info The CART_MEMORYSTORE_HOST has been built in order to explicitly represent the Memorystore (Redis) endpoint on an Istio perspective.</description>
+    </item>
+    <item>
+      <title>Deploy apps</title>
+      <link>https://mathieu-benoit.github.io/acm-workshop/onlineboutique/deploy-apps/index.html</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      <guid>https://mathieu-benoit.github.io/acm-workshop/onlineboutique/deploy-apps/index.html</guid>
+      <description>Duration: 5 min | Persona: Apps Operator
 In this section, you will deploy the Online Boutique apps, via Config Sync and its Helm chart.
 Initialize variables:
 WORK_DIR=~/ source ${WORK_DIR}acm-workshop-variables.sh Define RepoSync to deploy the Online Boutique&amp;rsquo;s Helm chart Define the RepoSync to deploy the Online Boutique&amp;rsquo;s Helm chart:
-cat &amp;lt;&amp;lt;EOF &amp;gt; ${WORK_DIR}$GKE_CONFIGS_DIR_NAME/repo-syncs/$ONLINEBOUTIQUE_NAMESPACE/repo-sync.yaml apiVersion: configsync.gke.io/v1beta1 kind: RepoSync metadata: name: repo-sync namespace: ${ONLINEBOUTIQUE_NAMESPACE} spec: sourceFormat: unstructured sourceType: helm helm: repo: oci://${CHART_REGISTRY_REPOSITORY} chart: ${ONLINEBOUTIQUE_NAMESPACE} version: ${ONLINE_BOUTIQUE_VERSION:1} releaseName: ${ONLINEBOUTIQUE_NAMESPACE} auth: gcpserviceaccount gcpServiceAccountEmail: ${HELM_CHARTS_READER_GSA}@${TENANT_PROJECT_ID}.</description></item><item><title>Deploy AuthorizationPolicies</title><link>https://mathieu-benoit.github.io/acm-workshop/bankofanthos/deploy-authorization-policies/index.html</link><pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate><guid>https://mathieu-benoit.github.io/acm-workshop/bankofanthos/deploy-authorization-policies/index.html</guid><description>Duration: 5 min | Persona: Apps Operator
+cat &amp;lt;&amp;lt;EOF &amp;gt; ${WORK_DIR}$GKE_CONFIGS_DIR_NAME/repo-syncs/$ONLINEBOUTIQUE_NAMESPACE/repo-sync.yaml apiVersion: configsync.gke.io/v1beta1 kind: RepoSync metadata: name: repo-sync namespace: ${ONLINEBOUTIQUE_NAMESPACE} spec: sourceFormat: unstructured sourceType: helm helm: repo: oci://${CHART_REGISTRY_REPOSITORY} chart: ${ONLINEBOUTIQUE_NAMESPACE} version: ${ONLINE_BOUTIQUE_VERSION:1} releaseName: ${ONLINEBOUTIQUE_NAMESPACE} auth: gcpserviceaccount gcpServiceAccountEmail: ${HELM_CHARTS_READER_GSA}@${TENANT_PROJECT_ID}.</description>
+    </item>
+    <item>
+      <title>Deploy AuthorizationPolicies</title>
+      <link>https://mathieu-benoit.github.io/acm-workshop/bankofanthos/deploy-authorization-policies/index.html</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      <guid>https://mathieu-benoit.github.io/acm-workshop/bankofanthos/deploy-authorization-policies/index.html</guid>
+      <description>Duration: 5 min | Persona: Apps Operator
 In this section, you will see how to track the AuthorizationPolicies issue and then you will deploy granular and specific ServiceAccounts and AuthorizationPolicies for the Bank of Anthos namespace to fix this issue.
 Initialize variables:
-WORK_DIR=~/ source ${WORK_DIR}acm-workshop-variables.sh See the AuthorizationPolicies issue See the AuthorizationPolicies issue in the GKE cluster for the Bank of Anthos namespace, by running this command and click on this link:</description></item><item><title>Deploy AuthorizationPolicy</title><link>https://mathieu-benoit.github.io/acm-workshop/whereami/deploy-authorization-policy/index.html</link><pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate><guid>https://mathieu-benoit.github.io/acm-workshop/whereami/deploy-authorization-policy/index.html</guid><description>Duration: 5 min | Persona: Apps Operator
+WORK_DIR=~/ source ${WORK_DIR}acm-workshop-variables.sh See the AuthorizationPolicies issue See the AuthorizationPolicies issue in the GKE cluster for the Bank of Anthos namespace, by running this command and click on this link:</description>
+    </item>
+    <item>
+      <title>Deploy AuthorizationPolicy</title>
+      <link>https://mathieu-benoit.github.io/acm-workshop/whereami/deploy-authorization-policy/index.html</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      <guid>https://mathieu-benoit.github.io/acm-workshop/whereami/deploy-authorization-policy/index.html</guid>
+      <description>Duration: 5 min | Persona: Apps Operator
 In this section, you will see how to track the AuthorizationPolicies issue and then you will deploy granular and specific AuthorizationPolicies for the Whereami namespace to fix this issue.
 Initialize variables:
 WORK_DIR=~/ source ${WORK_DIR}acm-workshop-variables.sh See the AuthorizationPolicies issue See the AuthorizationPolicies issue in the GKE cluster for the Whereami app, by running this command and click on this link:
-echo -e &amp;#34;https://console.cloud.google.com/anthos/security/workload-view/Deployment/${GKE_LOCATION}/${GKE_NAME}/${WHEREAMI_NAMESPACE}/whereami?project=${TENANT_PROJECT_ID}&amp;#34; Under the Service requests section on this page, you will see some Inbound denials depending on how many times you tried to refresh the Whereami app endpoint.</description></item><item><title>Scan workloads</title><link>https://mathieu-benoit.github.io/acm-workshop/monitoring-and-audit/scan-workloads/index.html</link><pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate><guid>https://mathieu-benoit.github.io/acm-workshop/monitoring-and-audit/scan-workloads/index.html</guid><description>Duration: 5 min | Persona: Apps Operator
+echo -e &amp;#34;https://console.cloud.google.com/anthos/security/workload-view/Deployment/${GKE_LOCATION}/${GKE_NAME}/${WHEREAMI_NAMESPACE}/whereami?project=${TENANT_PROJECT_ID}&amp;#34; Under the Service requests section on this page, you will see some Inbound denials depending on how many times you tried to refresh the Whereami app endpoint.</description>
+    </item>
+    <item>
+      <title>Scan workloads</title>
+      <link>https://mathieu-benoit.github.io/acm-workshop/monitoring-and-audit/scan-workloads/index.html</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      <guid>https://mathieu-benoit.github.io/acm-workshop/monitoring-and-audit/scan-workloads/index.html</guid>
+      <description>Duration: 5 min | Persona: Apps Operator
 In this section, you will monitor security scanning of your GKE workloads configurations in the Google Cloud console in order to leverage these two features:
 Scan workloads for configuration issues Scan container images for known vulnerabilities Initialize variables:
-WORK_DIR=~/ source ${WORK_DIR}acm-workshop-variables.sh In the Google Cloud console, navigate to Kubernetes Engine &amp;gt; Security Posture, click on the link displayed by the command below:</description></item><item><title>Deploy AuthorizationPolicies</title><link>https://mathieu-benoit.github.io/acm-workshop/onlineboutique/deploy-authorization-policies/index.html</link><pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate><guid>https://mathieu-benoit.github.io/acm-workshop/onlineboutique/deploy-authorization-policies/index.html</guid><description>Duration: 5 min | Persona: Apps Operator
+WORK_DIR=~/ source ${WORK_DIR}acm-workshop-variables.sh In the Google Cloud console, navigate to Kubernetes Engine &amp;gt; Security Posture, click on the link displayed by the command below:</description>
+    </item>
+    <item>
+      <title>Deploy AuthorizationPolicies</title>
+      <link>https://mathieu-benoit.github.io/acm-workshop/onlineboutique/deploy-authorization-policies/index.html</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      <guid>https://mathieu-benoit.github.io/acm-workshop/onlineboutique/deploy-authorization-policies/index.html</guid>
+      <description>Duration: 5 min | Persona: Apps Operator
 In this section, you will see how to track the AuthorizationPolicies issue and then you will deploy granular and specific AuthorizationPolicies for the Online Boutique namespace to fix this issue.
 Initialize variables:
 WORK_DIR=~/ source ${WORK_DIR}acm-workshop-variables.sh See the AuthorizationPolicies issue See the AuthorizationPolicies issue in the GKE cluster for the Online Boutique apps, by running this command and click on this link:
-echo -e &amp;#34;https://console.</description></item><item><title>Deploy NetworkPolicies</title><link>https://mathieu-benoit.github.io/acm-workshop/bankofanthos/deploy-network-policies/index.html</link><pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate><guid>https://mathieu-benoit.github.io/acm-workshop/bankofanthos/deploy-network-policies/index.html</guid><description>Duration: 5 min | Persona: Apps Operator
+echo -e &amp;#34;https://console.</description>
+    </item>
+    <item>
+      <title>Deploy NetworkPolicies</title>
+      <link>https://mathieu-benoit.github.io/acm-workshop/bankofanthos/deploy-network-policies/index.html</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      <guid>https://mathieu-benoit.github.io/acm-workshop/bankofanthos/deploy-network-policies/index.html</guid>
+      <description>Duration: 5 min | Persona: Apps Operator
 In this section, you will see the Policy Controller violation regarding to the missing NetworkPolicies in the Bank of Anthos namespace. Then, you will fix this violation by deploying the associated resources.
 Initialize variables:
 WORK_DIR=~/ source ${WORK_DIR}acm-workshop-variables.sh See the Policy Controller violations See the Policy Controller violations in the GKE cluster, by running this command and click on this link:
-echo -e &amp;#34;https://console.</description></item><item><title>Deploy NetworkPolicies</title><link>https://mathieu-benoit.github.io/acm-workshop/whereami/deploy-network-policies/index.html</link><pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate><guid>https://mathieu-benoit.github.io/acm-workshop/whereami/deploy-network-policies/index.html</guid><description>Duration: 5 min | Persona: Apps Operator
+echo -e &amp;#34;https://console.</description>
+    </item>
+    <item>
+      <title>Deploy NetworkPolicies</title>
+      <link>https://mathieu-benoit.github.io/acm-workshop/whereami/deploy-network-policies/index.html</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      <guid>https://mathieu-benoit.github.io/acm-workshop/whereami/deploy-network-policies/index.html</guid>
+      <description>Duration: 5 min | Persona: Apps Operator
 In this section, you will see the Policy Controller violation regarding to the missing NetworkPolicies in the Whereami namespace. Then, you will fix this violation by deploying the associated resources.
 Initialize variables:
 WORK_DIR=~/ source ${WORK_DIR}acm-workshop-variables.sh See the Policy Controller violations See the Policy Controller violations in the GKE cluster, by running this command and click on this link:
-echo -e &amp;#34;https://console.cloud.google.com/kubernetes/policy_controller/dashboard?project=${TENANT_PROJECT_ID}&amp;#34; You will see that the K8sRequireNamespaceNetworkPolicies Constraint has this violation: Namespace &amp;lt;whereami&amp;gt; does not have a NetworkPolicy.</description></item><item><title>Monitor resources synced</title><link>https://mathieu-benoit.github.io/acm-workshop/monitoring-and-audit/monitor-resources-synced/index.html</link><pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate><guid>https://mathieu-benoit.github.io/acm-workshop/monitoring-and-audit/monitor-resources-synced/index.html</guid><description>Duration: 5 min | Persona: Apps Operator
+echo -e &amp;#34;https://console.cloud.google.com/kubernetes/policy_controller/dashboard?project=${TENANT_PROJECT_ID}&amp;#34; You will see that the K8sRequireNamespaceNetworkPolicies Constraint has this violation: Namespace &amp;lt;whereami&amp;gt; does not have a NetworkPolicy.</description>
+    </item>
+    <item>
+      <title>Monitor resources synced</title>
+      <link>https://mathieu-benoit.github.io/acm-workshop/monitoring-and-audit/monitor-resources-synced/index.html</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      <guid>https://mathieu-benoit.github.io/acm-workshop/monitoring-and-audit/monitor-resources-synced/index.html</guid>
+      <description>Duration: 5 min | Persona: Apps Operator
 In this section, in the Google Cloud Console you will monitor the resources synced by Config Sync for both the Config Controller instance in the Host project and the GKE cluster in the Tenant project.
 Initialize variables:
-WORK_DIR=~/ source ${WORK_DIR}acm-workshop-variables.sh Monitor the resources synced by Config Sync in the Config Controller instance in the Host project Click on the link displayed by the command below:</description></item><item><title>Deploy NetworkPolicies</title><link>https://mathieu-benoit.github.io/acm-workshop/onlineboutique/deploy-network-policies/index.html</link><pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate><guid>https://mathieu-benoit.github.io/acm-workshop/onlineboutique/deploy-network-policies/index.html</guid><description>Duration: 5 min | Persona: Apps Operator
+WORK_DIR=~/ source ${WORK_DIR}acm-workshop-variables.sh Monitor the resources synced by Config Sync in the Config Controller instance in the Host project Click on the link displayed by the command below:</description>
+    </item>
+    <item>
+      <title>Deploy NetworkPolicies</title>
+      <link>https://mathieu-benoit.github.io/acm-workshop/onlineboutique/deploy-network-policies/index.html</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      <guid>https://mathieu-benoit.github.io/acm-workshop/onlineboutique/deploy-network-policies/index.html</guid>
+      <description>Duration: 5 min | Persona: Apps Operator
 In this section, you will see the Policy Controller violation regarding to the missing NetworkPolicies in the Online Boutique namespace. Then, you will fix this violation by deploying the associated resources.
 Initialize variables:
 WORK_DIR=~/ source ${WORK_DIR}acm-workshop-variables.sh See the Policy Controller violations See the Policy Controller violations in the GKE cluster, by running this command and click on this link:
-echo -e &amp;#34;https://console.cloud.google.com/kubernetes/policy_controller/dashboard?project=${TENANT_PROJECT_ID}&amp;#34; You will see that the K8sRequireNamespaceNetworkPolicies Constraint has this violation: Namespace &amp;lt;onlineboutique&amp;gt; does not have a NetworkPolicy.</description></item><item><title>Deploy Sidecar</title><link>https://mathieu-benoit.github.io/acm-workshop/whereami/deploy-sidecar/index.html</link><pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate><guid>https://mathieu-benoit.github.io/acm-workshop/whereami/deploy-sidecar/index.html</guid><description>Duration: 5 min | Persona: Apps Operator
+echo -e &amp;#34;https://console.cloud.google.com/kubernetes/policy_controller/dashboard?project=${TENANT_PROJECT_ID}&amp;#34; You will see that the K8sRequireNamespaceNetworkPolicies Constraint has this violation: Namespace &amp;lt;onlineboutique&amp;gt; does not have a NetworkPolicy.</description>
+    </item>
+    <item>
+      <title>Deploy Sidecar</title>
+      <link>https://mathieu-benoit.github.io/acm-workshop/whereami/deploy-sidecar/index.html</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      <guid>https://mathieu-benoit.github.io/acm-workshop/whereami/deploy-sidecar/index.html</guid>
+      <description>Duration: 5 min | Persona: Apps Operator
 In this section, you will deploy a fine granular Sidecar in order to optimize the resources (CPU/Memory) usage of the Whereami app&amp;rsquo;s sidecar proxy. By default, each application in the whereami Namespace can reach to all the endpoints in the mesh. The Sidecar resource allows to reduce that list to the strict minimum of which endpoints it needs to communicate with.
-Initialize variables:</description></item><item><title>Deploy Sidecars</title><link>https://mathieu-benoit.github.io/acm-workshop/bankofanthos/deploy-sidecars/index.html</link><pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate><guid>https://mathieu-benoit.github.io/acm-workshop/bankofanthos/deploy-sidecars/index.html</guid><description>Duration: 5 min | Persona: Apps Operator
-In this section, you will deploy fine granular Sidecars in order to optimize the resources (CPU/Memory) usage of the Bank of Anthos apps&amp;rsquo;s sidecar proxies. By default, each application in the bankofanthos Namespace can reach to all the endpoints in the mesh. The Sidecar resource allows to reduce that list to the strict minimum of which endpoints it needs to communicate with.</description></item><item><title>Monitor policies violations</title><link>https://mathieu-benoit.github.io/acm-workshop/monitoring-and-audit/monitor-policies-violations/index.html</link><pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate><guid>https://mathieu-benoit.github.io/acm-workshop/monitoring-and-audit/monitor-policies-violations/index.html</guid><description>Duration: 5 min | Persona: Apps Operator
+Initialize variables:</description>
+    </item>
+    <item>
+      <title>Deploy Sidecars</title>
+      <link>https://mathieu-benoit.github.io/acm-workshop/bankofanthos/deploy-sidecars/index.html</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      <guid>https://mathieu-benoit.github.io/acm-workshop/bankofanthos/deploy-sidecars/index.html</guid>
+      <description>Duration: 5 min | Persona: Apps Operator
+In this section, you will deploy fine granular Sidecars in order to optimize the resources (CPU/Memory) usage of the Bank of Anthos apps&amp;rsquo;s sidecar proxies. By default, each application in the bankofanthos Namespace can reach to all the endpoints in the mesh. The Sidecar resource allows to reduce that list to the strict minimum of which endpoints it needs to communicate with.</description>
+    </item>
+    <item>
+      <title>Monitor policies violations</title>
+      <link>https://mathieu-benoit.github.io/acm-workshop/monitoring-and-audit/monitor-policies-violations/index.html</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      <guid>https://mathieu-benoit.github.io/acm-workshop/monitoring-and-audit/monitor-policies-violations/index.html</guid>
+      <description>Duration: 5 min | Persona: Apps Operator
 In this section, in the Google Cloud Console you will monitor the Policy Controller&amp;rsquo;s policies violations for the GKE cluster in the Tenant project.
 Initialize variables:
 WORK_DIR=~/ source ${WORK_DIR}acm-workshop-variables.sh Click on the link displayed by the command below:
 echo -e &amp;#34;https://console.cloud.google.com/kubernetes/policy_controller/dashboard?project=${TENANT_PROJECT_ID}&amp;#34; On the default Dashboard tab, you will find something similar to:
-Then if you go on the Violations tab, you will find something similar to:</description></item><item><title>Deploy Sidecars</title><link>https://mathieu-benoit.github.io/acm-workshop/onlineboutique/deploy-sidecars/index.html</link><pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate><guid>https://mathieu-benoit.github.io/acm-workshop/onlineboutique/deploy-sidecars/index.html</guid><description>Duration: 5 min | Persona: Apps Operator
-In this section, you will deploy fine granular Sidecars in order to optimize the resources (CPU/Memory) usage of the Online Boutique apps&amp;rsquo;s sidecar proxies. By default, each application in the Online Boutique namespace can reach to all the endpoints in the mesh. The Sidecar resource allows to reduce that list to the strict minimum of which endpoints it needs to communicate with.</description></item></channel></rss>
+Then if you go on the Violations tab, you will find something similar to:</description>
+    </item>
+    <item>
+      <title>Deploy Sidecars</title>
+      <link>https://mathieu-benoit.github.io/acm-workshop/onlineboutique/deploy-sidecars/index.html</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      <guid>https://mathieu-benoit.github.io/acm-workshop/onlineboutique/deploy-sidecars/index.html</guid>
+      <description>Duration: 5 min | Persona: Apps Operator
+In this section, you will deploy fine granular Sidecars in order to optimize the resources (CPU/Memory) usage of the Online Boutique apps&amp;rsquo;s sidecar proxies. By default, each application in the Online Boutique namespace can reach to all the endpoints in the mesh. The Sidecar resource allows to reduce that list to the strict minimum of which endpoints it needs to communicate with.</description>
+    </item>
+  </channel>
+</rss>

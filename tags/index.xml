@@ -1,1 +1,87 @@
-<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>Tags on</title><link>https://mathieu-benoit.github.io/acm-workshop/tags/index.html</link><description>Recent content in Tags on</description><generator>Hugo -- gohugo.io</generator><language>en-us</language><atom:link href="https://mathieu-benoit.github.io/acm-workshop/tags/index.xml" rel="self" type="application/rss+xml"/><item><title>apps-operator</title><link>https://mathieu-benoit.github.io/acm-workshop/tags/apps-operator/index.html</link><pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate><guid>https://mathieu-benoit.github.io/acm-workshop/tags/apps-operator/index.html</guid><description/></item><item><title>asm</title><link>https://mathieu-benoit.github.io/acm-workshop/tags/asm/index.html</link><pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate><guid>https://mathieu-benoit.github.io/acm-workshop/tags/asm/index.html</guid><description/></item><item><title>gitops-tips</title><link>https://mathieu-benoit.github.io/acm-workshop/tags/gitops-tips/index.html</link><pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate><guid>https://mathieu-benoit.github.io/acm-workshop/tags/gitops-tips/index.html</guid><description/></item><item><title>gke</title><link>https://mathieu-benoit.github.io/acm-workshop/tags/gke/index.html</link><pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate><guid>https://mathieu-benoit.github.io/acm-workshop/tags/gke/index.html</guid><description/></item><item><title>helm</title><link>https://mathieu-benoit.github.io/acm-workshop/tags/helm/index.html</link><pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate><guid>https://mathieu-benoit.github.io/acm-workshop/tags/helm/index.html</guid><description/></item><item><title>kcc</title><link>https://mathieu-benoit.github.io/acm-workshop/tags/kcc/index.html</link><pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate><guid>https://mathieu-benoit.github.io/acm-workshop/tags/kcc/index.html</guid><description/></item><item><title>monitoring</title><link>https://mathieu-benoit.github.io/acm-workshop/tags/monitoring/index.html</link><pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate><guid>https://mathieu-benoit.github.io/acm-workshop/tags/monitoring/index.html</guid><description/></item><item><title>org-admin</title><link>https://mathieu-benoit.github.io/acm-workshop/tags/org-admin/index.html</link><pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate><guid>https://mathieu-benoit.github.io/acm-workshop/tags/org-admin/index.html</guid><description/></item><item><title>platform-admin</title><link>https://mathieu-benoit.github.io/acm-workshop/tags/platform-admin/index.html</link><pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate><guid>https://mathieu-benoit.github.io/acm-workshop/tags/platform-admin/index.html</guid><description/></item><item><title>policies</title><link>https://mathieu-benoit.github.io/acm-workshop/tags/policies/index.html</link><pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate><guid>https://mathieu-benoit.github.io/acm-workshop/tags/policies/index.html</guid><description/></item><item><title>security-tips</title><link>https://mathieu-benoit.github.io/acm-workshop/tags/security-tips/index.html</link><pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate><guid>https://mathieu-benoit.github.io/acm-workshop/tags/security-tips/index.html</guid><description/></item></channel></rss>
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Tags on </title>
+    <link>https://mathieu-benoit.github.io/acm-workshop/tags/index.html</link>
+    <description>Recent content in Tags on </description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-us</language><atom:link href="https://mathieu-benoit.github.io/acm-workshop/tags/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>apps-operator</title>
+      <link>https://mathieu-benoit.github.io/acm-workshop/tags/apps-operator/index.html</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      <guid>https://mathieu-benoit.github.io/acm-workshop/tags/apps-operator/index.html</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>asm</title>
+      <link>https://mathieu-benoit.github.io/acm-workshop/tags/asm/index.html</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      <guid>https://mathieu-benoit.github.io/acm-workshop/tags/asm/index.html</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>gitops-tips</title>
+      <link>https://mathieu-benoit.github.io/acm-workshop/tags/gitops-tips/index.html</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      <guid>https://mathieu-benoit.github.io/acm-workshop/tags/gitops-tips/index.html</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>gke</title>
+      <link>https://mathieu-benoit.github.io/acm-workshop/tags/gke/index.html</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      <guid>https://mathieu-benoit.github.io/acm-workshop/tags/gke/index.html</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>helm</title>
+      <link>https://mathieu-benoit.github.io/acm-workshop/tags/helm/index.html</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      <guid>https://mathieu-benoit.github.io/acm-workshop/tags/helm/index.html</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>kcc</title>
+      <link>https://mathieu-benoit.github.io/acm-workshop/tags/kcc/index.html</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      <guid>https://mathieu-benoit.github.io/acm-workshop/tags/kcc/index.html</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>monitoring</title>
+      <link>https://mathieu-benoit.github.io/acm-workshop/tags/monitoring/index.html</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      <guid>https://mathieu-benoit.github.io/acm-workshop/tags/monitoring/index.html</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>org-admin</title>
+      <link>https://mathieu-benoit.github.io/acm-workshop/tags/org-admin/index.html</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      <guid>https://mathieu-benoit.github.io/acm-workshop/tags/org-admin/index.html</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>platform-admin</title>
+      <link>https://mathieu-benoit.github.io/acm-workshop/tags/platform-admin/index.html</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      <guid>https://mathieu-benoit.github.io/acm-workshop/tags/platform-admin/index.html</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>policies</title>
+      <link>https://mathieu-benoit.github.io/acm-workshop/tags/policies/index.html</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      <guid>https://mathieu-benoit.github.io/acm-workshop/tags/policies/index.html</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>security-tips</title>
+      <link>https://mathieu-benoit.github.io/acm-workshop/tags/security-tips/index.html</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      <guid>https://mathieu-benoit.github.io/acm-workshop/tags/security-tips/index.html</guid>
+      <description></description>
+    </item>
+  </channel>
+</rss>

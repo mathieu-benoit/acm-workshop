@@ -1,35 +1,104 @@
-<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>ACM/ASM Workshop on</title><link>https://mathieu-benoit.github.io/acm-workshop/index.html</link><description>Recent content in ACM/ASM Workshop on</description><generator>Hugo -- gohugo.io</generator><language>en-us</language><atom:link href="https://mathieu-benoit.github.io/acm-workshop/index.xml" rel="self" type="application/rss+xml"/><item><title>Overview</title><link>https://mathieu-benoit.github.io/acm-workshop/overview/index.html</link><pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate><guid>https://mathieu-benoit.github.io/acm-workshop/overview/index.html</guid><description> Personas Agenda Before you begin Credits Costs</description></item><item><title>1. Host project</title><link>https://mathieu-benoit.github.io/acm-workshop/host-project/index.html</link><pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate><guid>https://mathieu-benoit.github.io/acm-workshop/host-project/index.html</guid><description>Set up the Host project with the Config Controller instance.
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>ACM/ASM Workshop on </title>
+    <link>https://mathieu-benoit.github.io/acm-workshop/index.html</link>
+    <description>Recent content in ACM/ASM Workshop on </description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-us</language><atom:link href="https://mathieu-benoit.github.io/acm-workshop/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Overview</title>
+      <link>https://mathieu-benoit.github.io/acm-workshop/overview/index.html</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      <guid>https://mathieu-benoit.github.io/acm-workshop/overview/index.html</guid>
+      <description> Personas Agenda Before you begin Credits Costs </description>
+    </item>
+    <item>
+      <title>1. Host project</title>
+      <link>https://mathieu-benoit.github.io/acm-workshop/host-project/index.html</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      <guid>https://mathieu-benoit.github.io/acm-workshop/host-project/index.html</guid>
+      <description>Set up the Host project with the Config Controller instance.
 Create Host projectDuration: 5 min | Persona: Org Admin
 Create Config ControllerDuration: 20 min | Persona: Org Admin
 Set up Host project&amp;#39;s Git repoDuration: 10 min | Persona: Org Admin
-Enforce Tenant projects policiesDuration: 5 min | Persona: Org Admin</description></item><item><title>2. Tenant project</title><link>https://mathieu-benoit.github.io/acm-workshop/tenant-project/index.html</link><pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate><guid>https://mathieu-benoit.github.io/acm-workshop/tenant-project/index.html</guid><description>Set up the Tenant project which will host later a GKE cluster, Artifact Registry, Memorystore (Redis), Cloud Armor, etc.
+Enforce Tenant projects policiesDuration: 5 min | Persona: Org Admin</description>
+    </item>
+    <item>
+      <title>2. Tenant project</title>
+      <link>https://mathieu-benoit.github.io/acm-workshop/tenant-project/index.html</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      <guid>https://mathieu-benoit.github.io/acm-workshop/tenant-project/index.html</guid>
+      <description>Set up the Tenant project which will host later a GKE cluster, Artifact Registry, Memorystore (Redis), Cloud Armor, etc.
 Create Tenant projectDuration: 10 min | Persona: Org Admin
 Set up Tenant project&amp;#39;s Git repoDuration: 5 min | Persona: Org Admin
 Enforce GCP resources policiesDuration: 5 min | Persona: Org Admin
 Allow MonitoringDuration: 2 min | Persona: Org Admin
-Set up MonitoringDuration: 5 min | Persona: Platform Admin</description></item><item><title>3. Networking</title><link>https://mathieu-benoit.github.io/acm-workshop/networking/index.html</link><pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate><guid>https://mathieu-benoit.github.io/acm-workshop/networking/index.html</guid><description>Set up the Networking in the Tenant project.
+Set up MonitoringDuration: 5 min | Persona: Platform Admin</description>
+    </item>
+    <item>
+      <title>3. Networking</title>
+      <link>https://mathieu-benoit.github.io/acm-workshop/networking/index.html</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      <guid>https://mathieu-benoit.github.io/acm-workshop/networking/index.html</guid>
+      <description>Set up the Networking in the Tenant project.
 Allow NetworkingDuration: 2 min | Persona: Org Admin
-Set up NetworkDuration: 5 min | Persona: Platform Admin</description></item><item><title>4. GKE cluster</title><link>https://mathieu-benoit.github.io/acm-workshop/gke-cluster/index.html</link><pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate><guid>https://mathieu-benoit.github.io/acm-workshop/gke-cluster/index.html</guid><description>Set up the GKE cluster.
+Set up NetworkDuration: 5 min | Persona: Platform Admin</description>
+    </item>
+    <item>
+      <title>4. GKE cluster</title>
+      <link>https://mathieu-benoit.github.io/acm-workshop/gke-cluster/index.html</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      <guid>https://mathieu-benoit.github.io/acm-workshop/gke-cluster/index.html</guid>
+      <description>Set up the GKE cluster.
 Allow GKEDuration: 5 min | Persona: Org Admin
 Enforce GKE policiesDuration: 5 min | Persona: Org Admin
 Create GKE clusterDuration: 20 min | Persona: Platform Admin
 Allow FleetDuration: 5 min | Persona: Org Admin
 Set up GKE configs&amp;#39;s Git repoDuration: 10 min | Persona: Platform Admin
 Enforce Kubernetes policiesDuration: 5 min | Persona: Platform Admin
-Set up NetworkPolicies loggingDuration: 5 min | Persona: Platform Admin</description></item><item><title>5. Artifact Registry</title><link>https://mathieu-benoit.github.io/acm-workshop/artifact-registry/index.html</link><pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate><guid>https://mathieu-benoit.github.io/acm-workshop/artifact-registry/index.html</guid><description>Set up Artifact Registry.
+Set up NetworkPolicies loggingDuration: 5 min | Persona: Platform Admin</description>
+    </item>
+    <item>
+      <title>5. Artifact Registry</title>
+      <link>https://mathieu-benoit.github.io/acm-workshop/artifact-registry/index.html</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      <guid>https://mathieu-benoit.github.io/acm-workshop/artifact-registry/index.html</guid>
+      <description>Set up Artifact Registry.
 Allow Artifact RegistryDuration: 5 min | Persona: Org Admin
 Create Artifact RegistryDuration: 5 min | Persona: Platform Admin
-Enforce Artifact Registry policiesDuration: 10 min | Persona: Platform Admin</description></item><item><title>6. Service Mesh</title><link>https://mathieu-benoit.github.io/acm-workshop/service-mesh/index.html</link><pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate><guid>https://mathieu-benoit.github.io/acm-workshop/service-mesh/index.html</guid><description>Set up Anthos Service Mesh (ASM).
+Enforce Artifact Registry policiesDuration: 10 min | Persona: Platform Admin</description>
+    </item>
+    <item>
+      <title>6. Service Mesh</title>
+      <link>https://mathieu-benoit.github.io/acm-workshop/service-mesh/index.html</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      <guid>https://mathieu-benoit.github.io/acm-workshop/service-mesh/index.html</guid>
+      <description>Set up Anthos Service Mesh (ASM).
 Allow ASMDuration: 5 min | Persona: Org Admin
 Install ASMDuration: 15 min | Persona: Platform Admin
 Set up ASM configsDuration: 5 min | Persona: Platform Admin
-Enforce Service Mesh policiesDuration: 10 min | Persona: Platform Admin</description></item><item><title>7. Ingress Gateway</title><link>https://mathieu-benoit.github.io/acm-workshop/ingress-gateway/index.html</link><pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate><guid>https://mathieu-benoit.github.io/acm-workshop/ingress-gateway/index.html</guid><description>Set up Anthos Service Mesh (ASM) Ingress Gateway.
+Enforce Service Mesh policiesDuration: 10 min | Persona: Platform Admin</description>
+    </item>
+    <item>
+      <title>7. Ingress Gateway</title>
+      <link>https://mathieu-benoit.github.io/acm-workshop/ingress-gateway/index.html</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      <guid>https://mathieu-benoit.github.io/acm-workshop/ingress-gateway/index.html</guid>
+      <description>Set up Anthos Service Mesh (ASM) Ingress Gateway.
 Create IP addressDuration: 5 min | Persona: Platform Admin
 Allow Cloud ArmorDuration: 2 min | Persona: Org Admin
 Set up Cloud ArmorDuration: 10 min | Persona: Platform Admin
 Deploy Ingress GatewayDuration: 15 min | Persona: Platform Admin
 Deploy NetworkPoliciesDuration: 5 min | Persona: Platform Admin
-Deploy AuthorizationPoliciesDuration: 5 min | Persona: Platform Admin</description></item><item><title>8. Whereami app</title><link>https://mathieu-benoit.github.io/acm-workshop/whereami/index.html</link><pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate><guid>https://mathieu-benoit.github.io/acm-workshop/whereami/index.html</guid><description>Set up the Whereami app.
+Deploy AuthorizationPoliciesDuration: 5 min | Persona: Platform Admin</description>
+    </item>
+    <item>
+      <title>8. Whereami app</title>
+      <link>https://mathieu-benoit.github.io/acm-workshop/whereami/index.html</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      <guid>https://mathieu-benoit.github.io/acm-workshop/whereami/index.html</guid>
+      <description>Set up the Whereami app.
 Set up DNSDuration: 5 min | Persona: Platform Admin
 Set up URL uptime checkDuration: 10 min | Persona: Platform Admin
 Configure Config SyncDuration: 10 min | Persona: Platform Admin
@@ -37,14 +106,28 @@ Prepare containerDuration: 5 min | Persona: Apps Operator
 Deploy appDuration: 10 min | Persona: Apps Operator
 Deploy AuthorizationPolicyDuration: 5 min | Persona: Apps Operator
 Deploy NetworkPoliciesDuration: 5 min | Persona: Apps Operator
-Deploy SidecarDuration: 5 min | Persona: Apps Operator</description></item><item><title>9. Online Boutique apps</title><link>https://mathieu-benoit.github.io/acm-workshop/onlineboutique/index.html</link><pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate><guid>https://mathieu-benoit.github.io/acm-workshop/onlineboutique/index.html</guid><description>Set up the Online Boutique apps.
+Deploy SidecarDuration: 5 min | Persona: Apps Operator</description>
+    </item>
+    <item>
+      <title>9. Online Boutique apps</title>
+      <link>https://mathieu-benoit.github.io/acm-workshop/onlineboutique/index.html</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      <guid>https://mathieu-benoit.github.io/acm-workshop/onlineboutique/index.html</guid>
+      <description>Set up the Online Boutique apps.
 Set up DNSDuration: 5 min | Persona: Platform Admin
 Set up URL uptime checkDuration: 10 min | Persona: Platform Admin
 Allow Config SyncDuration: 5 min | Persona: Platform Admin
 Configure Config SyncDuration: 5 min | Persona: Platform Admin
 Prepare containers and chartDuration: 5 min | Persona: Apps Operator
 Deploy appsDuration: 5 min | Persona: Apps Operator
-Deploy AuthorizationPoliciesDuration: 5 min | Persona: Apps Operator</description></item><item><title>10. Bank of Anthos apps</title><link>https://mathieu-benoit.github.io/acm-workshop/bankofanthos/index.html</link><pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate><guid>https://mathieu-benoit.github.io/acm-workshop/bankofanthos/index.html</guid><description>Set up the Bank of Anthos apps.
+Deploy AuthorizationPoliciesDuration: 5 min | Persona: Apps Operator</description>
+    </item>
+    <item>
+      <title>10. Bank of Anthos apps</title>
+      <link>https://mathieu-benoit.github.io/acm-workshop/bankofanthos/index.html</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      <guid>https://mathieu-benoit.github.io/acm-workshop/bankofanthos/index.html</guid>
+      <description>Set up the Bank of Anthos apps.
 Set up DNSDuration: 5 min | Persona: Platform Admin
 Set up URL uptime checkDuration: 10 min | Persona: Platform Admin
 Configure Config SyncDuration: 10 min | Persona: Platform Admin
@@ -52,11 +135,21 @@ Prepare containersDuration: 5 min | Persona: Apps Operator
 Deploy appsDuration: 5 min | Persona: Apps Operator
 Deploy AuthorizationPoliciesDuration: 5 min | Persona: Apps Operator
 Deploy NetworkPoliciesDuration: 5 min | Persona: Apps Operator
-Deploy SidecarsDuration: 5 min | Persona: Apps Operator</description></item><item><title>11. Monitoring &amp; Audit</title><link>https://mathieu-benoit.github.io/acm-workshop/monitoring-and-audit/index.html</link><pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate><guid>https://mathieu-benoit.github.io/acm-workshop/monitoring-and-audit/index.html</guid><description>Leverage the different Monitoring and Audit features in the Tenant project.
+Deploy SidecarsDuration: 5 min | Persona: Apps Operator</description>
+    </item>
+    <item>
+      <title>11. Monitoring &amp; Audit</title>
+      <link>https://mathieu-benoit.github.io/acm-workshop/monitoring-and-audit/index.html</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      <guid>https://mathieu-benoit.github.io/acm-workshop/monitoring-and-audit/index.html</guid>
+      <description>Leverage the different Monitoring and Audit features in the Tenant project.
 Verify ASM versionDuration: 5 min | Persona: Platform Admin
 Monitor apps securityDuration: 5 min | Persona: Apps Operator
 Monitor apps healthDuration: 5 min | Persona: Apps Operator
 Trace appsDuration: 5 min | Persona: Apps Operator
 Monitor WAF rulesDuration: 5 min | Persona: Platform Admin
 Scan workloadsDuration: 5 min | Persona: Apps Operator
-Monitor resources syncedDuration: 5 min | Persona: Apps Operator</description></item></channel></rss>
+Monitor resources syncedDuration: 5 min | Persona: Apps Operator</description>
+    </item>
+  </channel>
+</rss>

@@ -1,12 +1,42 @@
-<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>Spanner on</title><link>https://mathieu-benoit.github.io/acm-workshop/onlineboutique/spanner/index.html</link><description>Recent content in Spanner on</description><generator>Hugo -- gohugo.io</generator><language>en-us</language><atom:link href="https://mathieu-benoit.github.io/acm-workshop/onlineboutique/spanner/index.xml" rel="self" type="application/rss+xml"/><item><title>Allow Spanner</title><link>https://mathieu-benoit.github.io/acm-workshop/onlineboutique/spanner/allow-spanner/index.html</link><pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate><guid>https://mathieu-benoit.github.io/acm-workshop/onlineboutique/spanner/allow-spanner/index.html</guid><description>Duration: 5 min | Persona: Org Admin
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Spanner on </title>
+    <link>https://mathieu-benoit.github.io/acm-workshop/onlineboutique/spanner/index.html</link>
+    <description>Recent content in Spanner on </description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-us</language><atom:link href="https://mathieu-benoit.github.io/acm-workshop/onlineboutique/spanner/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Allow Spanner</title>
+      <link>https://mathieu-benoit.github.io/acm-workshop/onlineboutique/spanner/allow-spanner/index.html</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      <guid>https://mathieu-benoit.github.io/acm-workshop/onlineboutique/spanner/allow-spanner/index.html</guid>
+      <description>Duration: 5 min | Persona: Org Admin
 In this section, you will enable and grant the appropriate APIs in the Tenant project and the IAM role for the Tenant project&amp;rsquo;s service account. This will allow later this service account to provision a Spanner instance.
 Initialize variables:
 WORK_DIR=~/ source ${WORK_DIR}acm-workshop-variables.sh Define API Define the Spanner API Service resource for the Tenant project:
-cat &amp;lt;&amp;lt;EOF &amp;gt; ${WORK_DIR}$HOST_PROJECT_DIR_NAME/projects/$TENANT_PROJECT_ID/spanner-service.yaml apiVersion: serviceusage.cnrm.cloud.google.com/v1beta1 kind: Service metadata: annotations: cnrm.</description></item><item><title>Create Spanner</title><link>https://mathieu-benoit.github.io/acm-workshop/onlineboutique/spanner/create-spanner/index.html</link><pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate><guid>https://mathieu-benoit.github.io/acm-workshop/onlineboutique/spanner/create-spanner/index.html</guid><description>Duration: 10 min | Persona: Platform Admin
+cat &amp;lt;&amp;lt;EOF &amp;gt; ${WORK_DIR}$HOST_PROJECT_DIR_NAME/projects/$TENANT_PROJECT_ID/spanner-service.yaml apiVersion: serviceusage.cnrm.cloud.google.com/v1beta1 kind: Service metadata: annotations: cnrm.</description>
+    </item>
+    <item>
+      <title>Create Spanner</title>
+      <link>https://mathieu-benoit.github.io/acm-workshop/onlineboutique/spanner/create-spanner/index.html</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      <guid>https://mathieu-benoit.github.io/acm-workshop/onlineboutique/spanner/create-spanner/index.html</guid>
+      <description>Duration: 10 min | Persona: Platform Admin
 In this section, you will create a Spanner instance and database for the Online Boutique&amp;rsquo;s cartservice app to connect to. You will also configure the associated cartservice&amp;rsquo;s Google Service account to have fine granular read access to the Spanner database via Workload Identity.
 Initialize variables:
-WORK_DIR=~/ source ${WORK_DIR}acm-workshop-variables.sh echo &amp;#34;export SPANNER_INSTANCE_NAME=onlineboutique&amp;#34; &amp;gt;&amp;gt; ${WORK_DIR}acm-workshop-variables.sh echo &amp;#34;export SPANNER_DATABASE_NAME=carts&amp;#34; &amp;gt;&amp;gt; ${WORK_DIR}acm-workshop-variables.sh echo &amp;#34;export SPANNER_DATABASE_USER_GSA_NAME=spanner-db-user&amp;#34; &amp;gt;&amp;gt; ${WORK_DIR}acm-workshop-variables.</description></item><item><title>Use Spanner</title><link>https://mathieu-benoit.github.io/acm-workshop/onlineboutique/spanner/use-spanner/index.html</link><pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate><guid>https://mathieu-benoit.github.io/acm-workshop/onlineboutique/spanner/use-spanner/index.html</guid><description>Duration: 10 min | Persona: Apps Operator
+WORK_DIR=~/ source ${WORK_DIR}acm-workshop-variables.sh echo &amp;#34;export SPANNER_INSTANCE_NAME=onlineboutique&amp;#34; &amp;gt;&amp;gt; ${WORK_DIR}acm-workshop-variables.sh echo &amp;#34;export SPANNER_DATABASE_NAME=carts&amp;#34; &amp;gt;&amp;gt; ${WORK_DIR}acm-workshop-variables.sh echo &amp;#34;export SPANNER_DATABASE_USER_GSA_NAME=spanner-db-user&amp;#34; &amp;gt;&amp;gt; ${WORK_DIR}acm-workshop-variables.</description>
+    </item>
+    <item>
+      <title>Use Spanner</title>
+      <link>https://mathieu-benoit.github.io/acm-workshop/onlineboutique/spanner/use-spanner/index.html</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      <guid>https://mathieu-benoit.github.io/acm-workshop/onlineboutique/spanner/use-spanner/index.html</guid>
+      <description>Duration: 10 min | Persona: Apps Operator
 In this section, you will update the OnlineBoutique&amp;rsquo;s cartservice app in order to point to the Spanner database previously created.
 Initialize variables:
 WORK_DIR=~/ source ${WORK_DIR}acm-workshop-variables.sh Update RepoSync to deploy the Online Boutique&amp;rsquo;s Helm chart Get the Spanner database connection information:
-export SPANNER_CONNECTION_STRING=projects/${TENANT_PROJECT_ID}/instances/${SPANNER_INSTANCE_NAME}/databases/${SPANNER_DATABASE_NAME} export SPANNER_DB_USER_GSA_ID=${SPANNER_DATABASE_USER_GSA_NAME}@${TENANT_PROJECT_ID}.iam.gserviceaccount.com Define the RepoSync to deploy the Online Boutique&amp;rsquo;s Helm chart with the cartservice pointing to the Spanner database:</description></item></channel></rss>
+export SPANNER_CONNECTION_STRING=projects/${TENANT_PROJECT_ID}/instances/${SPANNER_INSTANCE_NAME}/databases/${SPANNER_DATABASE_NAME} export SPANNER_DB_USER_GSA_ID=${SPANNER_DATABASE_USER_GSA_NAME}@${TENANT_PROJECT_ID}.iam.gserviceaccount.com Define the RepoSync to deploy the Online Boutique&amp;rsquo;s Helm chart with the cartservice pointing to the Spanner database:</description>
+    </item>
+  </channel>
+</rss>
