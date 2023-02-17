@@ -1,2 +1,2 @@
-@import "theme-mine.css" screen;
+@import "theme-mine.css" screen and (prefers-color-scheme: light);
 @import "theme-relearn-dark.css" screen and (prefers-color-scheme: dark);
