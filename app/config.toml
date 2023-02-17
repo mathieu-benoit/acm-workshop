@@ -9,7 +9,7 @@ googleAnalytics = 'G-N4LZTQ74QV'
   home = [ "HTML", "RSS", "JSON"]
 
 [params]
-  editURL = "https://github.com/mathieu-benoit/acm-workshop/edit/main/content/"
+  editURL = "https://github.com/mathieu-benoit/acm-workshop/edit/main/app/content"
   description = "ACM/ASM Workshop"
   author = "Mathieu Benoit"
   showVisitedLinks = true
