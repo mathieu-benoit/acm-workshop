@@ -67,7 +67,7 @@ jobs:
         run: |
           docker run -v /var/run/docker.sock:/var/run/docker.sock --rm goodwithtech/dockle:latest -ak KEY_SHA512 --exit-code 1 --exit-level fatal ${IMAGE_NAME}
       - name: run trivy vulnerability scanner
-        uses: aquasecurity/trivy-action@0.9.1
+        uses: aquasecurity/trivy-action@0.9.2
         with:
           image-ref: ${{ env.IMAGE_NAME }}
           format: 'sarif'
