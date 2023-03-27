@@ -74,7 +74,7 @@ jobs:
           output: 'trivy-results.sarif'
           severity: ${{ env.SEVERITY }}
       - name: upload trivy scan results to GitHub security tab
-        uses: github/codeql-action/upload-sarif@v2.2.6
+        uses: github/codeql-action/upload-sarif@v2.2.9
         with:
           sarif_file: 'trivy-results.sarif'
       - name: run container locally as a test
