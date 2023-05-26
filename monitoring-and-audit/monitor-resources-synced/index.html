@@ -8,20 +8,20 @@
     <meta name="description" content="Duration: 5 min | Persona: Apps Operator">
     <meta name="author" content="Mathieu Benoit">
     <title>Monitor resources synced</title>
-    <link href="/acm-workshop/images/favicon.png?1685127828" rel="icon" type="image/png">
+    <link href="/acm-workshop/images/favicon.png?1685127848" rel="icon" type="image/png">
     <!-- https://github.com/filamentgroup/loadCSS/blob/master/README.md#how-to-use -->
-    <link href="/acm-workshop/css/fontawesome-all.min.css?1685127828" rel="stylesheet" media="print" onload="this.media='all';this.onload=null;"><noscript><link href="/acm-workshop/css/fontawesome-all.min.css?1685127828" rel="stylesheet"></noscript>
-    <link href="/acm-workshop/css/nucleus.css?1685127828" rel="stylesheet">
-    <link href="/acm-workshop/css/auto-complete.css?1685127828" rel="stylesheet" media="print" onload="this.media='all';this.onload=null;"><noscript><link href="/acm-workshop/css/auto-complete.css?1685127828" rel="stylesheet"></noscript>
-    <link href="/acm-workshop/css/perfect-scrollbar.min.css?1685127828" rel="stylesheet">
-    <link href="/acm-workshop/css/fonts.css?1685127828" rel="stylesheet" media="print" onload="this.media='all';this.onload=null;"><noscript><link href="/acm-workshop/css/fonts.css?1685127828" rel="stylesheet"></noscript>
-    <link href="/acm-workshop/css/theme.css?1685127828" rel="stylesheet">
-    <link href="/acm-workshop/css/theme-mine.css?1685127828" rel="stylesheet" id="variant-style">
-    <link href="/acm-workshop/css/variant.css?1685127828" rel="stylesheet">
-    <link href="/acm-workshop/css/print.css?1685127828" rel="stylesheet" media="print">
-    <link href="/acm-workshop/css/ie.css?1685127828" rel="stylesheet">
-    <script src="/acm-workshop/js/url.js?1685127828"></script>
-    <script src="/acm-workshop/js/variant.js?1685127828"></script>
+    <link href="/acm-workshop/css/fontawesome-all.min.css?1685127848" rel="stylesheet" media="print" onload="this.media='all';this.onload=null;"><noscript><link href="/acm-workshop/css/fontawesome-all.min.css?1685127848" rel="stylesheet"></noscript>
+    <link href="/acm-workshop/css/nucleus.css?1685127848" rel="stylesheet">
+    <link href="/acm-workshop/css/auto-complete.css?1685127848" rel="stylesheet" media="print" onload="this.media='all';this.onload=null;"><noscript><link href="/acm-workshop/css/auto-complete.css?1685127848" rel="stylesheet"></noscript>
+    <link href="/acm-workshop/css/perfect-scrollbar.min.css?1685127848" rel="stylesheet">
+    <link href="/acm-workshop/css/fonts.css?1685127848" rel="stylesheet" media="print" onload="this.media='all';this.onload=null;"><noscript><link href="/acm-workshop/css/fonts.css?1685127848" rel="stylesheet"></noscript>
+    <link href="/acm-workshop/css/theme.css?1685127848" rel="stylesheet">
+    <link href="/acm-workshop/css/theme-mine.css?1685127848" rel="stylesheet" id="variant-style">
+    <link href="/acm-workshop/css/variant.css?1685127848" rel="stylesheet">
+    <link href="/acm-workshop/css/print.css?1685127848" rel="stylesheet" media="print">
+    <link href="/acm-workshop/css/ie.css?1685127848" rel="stylesheet">
+    <script src="/acm-workshop/js/url.js?1685127848"></script>
+    <script src="/acm-workshop/js/variant.js?1685127848"></script>
     <script>
       // hack to let hugo tell us how to get to the root when using relativeURLs, it needs to be called *url= for it to do its magic:
       // https://github.com/gohugoio/hugo/blob/145b3fcce35fbac25c7033c91c1b7ae6d1179da8/transform/urlreplacers/absurlreplacer.go#L72
@@ -103,10 +103,10 @@ if (!doNotTrack) {
 <h1 id="monitor-resources-synced">Monitor resources synced</h1>
 
 <p>
-<a href="#image-c22061f3c2d1caf7114505d2c6b84dbe" class="lightbox-link">
+<a href="#image-b5c4280159c9ee4beec0d6a8f9837059" class="lightbox-link">
 <img src="https://github.com/mathieu-benoit/my-images/raw/main/acm-workshop/apps-operator.png" alt="Apps Operator" style="height: auto; width: auto;" loading="lazy">
 </a>
-<a href="javascript:history.back();" class="lightbox" id="image-c22061f3c2d1caf7114505d2c6b84dbe">
+<a href="javascript:history.back();" class="lightbox" id="image-b5c4280159c9ee4beec0d6a8f9837059">
 <img src="https://github.com/mathieu-benoit/my-images/raw/main/acm-workshop/apps-operator.png" alt="Apps Operator" class="lightbox-image" loading="lazy">
 </a>
 <em>Duration: 5 min | Persona: Apps Operator</em></p>
@@ -119,18 +119,18 @@ if (!doNotTrack) {
 <div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-Bash" data-lang="Bash"><span style="display:flex;"><span>echo -e <span style="color:#e6db74">&#34;https://console.cloud.google.com/kubernetes/config_management/dashboard?project=</span><span style="color:#e6db74">${</span>HOST_PROJECT_ID<span style="color:#e6db74">}</span><span style="color:#e6db74">&#34;</span>
 </span></span></code></pre></div><p>On the default <strong>Dashboard</strong> tab, you will find something similar to:</p>
 <p>
-<a href="#image-e0976d782bb212b9911d2de8ab89e90f" class="lightbox-link">
+<a href="#image-935535b8d39f08bb25b46c171e06c180" class="lightbox-link">
 <img src="https://github.com/mathieu-benoit/my-images/raw/main/acm-workshop/config-sync-dashboard-ui-config-controller.png" alt="Config Sync Dashboard UI for Config Controller instance" style="height: auto; width: auto;" loading="lazy">
 </a>
-<a href="javascript:history.back();" class="lightbox" id="image-e0976d782bb212b9911d2de8ab89e90f">
+<a href="javascript:history.back();" class="lightbox" id="image-935535b8d39f08bb25b46c171e06c180">
 <img src="https://github.com/mathieu-benoit/my-images/raw/main/acm-workshop/config-sync-dashboard-ui-config-controller.png" alt="Config Sync Dashboard UI for Config Controller instance" class="lightbox-image" loading="lazy">
 </a></p>
 <p>Then if you go on the <strong>Packages</strong> tab, you will find something similar to:</p>
 <p>
-<a href="#image-fb63c57098816c90ad86017cf4f7dfea" class="lightbox-link">
+<a href="#image-ae68e3b5cbf74498c353025e330d45ef" class="lightbox-link">
 <img src="https://github.com/mathieu-benoit/my-images/raw/main/acm-workshop/config-sync-packages-ui-config-controller.png" alt="Config Sync Packages UI for Config Controller instance" style="height: auto; width: auto;" loading="lazy">
 </a>
-<a href="javascript:history.back();" class="lightbox" id="image-fb63c57098816c90ad86017cf4f7dfea">
+<a href="javascript:history.back();" class="lightbox" id="image-ae68e3b5cbf74498c353025e330d45ef">
 <img src="https://github.com/mathieu-benoit/my-images/raw/main/acm-workshop/config-sync-packages-ui-config-controller.png" alt="Config Sync Packages UI for Config Controller instance" class="lightbox-image" loading="lazy">
 </a></p>
 <h2 id="monitor-the-resources-synced-by-config-sync-in-the-gke-cluster-in-the-tenant-project">Monitor the resources synced by Config Sync in the GKE cluster in the Tenant project</h2>
@@ -138,18 +138,18 @@ if (!doNotTrack) {
 <div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-Bash" data-lang="Bash"><span style="display:flex;"><span>echo -e <span style="color:#e6db74">&#34;https://console.cloud.google.com/kubernetes/config_management/dashboard?project=</span><span style="color:#e6db74">${</span>TENANT_PROJECT_ID<span style="color:#e6db74">}</span><span style="color:#e6db74">&#34;</span>
 </span></span></code></pre></div><p>On the default <strong>Dashboard</strong> tab, you will find something similar to:</p>
 <p>
-<a href="#image-b561b1b752ac3338674f73c397ce692e" class="lightbox-link">
+<a href="#image-a6f7ed01ef4476bc23bbc61c5cb8c8b3" class="lightbox-link">
 <img src="https://github.com/mathieu-benoit/my-images/raw/main/acm-workshop/config-sync-dashboard-ui-gke.png" alt="Config Sync Dashboard UI for GKE cluster" style="height: auto; width: auto;" loading="lazy">
 </a>
-<a href="javascript:history.back();" class="lightbox" id="image-b561b1b752ac3338674f73c397ce692e">
+<a href="javascript:history.back();" class="lightbox" id="image-a6f7ed01ef4476bc23bbc61c5cb8c8b3">
 <img src="https://github.com/mathieu-benoit/my-images/raw/main/acm-workshop/config-sync-dashboard-ui-gke.png" alt="Config Sync Dashboard UI for GKE cluster" class="lightbox-image" loading="lazy">
 </a></p>
 <p>Then if you go on the <strong>Packages</strong> tab, you will find something similar to:</p>
 <p>
-<a href="#image-c7eec447c37a5466f0e97753e41e3bfc" class="lightbox-link">
+<a href="#image-06f916086f9cb1163659d80d69356b72" class="lightbox-link">
 <img src="https://github.com/mathieu-benoit/my-images/raw/main/acm-workshop/config-sync-packages-ui-gke.png" alt="Config Sync Packages UI for GKE cluster" style="height: auto; width: auto;" loading="lazy">
 </a>
-<a href="javascript:history.back();" class="lightbox" id="image-c7eec447c37a5466f0e97753e41e3bfc">
+<a href="javascript:history.back();" class="lightbox" id="image-06f916086f9cb1163659d80d69356b72">
 <img src="https://github.com/mathieu-benoit/my-images/raw/main/acm-workshop/config-sync-packages-ui-gke.png" alt="Config Sync Packages UI for GKE cluster" class="lightbox-image" loading="lazy">
 </a></p>
 
@@ -338,8 +338,8 @@ if (!doNotTrack) {
         </div>
       </div>
     </aside>
-    <script src="/acm-workshop/js/clipboard.min.js?1685127829" defer></script>
-    <script src="/acm-workshop/js/perfect-scrollbar.min.js?1685127829" defer></script>
-    <script src="/acm-workshop/js/theme.js?1685127829" defer></script>
+    <script src="/acm-workshop/js/clipboard.min.js?1685127849" defer></script>
+    <script src="/acm-workshop/js/perfect-scrollbar.min.js?1685127849" defer></script>
+    <script src="/acm-workshop/js/theme.js?1685127849" defer></script>
   </body>
 </html>

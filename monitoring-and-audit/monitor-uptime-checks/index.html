@@ -8,20 +8,20 @@
     <meta name="description" content="Duration: 5 min | Persona: Platform Admin">
     <meta name="author" content="Mathieu Benoit">
     <title>Monitor uptime checks</title>
-    <link href="/acm-workshop/images/favicon.png?1685127828" rel="icon" type="image/png">
+    <link href="/acm-workshop/images/favicon.png?1685127848" rel="icon" type="image/png">
     <!-- https://github.com/filamentgroup/loadCSS/blob/master/README.md#how-to-use -->
-    <link href="/acm-workshop/css/fontawesome-all.min.css?1685127828" rel="stylesheet" media="print" onload="this.media='all';this.onload=null;"><noscript><link href="/acm-workshop/css/fontawesome-all.min.css?1685127828" rel="stylesheet"></noscript>
-    <link href="/acm-workshop/css/nucleus.css?1685127828" rel="stylesheet">
-    <link href="/acm-workshop/css/auto-complete.css?1685127828" rel="stylesheet" media="print" onload="this.media='all';this.onload=null;"><noscript><link href="/acm-workshop/css/auto-complete.css?1685127828" rel="stylesheet"></noscript>
-    <link href="/acm-workshop/css/perfect-scrollbar.min.css?1685127828" rel="stylesheet">
-    <link href="/acm-workshop/css/fonts.css?1685127828" rel="stylesheet" media="print" onload="this.media='all';this.onload=null;"><noscript><link href="/acm-workshop/css/fonts.css?1685127828" rel="stylesheet"></noscript>
-    <link href="/acm-workshop/css/theme.css?1685127828" rel="stylesheet">
-    <link href="/acm-workshop/css/theme-mine.css?1685127828" rel="stylesheet" id="variant-style">
-    <link href="/acm-workshop/css/variant.css?1685127828" rel="stylesheet">
-    <link href="/acm-workshop/css/print.css?1685127828" rel="stylesheet" media="print">
-    <link href="/acm-workshop/css/ie.css?1685127828" rel="stylesheet">
-    <script src="/acm-workshop/js/url.js?1685127828"></script>
-    <script src="/acm-workshop/js/variant.js?1685127828"></script>
+    <link href="/acm-workshop/css/fontawesome-all.min.css?1685127848" rel="stylesheet" media="print" onload="this.media='all';this.onload=null;"><noscript><link href="/acm-workshop/css/fontawesome-all.min.css?1685127848" rel="stylesheet"></noscript>
+    <link href="/acm-workshop/css/nucleus.css?1685127848" rel="stylesheet">
+    <link href="/acm-workshop/css/auto-complete.css?1685127848" rel="stylesheet" media="print" onload="this.media='all';this.onload=null;"><noscript><link href="/acm-workshop/css/auto-complete.css?1685127848" rel="stylesheet"></noscript>
+    <link href="/acm-workshop/css/perfect-scrollbar.min.css?1685127848" rel="stylesheet">
+    <link href="/acm-workshop/css/fonts.css?1685127848" rel="stylesheet" media="print" onload="this.media='all';this.onload=null;"><noscript><link href="/acm-workshop/css/fonts.css?1685127848" rel="stylesheet"></noscript>
+    <link href="/acm-workshop/css/theme.css?1685127848" rel="stylesheet">
+    <link href="/acm-workshop/css/theme-mine.css?1685127848" rel="stylesheet" id="variant-style">
+    <link href="/acm-workshop/css/variant.css?1685127848" rel="stylesheet">
+    <link href="/acm-workshop/css/print.css?1685127848" rel="stylesheet" media="print">
+    <link href="/acm-workshop/css/ie.css?1685127848" rel="stylesheet">
+    <script src="/acm-workshop/js/url.js?1685127848"></script>
+    <script src="/acm-workshop/js/variant.js?1685127848"></script>
     <script>
       // hack to let hugo tell us how to get to the root when using relativeURLs, it needs to be called *url= for it to do its magic:
       // https://github.com/gohugoio/hugo/blob/145b3fcce35fbac25c7033c91c1b7ae6d1179da8/transform/urlreplacers/absurlreplacer.go#L72
@@ -92,10 +92,10 @@ if (!doNotTrack) {
 <h1 id="monitor-uptime-checks">Monitor uptime checks</h1>
 
 <p>
-<a href="#image-adced2759ac6278cb2c43d00b26293d3" class="lightbox-link">
+<a href="#image-04f3d841e386e0d71519817b30baaff2" class="lightbox-link">
 <img src="https://github.com/mathieu-benoit/my-images/raw/main/acm-workshop/platform-admin.png" alt="Platform Admin" style="height: auto; width: auto;" loading="lazy">
 </a>
-<a href="javascript:history.back();" class="lightbox" id="image-adced2759ac6278cb2c43d00b26293d3">
+<a href="javascript:history.back();" class="lightbox" id="image-04f3d841e386e0d71519817b30baaff2">
 <img src="https://github.com/mathieu-benoit/my-images/raw/main/acm-workshop/platform-admin.png" alt="Platform Admin" class="lightbox-image" loading="lazy">
 </a>
 <em>Duration: 5 min | Persona: Platform Admin</em></p>
@@ -106,26 +106,26 @@ if (!doNotTrack) {
 </span></span></code></pre></div><p>In the Google Cloud console, navigate to <em>Monitoring &gt; Uptime checks</em> service. Click on the link displayed by the command below:</p>
 <div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-Bash" data-lang="Bash"><span style="display:flex;"><span>echo -e <span style="color:#e6db74">&#34;https://console.cloud.google.com/monitoring/uptime?project=</span><span style="color:#e6db74">${</span>TENANT_PROJECT_ID<span style="color:#e6db74">}</span><span style="color:#e6db74">&#34;</span>
 </span></span></code></pre></div><p>
-<a href="#image-f2d1bc900721fd926ce29364a8c3e11d" class="lightbox-link">
+<a href="#image-8dc26255f7d1f5c07779b15607ccb335" class="lightbox-link">
 <img src="https://github.com/mathieu-benoit/my-images/raw/main/acm-workshop/uptime-checks-overview.png" alt="Uptime checks overview" style="height: auto; width: auto;" loading="lazy">
 </a>
-<a href="javascript:history.back();" class="lightbox" id="image-f2d1bc900721fd926ce29364a8c3e11d">
+<a href="javascript:history.back();" class="lightbox" id="image-8dc26255f7d1f5c07779b15607ccb335">
 <img src="https://github.com/mathieu-benoit/my-images/raw/main/acm-workshop/uptime-checks-overview.png" alt="Uptime checks overview" class="lightbox-image" loading="lazy">
 </a></p>
 <p>Then, you could select one of the uptime checks config to get more insights:</p>
 <p>
-<a href="#image-aa8c7415c5f058d9e7be1d11d16f7138" class="lightbox-link">
+<a href="#image-cf3525f0906e1de558121288d0e171af" class="lightbox-link">
 <img src="https://github.com/mathieu-benoit/my-images/raw/main/acm-workshop/uptime-checks-bankofanthos.png" alt="Uptime checks for Bank of Anthos" style="height: auto; width: auto;" loading="lazy">
 </a>
-<a href="javascript:history.back();" class="lightbox" id="image-aa8c7415c5f058d9e7be1d11d16f7138">
+<a href="javascript:history.back();" class="lightbox" id="image-cf3525f0906e1de558121288d0e171af">
 <img src="https://github.com/mathieu-benoit/my-images/raw/main/acm-workshop/uptime-checks-bankofanthos.png" alt="Uptime checks for Bank of Anthos" class="lightbox-image" loading="lazy">
 </a></p>
 <p>With the email notification on the uptime checks alerting we set earlier in this workshop, if there is any alert you will receive an email similar to this:</p>
 <p>
-<a href="#image-4507c0e398aca92367f8eed15bf78afc" class="lightbox-link">
+<a href="#image-8e3145f00ceab4e7c25803516533d475" class="lightbox-link">
 <img src="https://github.com/mathieu-benoit/my-images/raw/main/acm-workshop/uptime-checks-alert-whereami.png" alt="Uptime checks alert for Whereami" style="height: auto; width: auto;" loading="lazy">
 </a>
-<a href="javascript:history.back();" class="lightbox" id="image-4507c0e398aca92367f8eed15bf78afc">
+<a href="javascript:history.back();" class="lightbox" id="image-8e3145f00ceab4e7c25803516533d475">
 <img src="https://github.com/mathieu-benoit/my-images/raw/main/acm-workshop/uptime-checks-alert-whereami.png" alt="Uptime checks alert for Whereami" class="lightbox-image" loading="lazy">
 </a></p>
 
@@ -314,8 +314,8 @@ if (!doNotTrack) {
         </div>
       </div>
     </aside>
-    <script src="/acm-workshop/js/clipboard.min.js?1685127829" defer></script>
-    <script src="/acm-workshop/js/perfect-scrollbar.min.js?1685127829" defer></script>
-    <script src="/acm-workshop/js/theme.js?1685127829" defer></script>
+    <script src="/acm-workshop/js/clipboard.min.js?1685127849" defer></script>
+    <script src="/acm-workshop/js/perfect-scrollbar.min.js?1685127849" defer></script>
+    <script src="/acm-workshop/js/theme.js?1685127849" defer></script>
   </body>
 </html>

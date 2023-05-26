@@ -8,20 +8,20 @@
     <meta name="description" content="Duration: 5 min | Persona: Apps Operator">
     <meta name="author" content="Mathieu Benoit">
     <title>Monitor policies violations</title>
-    <link href="/acm-workshop/images/favicon.png?1685127828" rel="icon" type="image/png">
+    <link href="/acm-workshop/images/favicon.png?1685127848" rel="icon" type="image/png">
     <!-- https://github.com/filamentgroup/loadCSS/blob/master/README.md#how-to-use -->
-    <link href="/acm-workshop/css/fontawesome-all.min.css?1685127828" rel="stylesheet" media="print" onload="this.media='all';this.onload=null;"><noscript><link href="/acm-workshop/css/fontawesome-all.min.css?1685127828" rel="stylesheet"></noscript>
-    <link href="/acm-workshop/css/nucleus.css?1685127828" rel="stylesheet">
-    <link href="/acm-workshop/css/auto-complete.css?1685127828" rel="stylesheet" media="print" onload="this.media='all';this.onload=null;"><noscript><link href="/acm-workshop/css/auto-complete.css?1685127828" rel="stylesheet"></noscript>
-    <link href="/acm-workshop/css/perfect-scrollbar.min.css?1685127828" rel="stylesheet">
-    <link href="/acm-workshop/css/fonts.css?1685127828" rel="stylesheet" media="print" onload="this.media='all';this.onload=null;"><noscript><link href="/acm-workshop/css/fonts.css?1685127828" rel="stylesheet"></noscript>
-    <link href="/acm-workshop/css/theme.css?1685127828" rel="stylesheet">
-    <link href="/acm-workshop/css/theme-mine.css?1685127828" rel="stylesheet" id="variant-style">
-    <link href="/acm-workshop/css/variant.css?1685127828" rel="stylesheet">
-    <link href="/acm-workshop/css/print.css?1685127828" rel="stylesheet" media="print">
-    <link href="/acm-workshop/css/ie.css?1685127828" rel="stylesheet">
-    <script src="/acm-workshop/js/url.js?1685127828"></script>
-    <script src="/acm-workshop/js/variant.js?1685127828"></script>
+    <link href="/acm-workshop/css/fontawesome-all.min.css?1685127848" rel="stylesheet" media="print" onload="this.media='all';this.onload=null;"><noscript><link href="/acm-workshop/css/fontawesome-all.min.css?1685127848" rel="stylesheet"></noscript>
+    <link href="/acm-workshop/css/nucleus.css?1685127848" rel="stylesheet">
+    <link href="/acm-workshop/css/auto-complete.css?1685127848" rel="stylesheet" media="print" onload="this.media='all';this.onload=null;"><noscript><link href="/acm-workshop/css/auto-complete.css?1685127848" rel="stylesheet"></noscript>
+    <link href="/acm-workshop/css/perfect-scrollbar.min.css?1685127848" rel="stylesheet">
+    <link href="/acm-workshop/css/fonts.css?1685127848" rel="stylesheet" media="print" onload="this.media='all';this.onload=null;"><noscript><link href="/acm-workshop/css/fonts.css?1685127848" rel="stylesheet"></noscript>
+    <link href="/acm-workshop/css/theme.css?1685127848" rel="stylesheet">
+    <link href="/acm-workshop/css/theme-mine.css?1685127848" rel="stylesheet" id="variant-style">
+    <link href="/acm-workshop/css/variant.css?1685127848" rel="stylesheet">
+    <link href="/acm-workshop/css/print.css?1685127848" rel="stylesheet" media="print">
+    <link href="/acm-workshop/css/ie.css?1685127848" rel="stylesheet">
+    <script src="/acm-workshop/js/url.js?1685127848"></script>
+    <script src="/acm-workshop/js/variant.js?1685127848"></script>
     <script>
       // hack to let hugo tell us how to get to the root when using relativeURLs, it needs to be called *url= for it to do its magic:
       // https://github.com/gohugoio/hugo/blob/145b3fcce35fbac25c7033c91c1b7ae6d1179da8/transform/urlreplacers/absurlreplacer.go#L72
@@ -93,10 +93,10 @@ if (!doNotTrack) {
 <h1 id="monitor-policies-violations">Monitor policies violations</h1>
 
 <p>
-<a href="#image-ec041c0e9e21e3f9eb127c4adeb13770" class="lightbox-link">
+<a href="#image-52927c64ee1c85d57718b201a83fc891" class="lightbox-link">
 <img src="https://github.com/mathieu-benoit/my-images/raw/main/acm-workshop/apps-operator.png" alt="Apps Operator" style="height: auto; width: auto;" loading="lazy">
 </a>
-<a href="javascript:history.back();" class="lightbox" id="image-ec041c0e9e21e3f9eb127c4adeb13770">
+<a href="javascript:history.back();" class="lightbox" id="image-52927c64ee1c85d57718b201a83fc891">
 <img src="https://github.com/mathieu-benoit/my-images/raw/main/acm-workshop/apps-operator.png" alt="Apps Operator" class="lightbox-image" loading="lazy">
 </a>
 <em>Duration: 5 min | Persona: Apps Operator</em></p>
@@ -108,26 +108,26 @@ if (!doNotTrack) {
 <div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-Bash" data-lang="Bash"><span style="display:flex;"><span>echo -e <span style="color:#e6db74">&#34;https://console.cloud.google.com/kubernetes/policy_controller/dashboard?project=</span><span style="color:#e6db74">${</span>TENANT_PROJECT_ID<span style="color:#e6db74">}</span><span style="color:#e6db74">&#34;</span>
 </span></span></code></pre></div><p>On the default <strong>Dashboard</strong> tab, you will find something similar to:</p>
 <p>
-<a href="#image-f90d63fc65ec8eebf6ab0abd7a01ce83" class="lightbox-link">
+<a href="#image-9415085708f7737329124cfb4c1026f7" class="lightbox-link">
 <img src="https://github.com/mathieu-benoit/my-images/raw/main/acm-workshop/policy-controller-dashboard-ui-gke.png" alt="Policy Controller Dashboard UI for GKE cluster" style="height: auto; width: auto;" loading="lazy">
 </a>
-<a href="javascript:history.back();" class="lightbox" id="image-f90d63fc65ec8eebf6ab0abd7a01ce83">
+<a href="javascript:history.back();" class="lightbox" id="image-9415085708f7737329124cfb4c1026f7">
 <img src="https://github.com/mathieu-benoit/my-images/raw/main/acm-workshop/policy-controller-dashboard-ui-gke.png" alt="Policy Controller Dashboard UI for GKE cluster" class="lightbox-image" loading="lazy">
 </a></p>
 <p>Then if you go on the <strong>Violations</strong> tab, you will find something similar to:</p>
 <p>
-<a href="#image-01eaf38cfc95c46d5ca5a36fb94e8c7c" class="lightbox-link">
+<a href="#image-6b78595dad8adf4c1b6c259ffb367f3c" class="lightbox-link">
 <img src="https://github.com/mathieu-benoit/my-images/raw/main/acm-workshop/policy-controller-violations-ui-gke.png" alt="Policy Controller Violations UI for GKE cluster" style="height: auto; width: auto;" loading="lazy">
 </a>
-<a href="javascript:history.back();" class="lightbox" id="image-01eaf38cfc95c46d5ca5a36fb94e8c7c">
+<a href="javascript:history.back();" class="lightbox" id="image-6b78595dad8adf4c1b6c259ffb367f3c">
 <img src="https://github.com/mathieu-benoit/my-images/raw/main/acm-workshop/policy-controller-violations-ui-gke.png" alt="Policy Controller Violations UI for GKE cluster" class="lightbox-image" loading="lazy">
 </a></p>
 <p>At the end of the workshop, we have fixed all the violations, but here below is an example of how a violation shows up:</p>
 <p>
-<a href="#image-49a10a9abea04a34f8a150ff434b3115" class="lightbox-link">
+<a href="#image-9ba143afa9a5694e4c301d6296ffed3a" class="lightbox-link">
 <img src="https://github.com/mathieu-benoit/my-images/raw/main/acm-workshop/policy-controller-violations-ui-example-gke.png" alt="Policy Controller Violations UI example for GKE cluster" style="height: auto; width: auto;" loading="lazy">
 </a>
-<a href="javascript:history.back();" class="lightbox" id="image-49a10a9abea04a34f8a150ff434b3115">
+<a href="javascript:history.back();" class="lightbox" id="image-9ba143afa9a5694e4c301d6296ffed3a">
 <img src="https://github.com/mathieu-benoit/my-images/raw/main/acm-workshop/policy-controller-violations-ui-example-gke.png" alt="Policy Controller Violations UI example for GKE cluster" class="lightbox-image" loading="lazy">
 </a></p>
 
@@ -316,8 +316,8 @@ if (!doNotTrack) {
         </div>
       </div>
     </aside>
-    <script src="/acm-workshop/js/clipboard.min.js?1685127829" defer></script>
-    <script src="/acm-workshop/js/perfect-scrollbar.min.js?1685127829" defer></script>
-    <script src="/acm-workshop/js/theme.js?1685127829" defer></script>
+    <script src="/acm-workshop/js/clipboard.min.js?1685127849" defer></script>
+    <script src="/acm-workshop/js/perfect-scrollbar.min.js?1685127849" defer></script>
+    <script src="/acm-workshop/js/theme.js?1685127849" defer></script>
   </body>
 </html>
