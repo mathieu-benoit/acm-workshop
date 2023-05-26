@@ -4,24 +4,24 @@
     <meta charset="utf-8">
     <meta name="viewport" content="height=device-height, width=device-width, initial-scale=1.0, minimum-scale=1.0">
     <meta name="generator" content="Hugo 0.109.0">
-    <meta name="generator" content="Relearn 5.12.5+tip">
+    <meta name="generator" content="Relearn 5.15.1+tip">
     <meta name="description" content="Duration: 5 min | Persona: Apps Operator">
     <meta name="author" content="Mathieu Benoit">
-    <title>Deploy AuthorizationPolicy :: </title>
-    <link href="/acm-workshop/images/favicon.png?1685127798" rel="icon" type="image/png">
+    <title>Deploy AuthorizationPolicy</title>
+    <link href="/acm-workshop/images/favicon.png?1685127828" rel="icon" type="image/png">
     <!-- https://github.com/filamentgroup/loadCSS/blob/master/README.md#how-to-use -->
-    <link href="/acm-workshop/css/fontawesome-all.min.css?1685127798" rel="stylesheet" media="print" onload="this.media='all';this.onload=null;"><noscript><link href="/acm-workshop/css/fontawesome-all.min.css?1685127798" rel="stylesheet"></noscript>
-    <link href="/acm-workshop/css/nucleus.css?1685127798" rel="stylesheet">
-    <link href="/acm-workshop/css/auto-complete.css?1685127798" rel="stylesheet" media="print" onload="this.media='all';this.onload=null;"><noscript><link href="/acm-workshop/css/auto-complete.css?1685127798" rel="stylesheet"></noscript>
-    <link href="/acm-workshop/css/perfect-scrollbar.min.css?1685127798" rel="stylesheet">
-    <link href="/acm-workshop/css/fonts.css?1685127798" rel="stylesheet" media="print" onload="this.media='all';this.onload=null;"><noscript><link href="/acm-workshop/css/fonts.css?1685127798" rel="stylesheet"></noscript>
-    <link href="/acm-workshop/css/theme.css?1685127798" rel="stylesheet">
-    <link href="/acm-workshop/css/theme-mine.css?1685127798" rel="stylesheet" id="variant-style">
-    <link href="/acm-workshop/css/variant.css?1685127798" rel="stylesheet">
-    <link href="/acm-workshop/css/print.css?1685127798" rel="stylesheet" media="print">
-    <link href="/acm-workshop/css/ie.css?1685127798" rel="stylesheet">
-    <script src="/acm-workshop/js/url.js?1685127798"></script>
-    <script src="/acm-workshop/js/variant.js?1685127798"></script>
+    <link href="/acm-workshop/css/fontawesome-all.min.css?1685127828" rel="stylesheet" media="print" onload="this.media='all';this.onload=null;"><noscript><link href="/acm-workshop/css/fontawesome-all.min.css?1685127828" rel="stylesheet"></noscript>
+    <link href="/acm-workshop/css/nucleus.css?1685127828" rel="stylesheet">
+    <link href="/acm-workshop/css/auto-complete.css?1685127828" rel="stylesheet" media="print" onload="this.media='all';this.onload=null;"><noscript><link href="/acm-workshop/css/auto-complete.css?1685127828" rel="stylesheet"></noscript>
+    <link href="/acm-workshop/css/perfect-scrollbar.min.css?1685127828" rel="stylesheet">
+    <link href="/acm-workshop/css/fonts.css?1685127828" rel="stylesheet" media="print" onload="this.media='all';this.onload=null;"><noscript><link href="/acm-workshop/css/fonts.css?1685127828" rel="stylesheet"></noscript>
+    <link href="/acm-workshop/css/theme.css?1685127828" rel="stylesheet">
+    <link href="/acm-workshop/css/theme-mine.css?1685127828" rel="stylesheet" id="variant-style">
+    <link href="/acm-workshop/css/variant.css?1685127828" rel="stylesheet">
+    <link href="/acm-workshop/css/print.css?1685127828" rel="stylesheet" media="print">
+    <link href="/acm-workshop/css/ie.css?1685127828" rel="stylesheet">
+    <script src="/acm-workshop/js/url.js?1685127828"></script>
+    <script src="/acm-workshop/js/variant.js?1685127828"></script>
     <script>
       // hack to let hugo tell us how to get to the root when using relativeURLs, it needs to be called *url= for it to do its magic:
       // https://github.com/gohugoio/hugo/blob/145b3fcce35fbac25c7033c91c1b7ae6d1179da8/transform/urlreplacers/absurlreplacer.go#L72
@@ -74,8 +74,8 @@ if (!doNotTrack) {
             </span>
             <span id="toc-menu" title='Table of Contents (CTRL+ALT+t)'><i class="fas fa-list-alt fa-fw"></i></span>
             <ol class="links" itemscope itemtype="http://schema.org/BreadcrumbList">
-              <li itemscope itemtype="https://schema.org/ListItem" itemprop="itemListElement"><a itemprop="item" href="/acm-workshop/index.html"><span itemprop="name">ACM/ASM Workshop</span></a><meta itemprop="position" content="1"> > </li>
-              <li itemscope itemtype="https://schema.org/ListItem" itemprop="itemListElement"><a itemprop="item" href="/acm-workshop/whereami/index.html"><span itemprop="name">8. Whereami app</span></a><meta itemprop="position" content="2"> > </li>
+              <li itemscope itemtype="https://schema.org/ListItem" itemprop="itemListElement"><a itemprop="item" href="/acm-workshop/index.html"><span itemprop="name">ACM/ASM Workshop</span></a><meta itemprop="position" content="1"> &gt; </li>
+              <li itemscope itemtype="https://schema.org/ListItem" itemprop="itemListElement"><a itemprop="item" href="/acm-workshop/whereami/index.html"><span itemprop="name">8. Whereami app</span></a><meta itemprop="position" content="2"> &gt; </li>
               <li itemscope itemtype="https://schema.org/ListItem" itemprop="itemListElement"><span itemprop="name">Deploy AuthorizationPolicy</span><meta itemprop="position" content="3"></li>
             </ol>
           </div>
@@ -95,21 +95,21 @@ if (!doNotTrack) {
       </nav>
       <main id="body-inner" class="highlightable default" tabindex="-1">
         <div class="flex-block-wrapper">
-          <div id="head-tags">
+          <article class="default">
+            <header class="headline">
 <div class="tags">
   <a class="tag-link" href="/acm-workshop/tags/apps-operator/index.html">apps-operator</a>
   <a class="tag-link" href="/acm-workshop/tags/asm/index.html">asm</a>
   <a class="tag-link" href="/acm-workshop/tags/security-tips/index.html">security-tips</a>
 </div>
-          </div>
-          <article class="default">
+            </header>
 <h1 id="deploy-authorizationpolicy">Deploy AuthorizationPolicy</h1>
 
 <p>
-<a href="#image-88eb0365841c0d15160b69d09e667f40" class="lightbox-link">
+<a href="#image-61c5a0468d5df354628239af548449d8" class="lightbox-link">
 <img src="https://github.com/mathieu-benoit/my-images/raw/main/acm-workshop/apps-operator.png" alt="Apps Operator" style="height: auto; width: auto;" loading="lazy">
 </a>
-<a href="javascript:history.back();" class="lightbox" id="image-88eb0365841c0d15160b69d09e667f40">
+<a href="javascript:history.back();" class="lightbox" id="image-61c5a0468d5df354628239af548449d8">
 <img src="https://github.com/mathieu-benoit/my-images/raw/main/acm-workshop/apps-operator.png" alt="Apps Operator" class="lightbox-image" loading="lazy">
 </a>
 <em>Duration: 5 min | Persona: Apps Operator</em></p>
@@ -177,8 +177,7 @@ if (!doNotTrack) {
 <p>Run this command and click on this link:</p>
 <div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-Bash" data-lang="Bash"><span style="display:flex;"><span>echo -e <span style="color:#e6db74">&#34;https://console.cloud.google.com/kubernetes/config_management/packages?project=</span><span style="color:#e6db74">${</span>TENANT_PROJECT_ID<span style="color:#e6db74">}</span><span style="color:#e6db74">&#34;</span>
 </span></span></code></pre></div><p>Wait until you see the <code>Sync status</code> column as <code>Synced</code> and the <code>Reconcile status</code> column as <code>Current</code>.</p>
-
-    </div>
+</div>
     <div
       data-tab-item="gcloud"
       class="tab-content-text"
@@ -190,8 +189,7 @@ if (!doNotTrack) {
 </span></span></span><span style="display:flex;"><span><span style="color:#ae81ff"></span>    --sync-name repo-sync <span style="color:#ae81ff">\
 </span></span></span><span style="display:flex;"><span><span style="color:#ae81ff"></span>    --sync-namespace $WHEREAMI_NAMESPACE
 </span></span></code></pre></div><p>Wait and re-run this command above until you see <code>&quot;status&quot;: &quot;SYNCED&quot;</code>.</p>
-
-    </div>
+</div>
   </div>
 </div></p>
 <p>List the GitHub runs for the <strong>Whereami app</strong> repository:</p>
@@ -202,6 +200,7 @@ if (!doNotTrack) {
 </span></span></code></pre></div><p>You should now have the Whereami app working successfully. Congrats!</p>
 
             <footer class="footline">
+
             </footer>
           </article>
         </div>
@@ -385,8 +384,8 @@ if (!doNotTrack) {
         </div>
       </div>
     </aside>
-    <script src="/acm-workshop/js/clipboard.min.js?1685127799" defer></script>
-    <script src="/acm-workshop/js/perfect-scrollbar.min.js?1685127799" defer></script>
-    <script src="/acm-workshop/js/theme.js?1685127799" defer></script>
+    <script src="/acm-workshop/js/clipboard.min.js?1685127829" defer></script>
+    <script src="/acm-workshop/js/perfect-scrollbar.min.js?1685127829" defer></script>
+    <script src="/acm-workshop/js/theme.js?1685127829" defer></script>
   </body>
 </html>
