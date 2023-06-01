@@ -4,24 +4,24 @@
     <meta charset="utf-8">
     <meta name="viewport" content="height=device-height, width=device-width, initial-scale=1.0, minimum-scale=1.0">
     <meta name="generator" content="Hugo 0.109.0">
-    <meta name="generator" content="Relearn 5.15.1+tip">
+    <meta name="generator" content="Relearn 5.15.2+tip">
     <meta name="description" content="Duration: 10 min | Persona: Platform Admin">
     <meta name="author" content="Mathieu Benoit">
     <title>Set up Cloud Armor</title>
-    <link href="/acm-workshop/images/favicon.png?1685652604" rel="icon" type="image/png">
+    <link href="/acm-workshop/images/favicon.png?1685652621" rel="icon" type="image/png">
     <!-- https://github.com/filamentgroup/loadCSS/blob/master/README.md#how-to-use -->
-    <link href="/acm-workshop/css/fontawesome-all.min.css?1685652604" rel="stylesheet" media="print" onload="this.media='all';this.onload=null;"><noscript><link href="/acm-workshop/css/fontawesome-all.min.css?1685652604" rel="stylesheet"></noscript>
-    <link href="/acm-workshop/css/nucleus.css?1685652604" rel="stylesheet">
-    <link href="/acm-workshop/css/auto-complete.css?1685652604" rel="stylesheet" media="print" onload="this.media='all';this.onload=null;"><noscript><link href="/acm-workshop/css/auto-complete.css?1685652604" rel="stylesheet"></noscript>
-    <link href="/acm-workshop/css/perfect-scrollbar.min.css?1685652604" rel="stylesheet">
-    <link href="/acm-workshop/css/fonts.css?1685652604" rel="stylesheet" media="print" onload="this.media='all';this.onload=null;"><noscript><link href="/acm-workshop/css/fonts.css?1685652604" rel="stylesheet"></noscript>
-    <link href="/acm-workshop/css/theme.css?1685652604" rel="stylesheet">
-    <link href="/acm-workshop/css/theme-mine.css?1685652604" rel="stylesheet" id="variant-style">
-    <link href="/acm-workshop/css/variant.css?1685652604" rel="stylesheet">
-    <link href="/acm-workshop/css/print.css?1685652604" rel="stylesheet" media="print">
-    <link href="/acm-workshop/css/ie.css?1685652604" rel="stylesheet">
-    <script src="/acm-workshop/js/url.js?1685652604"></script>
-    <script src="/acm-workshop/js/variant.js?1685652604"></script>
+    <link href="/acm-workshop/css/fontawesome-all.min.css?1685652621" rel="stylesheet" media="print" onload="this.media='all';this.onload=null;"><noscript><link href="/acm-workshop/css/fontawesome-all.min.css?1685652621" rel="stylesheet"></noscript>
+    <link href="/acm-workshop/css/nucleus.css?1685652621" rel="stylesheet">
+    <link href="/acm-workshop/css/auto-complete.css?1685652621" rel="stylesheet" media="print" onload="this.media='all';this.onload=null;"><noscript><link href="/acm-workshop/css/auto-complete.css?1685652621" rel="stylesheet"></noscript>
+    <link href="/acm-workshop/css/perfect-scrollbar.min.css?1685652621" rel="stylesheet">
+    <link href="/acm-workshop/css/fonts.css?1685652621" rel="stylesheet" media="print" onload="this.media='all';this.onload=null;"><noscript><link href="/acm-workshop/css/fonts.css?1685652621" rel="stylesheet"></noscript>
+    <link href="/acm-workshop/css/theme.css?1685652621" rel="stylesheet">
+    <link href="/acm-workshop/css/theme-mine.css?1685652621" rel="stylesheet" id="variant-style">
+    <link href="/acm-workshop/css/variant.css?1685652621" rel="stylesheet">
+    <link href="/acm-workshop/css/print.css?1685652621" rel="stylesheet" media="print">
+    <link href="/acm-workshop/css/ie.css?1685652621" rel="stylesheet">
+    <script src="/acm-workshop/js/url.js?1685652621"></script>
+    <script src="/acm-workshop/js/variant.js?1685652621"></script>
     <script>
       // hack to let hugo tell us how to get to the root when using relativeURLs, it needs to be called *url= for it to do its magic:
       // https://github.com/gohugoio/hugo/blob/145b3fcce35fbac25c7033c91c1b7ae6d1179da8/transform/urlreplacers/absurlreplacer.go#L72
@@ -105,10 +105,10 @@ if (!doNotTrack) {
 <h1 id="set-up-cloud-armor">Set up Cloud Armor</h1>
 
 <p>
-<a href="#image-bfd2ff6124c23c638f5c85b3deedb0e9" class="lightbox-link">
+<a href="#image-7f52ce62262bee3c8043992573273f98" class="lightbox-link">
 <img src="https://github.com/mathieu-benoit/my-images/raw/main/acm-workshop/platform-admin.png" alt="Platform Admin" style="height: auto; width: auto;" loading="lazy">
 </a>
-<a href="javascript:history.back();" class="lightbox" id="image-bfd2ff6124c23c638f5c85b3deedb0e9">
+<a href="javascript:history.back();" class="lightbox" id="image-7f52ce62262bee3c8043992573273f98">
 <img src="https://github.com/mathieu-benoit/my-images/raw/main/acm-workshop/platform-admin.png" alt="Platform Admin" class="lightbox-image" loading="lazy">
 </a>
 <em>Duration: 10 min | Persona: Platform Admin</em></p>
@@ -224,13 +224,9 @@ if (!doNotTrack) {
 </span></span></span><span style="display:flex;"><span><span style="color:#e6db74">        expression: &#34;evaluatePreconfiguredExpr(&#39;nodejs-v33-canary&#39;)&#34;
 </span></span></span><span style="display:flex;"><span><span style="color:#e6db74">    priority: 12000
 </span></span></span><span style="display:flex;"><span><span style="color:#e6db74">EOF</span>
-</span></span></code></pre></div>
-<div class="box notices cstyle info">
-  <div class="box-label"><i class="fa-fw fas fa-info-circle"></i> Info</div>
-  <div class="box-content">
+</span></span></code></pre></div><!-- raw HTML omitted -->
 <p>Here we are leveraging the <a href="https://cloud.google.com/armor/docs/waf-rules" target="_blank">Cloud Armor preconfigured WAF rules</a>: <code>xss</code>, <code>sqli</code>, <code>lfi</code>, <code>rfi</code>, <code>cve</code>, <code>rce</code>, <code>methodenforcement</code>, <code>scannerdetection</code>, <code>protocolattack</code>, <code>php</code>, <code>sessionfixation</code>, <code>java</code> and <code>nodejs</code>. All of them in <code>canary</code> version to have the latest version and ModSecurity Core Rule Set (CRS) 3.3. For <code>sqli</code>, we are only using sensitivity level 2 and exluding some of its rules, otherwise the Bank of Anthos is not working properly.</p>
-  </div>
-</div>
+<!-- raw HTML omitted -->
 <h2 id="define-ssl-policy">Define SSL policy</h2>
 <p>Not directly related to Cloud Armor, but let&rsquo;s define an <a href="https://cloud.google.com/config-connector/docs/reference/resource-docs/compute/computesslpolicy" target="_blank">SSL policy</a> which will allow us to set an HTTP to HTTPS redirect on the <code>Ingress</code>.</p>
 <div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-Bash" data-lang="Bash"><span style="display:flex;"><span>cat <span style="color:#e6db74">&lt;&lt;EOF &gt; ${WORK_DIR}$TENANT_PROJECT_DIR_NAME/ssl-policy.yaml
@@ -489,21 +485,21 @@ graph TD;
         </div>
       </div>
     </aside>
-    <script src="/acm-workshop/js/clipboard.min.js?1685652605" defer></script>
-    <script src="/acm-workshop/js/perfect-scrollbar.min.js?1685652605" defer></script>
-    <script src="/acm-workshop/js/d3/d3-color.min.js?1685652605" defer></script>
-    <script src="/acm-workshop/js/d3/d3-dispatch.min.js?1685652605" defer></script>
-    <script src="/acm-workshop/js/d3/d3-drag.min.js?1685652605" defer></script>
-    <script src="/acm-workshop/js/d3/d3-ease.min.js?1685652605" defer></script>
-    <script src="/acm-workshop/js/d3/d3-interpolate.min.js?1685652605" defer></script>
-    <script src="/acm-workshop/js/d3/d3-selection.min.js?1685652605" defer></script>
-    <script src="/acm-workshop/js/d3/d3-timer.min.js?1685652605" defer></script>
-    <script src="/acm-workshop/js/d3/d3-transition.min.js?1685652605" defer></script>
-    <script src="/acm-workshop/js/d3/d3-zoom.min.js?1685652605" defer></script>
-    <script src="/acm-workshop/js/mermaid.min.js?1685652605" defer></script>
+    <script src="/acm-workshop/js/clipboard.min.js?1685652622" defer></script>
+    <script src="/acm-workshop/js/perfect-scrollbar.min.js?1685652622" defer></script>
+    <script src="/acm-workshop/js/d3/d3-color.min.js?1685652622" defer></script>
+    <script src="/acm-workshop/js/d3/d3-dispatch.min.js?1685652622" defer></script>
+    <script src="/acm-workshop/js/d3/d3-drag.min.js?1685652622" defer></script>
+    <script src="/acm-workshop/js/d3/d3-ease.min.js?1685652622" defer></script>
+    <script src="/acm-workshop/js/d3/d3-interpolate.min.js?1685652622" defer></script>
+    <script src="/acm-workshop/js/d3/d3-selection.min.js?1685652622" defer></script>
+    <script src="/acm-workshop/js/d3/d3-timer.min.js?1685652622" defer></script>
+    <script src="/acm-workshop/js/d3/d3-transition.min.js?1685652622" defer></script>
+    <script src="/acm-workshop/js/d3/d3-zoom.min.js?1685652622" defer></script>
+    <script src="/acm-workshop/js/mermaid.min.js?1685652622" defer></script>
     <script>
       window.themeUseMermaid = JSON.parse("{}");
     </script>
-    <script src="/acm-workshop/js/theme.js?1685652605" defer></script>
+    <script src="/acm-workshop/js/theme.js?1685652622" defer></script>
   </body>
 </html>

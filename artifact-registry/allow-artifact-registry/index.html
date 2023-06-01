@@ -4,24 +4,24 @@
     <meta charset="utf-8">
     <meta name="viewport" content="height=device-height, width=device-width, initial-scale=1.0, minimum-scale=1.0">
     <meta name="generator" content="Hugo 0.109.0">
-    <meta name="generator" content="Relearn 5.15.1+tip">
+    <meta name="generator" content="Relearn 5.15.2+tip">
     <meta name="description" content="Duration: 5 min | Persona: Org Admin">
     <meta name="author" content="Mathieu Benoit">
     <title>Allow Artifact Registry</title>
-    <link href="/acm-workshop/images/favicon.png?1685652604" rel="icon" type="image/png">
+    <link href="/acm-workshop/images/favicon.png?1685652621" rel="icon" type="image/png">
     <!-- https://github.com/filamentgroup/loadCSS/blob/master/README.md#how-to-use -->
-    <link href="/acm-workshop/css/fontawesome-all.min.css?1685652604" rel="stylesheet" media="print" onload="this.media='all';this.onload=null;"><noscript><link href="/acm-workshop/css/fontawesome-all.min.css?1685652604" rel="stylesheet"></noscript>
-    <link href="/acm-workshop/css/nucleus.css?1685652604" rel="stylesheet">
-    <link href="/acm-workshop/css/auto-complete.css?1685652604" rel="stylesheet" media="print" onload="this.media='all';this.onload=null;"><noscript><link href="/acm-workshop/css/auto-complete.css?1685652604" rel="stylesheet"></noscript>
-    <link href="/acm-workshop/css/perfect-scrollbar.min.css?1685652604" rel="stylesheet">
-    <link href="/acm-workshop/css/fonts.css?1685652604" rel="stylesheet" media="print" onload="this.media='all';this.onload=null;"><noscript><link href="/acm-workshop/css/fonts.css?1685652604" rel="stylesheet"></noscript>
-    <link href="/acm-workshop/css/theme.css?1685652604" rel="stylesheet">
-    <link href="/acm-workshop/css/theme-mine.css?1685652604" rel="stylesheet" id="variant-style">
-    <link href="/acm-workshop/css/variant.css?1685652604" rel="stylesheet">
-    <link href="/acm-workshop/css/print.css?1685652604" rel="stylesheet" media="print">
-    <link href="/acm-workshop/css/ie.css?1685652604" rel="stylesheet">
-    <script src="/acm-workshop/js/url.js?1685652604"></script>
-    <script src="/acm-workshop/js/variant.js?1685652604"></script>
+    <link href="/acm-workshop/css/fontawesome-all.min.css?1685652621" rel="stylesheet" media="print" onload="this.media='all';this.onload=null;"><noscript><link href="/acm-workshop/css/fontawesome-all.min.css?1685652621" rel="stylesheet"></noscript>
+    <link href="/acm-workshop/css/nucleus.css?1685652621" rel="stylesheet">
+    <link href="/acm-workshop/css/auto-complete.css?1685652621" rel="stylesheet" media="print" onload="this.media='all';this.onload=null;"><noscript><link href="/acm-workshop/css/auto-complete.css?1685652621" rel="stylesheet"></noscript>
+    <link href="/acm-workshop/css/perfect-scrollbar.min.css?1685652621" rel="stylesheet">
+    <link href="/acm-workshop/css/fonts.css?1685652621" rel="stylesheet" media="print" onload="this.media='all';this.onload=null;"><noscript><link href="/acm-workshop/css/fonts.css?1685652621" rel="stylesheet"></noscript>
+    <link href="/acm-workshop/css/theme.css?1685652621" rel="stylesheet">
+    <link href="/acm-workshop/css/theme-mine.css?1685652621" rel="stylesheet" id="variant-style">
+    <link href="/acm-workshop/css/variant.css?1685652621" rel="stylesheet">
+    <link href="/acm-workshop/css/print.css?1685652621" rel="stylesheet" media="print">
+    <link href="/acm-workshop/css/ie.css?1685652621" rel="stylesheet">
+    <script src="/acm-workshop/js/url.js?1685652621"></script>
+    <script src="/acm-workshop/js/variant.js?1685652621"></script>
     <script>
       // hack to let hugo tell us how to get to the root when using relativeURLs, it needs to be called *url= for it to do its magic:
       // https://github.com/gohugoio/hugo/blob/145b3fcce35fbac25c7033c91c1b7ae6d1179da8/transform/urlreplacers/absurlreplacer.go#L72
@@ -105,10 +105,10 @@ if (!doNotTrack) {
 <h1 id="allow-artifact-registry">Allow Artifact Registry</h1>
 
 <p>
-<a href="#image-b12f8b04730203154f4dc0a2428ddae4" class="lightbox-link">
+<a href="#image-c26ade8eafffe5f5ec15bdabb40a6aba" class="lightbox-link">
 <img src="https://github.com/mathieu-benoit/my-images/raw/main/acm-workshop/org-admin.png" alt="Org Admin" style="height: auto; width: auto;" loading="lazy">
 </a>
-<a href="javascript:history.back();" class="lightbox" id="image-b12f8b04730203154f4dc0a2428ddae4">
+<a href="javascript:history.back();" class="lightbox" id="image-c26ade8eafffe5f5ec15bdabb40a6aba">
 <img src="https://github.com/mathieu-benoit/my-images/raw/main/acm-workshop/org-admin.png" alt="Org Admin" class="lightbox-image" loading="lazy">
 </a>
 <em>Duration: 5 min | Persona: Org Admin</em></p>
@@ -152,13 +152,9 @@ if (!doNotTrack) {
 </span></span></span><span style="display:flex;"><span><span style="color:#e6db74">    name: ${TENANT_PROJECT_ID}
 </span></span></span><span style="display:flex;"><span><span style="color:#e6db74">  resourceID: artifactregistry.googleapis.com
 </span></span></span><span style="display:flex;"><span><span style="color:#e6db74">EOF</span>
-</span></span></code></pre></div>
-<div class="box notices cstyle info">
-  <div class="box-label"><i class="fa-fw fas fa-info-circle"></i> Info</div>
-  <div class="box-content">
+</span></span></code></pre></div><!-- raw HTML omitted -->
 <p>We are enabling the GCP services APIs from the Org Admin, it allows more control and governance over which GCP services APIs the Platform Admin could use or not. If you want to give more autonomy to the Platform Admin, you could grant the <code>serviceusage.serviceUsageAdmin</code> role to the associated service account.</p>
-  </div>
-</div>
+<!-- raw HTML omitted -->
 <p>Define the <a href="https://cloud.google.com/container-analysis/docs/automated-scanning-howto" target="_blank">Container scanning</a> APIs <a href="https://cloud.google.com/config-connector/docs/reference/resource-docs/serviceusage/service" target="_blank"><code>Service</code></a> resource for the Tenant project:</p>
 <div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-Bash" data-lang="Bash"><span style="display:flex;"><span>cat <span style="color:#e6db74">&lt;&lt;EOF &gt; ${WORK_DIR}$HOST_PROJECT_DIR_NAME/projects/$TENANT_PROJECT_ID/containeranalysis-service.yaml
 </span></span></span><span style="display:flex;"><span><span style="color:#e6db74">apiVersion: serviceusage.cnrm.cloud.google.com/v1beta1
@@ -190,13 +186,9 @@ if (!doNotTrack) {
 </span></span></span><span style="display:flex;"><span><span style="color:#e6db74">    name: ${TENANT_PROJECT_ID}
 </span></span></span><span style="display:flex;"><span><span style="color:#e6db74">  resourceID: containerscanning.googleapis.com
 </span></span></span><span style="display:flex;"><span><span style="color:#e6db74">EOF</span>
-</span></span></code></pre></div>
-<div class="box notices cstyle info">
-  <div class="box-label"><i class="fa-fw fas fa-info-circle"></i> Info</div>
-  <div class="box-content">
+</span></span></code></pre></div><!-- raw HTML omitted -->
 <p>Container Analysis performs vulnerability scans on container images in Artifact Registry and Container Registry, and it monitors the vulnerability information to keep it up to date. This process comprises two main tasks: scanning and continuous analysis.</p>
-  </div>
-</div>
+<!-- raw HTML omitted -->
 <p>Define the <a href="https://cloud.google.com/container-analysis/docs/automated-scanning-howto" target="_blank">On-demand scanning</a> APIs <a href="https://cloud.google.com/config-connector/docs/reference/resource-docs/serviceusage/service" target="_blank"><code>Service</code></a> resource for the Tenant project:</p>
 <div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-Bash" data-lang="Bash"><span style="display:flex;"><span>cat <span style="color:#e6db74">&lt;&lt;EOF &gt; ${WORK_DIR}$HOST_PROJECT_DIR_NAME/projects/$TENANT_PROJECT_ID/ondemandscanning-service.yaml
 </span></span></span><span style="display:flex;"><span><span style="color:#e6db74">apiVersion: serviceusage.cnrm.cloud.google.com/v1beta1
@@ -213,13 +205,9 @@ if (!doNotTrack) {
 </span></span></span><span style="display:flex;"><span><span style="color:#e6db74">    name: ${TENANT_PROJECT_ID}
 </span></span></span><span style="display:flex;"><span><span style="color:#e6db74">  resourceID: ondemandscanning.googleapis.com
 </span></span></span><span style="display:flex;"><span><span style="color:#e6db74">EOF</span>
-</span></span></code></pre></div>
-<div class="box notices cstyle info">
-  <div class="box-label"><i class="fa-fw fas fa-info-circle"></i> Info</div>
-  <div class="box-content">
+</span></span></code></pre></div><!-- raw HTML omitted -->
 <p>On-demand scanning lets you scan container images locally on your computer or in your registry, using the gcloud CLI. This gives you the flexibility to customize your CI/CD pipeline, depending on when you need to access the vulnerability results. In this workshop, you will try out this feature with its associated <code>gcloud</code> command.</p>
-  </div>
-</div>
+<!-- raw HTML omitted -->
 <h2 id="deploy-kubernetes-manifests">Deploy Kubernetes manifests</h2>
 <div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-Bash" data-lang="Bash"><span style="display:flex;"><span>cd <span style="color:#e6db74">${</span>WORK_DIR<span style="color:#e6db74">}</span>$HOST_PROJECT_DIR_NAME/
 </span></span><span style="display:flex;"><span>git add . <span style="color:#f92672">&amp;&amp;</span> git commit -m <span style="color:#e6db74">&#34;Allow Artifact Registry for Tenant project&#34;</span> <span style="color:#f92672">&amp;&amp;</span> git push origin main
@@ -473,21 +461,21 @@ graph TD;
         </div>
       </div>
     </aside>
-    <script src="/acm-workshop/js/clipboard.min.js?1685652604" defer></script>
-    <script src="/acm-workshop/js/perfect-scrollbar.min.js?1685652604" defer></script>
-    <script src="/acm-workshop/js/d3/d3-color.min.js?1685652604" defer></script>
-    <script src="/acm-workshop/js/d3/d3-dispatch.min.js?1685652604" defer></script>
-    <script src="/acm-workshop/js/d3/d3-drag.min.js?1685652604" defer></script>
-    <script src="/acm-workshop/js/d3/d3-ease.min.js?1685652604" defer></script>
-    <script src="/acm-workshop/js/d3/d3-interpolate.min.js?1685652604" defer></script>
-    <script src="/acm-workshop/js/d3/d3-selection.min.js?1685652604" defer></script>
-    <script src="/acm-workshop/js/d3/d3-timer.min.js?1685652604" defer></script>
-    <script src="/acm-workshop/js/d3/d3-transition.min.js?1685652604" defer></script>
-    <script src="/acm-workshop/js/d3/d3-zoom.min.js?1685652604" defer></script>
-    <script src="/acm-workshop/js/mermaid.min.js?1685652604" defer></script>
+    <script src="/acm-workshop/js/clipboard.min.js?1685652621" defer></script>
+    <script src="/acm-workshop/js/perfect-scrollbar.min.js?1685652621" defer></script>
+    <script src="/acm-workshop/js/d3/d3-color.min.js?1685652621" defer></script>
+    <script src="/acm-workshop/js/d3/d3-dispatch.min.js?1685652621" defer></script>
+    <script src="/acm-workshop/js/d3/d3-drag.min.js?1685652621" defer></script>
+    <script src="/acm-workshop/js/d3/d3-ease.min.js?1685652621" defer></script>
+    <script src="/acm-workshop/js/d3/d3-interpolate.min.js?1685652621" defer></script>
+    <script src="/acm-workshop/js/d3/d3-selection.min.js?1685652621" defer></script>
+    <script src="/acm-workshop/js/d3/d3-timer.min.js?1685652621" defer></script>
+    <script src="/acm-workshop/js/d3/d3-transition.min.js?1685652621" defer></script>
+    <script src="/acm-workshop/js/d3/d3-zoom.min.js?1685652621" defer></script>
+    <script src="/acm-workshop/js/mermaid.min.js?1685652621" defer></script>
     <script>
       window.themeUseMermaid = JSON.parse("{}");
     </script>
-    <script src="/acm-workshop/js/theme.js?1685652604" defer></script>
+    <script src="/acm-workshop/js/theme.js?1685652621" defer></script>
   </body>
 </html>

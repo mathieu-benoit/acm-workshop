@@ -4,24 +4,24 @@
     <meta charset="utf-8">
     <meta name="viewport" content="height=device-height, width=device-width, initial-scale=1.0, minimum-scale=1.0">
     <meta name="generator" content="Hugo 0.109.0">
-    <meta name="generator" content="Relearn 5.15.1+tip">
+    <meta name="generator" content="Relearn 5.15.2+tip">
     <meta name="description" content="Duration: 5 min | Persona: Platform Admin">
     <meta name="author" content="Mathieu Benoit">
     <title>Enforce Kubernetes policies</title>
-    <link href="/acm-workshop/images/favicon.png?1685652604" rel="icon" type="image/png">
+    <link href="/acm-workshop/images/favicon.png?1685652621" rel="icon" type="image/png">
     <!-- https://github.com/filamentgroup/loadCSS/blob/master/README.md#how-to-use -->
-    <link href="/acm-workshop/css/fontawesome-all.min.css?1685652604" rel="stylesheet" media="print" onload="this.media='all';this.onload=null;"><noscript><link href="/acm-workshop/css/fontawesome-all.min.css?1685652604" rel="stylesheet"></noscript>
-    <link href="/acm-workshop/css/nucleus.css?1685652604" rel="stylesheet">
-    <link href="/acm-workshop/css/auto-complete.css?1685652604" rel="stylesheet" media="print" onload="this.media='all';this.onload=null;"><noscript><link href="/acm-workshop/css/auto-complete.css?1685652604" rel="stylesheet"></noscript>
-    <link href="/acm-workshop/css/perfect-scrollbar.min.css?1685652604" rel="stylesheet">
-    <link href="/acm-workshop/css/fonts.css?1685652604" rel="stylesheet" media="print" onload="this.media='all';this.onload=null;"><noscript><link href="/acm-workshop/css/fonts.css?1685652604" rel="stylesheet"></noscript>
-    <link href="/acm-workshop/css/theme.css?1685652604" rel="stylesheet">
-    <link href="/acm-workshop/css/theme-mine.css?1685652604" rel="stylesheet" id="variant-style">
-    <link href="/acm-workshop/css/variant.css?1685652604" rel="stylesheet">
-    <link href="/acm-workshop/css/print.css?1685652604" rel="stylesheet" media="print">
-    <link href="/acm-workshop/css/ie.css?1685652604" rel="stylesheet">
-    <script src="/acm-workshop/js/url.js?1685652604"></script>
-    <script src="/acm-workshop/js/variant.js?1685652604"></script>
+    <link href="/acm-workshop/css/fontawesome-all.min.css?1685652621" rel="stylesheet" media="print" onload="this.media='all';this.onload=null;"><noscript><link href="/acm-workshop/css/fontawesome-all.min.css?1685652621" rel="stylesheet"></noscript>
+    <link href="/acm-workshop/css/nucleus.css?1685652621" rel="stylesheet">
+    <link href="/acm-workshop/css/auto-complete.css?1685652621" rel="stylesheet" media="print" onload="this.media='all';this.onload=null;"><noscript><link href="/acm-workshop/css/auto-complete.css?1685652621" rel="stylesheet"></noscript>
+    <link href="/acm-workshop/css/perfect-scrollbar.min.css?1685652621" rel="stylesheet">
+    <link href="/acm-workshop/css/fonts.css?1685652621" rel="stylesheet" media="print" onload="this.media='all';this.onload=null;"><noscript><link href="/acm-workshop/css/fonts.css?1685652621" rel="stylesheet"></noscript>
+    <link href="/acm-workshop/css/theme.css?1685652621" rel="stylesheet">
+    <link href="/acm-workshop/css/theme-mine.css?1685652621" rel="stylesheet" id="variant-style">
+    <link href="/acm-workshop/css/variant.css?1685652621" rel="stylesheet">
+    <link href="/acm-workshop/css/print.css?1685652621" rel="stylesheet" media="print">
+    <link href="/acm-workshop/css/ie.css?1685652621" rel="stylesheet">
+    <script src="/acm-workshop/js/url.js?1685652621"></script>
+    <script src="/acm-workshop/js/variant.js?1685652621"></script>
     <script>
       // hack to let hugo tell us how to get to the root when using relativeURLs, it needs to be called *url= for it to do its magic:
       // https://github.com/gohugoio/hugo/blob/145b3fcce35fbac25c7033c91c1b7ae6d1179da8/transform/urlreplacers/absurlreplacer.go#L72
@@ -110,10 +110,10 @@ if (!doNotTrack) {
 <h1 id="enforce-kubernetes-policies">Enforce Kubernetes policies</h1>
 
 <p>
-<a href="#image-3d2ce42183e5d82091808c4c54495566" class="lightbox-link">
+<a href="#image-27fee7ec2f4922da3fb32337ca298a7a" class="lightbox-link">
 <img src="https://github.com/mathieu-benoit/my-images/raw/main/acm-workshop/platform-admin.png" alt="Platform Admin" style="height: auto; width: auto;" loading="lazy">
 </a>
-<a href="javascript:history.back();" class="lightbox" id="image-3d2ce42183e5d82091808c4c54495566">
+<a href="javascript:history.back();" class="lightbox" id="image-27fee7ec2f4922da3fb32337ca298a7a">
 <img src="https://github.com/mathieu-benoit/my-images/raw/main/acm-workshop/platform-admin.png" alt="Platform Admin" class="lightbox-image" loading="lazy">
 </a>
 <em>Duration: 5 min | Persona: Platform Admin</em></p>
@@ -159,13 +159,9 @@ if (!doNotTrack) {
 </span></span></span><span style="display:flex;"><span><span style="color:#e6db74">    - key: pod-security.kubernetes.io/enforce
 </span></span></span><span style="display:flex;"><span><span style="color:#e6db74">      allowedRegex: (baseline|restricted)
 </span></span></span><span style="display:flex;"><span><span style="color:#e6db74">EOF</span>
-</span></span></code></pre></div>
-<div class="box notices cstyle note">
-  <div class="box-label"><i class="fa-fw fas fa-exclamation-circle"></i> Note</div>
-  <div class="box-content">
+</span></span></code></pre></div><!-- raw HTML omitted -->
 <p>As of now, only the <code>asm-ingress</code> and <code>onlineboutique</code> namespaces support <code>restricted</code>. On the other hand, the <code>whereami</code> and <code>bankofanthos</code> namespaces only support <code>baseline</code>. We are authorizing both here.</p>
-  </div>
-</div>
+<!-- raw HTML omitted -->
 <h2 id="enforce-networkpolicies-policies">Enforce NetworkPolicies policies</h2>
 <h3 id="require-labels-for-namespaces-and-pods">Require labels for Namespaces and Pods</h3>
 <p>As a best practice and in order to get the <code>NetworkPolicies</code> working in this workshop, we need to guarantee that any <code>Pods</code> have a label <code>app</code>.</p>
@@ -203,13 +199,9 @@ if (!doNotTrack) {
 </span></span></span><span style="display:flex;"><span><span style="color:#e6db74">    labels:
 </span></span></span><span style="display:flex;"><span><span style="color:#e6db74">    - key: app
 </span></span></span><span style="display:flex;"><span><span style="color:#e6db74">EOF</span>
-</span></span></code></pre></div>
-<div class="box notices cstyle note">
-  <div class="box-label"><i class="fa-fw fas fa-exclamation-circle"></i> Note</div>
-  <div class="box-content">
+</span></span></code></pre></div><!-- raw HTML omitted -->
 <p>Complementary to this, on <code>Namespaces</code> the <a href="https://kubernetes.io/docs/concepts/overview/working-with-objects/namespaces/#automatic-labelling" target="_blank"><code>kubernetes.io/metadata.name</code> label</a> automatically set by Kubernetes 1.22+ will be leveraged.</p>
-  </div>
-</div>
+<!-- raw HTML omitted -->
 <h3 id="require-networkpolicies-in-namespaces">Require NetworkPolicies in Namespaces</h3>
 <p>Define the <code>namespaces-required-networkpolicies</code> <code>Constraint</code> based on the <a href="https://cloud.google.com/anthos-config-management/docs/reference/constraint-template-library#k8srequirenamespacenetworkpolicies" target="_blank"><code>K8sRequireNamespaceNetworkPolicies</code></a> <code>ConstraintTemplate</code> for <code>Namespaces</code>. This <code>Constraint</code> requires that any <code>Namespaces</code> defined in the cluster has a <code>NetworkPolicy</code>:</p>
 <div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-Bash" data-lang="Bash"><span style="display:flex;"><span>cat <span style="color:#e6db74">&lt;&lt;EOF &gt; ${WORK_DIR}$GKE_CONFIGS_DIR_NAME/policies/constraints/namespaces-required-networkpolicies.yaml
@@ -496,8 +488,8 @@ if (!doNotTrack) {
         </div>
       </div>
     </aside>
-    <script src="/acm-workshop/js/clipboard.min.js?1685652605" defer></script>
-    <script src="/acm-workshop/js/perfect-scrollbar.min.js?1685652605" defer></script>
-    <script src="/acm-workshop/js/theme.js?1685652605" defer></script>
+    <script src="/acm-workshop/js/clipboard.min.js?1685652621" defer></script>
+    <script src="/acm-workshop/js/perfect-scrollbar.min.js?1685652621" defer></script>
+    <script src="/acm-workshop/js/theme.js?1685652621" defer></script>
   </body>
 </html>

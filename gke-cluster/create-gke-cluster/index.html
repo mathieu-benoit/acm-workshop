@@ -4,24 +4,24 @@
     <meta charset="utf-8">
     <meta name="viewport" content="height=device-height, width=device-width, initial-scale=1.0, minimum-scale=1.0">
     <meta name="generator" content="Hugo 0.109.0">
-    <meta name="generator" content="Relearn 5.15.1+tip">
+    <meta name="generator" content="Relearn 5.15.2+tip">
     <meta name="description" content="Duration: 20 min | Persona: Platform Admin">
     <meta name="author" content="Mathieu Benoit">
     <title>Create GKE cluster</title>
-    <link href="/acm-workshop/images/favicon.png?1685652604" rel="icon" type="image/png">
+    <link href="/acm-workshop/images/favicon.png?1685652621" rel="icon" type="image/png">
     <!-- https://github.com/filamentgroup/loadCSS/blob/master/README.md#how-to-use -->
-    <link href="/acm-workshop/css/fontawesome-all.min.css?1685652604" rel="stylesheet" media="print" onload="this.media='all';this.onload=null;"><noscript><link href="/acm-workshop/css/fontawesome-all.min.css?1685652604" rel="stylesheet"></noscript>
-    <link href="/acm-workshop/css/nucleus.css?1685652604" rel="stylesheet">
-    <link href="/acm-workshop/css/auto-complete.css?1685652604" rel="stylesheet" media="print" onload="this.media='all';this.onload=null;"><noscript><link href="/acm-workshop/css/auto-complete.css?1685652604" rel="stylesheet"></noscript>
-    <link href="/acm-workshop/css/perfect-scrollbar.min.css?1685652604" rel="stylesheet">
-    <link href="/acm-workshop/css/fonts.css?1685652604" rel="stylesheet" media="print" onload="this.media='all';this.onload=null;"><noscript><link href="/acm-workshop/css/fonts.css?1685652604" rel="stylesheet"></noscript>
-    <link href="/acm-workshop/css/theme.css?1685652604" rel="stylesheet">
-    <link href="/acm-workshop/css/theme-mine.css?1685652604" rel="stylesheet" id="variant-style">
-    <link href="/acm-workshop/css/variant.css?1685652604" rel="stylesheet">
-    <link href="/acm-workshop/css/print.css?1685652604" rel="stylesheet" media="print">
-    <link href="/acm-workshop/css/ie.css?1685652604" rel="stylesheet">
-    <script src="/acm-workshop/js/url.js?1685652604"></script>
-    <script src="/acm-workshop/js/variant.js?1685652604"></script>
+    <link href="/acm-workshop/css/fontawesome-all.min.css?1685652621" rel="stylesheet" media="print" onload="this.media='all';this.onload=null;"><noscript><link href="/acm-workshop/css/fontawesome-all.min.css?1685652621" rel="stylesheet"></noscript>
+    <link href="/acm-workshop/css/nucleus.css?1685652621" rel="stylesheet">
+    <link href="/acm-workshop/css/auto-complete.css?1685652621" rel="stylesheet" media="print" onload="this.media='all';this.onload=null;"><noscript><link href="/acm-workshop/css/auto-complete.css?1685652621" rel="stylesheet"></noscript>
+    <link href="/acm-workshop/css/perfect-scrollbar.min.css?1685652621" rel="stylesheet">
+    <link href="/acm-workshop/css/fonts.css?1685652621" rel="stylesheet" media="print" onload="this.media='all';this.onload=null;"><noscript><link href="/acm-workshop/css/fonts.css?1685652621" rel="stylesheet"></noscript>
+    <link href="/acm-workshop/css/theme.css?1685652621" rel="stylesheet">
+    <link href="/acm-workshop/css/theme-mine.css?1685652621" rel="stylesheet" id="variant-style">
+    <link href="/acm-workshop/css/variant.css?1685652621" rel="stylesheet">
+    <link href="/acm-workshop/css/print.css?1685652621" rel="stylesheet" media="print">
+    <link href="/acm-workshop/css/ie.css?1685652621" rel="stylesheet">
+    <script src="/acm-workshop/js/url.js?1685652621"></script>
+    <script src="/acm-workshop/js/variant.js?1685652621"></script>
     <script>
       // hack to let hugo tell us how to get to the root when using relativeURLs, it needs to be called *url= for it to do its magic:
       // https://github.com/gohugoio/hugo/blob/145b3fcce35fbac25c7033c91c1b7ae6d1179da8/transform/urlreplacers/absurlreplacer.go#L72
@@ -107,10 +107,10 @@ if (!doNotTrack) {
 <h1 id="create-gke-cluster">Create GKE cluster</h1>
 
 <p>
-<a href="#image-1a3fbd6ca2deda64ac5f1dd75b4ff34a" class="lightbox-link">
+<a href="#image-074ae990bc399dd606ee0a7ec2011819" class="lightbox-link">
 <img src="https://github.com/mathieu-benoit/my-images/raw/main/acm-workshop/platform-admin.png" alt="Platform Admin" style="height: auto; width: auto;" loading="lazy">
 </a>
-<a href="javascript:history.back();" class="lightbox" id="image-1a3fbd6ca2deda64ac5f1dd75b4ff34a">
+<a href="javascript:history.back();" class="lightbox" id="image-074ae990bc399dd606ee0a7ec2011819">
 <img src="https://github.com/mathieu-benoit/my-images/raw/main/acm-workshop/platform-admin.png" alt="Platform Admin" class="lightbox-image" loading="lazy">
 </a>
 <em>Duration: 20 min | Persona: Platform Admin</em></p>
@@ -355,13 +355,9 @@ graph TD;
 </div>
   </div>
 </div></p>
-
-<div class="box notices cstyle note">
-  <div class="box-label"><i class="fa-fw fas fa-exclamation-circle"></i> Note</div>
-  <div class="box-content">
+<!-- raw HTML omitted -->
 <p>The creation of the <code>ContainerCluster</code> and <code>ContainerNodePool</code> can take ~15 mins.</p>
-  </div>
-</div>
+<!-- raw HTML omitted -->
 <p>List the GitHub runs for the <strong>Tenant project configs</strong> repository:</p>
 <div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-Bash" data-lang="Bash"><span style="display:flex;"><span>cd <span style="color:#e6db74">${</span>WORK_DIR<span style="color:#e6db74">}</span>$TENANT_PROJECT_DIR_NAME <span style="color:#f92672">&amp;&amp;</span> gh run list
 </span></span></code></pre></div><p>List the Google Cloud resources created:</p>
@@ -562,21 +558,21 @@ graph TD;
         </div>
       </div>
     </aside>
-    <script src="/acm-workshop/js/clipboard.min.js?1685652605" defer></script>
-    <script src="/acm-workshop/js/perfect-scrollbar.min.js?1685652605" defer></script>
-    <script src="/acm-workshop/js/d3/d3-color.min.js?1685652605" defer></script>
-    <script src="/acm-workshop/js/d3/d3-dispatch.min.js?1685652605" defer></script>
-    <script src="/acm-workshop/js/d3/d3-drag.min.js?1685652605" defer></script>
-    <script src="/acm-workshop/js/d3/d3-ease.min.js?1685652605" defer></script>
-    <script src="/acm-workshop/js/d3/d3-interpolate.min.js?1685652605" defer></script>
-    <script src="/acm-workshop/js/d3/d3-selection.min.js?1685652605" defer></script>
-    <script src="/acm-workshop/js/d3/d3-timer.min.js?1685652605" defer></script>
-    <script src="/acm-workshop/js/d3/d3-transition.min.js?1685652605" defer></script>
-    <script src="/acm-workshop/js/d3/d3-zoom.min.js?1685652605" defer></script>
-    <script src="/acm-workshop/js/mermaid.min.js?1685652605" defer></script>
+    <script src="/acm-workshop/js/clipboard.min.js?1685652621" defer></script>
+    <script src="/acm-workshop/js/perfect-scrollbar.min.js?1685652621" defer></script>
+    <script src="/acm-workshop/js/d3/d3-color.min.js?1685652621" defer></script>
+    <script src="/acm-workshop/js/d3/d3-dispatch.min.js?1685652621" defer></script>
+    <script src="/acm-workshop/js/d3/d3-drag.min.js?1685652621" defer></script>
+    <script src="/acm-workshop/js/d3/d3-ease.min.js?1685652621" defer></script>
+    <script src="/acm-workshop/js/d3/d3-interpolate.min.js?1685652621" defer></script>
+    <script src="/acm-workshop/js/d3/d3-selection.min.js?1685652621" defer></script>
+    <script src="/acm-workshop/js/d3/d3-timer.min.js?1685652621" defer></script>
+    <script src="/acm-workshop/js/d3/d3-transition.min.js?1685652621" defer></script>
+    <script src="/acm-workshop/js/d3/d3-zoom.min.js?1685652621" defer></script>
+    <script src="/acm-workshop/js/mermaid.min.js?1685652621" defer></script>
     <script>
       window.themeUseMermaid = JSON.parse("{}");
     </script>
-    <script src="/acm-workshop/js/theme.js?1685652605" defer></script>
+    <script src="/acm-workshop/js/theme.js?1685652621" defer></script>
   </body>
 </html>

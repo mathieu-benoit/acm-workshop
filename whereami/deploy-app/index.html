@@ -4,24 +4,24 @@
     <meta charset="utf-8">
     <meta name="viewport" content="height=device-height, width=device-width, initial-scale=1.0, minimum-scale=1.0">
     <meta name="generator" content="Hugo 0.109.0">
-    <meta name="generator" content="Relearn 5.15.1+tip">
+    <meta name="generator" content="Relearn 5.15.2+tip">
     <meta name="description" content="Duration: 10 min | Persona: Apps Operator">
     <meta name="author" content="Mathieu Benoit">
     <title>Deploy app</title>
-    <link href="/acm-workshop/images/favicon.png?1685652604" rel="icon" type="image/png">
+    <link href="/acm-workshop/images/favicon.png?1685652621" rel="icon" type="image/png">
     <!-- https://github.com/filamentgroup/loadCSS/blob/master/README.md#how-to-use -->
-    <link href="/acm-workshop/css/fontawesome-all.min.css?1685652604" rel="stylesheet" media="print" onload="this.media='all';this.onload=null;"><noscript><link href="/acm-workshop/css/fontawesome-all.min.css?1685652604" rel="stylesheet"></noscript>
-    <link href="/acm-workshop/css/nucleus.css?1685652604" rel="stylesheet">
-    <link href="/acm-workshop/css/auto-complete.css?1685652604" rel="stylesheet" media="print" onload="this.media='all';this.onload=null;"><noscript><link href="/acm-workshop/css/auto-complete.css?1685652604" rel="stylesheet"></noscript>
-    <link href="/acm-workshop/css/perfect-scrollbar.min.css?1685652604" rel="stylesheet">
-    <link href="/acm-workshop/css/fonts.css?1685652604" rel="stylesheet" media="print" onload="this.media='all';this.onload=null;"><noscript><link href="/acm-workshop/css/fonts.css?1685652604" rel="stylesheet"></noscript>
-    <link href="/acm-workshop/css/theme.css?1685652604" rel="stylesheet">
-    <link href="/acm-workshop/css/theme-mine.css?1685652604" rel="stylesheet" id="variant-style">
-    <link href="/acm-workshop/css/variant.css?1685652604" rel="stylesheet">
-    <link href="/acm-workshop/css/print.css?1685652604" rel="stylesheet" media="print">
-    <link href="/acm-workshop/css/ie.css?1685652604" rel="stylesheet">
-    <script src="/acm-workshop/js/url.js?1685652604"></script>
-    <script src="/acm-workshop/js/variant.js?1685652604"></script>
+    <link href="/acm-workshop/css/fontawesome-all.min.css?1685652621" rel="stylesheet" media="print" onload="this.media='all';this.onload=null;"><noscript><link href="/acm-workshop/css/fontawesome-all.min.css?1685652621" rel="stylesheet"></noscript>
+    <link href="/acm-workshop/css/nucleus.css?1685652621" rel="stylesheet">
+    <link href="/acm-workshop/css/auto-complete.css?1685652621" rel="stylesheet" media="print" onload="this.media='all';this.onload=null;"><noscript><link href="/acm-workshop/css/auto-complete.css?1685652621" rel="stylesheet"></noscript>
+    <link href="/acm-workshop/css/perfect-scrollbar.min.css?1685652621" rel="stylesheet">
+    <link href="/acm-workshop/css/fonts.css?1685652621" rel="stylesheet" media="print" onload="this.media='all';this.onload=null;"><noscript><link href="/acm-workshop/css/fonts.css?1685652621" rel="stylesheet"></noscript>
+    <link href="/acm-workshop/css/theme.css?1685652621" rel="stylesheet">
+    <link href="/acm-workshop/css/theme-mine.css?1685652621" rel="stylesheet" id="variant-style">
+    <link href="/acm-workshop/css/variant.css?1685652621" rel="stylesheet">
+    <link href="/acm-workshop/css/print.css?1685652621" rel="stylesheet" media="print">
+    <link href="/acm-workshop/css/ie.css?1685652621" rel="stylesheet">
+    <script src="/acm-workshop/js/url.js?1685652621"></script>
+    <script src="/acm-workshop/js/variant.js?1685652621"></script>
     <script>
       // hack to let hugo tell us how to get to the root when using relativeURLs, it needs to be called *url= for it to do its magic:
       // https://github.com/gohugoio/hugo/blob/145b3fcce35fbac25c7033c91c1b7ae6d1179da8/transform/urlreplacers/absurlreplacer.go#L72
@@ -107,10 +107,10 @@ if (!doNotTrack) {
 <h1 id="deploy-app">Deploy app</h1>
 
 <p>
-<a href="#image-453ac24121b499dde6652ed90f63ba36" class="lightbox-link">
+<a href="#image-3aafc42a385cb7df75a81ed30c9c9f44" class="lightbox-link">
 <img src="https://github.com/mathieu-benoit/my-images/raw/main/acm-workshop/apps-operator.png" alt="Apps Operator" style="height: auto; width: auto;" loading="lazy">
 </a>
-<a href="javascript:history.back();" class="lightbox" id="image-453ac24121b499dde6652ed90f63ba36">
+<a href="javascript:history.back();" class="lightbox" id="image-3aafc42a385cb7df75a81ed30c9c9f44">
 <img src="https://github.com/mathieu-benoit/my-images/raw/main/acm-workshop/apps-operator.png" alt="Apps Operator" class="lightbox-image" loading="lazy">
 </a>
 <em>Duration: 10 min | Persona: Apps Operator</em></p>
@@ -140,13 +140,9 @@ if (!doNotTrack) {
 </span></span></span><span style="display:flex;"><span><span style="color:#e6db74">      path: /spec/type
 </span></span></span><span style="display:flex;"><span><span style="color:#e6db74">      value: ClusterIP
 </span></span></span><span style="display:flex;"><span><span style="color:#e6db74">EOF</span>
-</span></span></code></pre></div>
-<div class="box notices cstyle info">
-  <div class="box-label"><i class="fa-fw fas fa-info-circle"></i> Info</div>
-  <div class="box-content">
+</span></span></code></pre></div><!-- raw HTML omitted -->
 <p>Here we are changing the <code>Service</code> <code>type</code> to <code>ClusterIP</code> because the Whereami app will be exposed by the Ingress Gateway.</p>
-  </div>
-</div>
+<!-- raw HTML omitted -->
 <h2 id="define-virtualservice">Define VirtualService</h2>
 <p>Define the <code>VirtualService</code> resource in order to establish the Ingress Gateway routing to the Whereami app:</p>
 <div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-Bash" data-lang="Bash"><span style="display:flex;"><span>cat <span style="color:#e6db74">&lt;&lt;EOF &gt; ${WORK_DIR}$WHERE_AMI_DIR_NAME/base/virtualservice.yaml
@@ -173,13 +169,9 @@ if (!doNotTrack) {
 <div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-Bash" data-lang="Bash"><span style="display:flex;"><span>cd <span style="color:#e6db74">${</span>WORK_DIR<span style="color:#e6db74">}</span>$WHERE_AMI_DIR_NAME/staging
 </span></span><span style="display:flex;"><span>kustomize edit add resource ../base
 </span></span><span style="display:flex;"><span>kustomize edit set namespace $WHEREAMI_NAMESPACE
-</span></span></code></pre></div>
-<div class="box notices cstyle info">
-  <div class="box-label"><i class="fa-fw fas fa-info-circle"></i> Info</div>
-  <div class="box-content">
+</span></span></code></pre></div><!-- raw HTML omitted -->
 <p>The <code>kustomization.yaml</code> file was already existing from the <a href="https://github.com/mathieu-benoit/config-sync-app-template-repo/blob/main/staging/kustomization.yaml" target="_blank">GitHub repository template</a> used when we created the <strong>Whereami app</strong> repository.</p>
-  </div>
-</div>
+<!-- raw HTML omitted -->
 <p>Update the Staging Kustomize overlay in order to set the private container image and the proper <code>hosts</code> value in the <code>VirtualService</code> resource:</p>
 <div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-Bash" data-lang="Bash"><span style="display:flex;"><span>cat <span style="color:#e6db74">&lt;&lt;EOF &gt;&gt; ${WORK_DIR}$WHERE_AMI_DIR_NAME/staging/kustomization.yaml
 </span></span></span><span style="display:flex;"><span><span style="color:#e6db74">patchesJson6902:
@@ -435,8 +427,8 @@ if (!doNotTrack) {
         </div>
       </div>
     </aside>
-    <script src="/acm-workshop/js/clipboard.min.js?1685652606" defer></script>
-    <script src="/acm-workshop/js/perfect-scrollbar.min.js?1685652606" defer></script>
-    <script src="/acm-workshop/js/theme.js?1685652606" defer></script>
+    <script src="/acm-workshop/js/clipboard.min.js?1685652622" defer></script>
+    <script src="/acm-workshop/js/perfect-scrollbar.min.js?1685652622" defer></script>
+    <script src="/acm-workshop/js/theme.js?1685652622" defer></script>
   </body>
 </html>

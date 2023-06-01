@@ -4,24 +4,24 @@
     <meta charset="utf-8">
     <meta name="viewport" content="height=device-height, width=device-width, initial-scale=1.0, minimum-scale=1.0">
     <meta name="generator" content="Hugo 0.109.0">
-    <meta name="generator" content="Relearn 5.15.1+tip">
+    <meta name="generator" content="Relearn 5.15.2+tip">
     <meta name="description" content="Duration: 10 min | Persona: Apps Operator">
     <meta name="author" content="Mathieu Benoit">
     <title>Secure Memorystore access</title>
-    <link href="/acm-workshop/images/favicon.png?1685652604" rel="icon" type="image/png">
+    <link href="/acm-workshop/images/favicon.png?1685652621" rel="icon" type="image/png">
     <!-- https://github.com/filamentgroup/loadCSS/blob/master/README.md#how-to-use -->
-    <link href="/acm-workshop/css/fontawesome-all.min.css?1685652604" rel="stylesheet" media="print" onload="this.media='all';this.onload=null;"><noscript><link href="/acm-workshop/css/fontawesome-all.min.css?1685652604" rel="stylesheet"></noscript>
-    <link href="/acm-workshop/css/nucleus.css?1685652604" rel="stylesheet">
-    <link href="/acm-workshop/css/auto-complete.css?1685652604" rel="stylesheet" media="print" onload="this.media='all';this.onload=null;"><noscript><link href="/acm-workshop/css/auto-complete.css?1685652604" rel="stylesheet"></noscript>
-    <link href="/acm-workshop/css/perfect-scrollbar.min.css?1685652604" rel="stylesheet">
-    <link href="/acm-workshop/css/fonts.css?1685652604" rel="stylesheet" media="print" onload="this.media='all';this.onload=null;"><noscript><link href="/acm-workshop/css/fonts.css?1685652604" rel="stylesheet"></noscript>
-    <link href="/acm-workshop/css/theme.css?1685652604" rel="stylesheet">
-    <link href="/acm-workshop/css/theme-mine.css?1685652604" rel="stylesheet" id="variant-style">
-    <link href="/acm-workshop/css/variant.css?1685652604" rel="stylesheet">
-    <link href="/acm-workshop/css/print.css?1685652604" rel="stylesheet" media="print">
-    <link href="/acm-workshop/css/ie.css?1685652604" rel="stylesheet">
-    <script src="/acm-workshop/js/url.js?1685652604"></script>
-    <script src="/acm-workshop/js/variant.js?1685652604"></script>
+    <link href="/acm-workshop/css/fontawesome-all.min.css?1685652621" rel="stylesheet" media="print" onload="this.media='all';this.onload=null;"><noscript><link href="/acm-workshop/css/fontawesome-all.min.css?1685652621" rel="stylesheet"></noscript>
+    <link href="/acm-workshop/css/nucleus.css?1685652621" rel="stylesheet">
+    <link href="/acm-workshop/css/auto-complete.css?1685652621" rel="stylesheet" media="print" onload="this.media='all';this.onload=null;"><noscript><link href="/acm-workshop/css/auto-complete.css?1685652621" rel="stylesheet"></noscript>
+    <link href="/acm-workshop/css/perfect-scrollbar.min.css?1685652621" rel="stylesheet">
+    <link href="/acm-workshop/css/fonts.css?1685652621" rel="stylesheet" media="print" onload="this.media='all';this.onload=null;"><noscript><link href="/acm-workshop/css/fonts.css?1685652621" rel="stylesheet"></noscript>
+    <link href="/acm-workshop/css/theme.css?1685652621" rel="stylesheet">
+    <link href="/acm-workshop/css/theme-mine.css?1685652621" rel="stylesheet" id="variant-style">
+    <link href="/acm-workshop/css/variant.css?1685652621" rel="stylesheet">
+    <link href="/acm-workshop/css/print.css?1685652621" rel="stylesheet" media="print">
+    <link href="/acm-workshop/css/ie.css?1685652621" rel="stylesheet">
+    <script src="/acm-workshop/js/url.js?1685652621"></script>
+    <script src="/acm-workshop/js/variant.js?1685652621"></script>
     <script>
       // hack to let hugo tell us how to get to the root when using relativeURLs, it needs to be called *url= for it to do its magic:
       // https://github.com/gohugoio/hugo/blob/145b3fcce35fbac25c7033c91c1b7ae6d1179da8/transform/urlreplacers/absurlreplacer.go#L72
@@ -107,10 +107,10 @@ if (!doNotTrack) {
 <h1 id="secure-memorystore-access">Secure Memorystore access</h1>
 
 <p>
-<a href="#image-dc6e99db7018bb0bb22cef8794c32389" class="lightbox-link">
+<a href="#image-8219bcec8a1e53cadb79c76fc4e57b9e" class="lightbox-link">
 <img src="https://github.com/mathieu-benoit/my-images/raw/main/acm-workshop/apps-operator.png" alt="Apps Operator" style="height: auto; width: auto;" loading="lazy">
 </a>
-<a href="javascript:history.back();" class="lightbox" id="image-dc6e99db7018bb0bb22cef8794c32389">
+<a href="javascript:history.back();" class="lightbox" id="image-8219bcec8a1e53cadb79c76fc4e57b9e">
 <img src="https://github.com/mathieu-benoit/my-images/raw/main/acm-workshop/apps-operator.png" alt="Apps Operator" class="lightbox-image" loading="lazy">
 </a>
 <em>Duration: 10 min | Persona: Apps Operator</em></p>
@@ -120,13 +120,9 @@ if (!doNotTrack) {
 </span></span><span style="display:flex;"><span>source <span style="color:#e6db74">${</span>WORK_DIR<span style="color:#e6db74">}</span>acm-workshop-variables.sh
 </span></span><span style="display:flex;"><span>echo <span style="color:#e6db74">&#34;export CART_MEMORYSTORE_HOST=</span><span style="color:#e6db74">${</span>REDIS_NAME<span style="color:#e6db74">}</span><span style="color:#e6db74">.memorystore-redis.</span><span style="color:#e6db74">${</span>ONLINEBOUTIQUE_NAMESPACE<span style="color:#e6db74">}</span><span style="color:#e6db74">&#34;</span> &gt;&gt; <span style="color:#e6db74">${</span>WORK_DIR<span style="color:#e6db74">}</span>acm-workshop-variables.sh
 </span></span><span style="display:flex;"><span>source <span style="color:#e6db74">${</span>WORK_DIR<span style="color:#e6db74">}</span>acm-workshop-variables.sh
-</span></span></code></pre></div>
-<div class="box notices cstyle info">
-  <div class="box-label"><i class="fa-fw fas fa-info-circle"></i> Info</div>
-  <div class="box-content">
+</span></span></code></pre></div><!-- raw HTML omitted -->
 <p>The <code>CART_MEMORYSTORE_HOST</code> has been built in order to explicitly represent the Memorystore (Redis) endpoint on an Istio perspective. This name will be leveraged in 3 Istio resources: <code>ServiceEntry</code>, <code>DestinationRule</code> and <code>Sidecar</code> generated by the Online Boutique&rsquo;s Helm chart.</p>
-  </div>
-</div>
+<!-- raw HTML omitted -->
 <h2 id="update-reposync-to-deploy-the-online-boutiques-helm-chart">Update <code>RepoSync</code> to deploy the Online Boutique&rsquo;s Helm chart</h2>
 <p>Get Memorystore (Redis) connection information:</p>
 <div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-Bash" data-lang="Bash"><span style="display:flex;"><span>export REDIS_TLS_IP<span style="color:#f92672">=</span><span style="color:#66d9ef">$(</span>gcloud redis instances describe $REDIS_TLS_NAME --region $GKE_LOCATION --project $TENANT_PROJECT_ID --format<span style="color:#f92672">=</span><span style="color:#e6db74">&#39;get(host)&#39;</span><span style="color:#66d9ef">)</span>
@@ -188,20 +184,12 @@ if (!doNotTrack) {
 </span></span></span><span style="display:flex;"><span><span style="color:#e6db74">      sidecars:
 </span></span></span><span style="display:flex;"><span><span style="color:#e6db74">        create: true
 </span></span></span><span style="display:flex;"><span><span style="color:#e6db74">EOF</span>
-</span></span></code></pre></div>
-<div class="box notices cstyle info">
-  <div class="box-label"><i class="fa-fw fas fa-info-circle"></i> Info</div>
-  <div class="box-content">
+</span></span></code></pre></div><!-- raw HTML omitted -->
 <p>This will change the <code>REDIS_ADDR</code> environment variable of the <code>cartservice</code> to point to the Memorystore (Redis) database as well as removing the <code>Deployment</code> and the <code>Service</code> of the default in-cluster <code>redis</code> database. Also, in order to properly set up the Istio origination, this Helm chart will generate multiple resources: a <code>ServiceEntry</code> to register the Memorystore (Redis) instance in the Mesh as an external endpoint with its private IP address and port; a <code>DestinationRule</code> to configure the outgoing connections to this Memorystore (Redis) instance with TLS in <code>SIMPLE</code> mode (not <code>MUTUAL</code>) with its associated Certificate Authority and finally will annotate the <code>cartservice</code> <code>Deployment</code> to mount the certificate as a <code>Secret</code> via its sidecar proxy.</p>
-  </div>
-</div>
-
-<div class="box notices cstyle note">
-  <div class="box-label"><i class="fa-fw fas fa-exclamation-circle"></i> Note</div>
-  <div class="box-content">
+<!-- raw HTML omitted -->
+<!-- raw HTML omitted -->
 <p>The certificate value is in clear text in this <code>RepoSync</code> manifest in the Git repository. It is not a good practice, you shouldn&rsquo;t do that for your own scenario. In the future, this will be fixed in this workshop with for example the use of the <a href="https://github.com/GoogleCloudPlatform/secrets-store-csi-driver-provider-gcp" target="_blank">Google Secret Manager provider for the Secret Store CSI Driver</a>.</p>
-  </div>
-</div>
+<!-- raw HTML omitted -->
 <h2 id="deploy-kubernetes-manifests">Deploy Kubernetes manifests</h2>
 <div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-Bash" data-lang="Bash"><span style="display:flex;"><span>cd <span style="color:#e6db74">${</span>WORK_DIR<span style="color:#e6db74">}</span>$GKE_CONFIGS_DIR_NAME/
 </span></span><span style="display:flex;"><span>git add . <span style="color:#f92672">&amp;&amp;</span> git commit -m <span style="color:#e6db74">&#34;Secure Memorystore (Redis) access&#34;</span> <span style="color:#f92672">&amp;&amp;</span> git push origin main
@@ -438,8 +426,8 @@ if (!doNotTrack) {
         </div>
       </div>
     </aside>
-    <script src="/acm-workshop/js/clipboard.min.js?1685652605" defer></script>
-    <script src="/acm-workshop/js/perfect-scrollbar.min.js?1685652605" defer></script>
-    <script src="/acm-workshop/js/theme.js?1685652605" defer></script>
+    <script src="/acm-workshop/js/clipboard.min.js?1685652622" defer></script>
+    <script src="/acm-workshop/js/perfect-scrollbar.min.js?1685652622" defer></script>
+    <script src="/acm-workshop/js/theme.js?1685652622" defer></script>
   </body>
 </html>

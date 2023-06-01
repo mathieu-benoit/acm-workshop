@@ -4,24 +4,24 @@
     <meta charset="utf-8">
     <meta name="viewport" content="height=device-height, width=device-width, initial-scale=1.0, minimum-scale=1.0">
     <meta name="generator" content="Hugo 0.109.0">
-    <meta name="generator" content="Relearn 5.15.1+tip">
+    <meta name="generator" content="Relearn 5.15.2+tip">
     <meta name="description" content="Duration: 5 min | Persona: Platform Admin">
     <meta name="author" content="Mathieu Benoit">
     <title>Set up DNS</title>
-    <link href="/acm-workshop/images/favicon.png?1685652604" rel="icon" type="image/png">
+    <link href="/acm-workshop/images/favicon.png?1685652621" rel="icon" type="image/png">
     <!-- https://github.com/filamentgroup/loadCSS/blob/master/README.md#how-to-use -->
-    <link href="/acm-workshop/css/fontawesome-all.min.css?1685652604" rel="stylesheet" media="print" onload="this.media='all';this.onload=null;"><noscript><link href="/acm-workshop/css/fontawesome-all.min.css?1685652604" rel="stylesheet"></noscript>
-    <link href="/acm-workshop/css/nucleus.css?1685652604" rel="stylesheet">
-    <link href="/acm-workshop/css/auto-complete.css?1685652604" rel="stylesheet" media="print" onload="this.media='all';this.onload=null;"><noscript><link href="/acm-workshop/css/auto-complete.css?1685652604" rel="stylesheet"></noscript>
-    <link href="/acm-workshop/css/perfect-scrollbar.min.css?1685652604" rel="stylesheet">
-    <link href="/acm-workshop/css/fonts.css?1685652604" rel="stylesheet" media="print" onload="this.media='all';this.onload=null;"><noscript><link href="/acm-workshop/css/fonts.css?1685652604" rel="stylesheet"></noscript>
-    <link href="/acm-workshop/css/theme.css?1685652604" rel="stylesheet">
-    <link href="/acm-workshop/css/theme-mine.css?1685652604" rel="stylesheet" id="variant-style">
-    <link href="/acm-workshop/css/variant.css?1685652604" rel="stylesheet">
-    <link href="/acm-workshop/css/print.css?1685652604" rel="stylesheet" media="print">
-    <link href="/acm-workshop/css/ie.css?1685652604" rel="stylesheet">
-    <script src="/acm-workshop/js/url.js?1685652604"></script>
-    <script src="/acm-workshop/js/variant.js?1685652604"></script>
+    <link href="/acm-workshop/css/fontawesome-all.min.css?1685652621" rel="stylesheet" media="print" onload="this.media='all';this.onload=null;"><noscript><link href="/acm-workshop/css/fontawesome-all.min.css?1685652621" rel="stylesheet"></noscript>
+    <link href="/acm-workshop/css/nucleus.css?1685652621" rel="stylesheet">
+    <link href="/acm-workshop/css/auto-complete.css?1685652621" rel="stylesheet" media="print" onload="this.media='all';this.onload=null;"><noscript><link href="/acm-workshop/css/auto-complete.css?1685652621" rel="stylesheet"></noscript>
+    <link href="/acm-workshop/css/perfect-scrollbar.min.css?1685652621" rel="stylesheet">
+    <link href="/acm-workshop/css/fonts.css?1685652621" rel="stylesheet" media="print" onload="this.media='all';this.onload=null;"><noscript><link href="/acm-workshop/css/fonts.css?1685652621" rel="stylesheet"></noscript>
+    <link href="/acm-workshop/css/theme.css?1685652621" rel="stylesheet">
+    <link href="/acm-workshop/css/theme-mine.css?1685652621" rel="stylesheet" id="variant-style">
+    <link href="/acm-workshop/css/variant.css?1685652621" rel="stylesheet">
+    <link href="/acm-workshop/css/print.css?1685652621" rel="stylesheet" media="print">
+    <link href="/acm-workshop/css/ie.css?1685652621" rel="stylesheet">
+    <script src="/acm-workshop/js/url.js?1685652621"></script>
+    <script src="/acm-workshop/js/variant.js?1685652621"></script>
     <script>
       // hack to let hugo tell us how to get to the root when using relativeURLs, it needs to be called *url= for it to do its magic:
       // https://github.com/gohugoio/hugo/blob/145b3fcce35fbac25c7033c91c1b7ae6d1179da8/transform/urlreplacers/absurlreplacer.go#L72
@@ -104,10 +104,10 @@ if (!doNotTrack) {
 <h1 id="set-up-dns">Set up DNS</h1>
 
 <p>
-<a href="#image-8e901d32670d05d76b59831b8e0666aa" class="lightbox-link">
+<a href="#image-1542e06756181765ee1d4a4bcbaed605" class="lightbox-link">
 <img src="https://github.com/mathieu-benoit/my-images/raw/main/acm-workshop/platform-admin.png" alt="Platform Admin" style="height: auto; width: auto;" loading="lazy">
 </a>
-<a href="javascript:history.back();" class="lightbox" id="image-8e901d32670d05d76b59831b8e0666aa">
+<a href="javascript:history.back();" class="lightbox" id="image-1542e06756181765ee1d4a4bcbaed605">
 <img src="https://github.com/mathieu-benoit/my-images/raw/main/acm-workshop/platform-admin.png" alt="Platform Admin" class="lightbox-image" loading="lazy">
 </a>
 <em>Duration: 5 min | Persona: Platform Admin</em></p>
@@ -204,14 +204,10 @@ if (!doNotTrack) {
 </span></span></span><span style="display:flex;"><span><span style="color:#ae81ff"></span>    --project $TENANT_PROJECT_ID
 </span></span><span style="display:flex;"><span>gcloud compute ssl-certificates list <span style="color:#ae81ff">\
 </span></span></span><span style="display:flex;"><span><span style="color:#ae81ff"></span>    --project $TENANT_PROJECT_ID
-</span></span></code></pre></div><p>Wait and re-run this command above until you see the resources created.
-
-<div class="box notices cstyle note">
-  <div class="box-label"><i class="fa-fw fas fa-exclamation-circle"></i> Note</div>
-  <div class="box-content">
+</span></span></code></pre></div><p>Wait and re-run this command above until you see the resources created.</p>
+<!-- raw HTML omitted -->
 <p>Wait for the <code>ManagedCertificate</code> to be provisioned. This usually takes about 30 minutes.</p>
-  </div>
-</div></p>
+<!-- raw HTML omitted -->
 
             <footer class="footline">
 
@@ -398,8 +394,8 @@ if (!doNotTrack) {
         </div>
       </div>
     </aside>
-    <script src="/acm-workshop/js/clipboard.min.js?1685652606" defer></script>
-    <script src="/acm-workshop/js/perfect-scrollbar.min.js?1685652606" defer></script>
-    <script src="/acm-workshop/js/theme.js?1685652606" defer></script>
+    <script src="/acm-workshop/js/clipboard.min.js?1685652622" defer></script>
+    <script src="/acm-workshop/js/perfect-scrollbar.min.js?1685652622" defer></script>
+    <script src="/acm-workshop/js/theme.js?1685652622" defer></script>
   </body>
 </html>
