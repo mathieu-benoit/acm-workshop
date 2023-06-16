@@ -8,20 +8,20 @@
     <meta name="description" content="Duration: 20 min | Persona: Platform Admin">
     <meta name="author" content="Mathieu Benoit">
     <title>Create GKE cluster</title>
-    <link href="/acm-workshop/images/favicon.png?1686931423" rel="icon" type="image/png">
+    <link href="/acm-workshop/images/favicon.png?1686931436" rel="icon" type="image/png">
     <!-- https://github.com/filamentgroup/loadCSS/blob/master/README.md#how-to-use -->
-    <link href="/acm-workshop/css/fontawesome-all.min.css?1686931423" rel="stylesheet" media="print" onload="this.media='all';this.onload=null;"><noscript><link href="/acm-workshop/css/fontawesome-all.min.css?1686931423" rel="stylesheet"></noscript>
-    <link href="/acm-workshop/css/nucleus.css?1686931423" rel="stylesheet">
-    <link href="/acm-workshop/css/auto-complete.css?1686931423" rel="stylesheet" media="print" onload="this.media='all';this.onload=null;"><noscript><link href="/acm-workshop/css/auto-complete.css?1686931423" rel="stylesheet"></noscript>
-    <link href="/acm-workshop/css/perfect-scrollbar.min.css?1686931423" rel="stylesheet">
-    <link href="/acm-workshop/css/fonts.css?1686931423" rel="stylesheet" media="print" onload="this.media='all';this.onload=null;"><noscript><link href="/acm-workshop/css/fonts.css?1686931423" rel="stylesheet"></noscript>
-    <link href="/acm-workshop/css/theme.css?1686931423" rel="stylesheet">
-    <link href="/acm-workshop/css/theme-mine.css?1686931423" rel="stylesheet" id="variant-style">
-    <link href="/acm-workshop/css/variant.css?1686931423" rel="stylesheet">
-    <link href="/acm-workshop/css/print.css?1686931423" rel="stylesheet" media="print">
-    <link href="/acm-workshop/css/ie.css?1686931423" rel="stylesheet">
-    <script src="/acm-workshop/js/url.js?1686931423"></script>
-    <script src="/acm-workshop/js/variant.js?1686931423"></script>
+    <link href="/acm-workshop/css/fontawesome-all.min.css?1686931436" rel="stylesheet" media="print" onload="this.media='all';this.onload=null;"><noscript><link href="/acm-workshop/css/fontawesome-all.min.css?1686931436" rel="stylesheet"></noscript>
+    <link href="/acm-workshop/css/nucleus.css?1686931436" rel="stylesheet">
+    <link href="/acm-workshop/css/auto-complete.css?1686931436" rel="stylesheet" media="print" onload="this.media='all';this.onload=null;"><noscript><link href="/acm-workshop/css/auto-complete.css?1686931436" rel="stylesheet"></noscript>
+    <link href="/acm-workshop/css/perfect-scrollbar.min.css?1686931436" rel="stylesheet">
+    <link href="/acm-workshop/css/fonts.css?1686931436" rel="stylesheet" media="print" onload="this.media='all';this.onload=null;"><noscript><link href="/acm-workshop/css/fonts.css?1686931436" rel="stylesheet"></noscript>
+    <link href="/acm-workshop/css/theme.css?1686931436" rel="stylesheet">
+    <link href="/acm-workshop/css/theme-mine.css?1686931436" rel="stylesheet" id="variant-style">
+    <link href="/acm-workshop/css/variant.css?1686931436" rel="stylesheet">
+    <link href="/acm-workshop/css/print.css?1686931436" rel="stylesheet" media="print">
+    <link href="/acm-workshop/css/ie.css?1686931436" rel="stylesheet">
+    <script src="/acm-workshop/js/url.js?1686931436"></script>
+    <script src="/acm-workshop/js/variant.js?1686931436"></script>
     <script>
       // hack to let hugo tell us how to get to the root when using relativeURLs, it needs to be called *url= for it to do its magic:
       // https://github.com/gohugoio/hugo/blob/145b3fcce35fbac25c7033c91c1b7ae6d1179da8/transform/urlreplacers/absurlreplacer.go#L72""
@@ -107,10 +107,10 @@ if (!doNotTrack) {
 <h1 id="create-gke-cluster">Create GKE cluster</h1>
 
 <p>
-<a href="#image-bf528937308ab2e27b073ad114cc9d05" class="lightbox-link">
+<a href="#image-a9dd5521342b379780c34eb7f166aea1" class="lightbox-link">
 <img src="https://github.com/mathieu-benoit/my-images/raw/main/acm-workshop/platform-admin.png" alt="Platform Admin" style="height: auto; width: auto;" loading="lazy">
 </a>
-<a href="javascript:history.back();" class="lightbox" id="image-bf528937308ab2e27b073ad114cc9d05">
+<a href="javascript:history.back();" class="lightbox" id="image-a9dd5521342b379780c34eb7f166aea1">
 <img src="https://github.com/mathieu-benoit/my-images/raw/main/acm-workshop/platform-admin.png" alt="Platform Admin" class="lightbox-image" loading="lazy">
 </a>
 <em>Duration: 20 min | Persona: Platform Admin</em></p>
@@ -317,13 +317,13 @@ graph TD;
 </div>
 <p>List the Kubernetes resources managed by Config Sync in <strong>Config Controller</strong> for the <strong>Tenant project configs</strong> repository:
 
-<div class="tab-panel" data-tab-group="f34ea155e7f6205c0d0272c1c1da4f6c">
+<div class="tab-panel" data-tab-group="a8afd71d7be4cb15cae7049af4cdd472">
   <div class="tab-nav">
     <div class="tab-nav-title">&#8203;</div>
     <button
       data-tab-item="UI"
       class="tab-nav-button tab-panel-style cstyle initial active"
-      onclick="switchTab('f34ea155e7f6205c0d0272c1c1da4f6c','UI')"
+      onclick="switchTab('a8afd71d7be4cb15cae7049af4cdd472','UI')"
     >
       <div>
         <div class="tab-nav-hidden">UI</div>
@@ -333,7 +333,7 @@ graph TD;
     <button
       data-tab-item="gcloud"
       class="tab-nav-button tab-panel-style cstyle initial"
-      onclick="switchTab('f34ea155e7f6205c0d0272c1c1da4f6c','gcloud')"
+      onclick="switchTab('a8afd71d7be4cb15cae7049af4cdd472','gcloud')"
     >
       <div>
         <div class="tab-nav-hidden">gcloud</div>
@@ -576,21 +576,21 @@ graph TD;
         </div>
       </div>
     </aside>
-    <script src="/acm-workshop/js/clipboard.min.js?1686931423" defer></script>
-    <script src="/acm-workshop/js/perfect-scrollbar.min.js?1686931423" defer></script>
-    <script src="/acm-workshop/js/d3/d3-color.min.js?1686931423" defer></script>
-    <script src="/acm-workshop/js/d3/d3-dispatch.min.js?1686931423" defer></script>
-    <script src="/acm-workshop/js/d3/d3-drag.min.js?1686931423" defer></script>
-    <script src="/acm-workshop/js/d3/d3-ease.min.js?1686931423" defer></script>
-    <script src="/acm-workshop/js/d3/d3-interpolate.min.js?1686931423" defer></script>
-    <script src="/acm-workshop/js/d3/d3-selection.min.js?1686931423" defer></script>
-    <script src="/acm-workshop/js/d3/d3-timer.min.js?1686931423" defer></script>
-    <script src="/acm-workshop/js/d3/d3-transition.min.js?1686931423" defer></script>
-    <script src="/acm-workshop/js/d3/d3-zoom.min.js?1686931423" defer></script>
-    <script src="/acm-workshop/js/mermaid.min.js?1686931423" defer></script>
+    <script src="/acm-workshop/js/clipboard.min.js?1686931436" defer></script>
+    <script src="/acm-workshop/js/perfect-scrollbar.min.js?1686931436" defer></script>
+    <script src="/acm-workshop/js/d3/d3-color.min.js?1686931436" defer></script>
+    <script src="/acm-workshop/js/d3/d3-dispatch.min.js?1686931436" defer></script>
+    <script src="/acm-workshop/js/d3/d3-drag.min.js?1686931436" defer></script>
+    <script src="/acm-workshop/js/d3/d3-ease.min.js?1686931436" defer></script>
+    <script src="/acm-workshop/js/d3/d3-interpolate.min.js?1686931436" defer></script>
+    <script src="/acm-workshop/js/d3/d3-selection.min.js?1686931436" defer></script>
+    <script src="/acm-workshop/js/d3/d3-timer.min.js?1686931436" defer></script>
+    <script src="/acm-workshop/js/d3/d3-transition.min.js?1686931436" defer></script>
+    <script src="/acm-workshop/js/d3/d3-zoom.min.js?1686931436" defer></script>
+    <script src="/acm-workshop/js/mermaid.min.js?1686931436" defer></script>
     <script>
       window.themeUseMermaid = JSON.parse("{}");
     </script>
-    <script src="/acm-workshop/js/theme.js?1686931423" defer></script>
+    <script src="/acm-workshop/js/theme.js?1686931436" defer></script>
   </body>
 </html>

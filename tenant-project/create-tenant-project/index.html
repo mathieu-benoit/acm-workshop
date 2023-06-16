@@ -8,20 +8,20 @@
     <meta name="description" content="Duration: 10 min | Persona: Org Admin">
     <meta name="author" content="Mathieu Benoit">
     <title>Create Tenant project</title>
-    <link href="/acm-workshop/images/favicon.png?1686931423" rel="icon" type="image/png">
+    <link href="/acm-workshop/images/favicon.png?1686931436" rel="icon" type="image/png">
     <!-- https://github.com/filamentgroup/loadCSS/blob/master/README.md#how-to-use -->
-    <link href="/acm-workshop/css/fontawesome-all.min.css?1686931423" rel="stylesheet" media="print" onload="this.media='all';this.onload=null;"><noscript><link href="/acm-workshop/css/fontawesome-all.min.css?1686931423" rel="stylesheet"></noscript>
-    <link href="/acm-workshop/css/nucleus.css?1686931423" rel="stylesheet">
-    <link href="/acm-workshop/css/auto-complete.css?1686931423" rel="stylesheet" media="print" onload="this.media='all';this.onload=null;"><noscript><link href="/acm-workshop/css/auto-complete.css?1686931423" rel="stylesheet"></noscript>
-    <link href="/acm-workshop/css/perfect-scrollbar.min.css?1686931423" rel="stylesheet">
-    <link href="/acm-workshop/css/fonts.css?1686931423" rel="stylesheet" media="print" onload="this.media='all';this.onload=null;"><noscript><link href="/acm-workshop/css/fonts.css?1686931423" rel="stylesheet"></noscript>
-    <link href="/acm-workshop/css/theme.css?1686931423" rel="stylesheet">
-    <link href="/acm-workshop/css/theme-mine.css?1686931423" rel="stylesheet" id="variant-style">
-    <link href="/acm-workshop/css/variant.css?1686931423" rel="stylesheet">
-    <link href="/acm-workshop/css/print.css?1686931423" rel="stylesheet" media="print">
-    <link href="/acm-workshop/css/ie.css?1686931423" rel="stylesheet">
-    <script src="/acm-workshop/js/url.js?1686931423"></script>
-    <script src="/acm-workshop/js/variant.js?1686931423"></script>
+    <link href="/acm-workshop/css/fontawesome-all.min.css?1686931436" rel="stylesheet" media="print" onload="this.media='all';this.onload=null;"><noscript><link href="/acm-workshop/css/fontawesome-all.min.css?1686931436" rel="stylesheet"></noscript>
+    <link href="/acm-workshop/css/nucleus.css?1686931436" rel="stylesheet">
+    <link href="/acm-workshop/css/auto-complete.css?1686931436" rel="stylesheet" media="print" onload="this.media='all';this.onload=null;"><noscript><link href="/acm-workshop/css/auto-complete.css?1686931436" rel="stylesheet"></noscript>
+    <link href="/acm-workshop/css/perfect-scrollbar.min.css?1686931436" rel="stylesheet">
+    <link href="/acm-workshop/css/fonts.css?1686931436" rel="stylesheet" media="print" onload="this.media='all';this.onload=null;"><noscript><link href="/acm-workshop/css/fonts.css?1686931436" rel="stylesheet"></noscript>
+    <link href="/acm-workshop/css/theme.css?1686931436" rel="stylesheet">
+    <link href="/acm-workshop/css/theme-mine.css?1686931436" rel="stylesheet" id="variant-style">
+    <link href="/acm-workshop/css/variant.css?1686931436" rel="stylesheet">
+    <link href="/acm-workshop/css/print.css?1686931436" rel="stylesheet" media="print">
+    <link href="/acm-workshop/css/ie.css?1686931436" rel="stylesheet">
+    <script src="/acm-workshop/js/url.js?1686931436"></script>
+    <script src="/acm-workshop/js/variant.js?1686931436"></script>
     <script>
       // hack to let hugo tell us how to get to the root when using relativeURLs, it needs to be called *url= for it to do its magic:
       // https://github.com/gohugoio/hugo/blob/145b3fcce35fbac25c7033c91c1b7ae6d1179da8/transform/urlreplacers/absurlreplacer.go#L72""
@@ -106,10 +106,10 @@ if (!doNotTrack) {
 <h1 id="create-tenant-project">Create Tenant project</h1>
 
 <p>
-<a href="#image-1e6e9eae6cb0a21328d7973b1a0ae5a7" class="lightbox-link">
+<a href="#image-0df5f91c0a6450c330f02c0c44729066" class="lightbox-link">
 <img src="https://github.com/mathieu-benoit/my-images/raw/main/acm-workshop/org-admin.png" alt="Org Admin" style="height: auto; width: auto;" loading="lazy">
 </a>
-<a href="javascript:history.back();" class="lightbox" id="image-1e6e9eae6cb0a21328d7973b1a0ae5a7">
+<a href="javascript:history.back();" class="lightbox" id="image-0df5f91c0a6450c330f02c0c44729066">
 <img src="https://github.com/mathieu-benoit/my-images/raw/main/acm-workshop/org-admin.png" alt="Org Admin" class="lightbox-image" loading="lazy">
 </a>
 <em>Duration: 10 min | Persona: Org Admin</em></p>
@@ -127,13 +127,13 @@ if (!doNotTrack) {
 </span></span></code></pre></div><h2 id="define-gcp-project">Define GCP project</h2>
 <p>Define the GCP project either at the Folder level or the Organization level:
 
-<div class="tab-panel" data-tab-group="56dfe1b84f774256eb9bb7daa41d0f20">
+<div class="tab-panel" data-tab-group="05668c167de8711f3b1f0fa7c932192c">
   <div class="tab-nav">
     <div class="tab-nav-title">&#8203;</div>
     <button
       data-tab-item="Folder level"
       class="tab-nav-button tab-panel-style cstyle initial active"
-      onclick="switchTab('56dfe1b84f774256eb9bb7daa41d0f20','Folder level')"
+      onclick="switchTab('05668c167de8711f3b1f0fa7c932192c','Folder level')"
     >
       <div>
         <div class="tab-nav-hidden">Folder level</div>
@@ -143,7 +143,7 @@ if (!doNotTrack) {
     <button
       data-tab-item="Org level"
       class="tab-nav-button tab-panel-style cstyle initial"
-      onclick="switchTab('56dfe1b84f774256eb9bb7daa41d0f20','Org level')"
+      onclick="switchTab('05668c167de8711f3b1f0fa7c932192c','Org level')"
     >
       <div>
         <div class="tab-nav-hidden">Org level</div>
@@ -272,13 +272,13 @@ graph TD;
 </div>
 <p>List the Kubernetes resources managed by Config Sync in <strong>Config Controller</strong> for the <strong>Host project configs</strong> repository:
 
-<div class="tab-panel" data-tab-group="f11860239acade2452ff37162bfbaae7">
+<div class="tab-panel" data-tab-group="abc5af1771cdcbc1a86d691a59b20fcd">
   <div class="tab-nav">
     <div class="tab-nav-title">&#8203;</div>
     <button
       data-tab-item="UI"
       class="tab-nav-button tab-panel-style cstyle initial active"
-      onclick="switchTab('f11860239acade2452ff37162bfbaae7','UI')"
+      onclick="switchTab('abc5af1771cdcbc1a86d691a59b20fcd','UI')"
     >
       <div>
         <div class="tab-nav-hidden">UI</div>
@@ -288,7 +288,7 @@ graph TD;
     <button
       data-tab-item="gcloud"
       class="tab-nav-button tab-panel-style cstyle initial"
-      onclick="switchTab('f11860239acade2452ff37162bfbaae7','gcloud')"
+      onclick="switchTab('abc5af1771cdcbc1a86d691a59b20fcd','gcloud')"
     >
       <div>
         <div class="tab-nav-hidden">gcloud</div>
@@ -346,13 +346,13 @@ graph TD;
 </span></span></code></pre></div><p>We will resolve this issue by redeploying the <code>Project</code> resource by removing the <code>billingAccountRef</code> part.</p>
 <p>Update the GCP project either at the Folder level or the Organization level:
 
-<div class="tab-panel" data-tab-group="aa1f469c1dbe9faf1920a60651bf8f95">
+<div class="tab-panel" data-tab-group="8115c23191e98e6f9d89d49b4c9c9a92">
   <div class="tab-nav">
     <div class="tab-nav-title">&#8203;</div>
     <button
       data-tab-item="Folder level"
       class="tab-nav-button tab-panel-style cstyle initial active"
-      onclick="switchTab('aa1f469c1dbe9faf1920a60651bf8f95','Folder level')"
+      onclick="switchTab('8115c23191e98e6f9d89d49b4c9c9a92','Folder level')"
     >
       <div>
         <div class="tab-nav-hidden">Folder level</div>
@@ -362,7 +362,7 @@ graph TD;
     <button
       data-tab-item="Org level"
       class="tab-nav-button tab-panel-style cstyle initial"
-      onclick="switchTab('aa1f469c1dbe9faf1920a60651bf8f95','Org level')"
+      onclick="switchTab('8115c23191e98e6f9d89d49b4c9c9a92','Org level')"
     >
       <div>
         <div class="tab-nav-hidden">Org level</div>
@@ -618,21 +618,21 @@ graph TD;
         </div>
       </div>
     </aside>
-    <script src="/acm-workshop/js/clipboard.min.js?1686931424" defer></script>
-    <script src="/acm-workshop/js/perfect-scrollbar.min.js?1686931424" defer></script>
-    <script src="/acm-workshop/js/d3/d3-color.min.js?1686931424" defer></script>
-    <script src="/acm-workshop/js/d3/d3-dispatch.min.js?1686931424" defer></script>
-    <script src="/acm-workshop/js/d3/d3-drag.min.js?1686931424" defer></script>
-    <script src="/acm-workshop/js/d3/d3-ease.min.js?1686931424" defer></script>
-    <script src="/acm-workshop/js/d3/d3-interpolate.min.js?1686931424" defer></script>
-    <script src="/acm-workshop/js/d3/d3-selection.min.js?1686931424" defer></script>
-    <script src="/acm-workshop/js/d3/d3-timer.min.js?1686931424" defer></script>
-    <script src="/acm-workshop/js/d3/d3-transition.min.js?1686931424" defer></script>
-    <script src="/acm-workshop/js/d3/d3-zoom.min.js?1686931424" defer></script>
-    <script src="/acm-workshop/js/mermaid.min.js?1686931424" defer></script>
+    <script src="/acm-workshop/js/clipboard.min.js?1686931437" defer></script>
+    <script src="/acm-workshop/js/perfect-scrollbar.min.js?1686931437" defer></script>
+    <script src="/acm-workshop/js/d3/d3-color.min.js?1686931437" defer></script>
+    <script src="/acm-workshop/js/d3/d3-dispatch.min.js?1686931437" defer></script>
+    <script src="/acm-workshop/js/d3/d3-drag.min.js?1686931437" defer></script>
+    <script src="/acm-workshop/js/d3/d3-ease.min.js?1686931437" defer></script>
+    <script src="/acm-workshop/js/d3/d3-interpolate.min.js?1686931437" defer></script>
+    <script src="/acm-workshop/js/d3/d3-selection.min.js?1686931437" defer></script>
+    <script src="/acm-workshop/js/d3/d3-timer.min.js?1686931437" defer></script>
+    <script src="/acm-workshop/js/d3/d3-transition.min.js?1686931437" defer></script>
+    <script src="/acm-workshop/js/d3/d3-zoom.min.js?1686931437" defer></script>
+    <script src="/acm-workshop/js/mermaid.min.js?1686931437" defer></script>
     <script>
       window.themeUseMermaid = JSON.parse("{}");
     </script>
-    <script src="/acm-workshop/js/theme.js?1686931424" defer></script>
+    <script src="/acm-workshop/js/theme.js?1686931437" defer></script>
   </body>
 </html>
