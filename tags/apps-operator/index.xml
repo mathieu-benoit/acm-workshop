@@ -23,7 +23,7 @@ WORK_DIR=~/ source ${WORK_DIR}acm-workshop-variables.sh In the Google Cloud cons
       <guid>https://mathieu-benoit.github.io/acm-workshop/overview/personas/index.html</guid>
       <description>3 personas are involved:
 Org Admin Platform Admin Apps Operator Here are the needs of each persona:
-The Developer persona is not involved in this workshop for the reason that they should focus on the code of their apps. The Apps Operator persona is responsible to set up the Continuous Integration part to build and push the container images associated to any apps the Developers are building. With this workshop we are not covering this part, we are assuming that the container images are already built, the Apps Operator persona will take it from here in this workshop and will configure the Continuous Deployment part.</description>
+Info The Developer persona is not involved in this workshop for the reason that they should focus on the code of their apps. The Apps Operator persona is responsible to set up the Continuous Integration part to build and push the container images associated to any apps the Developers are building. With this workshop we are not covering this part, we are assuming that the container images are already built, the Apps Operator persona will take it from here in this workshop and will configure the Continuous Deployment part.</description>
     </item>
     <item>
       <title>Agenda</title>
@@ -107,7 +107,7 @@ In this section, you will deploy the Whereami app.
 Initialize variables:
 WORK_DIR=~/ source ${WORK_DIR}acm-workshop-variables.sh Get upstream Kubernetes manifests Get the upstream Kubernetes manifests:
 cd ${WORK_DIR}$WHERE_AMI_DIR_NAME kpt pkg get https://github.com/GoogleCloudPlatform/kubernetes-engine-samples/whereami/k8s rm k8s/Kptfile mv k8s upstream Create base overlay Create Kustomize base overlay files:
-mkdir ${WORK_DIR}$WHERE_AMI_DIR_NAME/base cd ${WORK_DIR}$WHERE_AMI_DIR_NAME/base kustomize create kustomize edit add resource ../upstream cat &amp;lt;&amp;lt;EOF &amp;gt;&amp;gt; ${WORK_DIR}$WHERE_AMI_DIR_NAME/base/kustomization.yaml patchesJson6902: - target: kind: Service name: whereami patch: |- - op: replace path: /spec/type value: ClusterIP EOF Here we are changing the Service type to ClusterIP because the Whereami app will be exposed by the Ingress Gateway.</description>
+mkdir ${WORK_DIR}$WHERE_AMI_DIR_NAME/base cd ${WORK_DIR}$WHERE_AMI_DIR_NAME/base kustomize create kustomize edit add resource ../upstream cat &amp;lt;&amp;lt;EOF &amp;gt;&amp;gt; ${WORK_DIR}$WHERE_AMI_DIR_NAME/base/kustomization.yaml patchesJson6902: - target: kind: Service name: whereami patch: |- - op: replace path: /spec/type value: ClusterIP EOF Info Here we are changing the Service type to ClusterIP because the Whereami app will be exposed by the Ingress Gateway.</description>
     </item>
     <item>
       <title>Deploy apps</title>
@@ -130,7 +130,7 @@ mkdir ${WORK_DIR}$BANK_OF_ANTHOS_DIR_NAME/base cd ${WORK_DIR}$BANK_OF_ANTHOS_DIR
 In this section, you will copy the Online Boutique apps container images and the Helm chart in your private Artifact Registry. You will also scan one container image.
 Initialize variables:
 WORK_DIR=~/ source ${WORK_DIR}acm-workshop-variables.sh ONLINE_BOUTIQUE_VERSION=v0.5.0 echo &amp;#34;export ONLINE_BOUTIQUE_VERSION=${ONLINE_BOUTIQUE_VERSION}&amp;#34; &amp;gt;&amp;gt; ${WORK_DIR}acm-workshop-variables.sh PRIVATE_ONLINE_BOUTIQUE_REGISTRY=$CONTAINER_REGISTRY_REPOSITORY/onlineboutique echo &amp;#34;export PRIVATE_ONLINE_BOUTIQUE_REGISTRY=${PRIVATE_ONLINE_BOUTIQUE_REGISTRY}&amp;#34; &amp;gt;&amp;gt; ${WORK_DIR}acm-workshop-variables.sh source ${WORK_DIR}acm-workshop-variables.sh Prepare the container images Copy the public container images to your private registry:
-UPSTREAM_ONLINE_BOUTIQUE_CONTAINER_REGISTRY=gcr.io/google-samples/microservices-demo HTTP_SERVICES=&amp;#34;frontend loadgenerator&amp;#34; TAG=$ONLINE_BOUTIQUE_VERSION for s in $HTTP_SERVICES; do crane copy $UPSTREAM_ONLINE_BOUTIQUE_CONTAINER_REGISTRY/$s:$TAG $PRIVATE_ONLINE_BOUTIQUE_REGISTRY/$s:$TAG; done GRPC_SERVICES=&amp;#34;adservice cartservice checkoutservice currencyservice emailservice paymentservice productcatalogservice recommendationservice shippingservice&amp;#34; TAG=$ONLINE_BOUTIQUE_VERSION-native-grpc-probes for s in $GRPC_SERVICES; do crane copy $UPSTREAM_ONLINE_BOUTIQUE_CONTAINER_REGISTRY/$s:$TAG $PRIVATE_ONLINE_BOUTIQUE_REGISTRY/$s:$TAG; done crane copy redis:alpine $PRIVATE_ONLINE_BOUTIQUE_REGISTRY/redis:alpine We are making the copy of the gRPC services supporting the native Kubernetes health probes in order to get the associated optimized images, learn more about this here.</description>
+UPSTREAM_ONLINE_BOUTIQUE_CONTAINER_REGISTRY=gcr.io/google-samples/microservices-demo HTTP_SERVICES=&amp;#34;frontend loadgenerator&amp;#34; TAG=$ONLINE_BOUTIQUE_VERSION for s in $HTTP_SERVICES; do crane copy $UPSTREAM_ONLINE_BOUTIQUE_CONTAINER_REGISTRY/$s:$TAG $PRIVATE_ONLINE_BOUTIQUE_REGISTRY/$s:$TAG; done GRPC_SERVICES=&amp;#34;adservice cartservice checkoutservice currencyservice emailservice paymentservice productcatalogservice recommendationservice shippingservice&amp;#34; TAG=$ONLINE_BOUTIQUE_VERSION-native-grpc-probes for s in $GRPC_SERVICES; do crane copy $UPSTREAM_ONLINE_BOUTIQUE_CONTAINER_REGISTRY/$s:$TAG $PRIVATE_ONLINE_BOUTIQUE_REGISTRY/$s:$TAG; done crane copy redis:alpine $PRIVATE_ONLINE_BOUTIQUE_REGISTRY/redis:alpine Tip We are making the copy of the gRPC services supporting the native Kubernetes health probes in order to get the associated optimized images, learn more about this here.</description>
     </item>
     <item>
       <title>Secure Memorystore access</title>
@@ -140,7 +140,7 @@ UPSTREAM_ONLINE_BOUTIQUE_CONTAINER_REGISTRY=gcr.io/google-samples/microservices-
       <description>Duration: 10 min | Persona: Apps Operator
 In this section, you will secure the access by TLS to the Memorystore (Redis) instance from the OnlineBoutique&amp;rsquo;s cartservice app, without updating the source code of the app, just with Istio&amp;rsquo;s capabilities.
 Initialize variables:
-WORK_DIR=~/ source ${WORK_DIR}acm-workshop-variables.sh echo &amp;#34;export CART_MEMORYSTORE_HOST=${REDIS_NAME}.memorystore-redis.${ONLINEBOUTIQUE_NAMESPACE}&amp;#34; &amp;gt;&amp;gt; ${WORK_DIR}acm-workshop-variables.sh source ${WORK_DIR}acm-workshop-variables.sh The CART_MEMORYSTORE_HOST has been built in order to explicitly represent the Memorystore (Redis) endpoint on an Istio perspective. This name will be leveraged in 3 Istio resources: ServiceEntry, DestinationRule and Sidecar generated by the Online Boutique&amp;rsquo;s Helm chart.</description>
+WORK_DIR=~/ source ${WORK_DIR}acm-workshop-variables.sh echo &amp;#34;export CART_MEMORYSTORE_HOST=${REDIS_NAME}.memorystore-redis.${ONLINEBOUTIQUE_NAMESPACE}&amp;#34; &amp;gt;&amp;gt; ${WORK_DIR}acm-workshop-variables.sh source ${WORK_DIR}acm-workshop-variables.sh Info The CART_MEMORYSTORE_HOST has been built in order to explicitly represent the Memorystore (Redis) endpoint on an Istio perspective.</description>
     </item>
     <item>
       <title>Deploy apps</title>

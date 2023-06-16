@@ -4,27 +4,27 @@
     <meta charset="utf-8">
     <meta name="viewport" content="height=device-height, width=device-width, initial-scale=1.0, minimum-scale=1.0">
     <meta name="generator" content="Hugo 0.109.0">
-    <meta name="generator" content="Relearn 5.15.2+tip">
+    <meta name="generator" content="Relearn 5.16.2+tip">
     <meta name="description" content="Duration: 20 min | Persona: Org Admin">
     <meta name="author" content="Mathieu Benoit">
     <title>Create Config Controller</title>
-    <link href="/acm-workshop/images/favicon.png?1685652621" rel="icon" type="image/png">
+    <link href="/acm-workshop/images/favicon.png?1686931359" rel="icon" type="image/png">
     <!-- https://github.com/filamentgroup/loadCSS/blob/master/README.md#how-to-use -->
-    <link href="/acm-workshop/css/fontawesome-all.min.css?1685652621" rel="stylesheet" media="print" onload="this.media='all';this.onload=null;"><noscript><link href="/acm-workshop/css/fontawesome-all.min.css?1685652621" rel="stylesheet"></noscript>
-    <link href="/acm-workshop/css/nucleus.css?1685652621" rel="stylesheet">
-    <link href="/acm-workshop/css/auto-complete.css?1685652621" rel="stylesheet" media="print" onload="this.media='all';this.onload=null;"><noscript><link href="/acm-workshop/css/auto-complete.css?1685652621" rel="stylesheet"></noscript>
-    <link href="/acm-workshop/css/perfect-scrollbar.min.css?1685652621" rel="stylesheet">
-    <link href="/acm-workshop/css/fonts.css?1685652621" rel="stylesheet" media="print" onload="this.media='all';this.onload=null;"><noscript><link href="/acm-workshop/css/fonts.css?1685652621" rel="stylesheet"></noscript>
-    <link href="/acm-workshop/css/theme.css?1685652621" rel="stylesheet">
-    <link href="/acm-workshop/css/theme-mine.css?1685652621" rel="stylesheet" id="variant-style">
-    <link href="/acm-workshop/css/variant.css?1685652621" rel="stylesheet">
-    <link href="/acm-workshop/css/print.css?1685652621" rel="stylesheet" media="print">
-    <link href="/acm-workshop/css/ie.css?1685652621" rel="stylesheet">
-    <script src="/acm-workshop/js/url.js?1685652621"></script>
-    <script src="/acm-workshop/js/variant.js?1685652621"></script>
+    <link href="/acm-workshop/css/fontawesome-all.min.css?1686931359" rel="stylesheet" media="print" onload="this.media='all';this.onload=null;"><noscript><link href="/acm-workshop/css/fontawesome-all.min.css?1686931359" rel="stylesheet"></noscript>
+    <link href="/acm-workshop/css/nucleus.css?1686931359" rel="stylesheet">
+    <link href="/acm-workshop/css/auto-complete.css?1686931359" rel="stylesheet" media="print" onload="this.media='all';this.onload=null;"><noscript><link href="/acm-workshop/css/auto-complete.css?1686931359" rel="stylesheet"></noscript>
+    <link href="/acm-workshop/css/perfect-scrollbar.min.css?1686931359" rel="stylesheet">
+    <link href="/acm-workshop/css/fonts.css?1686931359" rel="stylesheet" media="print" onload="this.media='all';this.onload=null;"><noscript><link href="/acm-workshop/css/fonts.css?1686931359" rel="stylesheet"></noscript>
+    <link href="/acm-workshop/css/theme.css?1686931359" rel="stylesheet">
+    <link href="/acm-workshop/css/theme-mine.css?1686931359" rel="stylesheet" id="variant-style">
+    <link href="/acm-workshop/css/variant.css?1686931359" rel="stylesheet">
+    <link href="/acm-workshop/css/print.css?1686931359" rel="stylesheet" media="print">
+    <link href="/acm-workshop/css/ie.css?1686931359" rel="stylesheet">
+    <script src="/acm-workshop/js/url.js?1686931359"></script>
+    <script src="/acm-workshop/js/variant.js?1686931359"></script>
     <script>
       // hack to let hugo tell us how to get to the root when using relativeURLs, it needs to be called *url= for it to do its magic:
-      // https://github.com/gohugoio/hugo/blob/145b3fcce35fbac25c7033c91c1b7ae6d1179da8/transform/urlreplacers/absurlreplacer.go#L72
+      // https://github.com/gohugoio/hugo/blob/145b3fcce35fbac25c7033c91c1b7ae6d1179da8/transform/urlreplacers/absurlreplacer.go#L72""
       window.index_json_url="/acm-workshop/index.json";
       var root_url="/";
       var baseUri=root_url.replace(/\/$/, '');
@@ -103,10 +103,10 @@ if (!doNotTrack) {
 <h1 id="create-config-controller">Create Config Controller</h1>
 
 <p>
-<a href="#image-a7a5c50d64ad758bdd392f8fdfc0e4fe" class="lightbox-link">
+<a href="#image-d6972a5ac9818da87e3369eb3e758023" class="lightbox-link">
 <img src="https://github.com/mathieu-benoit/my-images/raw/main/acm-workshop/org-admin.png" alt="Org Admin" style="height: auto; width: auto;" loading="lazy">
 </a>
-<a href="javascript:history.back();" class="lightbox" id="image-a7a5c50d64ad758bdd392f8fdfc0e4fe">
+<a href="javascript:history.back();" class="lightbox" id="image-d6972a5ac9818da87e3369eb3e758023">
 <img src="https://github.com/mathieu-benoit/my-images/raw/main/acm-workshop/org-admin.png" alt="Org Admin" class="lightbox-image" loading="lazy">
 </a>
 <em>Duration: 20 min | Persona: Org Admin</em></p>
@@ -118,9 +118,14 @@ if (!doNotTrack) {
 </span></span><span style="display:flex;"><span>echo <span style="color:#e6db74">&#34;export CONFIG_CONTROLLER_LOCATION=northamerica-northeast1&#34;</span> &gt;&gt; <span style="color:#e6db74">${</span>WORK_DIR<span style="color:#e6db74">}</span>acm-workshop-variables.sh
 </span></span><span style="display:flex;"><span>echo <span style="color:#e6db74">&#34;export CONFIG_CONTROLLER_NETWORK=default&#34;</span> &gt;&gt; <span style="color:#e6db74">${</span>WORK_DIR<span style="color:#e6db74">}</span>acm-workshop-variables.sh
 </span></span><span style="display:flex;"><span>source <span style="color:#e6db74">${</span>WORK_DIR<span style="color:#e6db74">}</span>acm-workshop-variables.sh
-</span></span></code></pre></div><!-- raw HTML omitted -->
+</span></span></code></pre></div>
+<div class="box notices cstyle info">
+  <div class="box-label"><i class="fa-fw fas fa-info-circle"></i> Info</div>
+  <div class="box-content">
+
 <p>We are creating the Config Controller instance in <code>northamerica-northeast1</code> because that&rsquo;s the <a href="https://cloud.google.com/sustainability/region-carbon" target="_blank">greenest Google Cloud region (Low CO2)</a> in the regions supported by Config Controller: <code>europe-north1</code>, <code>europe-west1</code>, <code>europe-west3</code>, <code>australia-southeast1</code>, <code>australia-southeast2</code>, <code>us-east1</code>, <code>us-central1</code>, <code>northamerica-northeast1</code>, <code>northamerica-northeast2</code>, <code>asia-northeast1</code> and <code>asia-northeast2</code>.</p>
-<!-- raw HTML omitted -->
+</div>
+</div>
 <h2 id="create-the-config-controller-instance">Create the Config Controller instance</h2>
 <p>Enable the required Google Cloud APIs:</p>
 <div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-Bash" data-lang="Bash"><span style="display:flex;"><span>gcloud services enable <span style="color:#ae81ff">\
@@ -130,20 +135,35 @@ if (!doNotTrack) {
 </span></span></code></pre></div><p>If you don&rsquo;t have a default network in your project, create one by running the following command:</p>
 <div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-Bash" data-lang="Bash"><span style="display:flex;"><span>gcloud compute networks create $CONFIG_CONTROLLER_NETWORK <span style="color:#ae81ff">\
 </span></span></span><span style="display:flex;"><span><span style="color:#ae81ff"></span>    --subnet-mode<span style="color:#f92672">=</span>auto
-</span></span></code></pre></div><!-- raw HTML omitted -->
+</span></span></code></pre></div>
+<div class="box notices cstyle note">
+  <div class="box-label"><i class="fa-fw fas fa-exclamation-circle"></i> Note</div>
+  <div class="box-content">
+
 <p>If you get an error telling you that the default network already exists, you can ignore it.</p>
-<!-- raw HTML omitted -->
+</div>
+</div>
 <p>Create the Config Controller instance:</p>
 <div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-Bash" data-lang="Bash"><span style="display:flex;"><span>gcloud alpha anthos config controller create $CONFIG_CONTROLLER_NAME <span style="color:#ae81ff">\
 </span></span></span><span style="display:flex;"><span><span style="color:#ae81ff"></span>    --location $CONFIG_CONTROLLER_LOCATION <span style="color:#ae81ff">\
 </span></span></span><span style="display:flex;"><span><span style="color:#ae81ff"></span>    --network $CONFIG_CONTROLLER_NETWORK <span style="color:#ae81ff">\
 </span></span></span><span style="display:flex;"><span><span style="color:#ae81ff"></span>    --full-management
-</span></span></code></pre></div><!-- raw HTML omitted -->
+</span></span></code></pre></div><p>
+<div class="box notices cstyle tip">
+  <div class="box-label"><i class="fa-fw fas fa-lightbulb"></i> Tip</div>
+  <div class="box-content">
+
 <p>As a security best practice you could provision your Config Controller instance with the <code>--man-block $(curl -4 ifconfig.co)/32</code> parameter. We are not doing this in this workshop to avoid any issues with Cloud Shell which is allocating a new IP address as soon as the session expired.</p>
-<!-- raw HTML omitted -->
-<!-- raw HTML omitted -->
+</div>
+</div>
+
+<div class="box notices cstyle note">
+  <div class="box-label"><i class="fa-fw fas fa-exclamation-circle"></i> Note</div>
+  <div class="box-content">
+
 <p>The Config Controller instance provisioning could take around 15-20 min.</p>
-<!-- raw HTML omitted -->
+</div>
+</div></p>
 <p>Check that the Config Controller instance was successfully created:</p>
 <div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-Bash" data-lang="Bash"><span style="display:flex;"><span>gcloud anthos config controller list <span style="color:#ae81ff">\
 </span></span></span><span style="display:flex;"><span><span style="color:#ae81ff"></span>    --location $CONFIG_CONTROLLER_LOCATION
@@ -159,40 +179,53 @@ if (!doNotTrack) {
 </span></span></span><span style="display:flex;"><span><span style="color:#ae81ff"></span>    -o jsonpath<span style="color:#f92672">=</span><span style="color:#e6db74">&#39;{.items[0].spec.googleServiceAccount}&#39;</span><span style="color:#66d9ef">)</span><span style="color:#e6db74">&#34;</span>
 </span></span></code></pre></div><p>Set the <code>resourcemanager.projectCreator</code> role either at the Folder level or the Organization level:
 
-<div class="tab-panel" data-tab-group="org-level">
+<div class="tab-panel" data-tab-group="a2f06541bb262d17986980a138cd0554">
   <div class="tab-nav">
+    <div class="tab-nav-title">&#8203;</div>
     <button
       data-tab-item="Folder level"
-      class="tab-nav-button active"
-      onclick="switchTab('org-level','Folder level')"
+      class="tab-nav-button tab-panel-style cstyle initial active"
+      onclick="switchTab('a2f06541bb262d17986980a138cd0554','Folder level')"
     >
-      <span>Folder level</span></button>
+      <div>
+        <div class="tab-nav-hidden">Folder level</div>
+        <div class="tab-nav-text">Folder level</div>
+      </div>
+    </button>
     <button
       data-tab-item="Org level"
-      class="tab-nav-button"
-      onclick="switchTab('org-level','Org level')"
+      class="tab-nav-button tab-panel-style cstyle initial"
+      onclick="switchTab('a2f06541bb262d17986980a138cd0554','Org level')"
     >
-      <span>Org level</span></button>
+      <div>
+        <div class="tab-nav-hidden">Org level</div>
+        <div class="tab-nav-text">Org level</div>
+      </div>
+    </button>
   </div>
-  <div class="tab-content">
+  <div class="tab-content-container">
     <div
       data-tab-item="Folder level"
-      class="tab-content-text active"
-    >
+      class="tab-content tab-panel-style cstyle initial active">
+      <div class="tab-content-text">
+
 <p>Create this resource at a Folder level:</p>
 <div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-Bash" data-lang="Bash"><span style="display:flex;"><span>gcloud resource-manager folders add-iam-policy-binding <span style="color:#e6db74">${</span>FOLDER_OR_ORG_ID<span style="color:#e6db74">}</span> <span style="color:#ae81ff">\
 </span></span></span><span style="display:flex;"><span><span style="color:#ae81ff"></span>    --member<span style="color:#f92672">=</span><span style="color:#e6db74">&#34;serviceAccount:</span><span style="color:#e6db74">${</span>CONFIG_CONTROLLER_SA<span style="color:#e6db74">}</span><span style="color:#e6db74">&#34;</span> <span style="color:#ae81ff">\
 </span></span></span><span style="display:flex;"><span><span style="color:#ae81ff"></span>    --role<span style="color:#f92672">=</span><span style="color:#e6db74">&#39;roles/resourcemanager.projectCreator&#39;</span>
 </span></span></code></pre></div></div>
+    </div>
     <div
       data-tab-item="Org level"
-      class="tab-content-text"
-    >
+      class="tab-content tab-panel-style cstyle initial">
+      <div class="tab-content-text">
+
 <p>Alternatively, you could also create this resource at the Organization level:</p>
 <div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-Bash" data-lang="Bash"><span style="display:flex;"><span>gcloud organizations add-iam-policy-binding <span style="color:#e6db74">${</span>FOLDER_OR_ORG_ID<span style="color:#e6db74">}</span> <span style="color:#ae81ff">\
 </span></span></span><span style="display:flex;"><span><span style="color:#ae81ff"></span>    --member<span style="color:#f92672">=</span><span style="color:#e6db74">&#34;serviceAccount:</span><span style="color:#e6db74">${</span>CONFIG_CONTROLLER_SA<span style="color:#e6db74">}</span><span style="color:#e6db74">&#34;</span> <span style="color:#ae81ff">\
 </span></span></span><span style="display:flex;"><span><span style="color:#ae81ff"></span>    --role<span style="color:#f92672">=</span><span style="color:#e6db74">&#39;roles/resourcemanager.projectCreator&#39;</span>
 </span></span></code></pre></div></div>
+    </div>
   </div>
 </div></p>
 <p>Set the <code>serviceusage.serviceUsageAdmin</code> and <code>iam.serviceAccountAdmin</code> roles:</p>
@@ -206,9 +239,14 @@ if (!doNotTrack) {
 <div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-Bash" data-lang="Bash"><span style="display:flex;"><span>gcloud beta billing accounts add-iam-policy-binding <span style="color:#e6db74">${</span>BILLING_ACCOUNT_ID<span style="color:#e6db74">}</span> <span style="color:#ae81ff">\
 </span></span></span><span style="display:flex;"><span><span style="color:#ae81ff"></span>    --member<span style="color:#f92672">=</span><span style="color:#e6db74">&#34;serviceAccount:</span><span style="color:#e6db74">${</span>CONFIG_CONTROLLER_SA<span style="color:#e6db74">}</span><span style="color:#e6db74">&#34;</span> <span style="color:#ae81ff">\
 </span></span></span><span style="display:flex;"><span><span style="color:#ae81ff"></span>    --role<span style="color:#f92672">=</span><span style="color:#e6db74">&#39;roles/billing.user&#39;</span>
-</span></span></code></pre></div><!-- raw HTML omitted -->
+</span></span></code></pre></div>
+<div class="box notices cstyle note">
+  <div class="box-label"><i class="fa-fw fas fa-exclamation-circle"></i> Note</div>
+  <div class="box-content">
+
 <p>In some specific scenario, you may not be able to accomplish this step. You could skip it for now, another way to assign the Billing Account to a <code>Project</code> will be provided later in this workshop, when you will need it.</p>
-<!-- raw HTML omitted -->
+</div>
+</div>
 <h2 id="check-deployments">Check deployments</h2>
 <p>List the Google Cloud resources created:</p>
 <div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-Bash" data-lang="Bash"><span style="display:flex;"><span>gcloud anthos config controller list <span style="color:#ae81ff">\
@@ -222,40 +260,53 @@ if (!doNotTrack) {
 </span></span></span><span style="display:flex;"><span><span style="color:#ae81ff"></span>    --flatten<span style="color:#f92672">=</span><span style="color:#e6db74">&#34;bindings[].members&#34;</span> <span style="color:#ae81ff">\
 </span></span></span><span style="display:flex;"><span><span style="color:#ae81ff"></span>    --format<span style="color:#f92672">=</span><span style="color:#e6db74">&#34;table(bindings.role)&#34;</span>
 </span></span></code></pre></div>
-<div class="tab-panel" data-tab-group="org-level">
+<div class="tab-panel" data-tab-group="6602dec6caf0fc389bb3eb4fb683a1fb">
   <div class="tab-nav">
+    <div class="tab-nav-title">&#8203;</div>
     <button
       data-tab-item="Folder level"
-      class="tab-nav-button active"
-      onclick="switchTab('org-level','Folder level')"
+      class="tab-nav-button tab-panel-style cstyle initial active"
+      onclick="switchTab('6602dec6caf0fc389bb3eb4fb683a1fb','Folder level')"
     >
-      <span>Folder level</span></button>
+      <div>
+        <div class="tab-nav-hidden">Folder level</div>
+        <div class="tab-nav-text">Folder level</div>
+      </div>
+    </button>
     <button
       data-tab-item="Org level"
-      class="tab-nav-button"
-      onclick="switchTab('org-level','Org level')"
+      class="tab-nav-button tab-panel-style cstyle initial"
+      onclick="switchTab('6602dec6caf0fc389bb3eb4fb683a1fb','Org level')"
     >
-      <span>Org level</span></button>
+      <div>
+        <div class="tab-nav-hidden">Org level</div>
+        <div class="tab-nav-text">Org level</div>
+      </div>
+    </button>
   </div>
-  <div class="tab-content">
+  <div class="tab-content-container">
     <div
       data-tab-item="Folder level"
-      class="tab-content-text active"
-    >
+      class="tab-content tab-panel-style cstyle initial active">
+      <div class="tab-content-text">
+
 <div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-Bash" data-lang="Bash"><span style="display:flex;"><span>gcloud resource-manager folders get-iam-policy $FOLDER_OR_ORG_ID <span style="color:#ae81ff">\
 </span></span></span><span style="display:flex;"><span><span style="color:#ae81ff"></span>    --filter<span style="color:#f92672">=</span><span style="color:#e6db74">&#34;bindings.members:</span><span style="color:#e6db74">${</span>CONFIG_CONTROLLER_SA<span style="color:#e6db74">}</span><span style="color:#e6db74">&#34;</span> <span style="color:#ae81ff">\
 </span></span></span><span style="display:flex;"><span><span style="color:#ae81ff"></span>    --flatten<span style="color:#f92672">=</span><span style="color:#e6db74">&#34;bindings[].members&#34;</span> <span style="color:#ae81ff">\
 </span></span></span><span style="display:flex;"><span><span style="color:#ae81ff"></span>    --format<span style="color:#f92672">=</span><span style="color:#e6db74">&#34;table(bindings.role)&#34;</span>
 </span></span></code></pre></div></div>
+    </div>
     <div
       data-tab-item="Org level"
-      class="tab-content-text"
-    >
+      class="tab-content tab-panel-style cstyle initial">
+      <div class="tab-content-text">
+
 <div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-Bash" data-lang="Bash"><span style="display:flex;"><span>gcloud organizations get-iam-policy $FOLDER_OR_ORG_ID <span style="color:#ae81ff">\
 </span></span></span><span style="display:flex;"><span><span style="color:#ae81ff"></span>    --filter<span style="color:#f92672">=</span><span style="color:#e6db74">&#34;bindings.members:</span><span style="color:#e6db74">${</span>CONFIG_CONTROLLER_SA<span style="color:#e6db74">}</span><span style="color:#e6db74">&#34;</span> <span style="color:#ae81ff">\
 </span></span></span><span style="display:flex;"><span><span style="color:#ae81ff"></span>    --flatten<span style="color:#f92672">=</span><span style="color:#e6db74">&#34;bindings[].members&#34;</span> <span style="color:#ae81ff">\
 </span></span></span><span style="display:flex;"><span><span style="color:#ae81ff"></span>    --format<span style="color:#f92672">=</span><span style="color:#e6db74">&#34;table(bindings.role)&#34;</span>
 </span></span></code></pre></div></div>
+    </div>
   </div>
 </div>
 
@@ -444,8 +495,8 @@ if (!doNotTrack) {
         </div>
       </div>
     </aside>
-    <script src="/acm-workshop/js/clipboard.min.js?1685652621" defer></script>
-    <script src="/acm-workshop/js/perfect-scrollbar.min.js?1685652621" defer></script>
-    <script src="/acm-workshop/js/theme.js?1685652621" defer></script>
+    <script src="/acm-workshop/js/clipboard.min.js?1686931360" defer></script>
+    <script src="/acm-workshop/js/perfect-scrollbar.min.js?1686931360" defer></script>
+    <script src="/acm-workshop/js/theme.js?1686931360" defer></script>
   </body>
 </html>

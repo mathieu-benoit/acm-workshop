@@ -4,27 +4,27 @@
     <meta charset="utf-8">
     <meta name="viewport" content="height=device-height, width=device-width, initial-scale=1.0, minimum-scale=1.0">
     <meta name="generator" content="Hugo 0.109.0">
-    <meta name="generator" content="Relearn 5.15.2+tip">
+    <meta name="generator" content="Relearn 5.16.2+tip">
     <meta name="description" content="Duration: 5 min | Persona: Org Admin">
     <meta name="author" content="Mathieu Benoit">
     <title>Create Host project</title>
-    <link href="/acm-workshop/images/favicon.png?1685652621" rel="icon" type="image/png">
+    <link href="/acm-workshop/images/favicon.png?1686931359" rel="icon" type="image/png">
     <!-- https://github.com/filamentgroup/loadCSS/blob/master/README.md#how-to-use -->
-    <link href="/acm-workshop/css/fontawesome-all.min.css?1685652621" rel="stylesheet" media="print" onload="this.media='all';this.onload=null;"><noscript><link href="/acm-workshop/css/fontawesome-all.min.css?1685652621" rel="stylesheet"></noscript>
-    <link href="/acm-workshop/css/nucleus.css?1685652621" rel="stylesheet">
-    <link href="/acm-workshop/css/auto-complete.css?1685652621" rel="stylesheet" media="print" onload="this.media='all';this.onload=null;"><noscript><link href="/acm-workshop/css/auto-complete.css?1685652621" rel="stylesheet"></noscript>
-    <link href="/acm-workshop/css/perfect-scrollbar.min.css?1685652621" rel="stylesheet">
-    <link href="/acm-workshop/css/fonts.css?1685652621" rel="stylesheet" media="print" onload="this.media='all';this.onload=null;"><noscript><link href="/acm-workshop/css/fonts.css?1685652621" rel="stylesheet"></noscript>
-    <link href="/acm-workshop/css/theme.css?1685652621" rel="stylesheet">
-    <link href="/acm-workshop/css/theme-mine.css?1685652621" rel="stylesheet" id="variant-style">
-    <link href="/acm-workshop/css/variant.css?1685652621" rel="stylesheet">
-    <link href="/acm-workshop/css/print.css?1685652621" rel="stylesheet" media="print">
-    <link href="/acm-workshop/css/ie.css?1685652621" rel="stylesheet">
-    <script src="/acm-workshop/js/url.js?1685652621"></script>
-    <script src="/acm-workshop/js/variant.js?1685652621"></script>
+    <link href="/acm-workshop/css/fontawesome-all.min.css?1686931359" rel="stylesheet" media="print" onload="this.media='all';this.onload=null;"><noscript><link href="/acm-workshop/css/fontawesome-all.min.css?1686931359" rel="stylesheet"></noscript>
+    <link href="/acm-workshop/css/nucleus.css?1686931359" rel="stylesheet">
+    <link href="/acm-workshop/css/auto-complete.css?1686931359" rel="stylesheet" media="print" onload="this.media='all';this.onload=null;"><noscript><link href="/acm-workshop/css/auto-complete.css?1686931359" rel="stylesheet"></noscript>
+    <link href="/acm-workshop/css/perfect-scrollbar.min.css?1686931359" rel="stylesheet">
+    <link href="/acm-workshop/css/fonts.css?1686931359" rel="stylesheet" media="print" onload="this.media='all';this.onload=null;"><noscript><link href="/acm-workshop/css/fonts.css?1686931359" rel="stylesheet"></noscript>
+    <link href="/acm-workshop/css/theme.css?1686931359" rel="stylesheet">
+    <link href="/acm-workshop/css/theme-mine.css?1686931359" rel="stylesheet" id="variant-style">
+    <link href="/acm-workshop/css/variant.css?1686931359" rel="stylesheet">
+    <link href="/acm-workshop/css/print.css?1686931359" rel="stylesheet" media="print">
+    <link href="/acm-workshop/css/ie.css?1686931359" rel="stylesheet">
+    <script src="/acm-workshop/js/url.js?1686931359"></script>
+    <script src="/acm-workshop/js/variant.js?1686931359"></script>
     <script>
       // hack to let hugo tell us how to get to the root when using relativeURLs, it needs to be called *url= for it to do its magic:
-      // https://github.com/gohugoio/hugo/blob/145b3fcce35fbac25c7033c91c1b7ae6d1179da8/transform/urlreplacers/absurlreplacer.go#L72
+      // https://github.com/gohugoio/hugo/blob/145b3fcce35fbac25c7033c91c1b7ae6d1179da8/transform/urlreplacers/absurlreplacer.go#L72""
       window.index_json_url="/acm-workshop/index.json";
       var root_url="/";
       var baseUri=root_url.replace(/\/$/, '');
@@ -101,10 +101,10 @@ if (!doNotTrack) {
 <h1 id="create-host-project">Create Host project</h1>
 
 <p>
-<a href="#image-a111fd5329c5b831ce4f75bf38e4fd1e" class="lightbox-link">
+<a href="#image-9ee4a561c31b3ce70562b47c81a59a32" class="lightbox-link">
 <img src="https://github.com/mathieu-benoit/my-images/raw/main/acm-workshop/org-admin.png" alt="Org Admin" style="height: auto; width: auto;" loading="lazy">
 </a>
-<a href="javascript:history.back();" class="lightbox" id="image-a111fd5329c5b831ce4f75bf38e4fd1e">
+<a href="javascript:history.back();" class="lightbox" id="image-9ee4a561c31b3ce70562b47c81a59a32">
 <img src="https://github.com/mathieu-benoit/my-images/raw/main/acm-workshop/org-admin.png" alt="Org Admin" class="lightbox-image" loading="lazy">
 </a>
 <em>Duration: 5 min | Persona: Org Admin</em></p>
@@ -123,46 +123,64 @@ if (!doNotTrack) {
 </span></span><span style="display:flex;"><span>echo <span style="color:#e6db74">&#34;export BILLING_ACCOUNT_ID=</span><span style="color:#e6db74">${</span>BILLING_ACCOUNT_ID<span style="color:#e6db74">}</span><span style="color:#e6db74">&#34;</span> &gt;&gt; <span style="color:#e6db74">${</span>WORK_DIR<span style="color:#e6db74">}</span>acm-workshop-variables.sh
 </span></span><span style="display:flex;"><span>echo <span style="color:#e6db74">&#34;export FOLDER_OR_ORG_ID=</span><span style="color:#e6db74">${</span>FOLDER_OR_ORG_ID<span style="color:#e6db74">}</span><span style="color:#e6db74">&#34;</span> &gt;&gt; <span style="color:#e6db74">${</span>WORK_DIR<span style="color:#e6db74">}</span>acm-workshop-variables.sh
 </span></span><span style="display:flex;"><span>source <span style="color:#e6db74">${</span>WORK_DIR<span style="color:#e6db74">}</span>acm-workshop-variables.sh
-</span></span></code></pre></div><!-- raw HTML omitted -->
+</span></span></code></pre></div>
+<div class="box notices cstyle info">
+  <div class="box-label"><i class="fa-fw fas fa-info-circle"></i> Info</div>
+  <div class="box-content">
+
 <p>This <code>source ${WORK_DIR}acm-workshop-variables.sh</code> command will be particularly helpful if you are running this workshop from within Cloud Shell. You could run it every time your session timed out to reinitialize yoru environment variables.</p>
-<!-- raw HTML omitted -->
+</div>
+</div>
 <h2 id="create-host-project">Create Host project</h2>
 <p>Create the Config Controller&rsquo;s GCP project either at the Folder level or the Organization level:
 
-<div class="tab-panel" data-tab-group="org-level">
+<div class="tab-panel" data-tab-group="d4de071434c16643c07ae9d9bfa47e08">
   <div class="tab-nav">
+    <div class="tab-nav-title">&#8203;</div>
     <button
       data-tab-item="Folder level"
-      class="tab-nav-button active"
-      onclick="switchTab('org-level','Folder level')"
+      class="tab-nav-button tab-panel-style cstyle initial active"
+      onclick="switchTab('d4de071434c16643c07ae9d9bfa47e08','Folder level')"
     >
-      <span>Folder level</span></button>
+      <div>
+        <div class="tab-nav-hidden">Folder level</div>
+        <div class="tab-nav-text">Folder level</div>
+      </div>
+    </button>
     <button
       data-tab-item="Org level"
-      class="tab-nav-button"
-      onclick="switchTab('org-level','Org level')"
+      class="tab-nav-button tab-panel-style cstyle initial"
+      onclick="switchTab('d4de071434c16643c07ae9d9bfa47e08','Org level')"
     >
-      <span>Org level</span></button>
+      <div>
+        <div class="tab-nav-hidden">Org level</div>
+        <div class="tab-nav-text">Org level</div>
+      </div>
+    </button>
   </div>
-  <div class="tab-content">
+  <div class="tab-content-container">
     <div
       data-tab-item="Folder level"
-      class="tab-content-text active"
-    >
+      class="tab-content tab-panel-style cstyle initial active">
+      <div class="tab-content-text">
+
 <p>Create this resource at a Folder level:</p>
 <div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-Bash" data-lang="Bash"><span style="display:flex;"><span>gcloud projects create $HOST_PROJECT_ID <span style="color:#ae81ff">\
 </span></span></span><span style="display:flex;"><span><span style="color:#ae81ff"></span>    --folder $FOLDER_OR_ORG_ID <span style="color:#ae81ff">\
 </span></span></span><span style="display:flex;"><span><span style="color:#ae81ff"></span>    --name $HOST_PROJECT_ID
 </span></span></code></pre></div></div>
+    </div>
     <div
       data-tab-item="Org level"
-      class="tab-content-text"
-    >
+      class="tab-content tab-panel-style cstyle initial">
+      <div class="tab-content-text">
+
 <p>Alternatively, you could also create this resource at the Organization level:</p>
 <div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-Bash" data-lang="Bash"><span style="display:flex;"><span>gcloud projects create $HOST_PROJECT_ID <span style="color:#ae81ff">\
 </span></span></span><span style="display:flex;"><span><span style="color:#ae81ff"></span>    --organization $FOLDER_OR_ORG_ID <span style="color:#ae81ff">\
 </span></span></span><span style="display:flex;"><span><span style="color:#ae81ff"></span>    --name $HOST_PROJECT_ID
 </span></span></code></pre></div></div>
+    </div>
   </div>
 </div></p>
 <p>Set the Billing account on this GCP project:</p>
@@ -359,8 +377,8 @@ if (!doNotTrack) {
         </div>
       </div>
     </aside>
-    <script src="/acm-workshop/js/clipboard.min.js?1685652621" defer></script>
-    <script src="/acm-workshop/js/perfect-scrollbar.min.js?1685652621" defer></script>
-    <script src="/acm-workshop/js/theme.js?1685652621" defer></script>
+    <script src="/acm-workshop/js/clipboard.min.js?1686931360" defer></script>
+    <script src="/acm-workshop/js/perfect-scrollbar.min.js?1686931360" defer></script>
+    <script src="/acm-workshop/js/theme.js?1686931360" defer></script>
   </body>
 </html>

@@ -15,7 +15,7 @@
 In this section, you will create the Tenant project. The Tenant project will contain all the Google Cloud resources needed in this workshop.
 Define variables:
 WORK_DIR=~/ source ${WORK_DIR}acm-workshop-variables.sh TENANT_PROJECT_ID=acm-workshop-${RANDOM_SUFFIX}-tenant echo &amp;#34;export TENANT_PROJECT_ID=${TENANT_PROJECT_ID}&amp;#34; &amp;gt;&amp;gt; ${WORK_DIR}acm-workshop-variables.sh echo &amp;#34;export TENANT_PROJECT_SA_EMAIL=${TENANT_PROJECT_ID}@${HOST_PROJECT_ID}.iam.gserviceaccount.com&amp;#34; &amp;gt;&amp;gt; ${WORK_DIR}acm-workshop-variables.sh source ${WORK_DIR}acm-workshop-variables.sh Create a dedicated folder for this Tenant project resources:
-mkdir ${WORK_DIR}$HOST_PROJECT_DIR_NAME/projects mkdir ${WORK_DIR}$HOST_PROJECT_DIR_NAME/projects/$TENANT_PROJECT_ID Define GCP project Define the GCP project either at the Folder level or the Organization level: Folder level Org level At the Folder level:</description>
+mkdir ${WORK_DIR}$HOST_PROJECT_DIR_NAME/projects mkdir ${WORK_DIR}$HOST_PROJECT_DIR_NAME/projects/$TENANT_PROJECT_ID Define GCP project Define the GCP project either at the Folder level or the Organization level: &amp;#8203; Folder level Folder level Org level Org level At the Folder level:</description>
     </item>
     <item>
       <title>Set up Tenant project&#39;s Git repo</title>
@@ -35,7 +35,7 @@ WORK_DIR=~/ source ${WORK_DIR}acm-workshop-variables.sh echo &amp;#34;export TEN
       <description>Duration: 5 min | Persona: Org Admin
 In this section, you will set up policies in order to enforce governance against the Kubernetes manifests defining your Google Cloud services. As an example, you will limit the locations and the kind available for the Google Cloud services.
 Initialize variables:
-WORK_DIR=~/ source ${WORK_DIR}acm-workshop-variables.sh echo &amp;#34;export GKE_LOCATION=northamerica-northeast1&amp;#34; &amp;gt;&amp;gt; ${WORK_DIR}acm-workshop-variables.sh source ${WORK_DIR}acm-workshop-variables.sh We are defining the GKE_LOCATION in northamerica-northeast1 this will be used later for the location of the VPC, GKE, Artifact Registry, etc.</description>
+WORK_DIR=~/ source ${WORK_DIR}acm-workshop-variables.sh echo &amp;#34;export GKE_LOCATION=northamerica-northeast1&amp;#34; &amp;gt;&amp;gt; ${WORK_DIR}acm-workshop-variables.sh source ${WORK_DIR}acm-workshop-variables.sh Info We are defining the GKE_LOCATION in northamerica-northeast1 this will be used later for the location of the VPC, GKE, Artifact Registry, etc.</description>
     </item>
     <item>
       <title>Allow Monitoring</title>
@@ -57,8 +57,7 @@ cat &amp;lt;&amp;lt;EOF &amp;gt; ${WORK_DIR}$HOST_PROJECT_DIR_NAME/projects/$TEN
 In this section, you will set up an monitoring notification channel with you email and a generic alert policy on URLs uptime checks for the Tenant project.
 Initialize variables:
 WORK_DIR=~/ source ${WORK_DIR}acm-workshop-variables.sh Define variables for this page:
-export NOTIFICATION_CHANNEL_EMAIL_ADDRESS=FIXME export NOTIFICATION_CHANNEL_NAME=monitoringnotificationchannel-email Set your own email address for the NOTIFICATION_CHANNEL_EMAIL_ADDRESS variable, this will be used when defining the monitoring notification channel below.
-Define the monitoring notification channel with your email Define the VPC:</description>
+export NOTIFICATION_CHANNEL_EMAIL_ADDRESS=FIXME export NOTIFICATION_CHANNEL_NAME=monitoringnotificationchannel-email Tip Set your own email address for the NOTIFICATION_CHANNEL_EMAIL_ADDRESS variable, this will be used when defining the monitoring notification channel below.</description>
     </item>
   </channel>
 </rss>

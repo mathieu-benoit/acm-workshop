@@ -60,7 +60,7 @@ In this section, you will deploy the Whereami app.
 Initialize variables:
 WORK_DIR=~/ source ${WORK_DIR}acm-workshop-variables.sh Get upstream Kubernetes manifests Get the upstream Kubernetes manifests:
 cd ${WORK_DIR}$WHERE_AMI_DIR_NAME kpt pkg get https://github.com/GoogleCloudPlatform/kubernetes-engine-samples/whereami/k8s rm k8s/Kptfile mv k8s upstream Create base overlay Create Kustomize base overlay files:
-mkdir ${WORK_DIR}$WHERE_AMI_DIR_NAME/base cd ${WORK_DIR}$WHERE_AMI_DIR_NAME/base kustomize create kustomize edit add resource ../upstream cat &amp;lt;&amp;lt;EOF &amp;gt;&amp;gt; ${WORK_DIR}$WHERE_AMI_DIR_NAME/base/kustomization.yaml patchesJson6902: - target: kind: Service name: whereami patch: |- - op: replace path: /spec/type value: ClusterIP EOF Here we are changing the Service type to ClusterIP because the Whereami app will be exposed by the Ingress Gateway.</description>
+mkdir ${WORK_DIR}$WHERE_AMI_DIR_NAME/base cd ${WORK_DIR}$WHERE_AMI_DIR_NAME/base kustomize create kustomize edit add resource ../upstream cat &amp;lt;&amp;lt;EOF &amp;gt;&amp;gt; ${WORK_DIR}$WHERE_AMI_DIR_NAME/base/kustomization.yaml patchesJson6902: - target: kind: Service name: whereami patch: |- - op: replace path: /spec/type value: ClusterIP EOF Info Here we are changing the Service type to ClusterIP because the Whereami app will be exposed by the Ingress Gateway.</description>
     </item>
     <item>
       <title>Deploy AuthorizationPolicy</title>

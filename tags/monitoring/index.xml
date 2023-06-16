@@ -112,8 +112,7 @@ echo -e &amp;#34;https://console.cloud.google.com/net-security/securitypolicies/
 In this section, you will set up an monitoring notification channel with you email and a generic alert policy on URLs uptime checks for the Tenant project.
 Initialize variables:
 WORK_DIR=~/ source ${WORK_DIR}acm-workshop-variables.sh Define variables for this page:
-export NOTIFICATION_CHANNEL_EMAIL_ADDRESS=FIXME export NOTIFICATION_CHANNEL_NAME=monitoringnotificationchannel-email Set your own email address for the NOTIFICATION_CHANNEL_EMAIL_ADDRESS variable, this will be used when defining the monitoring notification channel below.
-Define the monitoring notification channel with your email Define the VPC:</description>
+export NOTIFICATION_CHANNEL_EMAIL_ADDRESS=FIXME export NOTIFICATION_CHANNEL_NAME=monitoringnotificationchannel-email Tip Set your own email address for the NOTIFICATION_CHANNEL_EMAIL_ADDRESS variable, this will be used when defining the monitoring notification channel below.</description>
     </item>
     <item>
       <title>Scan workloads</title>

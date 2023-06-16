@@ -47,7 +47,7 @@ cat &amp;lt;&amp;lt;EOF &amp;gt; ${WORK_DIR}$GKE_CONFIGS_DIR_NAME/policies/const
       <description>Duration: 5 min | Persona: Org Admin
 In this section, you will set up policies in order to enforce governance against the Kubernetes manifests defining your Google Cloud services. As an example, you will limit the locations and the kind available for the Google Cloud services.
 Initialize variables:
-WORK_DIR=~/ source ${WORK_DIR}acm-workshop-variables.sh echo &amp;#34;export GKE_LOCATION=northamerica-northeast1&amp;#34; &amp;gt;&amp;gt; ${WORK_DIR}acm-workshop-variables.sh source ${WORK_DIR}acm-workshop-variables.sh We are defining the GKE_LOCATION in northamerica-northeast1 this will be used later for the location of the VPC, GKE, Artifact Registry, etc.</description>
+WORK_DIR=~/ source ${WORK_DIR}acm-workshop-variables.sh echo &amp;#34;export GKE_LOCATION=northamerica-northeast1&amp;#34; &amp;gt;&amp;gt; ${WORK_DIR}acm-workshop-variables.sh source ${WORK_DIR}acm-workshop-variables.sh Info We are defining the GKE_LOCATION in northamerica-northeast1 this will be used later for the location of the VPC, GKE, Artifact Registry, etc.</description>
     </item>
     <item>
       <title>Enforce Service Mesh policies</title>

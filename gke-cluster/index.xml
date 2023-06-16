@@ -57,7 +57,7 @@ cat &amp;lt;&amp;lt;EOF &amp;gt; ${WORK_DIR}$HOST_PROJECT_DIR_NAME/projects/$TEN
 In this section, you will set up Config Sync and Policy Controller for the GKE cluster. You will also configure a main/root GitHub repository for this GKE cluster.
 Define variables:
 WORK_DIR=~/ source ${WORK_DIR}acm-workshop-variables.sh echo &amp;#34;export GKE_CONFIGS_DIR_NAME=acm-workshop-gke-configs-repo&amp;#34; &amp;gt;&amp;gt; ${WORK_DIR}acm-workshop-variables.sh source ${WORK_DIR}acm-workshop-variables.sh Define ACM GKEHubFeature Define the ACM GKEHubFeature resource:
-cat &amp;lt;&amp;lt;EOF &amp;gt; ${WORK_DIR}$TENANT_PROJECT_DIR_NAME/gke-hub-feature-acm.yaml apiVersion: gkehub.cnrm.cloud.google.com/v1beta1 kind: GKEHubFeature metadata: name: configmanagement namespace: ${TENANT_PROJECT_ID} spec: projectRef: name: ${TENANT_PROJECT_ID} location: global resourceID: configmanagement EOF The resourceID must be configmanagement if you want to use Anthos Config Management feature.</description>
+cat &amp;lt;&amp;lt;EOF &amp;gt; ${WORK_DIR}$TENANT_PROJECT_DIR_NAME/gke-hub-feature-acm.yaml apiVersion: gkehub.cnrm.cloud.google.com/v1beta1 kind: GKEHubFeature metadata: name: configmanagement namespace: ${TENANT_PROJECT_ID} spec: projectRef: name: ${TENANT_PROJECT_ID} location: global resourceID: configmanagement EOF Note The resourceID must be configmanagement if you want to use Anthos Config Management feature.</description>
     </item>
     <item>
       <title>Enforce Kubernetes policies</title>
