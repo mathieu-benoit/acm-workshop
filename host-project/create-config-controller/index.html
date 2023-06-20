@@ -8,20 +8,20 @@
     <meta name="description" content="Duration: 20 min | Persona: Org Admin">
     <meta name="author" content="Mathieu Benoit">
     <title>Create Config Controller</title>
-    <link href="/acm-workshop/images/favicon.png?1686931436" rel="icon" type="image/png">
+    <link href="/acm-workshop/images/favicon.png?1687278376" rel="icon" type="image/png">
     <!-- https://github.com/filamentgroup/loadCSS/blob/master/README.md#how-to-use -->
-    <link href="/acm-workshop/css/fontawesome-all.min.css?1686931436" rel="stylesheet" media="print" onload="this.media='all';this.onload=null;"><noscript><link href="/acm-workshop/css/fontawesome-all.min.css?1686931436" rel="stylesheet"></noscript>
-    <link href="/acm-workshop/css/nucleus.css?1686931436" rel="stylesheet">
-    <link href="/acm-workshop/css/auto-complete.css?1686931436" rel="stylesheet" media="print" onload="this.media='all';this.onload=null;"><noscript><link href="/acm-workshop/css/auto-complete.css?1686931436" rel="stylesheet"></noscript>
-    <link href="/acm-workshop/css/perfect-scrollbar.min.css?1686931436" rel="stylesheet">
-    <link href="/acm-workshop/css/fonts.css?1686931436" rel="stylesheet" media="print" onload="this.media='all';this.onload=null;"><noscript><link href="/acm-workshop/css/fonts.css?1686931436" rel="stylesheet"></noscript>
-    <link href="/acm-workshop/css/theme.css?1686931436" rel="stylesheet">
-    <link href="/acm-workshop/css/theme-mine.css?1686931436" rel="stylesheet" id="variant-style">
-    <link href="/acm-workshop/css/variant.css?1686931436" rel="stylesheet">
-    <link href="/acm-workshop/css/print.css?1686931436" rel="stylesheet" media="print">
-    <link href="/acm-workshop/css/ie.css?1686931436" rel="stylesheet">
-    <script src="/acm-workshop/js/url.js?1686931436"></script>
-    <script src="/acm-workshop/js/variant.js?1686931436"></script>
+    <link href="/acm-workshop/css/fontawesome-all.min.css?1687278376" rel="stylesheet" media="print" onload="this.media='all';this.onload=null;"><noscript><link href="/acm-workshop/css/fontawesome-all.min.css?1687278376" rel="stylesheet"></noscript>
+    <link href="/acm-workshop/css/nucleus.css?1687278376" rel="stylesheet">
+    <link href="/acm-workshop/css/auto-complete.css?1687278376" rel="stylesheet" media="print" onload="this.media='all';this.onload=null;"><noscript><link href="/acm-workshop/css/auto-complete.css?1687278376" rel="stylesheet"></noscript>
+    <link href="/acm-workshop/css/perfect-scrollbar.min.css?1687278376" rel="stylesheet">
+    <link href="/acm-workshop/css/fonts.css?1687278376" rel="stylesheet" media="print" onload="this.media='all';this.onload=null;"><noscript><link href="/acm-workshop/css/fonts.css?1687278376" rel="stylesheet"></noscript>
+    <link href="/acm-workshop/css/theme.css?1687278376" rel="stylesheet">
+    <link href="/acm-workshop/css/theme-mine.css?1687278376" rel="stylesheet" id="variant-style">
+    <link href="/acm-workshop/css/variant.css?1687278376" rel="stylesheet">
+    <link href="/acm-workshop/css/print.css?1687278376" rel="stylesheet" media="print">
+    <link href="/acm-workshop/css/ie.css?1687278376" rel="stylesheet">
+    <script src="/acm-workshop/js/url.js?1687278376"></script>
+    <script src="/acm-workshop/js/variant.js?1687278376"></script>
     <script>
       // hack to let hugo tell us how to get to the root when using relativeURLs, it needs to be called *url= for it to do its magic:
       // https://github.com/gohugoio/hugo/blob/145b3fcce35fbac25c7033c91c1b7ae6d1179da8/transform/urlreplacers/absurlreplacer.go#L72""
@@ -103,10 +103,10 @@ if (!doNotTrack) {
 <h1 id="create-config-controller">Create Config Controller</h1>
 
 <p>
-<a href="#image-4ff9ea3228e94a4b1947e12d0bcd9427" class="lightbox-link">
+<a href="#image-a1dbd3e877034b6c2fa8cd43a65204e1" class="lightbox-link">
 <img src="https://github.com/mathieu-benoit/my-images/raw/main/acm-workshop/org-admin.png" alt="Org Admin" style="height: auto; width: auto;" loading="lazy">
 </a>
-<a href="javascript:history.back();" class="lightbox" id="image-4ff9ea3228e94a4b1947e12d0bcd9427">
+<a href="javascript:history.back();" class="lightbox" id="image-a1dbd3e877034b6c2fa8cd43a65204e1">
 <img src="https://github.com/mathieu-benoit/my-images/raw/main/acm-workshop/org-admin.png" alt="Org Admin" class="lightbox-image" loading="lazy">
 </a>
 <em>Duration: 20 min | Persona: Org Admin</em></p>
@@ -179,13 +179,13 @@ if (!doNotTrack) {
 </span></span></span><span style="display:flex;"><span><span style="color:#ae81ff"></span>    -o jsonpath<span style="color:#f92672">=</span><span style="color:#e6db74">&#39;{.items[0].spec.googleServiceAccount}&#39;</span><span style="color:#66d9ef">)</span><span style="color:#e6db74">&#34;</span>
 </span></span></code></pre></div><p>Set the <code>resourcemanager.projectCreator</code> role either at the Folder level or the Organization level:
 
-<div class="tab-panel" data-tab-group="27821c691b1577a5c9e485ce5e6e7f0d">
+<div class="tab-panel" data-tab-group="ba1cb52b773c95c531e25c8d1fe4161d">
   <div class="tab-nav">
     <div class="tab-nav-title">&#8203;</div>
     <button
       data-tab-item="Folder level"
       class="tab-nav-button tab-panel-style cstyle initial active"
-      onclick="switchTab('27821c691b1577a5c9e485ce5e6e7f0d','Folder level')"
+      onclick="switchTab('ba1cb52b773c95c531e25c8d1fe4161d','Folder level')"
     >
       <div>
         <div class="tab-nav-hidden">Folder level</div>
@@ -195,7 +195,7 @@ if (!doNotTrack) {
     <button
       data-tab-item="Org level"
       class="tab-nav-button tab-panel-style cstyle initial"
-      onclick="switchTab('27821c691b1577a5c9e485ce5e6e7f0d','Org level')"
+      onclick="switchTab('ba1cb52b773c95c531e25c8d1fe4161d','Org level')"
     >
       <div>
         <div class="tab-nav-hidden">Org level</div>
@@ -260,13 +260,13 @@ if (!doNotTrack) {
 </span></span></span><span style="display:flex;"><span><span style="color:#ae81ff"></span>    --flatten<span style="color:#f92672">=</span><span style="color:#e6db74">&#34;bindings[].members&#34;</span> <span style="color:#ae81ff">\
 </span></span></span><span style="display:flex;"><span><span style="color:#ae81ff"></span>    --format<span style="color:#f92672">=</span><span style="color:#e6db74">&#34;table(bindings.role)&#34;</span>
 </span></span></code></pre></div>
-<div class="tab-panel" data-tab-group="326a913f5eb139091637ae33cc024777">
+<div class="tab-panel" data-tab-group="26a0c4546e12f6e4d0d7ad3fe2e0c57b">
   <div class="tab-nav">
     <div class="tab-nav-title">&#8203;</div>
     <button
       data-tab-item="Folder level"
       class="tab-nav-button tab-panel-style cstyle initial active"
-      onclick="switchTab('326a913f5eb139091637ae33cc024777','Folder level')"
+      onclick="switchTab('26a0c4546e12f6e4d0d7ad3fe2e0c57b','Folder level')"
     >
       <div>
         <div class="tab-nav-hidden">Folder level</div>
@@ -276,7 +276,7 @@ if (!doNotTrack) {
     <button
       data-tab-item="Org level"
       class="tab-nav-button tab-panel-style cstyle initial"
-      onclick="switchTab('326a913f5eb139091637ae33cc024777','Org level')"
+      onclick="switchTab('26a0c4546e12f6e4d0d7ad3fe2e0c57b','Org level')"
     >
       <div>
         <div class="tab-nav-hidden">Org level</div>
@@ -495,8 +495,8 @@ if (!doNotTrack) {
         </div>
       </div>
     </aside>
-    <script src="/acm-workshop/js/clipboard.min.js?1686931436" defer></script>
-    <script src="/acm-workshop/js/perfect-scrollbar.min.js?1686931436" defer></script>
-    <script src="/acm-workshop/js/theme.js?1686931436" defer></script>
+    <script src="/acm-workshop/js/clipboard.min.js?1687278377" defer></script>
+    <script src="/acm-workshop/js/perfect-scrollbar.min.js?1687278377" defer></script>
+    <script src="/acm-workshop/js/theme.js?1687278377" defer></script>
   </body>
 </html>

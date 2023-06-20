@@ -8,20 +8,20 @@
     <meta name="description" content="Duration: 5 min | Persona: Platform Admin">
     <meta name="author" content="Mathieu Benoit">
     <title>Verify ASM version</title>
-    <link href="/acm-workshop/images/favicon.png?1686931436" rel="icon" type="image/png">
+    <link href="/acm-workshop/images/favicon.png?1687278376" rel="icon" type="image/png">
     <!-- https://github.com/filamentgroup/loadCSS/blob/master/README.md#how-to-use -->
-    <link href="/acm-workshop/css/fontawesome-all.min.css?1686931436" rel="stylesheet" media="print" onload="this.media='all';this.onload=null;"><noscript><link href="/acm-workshop/css/fontawesome-all.min.css?1686931436" rel="stylesheet"></noscript>
-    <link href="/acm-workshop/css/nucleus.css?1686931436" rel="stylesheet">
-    <link href="/acm-workshop/css/auto-complete.css?1686931436" rel="stylesheet" media="print" onload="this.media='all';this.onload=null;"><noscript><link href="/acm-workshop/css/auto-complete.css?1686931436" rel="stylesheet"></noscript>
-    <link href="/acm-workshop/css/perfect-scrollbar.min.css?1686931436" rel="stylesheet">
-    <link href="/acm-workshop/css/fonts.css?1686931436" rel="stylesheet" media="print" onload="this.media='all';this.onload=null;"><noscript><link href="/acm-workshop/css/fonts.css?1686931436" rel="stylesheet"></noscript>
-    <link href="/acm-workshop/css/theme.css?1686931436" rel="stylesheet">
-    <link href="/acm-workshop/css/theme-mine.css?1686931436" rel="stylesheet" id="variant-style">
-    <link href="/acm-workshop/css/variant.css?1686931436" rel="stylesheet">
-    <link href="/acm-workshop/css/print.css?1686931436" rel="stylesheet" media="print">
-    <link href="/acm-workshop/css/ie.css?1686931436" rel="stylesheet">
-    <script src="/acm-workshop/js/url.js?1686931436"></script>
-    <script src="/acm-workshop/js/variant.js?1686931436"></script>
+    <link href="/acm-workshop/css/fontawesome-all.min.css?1687278376" rel="stylesheet" media="print" onload="this.media='all';this.onload=null;"><noscript><link href="/acm-workshop/css/fontawesome-all.min.css?1687278376" rel="stylesheet"></noscript>
+    <link href="/acm-workshop/css/nucleus.css?1687278376" rel="stylesheet">
+    <link href="/acm-workshop/css/auto-complete.css?1687278376" rel="stylesheet" media="print" onload="this.media='all';this.onload=null;"><noscript><link href="/acm-workshop/css/auto-complete.css?1687278376" rel="stylesheet"></noscript>
+    <link href="/acm-workshop/css/perfect-scrollbar.min.css?1687278376" rel="stylesheet">
+    <link href="/acm-workshop/css/fonts.css?1687278376" rel="stylesheet" media="print" onload="this.media='all';this.onload=null;"><noscript><link href="/acm-workshop/css/fonts.css?1687278376" rel="stylesheet"></noscript>
+    <link href="/acm-workshop/css/theme.css?1687278376" rel="stylesheet">
+    <link href="/acm-workshop/css/theme-mine.css?1687278376" rel="stylesheet" id="variant-style">
+    <link href="/acm-workshop/css/variant.css?1687278376" rel="stylesheet">
+    <link href="/acm-workshop/css/print.css?1687278376" rel="stylesheet" media="print">
+    <link href="/acm-workshop/css/ie.css?1687278376" rel="stylesheet">
+    <script src="/acm-workshop/js/url.js?1687278376"></script>
+    <script src="/acm-workshop/js/variant.js?1687278376"></script>
     <script>
       // hack to let hugo tell us how to get to the root when using relativeURLs, it needs to be called *url= for it to do its magic:
       // https://github.com/gohugoio/hugo/blob/145b3fcce35fbac25c7033c91c1b7ae6d1179da8/transform/urlreplacers/absurlreplacer.go#L72""
@@ -93,10 +93,10 @@ if (!doNotTrack) {
 <h1 id="verify-asm-version">Verify ASM version</h1>
 
 <p>
-<a href="#image-d4f5bb534fb499ae02d6bbd257f903c3" class="lightbox-link">
+<a href="#image-a56891be4a406d128559b4d6d912b657" class="lightbox-link">
 <img src="https://github.com/mathieu-benoit/my-images/raw/main/acm-workshop/platform-admin.png" alt="Platform Admin" style="height: auto; width: auto;" loading="lazy">
 </a>
-<a href="javascript:history.back();" class="lightbox" id="image-d4f5bb534fb499ae02d6bbd257f903c3">
+<a href="javascript:history.back();" class="lightbox" id="image-a56891be4a406d128559b4d6d912b657">
 <img src="https://github.com/mathieu-benoit/my-images/raw/main/acm-workshop/platform-admin.png" alt="Platform Admin" class="lightbox-image" loading="lazy">
 </a>
 <em>Duration: 5 min | Persona: Platform Admin</em></p>
@@ -108,10 +108,10 @@ if (!doNotTrack) {
 <p>You can view the versions of the control plane (<code>revision</code> column below) and data plane (<code>proxy-version</code> column below) in <strong>Monitoring &gt; Metrics Explorer</strong>. Click on the link displayed by the command below:</p>
 <div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-Bash" data-lang="Bash"><span style="display:flex;"><span>echo -e <span style="color:#e6db74">&#34;https://console.cloud.google.com/monitoring/metrics-explorer?pageState=%7B%22xyChart%22:%7B%22dataSets%22:%5B%7B%22timeSeriesFilter%22:%7B%22filter%22:%22metric.type%3D%5C%22istio.io%2Fcontrol%2Fproxy_clients%5C%22%20resource.type%3D%5C%22k8s_container%5C%22%20resource.label.%5C%22container_name%5C%22%3D%5C%22cr-</span><span style="color:#e6db74">${</span>ASM_VERSION<span style="color:#e6db74">}</span><span style="color:#e6db74">%5C%22%22,%22minAlignmentPeriod%22:%2260s%22,%22aggregations%22:%5B%7B%22perSeriesAligner%22:%22ALIGN_MEAN%22,%22crossSeriesReducer%22:%22REDUCE_SUM%22,%22alignmentPeriod%22:%2260s%22,%22groupByFields%22:%5B%22metric.label.%5C%22revision%5C%22%22,%22metric.label.%5C%22proxy_version%5C%22%22%5D%7D,%7B%22perSeriesAligner%22:%22ALIGN_NONE%22,%22crossSeriesReducer%22:%22REDUCE_NONE%22,%22alignmentPeriod%22:%2260s%22,%22groupByFields%22:%5B%5D%7D%5D%7D,%22targetAxis%22:%22Y1%22,%22plotType%22:%22LINE%22%7D%5D,%22options%22:%7B%22mode%22:%22COLOR%22%7D,%22constantLines%22:%5B%5D,%22timeshiftDuration%22:%220s%22,%22y1Axis%22:%7B%22label%22:%22y1Axis%22,%22scale%22:%22LINEAR%22%7D%7D,%22isAutoRefresh%22:true,%22timeSelection%22:%7B%22timeRange%22:%221h%22%7D%7D&amp;project=</span><span style="color:#e6db74">${</span>TENANT_PROJECT_ID<span style="color:#e6db74">}</span><span style="color:#e6db74">&#34;</span>
 </span></span></code></pre></div><p>
-<a href="#image-7f0487abf6a574519e5efff4ac2ebb6f" class="lightbox-link">
+<a href="#image-2e3b3aebde8e35be83565249e2c136a1" class="lightbox-link">
 <img src="https://github.com/mathieu-benoit/my-images/raw/main/acm-workshop/asm-version.png" alt="Anthos Service Mesh versions" style="height: auto; width: auto;" loading="lazy">
 </a>
-<a href="javascript:history.back();" class="lightbox" id="image-7f0487abf6a574519e5efff4ac2ebb6f">
+<a href="javascript:history.back();" class="lightbox" id="image-2e3b3aebde8e35be83565249e2c136a1">
 <img src="https://github.com/mathieu-benoit/my-images/raw/main/acm-workshop/asm-version.png" alt="Anthos Service Mesh versions" class="lightbox-image" loading="lazy">
 </a></p>
 
@@ -300,8 +300,8 @@ if (!doNotTrack) {
         </div>
       </div>
     </aside>
-    <script src="/acm-workshop/js/clipboard.min.js?1686931436" defer></script>
-    <script src="/acm-workshop/js/perfect-scrollbar.min.js?1686931436" defer></script>
-    <script src="/acm-workshop/js/theme.js?1686931436" defer></script>
+    <script src="/acm-workshop/js/clipboard.min.js?1687278377" defer></script>
+    <script src="/acm-workshop/js/perfect-scrollbar.min.js?1687278377" defer></script>
+    <script src="/acm-workshop/js/theme.js?1687278377" defer></script>
   </body>
 </html>

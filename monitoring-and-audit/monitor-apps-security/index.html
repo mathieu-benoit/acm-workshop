@@ -8,20 +8,20 @@
     <meta name="description" content="Duration: 5 min | Persona: Apps Operator">
     <meta name="author" content="Mathieu Benoit">
     <title>Monitor apps security</title>
-    <link href="/acm-workshop/images/favicon.png?1686931436" rel="icon" type="image/png">
+    <link href="/acm-workshop/images/favicon.png?1687278376" rel="icon" type="image/png">
     <!-- https://github.com/filamentgroup/loadCSS/blob/master/README.md#how-to-use -->
-    <link href="/acm-workshop/css/fontawesome-all.min.css?1686931436" rel="stylesheet" media="print" onload="this.media='all';this.onload=null;"><noscript><link href="/acm-workshop/css/fontawesome-all.min.css?1686931436" rel="stylesheet"></noscript>
-    <link href="/acm-workshop/css/nucleus.css?1686931436" rel="stylesheet">
-    <link href="/acm-workshop/css/auto-complete.css?1686931436" rel="stylesheet" media="print" onload="this.media='all';this.onload=null;"><noscript><link href="/acm-workshop/css/auto-complete.css?1686931436" rel="stylesheet"></noscript>
-    <link href="/acm-workshop/css/perfect-scrollbar.min.css?1686931436" rel="stylesheet">
-    <link href="/acm-workshop/css/fonts.css?1686931436" rel="stylesheet" media="print" onload="this.media='all';this.onload=null;"><noscript><link href="/acm-workshop/css/fonts.css?1686931436" rel="stylesheet"></noscript>
-    <link href="/acm-workshop/css/theme.css?1686931436" rel="stylesheet">
-    <link href="/acm-workshop/css/theme-mine.css?1686931436" rel="stylesheet" id="variant-style">
-    <link href="/acm-workshop/css/variant.css?1686931436" rel="stylesheet">
-    <link href="/acm-workshop/css/print.css?1686931436" rel="stylesheet" media="print">
-    <link href="/acm-workshop/css/ie.css?1686931436" rel="stylesheet">
-    <script src="/acm-workshop/js/url.js?1686931436"></script>
-    <script src="/acm-workshop/js/variant.js?1686931436"></script>
+    <link href="/acm-workshop/css/fontawesome-all.min.css?1687278376" rel="stylesheet" media="print" onload="this.media='all';this.onload=null;"><noscript><link href="/acm-workshop/css/fontawesome-all.min.css?1687278376" rel="stylesheet"></noscript>
+    <link href="/acm-workshop/css/nucleus.css?1687278376" rel="stylesheet">
+    <link href="/acm-workshop/css/auto-complete.css?1687278376" rel="stylesheet" media="print" onload="this.media='all';this.onload=null;"><noscript><link href="/acm-workshop/css/auto-complete.css?1687278376" rel="stylesheet"></noscript>
+    <link href="/acm-workshop/css/perfect-scrollbar.min.css?1687278376" rel="stylesheet">
+    <link href="/acm-workshop/css/fonts.css?1687278376" rel="stylesheet" media="print" onload="this.media='all';this.onload=null;"><noscript><link href="/acm-workshop/css/fonts.css?1687278376" rel="stylesheet"></noscript>
+    <link href="/acm-workshop/css/theme.css?1687278376" rel="stylesheet">
+    <link href="/acm-workshop/css/theme-mine.css?1687278376" rel="stylesheet" id="variant-style">
+    <link href="/acm-workshop/css/variant.css?1687278376" rel="stylesheet">
+    <link href="/acm-workshop/css/print.css?1687278376" rel="stylesheet" media="print">
+    <link href="/acm-workshop/css/ie.css?1687278376" rel="stylesheet">
+    <script src="/acm-workshop/js/url.js?1687278376"></script>
+    <script src="/acm-workshop/js/variant.js?1687278376"></script>
     <script>
       // hack to let hugo tell us how to get to the root when using relativeURLs, it needs to be called *url= for it to do its magic:
       // https://github.com/gohugoio/hugo/blob/145b3fcce35fbac25c7033c91c1b7ae6d1179da8/transform/urlreplacers/absurlreplacer.go#L72""
@@ -94,10 +94,10 @@ if (!doNotTrack) {
 <h1 id="monitor-apps-security">Monitor apps security</h1>
 
 <p>
-<a href="#image-c602d853e35c8b5f0e5a798faa265251" class="lightbox-link">
+<a href="#image-7797548166be49be2d89a85528034065" class="lightbox-link">
 <img src="https://github.com/mathieu-benoit/my-images/raw/main/acm-workshop/apps-operator.png" alt="Apps Operator" style="height: auto; width: auto;" loading="lazy">
 </a>
-<a href="javascript:history.back();" class="lightbox" id="image-c602d853e35c8b5f0e5a798faa265251">
+<a href="javascript:history.back();" class="lightbox" id="image-7797548166be49be2d89a85528034065">
 <img src="https://github.com/mathieu-benoit/my-images/raw/main/acm-workshop/apps-operator.png" alt="Apps Operator" class="lightbox-image" loading="lazy">
 </a>
 <em>Duration: 5 min | Persona: Apps Operator</em></p>
@@ -110,18 +110,18 @@ if (!doNotTrack) {
 <div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-Bash" data-lang="Bash"><span style="display:flex;"><span>echo -e <span style="color:#e6db74">&#34;https://console.cloud.google.com/anthos/security/policy-summary?project=</span><span style="color:#e6db74">${</span>TENANT_PROJECT_ID<span style="color:#e6db74">}</span><span style="color:#e6db74">&#34;</span>
 </span></span></code></pre></div><p>Select the <code>onlineboutique</code> <code>Namespace</code> on the <strong>Policy audit</strong> tab:
 
-<a href="#image-162c5683c4e24f27f176b4aed395c049" class="lightbox-link">
+<a href="#image-9450a582d9054ffdbe49d7502454622a" class="lightbox-link">
 <img src="https://github.com/mathieu-benoit/my-images/raw/main/acm-workshop/anthos-security-view.png" alt="Anthos Security overview for Online Boutique" style="height: auto; width: auto;" loading="lazy">
 </a>
-<a href="javascript:history.back();" class="lightbox" id="image-162c5683c4e24f27f176b4aed395c049">
+<a href="javascript:history.back();" class="lightbox" id="image-9450a582d9054ffdbe49d7502454622a">
 <img src="https://github.com/mathieu-benoit/my-images/raw/main/acm-workshop/anthos-security-view.png" alt="Anthos Security overview for Online Boutique" class="lightbox-image" loading="lazy">
 </a></p>
 <p>Select the <code>frontend</code> <strong>Workload</strong> to open a more detailed view:
 
-<a href="#image-df7969ab922ebd565bc19109c1428ec3" class="lightbox-link">
+<a href="#image-0f12d9df6f4ae5765a9503fa0330f24b" class="lightbox-link">
 <img src="https://github.com/mathieu-benoit/my-images/raw/main/acm-workshop/anthos-security-details.png" alt="Anthos Security details for Online Boutique" style="height: auto; width: auto;" loading="lazy">
 </a>
-<a href="javascript:history.back();" class="lightbox" id="image-df7969ab922ebd565bc19109c1428ec3">
+<a href="javascript:history.back();" class="lightbox" id="image-0f12d9df6f4ae5765a9503fa0330f24b">
 <img src="https://github.com/mathieu-benoit/my-images/raw/main/acm-workshop/anthos-security-details.png" alt="Anthos Security details for Online Boutique" class="lightbox-image" loading="lazy">
 </a></p>
 <p>From this view you could gain more visibility about <strong>Inbound denials</strong> or <strong>Outbound denials</strong> for both <strong>Network policy requests</strong> (<code>NetworkPolicies</code>) or <strong>Service requests</strong> (<code>AuthorizationPolicies</code>).</p>
@@ -328,8 +328,8 @@ if (!doNotTrack) {
         </div>
       </div>
     </aside>
-    <script src="/acm-workshop/js/clipboard.min.js?1686931436" defer></script>
-    <script src="/acm-workshop/js/perfect-scrollbar.min.js?1686931436" defer></script>
-    <script src="/acm-workshop/js/theme.js?1686931436" defer></script>
+    <script src="/acm-workshop/js/clipboard.min.js?1687278377" defer></script>
+    <script src="/acm-workshop/js/perfect-scrollbar.min.js?1687278377" defer></script>
+    <script src="/acm-workshop/js/theme.js?1687278377" defer></script>
   </body>
 </html>
