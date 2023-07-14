@@ -4,24 +4,24 @@
     <meta charset="utf-8">
     <meta name="viewport" content="height=device-height, width=device-width, initial-scale=1.0, minimum-scale=1.0">
     <meta name="generator" content="Hugo 0.109.0">
-    <meta name="generator" content="Relearn 5.16.2+tip">
+    <meta name="generator" content="Relearn 5.17.1+tip">
     <meta name="description" content="Duration: 5 min | Persona: Apps Operator">
     <meta name="author" content="Mathieu Benoit">
     <title>Prepare containers and chart</title>
-    <link href="/acm-workshop/images/favicon.png?1687278376" rel="icon" type="image/png">
+    <link href="/acm-workshop/images/favicon.png?1689352019" rel="icon" type="image/png">
     <!-- https://github.com/filamentgroup/loadCSS/blob/master/README.md#how-to-use -->
-    <link href="/acm-workshop/css/fontawesome-all.min.css?1687278376" rel="stylesheet" media="print" onload="this.media='all';this.onload=null;"><noscript><link href="/acm-workshop/css/fontawesome-all.min.css?1687278376" rel="stylesheet"></noscript>
-    <link href="/acm-workshop/css/nucleus.css?1687278376" rel="stylesheet">
-    <link href="/acm-workshop/css/auto-complete.css?1687278376" rel="stylesheet" media="print" onload="this.media='all';this.onload=null;"><noscript><link href="/acm-workshop/css/auto-complete.css?1687278376" rel="stylesheet"></noscript>
-    <link href="/acm-workshop/css/perfect-scrollbar.min.css?1687278376" rel="stylesheet">
-    <link href="/acm-workshop/css/fonts.css?1687278376" rel="stylesheet" media="print" onload="this.media='all';this.onload=null;"><noscript><link href="/acm-workshop/css/fonts.css?1687278376" rel="stylesheet"></noscript>
-    <link href="/acm-workshop/css/theme.css?1687278376" rel="stylesheet">
-    <link href="/acm-workshop/css/theme-mine.css?1687278376" rel="stylesheet" id="variant-style">
-    <link href="/acm-workshop/css/variant.css?1687278376" rel="stylesheet">
-    <link href="/acm-workshop/css/print.css?1687278376" rel="stylesheet" media="print">
-    <link href="/acm-workshop/css/ie.css?1687278376" rel="stylesheet">
-    <script src="/acm-workshop/js/url.js?1687278376"></script>
-    <script src="/acm-workshop/js/variant.js?1687278376"></script>
+    <link href="/acm-workshop/css/fontawesome-all.min.css?1689352019" rel="stylesheet" media="print" onload="this.media='all';this.onload=null;"><noscript><link href="/acm-workshop/css/fontawesome-all.min.css?1689352019" rel="stylesheet"></noscript>
+    <link href="/acm-workshop/css/nucleus.css?1689352019" rel="stylesheet">
+    <link href="/acm-workshop/css/auto-complete.css?1689352019" rel="stylesheet" media="print" onload="this.media='all';this.onload=null;"><noscript><link href="/acm-workshop/css/auto-complete.css?1689352019" rel="stylesheet"></noscript>
+    <link href="/acm-workshop/css/perfect-scrollbar.min.css?1689352019" rel="stylesheet">
+    <link href="/acm-workshop/css/fonts.css?1689352019" rel="stylesheet" media="print" onload="this.media='all';this.onload=null;"><noscript><link href="/acm-workshop/css/fonts.css?1689352019" rel="stylesheet"></noscript>
+    <link href="/acm-workshop/css/theme.css?1689352019" rel="stylesheet">
+    <link href="/acm-workshop/css/theme-mine.css?1689352019" rel="stylesheet" id="variant-style">
+    <link href="/acm-workshop/css/variant.css?1689352019" rel="stylesheet">
+    <link href="/acm-workshop/css/print.css?1689352019" rel="stylesheet" media="print">
+    <link href="/acm-workshop/css/ie.css?1689352019" rel="stylesheet">
+    <script src="/acm-workshop/js/url.js?1689352019"></script>
+    <script src="/acm-workshop/js/variant.js?1689352019"></script>
     <script>
       // hack to let hugo tell us how to get to the root when using relativeURLs, it needs to be called *url= for it to do its magic:
       // https://github.com/gohugoio/hugo/blob/145b3fcce35fbac25c7033c91c1b7ae6d1179da8/transform/urlreplacers/absurlreplacer.go#L72""
@@ -103,33 +103,31 @@ if (!doNotTrack) {
 <h1 id="prepare-containers-and-chart">Prepare containers and chart</h1>
 
 <p>
-<a href="#image-43ad5c7b02f8fc2fc0d308902d8ba524" class="lightbox-link">
+<a href="#image-17980d34232c72f491225bef78936d79" class="lightbox-link">
 <img src="https://github.com/mathieu-benoit/my-images/raw/main/acm-workshop/apps-operator.png" alt="Apps Operator" style="height: auto; width: auto;" loading="lazy">
 </a>
-<a href="javascript:history.back();" class="lightbox" id="image-43ad5c7b02f8fc2fc0d308902d8ba524">
+<a href="javascript:history.back();" class="lightbox" id="image-17980d34232c72f491225bef78936d79">
 <img src="https://github.com/mathieu-benoit/my-images/raw/main/acm-workshop/apps-operator.png" alt="Apps Operator" class="lightbox-image" loading="lazy">
 </a>
 <em>Duration: 5 min | Persona: Apps Operator</em></p>
 <p>In this section, you will copy the Online Boutique apps container images and the Helm chart in your private Artifact Registry. You will also scan one container image.</p>
 <p>Initialize variables:</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-Bash" data-lang="Bash"><span style="display:flex;"><span>WORK_DIR<span style="color:#f92672">=</span>~/
+<div class="wrap-code highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-Bash" data-lang="Bash"><span style="display:flex;"><span>WORK_DIR<span style="color:#f92672">=</span>~/
 </span></span><span style="display:flex;"><span>source <span style="color:#e6db74">${</span>WORK_DIR<span style="color:#e6db74">}</span>acm-workshop-variables.sh
 </span></span><span style="display:flex;"><span>ONLINE_BOUTIQUE_VERSION<span style="color:#f92672">=</span>v0.5.0
 </span></span><span style="display:flex;"><span>echo <span style="color:#e6db74">&#34;export ONLINE_BOUTIQUE_VERSION=</span><span style="color:#e6db74">${</span>ONLINE_BOUTIQUE_VERSION<span style="color:#e6db74">}</span><span style="color:#e6db74">&#34;</span> &gt;&gt; <span style="color:#e6db74">${</span>WORK_DIR<span style="color:#e6db74">}</span>acm-workshop-variables.sh
 </span></span><span style="display:flex;"><span>PRIVATE_ONLINE_BOUTIQUE_REGISTRY<span style="color:#f92672">=</span>$CONTAINER_REGISTRY_REPOSITORY/onlineboutique
 </span></span><span style="display:flex;"><span>echo <span style="color:#e6db74">&#34;export PRIVATE_ONLINE_BOUTIQUE_REGISTRY=</span><span style="color:#e6db74">${</span>PRIVATE_ONLINE_BOUTIQUE_REGISTRY<span style="color:#e6db74">}</span><span style="color:#e6db74">&#34;</span> &gt;&gt; <span style="color:#e6db74">${</span>WORK_DIR<span style="color:#e6db74">}</span>acm-workshop-variables.sh
-</span></span><span style="display:flex;"><span>source <span style="color:#e6db74">${</span>WORK_DIR<span style="color:#e6db74">}</span>acm-workshop-variables.sh
-</span></span></code></pre></div><h2 id="prepare-the-container-images">Prepare the container images</h2>
+</span></span><span style="display:flex;"><span>source <span style="color:#e6db74">${</span>WORK_DIR<span style="color:#e6db74">}</span>acm-workshop-variables.sh</span></span></code></pre></div><h2 id="prepare-the-container-images">Prepare the container images</h2>
 <p>Copy the public container images to your private registry:</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-Bash" data-lang="Bash"><span style="display:flex;"><span>UPSTREAM_ONLINE_BOUTIQUE_CONTAINER_REGISTRY<span style="color:#f92672">=</span>gcr.io/google-samples/microservices-demo
+<div class="wrap-code highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-Bash" data-lang="Bash"><span style="display:flex;"><span>UPSTREAM_ONLINE_BOUTIQUE_CONTAINER_REGISTRY<span style="color:#f92672">=</span>gcr.io/google-samples/microservices-demo
 </span></span><span style="display:flex;"><span>HTTP_SERVICES<span style="color:#f92672">=</span><span style="color:#e6db74">&#34;frontend loadgenerator&#34;</span>
 </span></span><span style="display:flex;"><span>TAG<span style="color:#f92672">=</span>$ONLINE_BOUTIQUE_VERSION
 </span></span><span style="display:flex;"><span><span style="color:#66d9ef">for</span> s in $HTTP_SERVICES; <span style="color:#66d9ef">do</span> crane copy $UPSTREAM_ONLINE_BOUTIQUE_CONTAINER_REGISTRY/$s:$TAG $PRIVATE_ONLINE_BOUTIQUE_REGISTRY/$s:$TAG; <span style="color:#66d9ef">done</span>
 </span></span><span style="display:flex;"><span>GRPC_SERVICES<span style="color:#f92672">=</span><span style="color:#e6db74">&#34;adservice cartservice checkoutservice currencyservice emailservice paymentservice productcatalogservice recommendationservice shippingservice&#34;</span>
 </span></span><span style="display:flex;"><span>TAG<span style="color:#f92672">=</span>$ONLINE_BOUTIQUE_VERSION-native-grpc-probes
 </span></span><span style="display:flex;"><span><span style="color:#66d9ef">for</span> s in $GRPC_SERVICES; <span style="color:#66d9ef">do</span> crane copy $UPSTREAM_ONLINE_BOUTIQUE_CONTAINER_REGISTRY/$s:$TAG $PRIVATE_ONLINE_BOUTIQUE_REGISTRY/$s:$TAG; <span style="color:#66d9ef">done</span>
-</span></span><span style="display:flex;"><span>crane copy redis:alpine $PRIVATE_ONLINE_BOUTIQUE_REGISTRY/redis:alpine
-</span></span></code></pre></div>
+</span></span><span style="display:flex;"><span>crane copy redis:alpine $PRIVATE_ONLINE_BOUTIQUE_REGISTRY/redis:alpine</span></span></code></pre></div>
 <div class="box notices cstyle tip">
   <div class="box-label"><i class="fa-fw fas fa-lightbulb"></i> Tip</div>
   <div class="box-content">
@@ -138,17 +136,15 @@ if (!doNotTrack) {
 </div>
 </div>
 <p>List the container images in your private registry:</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-Bash" data-lang="Bash"><span style="display:flex;"><span>gcloud artifacts docker images list $CONTAINER_REGISTRY_REPOSITORY <span style="color:#ae81ff">\
-</span></span></span><span style="display:flex;"><span><span style="color:#ae81ff"></span>    --include-tags
-</span></span></code></pre></div><p><a href="https://cloud.google.com/container-analysis/docs/on-demand-scanning-howto" target="_blank">Scan the <code>cartservice</code> container image</a>:</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-Bash" data-lang="Bash"><span style="display:flex;"><span>gcloud artifacts docker images scan $PRIVATE_ONLINE_BOUTIQUE_REGISTRY/cartservice:$ONLINE_BOUTIQUE_VERSION-native-grpc-probes <span style="color:#ae81ff">\
+<div class="wrap-code highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-Bash" data-lang="Bash"><span style="display:flex;"><span>gcloud artifacts docker images list $CONTAINER_REGISTRY_REPOSITORY <span style="color:#ae81ff">\
+</span></span></span><span style="display:flex;"><span><span style="color:#ae81ff"></span>    --include-tags</span></span></code></pre></div><p><a href="https://cloud.google.com/container-analysis/docs/on-demand-scanning-howto" target="_blank">Scan the <code>cartservice</code> container image</a>:</p>
+<div class="wrap-code highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-Bash" data-lang="Bash"><span style="display:flex;"><span>gcloud artifacts docker images scan $PRIVATE_ONLINE_BOUTIQUE_REGISTRY/cartservice:$ONLINE_BOUTIQUE_VERSION-native-grpc-probes <span style="color:#ae81ff">\
 </span></span></span><span style="display:flex;"><span><span style="color:#ae81ff"></span>    --project <span style="color:#e6db74">${</span>TENANT_PROJECT_ID<span style="color:#e6db74">}</span> <span style="color:#ae81ff">\
 </span></span></span><span style="display:flex;"><span><span style="color:#ae81ff"></span>    --remote <span style="color:#ae81ff">\
 </span></span></span><span style="display:flex;"><span><span style="color:#ae81ff"></span>    --format<span style="color:#f92672">=</span><span style="color:#e6db74">&#39;value(response.scan)&#39;</span> &gt; <span style="color:#e6db74">${</span>WORK_DIR<span style="color:#e6db74">}</span>scan_id.txt
 </span></span><span style="display:flex;"><span>gcloud artifacts docker images list-vulnerabilities <span style="color:#66d9ef">$(</span>cat <span style="color:#e6db74">${</span>WORK_DIR<span style="color:#e6db74">}</span>scan_id.txt<span style="color:#66d9ef">)</span> <span style="color:#ae81ff">\
 </span></span></span><span style="display:flex;"><span><span style="color:#ae81ff"></span>    --project <span style="color:#e6db74">${</span>TENANT_PROJECT_ID<span style="color:#e6db74">}</span> <span style="color:#ae81ff">\
-</span></span></span><span style="display:flex;"><span><span style="color:#ae81ff"></span>    --format<span style="color:#f92672">=</span><span style="color:#e6db74">&#39;table(vulnerability.effectiveSeverity, vulnerability.cvssScore, noteName, vulnerability.packageIssue[0].affectedPackage, vulnerability.packageIssue[0].affectedVersion.name, vulnerability.packageIssue[0].fixedVersion.name)&#39;</span>
-</span></span></code></pre></div>
+</span></span></span><span style="display:flex;"><span><span style="color:#ae81ff"></span>    --format<span style="color:#f92672">=</span><span style="color:#e6db74">&#39;table(vulnerability.effectiveSeverity, vulnerability.cvssScore, noteName, vulnerability.packageIssue[0].affectedPackage, vulnerability.packageIssue[0].affectedVersion.name, vulnerability.packageIssue[0].fixedVersion.name)&#39;</span></span></span></code></pre></div>
 <div class="box notices cstyle tip">
   <div class="box-label"><i class="fa-fw fas fa-lightbulb"></i> Tip</div>
   <div class="box-content">
@@ -158,13 +154,11 @@ if (!doNotTrack) {
 </div>
 <h2 id="prepare-the-helm-chart">Prepare the Helm chart</h2>
 <p>Copy the public Helm chart to your private registry:</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-Bash" data-lang="Bash"><span style="display:flex;"><span>UPSTREAM_ONLINE_BOUTIQUE_HELM_CHART_REGISTRY<span style="color:#f92672">=</span>us-docker.pkg.dev/online-boutique-ci/charts/onlineboutique
+<div class="wrap-code highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-Bash" data-lang="Bash"><span style="display:flex;"><span>UPSTREAM_ONLINE_BOUTIQUE_HELM_CHART_REGISTRY<span style="color:#f92672">=</span>us-docker.pkg.dev/online-boutique-ci/charts/onlineboutique
 </span></span><span style="display:flex;"><span>helm pull oci://<span style="color:#e6db74">${</span>UPSTREAM_ONLINE_BOUTIQUE_HELM_CHART_REGISTRY<span style="color:#e6db74">}</span> --version <span style="color:#e6db74">${</span>ONLINE_BOUTIQUE_VERSION:1<span style="color:#e6db74">}</span>
-</span></span><span style="display:flex;"><span>helm push onlineboutique-<span style="color:#e6db74">${</span>ONLINE_BOUTIQUE_VERSION:1<span style="color:#e6db74">}</span>.tgz oci://<span style="color:#e6db74">${</span>CHART_REGISTRY_REPOSITORY<span style="color:#e6db74">}</span>
-</span></span></code></pre></div><p>List the container images in your private registry:</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-Bash" data-lang="Bash"><span style="display:flex;"><span>gcloud artifacts docker images list $CHART_REGISTRY_REPOSITORY <span style="color:#ae81ff">\
-</span></span></span><span style="display:flex;"><span><span style="color:#ae81ff"></span>    --include-tags
-</span></span></code></pre></div>
+</span></span><span style="display:flex;"><span>helm push onlineboutique-<span style="color:#e6db74">${</span>ONLINE_BOUTIQUE_VERSION:1<span style="color:#e6db74">}</span>.tgz oci://<span style="color:#e6db74">${</span>CHART_REGISTRY_REPOSITORY<span style="color:#e6db74">}</span></span></span></code></pre></div><p>List the container images in your private registry:</p>
+<div class="wrap-code highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-Bash" data-lang="Bash"><span style="display:flex;"><span>gcloud artifacts docker images list $CHART_REGISTRY_REPOSITORY <span style="color:#ae81ff">\
+</span></span></span><span style="display:flex;"><span><span style="color:#ae81ff"></span>    --include-tags</span></span></code></pre></div>
             <footer class="footline">
 
             </footer>
@@ -350,8 +344,8 @@ if (!doNotTrack) {
         </div>
       </div>
     </aside>
-    <script src="/acm-workshop/js/clipboard.min.js?1687278378" defer></script>
-    <script src="/acm-workshop/js/perfect-scrollbar.min.js?1687278378" defer></script>
-    <script src="/acm-workshop/js/theme.js?1687278378" defer></script>
+    <script src="/acm-workshop/js/clipboard.min.js?1689352020" defer></script>
+    <script src="/acm-workshop/js/perfect-scrollbar.min.js?1689352020" defer></script>
+    <script src="/acm-workshop/js/theme.js?1689352020" defer></script>
   </body>
 </html>

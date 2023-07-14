@@ -14,7 +14,7 @@
       <description>Duration: 5 min | Persona: Apps Operator
 In this section, you will monitor security features such as Network Policies and Service requests of your apps in the Google Cloud console.
 Initialize variables:
-WORK_DIR=~/ source ${WORK_DIR}acm-workshop-variables.sh In the Google Cloud console, navigate to Anthos &amp;gt; Security &amp;gt; Policy Audit and filter for example by onlineboutique Namespace to see that the 3 security features Kubernetes Network policy, Service access control and mTLS status are enabled in green:</description>
+WORK_DIR=~/ source ${WORK_DIR}acm-workshop-variables.shIn the Google Cloud console, navigate to Anthos &amp;gt; Security &amp;gt; Policy Audit and filter for example by onlineboutique Namespace to see that the 3 security features Kubernetes Network policy, Service access control and mTLS status are enabled in green:</description>
     </item>
     <item>
       <title>Personas</title>
@@ -40,7 +40,8 @@ Info The Developer persona is not involved in this workshop for the reason that 
       <description>Duration: 5 min | Persona: Apps Operator
 In this section, you will navigate to the topology of your Service Mesh as well as monitor your apps in terms of security, health and performance.
 Initialize variables:
-WORK_DIR=~/ source ${WORK_DIR}acm-workshop-variables.sh In the Google Cloud console, navigate to Anthos &amp;gt; Service Mesh &amp;gt; Topology to see the topology graph of your Service Mesh: Click on the link displayed by the command below:</description>
+WORK_DIR=~/ source ${WORK_DIR}acm-workshop-variables.shIn the Google Cloud console, navigate to Anthos &amp;gt; Service Mesh &amp;gt; Topology to see the topology graph of your Service Mesh: Click on the link displayed by the command below:
+echo -e &amp;#34;https://console.</description>
     </item>
     <item>
       <title>Use Spanner</title>
@@ -50,8 +51,9 @@ WORK_DIR=~/ source ${WORK_DIR}acm-workshop-variables.sh In the Google Cloud cons
       <description>Duration: 10 min | Persona: Apps Operator
 In this section, you will update the OnlineBoutique&amp;rsquo;s cartservice app in order to point to the Spanner database previously created.
 Initialize variables:
-WORK_DIR=~/ source ${WORK_DIR}acm-workshop-variables.sh Update RepoSync to deploy the Online Boutique&amp;rsquo;s Helm chart Get the Spanner database connection information:
-export SPANNER_CONNECTION_STRING=projects/${TENANT_PROJECT_ID}/instances/${SPANNER_INSTANCE_NAME}/databases/${SPANNER_DATABASE_NAME} export SPANNER_DB_USER_GSA_ID=${SPANNER_DATABASE_USER_GSA_NAME}@${TENANT_PROJECT_ID}.iam.gserviceaccount.com Define the RepoSync to deploy the Online Boutique&amp;rsquo;s Helm chart with the cartservice pointing to the Spanner database:</description>
+WORK_DIR=~/ source ${WORK_DIR}acm-workshop-variables.shUpdate RepoSync to deploy the Online Boutique&amp;rsquo;s Helm chart Get the Spanner database connection information:
+export SPANNER_CONNECTION_STRING=projects/${TENANT_PROJECT_ID}/instances/${SPANNER_INSTANCE_NAME}/databases/${SPANNER_DATABASE_NAME} export SPANNER_DB_USER_GSA_ID=${SPANNER_DATABASE_USER_GSA_NAME}@${TENANT_PROJECT_ID}.iam.gserviceaccount.comDefine the RepoSync to deploy the Online Boutique&amp;rsquo;s Helm chart with the cartservice pointing to the Spanner database:
+cat &amp;lt;&amp;lt;EOF &amp;gt; ${WORK_DIR}$GKE_CONFIGS_DIR_NAME/repo-syncs/$ONLINEBOUTIQUE_NAMESPACE/repo-sync.</description>
     </item>
     <item>
       <title>Prepare container</title>
@@ -61,8 +63,9 @@ export SPANNER_CONNECTION_STRING=projects/${TENANT_PROJECT_ID}/instances/${SPANN
       <description>Duration: 5 min | Persona: Apps Operator
 In this section, you will copy the Whereami app container in your private Artifact Registry. You will also scan this container image.
 Initialize variables:
-WORK_DIR=~/ source ${WORK_DIR}acm-workshop-variables.sh WHEREAMI_VERSION=v1.2.14 PRIVATE_WHEREAMI_IMAGE_NAME=$CONTAINER_REGISTRY_REPOSITORY/whereami:$WHEREAMI_VERSION echo &amp;#34;export PRIVATE_WHEREAMI_IMAGE_NAME=${PRIVATE_WHEREAMI_IMAGE_NAME}&amp;#34; &amp;gt;&amp;gt; ${WORK_DIR}acm-workshop-variables.sh source ${WORK_DIR}acm-workshop-variables.sh Copy the public container image to your private registry:
-UPSTREAM_WHEREAMI_IMAGE_NAME=us-docker.pkg.dev/google-samples/containers/gke/whereami:$WHEREAMI_VERSION gcloud auth configure-docker $CONTAINER_REGISTRY_HOST_NAME --quiet crane copy $UPSTREAM_WHEREAMI_IMAGE_NAME $PRIVATE_WHEREAMI_IMAGE_NAME List the container images in your private registry:</description>
+WORK_DIR=~/ source ${WORK_DIR}acm-workshop-variables.sh WHEREAMI_VERSION=v1.2.14 PRIVATE_WHEREAMI_IMAGE_NAME=$CONTAINER_REGISTRY_REPOSITORY/whereami:$WHEREAMI_VERSION echo &amp;#34;export PRIVATE_WHEREAMI_IMAGE_NAME=${PRIVATE_WHEREAMI_IMAGE_NAME}&amp;#34; &amp;gt;&amp;gt; ${WORK_DIR}acm-workshop-variables.sh source ${WORK_DIR}acm-workshop-variables.shCopy the public container image to your private registry:
+UPSTREAM_WHEREAMI_IMAGE_NAME=us-docker.pkg.dev/google-samples/containers/gke/whereami:$WHEREAMI_VERSION gcloud auth configure-docker $CONTAINER_REGISTRY_HOST_NAME --quiet crane copy $UPSTREAM_WHEREAMI_IMAGE_NAME $PRIVATE_WHEREAMI_IMAGE_NAMEList the container images in your private registry:
+gcloud artifacts docker images list $CONTAINER_REGISTRY_REPOSITORY \ --include-tagsScan the whereami container image:</description>
     </item>
     <item>
       <title>Prepare containers</title>
@@ -72,8 +75,8 @@ UPSTREAM_WHEREAMI_IMAGE_NAME=us-docker.pkg.dev/google-samples/containers/gke/whe
       <description>Duration: 5 min | Persona: Apps Operator
 In this section, you will copy the Bank of Anthos apps containers in your private Artifact Registry. You will also scan one container image.
 Initialize variables:
-WORK_DIR=~/ source ${WORK_DIR}acm-workshop-variables.sh BANK_OF_ANTHOS_VERSION=v0.5.10 echo &amp;#34;export BANK_OF_ANTHOS_VERSION=${BANK_OF_ANTHOS_VERSION}&amp;#34; &amp;gt;&amp;gt; ${WORK_DIR}acm-workshop-variables.sh PRIVATE_BANK_OF_ANTHOS_REGISTRY=$CONTAINER_REGISTRY_REPOSITORY/bankofanthos echo &amp;#34;export PRIVATE_BANK_OF_ANTHOS_REGISTRY=${PRIVATE_BANK_OF_ANTHOS_REGISTRY}&amp;#34; &amp;gt;&amp;gt; ${WORK_DIR}acm-workshop-variables.sh source ${WORK_DIR}acm-workshop-variables.sh Copy the public container images to your private registry:
-UPSTREAM_BANK_OF_ANTHOS_REGISTRY=gcr.io/bank-of-anthos-ci SERVICES=&amp;#34;accounts-db balancereader contacts frontend ledger-db ledgerwriter loadgenerator transactionhistory userservice&amp;#34; for s in $SERVICES; do crane copy $UPSTREAM_BANK_OF_ANTHOS_REGISTRY/$s:$BANK_OF_ANTHOS_VERSION $PRIVATE_BANK_OF_ANTHOS_REGISTRY/$s:$BANK_OF_ANTHOS_VERSION; done List the container images in your private registry:</description>
+WORK_DIR=~/ source ${WORK_DIR}acm-workshop-variables.sh BANK_OF_ANTHOS_VERSION=v0.5.10 echo &amp;#34;export BANK_OF_ANTHOS_VERSION=${BANK_OF_ANTHOS_VERSION}&amp;#34; &amp;gt;&amp;gt; ${WORK_DIR}acm-workshop-variables.sh PRIVATE_BANK_OF_ANTHOS_REGISTRY=$CONTAINER_REGISTRY_REPOSITORY/bankofanthos echo &amp;#34;export PRIVATE_BANK_OF_ANTHOS_REGISTRY=${PRIVATE_BANK_OF_ANTHOS_REGISTRY}&amp;#34; &amp;gt;&amp;gt; ${WORK_DIR}acm-workshop-variables.sh source ${WORK_DIR}acm-workshop-variables.shCopy the public container images to your private registry:
+UPSTREAM_BANK_OF_ANTHOS_REGISTRY=gcr.io/bank-of-anthos-ci SERVICES=&amp;#34;accounts-db balancereader contacts frontend ledger-db ledgerwriter loadgenerator transactionhistory userservice&amp;#34; for s in $SERVICES; do crane copy $UPSTREAM_BANK_OF_ANTHOS_REGISTRY/$s:$BANK_OF_ANTHOS_VERSION $PRIVATE_BANK_OF_ANTHOS_REGISTRY/$s:$BANK_OF_ANTHOS_VERSION; doneList the container images in your private registry:</description>
     </item>
     <item>
       <title>Trace apps</title>
@@ -83,8 +86,8 @@ UPSTREAM_BANK_OF_ANTHOS_REGISTRY=gcr.io/bank-of-anthos-ci SERVICES=&amp;#34;acco
       <description>Duration: 5 min | Persona: Apps Operator
 In this section, you will trace your apps in order to follow a request through your Service Mesh, observe the network calls and profile your system end to end.
 Initialize variables:
-WORK_DIR=~/ source ${WORK_DIR}acm-workshop-variables.sh In the Google Cloud console, navigate to Trace service. Click on the link displayed by the command below:
-echo -e &amp;#34;https://console.cloud.google.com/traces/list?project=${TENANT_PROJECT_ID}&amp;#34; Select one of the Online Boutique&amp;rsquo;s frontend app&amp;rsquo;s requests: From there you will have access to a lot more details about the different calls, trace logs, etc.</description>
+WORK_DIR=~/ source ${WORK_DIR}acm-workshop-variables.shIn the Google Cloud console, navigate to Trace service. Click on the link displayed by the command below:
+echo -e &amp;#34;https://console.cloud.google.com/traces/list?project=${TENANT_PROJECT_ID}&amp;#34;Select one of the Online Boutique&amp;rsquo;s frontend app&amp;rsquo;s requests: From there you will have access to a lot more details about the different calls, trace logs, etc.</description>
     </item>
     <item>
       <title>Use Memorystore</title>
@@ -94,8 +97,8 @@ echo -e &amp;#34;https://console.cloud.google.com/traces/list?project=${TENANT_P
       <description>Duration: 10 min | Persona: Apps Operator
 In this section, you will update the OnlineBoutique&amp;rsquo;s cartservice app in order to point to the Memorystore (Redis) instance previously created.
 Initialize variables:
-WORK_DIR=~/ source ${WORK_DIR}acm-workshop-variables.sh Update RepoSync to deploy the Online Boutique&amp;rsquo;s Helm chart Get Memorystore (Redis) connection information:
-export REDIS_IP=$(gcloud redis instances describe $REDIS_NAME --region $GKE_LOCATION --project $TENANT_PROJECT_ID --format=&amp;#39;get(host)&amp;#39;) export REDIS_PORT=$(gcloud redis instances describe $REDIS_NAME --region $GKE_LOCATION --project $TENANT_PROJECT_ID --format=&amp;#39;get(port)&amp;#39;) Define the RepoSync to deploy the Online Boutique&amp;rsquo;s Helm chart with the cartservice pointing to the Memorystore (Redis) database:</description>
+WORK_DIR=~/ source ${WORK_DIR}acm-workshop-variables.shUpdate RepoSync to deploy the Online Boutique&amp;rsquo;s Helm chart Get Memorystore (Redis) connection information:
+export REDIS_IP=$(gcloud redis instances describe $REDIS_NAME --region $GKE_LOCATION --project $TENANT_PROJECT_ID --format=&amp;#39;get(host)&amp;#39;) export REDIS_PORT=$(gcloud redis instances describe $REDIS_NAME --region $GKE_LOCATION --project $TENANT_PROJECT_ID --format=&amp;#39;get(port)&amp;#39;)Define the RepoSync to deploy the Online Boutique&amp;rsquo;s Helm chart with the cartservice pointing to the Memorystore (Redis) database:</description>
     </item>
     <item>
       <title>Deploy app</title>
@@ -105,8 +108,8 @@ export REDIS_IP=$(gcloud redis instances describe $REDIS_NAME --region $GKE_LOCA
       <description>Duration: 10 min | Persona: Apps Operator
 In this section, you will deploy the Whereami app.
 Initialize variables:
-WORK_DIR=~/ source ${WORK_DIR}acm-workshop-variables.sh Get upstream Kubernetes manifests Get the upstream Kubernetes manifests:
-cd ${WORK_DIR}$WHERE_AMI_DIR_NAME kpt pkg get https://github.com/GoogleCloudPlatform/kubernetes-engine-samples/whereami/k8s rm k8s/Kptfile mv k8s upstream Create base overlay Create Kustomize base overlay files:
+WORK_DIR=~/ source ${WORK_DIR}acm-workshop-variables.shGet upstream Kubernetes manifests Get the upstream Kubernetes manifests:
+cd ${WORK_DIR}$WHERE_AMI_DIR_NAME kpt pkg get https://github.com/GoogleCloudPlatform/kubernetes-engine-samples/whereami/k8s rm k8s/Kptfile mv k8s upstreamCreate base overlay Create Kustomize base overlay files:
 mkdir ${WORK_DIR}$WHERE_AMI_DIR_NAME/base cd ${WORK_DIR}$WHERE_AMI_DIR_NAME/base kustomize create kustomize edit add resource ../upstream cat &amp;lt;&amp;lt;EOF &amp;gt;&amp;gt; ${WORK_DIR}$WHERE_AMI_DIR_NAME/base/kustomization.yaml patchesJson6902: - target: kind: Service name: whereami patch: |- - op: replace path: /spec/type value: ClusterIP EOF Info Here we are changing the Service type to ClusterIP because the Whereami app will be exposed by the Ingress Gateway.</description>
     </item>
     <item>
@@ -117,8 +120,8 @@ mkdir ${WORK_DIR}$WHERE_AMI_DIR_NAME/base cd ${WORK_DIR}$WHERE_AMI_DIR_NAME/base
       <description>Duration: 5 min | Persona: Apps Operator
 In this section, you will deploy the Bank of Anthos apps.
 Initialize variables:
-WORK_DIR=~/ source ${WORK_DIR}acm-workshop-variables.sh Get upstream Kubernetes manifests Get the upstream Kubernetes manifests:
-cd ${WORK_DIR}$BANK_OF_ANTHOS_DIR_NAME kpt pkg get https://github.com/GoogleCloudPlatform/bank-of-anthos/kubernetes-manifests mv kubernetes-manifests upstream cd upstream rm Kptfile curl -L https://raw.githubusercontent.com/GoogleCloudPlatform/bank-of-anthos/main/extras/jwt/jwt-secret.yaml &amp;gt; jwt-secret.yaml kustomize create --autodetect Create base overlay Create Kustomize base overlay files:
+WORK_DIR=~/ source ${WORK_DIR}acm-workshop-variables.shGet upstream Kubernetes manifests Get the upstream Kubernetes manifests:
+cd ${WORK_DIR}$BANK_OF_ANTHOS_DIR_NAME kpt pkg get https://github.com/GoogleCloudPlatform/bank-of-anthos/kubernetes-manifests mv kubernetes-manifests upstream cd upstream rm Kptfile curl -L https://raw.githubusercontent.com/GoogleCloudPlatform/bank-of-anthos/main/extras/jwt/jwt-secret.yaml &amp;gt; jwt-secret.yaml kustomize create --autodetectCreate base overlay Create Kustomize base overlay files:
 mkdir ${WORK_DIR}$BANK_OF_ANTHOS_DIR_NAME/base cd ${WORK_DIR}$BANK_OF_ANTHOS_DIR_NAME/base kustomize create kustomize edit add resource .</description>
     </item>
     <item>
@@ -129,7 +132,7 @@ mkdir ${WORK_DIR}$BANK_OF_ANTHOS_DIR_NAME/base cd ${WORK_DIR}$BANK_OF_ANTHOS_DIR
       <description>Duration: 5 min | Persona: Apps Operator
 In this section, you will copy the Online Boutique apps container images and the Helm chart in your private Artifact Registry. You will also scan one container image.
 Initialize variables:
-WORK_DIR=~/ source ${WORK_DIR}acm-workshop-variables.sh ONLINE_BOUTIQUE_VERSION=v0.5.0 echo &amp;#34;export ONLINE_BOUTIQUE_VERSION=${ONLINE_BOUTIQUE_VERSION}&amp;#34; &amp;gt;&amp;gt; ${WORK_DIR}acm-workshop-variables.sh PRIVATE_ONLINE_BOUTIQUE_REGISTRY=$CONTAINER_REGISTRY_REPOSITORY/onlineboutique echo &amp;#34;export PRIVATE_ONLINE_BOUTIQUE_REGISTRY=${PRIVATE_ONLINE_BOUTIQUE_REGISTRY}&amp;#34; &amp;gt;&amp;gt; ${WORK_DIR}acm-workshop-variables.sh source ${WORK_DIR}acm-workshop-variables.sh Prepare the container images Copy the public container images to your private registry:
+WORK_DIR=~/ source ${WORK_DIR}acm-workshop-variables.sh ONLINE_BOUTIQUE_VERSION=v0.5.0 echo &amp;#34;export ONLINE_BOUTIQUE_VERSION=${ONLINE_BOUTIQUE_VERSION}&amp;#34; &amp;gt;&amp;gt; ${WORK_DIR}acm-workshop-variables.sh PRIVATE_ONLINE_BOUTIQUE_REGISTRY=$CONTAINER_REGISTRY_REPOSITORY/onlineboutique echo &amp;#34;export PRIVATE_ONLINE_BOUTIQUE_REGISTRY=${PRIVATE_ONLINE_BOUTIQUE_REGISTRY}&amp;#34; &amp;gt;&amp;gt; ${WORK_DIR}acm-workshop-variables.sh source ${WORK_DIR}acm-workshop-variables.shPrepare the container images Copy the public container images to your private registry:
 UPSTREAM_ONLINE_BOUTIQUE_CONTAINER_REGISTRY=gcr.io/google-samples/microservices-demo HTTP_SERVICES=&amp;#34;frontend loadgenerator&amp;#34; TAG=$ONLINE_BOUTIQUE_VERSION for s in $HTTP_SERVICES; do crane copy $UPSTREAM_ONLINE_BOUTIQUE_CONTAINER_REGISTRY/$s:$TAG $PRIVATE_ONLINE_BOUTIQUE_REGISTRY/$s:$TAG; done GRPC_SERVICES=&amp;#34;adservice cartservice checkoutservice currencyservice emailservice paymentservice productcatalogservice recommendationservice shippingservice&amp;#34; TAG=$ONLINE_BOUTIQUE_VERSION-native-grpc-probes for s in $GRPC_SERVICES; do crane copy $UPSTREAM_ONLINE_BOUTIQUE_CONTAINER_REGISTRY/$s:$TAG $PRIVATE_ONLINE_BOUTIQUE_REGISTRY/$s:$TAG; done crane copy redis:alpine $PRIVATE_ONLINE_BOUTIQUE_REGISTRY/redis:alpine Tip We are making the copy of the gRPC services supporting the native Kubernetes health probes in order to get the associated optimized images, learn more about this here.</description>
     </item>
     <item>
@@ -150,7 +153,7 @@ WORK_DIR=~/ source ${WORK_DIR}acm-workshop-variables.sh echo &amp;#34;export CAR
       <description>Duration: 5 min | Persona: Apps Operator
 In this section, you will deploy the Online Boutique apps, via Config Sync and its Helm chart.
 Initialize variables:
-WORK_DIR=~/ source ${WORK_DIR}acm-workshop-variables.sh Define RepoSync to deploy the Online Boutique&amp;rsquo;s Helm chart Define the RepoSync to deploy the Online Boutique&amp;rsquo;s Helm chart:
+WORK_DIR=~/ source ${WORK_DIR}acm-workshop-variables.shDefine RepoSync to deploy the Online Boutique&amp;rsquo;s Helm chart Define the RepoSync to deploy the Online Boutique&amp;rsquo;s Helm chart:
 cat &amp;lt;&amp;lt;EOF &amp;gt; ${WORK_DIR}$GKE_CONFIGS_DIR_NAME/repo-syncs/$ONLINEBOUTIQUE_NAMESPACE/repo-sync.yaml apiVersion: configsync.gke.io/v1beta1 kind: RepoSync metadata: name: repo-sync namespace: ${ONLINEBOUTIQUE_NAMESPACE} spec: sourceFormat: unstructured sourceType: helm helm: repo: oci://${CHART_REGISTRY_REPOSITORY} chart: ${ONLINEBOUTIQUE_NAMESPACE} version: ${ONLINE_BOUTIQUE_VERSION:1} releaseName: ${ONLINEBOUTIQUE_NAMESPACE} auth: gcpserviceaccount gcpServiceAccountEmail: ${HELM_CHARTS_READER_GSA}@${TENANT_PROJECT_ID}.</description>
     </item>
     <item>
@@ -161,7 +164,7 @@ cat &amp;lt;&amp;lt;EOF &amp;gt; ${WORK_DIR}$GKE_CONFIGS_DIR_NAME/repo-syncs/$ON
       <description>Duration: 5 min | Persona: Apps Operator
 In this section, you will see how to track the AuthorizationPolicies issue and then you will deploy granular and specific ServiceAccounts and AuthorizationPolicies for the Bank of Anthos namespace to fix this issue.
 Initialize variables:
-WORK_DIR=~/ source ${WORK_DIR}acm-workshop-variables.sh See the AuthorizationPolicies issue See the AuthorizationPolicies issue in the GKE cluster for the Bank of Anthos namespace, by running this command and click on this link:</description>
+WORK_DIR=~/ source ${WORK_DIR}acm-workshop-variables.shSee the AuthorizationPolicies issue See the AuthorizationPolicies issue in the GKE cluster for the Bank of Anthos namespace, by running this command and click on this link:</description>
     </item>
     <item>
       <title>Deploy AuthorizationPolicy</title>
@@ -171,8 +174,8 @@ WORK_DIR=~/ source ${WORK_DIR}acm-workshop-variables.sh See the AuthorizationPol
       <description>Duration: 5 min | Persona: Apps Operator
 In this section, you will see how to track the AuthorizationPolicies issue and then you will deploy granular and specific AuthorizationPolicies for the Whereami namespace to fix this issue.
 Initialize variables:
-WORK_DIR=~/ source ${WORK_DIR}acm-workshop-variables.sh See the AuthorizationPolicies issue See the AuthorizationPolicies issue in the GKE cluster for the Whereami app, by running this command and click on this link:
-echo -e &amp;#34;https://console.cloud.google.com/anthos/security/workload-view/Deployment/${GKE_LOCATION}/${GKE_NAME}/${WHEREAMI_NAMESPACE}/whereami?project=${TENANT_PROJECT_ID}&amp;#34; Under the Service requests section on this page, you will see some Inbound denials depending on how many times you tried to refresh the Whereami app endpoint.</description>
+WORK_DIR=~/ source ${WORK_DIR}acm-workshop-variables.shSee the AuthorizationPolicies issue See the AuthorizationPolicies issue in the GKE cluster for the Whereami app, by running this command and click on this link:
+echo -e &amp;#34;https://console.cloud.google.com/anthos/security/workload-view/Deployment/${GKE_LOCATION}/${GKE_NAME}/${WHEREAMI_NAMESPACE}/whereami?project=${TENANT_PROJECT_ID}&amp;#34;Under the Service requests section on this page, you will see some Inbound denials depending on how many times you tried to refresh the Whereami app endpoint.</description>
     </item>
     <item>
       <title>Scan workloads</title>
@@ -182,7 +185,8 @@ echo -e &amp;#34;https://console.cloud.google.com/anthos/security/workload-view/
       <description>Duration: 5 min | Persona: Apps Operator
 In this section, you will monitor security scanning of your GKE workloads configurations in the Google Cloud console in order to leverage these two features:
 Scan workloads for configuration issues Scan container images for known vulnerabilities Initialize variables:
-WORK_DIR=~/ source ${WORK_DIR}acm-workshop-variables.sh In the Google Cloud console, navigate to Kubernetes Engine &amp;gt; Security Posture, click on the link displayed by the command below:</description>
+WORK_DIR=~/ source ${WORK_DIR}acm-workshop-variables.shIn the Google Cloud console, navigate to Kubernetes Engine &amp;gt; Security Posture, click on the link displayed by the command below:
+echo -e &amp;#34;https://console.</description>
     </item>
     <item>
       <title>Deploy AuthorizationPolicies</title>
@@ -192,7 +196,7 @@ WORK_DIR=~/ source ${WORK_DIR}acm-workshop-variables.sh In the Google Cloud cons
       <description>Duration: 5 min | Persona: Apps Operator
 In this section, you will see how to track the AuthorizationPolicies issue and then you will deploy granular and specific AuthorizationPolicies for the Online Boutique namespace to fix this issue.
 Initialize variables:
-WORK_DIR=~/ source ${WORK_DIR}acm-workshop-variables.sh See the AuthorizationPolicies issue See the AuthorizationPolicies issue in the GKE cluster for the Online Boutique apps, by running this command and click on this link:
+WORK_DIR=~/ source ${WORK_DIR}acm-workshop-variables.shSee the AuthorizationPolicies issue See the AuthorizationPolicies issue in the GKE cluster for the Online Boutique apps, by running this command and click on this link:
 echo -e &amp;#34;https://console.</description>
     </item>
     <item>
@@ -203,8 +207,8 @@ echo -e &amp;#34;https://console.</description>
       <description>Duration: 5 min | Persona: Apps Operator
 In this section, you will see the Policy Controller violation regarding to the missing NetworkPolicies in the Bank of Anthos namespace. Then, you will fix this violation by deploying the associated resources.
 Initialize variables:
-WORK_DIR=~/ source ${WORK_DIR}acm-workshop-variables.sh See the Policy Controller violations See the Policy Controller violations in the GKE cluster, by running this command and click on this link:
-echo -e &amp;#34;https://console.</description>
+WORK_DIR=~/ source ${WORK_DIR}acm-workshop-variables.shSee the Policy Controller violations See the Policy Controller violations in the GKE cluster, by running this command and click on this link:
+echo -e &amp;#34;https://console.cloud.google.com/kubernetes/policy_controller/dashboard?project=${TENANT_PROJECT_ID}&amp;#34;You will see that the K8sRequireNamespaceNetworkPolicies Constraint has this violation: Namespace &amp;lt;bankofanthos&amp;gt; does not have a NetworkPolicy.</description>
     </item>
     <item>
       <title>Deploy NetworkPolicies</title>
@@ -214,8 +218,8 @@ echo -e &amp;#34;https://console.</description>
       <description>Duration: 5 min | Persona: Apps Operator
 In this section, you will see the Policy Controller violation regarding to the missing NetworkPolicies in the Whereami namespace. Then, you will fix this violation by deploying the associated resources.
 Initialize variables:
-WORK_DIR=~/ source ${WORK_DIR}acm-workshop-variables.sh See the Policy Controller violations See the Policy Controller violations in the GKE cluster, by running this command and click on this link:
-echo -e &amp;#34;https://console.cloud.google.com/kubernetes/policy_controller/dashboard?project=${TENANT_PROJECT_ID}&amp;#34; You will see that the K8sRequireNamespaceNetworkPolicies Constraint has this violation: Namespace &amp;lt;whereami&amp;gt; does not have a NetworkPolicy.</description>
+WORK_DIR=~/ source ${WORK_DIR}acm-workshop-variables.shSee the Policy Controller violations See the Policy Controller violations in the GKE cluster, by running this command and click on this link:
+echo -e &amp;#34;https://console.cloud.google.com/kubernetes/policy_controller/dashboard?project=${TENANT_PROJECT_ID}&amp;#34;You will see that the K8sRequireNamespaceNetworkPolicies Constraint has this violation: Namespace &amp;lt;whereami&amp;gt; does not have a NetworkPolicy.</description>
     </item>
     <item>
       <title>Monitor resources synced</title>
@@ -225,7 +229,7 @@ echo -e &amp;#34;https://console.cloud.google.com/kubernetes/policy_controller/d
       <description>Duration: 5 min | Persona: Apps Operator
 In this section, in the Google Cloud Console you will monitor the resources synced by Config Sync for both the Config Controller instance in the Host project and the GKE cluster in the Tenant project.
 Initialize variables:
-WORK_DIR=~/ source ${WORK_DIR}acm-workshop-variables.sh Monitor the resources synced by Config Sync in the Config Controller instance in the Host project Click on the link displayed by the command below:</description>
+WORK_DIR=~/ source ${WORK_DIR}acm-workshop-variables.shMonitor the resources synced by Config Sync in the Config Controller instance in the Host project Click on the link displayed by the command below:</description>
     </item>
     <item>
       <title>Deploy NetworkPolicies</title>
@@ -235,8 +239,8 @@ WORK_DIR=~/ source ${WORK_DIR}acm-workshop-variables.sh Monitor the resources sy
       <description>Duration: 5 min | Persona: Apps Operator
 In this section, you will see the Policy Controller violation regarding to the missing NetworkPolicies in the Online Boutique namespace. Then, you will fix this violation by deploying the associated resources.
 Initialize variables:
-WORK_DIR=~/ source ${WORK_DIR}acm-workshop-variables.sh See the Policy Controller violations See the Policy Controller violations in the GKE cluster, by running this command and click on this link:
-echo -e &amp;#34;https://console.cloud.google.com/kubernetes/policy_controller/dashboard?project=${TENANT_PROJECT_ID}&amp;#34; You will see that the K8sRequireNamespaceNetworkPolicies Constraint has this violation: Namespace &amp;lt;onlineboutique&amp;gt; does not have a NetworkPolicy.</description>
+WORK_DIR=~/ source ${WORK_DIR}acm-workshop-variables.shSee the Policy Controller violations See the Policy Controller violations in the GKE cluster, by running this command and click on this link:
+echo -e &amp;#34;https://console.cloud.google.com/kubernetes/policy_controller/dashboard?project=${TENANT_PROJECT_ID}&amp;#34;You will see that the K8sRequireNamespaceNetworkPolicies Constraint has this violation: Namespace &amp;lt;onlineboutique&amp;gt; does not have a NetworkPolicy.</description>
     </item>
     <item>
       <title>Deploy Sidecar</title>
@@ -263,8 +267,8 @@ In this section, you will deploy fine granular Sidecars in order to optimize the
       <description>Duration: 5 min | Persona: Apps Operator
 In this section, in the Google Cloud Console you will monitor the Policy Controller&amp;rsquo;s policies violations for the GKE cluster in the Tenant project.
 Initialize variables:
-WORK_DIR=~/ source ${WORK_DIR}acm-workshop-variables.sh Click on the link displayed by the command below:
-echo -e &amp;#34;https://console.cloud.google.com/kubernetes/policy_controller/dashboard?project=${TENANT_PROJECT_ID}&amp;#34; On the default Dashboard tab, you will find something similar to:
+WORK_DIR=~/ source ${WORK_DIR}acm-workshop-variables.shClick on the link displayed by the command below:
+echo -e &amp;#34;https://console.cloud.google.com/kubernetes/policy_controller/dashboard?project=${TENANT_PROJECT_ID}&amp;#34;On the default Dashboard tab, you will find something similar to:
 Then if you go on the Violations tab, you will find something similar to:</description>
     </item>
     <item>

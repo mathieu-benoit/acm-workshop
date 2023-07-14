@@ -4,24 +4,24 @@
     <meta charset="utf-8">
     <meta name="viewport" content="height=device-height, width=device-width, initial-scale=1.0, minimum-scale=1.0">
     <meta name="generator" content="Hugo 0.109.0">
-    <meta name="generator" content="Relearn 5.16.2+tip">
+    <meta name="generator" content="Relearn 5.17.1+tip">
     <meta name="description" content="Duration: 20 min | Persona: Platform Admin">
     <meta name="author" content="Mathieu Benoit">
     <title>Create GKE cluster</title>
-    <link href="/acm-workshop/images/favicon.png?1687278376" rel="icon" type="image/png">
+    <link href="/acm-workshop/images/favicon.png?1689352019" rel="icon" type="image/png">
     <!-- https://github.com/filamentgroup/loadCSS/blob/master/README.md#how-to-use -->
-    <link href="/acm-workshop/css/fontawesome-all.min.css?1687278376" rel="stylesheet" media="print" onload="this.media='all';this.onload=null;"><noscript><link href="/acm-workshop/css/fontawesome-all.min.css?1687278376" rel="stylesheet"></noscript>
-    <link href="/acm-workshop/css/nucleus.css?1687278376" rel="stylesheet">
-    <link href="/acm-workshop/css/auto-complete.css?1687278376" rel="stylesheet" media="print" onload="this.media='all';this.onload=null;"><noscript><link href="/acm-workshop/css/auto-complete.css?1687278376" rel="stylesheet"></noscript>
-    <link href="/acm-workshop/css/perfect-scrollbar.min.css?1687278376" rel="stylesheet">
-    <link href="/acm-workshop/css/fonts.css?1687278376" rel="stylesheet" media="print" onload="this.media='all';this.onload=null;"><noscript><link href="/acm-workshop/css/fonts.css?1687278376" rel="stylesheet"></noscript>
-    <link href="/acm-workshop/css/theme.css?1687278376" rel="stylesheet">
-    <link href="/acm-workshop/css/theme-mine.css?1687278376" rel="stylesheet" id="variant-style">
-    <link href="/acm-workshop/css/variant.css?1687278376" rel="stylesheet">
-    <link href="/acm-workshop/css/print.css?1687278376" rel="stylesheet" media="print">
-    <link href="/acm-workshop/css/ie.css?1687278376" rel="stylesheet">
-    <script src="/acm-workshop/js/url.js?1687278376"></script>
-    <script src="/acm-workshop/js/variant.js?1687278376"></script>
+    <link href="/acm-workshop/css/fontawesome-all.min.css?1689352019" rel="stylesheet" media="print" onload="this.media='all';this.onload=null;"><noscript><link href="/acm-workshop/css/fontawesome-all.min.css?1689352019" rel="stylesheet"></noscript>
+    <link href="/acm-workshop/css/nucleus.css?1689352019" rel="stylesheet">
+    <link href="/acm-workshop/css/auto-complete.css?1689352019" rel="stylesheet" media="print" onload="this.media='all';this.onload=null;"><noscript><link href="/acm-workshop/css/auto-complete.css?1689352019" rel="stylesheet"></noscript>
+    <link href="/acm-workshop/css/perfect-scrollbar.min.css?1689352019" rel="stylesheet">
+    <link href="/acm-workshop/css/fonts.css?1689352019" rel="stylesheet" media="print" onload="this.media='all';this.onload=null;"><noscript><link href="/acm-workshop/css/fonts.css?1689352019" rel="stylesheet"></noscript>
+    <link href="/acm-workshop/css/theme.css?1689352019" rel="stylesheet">
+    <link href="/acm-workshop/css/theme-mine.css?1689352019" rel="stylesheet" id="variant-style">
+    <link href="/acm-workshop/css/variant.css?1689352019" rel="stylesheet">
+    <link href="/acm-workshop/css/print.css?1689352019" rel="stylesheet" media="print">
+    <link href="/acm-workshop/css/ie.css?1689352019" rel="stylesheet">
+    <script src="/acm-workshop/js/url.js?1689352019"></script>
+    <script src="/acm-workshop/js/variant.js?1689352019"></script>
     <script>
       // hack to let hugo tell us how to get to the root when using relativeURLs, it needs to be called *url= for it to do its magic:
       // https://github.com/gohugoio/hugo/blob/145b3fcce35fbac25c7033c91c1b7ae6d1179da8/transform/urlreplacers/absurlreplacer.go#L72""
@@ -107,23 +107,22 @@ if (!doNotTrack) {
 <h1 id="create-gke-cluster">Create GKE cluster</h1>
 
 <p>
-<a href="#image-dbd19a28bd6826d98e2efb5de474f9a9" class="lightbox-link">
+<a href="#image-897f403dbaa402db3d5bf29589802c9f" class="lightbox-link">
 <img src="https://github.com/mathieu-benoit/my-images/raw/main/acm-workshop/platform-admin.png" alt="Platform Admin" style="height: auto; width: auto;" loading="lazy">
 </a>
-<a href="javascript:history.back();" class="lightbox" id="image-dbd19a28bd6826d98e2efb5de474f9a9">
+<a href="javascript:history.back();" class="lightbox" id="image-897f403dbaa402db3d5bf29589802c9f">
 <img src="https://github.com/mathieu-benoit/my-images/raw/main/acm-workshop/platform-admin.png" alt="Platform Admin" class="lightbox-image" loading="lazy">
 </a>
 <em>Duration: 20 min | Persona: Platform Admin</em></p>
 <p>In this section, you will set up a secured GKE cluster including features like: workload identity, least privilege service account for the nodes, Dataplane V2, private nodes, confidential and shielded nodes, etc.</p>
 <p>Initialize variables:</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-Bash" data-lang="Bash"><span style="display:flex;"><span>WORK_DIR<span style="color:#f92672">=</span>~/
+<div class="wrap-code highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-Bash" data-lang="Bash"><span style="display:flex;"><span>WORK_DIR<span style="color:#f92672">=</span>~/
 </span></span><span style="display:flex;"><span>source <span style="color:#e6db74">${</span>WORK_DIR<span style="color:#e6db74">}</span>acm-workshop-variables.sh
 </span></span><span style="display:flex;"><span>echo <span style="color:#e6db74">&#34;export TENANT_PROJECT_NUMBER=</span><span style="color:#66d9ef">$(</span>gcloud projects describe $TENANT_PROJECT_ID --format<span style="color:#f92672">=</span><span style="color:#e6db74">&#39;get(projectNumber)&#39;</span><span style="color:#66d9ef">)</span><span style="color:#e6db74">&#34;</span> &gt;&gt; <span style="color:#e6db74">${</span>WORK_DIR<span style="color:#e6db74">}</span>acm-workshop-variables.sh
 </span></span><span style="display:flex;"><span>echo <span style="color:#e6db74">&#34;export GKE_SA=gke-primary-pool&#34;</span> &gt;&gt; <span style="color:#e6db74">${</span>WORK_DIR<span style="color:#e6db74">}</span>acm-workshop-variables.sh
-</span></span><span style="display:flex;"><span>source <span style="color:#e6db74">${</span>WORK_DIR<span style="color:#e6db74">}</span>acm-workshop-variables.sh
-</span></span></code></pre></div><h2 id="define-gke-cluster">Define GKE cluster</h2>
+</span></span><span style="display:flex;"><span>source <span style="color:#e6db74">${</span>WORK_DIR<span style="color:#e6db74">}</span>acm-workshop-variables.sh</span></span></code></pre></div><h2 id="define-gke-cluster">Define GKE cluster</h2>
 <p>Define the <a href="https://cloud.google.com/config-connector/docs/reference/resource-docs/container/containercluster" target="_blank">GKE cluster</a> with empty node pool:</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-Bash" data-lang="Bash"><span style="display:flex;"><span>cat <span style="color:#e6db74">&lt;&lt;EOF &gt; ${WORK_DIR}$TENANT_PROJECT_DIR_NAME/gke-cluster.yaml
+<div class="wrap-code highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-Bash" data-lang="Bash"><span style="display:flex;"><span>cat <span style="color:#e6db74">&lt;&lt;EOF &gt; ${WORK_DIR}$TENANT_PROJECT_DIR_NAME/gke-cluster.yaml
 </span></span></span><span style="display:flex;"><span><span style="color:#e6db74">apiVersion: container.cnrm.cloud.google.com/v1beta1
 </span></span></span><span style="display:flex;"><span><span style="color:#e6db74">kind: ContainerCluster
 </span></span></span><span style="display:flex;"><span><span style="color:#e6db74">metadata:
@@ -175,10 +174,9 @@ if (!doNotTrack) {
 </span></span></span><span style="display:flex;"><span><span style="color:#e6db74">    name: gke
 </span></span></span><span style="display:flex;"><span><span style="color:#e6db74">  workloadIdentityConfig:
 </span></span></span><span style="display:flex;"><span><span style="color:#e6db74">    workloadPool: ${TENANT_PROJECT_ID}.svc.id.goog
-</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">EOF</span>
-</span></span></code></pre></div><h2 id="define-gke-primary-node-pools-service-account">Define GKE primary node pool&rsquo;s service account</h2>
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">EOF</span></span></span></code></pre></div><h2 id="define-gke-primary-node-pools-service-account">Define GKE primary node pool&rsquo;s service account</h2>
 <p>Define the GKE primary node pool&rsquo;s <a href="https://cloud.google.com/config-connector/docs/reference/resource-docs/iam/iamserviceaccount" target="_blank">Google Service Account</a>:</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-Bash" data-lang="Bash"><span style="display:flex;"><span>cat <span style="color:#e6db74">&lt;&lt;EOF &gt; ${WORK_DIR}$TENANT_PROJECT_DIR_NAME/gke-primary-pool-sa.yaml
+<div class="wrap-code highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-Bash" data-lang="Bash"><span style="display:flex;"><span>cat <span style="color:#e6db74">&lt;&lt;EOF &gt; ${WORK_DIR}$TENANT_PROJECT_DIR_NAME/gke-primary-pool-sa.yaml
 </span></span></span><span style="display:flex;"><span><span style="color:#e6db74">apiVersion: iam.cnrm.cloud.google.com/v1beta1
 </span></span></span><span style="display:flex;"><span><span style="color:#e6db74">kind: IAMServiceAccount
 </span></span></span><span style="display:flex;"><span><span style="color:#e6db74">metadata:
@@ -188,9 +186,8 @@ if (!doNotTrack) {
 </span></span></span><span style="display:flex;"><span><span style="color:#e6db74">  namespace: ${TENANT_PROJECT_ID}
 </span></span></span><span style="display:flex;"><span><span style="color:#e6db74">spec:
 </span></span></span><span style="display:flex;"><span><span style="color:#e6db74">  displayName: ${GKE_SA}
-</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">EOF</span>
-</span></span></code></pre></div><p>Define the <code>logging.logWriter</code>, <code>monitoring.metricWriter</code> and <code>monitoring.viewer</code> roles with an <a href="https://cloud.google.com/config-connector/docs/reference/resource-docs/iam/iampolicymember" target="_blank"><code>IAMPolicyMember</code></a> resource for the GKE primary node pool&rsquo;s service account:</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-Bash" data-lang="Bash"><span style="display:flex;"><span>cat <span style="color:#e6db74">&lt;&lt;EOF &gt; ${WORK_DIR}$TENANT_PROJECT_DIR_NAME/log-writer-gke-sa.yaml
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">EOF</span></span></span></code></pre></div><p>Define the <code>logging.logWriter</code>, <code>monitoring.metricWriter</code> and <code>monitoring.viewer</code> roles with an <a href="https://cloud.google.com/config-connector/docs/reference/resource-docs/iam/iampolicymember" target="_blank"><code>IAMPolicyMember</code></a> resource for the GKE primary node pool&rsquo;s service account:</p>
+<div class="wrap-code highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-Bash" data-lang="Bash"><span style="display:flex;"><span>cat <span style="color:#e6db74">&lt;&lt;EOF &gt; ${WORK_DIR}$TENANT_PROJECT_DIR_NAME/log-writer-gke-sa.yaml
 </span></span></span><span style="display:flex;"><span><span style="color:#e6db74">apiVersion: iam.cnrm.cloud.google.com/v1beta1
 </span></span></span><span style="display:flex;"><span><span style="color:#e6db74">kind: IAMPolicyMember
 </span></span></span><span style="display:flex;"><span><span style="color:#e6db74">metadata:
@@ -261,10 +258,9 @@ if (!doNotTrack) {
 </span></span></span><span style="display:flex;"><span><span style="color:#e6db74">    kind: Project
 </span></span></span><span style="display:flex;"><span><span style="color:#e6db74">    external: ${TENANT_PROJECT_ID}
 </span></span></span><span style="display:flex;"><span><span style="color:#e6db74">  role: roles/cloudtrace.agent
-</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">EOF</span>
-</span></span></code></pre></div><h2 id="define-gke-primary-node-pool">Define GKE primary node pool</h2>
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">EOF</span></span></span></code></pre></div><h2 id="define-gke-primary-node-pool">Define GKE primary node pool</h2>
 <p>Define the GKE primary node pool:</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-Bash" data-lang="Bash"><span style="display:flex;"><span>cat <span style="color:#e6db74">&lt;&lt;EOF &gt; ${WORK_DIR}$TENANT_PROJECT_DIR_NAME/gke-primary-pool.yaml
+<div class="wrap-code highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-Bash" data-lang="Bash"><span style="display:flex;"><span>cat <span style="color:#e6db74">&lt;&lt;EOF &gt; ${WORK_DIR}$TENANT_PROJECT_DIR_NAME/gke-primary-pool.yaml
 </span></span></span><span style="display:flex;"><span><span style="color:#e6db74">apiVersion: container.cnrm.cloud.google.com/v1beta1
 </span></span></span><span style="display:flex;"><span><span style="color:#e6db74">kind: ContainerNodePool
 </span></span></span><span style="display:flex;"><span><span style="color:#e6db74">metadata:
@@ -294,11 +290,9 @@ if (!doNotTrack) {
 </span></span></span><span style="display:flex;"><span><span style="color:#e6db74">    serviceAccountRef:
 </span></span></span><span style="display:flex;"><span><span style="color:#e6db74">      name: ${GKE_SA}
 </span></span></span><span style="display:flex;"><span><span style="color:#e6db74">  nodeCount: 3
-</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">EOF</span>
-</span></span></code></pre></div><h2 id="deploy-kubernetes-manifests">Deploy Kubernetes manifests</h2>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-Bash" data-lang="Bash"><span style="display:flex;"><span>cd ~/$TENANT_PROJECT_DIR_NAME/
-</span></span><span style="display:flex;"><span>git add . <span style="color:#f92672">&amp;&amp;</span> git commit -m <span style="color:#e6db74">&#34;GKE cluster, primary nodepool and SA for Tenant project&#34;</span> <span style="color:#f92672">&amp;&amp;</span> git push origin main
-</span></span></code></pre></div><h2 id="check-deployments">Check deployments</h2>
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">EOF</span></span></span></code></pre></div><h2 id="deploy-kubernetes-manifests">Deploy Kubernetes manifests</h2>
+<div class="wrap-code highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-Bash" data-lang="Bash"><span style="display:flex;"><span>cd ~/$TENANT_PROJECT_DIR_NAME/
+</span></span><span style="display:flex;"><span>git add . <span style="color:#f92672">&amp;&amp;</span> git commit -m <span style="color:#e6db74">&#34;GKE cluster, primary nodepool and SA for Tenant project&#34;</span> <span style="color:#f92672">&amp;&amp;</span> git push origin main</span></span></code></pre></div><h2 id="check-deployments">Check deployments</h2>
 
 <div class="mermaid align-center">
 graph TD;
@@ -317,13 +311,13 @@ graph TD;
 </div>
 <p>List the Kubernetes resources managed by Config Sync in <strong>Config Controller</strong> for the <strong>Tenant project configs</strong> repository:
 
-<div class="tab-panel" data-tab-group="612d242617c8f20cea5896c141df8741">
+<div class="tab-panel" data-tab-group="e0f1335a06d0da9faacc08b4f9c5322b">
   <div class="tab-nav">
     <div class="tab-nav-title">&#8203;</div>
     <button
       data-tab-item="UI"
       class="tab-nav-button tab-panel-style cstyle initial active"
-      onclick="switchTab('612d242617c8f20cea5896c141df8741','UI')"
+      onclick="switchTab('e0f1335a06d0da9faacc08b4f9c5322b','UI')"
     >
       <div>
         <div class="tab-nav-hidden">UI</div>
@@ -333,7 +327,7 @@ graph TD;
     <button
       data-tab-item="gcloud"
       class="tab-nav-button tab-panel-style cstyle initial"
-      onclick="switchTab('612d242617c8f20cea5896c141df8741','gcloud')"
+      onclick="switchTab('e0f1335a06d0da9faacc08b4f9c5322b','gcloud')"
     >
       <div>
         <div class="tab-nav-hidden">gcloud</div>
@@ -348,8 +342,7 @@ graph TD;
       <div class="tab-content-text">
 
 <p>Run this command and click on this link:</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-Bash" data-lang="Bash"><span style="display:flex;"><span>echo -e <span style="color:#e6db74">&#34;https://console.cloud.google.com/kubernetes/config_management/packages?project=</span><span style="color:#e6db74">${</span>HOST_PROJECT_ID<span style="color:#e6db74">}</span><span style="color:#e6db74">&#34;</span>
-</span></span></code></pre></div><p>Wait until you see the <code>Sync status</code> column as <code>Synced</code> and the <code>Reconcile status</code> column as <code>Current</code>.</p>
+<div class="wrap-code highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-Bash" data-lang="Bash"><span style="display:flex;"><span>echo -e <span style="color:#e6db74">&#34;https://console.cloud.google.com/kubernetes/config_management/packages?project=</span><span style="color:#e6db74">${</span>HOST_PROJECT_ID<span style="color:#e6db74">}</span><span style="color:#e6db74">&#34;</span></span></span></code></pre></div><p>Wait until you see the <code>Sync status</code> column as <code>Synced</code> and the <code>Reconcile status</code> column as <code>Current</code>.</p>
 </div>
     </div>
     <div
@@ -358,12 +351,11 @@ graph TD;
       <div class="tab-content-text">
 
 <p>Run this command:</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-Bash" data-lang="Bash"><span style="display:flex;"><span>gcloud alpha anthos config sync repo describe <span style="color:#ae81ff">\
+<div class="wrap-code highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-Bash" data-lang="Bash"><span style="display:flex;"><span>gcloud alpha anthos config sync repo describe <span style="color:#ae81ff">\
 </span></span></span><span style="display:flex;"><span><span style="color:#ae81ff"></span>    --project $HOST_PROJECT_ID <span style="color:#ae81ff">\
 </span></span></span><span style="display:flex;"><span><span style="color:#ae81ff"></span>    --managed-resources all <span style="color:#ae81ff">\
 </span></span></span><span style="display:flex;"><span><span style="color:#ae81ff"></span>    --sync-name repo-sync <span style="color:#ae81ff">\
-</span></span></span><span style="display:flex;"><span><span style="color:#ae81ff"></span>    --sync-namespace $TENANT_PROJECT_ID
-</span></span></code></pre></div><p>Wait and re-run this command above until you see <code>&quot;status&quot;: &quot;SYNCED&quot;</code>. All the <code>managed_resources</code> listed should have <code>STATUS: Current</code> too.</p>
+</span></span></span><span style="display:flex;"><span><span style="color:#ae81ff"></span>    --sync-namespace $TENANT_PROJECT_ID</span></span></code></pre></div><p>Wait and re-run this command above until you see <code>&quot;status&quot;: &quot;SYNCED&quot;</code>. All the <code>managed_resources</code> listed should have <code>STATUS: Current</code> too.</p>
 </div>
     </div>
   </div>
@@ -377,9 +369,8 @@ graph TD;
 </div>
 </div>
 <p>List the GitHub runs for the <strong>Tenant project configs</strong> repository:</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-Bash" data-lang="Bash"><span style="display:flex;"><span>cd <span style="color:#e6db74">${</span>WORK_DIR<span style="color:#e6db74">}</span>$TENANT_PROJECT_DIR_NAME <span style="color:#f92672">&amp;&amp;</span> gh run list
-</span></span></code></pre></div><p>List the Google Cloud resources created:</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-Bash" data-lang="Bash"><span style="display:flex;"><span>gcloud projects get-iam-policy $TENANT_PROJECT_ID <span style="color:#ae81ff">\
+<div class="wrap-code highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-Bash" data-lang="Bash"><span style="display:flex;"><span>cd <span style="color:#e6db74">${</span>WORK_DIR<span style="color:#e6db74">}</span>$TENANT_PROJECT_DIR_NAME <span style="color:#f92672">&amp;&amp;</span> gh run list</span></span></code></pre></div><p>List the Google Cloud resources created:</p>
+<div class="wrap-code highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-Bash" data-lang="Bash"><span style="display:flex;"><span>gcloud projects get-iam-policy $TENANT_PROJECT_ID <span style="color:#ae81ff">\
 </span></span></span><span style="display:flex;"><span><span style="color:#ae81ff"></span>    --filter<span style="color:#f92672">=</span><span style="color:#e6db74">&#34;bindings.members:</span><span style="color:#e6db74">${</span>GKE_SA<span style="color:#e6db74">}</span><span style="color:#e6db74">@</span><span style="color:#e6db74">${</span>TENANT_PROJECT_ID<span style="color:#e6db74">}</span><span style="color:#e6db74">.iam.gserviceaccount.com&#34;</span> <span style="color:#ae81ff">\
 </span></span></span><span style="display:flex;"><span><span style="color:#ae81ff"></span>    --flatten<span style="color:#f92672">=</span><span style="color:#e6db74">&#34;bindings[].members&#34;</span> <span style="color:#ae81ff">\
 </span></span></span><span style="display:flex;"><span><span style="color:#ae81ff"></span>    --format<span style="color:#f92672">=</span><span style="color:#e6db74">&#34;table(bindings.role)&#34;</span>
@@ -388,8 +379,7 @@ graph TD;
 </span></span><span style="display:flex;"><span>gcloud container node-pools list <span style="color:#ae81ff">\
 </span></span></span><span style="display:flex;"><span><span style="color:#ae81ff"></span>    --cluster $GKE_NAME <span style="color:#ae81ff">\
 </span></span></span><span style="display:flex;"><span><span style="color:#ae81ff"></span>    --project $TENANT_PROJECT_ID <span style="color:#ae81ff">\
-</span></span></span><span style="display:flex;"><span><span style="color:#ae81ff"></span>    --region $GKE_LOCATION
-</span></span></code></pre></div><p>Wait and re-run this command above until you see the resources created.</p>
+</span></span></span><span style="display:flex;"><span><span style="color:#ae81ff"></span>    --region $GKE_LOCATION</span></span></code></pre></div><p>Wait and re-run this command above until you see the resources created.</p>
 
             <footer class="footline">
 
@@ -576,21 +566,21 @@ graph TD;
         </div>
       </div>
     </aside>
-    <script src="/acm-workshop/js/clipboard.min.js?1687278377" defer></script>
-    <script src="/acm-workshop/js/perfect-scrollbar.min.js?1687278377" defer></script>
-    <script src="/acm-workshop/js/d3/d3-color.min.js?1687278377" defer></script>
-    <script src="/acm-workshop/js/d3/d3-dispatch.min.js?1687278377" defer></script>
-    <script src="/acm-workshop/js/d3/d3-drag.min.js?1687278377" defer></script>
-    <script src="/acm-workshop/js/d3/d3-ease.min.js?1687278377" defer></script>
-    <script src="/acm-workshop/js/d3/d3-interpolate.min.js?1687278377" defer></script>
-    <script src="/acm-workshop/js/d3/d3-selection.min.js?1687278377" defer></script>
-    <script src="/acm-workshop/js/d3/d3-timer.min.js?1687278377" defer></script>
-    <script src="/acm-workshop/js/d3/d3-transition.min.js?1687278377" defer></script>
-    <script src="/acm-workshop/js/d3/d3-zoom.min.js?1687278377" defer></script>
-    <script src="/acm-workshop/js/mermaid.min.js?1687278377" defer></script>
+    <script src="/acm-workshop/js/clipboard.min.js?1689352019" defer></script>
+    <script src="/acm-workshop/js/perfect-scrollbar.min.js?1689352019" defer></script>
+    <script src="/acm-workshop/js/d3/d3-color.min.js?1689352019" defer></script>
+    <script src="/acm-workshop/js/d3/d3-dispatch.min.js?1689352019" defer></script>
+    <script src="/acm-workshop/js/d3/d3-drag.min.js?1689352019" defer></script>
+    <script src="/acm-workshop/js/d3/d3-ease.min.js?1689352019" defer></script>
+    <script src="/acm-workshop/js/d3/d3-interpolate.min.js?1689352019" defer></script>
+    <script src="/acm-workshop/js/d3/d3-selection.min.js?1689352019" defer></script>
+    <script src="/acm-workshop/js/d3/d3-timer.min.js?1689352019" defer></script>
+    <script src="/acm-workshop/js/d3/d3-transition.min.js?1689352019" defer></script>
+    <script src="/acm-workshop/js/d3/d3-zoom.min.js?1689352019" defer></script>
+    <script src="/acm-workshop/js/mermaid.min.js?1689352019" defer></script>
     <script>
       window.themeUseMermaid = JSON.parse("{}");
     </script>
-    <script src="/acm-workshop/js/theme.js?1687278377" defer></script>
+    <script src="/acm-workshop/js/theme.js?1689352019" defer></script>
   </body>
 </html>

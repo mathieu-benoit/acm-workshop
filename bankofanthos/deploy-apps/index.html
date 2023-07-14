@@ -4,24 +4,24 @@
     <meta charset="utf-8">
     <meta name="viewport" content="height=device-height, width=device-width, initial-scale=1.0, minimum-scale=1.0">
     <meta name="generator" content="Hugo 0.109.0">
-    <meta name="generator" content="Relearn 5.16.2+tip">
+    <meta name="generator" content="Relearn 5.17.1+tip">
     <meta name="description" content="Duration: 5 min | Persona: Apps Operator">
     <meta name="author" content="Mathieu Benoit">
     <title>Deploy apps</title>
-    <link href="/acm-workshop/images/favicon.png?1687278376" rel="icon" type="image/png">
+    <link href="/acm-workshop/images/favicon.png?1689352019" rel="icon" type="image/png">
     <!-- https://github.com/filamentgroup/loadCSS/blob/master/README.md#how-to-use -->
-    <link href="/acm-workshop/css/fontawesome-all.min.css?1687278376" rel="stylesheet" media="print" onload="this.media='all';this.onload=null;"><noscript><link href="/acm-workshop/css/fontawesome-all.min.css?1687278376" rel="stylesheet"></noscript>
-    <link href="/acm-workshop/css/nucleus.css?1687278376" rel="stylesheet">
-    <link href="/acm-workshop/css/auto-complete.css?1687278376" rel="stylesheet" media="print" onload="this.media='all';this.onload=null;"><noscript><link href="/acm-workshop/css/auto-complete.css?1687278376" rel="stylesheet"></noscript>
-    <link href="/acm-workshop/css/perfect-scrollbar.min.css?1687278376" rel="stylesheet">
-    <link href="/acm-workshop/css/fonts.css?1687278376" rel="stylesheet" media="print" onload="this.media='all';this.onload=null;"><noscript><link href="/acm-workshop/css/fonts.css?1687278376" rel="stylesheet"></noscript>
-    <link href="/acm-workshop/css/theme.css?1687278376" rel="stylesheet">
-    <link href="/acm-workshop/css/theme-mine.css?1687278376" rel="stylesheet" id="variant-style">
-    <link href="/acm-workshop/css/variant.css?1687278376" rel="stylesheet">
-    <link href="/acm-workshop/css/print.css?1687278376" rel="stylesheet" media="print">
-    <link href="/acm-workshop/css/ie.css?1687278376" rel="stylesheet">
-    <script src="/acm-workshop/js/url.js?1687278376"></script>
-    <script src="/acm-workshop/js/variant.js?1687278376"></script>
+    <link href="/acm-workshop/css/fontawesome-all.min.css?1689352019" rel="stylesheet" media="print" onload="this.media='all';this.onload=null;"><noscript><link href="/acm-workshop/css/fontawesome-all.min.css?1689352019" rel="stylesheet"></noscript>
+    <link href="/acm-workshop/css/nucleus.css?1689352019" rel="stylesheet">
+    <link href="/acm-workshop/css/auto-complete.css?1689352019" rel="stylesheet" media="print" onload="this.media='all';this.onload=null;"><noscript><link href="/acm-workshop/css/auto-complete.css?1689352019" rel="stylesheet"></noscript>
+    <link href="/acm-workshop/css/perfect-scrollbar.min.css?1689352019" rel="stylesheet">
+    <link href="/acm-workshop/css/fonts.css?1689352019" rel="stylesheet" media="print" onload="this.media='all';this.onload=null;"><noscript><link href="/acm-workshop/css/fonts.css?1689352019" rel="stylesheet"></noscript>
+    <link href="/acm-workshop/css/theme.css?1689352019" rel="stylesheet">
+    <link href="/acm-workshop/css/theme-mine.css?1689352019" rel="stylesheet" id="variant-style">
+    <link href="/acm-workshop/css/variant.css?1689352019" rel="stylesheet">
+    <link href="/acm-workshop/css/print.css?1689352019" rel="stylesheet" media="print">
+    <link href="/acm-workshop/css/ie.css?1689352019" rel="stylesheet">
+    <script src="/acm-workshop/js/url.js?1689352019"></script>
+    <script src="/acm-workshop/js/variant.js?1689352019"></script>
     <script>
       // hack to let hugo tell us how to get to the root when using relativeURLs, it needs to be called *url= for it to do its magic:
       // https://github.com/gohugoio/hugo/blob/145b3fcce35fbac25c7033c91c1b7ae6d1179da8/transform/urlreplacers/absurlreplacer.go#L72""
@@ -108,29 +108,27 @@ if (!doNotTrack) {
 <h1 id="deploy-apps">Deploy apps</h1>
 
 <p>
-<a href="#image-89f22dc7c3419caf239aab2fad7bde55" class="lightbox-link">
+<a href="#image-6ed7aa7258800c2cd554c72f90d2ac5b" class="lightbox-link">
 <img src="https://github.com/mathieu-benoit/my-images/raw/main/acm-workshop/apps-operator.png" alt="Apps Operator" style="height: auto; width: auto;" loading="lazy">
 </a>
-<a href="javascript:history.back();" class="lightbox" id="image-89f22dc7c3419caf239aab2fad7bde55">
+<a href="javascript:history.back();" class="lightbox" id="image-6ed7aa7258800c2cd554c72f90d2ac5b">
 <img src="https://github.com/mathieu-benoit/my-images/raw/main/acm-workshop/apps-operator.png" alt="Apps Operator" class="lightbox-image" loading="lazy">
 </a>
 <em>Duration: 5 min | Persona: Apps Operator</em></p>
 <p>In this section, you will deploy the Bank of Anthos apps.</p>
 <p>Initialize variables:</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-Bash" data-lang="Bash"><span style="display:flex;"><span>WORK_DIR<span style="color:#f92672">=</span>~/
-</span></span><span style="display:flex;"><span>source <span style="color:#e6db74">${</span>WORK_DIR<span style="color:#e6db74">}</span>acm-workshop-variables.sh
-</span></span></code></pre></div><h2 id="get-upstream-kubernetes-manifests">Get upstream Kubernetes manifests</h2>
+<div class="wrap-code highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-Bash" data-lang="Bash"><span style="display:flex;"><span>WORK_DIR<span style="color:#f92672">=</span>~/
+</span></span><span style="display:flex;"><span>source <span style="color:#e6db74">${</span>WORK_DIR<span style="color:#e6db74">}</span>acm-workshop-variables.sh</span></span></code></pre></div><h2 id="get-upstream-kubernetes-manifests">Get upstream Kubernetes manifests</h2>
 <p>Get the upstream Kubernetes manifests:</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-Bash" data-lang="Bash"><span style="display:flex;"><span>cd <span style="color:#e6db74">${</span>WORK_DIR<span style="color:#e6db74">}</span>$BANK_OF_ANTHOS_DIR_NAME
+<div class="wrap-code highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-Bash" data-lang="Bash"><span style="display:flex;"><span>cd <span style="color:#e6db74">${</span>WORK_DIR<span style="color:#e6db74">}</span>$BANK_OF_ANTHOS_DIR_NAME
 </span></span><span style="display:flex;"><span>kpt pkg get https://github.com/GoogleCloudPlatform/bank-of-anthos/kubernetes-manifests
 </span></span><span style="display:flex;"><span>mv kubernetes-manifests upstream
 </span></span><span style="display:flex;"><span>cd upstream
 </span></span><span style="display:flex;"><span>rm Kptfile
 </span></span><span style="display:flex;"><span>curl -L https://raw.githubusercontent.com/GoogleCloudPlatform/bank-of-anthos/main/extras/jwt/jwt-secret.yaml &gt; jwt-secret.yaml
-</span></span><span style="display:flex;"><span>kustomize create --autodetect
-</span></span></code></pre></div><h2 id="create-base-overlay">Create base overlay</h2>
+</span></span><span style="display:flex;"><span>kustomize create --autodetect</span></span></code></pre></div><h2 id="create-base-overlay">Create base overlay</h2>
 <p>Create Kustomize base overlay files:</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-Bash" data-lang="Bash"><span style="display:flex;"><span>mkdir <span style="color:#e6db74">${</span>WORK_DIR<span style="color:#e6db74">}</span>$BANK_OF_ANTHOS_DIR_NAME/base
+<div class="wrap-code highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-Bash" data-lang="Bash"><span style="display:flex;"><span>mkdir <span style="color:#e6db74">${</span>WORK_DIR<span style="color:#e6db74">}</span>$BANK_OF_ANTHOS_DIR_NAME/base
 </span></span><span style="display:flex;"><span>cd <span style="color:#e6db74">${</span>WORK_DIR<span style="color:#e6db74">}</span>$BANK_OF_ANTHOS_DIR_NAME/base
 </span></span><span style="display:flex;"><span>kustomize create
 </span></span><span style="display:flex;"><span>kustomize edit add resource ../upstream
@@ -143,8 +141,7 @@ if (!doNotTrack) {
 </span></span></span><span style="display:flex;"><span><span style="color:#e6db74">    - op: replace
 </span></span></span><span style="display:flex;"><span><span style="color:#e6db74">      path: /spec/type
 </span></span></span><span style="display:flex;"><span><span style="color:#e6db74">      value: ClusterIP
-</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">EOF</span>
-</span></span></code></pre></div>
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">EOF</span></span></span></code></pre></div>
 <div class="box notices cstyle info">
   <div class="box-label"><i class="fa-fw fas fa-info-circle"></i> Info</div>
   <div class="box-content">
@@ -154,7 +151,7 @@ if (!doNotTrack) {
 </div>
 <h2 id="define-virtualservice">Define VirtualService</h2>
 <p>Define the <code>VirtualService</code> resource in order to establish the Ingress Gateway routing to the Online Boutique apps:</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-Bash" data-lang="Bash"><span style="display:flex;"><span>cat <span style="color:#e6db74">&lt;&lt;EOF &gt; ${WORK_DIR}$BANK_OF_ANTHOS_DIR_NAME/base/virtualservice.yaml
+<div class="wrap-code highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-Bash" data-lang="Bash"><span style="display:flex;"><span>cat <span style="color:#e6db74">&lt;&lt;EOF &gt; ${WORK_DIR}$BANK_OF_ANTHOS_DIR_NAME/base/virtualservice.yaml
 </span></span></span><span style="display:flex;"><span><span style="color:#e6db74">apiVersion: networking.istio.io/v1alpha3
 </span></span></span><span style="display:flex;"><span><span style="color:#e6db74">kind: VirtualService
 </span></span></span><span style="display:flex;"><span><span style="color:#e6db74">metadata:
@@ -170,15 +167,12 @@ if (!doNotTrack) {
 </span></span></span><span style="display:flex;"><span><span style="color:#e6db74">        host: frontend
 </span></span></span><span style="display:flex;"><span><span style="color:#e6db74">        port:
 </span></span></span><span style="display:flex;"><span><span style="color:#e6db74">          number: 80
-</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">EOF</span>
-</span></span></code></pre></div><p>Update the Kustomize base overlay:</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-Bash" data-lang="Bash"><span style="display:flex;"><span>cd <span style="color:#e6db74">${</span>WORK_DIR<span style="color:#e6db74">}</span>$BANK_OF_ANTHOS_DIR_NAME/base
-</span></span><span style="display:flex;"><span>kustomize edit add resource virtualservice.yaml
-</span></span></code></pre></div><h2 id="define-staging-namespace-overlay">Define Staging namespace overlay</h2>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-Bash" data-lang="Bash"><span style="display:flex;"><span>cd <span style="color:#e6db74">${</span>WORK_DIR<span style="color:#e6db74">}</span>$BANK_OF_ANTHOS_DIR_NAME/staging
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">EOF</span></span></span></code></pre></div><p>Update the Kustomize base overlay:</p>
+<div class="wrap-code highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-Bash" data-lang="Bash"><span style="display:flex;"><span>cd <span style="color:#e6db74">${</span>WORK_DIR<span style="color:#e6db74">}</span>$BANK_OF_ANTHOS_DIR_NAME/base
+</span></span><span style="display:flex;"><span>kustomize edit add resource virtualservice.yaml</span></span></code></pre></div><h2 id="define-staging-namespace-overlay">Define Staging namespace overlay</h2>
+<div class="wrap-code highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-Bash" data-lang="Bash"><span style="display:flex;"><span>cd <span style="color:#e6db74">${</span>WORK_DIR<span style="color:#e6db74">}</span>$BANK_OF_ANTHOS_DIR_NAME/staging
 </span></span><span style="display:flex;"><span>kustomize edit add resource ../base
-</span></span><span style="display:flex;"><span>kustomize edit set namespace $BANKOFANTHOS_NAMESPACE
-</span></span></code></pre></div>
+</span></span><span style="display:flex;"><span>kustomize edit set namespace $BANKOFANTHOS_NAMESPACE</span></span></code></pre></div>
 <div class="box notices cstyle info">
   <div class="box-label"><i class="fa-fw fas fa-info-circle"></i> Info</div>
   <div class="box-content">
@@ -188,7 +182,7 @@ if (!doNotTrack) {
 </div>
 <h2 id="update-the-staging-namespace-overlay">Update the Staging namespace overlay</h2>
 <p>Set the proper <code>hosts</code> value in the <code>VirtualService</code>:</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-Bash" data-lang="Bash"><span style="display:flex;"><span>mkdir <span style="color:#e6db74">${</span>WORK_DIR<span style="color:#e6db74">}</span>$BANK_OF_ANTHOS_DIR_NAME/staging/virtualservice
+<div class="wrap-code highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-Bash" data-lang="Bash"><span style="display:flex;"><span>mkdir <span style="color:#e6db74">${</span>WORK_DIR<span style="color:#e6db74">}</span>$BANK_OF_ANTHOS_DIR_NAME/staging/virtualservice
 </span></span><span style="display:flex;"><span>cat <span style="color:#e6db74">&lt;&lt;EOF &gt; ${WORK_DIR}$BANK_OF_ANTHOS_DIR_NAME/staging/virtualservice/kustomization.yaml
 </span></span></span><span style="display:flex;"><span><span style="color:#e6db74">apiVersion: kustomize.config.k8s.io/v1alpha1
 </span></span></span><span style="display:flex;"><span><span style="color:#e6db74">kind: Component
@@ -201,9 +195,8 @@ if (!doNotTrack) {
 </span></span></span><span style="display:flex;"><span><span style="color:#e6db74">      path: /spec/hosts
 </span></span></span><span style="display:flex;"><span><span style="color:#e6db74">      value:
 </span></span></span><span style="display:flex;"><span><span style="color:#e6db74">        - ${BANK_OF_ANTHOS_INGRESS_GATEWAY_HOST_NAME}
-</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">EOF</span>
-</span></span></code></pre></div><p>Update the <code>StatefulSets</code> and <code>Deployments</code>&rsquo;s container images to point to the private Artifact Registry:</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-Bash" data-lang="Bash"><span style="display:flex;"><span>mkdir <span style="color:#e6db74">${</span>WORK_DIR<span style="color:#e6db74">}</span>$BANK_OF_ANTHOS_DIR_NAME/staging/container-images
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">EOF</span></span></span></code></pre></div><p>Update the <code>StatefulSets</code> and <code>Deployments</code>&rsquo;s container images to point to the private Artifact Registry:</p>
+<div class="wrap-code highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-Bash" data-lang="Bash"><span style="display:flex;"><span>mkdir <span style="color:#e6db74">${</span>WORK_DIR<span style="color:#e6db74">}</span>$BANK_OF_ANTHOS_DIR_NAME/staging/container-images
 </span></span><span style="display:flex;"><span>cat <span style="color:#e6db74">&lt;&lt;EOF &gt; ${WORK_DIR}$BANK_OF_ANTHOS_DIR_NAME/staging/container-images/kustomization.yaml
 </span></span></span><span style="display:flex;"><span><span style="color:#e6db74">apiVersion: kustomize.config.k8s.io/v1alpha1
 </span></span></span><span style="display:flex;"><span><span style="color:#e6db74">kind: Component
@@ -271,9 +264,8 @@ if (!doNotTrack) {
 </span></span></span><span style="display:flex;"><span><span style="color:#e6db74">    - op: replace
 </span></span></span><span style="display:flex;"><span><span style="color:#e6db74">      path: /spec/template/spec/containers/0/image
 </span></span></span><span style="display:flex;"><span><span style="color:#e6db74">      value: ${PRIVATE_BANK_OF_ANTHOS_REGISTRY}/userservice:${BANK_OF_ANTHOS_VERSION}
-</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">EOF</span>
-</span></span></code></pre></div><p>Update the <code>StatefulSets</code> and <code>Deployments</code>&rsquo;s container images to point to the private Artifact Registry:</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-Bash" data-lang="Bash"><span style="display:flex;"><span>mkdir <span style="color:#e6db74">${</span>WORK_DIR<span style="color:#e6db74">}</span>$BANK_OF_ANTHOS_DIR_NAME/staging/disable-monitoring
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">EOF</span></span></span></code></pre></div><p>Update the <code>StatefulSets</code> and <code>Deployments</code>&rsquo;s container images to point to the private Artifact Registry:</p>
+<div class="wrap-code highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-Bash" data-lang="Bash"><span style="display:flex;"><span>mkdir <span style="color:#e6db74">${</span>WORK_DIR<span style="color:#e6db74">}</span>$BANK_OF_ANTHOS_DIR_NAME/staging/disable-monitoring
 </span></span><span style="display:flex;"><span>cat <span style="color:#e6db74">&lt;&lt;EOF &gt; ${WORK_DIR}$BANK_OF_ANTHOS_DIR_NAME/staging/disable-monitoring/kustomization.yaml
 </span></span></span><span style="display:flex;"><span><span style="color:#e6db74">apiVersion: kustomize.config.k8s.io/v1alpha1
 </span></span></span><span style="display:flex;"><span><span style="color:#e6db74">kind: Component
@@ -362,25 +354,22 @@ if (!doNotTrack) {
 </span></span></span><span style="display:flex;"><span><span style="color:#e6db74">            env:
 </span></span></span><span style="display:flex;"><span><span style="color:#e6db74">            - name: ENABLE_TRACING
 </span></span></span><span style="display:flex;"><span><span style="color:#e6db74">              value: &#34;false&#34;
-</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">EOF</span>
-</span></span></code></pre></div><p>Update the Staging Kustomize overlay:</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-Bash" data-lang="Bash"><span style="display:flex;"><span>cd <span style="color:#e6db74">${</span>WORK_DIR<span style="color:#e6db74">}</span>$BANK_OF_ANTHOS_DIR_NAME/staging
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">EOF</span></span></span></code></pre></div><p>Update the Staging Kustomize overlay:</p>
+<div class="wrap-code highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-Bash" data-lang="Bash"><span style="display:flex;"><span>cd <span style="color:#e6db74">${</span>WORK_DIR<span style="color:#e6db74">}</span>$BANK_OF_ANTHOS_DIR_NAME/staging
 </span></span><span style="display:flex;"><span>kustomize edit add component virtualservice
 </span></span><span style="display:flex;"><span>kustomize edit add component container-images
-</span></span><span style="display:flex;"><span>kustomize edit add component disable-monitoring
-</span></span></code></pre></div><h2 id="deploy-kubernetes-manifests">Deploy Kubernetes manifests</h2>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-Bash" data-lang="Bash"><span style="display:flex;"><span>cd <span style="color:#e6db74">${</span>WORK_DIR<span style="color:#e6db74">}</span>$BANK_OF_ANTHOS_DIR_NAME/
-</span></span><span style="display:flex;"><span>git add . <span style="color:#f92672">&amp;&amp;</span> git commit -m <span style="color:#e6db74">&#34;Bank of Anthos apps&#34;</span> <span style="color:#f92672">&amp;&amp;</span> git push origin main
-</span></span></code></pre></div><h2 id="check-deployments">Check deployments</h2>
+</span></span><span style="display:flex;"><span>kustomize edit add component disable-monitoring</span></span></code></pre></div><h2 id="deploy-kubernetes-manifests">Deploy Kubernetes manifests</h2>
+<div class="wrap-code highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-Bash" data-lang="Bash"><span style="display:flex;"><span>cd <span style="color:#e6db74">${</span>WORK_DIR<span style="color:#e6db74">}</span>$BANK_OF_ANTHOS_DIR_NAME/
+</span></span><span style="display:flex;"><span>git add . <span style="color:#f92672">&amp;&amp;</span> git commit -m <span style="color:#e6db74">&#34;Bank of Anthos apps&#34;</span> <span style="color:#f92672">&amp;&amp;</span> git push origin main</span></span></code></pre></div><h2 id="check-deployments">Check deployments</h2>
 <p>List the Kubernetes resources managed by Config Sync in <strong>GKE cluster</strong> for the <strong>Bank of Anthos apps</strong> repository:
 
-<div class="tab-panel" data-tab-group="f95a01984e9e8f72b931c3bdd53b017a">
+<div class="tab-panel" data-tab-group="3bdb395955a9db45a8c79e404b18ba13">
   <div class="tab-nav">
     <div class="tab-nav-title">&#8203;</div>
     <button
       data-tab-item="UI"
       class="tab-nav-button tab-panel-style cstyle initial active"
-      onclick="switchTab('f95a01984e9e8f72b931c3bdd53b017a','UI')"
+      onclick="switchTab('3bdb395955a9db45a8c79e404b18ba13','UI')"
     >
       <div>
         <div class="tab-nav-hidden">UI</div>
@@ -390,7 +379,7 @@ if (!doNotTrack) {
     <button
       data-tab-item="gcloud"
       class="tab-nav-button tab-panel-style cstyle initial"
-      onclick="switchTab('f95a01984e9e8f72b931c3bdd53b017a','gcloud')"
+      onclick="switchTab('3bdb395955a9db45a8c79e404b18ba13','gcloud')"
     >
       <div>
         <div class="tab-nav-hidden">gcloud</div>
@@ -405,8 +394,7 @@ if (!doNotTrack) {
       <div class="tab-content-text">
 
 <p>Run this command and click on this link:</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-Bash" data-lang="Bash"><span style="display:flex;"><span>echo -e <span style="color:#e6db74">&#34;https://console.cloud.google.com/kubernetes/config_management/packages?project=</span><span style="color:#e6db74">${</span>TENANT_PROJECT_ID<span style="color:#e6db74">}</span><span style="color:#e6db74">&#34;</span>
-</span></span></code></pre></div><p>Wait until you see the <code>Sync status</code> column as <code>Synced</code> and the <code>Reconcile status</code> column as <code>Current</code>.</p>
+<div class="wrap-code highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-Bash" data-lang="Bash"><span style="display:flex;"><span>echo -e <span style="color:#e6db74">&#34;https://console.cloud.google.com/kubernetes/config_management/packages?project=</span><span style="color:#e6db74">${</span>TENANT_PROJECT_ID<span style="color:#e6db74">}</span><span style="color:#e6db74">&#34;</span></span></span></code></pre></div><p>Wait until you see the <code>Sync status</code> column as <code>Synced</code> and the <code>Reconcile status</code> column as <code>Current</code>.</p>
 </div>
     </div>
     <div
@@ -415,22 +403,19 @@ if (!doNotTrack) {
       <div class="tab-content-text">
 
 <p>Run this command:</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-Bash" data-lang="Bash"><span style="display:flex;"><span>gcloud alpha anthos config sync repo describe <span style="color:#ae81ff">\
+<div class="wrap-code highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-Bash" data-lang="Bash"><span style="display:flex;"><span>gcloud alpha anthos config sync repo describe <span style="color:#ae81ff">\
 </span></span></span><span style="display:flex;"><span><span style="color:#ae81ff"></span>    --project $TENANT_PROJECT_ID <span style="color:#ae81ff">\
 </span></span></span><span style="display:flex;"><span><span style="color:#ae81ff"></span>    --managed-resources all <span style="color:#ae81ff">\
 </span></span></span><span style="display:flex;"><span><span style="color:#ae81ff"></span>    --sync-name repo-sync <span style="color:#ae81ff">\
-</span></span></span><span style="display:flex;"><span><span style="color:#ae81ff"></span>    --sync-namespace $BANKOFANTHOS_NAMESPACE
-</span></span></code></pre></div><p>Wait and re-run this command above until you see <code>&quot;status&quot;: &quot;SYNCED&quot;</code>.</p>
+</span></span></span><span style="display:flex;"><span><span style="color:#ae81ff"></span>    --sync-namespace $BANKOFANTHOS_NAMESPACE</span></span></code></pre></div><p>Wait and re-run this command above until you see <code>&quot;status&quot;: &quot;SYNCED&quot;</code>.</p>
 </div>
     </div>
   </div>
 </div></p>
 <p>List the GitHub runs for the <strong>Bank of Anthos apps</strong> repository:</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-Bash" data-lang="Bash"><span style="display:flex;"><span>cd <span style="color:#e6db74">${</span>WORK_DIR<span style="color:#e6db74">}</span>$BANK_OF_ANTHOS_DIR_NAME <span style="color:#f92672">&amp;&amp;</span> gh run list
-</span></span></code></pre></div><h2 id="check-the-bank-of-anthos-website">Check the Bank of Anthos website</h2>
+<div class="wrap-code highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-Bash" data-lang="Bash"><span style="display:flex;"><span>cd <span style="color:#e6db74">${</span>WORK_DIR<span style="color:#e6db74">}</span>$BANK_OF_ANTHOS_DIR_NAME <span style="color:#f92672">&amp;&amp;</span> gh run list</span></span></code></pre></div><h2 id="check-the-bank-of-anthos-website">Check the Bank of Anthos website</h2>
 <p>Navigate to the Bank of Anthos website, click on the link displayed by the command below:</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-Bash" data-lang="Bash"><span style="display:flex;"><span>echo -e <span style="color:#e6db74">&#34;https://</span><span style="color:#e6db74">${</span>BANK_OF_ANTHOS_INGRESS_GATEWAY_HOST_NAME<span style="color:#e6db74">}</span><span style="color:#e6db74">&#34;</span>
-</span></span></code></pre></div><p>You should see the error: <code>RBAC: access denied</code>. In the next section, you will see how to track this error and how to fix it.</p>
+<div class="wrap-code highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-Bash" data-lang="Bash"><span style="display:flex;"><span>echo -e <span style="color:#e6db74">&#34;https://</span><span style="color:#e6db74">${</span>BANK_OF_ANTHOS_INGRESS_GATEWAY_HOST_NAME<span style="color:#e6db74">}</span><span style="color:#e6db74">&#34;</span></span></span></code></pre></div><p>You should see the error: <code>RBAC: access denied</code>. In the next section, you will see how to track this error and how to fix it.</p>
 
             <footer class="footline">
 
@@ -617,8 +602,8 @@ if (!doNotTrack) {
         </div>
       </div>
     </aside>
-    <script src="/acm-workshop/js/clipboard.min.js?1687278377" defer></script>
-    <script src="/acm-workshop/js/perfect-scrollbar.min.js?1687278377" defer></script>
-    <script src="/acm-workshop/js/theme.js?1687278377" defer></script>
+    <script src="/acm-workshop/js/clipboard.min.js?1689352019" defer></script>
+    <script src="/acm-workshop/js/perfect-scrollbar.min.js?1689352019" defer></script>
+    <script src="/acm-workshop/js/theme.js?1689352019" defer></script>
   </body>
 </html>

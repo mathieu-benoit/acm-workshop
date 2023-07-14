@@ -4,24 +4,24 @@
     <meta charset="utf-8">
     <meta name="viewport" content="height=device-height, width=device-width, initial-scale=1.0, minimum-scale=1.0">
     <meta name="generator" content="Hugo 0.109.0">
-    <meta name="generator" content="Relearn 5.16.2+tip">
+    <meta name="generator" content="Relearn 5.17.1+tip">
     <meta name="description" content="Duration: 5 min | Persona: Apps Operator">
     <meta name="author" content="Mathieu Benoit">
     <title>Monitor apps health</title>
-    <link href="/acm-workshop/images/favicon.png?1687278376" rel="icon" type="image/png">
+    <link href="/acm-workshop/images/favicon.png?1689352019" rel="icon" type="image/png">
     <!-- https://github.com/filamentgroup/loadCSS/blob/master/README.md#how-to-use -->
-    <link href="/acm-workshop/css/fontawesome-all.min.css?1687278376" rel="stylesheet" media="print" onload="this.media='all';this.onload=null;"><noscript><link href="/acm-workshop/css/fontawesome-all.min.css?1687278376" rel="stylesheet"></noscript>
-    <link href="/acm-workshop/css/nucleus.css?1687278376" rel="stylesheet">
-    <link href="/acm-workshop/css/auto-complete.css?1687278376" rel="stylesheet" media="print" onload="this.media='all';this.onload=null;"><noscript><link href="/acm-workshop/css/auto-complete.css?1687278376" rel="stylesheet"></noscript>
-    <link href="/acm-workshop/css/perfect-scrollbar.min.css?1687278376" rel="stylesheet">
-    <link href="/acm-workshop/css/fonts.css?1687278376" rel="stylesheet" media="print" onload="this.media='all';this.onload=null;"><noscript><link href="/acm-workshop/css/fonts.css?1687278376" rel="stylesheet"></noscript>
-    <link href="/acm-workshop/css/theme.css?1687278376" rel="stylesheet">
-    <link href="/acm-workshop/css/theme-mine.css?1687278376" rel="stylesheet" id="variant-style">
-    <link href="/acm-workshop/css/variant.css?1687278376" rel="stylesheet">
-    <link href="/acm-workshop/css/print.css?1687278376" rel="stylesheet" media="print">
-    <link href="/acm-workshop/css/ie.css?1687278376" rel="stylesheet">
-    <script src="/acm-workshop/js/url.js?1687278376"></script>
-    <script src="/acm-workshop/js/variant.js?1687278376"></script>
+    <link href="/acm-workshop/css/fontawesome-all.min.css?1689352019" rel="stylesheet" media="print" onload="this.media='all';this.onload=null;"><noscript><link href="/acm-workshop/css/fontawesome-all.min.css?1689352019" rel="stylesheet"></noscript>
+    <link href="/acm-workshop/css/nucleus.css?1689352019" rel="stylesheet">
+    <link href="/acm-workshop/css/auto-complete.css?1689352019" rel="stylesheet" media="print" onload="this.media='all';this.onload=null;"><noscript><link href="/acm-workshop/css/auto-complete.css?1689352019" rel="stylesheet"></noscript>
+    <link href="/acm-workshop/css/perfect-scrollbar.min.css?1689352019" rel="stylesheet">
+    <link href="/acm-workshop/css/fonts.css?1689352019" rel="stylesheet" media="print" onload="this.media='all';this.onload=null;"><noscript><link href="/acm-workshop/css/fonts.css?1689352019" rel="stylesheet"></noscript>
+    <link href="/acm-workshop/css/theme.css?1689352019" rel="stylesheet">
+    <link href="/acm-workshop/css/theme-mine.css?1689352019" rel="stylesheet" id="variant-style">
+    <link href="/acm-workshop/css/variant.css?1689352019" rel="stylesheet">
+    <link href="/acm-workshop/css/print.css?1689352019" rel="stylesheet" media="print">
+    <link href="/acm-workshop/css/ie.css?1689352019" rel="stylesheet">
+    <script src="/acm-workshop/js/url.js?1689352019"></script>
+    <script src="/acm-workshop/js/variant.js?1689352019"></script>
     <script>
       // hack to let hugo tell us how to get to the root when using relativeURLs, it needs to be called *url= for it to do its magic:
       // https://github.com/gohugoio/hugo/blob/145b3fcce35fbac25c7033c91c1b7ae6d1179da8/transform/urlreplacers/absurlreplacer.go#L72""
@@ -94,49 +94,47 @@ if (!doNotTrack) {
 <h1 id="monitor-apps-health">Monitor apps health</h1>
 
 <p>
-<a href="#image-cfe966b569dc32b989a2ea39049e7aa9" class="lightbox-link">
+<a href="#image-20c1c2e2f669f2f3ccbc93887e9b266b" class="lightbox-link">
 <img src="https://github.com/mathieu-benoit/my-images/raw/main/acm-workshop/apps-operator.png" alt="Apps Operator" style="height: auto; width: auto;" loading="lazy">
 </a>
-<a href="javascript:history.back();" class="lightbox" id="image-cfe966b569dc32b989a2ea39049e7aa9">
+<a href="javascript:history.back();" class="lightbox" id="image-20c1c2e2f669f2f3ccbc93887e9b266b">
 <img src="https://github.com/mathieu-benoit/my-images/raw/main/acm-workshop/apps-operator.png" alt="Apps Operator" class="lightbox-image" loading="lazy">
 </a>
 <em>Duration: 5 min | Persona: Apps Operator</em></p>
 <p>In this section, you will navigate to the topology of your Service Mesh as well as monitor your apps in terms of security, health and performance.</p>
 <p>Initialize variables:</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-Bash" data-lang="Bash"><span style="display:flex;"><span>WORK_DIR<span style="color:#f92672">=</span>~/
-</span></span><span style="display:flex;"><span>source <span style="color:#e6db74">${</span>WORK_DIR<span style="color:#e6db74">}</span>acm-workshop-variables.sh
-</span></span></code></pre></div><p>In the Google Cloud console, navigate to <em>Anthos &gt; Service Mesh &gt; Topology</em> to see the topology graph of your Service Mesh:
+<div class="wrap-code highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-Bash" data-lang="Bash"><span style="display:flex;"><span>WORK_DIR<span style="color:#f92672">=</span>~/
+</span></span><span style="display:flex;"><span>source <span style="color:#e6db74">${</span>WORK_DIR<span style="color:#e6db74">}</span>acm-workshop-variables.sh</span></span></code></pre></div><p>In the Google Cloud console, navigate to <em>Anthos &gt; Service Mesh &gt; Topology</em> to see the topology graph of your Service Mesh:
 
-<a href="#image-226813187b259a047a92b0703121e084" class="lightbox-link">
+<a href="#image-0f176d214fcefc4d498e110097872dff" class="lightbox-link">
 <img src="https://github.com/mathieu-benoit/my-images/raw/main/acm-workshop/service-mesh-topology.png" alt="Anthos Service Mesh Topology view" style="height: auto; width: auto;" loading="lazy">
 </a>
-<a href="javascript:history.back();" class="lightbox" id="image-226813187b259a047a92b0703121e084">
+<a href="javascript:history.back();" class="lightbox" id="image-0f176d214fcefc4d498e110097872dff">
 <img src="https://github.com/mathieu-benoit/my-images/raw/main/acm-workshop/service-mesh-topology.png" alt="Anthos Service Mesh Topology view" class="lightbox-image" loading="lazy">
 </a></p>
 <p>Click on the link displayed by the command below:</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-Bash" data-lang="Bash"><span style="display:flex;"><span>echo -e <span style="color:#e6db74">&#34;https://console.cloud.google.com/anthos/services?project=</span><span style="color:#e6db74">${</span>TENANT_PROJECT_ID<span style="color:#e6db74">}</span><span style="color:#e6db74">&amp;pageState=%28%22topologyViewToggle%22:%28%22value%22:%22graph%22%29%29&#34;</span>
-</span></span></code></pre></div><p>Select the Online Boutique&rsquo;s <code>frontend</code> app. On your right, click on <strong>&ndash;&gt; Go to service dashboard</strong>:
+<div class="wrap-code highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-Bash" data-lang="Bash"><span style="display:flex;"><span>echo -e <span style="color:#e6db74">&#34;https://console.cloud.google.com/anthos/services?project=</span><span style="color:#e6db74">${</span>TENANT_PROJECT_ID<span style="color:#e6db74">}</span><span style="color:#e6db74">&amp;pageState=%28%22topologyViewToggle%22:%28%22value%22:%22graph%22%29%29&#34;</span></span></span></code></pre></div><p>Select the Online Boutique&rsquo;s <code>frontend</code> app. On your right, click on <strong>&ndash;&gt; Go to service dashboard</strong>:
 
-<a href="#image-e1ae8593c8f4b0dbf0e9ff66692923bd" class="lightbox-link">
+<a href="#image-44cf0de77f2525e4e7bef07ada3547a7" class="lightbox-link">
 <img src="https://github.com/mathieu-benoit/my-images/raw/main/acm-workshop/service-mesh-monitoring-overview.png" alt="Anthos Service Mesh Monitoring overview" style="height: auto; width: auto;" loading="lazy">
 </a>
-<a href="javascript:history.back();" class="lightbox" id="image-e1ae8593c8f4b0dbf0e9ff66692923bd">
+<a href="javascript:history.back();" class="lightbox" id="image-44cf0de77f2525e4e7bef07ada3547a7">
 <img src="https://github.com/mathieu-benoit/my-images/raw/main/acm-workshop/service-mesh-monitoring-overview.png" alt="Anthos Service Mesh Monitoring overview" class="lightbox-image" loading="lazy">
 </a></p>
 <p>On the left, click the <strong>Metrics</strong> tab where you could get more insights about the <a href="https://sre.google/sre-book/monitoring-distributed-systems/#xref_monitoring_golden-signals" target="_blank">golden signals</a> of the <code>frontend</code> app:
 
-<a href="#image-a38dbb3ede12bd530edbe2927b360be9" class="lightbox-link">
+<a href="#image-4e5d455487f0904d8535f40cec348535" class="lightbox-link">
 <img src="https://github.com/mathieu-benoit/my-images/raw/main/acm-workshop/service-mesh-monitoring-metrics.png" alt="Anthos Service Mesh Monitoring metrics" style="height: auto; width: auto;" loading="lazy">
 </a>
-<a href="javascript:history.back();" class="lightbox" id="image-a38dbb3ede12bd530edbe2927b360be9">
+<a href="javascript:history.back();" class="lightbox" id="image-4e5d455487f0904d8535f40cec348535">
 <img src="https://github.com/mathieu-benoit/my-images/raw/main/acm-workshop/service-mesh-monitoring-metrics.png" alt="Anthos Service Mesh Monitoring metrics" class="lightbox-image" loading="lazy">
 </a></p>
 <p>On the left, click the <strong>Security</strong> tab where you could get more insights about the <strong>Service requests</strong> (<code>AuthorizationPolicy</code>) of the <code>frontend</code> app:
 
-<a href="#image-f407a2fc68506374741d3796794854af" class="lightbox-link">
+<a href="#image-1a6e90dad4fe3933786c396543638e9e" class="lightbox-link">
 <img src="https://github.com/mathieu-benoit/my-images/raw/main/acm-workshop/service-mesh-monitoring-security.png" alt="Anthos Service Mesh Monitoring security" style="height: auto; width: auto;" loading="lazy">
 </a>
-<a href="javascript:history.back();" class="lightbox" id="image-f407a2fc68506374741d3796794854af">
+<a href="javascript:history.back();" class="lightbox" id="image-1a6e90dad4fe3933786c396543638e9e">
 <img src="https://github.com/mathieu-benoit/my-images/raw/main/acm-workshop/service-mesh-monitoring-security.png" alt="Anthos Service Mesh Monitoring security" class="lightbox-image" loading="lazy">
 </a></p>
 <p>From there you will have access to a lot more monitoring features out of the box, feel free to discover these features and play with them for the different apps in your Service Mesh.</p>
@@ -326,8 +324,8 @@ if (!doNotTrack) {
         </div>
       </div>
     </aside>
-    <script src="/acm-workshop/js/clipboard.min.js?1687278377" defer></script>
-    <script src="/acm-workshop/js/perfect-scrollbar.min.js?1687278377" defer></script>
-    <script src="/acm-workshop/js/theme.js?1687278377" defer></script>
+    <script src="/acm-workshop/js/clipboard.min.js?1689352020" defer></script>
+    <script src="/acm-workshop/js/perfect-scrollbar.min.js?1689352020" defer></script>
+    <script src="/acm-workshop/js/theme.js?1689352020" defer></script>
   </body>
 </html>

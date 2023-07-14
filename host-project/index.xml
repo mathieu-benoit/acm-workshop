@@ -14,7 +14,7 @@
       <description>Duration: 5 min | Persona: Org Admin
 In this section, you will create the Host project. This Google Cloud project will host the Config Controller instance later.
 Two Google Cloud Projects will be created during this workshop, we will assign them your Billing Account Id. Set your Billing Account Id for the rest of the workshop:
-BILLING_ACCOUNT_ID=FIXME These two Google Cloud Projects will be created either at the Folder level (recommended) or at the Organization level.</description>
+BILLING_ACCOUNT_ID=FIXMEThese two Google Cloud Projects will be created either at the Folder level (recommended) or at the Organization level.</description>
     </item>
     <item>
       <title>Create Config Controller</title>
@@ -42,7 +42,7 @@ In this section, you will set up the primary Git repository of the Config Contro
       <description>Duration: 5 min | Persona: Org Admin
 In this section you will enforce policies to guarantee that any Namespaces in the ConfigController instance defining any Tenant project should contain its own ConfigConnectorContext object in order to leverage the namespaced mode of Config Connector.
 Initialize variables:
-WORK_DIR=~/ source ${WORK_DIR}acm-workshop-variables.sh Define the &amp;ldquo;Require ConfigConnectorContext for Namespaces&amp;rdquo; policies Define the ConstraintTemplate making sure that any Namespaces has a ConfigConnectorContext in it:
+WORK_DIR=~/ source ${WORK_DIR}acm-workshop-variables.shDefine the &amp;ldquo;Require ConfigConnectorContext for Namespaces&amp;rdquo; policies Define the ConstraintTemplate making sure that any Namespaces has a ConfigConnectorContext in it:
 cat &amp;lt;&amp;lt;EOF &amp;gt; ${WORK_DIR}$HOST_PROJECT_DIR_NAME/policies/templates/requirenamespaceconfigconnectorcontext.</description>
     </item>
   </channel>

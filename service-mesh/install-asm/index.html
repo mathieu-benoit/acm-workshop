@@ -4,24 +4,24 @@
     <meta charset="utf-8">
     <meta name="viewport" content="height=device-height, width=device-width, initial-scale=1.0, minimum-scale=1.0">
     <meta name="generator" content="Hugo 0.109.0">
-    <meta name="generator" content="Relearn 5.16.2+tip">
+    <meta name="generator" content="Relearn 5.17.1+tip">
     <meta name="description" content="Duration: 15 min | Persona: Platform Admin">
     <meta name="author" content="Mathieu Benoit">
     <title>Install ASM</title>
-    <link href="/acm-workshop/images/favicon.png?1687278376" rel="icon" type="image/png">
+    <link href="/acm-workshop/images/favicon.png?1689352019" rel="icon" type="image/png">
     <!-- https://github.com/filamentgroup/loadCSS/blob/master/README.md#how-to-use -->
-    <link href="/acm-workshop/css/fontawesome-all.min.css?1687278376" rel="stylesheet" media="print" onload="this.media='all';this.onload=null;"><noscript><link href="/acm-workshop/css/fontawesome-all.min.css?1687278376" rel="stylesheet"></noscript>
-    <link href="/acm-workshop/css/nucleus.css?1687278376" rel="stylesheet">
-    <link href="/acm-workshop/css/auto-complete.css?1687278376" rel="stylesheet" media="print" onload="this.media='all';this.onload=null;"><noscript><link href="/acm-workshop/css/auto-complete.css?1687278376" rel="stylesheet"></noscript>
-    <link href="/acm-workshop/css/perfect-scrollbar.min.css?1687278376" rel="stylesheet">
-    <link href="/acm-workshop/css/fonts.css?1687278376" rel="stylesheet" media="print" onload="this.media='all';this.onload=null;"><noscript><link href="/acm-workshop/css/fonts.css?1687278376" rel="stylesheet"></noscript>
-    <link href="/acm-workshop/css/theme.css?1687278376" rel="stylesheet">
-    <link href="/acm-workshop/css/theme-mine.css?1687278376" rel="stylesheet" id="variant-style">
-    <link href="/acm-workshop/css/variant.css?1687278376" rel="stylesheet">
-    <link href="/acm-workshop/css/print.css?1687278376" rel="stylesheet" media="print">
-    <link href="/acm-workshop/css/ie.css?1687278376" rel="stylesheet">
-    <script src="/acm-workshop/js/url.js?1687278376"></script>
-    <script src="/acm-workshop/js/variant.js?1687278376"></script>
+    <link href="/acm-workshop/css/fontawesome-all.min.css?1689352019" rel="stylesheet" media="print" onload="this.media='all';this.onload=null;"><noscript><link href="/acm-workshop/css/fontawesome-all.min.css?1689352019" rel="stylesheet"></noscript>
+    <link href="/acm-workshop/css/nucleus.css?1689352019" rel="stylesheet">
+    <link href="/acm-workshop/css/auto-complete.css?1689352019" rel="stylesheet" media="print" onload="this.media='all';this.onload=null;"><noscript><link href="/acm-workshop/css/auto-complete.css?1689352019" rel="stylesheet"></noscript>
+    <link href="/acm-workshop/css/perfect-scrollbar.min.css?1689352019" rel="stylesheet">
+    <link href="/acm-workshop/css/fonts.css?1689352019" rel="stylesheet" media="print" onload="this.media='all';this.onload=null;"><noscript><link href="/acm-workshop/css/fonts.css?1689352019" rel="stylesheet"></noscript>
+    <link href="/acm-workshop/css/theme.css?1689352019" rel="stylesheet">
+    <link href="/acm-workshop/css/theme-mine.css?1689352019" rel="stylesheet" id="variant-style">
+    <link href="/acm-workshop/css/variant.css?1689352019" rel="stylesheet">
+    <link href="/acm-workshop/css/print.css?1689352019" rel="stylesheet" media="print">
+    <link href="/acm-workshop/css/ie.css?1689352019" rel="stylesheet">
+    <script src="/acm-workshop/js/url.js?1689352019"></script>
+    <script src="/acm-workshop/js/variant.js?1689352019"></script>
     <script>
       // hack to let hugo tell us how to get to the root when using relativeURLs, it needs to be called *url= for it to do its magic:
       // https://github.com/gohugoio/hugo/blob/145b3fcce35fbac25c7033c91c1b7ae6d1179da8/transform/urlreplacers/absurlreplacer.go#L72""
@@ -106,20 +106,19 @@ if (!doNotTrack) {
 <h1 id="install-asm">Install ASM</h1>
 
 <p>
-<a href="#image-1c9673a109722060ef9758e4280fcbee" class="lightbox-link">
+<a href="#image-e1b907e3ab87df963f15b31788cd3a90" class="lightbox-link">
 <img src="https://github.com/mathieu-benoit/my-images/raw/main/acm-workshop/platform-admin.png" alt="Platform Admin" style="height: auto; width: auto;" loading="lazy">
 </a>
-<a href="javascript:history.back();" class="lightbox" id="image-1c9673a109722060ef9758e4280fcbee">
+<a href="javascript:history.back();" class="lightbox" id="image-e1b907e3ab87df963f15b31788cd3a90">
 <img src="https://github.com/mathieu-benoit/my-images/raw/main/acm-workshop/platform-admin.png" alt="Platform Admin" class="lightbox-image" loading="lazy">
 </a>
 <em>Duration: 15 min | Persona: Platform Admin</em></p>
 <p>In this section, you will install a Managed Service Mesh for your GKE cluster. This will opt your cluster in a specific channel in order to get the upgrades handled by Google for the managed control plane and managed data plane.</p>
 <p>Initialize variables:</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-Bash" data-lang="Bash"><span style="display:flex;"><span>WORK_DIR<span style="color:#f92672">=</span>~/
-</span></span><span style="display:flex;"><span>source <span style="color:#e6db74">${</span>WORK_DIR<span style="color:#e6db74">}</span>acm-workshop-variables.sh
-</span></span></code></pre></div><h2 id="define-asm-feature-for-the-tenant-project">Define ASM feature for the tenant project</h2>
+<div class="wrap-code highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-Bash" data-lang="Bash"><span style="display:flex;"><span>WORK_DIR<span style="color:#f92672">=</span>~/
+</span></span><span style="display:flex;"><span>source <span style="color:#e6db74">${</span>WORK_DIR<span style="color:#e6db74">}</span>acm-workshop-variables.sh</span></span></code></pre></div><h2 id="define-asm-feature-for-the-tenant-project">Define ASM feature for the tenant project</h2>
 <p>Define the ASM <a href="https://cloud.google.com/config-connector/docs/reference/resource-docs/gkehub/gkehubfeature" target="_blank"><code>GKEHubFeature</code></a> resource:</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-Bash" data-lang="Bash"><span style="display:flex;"><span>cat <span style="color:#e6db74">&lt;&lt;EOF &gt; ${WORK_DIR}$TENANT_PROJECT_DIR_NAME/gke-hub-feature-asm.yaml
+<div class="wrap-code highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-Bash" data-lang="Bash"><span style="display:flex;"><span>cat <span style="color:#e6db74">&lt;&lt;EOF &gt; ${WORK_DIR}$TENANT_PROJECT_DIR_NAME/gke-hub-feature-asm.yaml
 </span></span></span><span style="display:flex;"><span><span style="color:#e6db74">apiVersion: gkehub.cnrm.cloud.google.com/v1beta1
 </span></span></span><span style="display:flex;"><span><span style="color:#e6db74">kind: GKEHubFeature
 </span></span></span><span style="display:flex;"><span><span style="color:#e6db74">metadata:
@@ -130,8 +129,7 @@ if (!doNotTrack) {
 </span></span></span><span style="display:flex;"><span><span style="color:#e6db74">    name: ${TENANT_PROJECT_ID}
 </span></span></span><span style="display:flex;"><span><span style="color:#e6db74">  location: global
 </span></span></span><span style="display:flex;"><span><span style="color:#e6db74">  resourceID: servicemesh
-</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">EOF</span>
-</span></span></code></pre></div>
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">EOF</span></span></span></code></pre></div>
 <div class="box notices cstyle note">
   <div class="box-label"><i class="fa-fw fas fa-exclamation-circle"></i> Note</div>
   <div class="box-content">
@@ -141,7 +139,7 @@ if (!doNotTrack) {
 </div>
 <h2 id="define-managed-asm-for-the-gke-cluster">Define Managed ASM for the GKE cluster</h2>
 <p>Define the Managed ASM <a href="https://cloud.google.com/config-connector/docs/reference/resource-docs/gkehub/gkehubfeaturemembership" target="_blank"><code>GKEHubFeatureMembership</code></a> resource:</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-Bash" data-lang="Bash"><span style="display:flex;"><span>cat <span style="color:#e6db74">&lt;&lt;EOF &gt; ${WORK_DIR}$TENANT_PROJECT_DIR_NAME/gke-mesh-membership.yaml
+<div class="wrap-code highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-Bash" data-lang="Bash"><span style="display:flex;"><span>cat <span style="color:#e6db74">&lt;&lt;EOF &gt; ${WORK_DIR}$TENANT_PROJECT_DIR_NAME/gke-mesh-membership.yaml
 </span></span></span><span style="display:flex;"><span><span style="color:#e6db74">apiVersion: gkehub.cnrm.cloud.google.com/v1beta1
 </span></span></span><span style="display:flex;"><span><span style="color:#e6db74">kind: GKEHubFeatureMembership
 </span></span></span><span style="display:flex;"><span><span style="color:#e6db74">metadata:
@@ -159,11 +157,9 @@ if (!doNotTrack) {
 </span></span></span><span style="display:flex;"><span><span style="color:#e6db74">    name: servicemesh
 </span></span></span><span style="display:flex;"><span><span style="color:#e6db74">  mesh:
 </span></span></span><span style="display:flex;"><span><span style="color:#e6db74">    management: MANAGEMENT_AUTOMATIC
-</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">EOF</span>
-</span></span></code></pre></div><h2 id="deploy-kubernetes-manifests">Deploy Kubernetes manifests</h2>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-Bash" data-lang="Bash"><span style="display:flex;"><span>cd <span style="color:#e6db74">${</span>WORK_DIR<span style="color:#e6db74">}</span>$TENANT_PROJECT_DIR_NAME/
-</span></span><span style="display:flex;"><span>git add . <span style="color:#f92672">&amp;&amp;</span> git commit -m <span style="color:#e6db74">&#34;Managed ASM for GKE cluster in Tenant project&#34;</span> <span style="color:#f92672">&amp;&amp;</span> git push origin main
-</span></span></code></pre></div><h2 id="check-deployments">Check deployments</h2>
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">EOF</span></span></span></code></pre></div><h2 id="deploy-kubernetes-manifests">Deploy Kubernetes manifests</h2>
+<div class="wrap-code highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-Bash" data-lang="Bash"><span style="display:flex;"><span>cd <span style="color:#e6db74">${</span>WORK_DIR<span style="color:#e6db74">}</span>$TENANT_PROJECT_DIR_NAME/
+</span></span><span style="display:flex;"><span>git add . <span style="color:#f92672">&amp;&amp;</span> git commit -m <span style="color:#e6db74">&#34;Managed ASM for GKE cluster in Tenant project&#34;</span> <span style="color:#f92672">&amp;&amp;</span> git push origin main</span></span></code></pre></div><h2 id="check-deployments">Check deployments</h2>
 
 <div class="mermaid align-center">
 graph TD;
@@ -171,13 +167,13 @@ graph TD;
 </div>
 <p>List the Kubernetes resources managed by Config Sync in <strong>Config Controller</strong> for the <strong>Tenant project configs</strong> repository:
 
-<div class="tab-panel" data-tab-group="690c930bc03894b9efd447c0fdc08e8c">
+<div class="tab-panel" data-tab-group="69d59f5e78fd98a586e0c0b96cf2f8ca">
   <div class="tab-nav">
     <div class="tab-nav-title">&#8203;</div>
     <button
       data-tab-item="UI"
       class="tab-nav-button tab-panel-style cstyle initial active"
-      onclick="switchTab('690c930bc03894b9efd447c0fdc08e8c','UI')"
+      onclick="switchTab('69d59f5e78fd98a586e0c0b96cf2f8ca','UI')"
     >
       <div>
         <div class="tab-nav-hidden">UI</div>
@@ -187,7 +183,7 @@ graph TD;
     <button
       data-tab-item="gcloud"
       class="tab-nav-button tab-panel-style cstyle initial"
-      onclick="switchTab('690c930bc03894b9efd447c0fdc08e8c','gcloud')"
+      onclick="switchTab('69d59f5e78fd98a586e0c0b96cf2f8ca','gcloud')"
     >
       <div>
         <div class="tab-nav-hidden">gcloud</div>
@@ -202,8 +198,7 @@ graph TD;
       <div class="tab-content-text">
 
 <p>Run this command and click on this link:</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-Bash" data-lang="Bash"><span style="display:flex;"><span>echo -e <span style="color:#e6db74">&#34;https://console.cloud.google.com/kubernetes/config_management/packages?project=</span><span style="color:#e6db74">${</span>HOST_PROJECT_ID<span style="color:#e6db74">}</span><span style="color:#e6db74">&#34;</span>
-</span></span></code></pre></div><p>Wait until you see the <code>Sync status</code> column as <code>Synced</code> and the <code>Reconcile status</code> column as <code>Current</code>.</p>
+<div class="wrap-code highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-Bash" data-lang="Bash"><span style="display:flex;"><span>echo -e <span style="color:#e6db74">&#34;https://console.cloud.google.com/kubernetes/config_management/packages?project=</span><span style="color:#e6db74">${</span>HOST_PROJECT_ID<span style="color:#e6db74">}</span><span style="color:#e6db74">&#34;</span></span></span></code></pre></div><p>Wait until you see the <code>Sync status</code> column as <code>Synced</code> and the <code>Reconcile status</code> column as <code>Current</code>.</p>
 </div>
     </div>
     <div
@@ -212,23 +207,20 @@ graph TD;
       <div class="tab-content-text">
 
 <p>Run this command:</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-Bash" data-lang="Bash"><span style="display:flex;"><span>gcloud alpha anthos config sync repo describe <span style="color:#ae81ff">\
+<div class="wrap-code highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-Bash" data-lang="Bash"><span style="display:flex;"><span>gcloud alpha anthos config sync repo describe <span style="color:#ae81ff">\
 </span></span></span><span style="display:flex;"><span><span style="color:#ae81ff"></span>    --project $HOST_PROJECT_ID <span style="color:#ae81ff">\
 </span></span></span><span style="display:flex;"><span><span style="color:#ae81ff"></span>    --managed-resources all <span style="color:#ae81ff">\
 </span></span></span><span style="display:flex;"><span><span style="color:#ae81ff"></span>    --sync-name repo-sync <span style="color:#ae81ff">\
-</span></span></span><span style="display:flex;"><span><span style="color:#ae81ff"></span>    --sync-namespace $TENANT_PROJECT_ID
-</span></span></code></pre></div><p>Wait and re-run this command above until you see <code>&quot;status&quot;: &quot;SYNCED&quot;</code>. All the <code>managed_resources</code> listed should have <code>STATUS: Current</code> too.</p>
+</span></span></span><span style="display:flex;"><span><span style="color:#ae81ff"></span>    --sync-namespace $TENANT_PROJECT_ID</span></span></code></pre></div><p>Wait and re-run this command above until you see <code>&quot;status&quot;: &quot;SYNCED&quot;</code>. All the <code>managed_resources</code> listed should have <code>STATUS: Current</code> too.</p>
 </div>
     </div>
   </div>
 </div></p>
 <p>List the GitHub runs for the <strong>Tenant project configs</strong> repository:</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-Bash" data-lang="Bash"><span style="display:flex;"><span>cd <span style="color:#e6db74">${</span>WORK_DIR<span style="color:#e6db74">}</span>$TENANT_PROJECT_DIR_NAME <span style="color:#f92672">&amp;&amp;</span> gh run list
-</span></span></code></pre></div><p>List the Google Cloud resources created:</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-Bash" data-lang="Bash"><span style="display:flex;"><span>gcloud container fleet mesh describe <span style="color:#ae81ff">\
-</span></span></span><span style="display:flex;"><span><span style="color:#ae81ff"></span>    --project $TENANT_PROJECT_ID
-</span></span></code></pre></div><p>For the result of the last command, in order to make sure the Managed ASM is successfully installed you should see something like this:</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-Plaintext" data-lang="Plaintext"><span style="display:flex;"><span>createTime: &#39;2022-12-30T05:07:47.372234169Z&#39;
+<div class="wrap-code highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-Bash" data-lang="Bash"><span style="display:flex;"><span>cd <span style="color:#e6db74">${</span>WORK_DIR<span style="color:#e6db74">}</span>$TENANT_PROJECT_DIR_NAME <span style="color:#f92672">&amp;&amp;</span> gh run list</span></span></code></pre></div><p>List the Google Cloud resources created:</p>
+<div class="wrap-code highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-Bash" data-lang="Bash"><span style="display:flex;"><span>gcloud container fleet mesh describe <span style="color:#ae81ff">\
+</span></span></span><span style="display:flex;"><span><span style="color:#ae81ff"></span>    --project $TENANT_PROJECT_ID</span></span></code></pre></div><p>For the result of the last command, in order to make sure the Managed ASM is successfully installed you should see something like this:</p>
+<div class="wrap-code highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-Plaintext" data-lang="Plaintext"><span style="display:flex;"><span>createTime: &#39;2022-12-30T05:07:47.372234169Z&#39;
 </span></span><span style="display:flex;"><span>labels:
 </span></span><span style="display:flex;"><span>  managed-by-cnrm: &#39;true&#39;
 </span></span><span style="display:flex;"><span>membershipSpecs:
@@ -258,8 +250,7 @@ graph TD;
 </span></span><span style="display:flex;"><span>spec: {}
 </span></span><span style="display:flex;"><span>state:
 </span></span><span style="display:flex;"><span>  state: {}
-</span></span><span style="display:flex;"><span>updateTime: &#39;2022-12-30T05:21:02.601258121Z&#39;
-</span></span></code></pre></div><p>Wait and re-run this command above until you see both <code>controlPlaneManagement</code> and <code>dataPlaneManagement</code> with <code>state: ACTIVE</code>.</p>
+</span></span><span style="display:flex;"><span>updateTime: &#39;2022-12-30T05:21:02.601258121Z&#39;</span></span></code></pre></div><p>Wait and re-run this command above until you see both <code>controlPlaneManagement</code> and <code>dataPlaneManagement</code> with <code>state: ACTIVE</code>.</p>
 
 <div class="box notices cstyle note">
   <div class="box-label"><i class="fa-fw fas fa-exclamation-circle"></i> Note</div>
@@ -454,21 +445,21 @@ graph TD;
         </div>
       </div>
     </aside>
-    <script src="/acm-workshop/js/clipboard.min.js?1687278378" defer></script>
-    <script src="/acm-workshop/js/perfect-scrollbar.min.js?1687278378" defer></script>
-    <script src="/acm-workshop/js/d3/d3-color.min.js?1687278378" defer></script>
-    <script src="/acm-workshop/js/d3/d3-dispatch.min.js?1687278378" defer></script>
-    <script src="/acm-workshop/js/d3/d3-drag.min.js?1687278378" defer></script>
-    <script src="/acm-workshop/js/d3/d3-ease.min.js?1687278378" defer></script>
-    <script src="/acm-workshop/js/d3/d3-interpolate.min.js?1687278378" defer></script>
-    <script src="/acm-workshop/js/d3/d3-selection.min.js?1687278378" defer></script>
-    <script src="/acm-workshop/js/d3/d3-timer.min.js?1687278378" defer></script>
-    <script src="/acm-workshop/js/d3/d3-transition.min.js?1687278378" defer></script>
-    <script src="/acm-workshop/js/d3/d3-zoom.min.js?1687278378" defer></script>
-    <script src="/acm-workshop/js/mermaid.min.js?1687278378" defer></script>
+    <script src="/acm-workshop/js/clipboard.min.js?1689352021" defer></script>
+    <script src="/acm-workshop/js/perfect-scrollbar.min.js?1689352021" defer></script>
+    <script src="/acm-workshop/js/d3/d3-color.min.js?1689352021" defer></script>
+    <script src="/acm-workshop/js/d3/d3-dispatch.min.js?1689352021" defer></script>
+    <script src="/acm-workshop/js/d3/d3-drag.min.js?1689352021" defer></script>
+    <script src="/acm-workshop/js/d3/d3-ease.min.js?1689352021" defer></script>
+    <script src="/acm-workshop/js/d3/d3-interpolate.min.js?1689352021" defer></script>
+    <script src="/acm-workshop/js/d3/d3-selection.min.js?1689352021" defer></script>
+    <script src="/acm-workshop/js/d3/d3-timer.min.js?1689352021" defer></script>
+    <script src="/acm-workshop/js/d3/d3-transition.min.js?1689352021" defer></script>
+    <script src="/acm-workshop/js/d3/d3-zoom.min.js?1689352021" defer></script>
+    <script src="/acm-workshop/js/mermaid.min.js?1689352021" defer></script>
     <script>
       window.themeUseMermaid = JSON.parse("{}");
     </script>
-    <script src="/acm-workshop/js/theme.js?1687278378" defer></script>
+    <script src="/acm-workshop/js/theme.js?1689352021" defer></script>
   </body>
 </html>

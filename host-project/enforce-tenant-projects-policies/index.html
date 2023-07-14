@@ -4,24 +4,24 @@
     <meta charset="utf-8">
     <meta name="viewport" content="height=device-height, width=device-width, initial-scale=1.0, minimum-scale=1.0">
     <meta name="generator" content="Hugo 0.109.0">
-    <meta name="generator" content="Relearn 5.16.2+tip">
+    <meta name="generator" content="Relearn 5.17.1+tip">
     <meta name="description" content="Duration: 5 min | Persona: Org Admin">
     <meta name="author" content="Mathieu Benoit">
     <title>Enforce Tenant projects policies</title>
-    <link href="/acm-workshop/images/favicon.png?1687278376" rel="icon" type="image/png">
+    <link href="/acm-workshop/images/favicon.png?1689352019" rel="icon" type="image/png">
     <!-- https://github.com/filamentgroup/loadCSS/blob/master/README.md#how-to-use -->
-    <link href="/acm-workshop/css/fontawesome-all.min.css?1687278376" rel="stylesheet" media="print" onload="this.media='all';this.onload=null;"><noscript><link href="/acm-workshop/css/fontawesome-all.min.css?1687278376" rel="stylesheet"></noscript>
-    <link href="/acm-workshop/css/nucleus.css?1687278376" rel="stylesheet">
-    <link href="/acm-workshop/css/auto-complete.css?1687278376" rel="stylesheet" media="print" onload="this.media='all';this.onload=null;"><noscript><link href="/acm-workshop/css/auto-complete.css?1687278376" rel="stylesheet"></noscript>
-    <link href="/acm-workshop/css/perfect-scrollbar.min.css?1687278376" rel="stylesheet">
-    <link href="/acm-workshop/css/fonts.css?1687278376" rel="stylesheet" media="print" onload="this.media='all';this.onload=null;"><noscript><link href="/acm-workshop/css/fonts.css?1687278376" rel="stylesheet"></noscript>
-    <link href="/acm-workshop/css/theme.css?1687278376" rel="stylesheet">
-    <link href="/acm-workshop/css/theme-mine.css?1687278376" rel="stylesheet" id="variant-style">
-    <link href="/acm-workshop/css/variant.css?1687278376" rel="stylesheet">
-    <link href="/acm-workshop/css/print.css?1687278376" rel="stylesheet" media="print">
-    <link href="/acm-workshop/css/ie.css?1687278376" rel="stylesheet">
-    <script src="/acm-workshop/js/url.js?1687278376"></script>
-    <script src="/acm-workshop/js/variant.js?1687278376"></script>
+    <link href="/acm-workshop/css/fontawesome-all.min.css?1689352019" rel="stylesheet" media="print" onload="this.media='all';this.onload=null;"><noscript><link href="/acm-workshop/css/fontawesome-all.min.css?1689352019" rel="stylesheet"></noscript>
+    <link href="/acm-workshop/css/nucleus.css?1689352019" rel="stylesheet">
+    <link href="/acm-workshop/css/auto-complete.css?1689352019" rel="stylesheet" media="print" onload="this.media='all';this.onload=null;"><noscript><link href="/acm-workshop/css/auto-complete.css?1689352019" rel="stylesheet"></noscript>
+    <link href="/acm-workshop/css/perfect-scrollbar.min.css?1689352019" rel="stylesheet">
+    <link href="/acm-workshop/css/fonts.css?1689352019" rel="stylesheet" media="print" onload="this.media='all';this.onload=null;"><noscript><link href="/acm-workshop/css/fonts.css?1689352019" rel="stylesheet"></noscript>
+    <link href="/acm-workshop/css/theme.css?1689352019" rel="stylesheet">
+    <link href="/acm-workshop/css/theme-mine.css?1689352019" rel="stylesheet" id="variant-style">
+    <link href="/acm-workshop/css/variant.css?1689352019" rel="stylesheet">
+    <link href="/acm-workshop/css/print.css?1689352019" rel="stylesheet" media="print">
+    <link href="/acm-workshop/css/ie.css?1689352019" rel="stylesheet">
+    <script src="/acm-workshop/js/url.js?1689352019"></script>
+    <script src="/acm-workshop/js/variant.js?1689352019"></script>
     <script>
       // hack to let hugo tell us how to get to the root when using relativeURLs, it needs to be called *url= for it to do its magic:
       // https://github.com/gohugoio/hugo/blob/145b3fcce35fbac25c7033c91c1b7ae6d1179da8/transform/urlreplacers/absurlreplacer.go#L72""
@@ -104,20 +104,19 @@ if (!doNotTrack) {
 <h1 id="enforce-tenant-projects-policies">Enforce Tenant projects policies</h1>
 
 <p>
-<a href="#image-01ab68639a12349cefdb88f1766b358f" class="lightbox-link">
+<a href="#image-266e4e0e408f6aa635ca5201401d4e4b" class="lightbox-link">
 <img src="https://github.com/mathieu-benoit/my-images/raw/main/acm-workshop/org-admin.png" alt="Org Admin" style="height: auto; width: auto;" loading="lazy">
 </a>
-<a href="javascript:history.back();" class="lightbox" id="image-01ab68639a12349cefdb88f1766b358f">
+<a href="javascript:history.back();" class="lightbox" id="image-266e4e0e408f6aa635ca5201401d4e4b">
 <img src="https://github.com/mathieu-benoit/my-images/raw/main/acm-workshop/org-admin.png" alt="Org Admin" class="lightbox-image" loading="lazy">
 </a>
 <em>Duration: 5 min | Persona: Org Admin</em></p>
 <p>In this section you will enforce policies to guarantee that any <code>Namespaces</code> in the ConfigController instance defining any Tenant project should contain its own <code>ConfigConnectorContext</code> object in order to leverage the <a href="https://cloud.google.com/config-connector/docs/how-to/advanced-install#namespaced-mode" target="_blank">namespaced mode of Config Connector</a>.</p>
 <p>Initialize variables:</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-Bash" data-lang="Bash"><span style="display:flex;"><span>WORK_DIR<span style="color:#f92672">=</span>~/
-</span></span><span style="display:flex;"><span>source <span style="color:#e6db74">${</span>WORK_DIR<span style="color:#e6db74">}</span>acm-workshop-variables.sh
-</span></span></code></pre></div><h2 id="define-the-require-configconnectorcontext-for-namespaces-policies">Define the &ldquo;Require ConfigConnectorContext for Namespaces&rdquo; policies</h2>
+<div class="wrap-code highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-Bash" data-lang="Bash"><span style="display:flex;"><span>WORK_DIR<span style="color:#f92672">=</span>~/
+</span></span><span style="display:flex;"><span>source <span style="color:#e6db74">${</span>WORK_DIR<span style="color:#e6db74">}</span>acm-workshop-variables.sh</span></span></code></pre></div><h2 id="define-the-require-configconnectorcontext-for-namespaces-policies">Define the &ldquo;Require ConfigConnectorContext for Namespaces&rdquo; policies</h2>
 <p>Define the <code>ConstraintTemplate</code> making sure that any <code>Namespaces</code> has a <code>ConfigConnectorContext</code> in it:</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-Bash" data-lang="Bash"><span style="display:flex;"><span>cat <span style="color:#e6db74">&lt;&lt;EOF &gt; ${WORK_DIR}$HOST_PROJECT_DIR_NAME/policies/templates/requirenamespaceconfigconnectorcontext.yaml
+<div class="wrap-code highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-Bash" data-lang="Bash"><span style="display:flex;"><span>cat <span style="color:#e6db74">&lt;&lt;EOF &gt; ${WORK_DIR}$HOST_PROJECT_DIR_NAME/policies/templates/requirenamespaceconfigconnectorcontext.yaml
 </span></span></span><span style="display:flex;"><span><span style="color:#e6db74">apiVersion: templates.gatekeeper.sh/v1
 </span></span></span><span style="display:flex;"><span><span style="color:#e6db74">kind: ConstraintTemplate
 </span></span></span><span style="display:flex;"><span><span style="color:#e6db74">metadata:
@@ -141,9 +140,8 @@ if (!doNotTrack) {
 </span></span></span><span style="display:flex;"><span><span style="color:#e6db74">        namespace_has_configconnectorcontext(ns) {
 </span></span></span><span style="display:flex;"><span><span style="color:#e6db74">          ccc := data.inventory.namespace[ns][_].ConfigConnectorContext[_]
 </span></span></span><span style="display:flex;"><span><span style="color:#e6db74">        }
-</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">EOF</span>
-</span></span></code></pre></div><p>Define the <code>namespaces-required-configconnectorcontext</code> <code>Constraint</code> based on the <code>RequireNamespaceConfigConnectorContext</code> <code>ConstraintTemplate</code> for <code>Namespaces</code>:</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-Bash" data-lang="Bash"><span style="display:flex;"><span>cat <span style="color:#e6db74">&lt;&lt;EOF &gt; ${WORK_DIR}$HOST_PROJECT_DIR_NAME/policies/constraints/namespaces-required-configconnectorcontext.yaml
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">EOF</span></span></span></code></pre></div><p>Define the <code>namespaces-required-configconnectorcontext</code> <code>Constraint</code> based on the <code>RequireNamespaceConfigConnectorContext</code> <code>ConstraintTemplate</code> for <code>Namespaces</code>:</p>
+<div class="wrap-code highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-Bash" data-lang="Bash"><span style="display:flex;"><span>cat <span style="color:#e6db74">&lt;&lt;EOF &gt; ${WORK_DIR}$HOST_PROJECT_DIR_NAME/policies/constraints/namespaces-required-configconnectorcontext.yaml
 </span></span></span><span style="display:flex;"><span><span style="color:#e6db74">apiVersion: constraints.gatekeeper.sh/v1beta1
 </span></span></span><span style="display:flex;"><span><span style="color:#e6db74">kind: RequireNamespaceConfigConnectorContext
 </span></span></span><span style="display:flex;"><span><span style="color:#e6db74">metadata:
@@ -176,9 +174,8 @@ if (!doNotTrack) {
 </span></span></span><span style="display:flex;"><span><span style="color:#e6db74">    - kube-public
 </span></span></span><span style="display:flex;"><span><span style="color:#e6db74">    - kube-system
 </span></span></span><span style="display:flex;"><span><span style="color:#e6db74">    - resource-group-system
-</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">EOF</span>
-</span></span></code></pre></div><p>Because this is <a href="https://cloud.google.com/anthos-config-management/docs/how-to/creating-constraints#referential" target="_blank">constraint is referential</a> (look at <code>ConfigConnectorContext</code> in <code>Namespace</code>), we need to define an associated <code>Config</code> in the <code>gatekeeper-system</code> <code>Namespace</code>:</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-Bash" data-lang="Bash"><span style="display:flex;"><span>cat <span style="color:#e6db74">&lt;&lt;EOF &gt; ${WORK_DIR}$HOST_PROJECT_DIR_NAME/config-referential-constraints.yaml
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">EOF</span></span></span></code></pre></div><p>Because this is <a href="https://cloud.google.com/anthos-config-management/docs/how-to/creating-constraints#referential" target="_blank">constraint is referential</a> (look at <code>ConfigConnectorContext</code> in <code>Namespace</code>), we need to define an associated <code>Config</code> in the <code>gatekeeper-system</code> <code>Namespace</code>:</p>
+<div class="wrap-code highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-Bash" data-lang="Bash"><span style="display:flex;"><span>cat <span style="color:#e6db74">&lt;&lt;EOF &gt; ${WORK_DIR}$HOST_PROJECT_DIR_NAME/config-referential-constraints.yaml
 </span></span></span><span style="display:flex;"><span><span style="color:#e6db74">apiVersion: config.gatekeeper.sh/v1alpha1
 </span></span></span><span style="display:flex;"><span><span style="color:#e6db74">kind: Config
 </span></span></span><span style="display:flex;"><span><span style="color:#e6db74">metadata:
@@ -193,20 +190,18 @@ if (!doNotTrack) {
 </span></span></span><span style="display:flex;"><span><span style="color:#e6db74">      - group: &#34;core.cnrm.cloud.google.com&#34;
 </span></span></span><span style="display:flex;"><span><span style="color:#e6db74">        version: &#34;v1beta1&#34;
 </span></span></span><span style="display:flex;"><span><span style="color:#e6db74">        kind: &#34;ConfigConnectorContext&#34;
-</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">EOF</span>
-</span></span></code></pre></div><h2 id="deploy-kubernetes-manifests">Deploy Kubernetes manifests</h2>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-Bash" data-lang="Bash"><span style="display:flex;"><span>cd <span style="color:#e6db74">${</span>WORK_DIR<span style="color:#e6db74">}</span>$HOST_PROJECT_DIR_NAME/
-</span></span><span style="display:flex;"><span>git add . <span style="color:#f92672">&amp;&amp;</span> git commit -m <span style="color:#e6db74">&#34;Enforce policies for Tenant projects&#34;</span> <span style="color:#f92672">&amp;&amp;</span> git push origin main
-</span></span></code></pre></div><h2 id="check-deployments">Check deployments</h2>
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">EOF</span></span></span></code></pre></div><h2 id="deploy-kubernetes-manifests">Deploy Kubernetes manifests</h2>
+<div class="wrap-code highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-Bash" data-lang="Bash"><span style="display:flex;"><span>cd <span style="color:#e6db74">${</span>WORK_DIR<span style="color:#e6db74">}</span>$HOST_PROJECT_DIR_NAME/
+</span></span><span style="display:flex;"><span>git add . <span style="color:#f92672">&amp;&amp;</span> git commit -m <span style="color:#e6db74">&#34;Enforce policies for Tenant projects&#34;</span> <span style="color:#f92672">&amp;&amp;</span> git push origin main</span></span></code></pre></div><h2 id="check-deployments">Check deployments</h2>
 <p>List the Kubernetes resources managed by Config Sync in <strong>Config Controller</strong> for the <strong>Host project configs</strong> repository:
 
-<div class="tab-panel" data-tab-group="4a4bf131dcf3d66c642dc030b535553a">
+<div class="tab-panel" data-tab-group="dad2027425ca21097dc2fc1379695ecb">
   <div class="tab-nav">
     <div class="tab-nav-title">&#8203;</div>
     <button
       data-tab-item="UI"
       class="tab-nav-button tab-panel-style cstyle initial active"
-      onclick="switchTab('4a4bf131dcf3d66c642dc030b535553a','UI')"
+      onclick="switchTab('dad2027425ca21097dc2fc1379695ecb','UI')"
     >
       <div>
         <div class="tab-nav-hidden">UI</div>
@@ -216,7 +211,7 @@ if (!doNotTrack) {
     <button
       data-tab-item="gcloud"
       class="tab-nav-button tab-panel-style cstyle initial"
-      onclick="switchTab('4a4bf131dcf3d66c642dc030b535553a','gcloud')"
+      onclick="switchTab('dad2027425ca21097dc2fc1379695ecb','gcloud')"
     >
       <div>
         <div class="tab-nav-hidden">gcloud</div>
@@ -231,8 +226,7 @@ if (!doNotTrack) {
       <div class="tab-content-text">
 
 <p>Run this command and click on this link:</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-Bash" data-lang="Bash"><span style="display:flex;"><span>echo -e <span style="color:#e6db74">&#34;https://console.cloud.google.com/kubernetes/config_management/packages?project=</span><span style="color:#e6db74">${</span>HOST_PROJECT_ID<span style="color:#e6db74">}</span><span style="color:#e6db74">&#34;</span>
-</span></span></code></pre></div><p>Wait until you see the <code>Sync status</code> column as <code>Synced</code> and the <code>Reconcile status</code> column as <code>Current</code>.</p>
+<div class="wrap-code highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-Bash" data-lang="Bash"><span style="display:flex;"><span>echo -e <span style="color:#e6db74">&#34;https://console.cloud.google.com/kubernetes/config_management/packages?project=</span><span style="color:#e6db74">${</span>HOST_PROJECT_ID<span style="color:#e6db74">}</span><span style="color:#e6db74">&#34;</span></span></span></code></pre></div><p>Wait until you see the <code>Sync status</code> column as <code>Synced</code> and the <code>Reconcile status</code> column as <code>Current</code>.</p>
 </div>
     </div>
     <div
@@ -241,19 +235,17 @@ if (!doNotTrack) {
       <div class="tab-content-text">
 
 <p>Run this command:</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-Bash" data-lang="Bash"><span style="display:flex;"><span>gcloud alpha anthos config sync repo describe <span style="color:#ae81ff">\
+<div class="wrap-code highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-Bash" data-lang="Bash"><span style="display:flex;"><span>gcloud alpha anthos config sync repo describe <span style="color:#ae81ff">\
 </span></span></span><span style="display:flex;"><span><span style="color:#ae81ff"></span>    --project $HOST_PROJECT_ID <span style="color:#ae81ff">\
 </span></span></span><span style="display:flex;"><span><span style="color:#ae81ff"></span>    --managed-resources all <span style="color:#ae81ff">\
 </span></span></span><span style="display:flex;"><span><span style="color:#ae81ff"></span>    --sync-name root-sync <span style="color:#ae81ff">\
-</span></span></span><span style="display:flex;"><span><span style="color:#ae81ff"></span>    --sync-namespace config-management-system
-</span></span></code></pre></div><p>Wait and re-run this command above until you see <code>&quot;status&quot;: &quot;SYNCED&quot;</code>. All the <code>managed_resources</code> listed should have <code>STATUS: Current</code> too.</p>
+</span></span></span><span style="display:flex;"><span><span style="color:#ae81ff"></span>    --sync-namespace config-management-system</span></span></code></pre></div><p>Wait and re-run this command above until you see <code>&quot;status&quot;: &quot;SYNCED&quot;</code>. All the <code>managed_resources</code> listed should have <code>STATUS: Current</code> too.</p>
 </div>
     </div>
   </div>
 </div></p>
 <p>List the GitHub runs for the <strong>Host project configs</strong> repository:</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-Bash" data-lang="Bash"><span style="display:flex;"><span>cd <span style="color:#e6db74">${</span>WORK_DIR<span style="color:#e6db74">}</span>$HOST_PROJECT_DIR_NAME <span style="color:#f92672">&amp;&amp;</span> gh run list
-</span></span></code></pre></div>
+<div class="wrap-code highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-Bash" data-lang="Bash"><span style="display:flex;"><span>cd <span style="color:#e6db74">${</span>WORK_DIR<span style="color:#e6db74">}</span>$HOST_PROJECT_DIR_NAME <span style="color:#f92672">&amp;&amp;</span> gh run list</span></span></code></pre></div>
             <footer class="footline">
 
             </footer>
@@ -439,8 +431,8 @@ if (!doNotTrack) {
         </div>
       </div>
     </aside>
-    <script src="/acm-workshop/js/clipboard.min.js?1687278377" defer></script>
-    <script src="/acm-workshop/js/perfect-scrollbar.min.js?1687278377" defer></script>
-    <script src="/acm-workshop/js/theme.js?1687278377" defer></script>
+    <script src="/acm-workshop/js/clipboard.min.js?1689352020" defer></script>
+    <script src="/acm-workshop/js/perfect-scrollbar.min.js?1689352020" defer></script>
+    <script src="/acm-workshop/js/theme.js?1689352020" defer></script>
   </body>
 </html>

@@ -14,7 +14,7 @@
       <description>Duration: 5 min | Persona: Org Admin
 In this section, you will set up policies in order to enforce governance against the Kubernetes manifests defining your GKE cluster. This will guarantee that the best practices in term of security are respected.
 Define variables:
-WORK_DIR=~/ source ${WORK_DIR}acm-workshop-variables.sh Enforce GKE clusters policies Define the ConstraintTemplate:
+WORK_DIR=~/ source ${WORK_DIR}acm-workshop-variables.shEnforce GKE clusters policies Define the ConstraintTemplate:
 cat &amp;lt;&amp;lt;EOF &amp;gt; ${WORK_DIR}$HOST_PROJECT_DIR_NAME/policies/templates/gkeclusterrequirement.yaml apiVersion: templates.gatekeeper.sh/v1 kind: ConstraintTemplate metadata: name: gkeclusterrequirement annotations: description: &amp;#34;Requirements for any GKE cluster.</description>
     </item>
     <item>
@@ -25,8 +25,8 @@ cat &amp;lt;&amp;lt;EOF &amp;gt; ${WORK_DIR}$HOST_PROJECT_DIR_NAME/policies/temp
       <description>Duration: 5 min | Persona: Org Admin
 In this section, you will set up policies in order to enforce governance against the Kubernetes manifests defining your Memorystore (Redis) instances.
 Initialize variables:
-WORK_DIR=~/ source ${WORK_DIR}acm-workshop-variables.sh Enforce Memorystore policies Define the ConstraintTemplate resource:
-cat &amp;lt;&amp;lt;EOF &amp;gt; ${WORK_DIR}$HOST_PROJECT_DIR_NAME/policies/templates/limitmemorystoreredis.yaml apiVersion: templates.gatekeeper.sh/v1 kind: ConstraintTemplate metadata: name: limitmemorystoreredis annotations: description: &amp;#34;Requirements for any Memorystore (Redis) instance.&amp;#34; spec: crd: spec: names: kind: LimitMemorystoreRedis targets: - target: admission.</description>
+WORK_DIR=~/ source ${WORK_DIR}acm-workshop-variables.shEnforce Memorystore policies Define the ConstraintTemplate resource:
+cat &amp;lt;&amp;lt;EOF &amp;gt; ${WORK_DIR}$HOST_PROJECT_DIR_NAME/policies/templates/limitmemorystoreredis.yaml apiVersion: templates.gatekeeper.sh/v1 kind: ConstraintTemplate metadata: name: limitmemorystoreredis annotations: description: &amp;#34;Requirements for any Memorystore (Redis) instance.&amp;#34; spec: crd: spec: names: kind: LimitMemorystoreRedis targets: - target: admission.k8s.gatekeeper.sh rego: |- package limitmemorystoreredis violation[{&amp;#34;msg&amp;#34;:msg}] { input.</description>
     </item>
     <item>
       <title>Enforce Artifact Registry policies</title>
@@ -36,7 +36,7 @@ cat &amp;lt;&amp;lt;EOF &amp;gt; ${WORK_DIR}$HOST_PROJECT_DIR_NAME/policies/temp
       <description>Duration: 10 min | Persona: Platform Admin
 In this section, you will enforce policies in order to make sure that the containers in your clusters are coming from a restricted list of container registries.
 Initialize variables:
-WORK_DIR=~/ source ${WORK_DIR}acm-workshop-variables.sh Define &amp;ldquo;Allowed container registries&amp;rdquo; policy Define the Constraint based on the K8sAllowedRepos ConstraintTemplate for Pods:
+WORK_DIR=~/ source ${WORK_DIR}acm-workshop-variables.shDefine &amp;ldquo;Allowed container registries&amp;rdquo; policy Define the Constraint based on the K8sAllowedRepos ConstraintTemplate for Pods:
 cat &amp;lt;&amp;lt;EOF &amp;gt; ${WORK_DIR}$GKE_CONFIGS_DIR_NAME/policies/constraints/pod-allowed-container-registries.yaml apiVersion: constraints.gatekeeper.sh/v1beta1 kind: K8sAllowedRepos metadata: name: pod-allowed-container-registries annotations: policycontroller.gke.io/constraintData: | &amp;#34;{ description: &amp;#39;Requires container images to begin with a string from the specified list.</description>
     </item>
     <item>
@@ -57,7 +57,7 @@ WORK_DIR=~/ source ${WORK_DIR}acm-workshop-variables.sh echo &amp;#34;export GKE
       <description>Duration: 10 min | Persona: Platform Admin
 In this section, you will enforce policies in order to make sure that your clusters, namespaces and apps are well configured to be secured by your Service Mesh.
 Initialize variables:
-WORK_DIR=~/ source ${WORK_DIR}acm-workshop-variables.sh echo &amp;#34;export INGRESS_GATEWAY_NAMESPACE=asm-ingress&amp;#34; &amp;gt;&amp;gt; ${WORK_DIR}acm-workshop-variables.sh source ${WORK_DIR}acm-workshop-variables.sh Define &amp;ldquo;Automatic sidecar proxy injection&amp;rdquo; policies https://cloud.google.com/service-mesh/docs/anthos-service-mesh-proxy-injection
+WORK_DIR=~/ source ${WORK_DIR}acm-workshop-variables.sh echo &amp;#34;export INGRESS_GATEWAY_NAMESPACE=asm-ingress&amp;#34; &amp;gt;&amp;gt; ${WORK_DIR}acm-workshop-variables.sh source ${WORK_DIR}acm-workshop-variables.shDefine &amp;ldquo;Automatic sidecar proxy injection&amp;rdquo; policies https://cloud.google.com/service-mesh/docs/anthos-service-mesh-proxy-injection
 Define the namespaces-automatic-sidecar-injection-label Constraint based on the K8sRequiredLabels ConstraintTemplate for Namespaces:
 cat &amp;lt;&amp;lt;EOF &amp;gt; ${WORK_DIR}$GKE_CONFIGS_DIR_NAME/policies/constraints/namespaces-automatic-sidecar-injection-label.yaml apiVersion: constraints.</description>
     </item>
@@ -69,7 +69,7 @@ cat &amp;lt;&amp;lt;EOF &amp;gt; ${WORK_DIR}$GKE_CONFIGS_DIR_NAME/policies/const
       <description>Duration: 5 min | Persona: Org Admin
 In this section you will enforce policies to guarantee that any Namespaces in the ConfigController instance defining any Tenant project should contain its own ConfigConnectorContext object in order to leverage the namespaced mode of Config Connector.
 Initialize variables:
-WORK_DIR=~/ source ${WORK_DIR}acm-workshop-variables.sh Define the &amp;ldquo;Require ConfigConnectorContext for Namespaces&amp;rdquo; policies Define the ConstraintTemplate making sure that any Namespaces has a ConfigConnectorContext in it:
+WORK_DIR=~/ source ${WORK_DIR}acm-workshop-variables.shDefine the &amp;ldquo;Require ConfigConnectorContext for Namespaces&amp;rdquo; policies Define the ConstraintTemplate making sure that any Namespaces has a ConfigConnectorContext in it:
 cat &amp;lt;&amp;lt;EOF &amp;gt; ${WORK_DIR}$HOST_PROJECT_DIR_NAME/policies/templates/requirenamespaceconfigconnectorcontext.</description>
     </item>
     <item>
@@ -80,8 +80,8 @@ cat &amp;lt;&amp;lt;EOF &amp;gt; ${WORK_DIR}$HOST_PROJECT_DIR_NAME/policies/temp
       <description>Duration: 5 min | Persona: Platform Admin
 In this section, you will see the Policy Controller violation regarding to the missing NetworkPolicies in the Ingress Gateway. Finally, you will fix this violation by deploying the associated resources.
 Initialize variables:
-WORK_DIR=~/ source ${WORK_DIR}acm-workshop-variables.sh See the Policy Controller violations See the Policy Controller violations in the GKE cluster, by running this command and click on this link:
-echo -e &amp;#34;https://console.cloud.google.com/kubernetes/policy_controller/dashboard?project=${TENANT_PROJECT_ID}&amp;#34; You will see that the K8sRequireNamespaceNetworkPolicies Constraint has this violation: Namespace &amp;lt;asm-ingress&amp;gt; does not have a NetworkPolicy.</description>
+WORK_DIR=~/ source ${WORK_DIR}acm-workshop-variables.shSee the Policy Controller violations See the Policy Controller violations in the GKE cluster, by running this command and click on this link:
+echo -e &amp;#34;https://console.cloud.google.com/kubernetes/policy_controller/dashboard?project=${TENANT_PROJECT_ID}&amp;#34;You will see that the K8sRequireNamespaceNetworkPolicies Constraint has this violation: Namespace &amp;lt;asm-ingress&amp;gt; does not have a NetworkPolicy.</description>
     </item>
     <item>
       <title>Enforce Kubernetes policies</title>
@@ -91,7 +91,7 @@ echo -e &amp;#34;https://console.cloud.google.com/kubernetes/policy_controller/d
       <description>Duration: 5 min | Persona: Platform Admin
 In this section, you will enforce Kubernetes policies for Pod Security Admission (PSA) and NetworkPolicies.
 Define variables:
-WORK_DIR=~/ source ${WORK_DIR}acm-workshop-variables.sh Enforce Pod Security Admission (PSA) policies As best practice we will ensure that any Namespaces enables the Pod Security Admission (PSA) feature.
+WORK_DIR=~/ source ${WORK_DIR}acm-workshop-variables.shEnforce Pod Security Admission (PSA) policies As best practice we will ensure that any Namespaces enables the Pod Security Admission (PSA) feature.
 Define the namespaces-required-psa-label Constraint based on the K8sRequiredLabels ConstraintTemplate for Namespaces:
 cat &amp;lt;&amp;lt;EOF &amp;gt; ${WORK_DIR}$GKE_CONFIGS_DIR_NAME/policies/constraints/namespaces-required-psa-label.yaml apiVersion: constraints.gatekeeper.sh/v1beta1 kind: K8sRequiredLabels metadata: name: namespaces-required-psa-label annotations: policycontroller.</description>
     </item>
@@ -103,8 +103,8 @@ cat &amp;lt;&amp;lt;EOF &amp;gt; ${WORK_DIR}$GKE_CONFIGS_DIR_NAME/policies/const
       <description>Duration: 5 min | Persona: Apps Operator
 In this section, you will see the Policy Controller violation regarding to the missing NetworkPolicies in the Bank of Anthos namespace. Then, you will fix this violation by deploying the associated resources.
 Initialize variables:
-WORK_DIR=~/ source ${WORK_DIR}acm-workshop-variables.sh See the Policy Controller violations See the Policy Controller violations in the GKE cluster, by running this command and click on this link:
-echo -e &amp;#34;https://console.</description>
+WORK_DIR=~/ source ${WORK_DIR}acm-workshop-variables.shSee the Policy Controller violations See the Policy Controller violations in the GKE cluster, by running this command and click on this link:
+echo -e &amp;#34;https://console.cloud.google.com/kubernetes/policy_controller/dashboard?project=${TENANT_PROJECT_ID}&amp;#34;You will see that the K8sRequireNamespaceNetworkPolicies Constraint has this violation: Namespace &amp;lt;bankofanthos&amp;gt; does not have a NetworkPolicy.</description>
     </item>
     <item>
       <title>Deploy NetworkPolicies</title>
@@ -114,8 +114,8 @@ echo -e &amp;#34;https://console.</description>
       <description>Duration: 5 min | Persona: Apps Operator
 In this section, you will see the Policy Controller violation regarding to the missing NetworkPolicies in the Whereami namespace. Then, you will fix this violation by deploying the associated resources.
 Initialize variables:
-WORK_DIR=~/ source ${WORK_DIR}acm-workshop-variables.sh See the Policy Controller violations See the Policy Controller violations in the GKE cluster, by running this command and click on this link:
-echo -e &amp;#34;https://console.cloud.google.com/kubernetes/policy_controller/dashboard?project=${TENANT_PROJECT_ID}&amp;#34; You will see that the K8sRequireNamespaceNetworkPolicies Constraint has this violation: Namespace &amp;lt;whereami&amp;gt; does not have a NetworkPolicy.</description>
+WORK_DIR=~/ source ${WORK_DIR}acm-workshop-variables.shSee the Policy Controller violations See the Policy Controller violations in the GKE cluster, by running this command and click on this link:
+echo -e &amp;#34;https://console.cloud.google.com/kubernetes/policy_controller/dashboard?project=${TENANT_PROJECT_ID}&amp;#34;You will see that the K8sRequireNamespaceNetworkPolicies Constraint has this violation: Namespace &amp;lt;whereami&amp;gt; does not have a NetworkPolicy.</description>
     </item>
     <item>
       <title>Deploy NetworkPolicies</title>
@@ -125,8 +125,8 @@ echo -e &amp;#34;https://console.cloud.google.com/kubernetes/policy_controller/d
       <description>Duration: 5 min | Persona: Apps Operator
 In this section, you will see the Policy Controller violation regarding to the missing NetworkPolicies in the Online Boutique namespace. Then, you will fix this violation by deploying the associated resources.
 Initialize variables:
-WORK_DIR=~/ source ${WORK_DIR}acm-workshop-variables.sh See the Policy Controller violations See the Policy Controller violations in the GKE cluster, by running this command and click on this link:
-echo -e &amp;#34;https://console.cloud.google.com/kubernetes/policy_controller/dashboard?project=${TENANT_PROJECT_ID}&amp;#34; You will see that the K8sRequireNamespaceNetworkPolicies Constraint has this violation: Namespace &amp;lt;onlineboutique&amp;gt; does not have a NetworkPolicy.</description>
+WORK_DIR=~/ source ${WORK_DIR}acm-workshop-variables.shSee the Policy Controller violations See the Policy Controller violations in the GKE cluster, by running this command and click on this link:
+echo -e &amp;#34;https://console.cloud.google.com/kubernetes/policy_controller/dashboard?project=${TENANT_PROJECT_ID}&amp;#34;You will see that the K8sRequireNamespaceNetworkPolicies Constraint has this violation: Namespace &amp;lt;onlineboutique&amp;gt; does not have a NetworkPolicy.</description>
     </item>
   </channel>
 </rss>

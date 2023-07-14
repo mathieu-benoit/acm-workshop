@@ -14,7 +14,7 @@
       <description>Duration: 5 min | Persona: Org Admin
 In this section, you will enable and grant the appropriate APIs in the Tenant project and the IAM role for the Tenant project&amp;rsquo;s service account. This will allow later this service account to provision a Spanner instance.
 Initialize variables:
-WORK_DIR=~/ source ${WORK_DIR}acm-workshop-variables.sh Define API Define the Spanner API Service resource for the Tenant project:
+WORK_DIR=~/ source ${WORK_DIR}acm-workshop-variables.shDefine API Define the Spanner API Service resource for the Tenant project:
 cat &amp;lt;&amp;lt;EOF &amp;gt; ${WORK_DIR}$HOST_PROJECT_DIR_NAME/projects/$TENANT_PROJECT_ID/spanner-service.yaml apiVersion: serviceusage.cnrm.cloud.google.com/v1beta1 kind: Service metadata: annotations: cnrm.</description>
     </item>
     <item>
@@ -35,8 +35,9 @@ WORK_DIR=~/ source ${WORK_DIR}acm-workshop-variables.sh echo &amp;#34;export SPA
       <description>Duration: 10 min | Persona: Apps Operator
 In this section, you will update the OnlineBoutique&amp;rsquo;s cartservice app in order to point to the Spanner database previously created.
 Initialize variables:
-WORK_DIR=~/ source ${WORK_DIR}acm-workshop-variables.sh Update RepoSync to deploy the Online Boutique&amp;rsquo;s Helm chart Get the Spanner database connection information:
-export SPANNER_CONNECTION_STRING=projects/${TENANT_PROJECT_ID}/instances/${SPANNER_INSTANCE_NAME}/databases/${SPANNER_DATABASE_NAME} export SPANNER_DB_USER_GSA_ID=${SPANNER_DATABASE_USER_GSA_NAME}@${TENANT_PROJECT_ID}.iam.gserviceaccount.com Define the RepoSync to deploy the Online Boutique&amp;rsquo;s Helm chart with the cartservice pointing to the Spanner database:</description>
+WORK_DIR=~/ source ${WORK_DIR}acm-workshop-variables.shUpdate RepoSync to deploy the Online Boutique&amp;rsquo;s Helm chart Get the Spanner database connection information:
+export SPANNER_CONNECTION_STRING=projects/${TENANT_PROJECT_ID}/instances/${SPANNER_INSTANCE_NAME}/databases/${SPANNER_DATABASE_NAME} export SPANNER_DB_USER_GSA_ID=${SPANNER_DATABASE_USER_GSA_NAME}@${TENANT_PROJECT_ID}.iam.gserviceaccount.comDefine the RepoSync to deploy the Online Boutique&amp;rsquo;s Helm chart with the cartservice pointing to the Spanner database:
+cat &amp;lt;&amp;lt;EOF &amp;gt; ${WORK_DIR}$GKE_CONFIGS_DIR_NAME/repo-syncs/$ONLINEBOUTIQUE_NAMESPACE/repo-sync.</description>
     </item>
   </channel>
 </rss>

@@ -4,24 +4,24 @@
     <meta charset="utf-8">
     <meta name="viewport" content="height=device-height, width=device-width, initial-scale=1.0, minimum-scale=1.0">
     <meta name="generator" content="Hugo 0.109.0">
-    <meta name="generator" content="Relearn 5.16.2+tip">
+    <meta name="generator" content="Relearn 5.17.1+tip">
     <meta name="description" content="Duration: 5 min | Persona: Apps Operator">
     <meta name="author" content="Mathieu Benoit">
     <title>Scan workloads</title>
-    <link href="/acm-workshop/images/favicon.png?1687278376" rel="icon" type="image/png">
+    <link href="/acm-workshop/images/favicon.png?1689352019" rel="icon" type="image/png">
     <!-- https://github.com/filamentgroup/loadCSS/blob/master/README.md#how-to-use -->
-    <link href="/acm-workshop/css/fontawesome-all.min.css?1687278376" rel="stylesheet" media="print" onload="this.media='all';this.onload=null;"><noscript><link href="/acm-workshop/css/fontawesome-all.min.css?1687278376" rel="stylesheet"></noscript>
-    <link href="/acm-workshop/css/nucleus.css?1687278376" rel="stylesheet">
-    <link href="/acm-workshop/css/auto-complete.css?1687278376" rel="stylesheet" media="print" onload="this.media='all';this.onload=null;"><noscript><link href="/acm-workshop/css/auto-complete.css?1687278376" rel="stylesheet"></noscript>
-    <link href="/acm-workshop/css/perfect-scrollbar.min.css?1687278376" rel="stylesheet">
-    <link href="/acm-workshop/css/fonts.css?1687278376" rel="stylesheet" media="print" onload="this.media='all';this.onload=null;"><noscript><link href="/acm-workshop/css/fonts.css?1687278376" rel="stylesheet"></noscript>
-    <link href="/acm-workshop/css/theme.css?1687278376" rel="stylesheet">
-    <link href="/acm-workshop/css/theme-mine.css?1687278376" rel="stylesheet" id="variant-style">
-    <link href="/acm-workshop/css/variant.css?1687278376" rel="stylesheet">
-    <link href="/acm-workshop/css/print.css?1687278376" rel="stylesheet" media="print">
-    <link href="/acm-workshop/css/ie.css?1687278376" rel="stylesheet">
-    <script src="/acm-workshop/js/url.js?1687278376"></script>
-    <script src="/acm-workshop/js/variant.js?1687278376"></script>
+    <link href="/acm-workshop/css/fontawesome-all.min.css?1689352019" rel="stylesheet" media="print" onload="this.media='all';this.onload=null;"><noscript><link href="/acm-workshop/css/fontawesome-all.min.css?1689352019" rel="stylesheet"></noscript>
+    <link href="/acm-workshop/css/nucleus.css?1689352019" rel="stylesheet">
+    <link href="/acm-workshop/css/auto-complete.css?1689352019" rel="stylesheet" media="print" onload="this.media='all';this.onload=null;"><noscript><link href="/acm-workshop/css/auto-complete.css?1689352019" rel="stylesheet"></noscript>
+    <link href="/acm-workshop/css/perfect-scrollbar.min.css?1689352019" rel="stylesheet">
+    <link href="/acm-workshop/css/fonts.css?1689352019" rel="stylesheet" media="print" onload="this.media='all';this.onload=null;"><noscript><link href="/acm-workshop/css/fonts.css?1689352019" rel="stylesheet"></noscript>
+    <link href="/acm-workshop/css/theme.css?1689352019" rel="stylesheet">
+    <link href="/acm-workshop/css/theme-mine.css?1689352019" rel="stylesheet" id="variant-style">
+    <link href="/acm-workshop/css/variant.css?1689352019" rel="stylesheet">
+    <link href="/acm-workshop/css/print.css?1689352019" rel="stylesheet" media="print">
+    <link href="/acm-workshop/css/ie.css?1689352019" rel="stylesheet">
+    <script src="/acm-workshop/js/url.js?1689352019"></script>
+    <script src="/acm-workshop/js/variant.js?1689352019"></script>
     <script>
       // hack to let hugo tell us how to get to the root when using relativeURLs, it needs to be called *url= for it to do its magic:
       // https://github.com/gohugoio/hugo/blob/145b3fcce35fbac25c7033c91c1b7ae6d1179da8/transform/urlreplacers/absurlreplacer.go#L72""
@@ -93,10 +93,10 @@ if (!doNotTrack) {
 <h1 id="scan-workloads">Scan workloads</h1>
 
 <p>
-<a href="#image-6dd7474fef9eee08b407303a1e6e9461" class="lightbox-link">
+<a href="#image-7f0de52a2ffa53b01c3e2cc03aeea0b8" class="lightbox-link">
 <img src="https://github.com/mathieu-benoit/my-images/raw/main/acm-workshop/apps-operator.png" alt="Apps Operator" style="height: auto; width: auto;" loading="lazy">
 </a>
-<a href="javascript:history.back();" class="lightbox" id="image-6dd7474fef9eee08b407303a1e6e9461">
+<a href="javascript:history.back();" class="lightbox" id="image-7f0de52a2ffa53b01c3e2cc03aeea0b8">
 <img src="https://github.com/mathieu-benoit/my-images/raw/main/acm-workshop/apps-operator.png" alt="Apps Operator" class="lightbox-image" loading="lazy">
 </a>
 <em>Duration: 5 min | Persona: Apps Operator</em></p>
@@ -106,16 +106,14 @@ if (!doNotTrack) {
 <li><a href="https://cloud.google.com/kubernetes-engine/docs/how-to/security-posture-vulnerability-scanning" target="_blank">Scan container images for known vulnerabilities</a></li>
 </ul>
 <p>Initialize variables:</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-Bash" data-lang="Bash"><span style="display:flex;"><span>WORK_DIR<span style="color:#f92672">=</span>~/
-</span></span><span style="display:flex;"><span>source <span style="color:#e6db74">${</span>WORK_DIR<span style="color:#e6db74">}</span>acm-workshop-variables.sh
-</span></span></code></pre></div><p>In the Google Cloud console, navigate to <em>Kubernetes Engine &gt; Security Posture</em>, click on the link displayed by the command below:</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-Bash" data-lang="Bash"><span style="display:flex;"><span>echo -e <span style="color:#e6db74">&#34;https://console.cloud.google.com/kubernetes/security/dashboard?project=</span><span style="color:#e6db74">${</span>TENANT_PROJECT_ID<span style="color:#e6db74">}</span><span style="color:#e6db74">&#34;</span>
-</span></span></code></pre></div><p>On the default <strong>Dashboard</strong> tab, find the <strong>GKE Posture settings</strong> tile. And for both features <strong>Workload configuration audit</strong> and <strong>Workload vulnerability audit</strong>, click on one of the <strong>Seclect clusters</strong> button, select your GKE cluster and click on the <strong>Turn on audit</strong> button.</p>
+<div class="wrap-code highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-Bash" data-lang="Bash"><span style="display:flex;"><span>WORK_DIR<span style="color:#f92672">=</span>~/
+</span></span><span style="display:flex;"><span>source <span style="color:#e6db74">${</span>WORK_DIR<span style="color:#e6db74">}</span>acm-workshop-variables.sh</span></span></code></pre></div><p>In the Google Cloud console, navigate to <em>Kubernetes Engine &gt; Security Posture</em>, click on the link displayed by the command below:</p>
+<div class="wrap-code highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-Bash" data-lang="Bash"><span style="display:flex;"><span>echo -e <span style="color:#e6db74">&#34;https://console.cloud.google.com/kubernetes/security/dashboard?project=</span><span style="color:#e6db74">${</span>TENANT_PROJECT_ID<span style="color:#e6db74">}</span><span style="color:#e6db74">&#34;</span></span></span></code></pre></div><p>On the default <strong>Dashboard</strong> tab, find the <strong>GKE Posture settings</strong> tile. And for both features <strong>Workload configuration audit</strong> and <strong>Workload vulnerability audit</strong>, click on one of the <strong>Seclect clusters</strong> button, select your GKE cluster and click on the <strong>Turn on audit</strong> button.</p>
 <p>
-<a href="#image-484fdf5f580bab7ff8249cf5e581bcd1" class="lightbox-link">
+<a href="#image-d6697e26b0a0ad7f13e93a1972a47da0" class="lightbox-link">
 <img src="https://github.com/mathieu-benoit/my-images/raw/main/acm-workshop/gke-security-posture-enablement.png" alt="Enable GKE Security Posture" style="height: auto; width: auto;" loading="lazy">
 </a>
-<a href="javascript:history.back();" class="lightbox" id="image-484fdf5f580bab7ff8249cf5e581bcd1">
+<a href="javascript:history.back();" class="lightbox" id="image-d6697e26b0a0ad7f13e93a1972a47da0">
 <img src="https://github.com/mathieu-benoit/my-images/raw/main/acm-workshop/gke-security-posture-enablement.png" alt="Enable GKE Security Posture" class="lightbox-image" loading="lazy">
 </a></p>
 <p>Then you have to wait a little bit while these features are being enabled on your GKE cluster and eventually the audit will start:</p>
@@ -124,18 +122,18 @@ if (!doNotTrack) {
 </blockquote>
 <p>When the audit is done, you will be able to see the report of the vulnerabilities found. The <strong>Workload configuration audit</strong> will come first, <strong>Workload vulnerability audit</strong> will be generated later.</p>
 <p>
-<a href="#image-86f066ef5f4f814d9a936d2f9afe692e" class="lightbox-link">
+<a href="#image-dcaaa75a11c3bd46cb2f1ca5009858cc" class="lightbox-link">
 <img src="https://github.com/mathieu-benoit/my-images/raw/main/acm-workshop/gke-security-posture-report.png" alt="GKE Security Posture report" style="height: auto; width: auto;" loading="lazy">
 </a>
-<a href="javascript:history.back();" class="lightbox" id="image-86f066ef5f4f814d9a936d2f9afe692e">
+<a href="javascript:history.back();" class="lightbox" id="image-dcaaa75a11c3bd46cb2f1ca5009858cc">
 <img src="https://github.com/mathieu-benoit/my-images/raw/main/acm-workshop/gke-security-posture-report.png" alt="GKE Security Posture report" class="lightbox-image" loading="lazy">
 </a></p>
 <p>You will also be able to see in details the associated concerns:</p>
 <p>
-<a href="#image-c26443866a74e006f06fc51ef0e76cf7" class="lightbox-link">
+<a href="#image-3fdb7aa3fba2537f8739c7bb6e8efb72" class="lightbox-link">
 <img src="https://github.com/mathieu-benoit/my-images/raw/main/acm-workshop/gke-security-posture-concerns.png" alt="GKE Security Posture concerns" style="height: auto; width: auto;" loading="lazy">
 </a>
-<a href="javascript:history.back();" class="lightbox" id="image-c26443866a74e006f06fc51ef0e76cf7">
+<a href="javascript:history.back();" class="lightbox" id="image-3fdb7aa3fba2537f8739c7bb6e8efb72">
 <img src="https://github.com/mathieu-benoit/my-images/raw/main/acm-workshop/gke-security-posture-concerns.png" alt="GKE Security Posture concerns" class="lightbox-image" loading="lazy">
 </a></p>
 
@@ -324,8 +322,8 @@ if (!doNotTrack) {
         </div>
       </div>
     </aside>
-    <script src="/acm-workshop/js/clipboard.min.js?1687278377" defer></script>
-    <script src="/acm-workshop/js/perfect-scrollbar.min.js?1687278377" defer></script>
-    <script src="/acm-workshop/js/theme.js?1687278377" defer></script>
+    <script src="/acm-workshop/js/clipboard.min.js?1689352020" defer></script>
+    <script src="/acm-workshop/js/perfect-scrollbar.min.js?1689352020" defer></script>
+    <script src="/acm-workshop/js/theme.js?1689352020" defer></script>
   </body>
 </html>

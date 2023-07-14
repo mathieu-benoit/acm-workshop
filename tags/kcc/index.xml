@@ -14,7 +14,7 @@
       <description>Duration: 5 min | Persona: Org Admin
 In this section, you will enable and grant the appropriate APIs in the Tenant project and the IAM role for the Tenant project&amp;rsquo;s service account. This will allow later this service account to provision the Artifact Registry to have your private container images. You will also the containers analysis and scanning features of Artifact Registry.
 Initialize variables:
-WORK_DIR=~/ source ${WORK_DIR}acm-workshop-variables.sh Define role Define the artifactregistry.</description>
+WORK_DIR=~/ source ${WORK_DIR}acm-workshop-variables.shDefine role Define the artifactregistry.</description>
     </item>
     <item>
       <title>Allow ASM</title>
@@ -33,7 +33,7 @@ Initialize variables:</description>
       <description>Duration: 5 min | Persona: Org Admin
 In this section, you will enable and grant the appropriate APIs in the Tenant project and the IAM role for the Tenant project&amp;rsquo;s service account. This will allow later this service account to provision the GKE cluster.
 Define variables:
-WORK_DIR=~/ source ${WORK_DIR}acm-workshop-variables.sh Define roles Define the container.admin, iam.serviceAccountAdmin, resourcemanager.projectIamAdmin, iam.serviceAccountUser and serviceusage.serviceUsageConsumer roles with an IAMPolicyMember resource for the Tenant project&amp;rsquo;s service account:</description>
+WORK_DIR=~/ source ${WORK_DIR}acm-workshop-variables.shDefine roles Define the container.admin, iam.serviceAccountAdmin, resourcemanager.projectIamAdmin, iam.serviceAccountUser and serviceusage.serviceUsageConsumer roles with an IAMPolicyMember resource for the Tenant project&amp;rsquo;s service account:</description>
     </item>
     <item>
       <title>Allow Memorystore</title>
@@ -43,7 +43,7 @@ WORK_DIR=~/ source ${WORK_DIR}acm-workshop-variables.sh Define roles Define the 
       <description>Duration: 5 min | Persona: Org Admin
 In this section, you will enable and grant the appropriate APIs in the Tenant project and the IAM role for the Tenant project&amp;rsquo;s service account. This will allow later this service account to provision Memorystore (Redis) instances.
 Initialize variables:
-WORK_DIR=~/ source ${WORK_DIR}acm-workshop-variables.sh Define API Define the Memorystore (Redis) API Service resource for the Tenant project:
+WORK_DIR=~/ source ${WORK_DIR}acm-workshop-variables.shDefine API Define the Memorystore (Redis) API Service resource for the Tenant project:
 cat &amp;lt;&amp;lt;EOF &amp;gt; ${WORK_DIR}$HOST_PROJECT_DIR_NAME/projects/$TENANT_PROJECT_ID/redis-service.yaml apiVersion: serviceusage.cnrm.cloud.google.com/v1beta1 kind: Service metadata: annotations: cnrm.</description>
     </item>
     <item>
@@ -54,8 +54,8 @@ cat &amp;lt;&amp;lt;EOF &amp;gt; ${WORK_DIR}$HOST_PROJECT_DIR_NAME/projects/$TEN
       <description>Duration: 2 min | Persona: Org Admin
 In this section, you will enable and grant the appropriate APIs in the Tenant project and the IAM role for the Tenant project&amp;rsquo;s service account. This will allow later this service account to provision the networking services.
 Initialize variables:
-WORK_DIR=~/ source ${WORK_DIR}acm-workshop-variables.sh Define role Define the compute.networkAdmin role with an IAMPolicyMember for the Tenant project&amp;rsquo;s service account:
-cat &amp;lt;&amp;lt;EOF &amp;gt; ${WORK_DIR}$HOST_PROJECT_DIR_NAME/projects/$TENANT_PROJECT_ID/network-admin.yaml apiVersion: iam.</description>
+WORK_DIR=~/ source ${WORK_DIR}acm-workshop-variables.shDefine role Define the compute.networkAdmin role with an IAMPolicyMember for the Tenant project&amp;rsquo;s service account:
+cat &amp;lt;&amp;lt;EOF &amp;gt; ${WORK_DIR}$HOST_PROJECT_DIR_NAME/projects/$TENANT_PROJECT_ID/network-admin.yaml apiVersion: iam.cnrm.cloud.google.com/v1beta1 kind: IAMPolicyMember metadata: name: network-admin-${TENANT_PROJECT_ID} namespace: config-control annotations: config.</description>
     </item>
     <item>
       <title>Allow Spanner</title>
@@ -65,7 +65,7 @@ cat &amp;lt;&amp;lt;EOF &amp;gt; ${WORK_DIR}$HOST_PROJECT_DIR_NAME/projects/$TEN
       <description>Duration: 5 min | Persona: Org Admin
 In this section, you will enable and grant the appropriate APIs in the Tenant project and the IAM role for the Tenant project&amp;rsquo;s service account. This will allow later this service account to provision a Spanner instance.
 Initialize variables:
-WORK_DIR=~/ source ${WORK_DIR}acm-workshop-variables.sh Define API Define the Spanner API Service resource for the Tenant project:
+WORK_DIR=~/ source ${WORK_DIR}acm-workshop-variables.shDefine API Define the Spanner API Service resource for the Tenant project:
 cat &amp;lt;&amp;lt;EOF &amp;gt; ${WORK_DIR}$HOST_PROJECT_DIR_NAME/projects/$TENANT_PROJECT_ID/spanner-service.yaml apiVersion: serviceusage.cnrm.cloud.google.com/v1beta1 kind: Service metadata: annotations: cnrm.</description>
     </item>
     <item>
@@ -76,7 +76,7 @@ cat &amp;lt;&amp;lt;EOF &amp;gt; ${WORK_DIR}$HOST_PROJECT_DIR_NAME/projects/$TEN
       <description>Duration: 5 min | Persona: Platform Admin
 In this section, you will create a public IP address in order to expose all your applications in your Service Mesh thanks to an Ingress Gateway you will configure.
 Initialize variables:
-WORK_DIR=~/ source ${WORK_DIR}acm-workshop-variables.sh echo &amp;#34;export INGRESS_GATEWAY_PUBLIC_IP_NAME=${GKE_NAME}-asm-ingressgateway&amp;#34; &amp;gt;&amp;gt; ${WORK_DIR}acm-workshop-variables.sh source ${WORK_DIR}acm-workshop-variables.sh Define IP address Define the Ingress Gateway&amp;rsquo;s public static IP address resource:
+WORK_DIR=~/ source ${WORK_DIR}acm-workshop-variables.sh echo &amp;#34;export INGRESS_GATEWAY_PUBLIC_IP_NAME=${GKE_NAME}-asm-ingressgateway&amp;#34; &amp;gt;&amp;gt; ${WORK_DIR}acm-workshop-variables.sh source ${WORK_DIR}acm-workshop-variables.shDefine IP address Define the Ingress Gateway&amp;rsquo;s public static IP address resource:
 cat &amp;lt;&amp;lt;EOF &amp;gt; ${WORK_DIR}$TENANT_PROJECT_DIR_NAME/public-ip-address.yaml apiVersion: compute.cnrm.cloud.google.com/v1beta1 kind: ComputeAddress metadata: annotations: cnrm.</description>
     </item>
     <item>
@@ -87,8 +87,8 @@ cat &amp;lt;&amp;lt;EOF &amp;gt; ${WORK_DIR}$TENANT_PROJECT_DIR_NAME/public-ip-a
       <description>Duration: 10 min | Persona: Org Admin
 In this section, you will create the Tenant project. The Tenant project will contain all the Google Cloud resources needed in this workshop.
 Define variables:
-WORK_DIR=~/ source ${WORK_DIR}acm-workshop-variables.sh TENANT_PROJECT_ID=acm-workshop-${RANDOM_SUFFIX}-tenant echo &amp;#34;export TENANT_PROJECT_ID=${TENANT_PROJECT_ID}&amp;#34; &amp;gt;&amp;gt; ${WORK_DIR}acm-workshop-variables.sh echo &amp;#34;export TENANT_PROJECT_SA_EMAIL=${TENANT_PROJECT_ID}@${HOST_PROJECT_ID}.iam.gserviceaccount.com&amp;#34; &amp;gt;&amp;gt; ${WORK_DIR}acm-workshop-variables.sh source ${WORK_DIR}acm-workshop-variables.sh Create a dedicated folder for this Tenant project resources:
-mkdir ${WORK_DIR}$HOST_PROJECT_DIR_NAME/projects mkdir ${WORK_DIR}$HOST_PROJECT_DIR_NAME/projects/$TENANT_PROJECT_ID Define GCP project Define the GCP project either at the Folder level or the Organization level: &amp;#8203; Folder level Folder level Org level Org level At the Folder level:</description>
+WORK_DIR=~/ source ${WORK_DIR}acm-workshop-variables.sh TENANT_PROJECT_ID=acm-workshop-${RANDOM_SUFFIX}-tenant echo &amp;#34;export TENANT_PROJECT_ID=${TENANT_PROJECT_ID}&amp;#34; &amp;gt;&amp;gt; ${WORK_DIR}acm-workshop-variables.sh echo &amp;#34;export TENANT_PROJECT_SA_EMAIL=${TENANT_PROJECT_ID}@${HOST_PROJECT_ID}.iam.gserviceaccount.com&amp;#34; &amp;gt;&amp;gt; ${WORK_DIR}acm-workshop-variables.sh source ${WORK_DIR}acm-workshop-variables.shCreate a dedicated folder for this Tenant project resources:
+mkdir ${WORK_DIR}$HOST_PROJECT_DIR_NAME/projects mkdir ${WORK_DIR}$HOST_PROJECT_DIR_NAME/projects/$TENANT_PROJECT_IDDefine GCP project Define the GCP project either at the Folder level or the Organization level: &amp;#8203; Folder level Folder level Org level Org level At the Folder level:</description>
     </item>
     <item>
       <title>Set up Network</title>
@@ -98,8 +98,8 @@ mkdir ${WORK_DIR}$HOST_PROJECT_DIR_NAME/projects mkdir ${WORK_DIR}$HOST_PROJECT_
       <description>Duration: 5 min | Persona: Platform Admin
 In this section, you will set up the VPC, subnet and Cloud NAT which will be used by the GKE cluster later.
 Initialize variables:
-WORK_DIR=~/ source ${WORK_DIR}acm-workshop-variables.sh echo &amp;#34;export GKE_NAME=gke&amp;#34; &amp;gt;&amp;gt; ${WORK_DIR}acm-workshop-variables.sh source ${WORK_DIR}acm-workshop-variables.sh Define VPC and Subnet Define the VPC:
-cat &amp;lt;&amp;lt;EOF &amp;gt; ${WORK_DIR}$TENANT_PROJECT_DIR_NAME/vpc.yaml apiVersion: compute.cnrm.cloud.google.com/v1beta1 kind: ComputeNetwork metadata: annotations: cnrm.cloud.google.com/project-id: ${TENANT_PROJECT_ID} name: ${GKE_NAME} namespace: ${TENANT_PROJECT_ID} spec: routingMode: REGIONAL autoCreateSubnetworks: false EOF Define the Subnet:</description>
+WORK_DIR=~/ source ${WORK_DIR}acm-workshop-variables.sh echo &amp;#34;export GKE_NAME=gke&amp;#34; &amp;gt;&amp;gt; ${WORK_DIR}acm-workshop-variables.sh source ${WORK_DIR}acm-workshop-variables.shDefine VPC and Subnet Define the VPC:
+cat &amp;lt;&amp;lt;EOF &amp;gt; ${WORK_DIR}$TENANT_PROJECT_DIR_NAME/vpc.yaml apiVersion: compute.cnrm.cloud.google.com/v1beta1 kind: ComputeNetwork metadata: annotations: cnrm.cloud.google.com/project-id: ${TENANT_PROJECT_ID} name: ${GKE_NAME} namespace: ${TENANT_PROJECT_ID} spec: routingMode: REGIONAL autoCreateSubnetworks: false EOFDefine the Subnet:</description>
     </item>
     <item>
       <title>Allow Cloud Armor</title>
@@ -109,8 +109,8 @@ cat &amp;lt;&amp;lt;EOF &amp;gt; ${WORK_DIR}$TENANT_PROJECT_DIR_NAME/vpc.yaml ap
       <description>Duration: 2 min | Persona: Org Admin
 In this section, you will grant the appropriate IAM role for the Tenant project&amp;rsquo;s service account. This will allow later this service account to provision Cloud Armor.
 Initialize variables:
-WORK_DIR=~/ source ${WORK_DIR}acm-workshop-variables.sh Define role Define the compute.securityAdmin role with an IAMPolicyMember for the Tenant project&amp;rsquo;s service account:
-cat &amp;lt;&amp;lt;EOF &amp;gt; ${WORK_DIR}$HOST_PROJECT_DIR_NAME/projects/$TENANT_PROJECT_ID/security-admin.yaml apiVersion: iam.cnrm.cloud.google.com/v1beta1 kind: IAMPolicyMember metadata: name: security-admin-${TENANT_PROJECT_ID} namespace: config-control annotations: config.kubernetes.io/depends-on: iam.</description>
+WORK_DIR=~/ source ${WORK_DIR}acm-workshop-variables.shDefine role Define the compute.securityAdmin role with an IAMPolicyMember for the Tenant project&amp;rsquo;s service account:
+cat &amp;lt;&amp;lt;EOF &amp;gt; ${WORK_DIR}$HOST_PROJECT_DIR_NAME/projects/$TENANT_PROJECT_ID/security-admin.yaml apiVersion: iam.cnrm.cloud.google.com/v1beta1 kind: IAMPolicyMember metadata: name: security-admin-${TENANT_PROJECT_ID} namespace: config-control annotations: config.kubernetes.io/depends-on: iam.cnrm.cloud.google.com/namespaces/config-control/IAMServiceAccount/${TENANT_PROJECT_ID},resourcemanager.cnrm.cloud.google.com/namespaces/config-control/Project/${TENANT_PROJECT_ID} spec: memberFrom: serviceAccountRef: name: ${TENANT_PROJECT_ID} role: roles/compute.</description>
     </item>
     <item>
       <title>Create Artifact Registry</title>
@@ -140,7 +140,7 @@ WORK_DIR=~/ source ${WORK_DIR}acm-workshop-variables.sh echo &amp;#34;export SPA
       <description>Duration: 15 min | Persona: Platform Admin
 In this section, you will install a Managed Service Mesh for your GKE cluster. This will opt your cluster in a specific channel in order to get the upgrades handled by Google for the managed control plane and managed data plane.
 Initialize variables:
-WORK_DIR=~/ source ${WORK_DIR}acm-workshop-variables.sh Define ASM feature for the tenant project Define the ASM GKEHubFeature resource:
+WORK_DIR=~/ source ${WORK_DIR}acm-workshop-variables.shDefine ASM feature for the tenant project Define the ASM GKEHubFeature resource:
 cat &amp;lt;&amp;lt;EOF &amp;gt; ${WORK_DIR}$TENANT_PROJECT_DIR_NAME/gke-hub-feature-asm.yaml apiVersion: gkehub.</description>
     </item>
     <item>
@@ -151,8 +151,8 @@ cat &amp;lt;&amp;lt;EOF &amp;gt; ${WORK_DIR}$TENANT_PROJECT_DIR_NAME/gke-hub-fea
       <description>Duration: 10 min | Persona: Platform Admin
 In this section, you will set up an uptime check on the Bank of Anthos website URL.
 Initialize variables:
-WORK_DIR=~/ source ${WORK_DIR}acm-workshop-variables.sh mkdir ${WORK_DIR}$TENANT_PROJECT_DIR_NAME/$BANKOFANTHOS_NAMESPACE Define Uptime check config Define the MonitoringUptimeCheckConfig:
-cat &amp;lt;&amp;lt;EOF &amp;gt; ${WORK_DIR}$TENANT_PROJECT_DIR_NAME/$BANKOFANTHOS_NAMESPACE/uptime-check-config.yaml apiVersion: monitoring.cnrm.cloud.google.com/v1beta1 kind: MonitoringUptimeCheckConfig metadata: name: uptimecheckconfig-${BANKOFANTHOS_NAMESPACE} spec: projectRef: name: ${TENANT_PROJECT_ID} displayName: ${BANKOFANTHOS_NAMESPACE} period: 900s timeout: 5s monitoredResource: type: &amp;#34;uptime_url&amp;#34; filterLabels: host: ${BANK_OF_ANTHOS_INGRESS_GATEWAY_HOST_NAME} project_id: ${TENANT_PROJECT_ID} httpCheck: port: 443 requestMethod: GET useSsl: true validateSsl: true EOF Deploy Kubernetes manifests cd ${WORK_DIR}$TENANT_PROJECT_DIR_NAME/ git add .</description>
+WORK_DIR=~/ source ${WORK_DIR}acm-workshop-variables.shmkdir ${WORK_DIR}$TENANT_PROJECT_DIR_NAME/$BANKOFANTHOS_NAMESPACEDefine Uptime check config Define the MonitoringUptimeCheckConfig:
+cat &amp;lt;&amp;lt;EOF &amp;gt; ${WORK_DIR}$TENANT_PROJECT_DIR_NAME/$BANKOFANTHOS_NAMESPACE/uptime-check-config.yaml apiVersion: monitoring.cnrm.cloud.google.com/v1beta1 kind: MonitoringUptimeCheckConfig metadata: name: uptimecheckconfig-${BANKOFANTHOS_NAMESPACE} spec: projectRef: name: ${TENANT_PROJECT_ID} displayName: ${BANKOFANTHOS_NAMESPACE} period: 900s timeout: 5s monitoredResource: type: &amp;#34;uptime_url&amp;#34; filterLabels: host: ${BANK_OF_ANTHOS_INGRESS_GATEWAY_HOST_NAME} project_id: ${TENANT_PROJECT_ID} httpCheck: port: 443 requestMethod: GET useSsl: true validateSsl: true EOFDeploy Kubernetes manifests cd ${WORK_DIR}$TENANT_PROJECT_DIR_NAME/ git add .</description>
     </item>
     <item>
       <title>Set up URL uptime check</title>
@@ -162,8 +162,8 @@ cat &amp;lt;&amp;lt;EOF &amp;gt; ${WORK_DIR}$TENANT_PROJECT_DIR_NAME/$BANKOFANTH
       <description>Duration: 10 min | Persona: Platform Admin
 In this section, you will set up an uptime check on the Online Boutique website URL.
 Initialize variables:
-WORK_DIR=~/ source ${WORK_DIR}acm-workshop-variables.sh mkdir -p ${WORK_DIR}$TENANT_PROJECT_DIR_NAME/$ONLINEBOUTIQUE_NAMESPACE Define Uptime check config Define the MonitoringUptimeCheckConfig:
-cat &amp;lt;&amp;lt;EOF &amp;gt; ${WORK_DIR}$TENANT_PROJECT_DIR_NAME/$ONLINEBOUTIQUE_NAMESPACE/uptime-check-config.yaml apiVersion: monitoring.cnrm.cloud.google.com/v1beta1 kind: MonitoringUptimeCheckConfig metadata: name: uptimecheckconfig-${ONLINEBOUTIQUE_NAMESPACE} spec: projectRef: name: ${TENANT_PROJECT_ID} displayName: ${ONLINEBOUTIQUE_NAMESPACE} period: 900s timeout: 5s monitoredResource: type: &amp;#34;uptime_url&amp;#34; filterLabels: host: ${ONLINE_BOUTIQUE_INGRESS_GATEWAY_HOST_NAME} project_id: ${TENANT_PROJECT_ID} httpCheck: port: 443 requestMethod: GET useSsl: true validateSsl: true EOF Deploy Kubernetes manifests cd ${WORK_DIR}$TENANT_PROJECT_DIR_NAME/ git add .</description>
+WORK_DIR=~/ source ${WORK_DIR}acm-workshop-variables.shmkdir -p ${WORK_DIR}$TENANT_PROJECT_DIR_NAME/$ONLINEBOUTIQUE_NAMESPACEDefine Uptime check config Define the MonitoringUptimeCheckConfig:
+cat &amp;lt;&amp;lt;EOF &amp;gt; ${WORK_DIR}$TENANT_PROJECT_DIR_NAME/$ONLINEBOUTIQUE_NAMESPACE/uptime-check-config.yaml apiVersion: monitoring.cnrm.cloud.google.com/v1beta1 kind: MonitoringUptimeCheckConfig metadata: name: uptimecheckconfig-${ONLINEBOUTIQUE_NAMESPACE} spec: projectRef: name: ${TENANT_PROJECT_ID} displayName: ${ONLINEBOUTIQUE_NAMESPACE} period: 900s timeout: 5s monitoredResource: type: &amp;#34;uptime_url&amp;#34; filterLabels: host: ${ONLINE_BOUTIQUE_INGRESS_GATEWAY_HOST_NAME} project_id: ${TENANT_PROJECT_ID} httpCheck: port: 443 requestMethod: GET useSsl: true validateSsl: true EOFDeploy Kubernetes manifests cd ${WORK_DIR}$TENANT_PROJECT_DIR_NAME/ git add .</description>
     </item>
     <item>
       <title>Set up URL uptime check</title>
@@ -173,8 +173,8 @@ cat &amp;lt;&amp;lt;EOF &amp;gt; ${WORK_DIR}$TENANT_PROJECT_DIR_NAME/$ONLINEBOUT
       <description>Duration: 10 min | Persona: Platform Admin
 In this section, you will set up an uptime check on the Whereami URL.
 Initialize variables:
-WORK_DIR=~/ source ${WORK_DIR}acm-workshop-variables.sh mkdir ${WORK_DIR}$TENANT_PROJECT_DIR_NAME/$WHEREAMI_NAMESPACE Define Uptime check config Define the MonitoringUptimeCheckConfig:
-cat &amp;lt;&amp;lt;EOF &amp;gt; ${WORK_DIR}$TENANT_PROJECT_DIR_NAME/$WHEREAMI_NAMESPACE/uptime-check-config.yaml apiVersion: monitoring.cnrm.cloud.google.com/v1beta1 kind: MonitoringUptimeCheckConfig metadata: name: uptimecheckconfig-${WHEREAMI_NAMESPACE} spec: projectRef: name: ${TENANT_PROJECT_ID} displayName: ${WHEREAMI_NAMESPACE} period: 900s timeout: 5s monitoredResource: type: &amp;#34;uptime_url&amp;#34; filterLabels: host: ${WHERE_AMI_INGRESS_GATEWAY_HOST_NAME} project_id: ${TENANT_PROJECT_ID} httpCheck: port: 443 requestMethod: GET useSsl: true validateSsl: true EOF Deploy Kubernetes manifests cd ${WORK_DIR}$TENANT_PROJECT_DIR_NAME/ git add .</description>
+WORK_DIR=~/ source ${WORK_DIR}acm-workshop-variables.shmkdir ${WORK_DIR}$TENANT_PROJECT_DIR_NAME/$WHEREAMI_NAMESPACEDefine Uptime check config Define the MonitoringUptimeCheckConfig:
+cat &amp;lt;&amp;lt;EOF &amp;gt; ${WORK_DIR}$TENANT_PROJECT_DIR_NAME/$WHEREAMI_NAMESPACE/uptime-check-config.yaml apiVersion: monitoring.cnrm.cloud.google.com/v1beta1 kind: MonitoringUptimeCheckConfig metadata: name: uptimecheckconfig-${WHEREAMI_NAMESPACE} spec: projectRef: name: ${TENANT_PROJECT_ID} displayName: ${WHEREAMI_NAMESPACE} period: 900s timeout: 5s monitoredResource: type: &amp;#34;uptime_url&amp;#34; filterLabels: host: ${WHERE_AMI_INGRESS_GATEWAY_HOST_NAME} project_id: ${TENANT_PROJECT_ID} httpCheck: port: 443 requestMethod: GET useSsl: true validateSsl: true EOFDeploy Kubernetes manifests cd ${WORK_DIR}$TENANT_PROJECT_DIR_NAME/ git add .</description>
     </item>
     <item>
       <title>Create GKE cluster</title>
@@ -184,7 +184,7 @@ cat &amp;lt;&amp;lt;EOF &amp;gt; ${WORK_DIR}$TENANT_PROJECT_DIR_NAME/$WHEREAMI_N
       <description>Duration: 20 min | Persona: Platform Admin
 In this section, you will set up a secured GKE cluster including features like: workload identity, least privilege service account for the nodes, Dataplane V2, private nodes, confidential and shielded nodes, etc.
 Initialize variables:
-WORK_DIR=~/ source ${WORK_DIR}acm-workshop-variables.sh echo &amp;#34;export TENANT_PROJECT_NUMBER=$(gcloud projects describe $TENANT_PROJECT_ID --format=&amp;#39;get(projectNumber)&amp;#39;)&amp;#34; &amp;gt;&amp;gt; ${WORK_DIR}acm-workshop-variables.sh echo &amp;#34;export GKE_SA=gke-primary-pool&amp;#34; &amp;gt;&amp;gt; ${WORK_DIR}acm-workshop-variables.sh source ${WORK_DIR}acm-workshop-variables.sh Define GKE cluster Define the GKE cluster with empty node pool:</description>
+WORK_DIR=~/ source ${WORK_DIR}acm-workshop-variables.sh echo &amp;#34;export TENANT_PROJECT_NUMBER=$(gcloud projects describe $TENANT_PROJECT_ID --format=&amp;#39;get(projectNumber)&amp;#39;)&amp;#34; &amp;gt;&amp;gt; ${WORK_DIR}acm-workshop-variables.sh echo &amp;#34;export GKE_SA=gke-primary-pool&amp;#34; &amp;gt;&amp;gt; ${WORK_DIR}acm-workshop-variables.sh source ${WORK_DIR}acm-workshop-variables.shDefine GKE cluster Define the GKE cluster with empty node pool:</description>
     </item>
     <item>
       <title>Create Memorystore</title>
@@ -194,7 +194,8 @@ WORK_DIR=~/ source ${WORK_DIR}acm-workshop-variables.sh echo &amp;#34;export TEN
       <description>Duration: 10 min | Persona: Platform Admin
 In this section, you will create a Memorystore (Redis) instance for the Online Boutique&amp;rsquo;s cartservice app to connect to. We will also create a second Memorystore (Redis) with TLS enabled which will be leveraged in another section.
 Initialize variables:
-WORK_DIR=~/ source ${WORK_DIR}acm-workshop-variables.sh echo &amp;#34;export REDIS_NAME=cart&amp;#34; &amp;gt;&amp;gt; ${WORK_DIR}acm-workshop-variables.sh echo &amp;#34;export REDIS_TLS_NAME=cart-tls&amp;#34; &amp;gt;&amp;gt; ${WORK_DIR}acm-workshop-variables.sh source ${WORK_DIR}acm-workshop-variables.sh Define Memorystore (Redis) Define the Memorystore (Redis) resource:</description>
+WORK_DIR=~/ source ${WORK_DIR}acm-workshop-variables.sh echo &amp;#34;export REDIS_NAME=cart&amp;#34; &amp;gt;&amp;gt; ${WORK_DIR}acm-workshop-variables.sh echo &amp;#34;export REDIS_TLS_NAME=cart-tls&amp;#34; &amp;gt;&amp;gt; ${WORK_DIR}acm-workshop-variables.sh source ${WORK_DIR}acm-workshop-variables.shDefine Memorystore (Redis) Define the Memorystore (Redis) resource:
+cat &amp;lt;&amp;lt;EOF &amp;gt; ${WORK_DIR}$TENANT_PROJECT_DIR_NAME/$ONLINEBOUTIQUE_NAMESPACE/memorystore.</description>
     </item>
     <item>
       <title>Set up Cloud Armor</title>
@@ -204,7 +205,7 @@ WORK_DIR=~/ source ${WORK_DIR}acm-workshop-variables.sh echo &amp;#34;export RED
       <description>Duration: 10 min | Persona: Platform Admin
 In this section, you will set up Cloud Armor preconfigured WAF rules such as: SQL injection, local/remote file inclusion, etc.
 Initialize variables:
-WORK_DIR=~/ source ${WORK_DIR}acm-workshop-variables.sh SECURITY_POLICY_NAME=$GKE_NAME-asm-ingressgateway echo &amp;#34;export SECURITY_POLICY_NAME=${SECURITY_POLICY_NAME}&amp;#34; &amp;gt;&amp;gt; ${WORK_DIR}acm-workshop-variables.sh echo &amp;#34;export SSL_POLICY_NAME=${SECURITY_POLICY_NAME}&amp;#34; &amp;gt;&amp;gt; ${WORK_DIR}acm-workshop-variables.sh source ${WORK_DIR}acm-workshop-variables.sh Define Cloud Armor rules Define the Ingress Gateway&amp;rsquo;s Cloud Armor rules:
+WORK_DIR=~/ source ${WORK_DIR}acm-workshop-variables.sh SECURITY_POLICY_NAME=$GKE_NAME-asm-ingressgateway echo &amp;#34;export SECURITY_POLICY_NAME=${SECURITY_POLICY_NAME}&amp;#34; &amp;gt;&amp;gt; ${WORK_DIR}acm-workshop-variables.sh echo &amp;#34;export SSL_POLICY_NAME=${SECURITY_POLICY_NAME}&amp;#34; &amp;gt;&amp;gt; ${WORK_DIR}acm-workshop-variables.sh source ${WORK_DIR}acm-workshop-variables.shDefine Cloud Armor rules Define the Ingress Gateway&amp;rsquo;s Cloud Armor rules:
 cat &amp;lt;&amp;lt;EOF &amp;gt; ${WORK_DIR}$TENANT_PROJECT_DIR_NAME/cloud-armor.yaml apiVersion: compute.cnrm.cloud.google.com/v1beta1 kind: ComputeSecurityPolicy metadata: annotations: cnrm.cloud.google.com/project-id: ${TENANT_PROJECT_ID} name: ${SECURITY_POLICY_NAME} namespace: ${TENANT_PROJECT_ID} spec: adaptiveProtectionConfig: layer7DdosDefenseConfig: enable: true advancedOptionsConfig: logLevel: VERBOSE rule: - action: allow description: &amp;#34;Default rule&amp;#34; match: versionedExpr: SRC_IPS_V1 config: srcIpRanges: - &amp;#34;*&amp;#34; priority: 2147483647 - action: deny(403) description: &amp;#34;XSS&amp;#34; match: expr: expression: &amp;#34;evaluatePreconfiguredExpr(&amp;#39;xss-v33-canary&amp;#39;)&amp;#34; priority: 1000 - action: deny(403) description: &amp;#34;SQL injection level 2&amp;#34; match: expr: expression: &amp;#34;evaluatePreconfiguredWaf(&amp;#39;sqli-v33-canary&amp;#39;, {&amp;#39;sensitivity&amp;#39;: 2, &amp;#39;opt_out_rule_ids&amp;#39;: [&amp;#39;owasp-crs-v030301-id942200-sqli&amp;#39;, &amp;#39;owasp-crs-v030301-id942260-sqli&amp;#39;, &amp;#39;owasp-crs-v030301-id942430-sqli&amp;#39;]})&amp;#34; priority: 2000 - action: deny(403) description: &amp;#34;Local file inclusion&amp;#34; match: expr: expression: &amp;#34;evaluatePreconfiguredExpr(&amp;#39;lfi-v33-canary&amp;#39;)&amp;#34; priority: 3000 - action: deny(403) description: &amp;#34;Remote file inclusion&amp;#34; match: expr: expression: &amp;#34;evaluatePreconfiguredExpr(&amp;#39;rfi-v33-canary&amp;#39;)&amp;#34; priority: 4000 - action: deny(403) description: &amp;#34;CVE-2021-44228 and CVE-2021-45046&amp;#34; match: expr: expression: &amp;#34;evaluatePreconfiguredExpr(&amp;#39;cve-canary&amp;#39;)&amp;#34; priority: 12345 - action: deny(403) description: &amp;#34;Remote code execution&amp;#34; match: expr: expression: &amp;#34;evaluatePreconfiguredExpr(&amp;#39;rce-v33-canary&amp;#39;)&amp;#34; priority: 5000 - action: deny(403) description: &amp;#34;Method enforcement&amp;#34; match: expr: expression: &amp;#34;evaluatePreconfiguredExpr(&amp;#39;methodenforcement-v33-canary&amp;#39;)&amp;#34; priority: 6000 - action: deny(403) description: &amp;#34;Scanner detection&amp;#34; match: expr: expression: &amp;#34;evaluatePreconfiguredExpr(&amp;#39;scannerdetection-v33-canary&amp;#39;)&amp;#34; priority: 7000 - action: deny(403) description: &amp;#34;Protocol attack&amp;#34; match: expr: expression: &amp;#34;evaluatePreconfiguredExpr(&amp;#39;protocolattack-v33-canary&amp;#39;)&amp;#34; priority: 8000 - action: deny(403) description: &amp;#34;PHP injection attack&amp;#34; match: expr: expression: &amp;#34;evaluatePreconfiguredExpr(&amp;#39;php-v33-canary&amp;#39;)&amp;#34; priority: 9000 - action: deny(403) description: &amp;#34;Session fixation attack&amp;#34; match: expr: expression: &amp;#34;evaluatePreconfiguredExpr(&amp;#39;sessionfixation-v33-canary&amp;#39;)&amp;#34; priority: 10000 - action: deny(403) description: &amp;#34;Java attack&amp;#34; match: expr: expression: &amp;#34;evaluatePreconfiguredExpr(&amp;#39;java-v33-canary&amp;#39;)&amp;#34; priority: 11000 - action: deny(403) description: &amp;#34;NodeJS attack&amp;#34; match: expr: expression: &amp;#34;evaluatePreconfiguredExpr(&amp;#39;nodejs-v33-canary&amp;#39;)&amp;#34; priority: 12000 EOF Info Here we are leveraging the Cloud Armor preconfigured WAF rules: xss, sqli, lfi, rfi, cve, rce, methodenforcement, scannerdetection, protocolattack, php, sessionfixation, java and nodejs.</description>
     </item>
     <item>
@@ -223,8 +224,8 @@ In this section, you will set up the primary Git repository of the Config Contro
       <description>Duration: 5 min | Persona: Org Admin
 In this section, you will enable and grant the appropriate APIs in the Tenant project and the IAM role for the Tenant project&amp;rsquo;s service account. This will allow later this service account to provision the Fleet features.
 Define variables:
-WORK_DIR=~/ source ${WORK_DIR}acm-workshop-variables.sh Define role Define the gkehub.admin role with an IAMPolicyMember for the Tenant project&amp;rsquo;s service account:
-cat &amp;lt;&amp;lt;EOF &amp;gt; ${WORK_DIR}$HOST_PROJECT_DIR_NAME/projects/$TENANT_PROJECT_ID/gke-hub-admin.yaml apiVersion: iam.</description>
+WORK_DIR=~/ source ${WORK_DIR}acm-workshop-variables.shDefine role Define the gkehub.admin role with an IAMPolicyMember for the Tenant project&amp;rsquo;s service account:
+cat &amp;lt;&amp;lt;EOF &amp;gt; ${WORK_DIR}$HOST_PROJECT_DIR_NAME/projects/$TENANT_PROJECT_ID/gke-hub-admin.yaml apiVersion: iam.cnrm.cloud.google.com/v1beta1 kind: IAMPolicyMember metadata: name: gke-hub-admin-${TENANT_PROJECT_ID} namespace: config-control annotations: config.</description>
     </item>
     <item>
       <title>Allow Monitoring</title>
@@ -234,7 +235,7 @@ cat &amp;lt;&amp;lt;EOF &amp;gt; ${WORK_DIR}$HOST_PROJECT_DIR_NAME/projects/$TEN
       <description>Duration: 2 min | Persona: Org Admin
 In this section, you will grant the appropriate the IAM roles for the Tenant project&amp;rsquo;s service account. This will allow later this service account to provision some monitoring features.
 Initialize variables:
-WORK_DIR=~/ source ${WORK_DIR}acm-workshop-variables.sh Define roles Define the monitoring.uptimeCheckConfigEditor role with an IAMPolicyMember for the Tenant project&amp;rsquo;s service account:
+WORK_DIR=~/ source ${WORK_DIR}acm-workshop-variables.shDefine roles Define the monitoring.uptimeCheckConfigEditor role with an IAMPolicyMember for the Tenant project&amp;rsquo;s service account:
 cat &amp;lt;&amp;lt;EOF &amp;gt; ${WORK_DIR}$HOST_PROJECT_DIR_NAME/projects/$TENANT_PROJECT_ID/uptime-check-config-editor.yaml apiVersion: iam.cnrm.cloud.google.com/v1beta1 kind: IAMPolicyMember metadata: name: uptime-check-config-editor-${TENANT_PROJECT_ID} namespace: config-control annotations: config.</description>
     </item>
     <item>
@@ -245,7 +246,7 @@ cat &amp;lt;&amp;lt;EOF &amp;gt; ${WORK_DIR}$HOST_PROJECT_DIR_NAME/projects/$TEN
       <description>Duration: 10 min | Persona: Platform Admin
 In this section, you will set up Config Sync and Policy Controller for the GKE cluster. You will also configure a main/root GitHub repository for this GKE cluster.
 Define variables:
-WORK_DIR=~/ source ${WORK_DIR}acm-workshop-variables.sh echo &amp;#34;export GKE_CONFIGS_DIR_NAME=acm-workshop-gke-configs-repo&amp;#34; &amp;gt;&amp;gt; ${WORK_DIR}acm-workshop-variables.sh source ${WORK_DIR}acm-workshop-variables.sh Define ACM GKEHubFeature Define the ACM GKEHubFeature resource:
+WORK_DIR=~/ source ${WORK_DIR}acm-workshop-variables.sh echo &amp;#34;export GKE_CONFIGS_DIR_NAME=acm-workshop-gke-configs-repo&amp;#34; &amp;gt;&amp;gt; ${WORK_DIR}acm-workshop-variables.sh source ${WORK_DIR}acm-workshop-variables.shDefine ACM GKEHubFeature Define the ACM GKEHubFeature resource:
 cat &amp;lt;&amp;lt;EOF &amp;gt; ${WORK_DIR}$TENANT_PROJECT_DIR_NAME/gke-hub-feature-acm.yaml apiVersion: gkehub.cnrm.cloud.google.com/v1beta1 kind: GKEHubFeature metadata: name: configmanagement namespace: ${TENANT_PROJECT_ID} spec: projectRef: name: ${TENANT_PROJECT_ID} location: global resourceID: configmanagement EOF Note The resourceID must be configmanagement if you want to use Anthos Config Management feature.</description>
     </item>
     <item>
@@ -256,8 +257,9 @@ cat &amp;lt;&amp;lt;EOF &amp;gt; ${WORK_DIR}$TENANT_PROJECT_DIR_NAME/gke-hub-fea
       <description>Duration: 5 min | Persona: Platform Admin
 In this section, you will set up an monitoring notification channel with you email and a generic alert policy on URLs uptime checks for the Tenant project.
 Initialize variables:
-WORK_DIR=~/ source ${WORK_DIR}acm-workshop-variables.sh Define variables for this page:
-export NOTIFICATION_CHANNEL_EMAIL_ADDRESS=FIXME export NOTIFICATION_CHANNEL_NAME=monitoringnotificationchannel-email Tip Set your own email address for the NOTIFICATION_CHANNEL_EMAIL_ADDRESS variable, this will be used when defining the monitoring notification channel below.</description>
+WORK_DIR=~/ source ${WORK_DIR}acm-workshop-variables.shDefine variables for this page:
+export NOTIFICATION_CHANNEL_EMAIL_ADDRESS=FIXME export NOTIFICATION_CHANNEL_NAME=monitoringnotificationchannel-email Tip Set your own email address for the NOTIFICATION_CHANNEL_EMAIL_ADDRESS variable, this will be used when defining the monitoring notification channel below.
+Define the monitoring notification channel with your email Define the VPC:</description>
     </item>
   </channel>
 </rss>

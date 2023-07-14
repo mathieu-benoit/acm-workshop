@@ -4,24 +4,24 @@
     <meta charset="utf-8">
     <meta name="viewport" content="height=device-height, width=device-width, initial-scale=1.0, minimum-scale=1.0">
     <meta name="generator" content="Hugo 0.109.0">
-    <meta name="generator" content="Relearn 5.16.2+tip">
+    <meta name="generator" content="Relearn 5.17.1+tip">
     <meta name="description" content="Duration: 5 min | Persona: Platform Admin">
     <meta name="author" content="Mathieu Benoit">
     <title>Set up DNS</title>
-    <link href="/acm-workshop/images/favicon.png?1687278376" rel="icon" type="image/png">
+    <link href="/acm-workshop/images/favicon.png?1689352019" rel="icon" type="image/png">
     <!-- https://github.com/filamentgroup/loadCSS/blob/master/README.md#how-to-use -->
-    <link href="/acm-workshop/css/fontawesome-all.min.css?1687278376" rel="stylesheet" media="print" onload="this.media='all';this.onload=null;"><noscript><link href="/acm-workshop/css/fontawesome-all.min.css?1687278376" rel="stylesheet"></noscript>
-    <link href="/acm-workshop/css/nucleus.css?1687278376" rel="stylesheet">
-    <link href="/acm-workshop/css/auto-complete.css?1687278376" rel="stylesheet" media="print" onload="this.media='all';this.onload=null;"><noscript><link href="/acm-workshop/css/auto-complete.css?1687278376" rel="stylesheet"></noscript>
-    <link href="/acm-workshop/css/perfect-scrollbar.min.css?1687278376" rel="stylesheet">
-    <link href="/acm-workshop/css/fonts.css?1687278376" rel="stylesheet" media="print" onload="this.media='all';this.onload=null;"><noscript><link href="/acm-workshop/css/fonts.css?1687278376" rel="stylesheet"></noscript>
-    <link href="/acm-workshop/css/theme.css?1687278376" rel="stylesheet">
-    <link href="/acm-workshop/css/theme-mine.css?1687278376" rel="stylesheet" id="variant-style">
-    <link href="/acm-workshop/css/variant.css?1687278376" rel="stylesheet">
-    <link href="/acm-workshop/css/print.css?1687278376" rel="stylesheet" media="print">
-    <link href="/acm-workshop/css/ie.css?1687278376" rel="stylesheet">
-    <script src="/acm-workshop/js/url.js?1687278376"></script>
-    <script src="/acm-workshop/js/variant.js?1687278376"></script>
+    <link href="/acm-workshop/css/fontawesome-all.min.css?1689352019" rel="stylesheet" media="print" onload="this.media='all';this.onload=null;"><noscript><link href="/acm-workshop/css/fontawesome-all.min.css?1689352019" rel="stylesheet"></noscript>
+    <link href="/acm-workshop/css/nucleus.css?1689352019" rel="stylesheet">
+    <link href="/acm-workshop/css/auto-complete.css?1689352019" rel="stylesheet" media="print" onload="this.media='all';this.onload=null;"><noscript><link href="/acm-workshop/css/auto-complete.css?1689352019" rel="stylesheet"></noscript>
+    <link href="/acm-workshop/css/perfect-scrollbar.min.css?1689352019" rel="stylesheet">
+    <link href="/acm-workshop/css/fonts.css?1689352019" rel="stylesheet" media="print" onload="this.media='all';this.onload=null;"><noscript><link href="/acm-workshop/css/fonts.css?1689352019" rel="stylesheet"></noscript>
+    <link href="/acm-workshop/css/theme.css?1689352019" rel="stylesheet">
+    <link href="/acm-workshop/css/theme-mine.css?1689352019" rel="stylesheet" id="variant-style">
+    <link href="/acm-workshop/css/variant.css?1689352019" rel="stylesheet">
+    <link href="/acm-workshop/css/print.css?1689352019" rel="stylesheet" media="print">
+    <link href="/acm-workshop/css/ie.css?1689352019" rel="stylesheet">
+    <script src="/acm-workshop/js/url.js?1689352019"></script>
+    <script src="/acm-workshop/js/variant.js?1689352019"></script>
     <script>
       // hack to let hugo tell us how to get to the root when using relativeURLs, it needs to be called *url= for it to do its magic:
       // https://github.com/gohugoio/hugo/blob/145b3fcce35fbac25c7033c91c1b7ae6d1179da8/transform/urlreplacers/absurlreplacer.go#L72""
@@ -104,22 +104,21 @@ if (!doNotTrack) {
 <h1 id="set-up-dns">Set up DNS</h1>
 
 <p>
-<a href="#image-8d1716fd9e902422d2c6e79654091ee0" class="lightbox-link">
+<a href="#image-691454991a9215875fb7628cc1966916" class="lightbox-link">
 <img src="https://github.com/mathieu-benoit/my-images/raw/main/acm-workshop/platform-admin.png" alt="Platform Admin" style="height: auto; width: auto;" loading="lazy">
 </a>
-<a href="javascript:history.back();" class="lightbox" id="image-8d1716fd9e902422d2c6e79654091ee0">
+<a href="javascript:history.back();" class="lightbox" id="image-691454991a9215875fb7628cc1966916">
 <img src="https://github.com/mathieu-benoit/my-images/raw/main/acm-workshop/platform-admin.png" alt="Platform Admin" class="lightbox-image" loading="lazy">
 </a>
 <em>Duration: 5 min | Persona: Platform Admin</em></p>
 <p>In this section, you will set up a dedicated DNS with Cloud Endpoints you will use later for the Bank of Anthos app.</p>
 <p>Initialize variables:</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-Bash" data-lang="Bash"><span style="display:flex;"><span>WORK_DIR<span style="color:#f92672">=</span>~/
+<div class="wrap-code highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-Bash" data-lang="Bash"><span style="display:flex;"><span>WORK_DIR<span style="color:#f92672">=</span>~/
 </span></span><span style="display:flex;"><span>source <span style="color:#e6db74">${</span>WORK_DIR<span style="color:#e6db74">}</span>acm-workshop-variables.sh
 </span></span><span style="display:flex;"><span>echo <span style="color:#e6db74">&#34;export BANK_OF_ANTHOS_INGRESS_GATEWAY_HOST_NAME=&#39;bankofanthos.endpoints.</span><span style="color:#e6db74">${</span>TENANT_PROJECT_ID<span style="color:#e6db74">}</span><span style="color:#e6db74">.cloud.goog&#39;&#34;</span> &gt;&gt; <span style="color:#e6db74">${</span>WORK_DIR<span style="color:#e6db74">}</span>acm-workshop-variables.sh
-</span></span><span style="display:flex;"><span>source <span style="color:#e6db74">${</span>WORK_DIR<span style="color:#e6db74">}</span>acm-workshop-variables.sh
-</span></span></code></pre></div><h2 id="create-fqdn">Create FQDN</h2>
+</span></span><span style="display:flex;"><span>source <span style="color:#e6db74">${</span>WORK_DIR<span style="color:#e6db74">}</span>acm-workshop-variables.sh</span></span></code></pre></div><h2 id="create-fqdn">Create FQDN</h2>
 <p>Create an FQDN with Cloud Endpoints for Bank of Anthos:</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-Bash" data-lang="Bash"><span style="display:flex;"><span>cat <span style="color:#e6db74">&lt;&lt;EOF &gt; ${WORK_DIR}dns-spec.yaml
+<div class="wrap-code highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-Bash" data-lang="Bash"><span style="display:flex;"><span>cat <span style="color:#e6db74">&lt;&lt;EOF &gt; ${WORK_DIR}dns-spec.yaml
 </span></span></span><span style="display:flex;"><span><span style="color:#e6db74">swagger: &#34;2.0&#34;
 </span></span></span><span style="display:flex;"><span><span style="color:#e6db74">info:
 </span></span></span><span style="display:flex;"><span><span style="color:#e6db74">  description: &#34;Bank of Anthos Cloud Endpoints DNS&#34;
@@ -133,10 +132,9 @@ if (!doNotTrack) {
 </span></span></span><span style="display:flex;"><span><span style="color:#e6db74">EOF</span>
 </span></span><span style="display:flex;"><span>gcloud endpoints services deploy <span style="color:#e6db74">${</span>WORK_DIR<span style="color:#e6db74">}</span>dns-spec.yaml <span style="color:#ae81ff">\
 </span></span></span><span style="display:flex;"><span><span style="color:#ae81ff"></span>    --project <span style="color:#e6db74">${</span>TENANT_PROJECT_ID<span style="color:#e6db74">}</span>
-</span></span><span style="display:flex;"><span>rm <span style="color:#e6db74">${</span>WORK_DIR<span style="color:#e6db74">}</span>dns-spec.yaml
-</span></span></code></pre></div><h2 id="define-managedcertificate-resource">Define ManagedCertificate resource</h2>
+</span></span><span style="display:flex;"><span>rm <span style="color:#e6db74">${</span>WORK_DIR<span style="color:#e6db74">}</span>dns-spec.yaml</span></span></code></pre></div><h2 id="define-managedcertificate-resource">Define ManagedCertificate resource</h2>
 <p>Define the <code>ManagedCertificate</code> for Bank of Anthos in the Ingress Gateway namespace:</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-Bash" data-lang="Bash"><span style="display:flex;"><span>cat <span style="color:#e6db74">&lt;&lt;EOF &gt; ${WORK_DIR}$GKE_CONFIGS_DIR_NAME/$INGRESS_GATEWAY_NAMESPACE/managedcertificate-bankofanthos.yaml
+<div class="wrap-code highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-Bash" data-lang="Bash"><span style="display:flex;"><span>cat <span style="color:#e6db74">&lt;&lt;EOF &gt; ${WORK_DIR}$GKE_CONFIGS_DIR_NAME/$INGRESS_GATEWAY_NAMESPACE/managedcertificate-bankofanthos.yaml
 </span></span></span><span style="display:flex;"><span><span style="color:#e6db74">apiVersion: networking.gke.io/v1
 </span></span></span><span style="display:flex;"><span><span style="color:#e6db74">kind: ManagedCertificate
 </span></span></span><span style="display:flex;"><span><span style="color:#e6db74">metadata:
@@ -145,15 +143,13 @@ if (!doNotTrack) {
 </span></span></span><span style="display:flex;"><span><span style="color:#e6db74">spec:
 </span></span></span><span style="display:flex;"><span><span style="color:#e6db74">  domains:
 </span></span></span><span style="display:flex;"><span><span style="color:#e6db74">    - &#34;${BANK_OF_ANTHOS_INGRESS_GATEWAY_HOST_NAME}&#34;
-</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">EOF</span>
-</span></span></code></pre></div><h2 id="update-ingress">Update Ingress</h2>
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">EOF</span></span></span></code></pre></div><h2 id="update-ingress">Update Ingress</h2>
 <p>Configure Bank of Anthos <code>ManagedCertificate</code> on the Ingress Gateway&rsquo;s <code>Ingress</code> resource:</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-Bash" data-lang="Bash"><span style="display:flex;"><span>cd <span style="color:#e6db74">${</span>WORK_DIR<span style="color:#e6db74">}</span>$GKE_CONFIGS_DIR_NAME/$INGRESS_GATEWAY_NAMESPACE
+<div class="wrap-code highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-Bash" data-lang="Bash"><span style="display:flex;"><span>cd <span style="color:#e6db74">${</span>WORK_DIR<span style="color:#e6db74">}</span>$GKE_CONFIGS_DIR_NAME/$INGRESS_GATEWAY_NAMESPACE
 </span></span><span style="display:flex;"><span>kpt fn eval . <span style="color:#ae81ff">\
 </span></span></span><span style="display:flex;"><span><span style="color:#ae81ff"></span>    -i set-annotations:v0.1 <span style="color:#ae81ff">\
 </span></span></span><span style="display:flex;"><span><span style="color:#ae81ff"></span>    --match-kind Ingress <span style="color:#ae81ff">\
-</span></span></span><span style="display:flex;"><span><span style="color:#ae81ff"></span>    -- networking.gke.io/managed-certificates<span style="color:#f92672">=</span>whereami,onlineboutique,bankofanthos
-</span></span></code></pre></div>
+</span></span></span><span style="display:flex;"><span><span style="color:#ae81ff"></span>    -- networking.gke.io/managed-certificates<span style="color:#f92672">=</span>whereami,onlineboutique,bankofanthos</span></span></code></pre></div>
 <div class="box notices cstyle note">
   <div class="box-label"><i class="fa-fw fas fa-exclamation-circle"></i> Note</div>
   <div class="box-content">
@@ -162,18 +158,17 @@ if (!doNotTrack) {
 </div>
 </div>
 <h2 id="deploy-kubernetes-manifests">Deploy Kubernetes manifests</h2>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-Bash" data-lang="Bash"><span style="display:flex;"><span>cd <span style="color:#e6db74">${</span>WORK_DIR<span style="color:#e6db74">}</span>$GKE_CONFIGS_DIR_NAME/
-</span></span><span style="display:flex;"><span>git add . <span style="color:#f92672">&amp;&amp;</span> git commit -m <span style="color:#e6db74">&#34;Bank of Anthos ManagedCertificate&#34;</span> <span style="color:#f92672">&amp;&amp;</span> git push origin main
-</span></span></code></pre></div><h2 id="check-deployments">Check deployments</h2>
+<div class="wrap-code highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-Bash" data-lang="Bash"><span style="display:flex;"><span>cd <span style="color:#e6db74">${</span>WORK_DIR<span style="color:#e6db74">}</span>$GKE_CONFIGS_DIR_NAME/
+</span></span><span style="display:flex;"><span>git add . <span style="color:#f92672">&amp;&amp;</span> git commit -m <span style="color:#e6db74">&#34;Bank of Anthos ManagedCertificate&#34;</span> <span style="color:#f92672">&amp;&amp;</span> git push origin main</span></span></code></pre></div><h2 id="check-deployments">Check deployments</h2>
 <p>List the Kubernetes resources managed by Config Sync in <strong>GKE cluster</strong> for the <strong>GKE cluster configs</strong> repository:
 
-<div class="tab-panel" data-tab-group="714a3032d7e31c4dbc412343a7e68db6">
+<div class="tab-panel" data-tab-group="5afac445975a82a6748de5b5de8d0318">
   <div class="tab-nav">
     <div class="tab-nav-title">&#8203;</div>
     <button
       data-tab-item="UI"
       class="tab-nav-button tab-panel-style cstyle initial active"
-      onclick="switchTab('714a3032d7e31c4dbc412343a7e68db6','UI')"
+      onclick="switchTab('5afac445975a82a6748de5b5de8d0318','UI')"
     >
       <div>
         <div class="tab-nav-hidden">UI</div>
@@ -183,7 +178,7 @@ if (!doNotTrack) {
     <button
       data-tab-item="gcloud"
       class="tab-nav-button tab-panel-style cstyle initial"
-      onclick="switchTab('714a3032d7e31c4dbc412343a7e68db6','gcloud')"
+      onclick="switchTab('5afac445975a82a6748de5b5de8d0318','gcloud')"
     >
       <div>
         <div class="tab-nav-hidden">gcloud</div>
@@ -198,8 +193,7 @@ if (!doNotTrack) {
       <div class="tab-content-text">
 
 <p>Run this command and click on this link:</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-Bash" data-lang="Bash"><span style="display:flex;"><span>echo -e <span style="color:#e6db74">&#34;https://console.cloud.google.com/kubernetes/config_management/packages?project=</span><span style="color:#e6db74">${</span>TENANT_PROJECT_ID<span style="color:#e6db74">}</span><span style="color:#e6db74">&#34;</span>
-</span></span></code></pre></div><p>Wait until you see the <code>Sync status</code> column as <code>Synced</code> and the <code>Reconcile status</code> column as <code>Current</code>.</p>
+<div class="wrap-code highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-Bash" data-lang="Bash"><span style="display:flex;"><span>echo -e <span style="color:#e6db74">&#34;https://console.cloud.google.com/kubernetes/config_management/packages?project=</span><span style="color:#e6db74">${</span>TENANT_PROJECT_ID<span style="color:#e6db74">}</span><span style="color:#e6db74">&#34;</span></span></span></code></pre></div><p>Wait until you see the <code>Sync status</code> column as <code>Synced</code> and the <code>Reconcile status</code> column as <code>Current</code>.</p>
 </div>
     </div>
     <div
@@ -208,24 +202,21 @@ if (!doNotTrack) {
       <div class="tab-content-text">
 
 <p>Run this command:</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-Bash" data-lang="Bash"><span style="display:flex;"><span>gcloud alpha anthos config sync repo describe <span style="color:#ae81ff">\
+<div class="wrap-code highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-Bash" data-lang="Bash"><span style="display:flex;"><span>gcloud alpha anthos config sync repo describe <span style="color:#ae81ff">\
 </span></span></span><span style="display:flex;"><span><span style="color:#ae81ff"></span>    --project $TENANT_PROJECT_ID <span style="color:#ae81ff">\
 </span></span></span><span style="display:flex;"><span><span style="color:#ae81ff"></span>    --managed-resources all <span style="color:#ae81ff">\
 </span></span></span><span style="display:flex;"><span><span style="color:#ae81ff"></span>    --sync-name root-sync <span style="color:#ae81ff">\
-</span></span></span><span style="display:flex;"><span><span style="color:#ae81ff"></span>    --sync-namespace config-management-system
-</span></span></code></pre></div><p>Wait and re-run this command above until you see <code>&quot;status&quot;: &quot;SYNCED&quot;</code>.</p>
+</span></span></span><span style="display:flex;"><span><span style="color:#ae81ff"></span>    --sync-namespace config-management-system</span></span></code></pre></div><p>Wait and re-run this command above until you see <code>&quot;status&quot;: &quot;SYNCED&quot;</code>.</p>
 </div>
     </div>
   </div>
 </div></p>
 <p>List the GitHub runs for the <strong>GKE cluster configs</strong> repository:</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-Bash" data-lang="Bash"><span style="display:flex;"><span>cd <span style="color:#e6db74">${</span>WORK_DIR<span style="color:#e6db74">}</span>$GKE_CONFIGS_DIR_NAME <span style="color:#f92672">&amp;&amp;</span> gh run list
-</span></span></code></pre></div><p>List the Google Cloud resources created:</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-Bash" data-lang="Bash"><span style="display:flex;"><span>gcloud endpoints services list <span style="color:#ae81ff">\
+<div class="wrap-code highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-Bash" data-lang="Bash"><span style="display:flex;"><span>cd <span style="color:#e6db74">${</span>WORK_DIR<span style="color:#e6db74">}</span>$GKE_CONFIGS_DIR_NAME <span style="color:#f92672">&amp;&amp;</span> gh run list</span></span></code></pre></div><p>List the Google Cloud resources created:</p>
+<div class="wrap-code highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-Bash" data-lang="Bash"><span style="display:flex;"><span>gcloud endpoints services list <span style="color:#ae81ff">\
 </span></span></span><span style="display:flex;"><span><span style="color:#ae81ff"></span>    --project $TENANT_PROJECT_ID
 </span></span><span style="display:flex;"><span>gcloud compute ssl-certificates list <span style="color:#ae81ff">\
-</span></span></span><span style="display:flex;"><span><span style="color:#ae81ff"></span>    --project $TENANT_PROJECT_ID
-</span></span></code></pre></div>
+</span></span></span><span style="display:flex;"><span><span style="color:#ae81ff"></span>    --project $TENANT_PROJECT_ID</span></span></code></pre></div>
 <div class="box notices cstyle note">
   <div class="box-label"><i class="fa-fw fas fa-exclamation-circle"></i> Note</div>
   <div class="box-content">
@@ -419,8 +410,8 @@ if (!doNotTrack) {
         </div>
       </div>
     </aside>
-    <script src="/acm-workshop/js/clipboard.min.js?1687278377" defer></script>
-    <script src="/acm-workshop/js/perfect-scrollbar.min.js?1687278377" defer></script>
-    <script src="/acm-workshop/js/theme.js?1687278377" defer></script>
+    <script src="/acm-workshop/js/clipboard.min.js?1689352019" defer></script>
+    <script src="/acm-workshop/js/perfect-scrollbar.min.js?1689352019" defer></script>
+    <script src="/acm-workshop/js/theme.js?1689352019" defer></script>
   </body>
 </html>

@@ -4,24 +4,24 @@
     <meta charset="utf-8">
     <meta name="viewport" content="height=device-height, width=device-width, initial-scale=1.0, minimum-scale=1.0">
     <meta name="generator" content="Hugo 0.109.0">
-    <meta name="generator" content="Relearn 5.16.2+tip">
+    <meta name="generator" content="Relearn 5.17.1+tip">
     <meta name="description" content="Duration: 10 min | Persona: Platform Admin">
     <meta name="author" content="Mathieu Benoit">
     <title>Create Spanner</title>
-    <link href="/acm-workshop/images/favicon.png?1687278376" rel="icon" type="image/png">
+    <link href="/acm-workshop/images/favicon.png?1689352019" rel="icon" type="image/png">
     <!-- https://github.com/filamentgroup/loadCSS/blob/master/README.md#how-to-use -->
-    <link href="/acm-workshop/css/fontawesome-all.min.css?1687278376" rel="stylesheet" media="print" onload="this.media='all';this.onload=null;"><noscript><link href="/acm-workshop/css/fontawesome-all.min.css?1687278376" rel="stylesheet"></noscript>
-    <link href="/acm-workshop/css/nucleus.css?1687278376" rel="stylesheet">
-    <link href="/acm-workshop/css/auto-complete.css?1687278376" rel="stylesheet" media="print" onload="this.media='all';this.onload=null;"><noscript><link href="/acm-workshop/css/auto-complete.css?1687278376" rel="stylesheet"></noscript>
-    <link href="/acm-workshop/css/perfect-scrollbar.min.css?1687278376" rel="stylesheet">
-    <link href="/acm-workshop/css/fonts.css?1687278376" rel="stylesheet" media="print" onload="this.media='all';this.onload=null;"><noscript><link href="/acm-workshop/css/fonts.css?1687278376" rel="stylesheet"></noscript>
-    <link href="/acm-workshop/css/theme.css?1687278376" rel="stylesheet">
-    <link href="/acm-workshop/css/theme-mine.css?1687278376" rel="stylesheet" id="variant-style">
-    <link href="/acm-workshop/css/variant.css?1687278376" rel="stylesheet">
-    <link href="/acm-workshop/css/print.css?1687278376" rel="stylesheet" media="print">
-    <link href="/acm-workshop/css/ie.css?1687278376" rel="stylesheet">
-    <script src="/acm-workshop/js/url.js?1687278376"></script>
-    <script src="/acm-workshop/js/variant.js?1687278376"></script>
+    <link href="/acm-workshop/css/fontawesome-all.min.css?1689352019" rel="stylesheet" media="print" onload="this.media='all';this.onload=null;"><noscript><link href="/acm-workshop/css/fontawesome-all.min.css?1689352019" rel="stylesheet"></noscript>
+    <link href="/acm-workshop/css/nucleus.css?1689352019" rel="stylesheet">
+    <link href="/acm-workshop/css/auto-complete.css?1689352019" rel="stylesheet" media="print" onload="this.media='all';this.onload=null;"><noscript><link href="/acm-workshop/css/auto-complete.css?1689352019" rel="stylesheet"></noscript>
+    <link href="/acm-workshop/css/perfect-scrollbar.min.css?1689352019" rel="stylesheet">
+    <link href="/acm-workshop/css/fonts.css?1689352019" rel="stylesheet" media="print" onload="this.media='all';this.onload=null;"><noscript><link href="/acm-workshop/css/fonts.css?1689352019" rel="stylesheet"></noscript>
+    <link href="/acm-workshop/css/theme.css?1689352019" rel="stylesheet">
+    <link href="/acm-workshop/css/theme-mine.css?1689352019" rel="stylesheet" id="variant-style">
+    <link href="/acm-workshop/css/variant.css?1689352019" rel="stylesheet">
+    <link href="/acm-workshop/css/print.css?1689352019" rel="stylesheet" media="print">
+    <link href="/acm-workshop/css/ie.css?1689352019" rel="stylesheet">
+    <script src="/acm-workshop/js/url.js?1689352019"></script>
+    <script src="/acm-workshop/js/variant.js?1689352019"></script>
     <script>
       // hack to let hugo tell us how to get to the root when using relativeURLs, it needs to be called *url= for it to do its magic:
       // https://github.com/gohugoio/hugo/blob/145b3fcce35fbac25c7033c91c1b7ae6d1179da8/transform/urlreplacers/absurlreplacer.go#L72""
@@ -106,24 +106,23 @@ if (!doNotTrack) {
 <h1 id="create-spanner">Create Spanner</h1>
 
 <p>
-<a href="#image-b01a94f6d5a353e0734c4b4ffa76b641" class="lightbox-link">
+<a href="#image-a59291193e5f59815230b2f7e21f1857" class="lightbox-link">
 <img src="https://github.com/mathieu-benoit/my-images/raw/main/acm-workshop/platform-admin.png" alt="Platform Admin" style="height: auto; width: auto;" loading="lazy">
 </a>
-<a href="javascript:history.back();" class="lightbox" id="image-b01a94f6d5a353e0734c4b4ffa76b641">
+<a href="javascript:history.back();" class="lightbox" id="image-a59291193e5f59815230b2f7e21f1857">
 <img src="https://github.com/mathieu-benoit/my-images/raw/main/acm-workshop/platform-admin.png" alt="Platform Admin" class="lightbox-image" loading="lazy">
 </a>
 <em>Duration: 10 min | Persona: Platform Admin</em></p>
 <p>In this section, you will create a Spanner instance and database for the Online Boutique&rsquo;s <code>cartservice</code> app to connect to. You will also configure the associated <code>cartservice</code>&rsquo;s Google Service account to have fine granular read access to the Spanner database via Workload Identity.</p>
 <p>Initialize variables:</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-Bash" data-lang="Bash"><span style="display:flex;"><span>WORK_DIR<span style="color:#f92672">=</span>~/
+<div class="wrap-code highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-Bash" data-lang="Bash"><span style="display:flex;"><span>WORK_DIR<span style="color:#f92672">=</span>~/
 </span></span><span style="display:flex;"><span>source <span style="color:#e6db74">${</span>WORK_DIR<span style="color:#e6db74">}</span>acm-workshop-variables.sh
 </span></span><span style="display:flex;"><span>echo <span style="color:#e6db74">&#34;export SPANNER_INSTANCE_NAME=onlineboutique&#34;</span> &gt;&gt; <span style="color:#e6db74">${</span>WORK_DIR<span style="color:#e6db74">}</span>acm-workshop-variables.sh
 </span></span><span style="display:flex;"><span>echo <span style="color:#e6db74">&#34;export SPANNER_DATABASE_NAME=carts&#34;</span> &gt;&gt; <span style="color:#e6db74">${</span>WORK_DIR<span style="color:#e6db74">}</span>acm-workshop-variables.sh
 </span></span><span style="display:flex;"><span>echo <span style="color:#e6db74">&#34;export SPANNER_DATABASE_USER_GSA_NAME=spanner-db-user&#34;</span> &gt;&gt; <span style="color:#e6db74">${</span>WORK_DIR<span style="color:#e6db74">}</span>acm-workshop-variables.sh
-</span></span><span style="display:flex;"><span>source <span style="color:#e6db74">${</span>WORK_DIR<span style="color:#e6db74">}</span>acm-workshop-variables.sh
-</span></span></code></pre></div><h2 id="define-spanner-instance">Define Spanner instance</h2>
+</span></span><span style="display:flex;"><span>source <span style="color:#e6db74">${</span>WORK_DIR<span style="color:#e6db74">}</span>acm-workshop-variables.sh</span></span></code></pre></div><h2 id="define-spanner-instance">Define Spanner instance</h2>
 <p>Define the <a href="https://cloud.google.com/config-connector/docs/reference/resource-docs/spanner/spannerinstance" target="_blank">Spanner instance resource</a>:</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-Bash" data-lang="Bash"><span style="display:flex;"><span>cat <span style="color:#e6db74">&lt;&lt;EOF &gt; ${WORK_DIR}$TENANT_PROJECT_DIR_NAME/$ONLINEBOUTIQUE_NAMESPACE/spanner-instance.yaml
+<div class="wrap-code highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-Bash" data-lang="Bash"><span style="display:flex;"><span>cat <span style="color:#e6db74">&lt;&lt;EOF &gt; ${WORK_DIR}$TENANT_PROJECT_DIR_NAME/$ONLINEBOUTIQUE_NAMESPACE/spanner-instance.yaml
 </span></span></span><span style="display:flex;"><span><span style="color:#e6db74">apiVersion: spanner.cnrm.cloud.google.com/v1beta1
 </span></span></span><span style="display:flex;"><span><span style="color:#e6db74">kind: SpannerInstance
 </span></span></span><span style="display:flex;"><span><span style="color:#e6db74">metadata:
@@ -135,10 +134,9 @@ if (!doNotTrack) {
 </span></span></span><span style="display:flex;"><span><span style="color:#e6db74">  config: regional-${GKE_LOCATION}
 </span></span></span><span style="display:flex;"><span><span style="color:#e6db74">  displayName: ${SPANNER_INSTANCE_NAME}
 </span></span></span><span style="display:flex;"><span><span style="color:#e6db74">  numNodes: 2
-</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">EOF</span>
-</span></span></code></pre></div><h2 id="define-spanner-database">Define Spanner database</h2>
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">EOF</span></span></span></code></pre></div><h2 id="define-spanner-database">Define Spanner database</h2>
 <p>Define the <a href="https://cloud.google.com/config-connector/docs/reference/resource-docs/spanner/spannerdatabase" target="_blank">Spanner database resource</a>:</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-Bash" data-lang="Bash"><span style="display:flex;"><span>cat <span style="color:#e6db74">&lt;&lt;EOF &gt; ${WORK_DIR}$TENANT_PROJECT_DIR_NAME/$ONLINEBOUTIQUE_NAMESPACE/spanner-database.yaml
+<div class="wrap-code highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-Bash" data-lang="Bash"><span style="display:flex;"><span>cat <span style="color:#e6db74">&lt;&lt;EOF &gt; ${WORK_DIR}$TENANT_PROJECT_DIR_NAME/$ONLINEBOUTIQUE_NAMESPACE/spanner-database.yaml
 </span></span></span><span style="display:flex;"><span><span style="color:#e6db74">apiVersion: spanner.cnrm.cloud.google.com/v1beta1
 </span></span></span><span style="display:flex;"><span><span style="color:#e6db74">kind: SpannerDatabase
 </span></span></span><span style="display:flex;"><span><span style="color:#e6db74">metadata:
@@ -153,9 +151,8 @@ if (!doNotTrack) {
 </span></span></span><span style="display:flex;"><span><span style="color:#e6db74">  ddl:
 </span></span></span><span style="display:flex;"><span><span style="color:#e6db74">  - &#34;CREATE TABLE CartItems (userId STRING(1024), productId STRING(1024), quantity INT64,) PRIMARY KEY (userId, productId)&#34;
 </span></span></span><span style="display:flex;"><span><span style="color:#e6db74">  - &#34;CREATE INDEX CartItemsByUserId ON CartItems(userId)&#34;
-</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">EOF</span>
-</span></span></code></pre></div><h2 id="grant-the-cartservices-service-account-access-to-the-spanner-database">Grant the <code>cartservice</code>&rsquo;s service account access to the Spanner database</h2>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-Bash" data-lang="Bash"><span style="display:flex;"><span>cat <span style="color:#e6db74">&lt;&lt;EOF &gt; ${WORK_DIR}$TENANT_PROJECT_DIR_NAME/$ONLINEBOUTIQUE_NAMESPACE/spanner-db-user-service-account.yaml
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">EOF</span></span></span></code></pre></div><h2 id="grant-the-cartservices-service-account-access-to-the-spanner-database">Grant the <code>cartservice</code>&rsquo;s service account access to the Spanner database</h2>
+<div class="wrap-code highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-Bash" data-lang="Bash"><span style="display:flex;"><span>cat <span style="color:#e6db74">&lt;&lt;EOF &gt; ${WORK_DIR}$TENANT_PROJECT_DIR_NAME/$ONLINEBOUTIQUE_NAMESPACE/spanner-db-user-service-account.yaml
 </span></span></span><span style="display:flex;"><span><span style="color:#e6db74">apiVersion: iam.cnrm.cloud.google.com/v1beta1
 </span></span></span><span style="display:flex;"><span><span style="color:#e6db74">kind: IAMServiceAccount
 </span></span></span><span style="display:flex;"><span><span style="color:#e6db74">metadata:
@@ -165,8 +162,7 @@ if (!doNotTrack) {
 </span></span></span><span style="display:flex;"><span><span style="color:#e6db74">  namespace: ${TENANT_PROJECT_ID}
 </span></span></span><span style="display:flex;"><span><span style="color:#e6db74">spec:
 </span></span></span><span style="display:flex;"><span><span style="color:#e6db74">  displayName: ${SPANNER_DATABASE_USER_GSA_NAME}
-</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">EOF</span>
-</span></span></code></pre></div><div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-Bash" data-lang="Bash"><span style="display:flex;"><span>cat <span style="color:#e6db74">&lt;&lt;EOF &gt; ${WORK_DIR}$TENANT_PROJECT_DIR_NAME/$ONLINEBOUTIQUE_NAMESPACE/spanner-db-user.yaml
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">EOF</span></span></span></code></pre></div><div class="wrap-code highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-Bash" data-lang="Bash"><span style="display:flex;"><span>cat <span style="color:#e6db74">&lt;&lt;EOF &gt; ${WORK_DIR}$TENANT_PROJECT_DIR_NAME/$ONLINEBOUTIQUE_NAMESPACE/spanner-db-user.yaml
 </span></span></span><span style="display:flex;"><span><span style="color:#e6db74">apiVersion: iam.cnrm.cloud.google.com/v1beta1
 </span></span></span><span style="display:flex;"><span><span style="color:#e6db74">kind: IAMPolicyMember
 </span></span></span><span style="display:flex;"><span><span style="color:#e6db74">metadata:
@@ -183,8 +179,7 @@ if (!doNotTrack) {
 </span></span></span><span style="display:flex;"><span><span style="color:#e6db74">    kind: SpannerDatabase
 </span></span></span><span style="display:flex;"><span><span style="color:#e6db74">    name: ${SPANNER_DATABASE_NAME}
 </span></span></span><span style="display:flex;"><span><span style="color:#e6db74">  role: roles/spanner.databaseUser
-</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">EOF</span>
-</span></span></code></pre></div><div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-Bash" data-lang="Bash"><span style="display:flex;"><span>cat <span style="color:#e6db74">&lt;&lt;EOF &gt; ${WORK_DIR}$TENANT_PROJECT_DIR_NAME/$ONLINEBOUTIQUE_NAMESPACE/spanner-db-user-workload-identity-user.yaml
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">EOF</span></span></span></code></pre></div><div class="wrap-code highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-Bash" data-lang="Bash"><span style="display:flex;"><span>cat <span style="color:#e6db74">&lt;&lt;EOF &gt; ${WORK_DIR}$TENANT_PROJECT_DIR_NAME/$ONLINEBOUTIQUE_NAMESPACE/spanner-db-user-workload-identity-user.yaml
 </span></span></span><span style="display:flex;"><span><span style="color:#e6db74">apiVersion: iam.cnrm.cloud.google.com/v1beta1
 </span></span></span><span style="display:flex;"><span><span style="color:#e6db74">kind: IAMPartialPolicy
 </span></span></span><span style="display:flex;"><span><span style="color:#e6db74">metadata:
@@ -200,11 +195,9 @@ if (!doNotTrack) {
 </span></span></span><span style="display:flex;"><span><span style="color:#e6db74">    - role: roles/iam.workloadIdentityUser
 </span></span></span><span style="display:flex;"><span><span style="color:#e6db74">      members:
 </span></span></span><span style="display:flex;"><span><span style="color:#e6db74">        - member: serviceAccount:${TENANT_PROJECT_ID}.svc.id.goog[${ONLINEBOUTIQUE_NAMESPACE}/cartservice]
-</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">EOF</span>
-</span></span></code></pre></div><h2 id="deploy-kubernetes-manifests">Deploy Kubernetes manifests</h2>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-Bash" data-lang="Bash"><span style="display:flex;"><span>cd <span style="color:#e6db74">${</span>WORK_DIR<span style="color:#e6db74">}</span>$TENANT_PROJECT_DIR_NAME/
-</span></span><span style="display:flex;"><span>git add . <span style="color:#f92672">&amp;&amp;</span> git commit -m <span style="color:#e6db74">&#34;Spanner instance and database and configure cartservice&#39;s gsa&#34;</span> <span style="color:#f92672">&amp;&amp;</span> git push origin main
-</span></span></code></pre></div><h2 id="check-deployments">Check deployments</h2>
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">EOF</span></span></span></code></pre></div><h2 id="deploy-kubernetes-manifests">Deploy Kubernetes manifests</h2>
+<div class="wrap-code highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-Bash" data-lang="Bash"><span style="display:flex;"><span>cd <span style="color:#e6db74">${</span>WORK_DIR<span style="color:#e6db74">}</span>$TENANT_PROJECT_DIR_NAME/
+</span></span><span style="display:flex;"><span>git add . <span style="color:#f92672">&amp;&amp;</span> git commit -m <span style="color:#e6db74">&#34;Spanner instance and database and configure cartservice&#39;s gsa&#34;</span> <span style="color:#f92672">&amp;&amp;</span> git push origin main</span></span></code></pre></div><h2 id="check-deployments">Check deployments</h2>
 
 <div class="mermaid align-center">
 graph TD;
@@ -216,13 +209,13 @@ graph TD;
 </div>
 <p>List the Kubernetes resources managed by Config Sync in <strong>Config Controller</strong> for the <strong>Tenant project configs</strong> repository:
 
-<div class="tab-panel" data-tab-group="2567e82518d7888d40887ebb932db9cb">
+<div class="tab-panel" data-tab-group="9daf616c1435cb0cd705889a08807a9b">
   <div class="tab-nav">
     <div class="tab-nav-title">&#8203;</div>
     <button
       data-tab-item="UI"
       class="tab-nav-button tab-panel-style cstyle initial active"
-      onclick="switchTab('2567e82518d7888d40887ebb932db9cb','UI')"
+      onclick="switchTab('9daf616c1435cb0cd705889a08807a9b','UI')"
     >
       <div>
         <div class="tab-nav-hidden">UI</div>
@@ -232,7 +225,7 @@ graph TD;
     <button
       data-tab-item="gcloud"
       class="tab-nav-button tab-panel-style cstyle initial"
-      onclick="switchTab('2567e82518d7888d40887ebb932db9cb','gcloud')"
+      onclick="switchTab('9daf616c1435cb0cd705889a08807a9b','gcloud')"
     >
       <div>
         <div class="tab-nav-hidden">gcloud</div>
@@ -247,8 +240,7 @@ graph TD;
       <div class="tab-content-text">
 
 <p>Run this command and click on this link:</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-Bash" data-lang="Bash"><span style="display:flex;"><span>echo -e <span style="color:#e6db74">&#34;https://console.cloud.google.com/kubernetes/config_management/packages?project=</span><span style="color:#e6db74">${</span>HOST_PROJECT_ID<span style="color:#e6db74">}</span><span style="color:#e6db74">&#34;</span>
-</span></span></code></pre></div><p>Wait until you see the <code>Sync status</code> column as <code>Synced</code> and the <code>Reconcile status</code> column as <code>Current</code>.</p>
+<div class="wrap-code highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-Bash" data-lang="Bash"><span style="display:flex;"><span>echo -e <span style="color:#e6db74">&#34;https://console.cloud.google.com/kubernetes/config_management/packages?project=</span><span style="color:#e6db74">${</span>HOST_PROJECT_ID<span style="color:#e6db74">}</span><span style="color:#e6db74">&#34;</span></span></span></code></pre></div><p>Wait until you see the <code>Sync status</code> column as <code>Synced</code> and the <code>Reconcile status</code> column as <code>Current</code>.</p>
 </div>
     </div>
     <div
@@ -257,20 +249,18 @@ graph TD;
       <div class="tab-content-text">
 
 <p>Run this command:</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-Bash" data-lang="Bash"><span style="display:flex;"><span>gcloud alpha anthos config sync repo describe <span style="color:#ae81ff">\
+<div class="wrap-code highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-Bash" data-lang="Bash"><span style="display:flex;"><span>gcloud alpha anthos config sync repo describe <span style="color:#ae81ff">\
 </span></span></span><span style="display:flex;"><span><span style="color:#ae81ff"></span>    --project $HOST_PROJECT_ID <span style="color:#ae81ff">\
 </span></span></span><span style="display:flex;"><span><span style="color:#ae81ff"></span>    --managed-resources all <span style="color:#ae81ff">\
 </span></span></span><span style="display:flex;"><span><span style="color:#ae81ff"></span>    --sync-name repo-sync <span style="color:#ae81ff">\
-</span></span></span><span style="display:flex;"><span><span style="color:#ae81ff"></span>    --sync-namespace $TENANT_PROJECT_ID
-</span></span></code></pre></div><p>Wait and re-run this command above until you see <code>&quot;status&quot;: &quot;SYNCED&quot;</code>. All the <code>managed_resources</code> listed should have <code>STATUS: Current</code> too.</p>
+</span></span></span><span style="display:flex;"><span><span style="color:#ae81ff"></span>    --sync-namespace $TENANT_PROJECT_ID</span></span></code></pre></div><p>Wait and re-run this command above until you see <code>&quot;status&quot;: &quot;SYNCED&quot;</code>. All the <code>managed_resources</code> listed should have <code>STATUS: Current</code> too.</p>
 </div>
     </div>
   </div>
 </div></p>
 <p>List the GitHub runs for the <strong>Tenant project configs</strong> repository:</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-Bash" data-lang="Bash"><span style="display:flex;"><span>cd <span style="color:#e6db74">${</span>WORK_DIR<span style="color:#e6db74">}</span>$TENANT_PROJECT_DIR_NAME <span style="color:#f92672">&amp;&amp;</span> gh run list
-</span></span></code></pre></div><p>List the Google Cloud resources created:</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-Bash" data-lang="Bash"><span style="display:flex;"><span>gcloud spanner instances list <span style="color:#ae81ff">\
+<div class="wrap-code highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-Bash" data-lang="Bash"><span style="display:flex;"><span>cd <span style="color:#e6db74">${</span>WORK_DIR<span style="color:#e6db74">}</span>$TENANT_PROJECT_DIR_NAME <span style="color:#f92672">&amp;&amp;</span> gh run list</span></span></code></pre></div><p>List the Google Cloud resources created:</p>
+<div class="wrap-code highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-Bash" data-lang="Bash"><span style="display:flex;"><span>gcloud spanner instances list <span style="color:#ae81ff">\
 </span></span></span><span style="display:flex;"><span><span style="color:#ae81ff"></span>    --project<span style="color:#f92672">=</span>$TENANT_PROJECT_ID
 </span></span><span style="display:flex;"><span>gcloud spanner databases list <span style="color:#ae81ff">\
 </span></span></span><span style="display:flex;"><span><span style="color:#ae81ff"></span>    --instance $SPANNER_INSTANCE_NAME <span style="color:#ae81ff">\
@@ -280,8 +270,7 @@ graph TD;
 </span></span></span><span style="display:flex;"><span><span style="color:#ae81ff"></span>    --instance $SPANNER_INSTANCE_NAME <span style="color:#ae81ff">\
 </span></span></span><span style="display:flex;"><span><span style="color:#ae81ff"></span>    --filter<span style="color:#f92672">=</span><span style="color:#e6db74">&#34;bindings.members:</span><span style="color:#e6db74">${</span>SPANNER_DATABASE_USER_GSA_NAME<span style="color:#e6db74">}</span><span style="color:#e6db74">@</span><span style="color:#e6db74">${</span>TENANT_PROJECT_ID<span style="color:#e6db74">}</span><span style="color:#e6db74">.iam.gserviceaccount.com&#34;</span> <span style="color:#ae81ff">\
 </span></span></span><span style="display:flex;"><span><span style="color:#ae81ff"></span>    --flatten<span style="color:#f92672">=</span><span style="color:#e6db74">&#34;bindings[].members&#34;</span> <span style="color:#ae81ff">\
-</span></span></span><span style="display:flex;"><span><span style="color:#ae81ff"></span>    --format<span style="color:#f92672">=</span><span style="color:#e6db74">&#34;table(bindings.role)&#34;</span>
-</span></span></code></pre></div>
+</span></span></span><span style="display:flex;"><span><span style="color:#ae81ff"></span>    --format<span style="color:#f92672">=</span><span style="color:#e6db74">&#34;table(bindings.role)&#34;</span></span></span></code></pre></div>
             <footer class="footline">
 
             </footer>
@@ -467,21 +456,21 @@ graph TD;
         </div>
       </div>
     </aside>
-    <script src="/acm-workshop/js/clipboard.min.js?1687278378" defer></script>
-    <script src="/acm-workshop/js/perfect-scrollbar.min.js?1687278378" defer></script>
-    <script src="/acm-workshop/js/d3/d3-color.min.js?1687278378" defer></script>
-    <script src="/acm-workshop/js/d3/d3-dispatch.min.js?1687278378" defer></script>
-    <script src="/acm-workshop/js/d3/d3-drag.min.js?1687278378" defer></script>
-    <script src="/acm-workshop/js/d3/d3-ease.min.js?1687278378" defer></script>
-    <script src="/acm-workshop/js/d3/d3-interpolate.min.js?1687278378" defer></script>
-    <script src="/acm-workshop/js/d3/d3-selection.min.js?1687278378" defer></script>
-    <script src="/acm-workshop/js/d3/d3-timer.min.js?1687278378" defer></script>
-    <script src="/acm-workshop/js/d3/d3-transition.min.js?1687278378" defer></script>
-    <script src="/acm-workshop/js/d3/d3-zoom.min.js?1687278378" defer></script>
-    <script src="/acm-workshop/js/mermaid.min.js?1687278378" defer></script>
+    <script src="/acm-workshop/js/clipboard.min.js?1689352021" defer></script>
+    <script src="/acm-workshop/js/perfect-scrollbar.min.js?1689352021" defer></script>
+    <script src="/acm-workshop/js/d3/d3-color.min.js?1689352021" defer></script>
+    <script src="/acm-workshop/js/d3/d3-dispatch.min.js?1689352021" defer></script>
+    <script src="/acm-workshop/js/d3/d3-drag.min.js?1689352021" defer></script>
+    <script src="/acm-workshop/js/d3/d3-ease.min.js?1689352021" defer></script>
+    <script src="/acm-workshop/js/d3/d3-interpolate.min.js?1689352021" defer></script>
+    <script src="/acm-workshop/js/d3/d3-selection.min.js?1689352021" defer></script>
+    <script src="/acm-workshop/js/d3/d3-timer.min.js?1689352021" defer></script>
+    <script src="/acm-workshop/js/d3/d3-transition.min.js?1689352021" defer></script>
+    <script src="/acm-workshop/js/d3/d3-zoom.min.js?1689352021" defer></script>
+    <script src="/acm-workshop/js/mermaid.min.js?1689352021" defer></script>
     <script>
       window.themeUseMermaid = JSON.parse("{}");
     </script>
-    <script src="/acm-workshop/js/theme.js?1687278378" defer></script>
+    <script src="/acm-workshop/js/theme.js?1689352021" defer></script>
   </body>
 </html>

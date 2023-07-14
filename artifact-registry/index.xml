@@ -14,7 +14,7 @@
       <description>Duration: 5 min | Persona: Org Admin
 In this section, you will enable and grant the appropriate APIs in the Tenant project and the IAM role for the Tenant project&amp;rsquo;s service account. This will allow later this service account to provision the Artifact Registry to have your private container images. You will also the containers analysis and scanning features of Artifact Registry.
 Initialize variables:
-WORK_DIR=~/ source ${WORK_DIR}acm-workshop-variables.sh Define role Define the artifactregistry.</description>
+WORK_DIR=~/ source ${WORK_DIR}acm-workshop-variables.shDefine role Define the artifactregistry.</description>
     </item>
     <item>
       <title>Create Artifact Registry</title>
@@ -34,7 +34,7 @@ WORK_DIR=~/ source ${WORK_DIR}acm-workshop-variables.sh CONTAINER_REGISTRY_NAME=
       <description>Duration: 10 min | Persona: Platform Admin
 In this section, you will enforce policies in order to make sure that the containers in your clusters are coming from a restricted list of container registries.
 Initialize variables:
-WORK_DIR=~/ source ${WORK_DIR}acm-workshop-variables.sh Define &amp;ldquo;Allowed container registries&amp;rdquo; policy Define the Constraint based on the K8sAllowedRepos ConstraintTemplate for Pods:
+WORK_DIR=~/ source ${WORK_DIR}acm-workshop-variables.shDefine &amp;ldquo;Allowed container registries&amp;rdquo; policy Define the Constraint based on the K8sAllowedRepos ConstraintTemplate for Pods:
 cat &amp;lt;&amp;lt;EOF &amp;gt; ${WORK_DIR}$GKE_CONFIGS_DIR_NAME/policies/constraints/pod-allowed-container-registries.yaml apiVersion: constraints.gatekeeper.sh/v1beta1 kind: K8sAllowedRepos metadata: name: pod-allowed-container-registries annotations: policycontroller.gke.io/constraintData: | &amp;#34;{ description: &amp;#39;Requires container images to begin with a string from the specified list.</description>
     </item>
   </channel>

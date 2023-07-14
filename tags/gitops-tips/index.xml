@@ -14,8 +14,8 @@
       <description>Duration: 5 min | Persona: Platform Admin
 In this section, you will set up the VPC, subnet and Cloud NAT which will be used by the GKE cluster later.
 Initialize variables:
-WORK_DIR=~/ source ${WORK_DIR}acm-workshop-variables.sh echo &amp;#34;export GKE_NAME=gke&amp;#34; &amp;gt;&amp;gt; ${WORK_DIR}acm-workshop-variables.sh source ${WORK_DIR}acm-workshop-variables.sh Define VPC and Subnet Define the VPC:
-cat &amp;lt;&amp;lt;EOF &amp;gt; ${WORK_DIR}$TENANT_PROJECT_DIR_NAME/vpc.yaml apiVersion: compute.cnrm.cloud.google.com/v1beta1 kind: ComputeNetwork metadata: annotations: cnrm.cloud.google.com/project-id: ${TENANT_PROJECT_ID} name: ${GKE_NAME} namespace: ${TENANT_PROJECT_ID} spec: routingMode: REGIONAL autoCreateSubnetworks: false EOF Define the Subnet:</description>
+WORK_DIR=~/ source ${WORK_DIR}acm-workshop-variables.sh echo &amp;#34;export GKE_NAME=gke&amp;#34; &amp;gt;&amp;gt; ${WORK_DIR}acm-workshop-variables.sh source ${WORK_DIR}acm-workshop-variables.shDefine VPC and Subnet Define the VPC:
+cat &amp;lt;&amp;lt;EOF &amp;gt; ${WORK_DIR}$TENANT_PROJECT_DIR_NAME/vpc.yaml apiVersion: compute.cnrm.cloud.google.com/v1beta1 kind: ComputeNetwork metadata: annotations: cnrm.cloud.google.com/project-id: ${TENANT_PROJECT_ID} name: ${GKE_NAME} namespace: ${TENANT_PROJECT_ID} spec: routingMode: REGIONAL autoCreateSubnetworks: false EOFDefine the Subnet:</description>
     </item>
     <item>
       <title>Create Artifact Registry</title>
@@ -35,7 +35,7 @@ WORK_DIR=~/ source ${WORK_DIR}acm-workshop-variables.sh CONTAINER_REGISTRY_NAME=
       <description>Duration: 5 min | Persona: Org Admin
 In this section, you will set up a dedicated GitHub repository containing all the Kubernetes manifests which will be deployed by Config Sync and Config Connector in order to provision the Google Cloud services in the Tenant project.
 Define variables:
-WORK_DIR=~/ source ${WORK_DIR}acm-workshop-variables.sh echo &amp;#34;export TENANT_PROJECT_DIR_NAME=acm-workshop-tenant-project-repo&amp;#34; &amp;gt;&amp;gt; ${WORK_DIR}acm-workshop-variables.sh source ${WORK_DIR}acm-workshop-variables.sh Create GitHub repository Create a dedicated GitHub repository to store any Kubernetes manifests associated to the Tenant project:</description>
+WORK_DIR=~/ source ${WORK_DIR}acm-workshop-variables.sh echo &amp;#34;export TENANT_PROJECT_DIR_NAME=acm-workshop-tenant-project-repo&amp;#34; &amp;gt;&amp;gt; ${WORK_DIR}acm-workshop-variables.sh source ${WORK_DIR}acm-workshop-variables.shCreate GitHub repository Create a dedicated GitHub repository to store any Kubernetes manifests associated to the Tenant project:</description>
     </item>
     <item>
       <title>Allow Config Sync</title>
@@ -45,7 +45,7 @@ WORK_DIR=~/ source ${WORK_DIR}acm-workshop-variables.sh echo &amp;#34;export TEN
       <description>Duration: 5 min | Persona: Platform Admin
 In this section, you will bind the workload identity capability from the Online Boutique&amp;rsquo;s RepoSync Kubernetes Service Account to the Artifact Registry reader Google Service Account created earlier.
 Initialize variables:
-WORK_DIR=~/ source ${WORK_DIR}acm-workshop-variables.sh echo &amp;#34;export ONLINEBOUTIQUE_NAMESPACE=onlineboutique&amp;#34; &amp;gt;&amp;gt; ${WORK_DIR}acm-workshop-variables.sh source ${WORK_DIR}acm-workshop-variables.sh mkdir ${WORK_DIR}$TENANT_PROJECT_DIR_NAME/$ONLINEBOUTIQUE_NAMESPACE Bind the Artifact Registry reader GSA to the Online Boutique&amp;rsquo;s RepoSync cat &amp;lt;&amp;lt;EOF &amp;gt; ${WORK_DIR}$TENANT_PROJECT_DIR_NAME/$ONLINEBOUTIQUE_NAMESPACE/artifactregistry-charts-reader-workload-identity-user.yaml apiVersion: iam.cnrm.cloud.google.com/v1beta1 kind: IAMPartialPolicy metadata: name: ${HELM_CHARTS_READER_GSA}-${ONLINEBOUTIQUE_NAMESPACE} namespace: ${TENANT_PROJECT_ID} annotations: config.</description>
+WORK_DIR=~/ source ${WORK_DIR}acm-workshop-variables.sh echo &amp;#34;export ONLINEBOUTIQUE_NAMESPACE=onlineboutique&amp;#34; &amp;gt;&amp;gt; ${WORK_DIR}acm-workshop-variables.sh source ${WORK_DIR}acm-workshop-variables.shmkdir ${WORK_DIR}$TENANT_PROJECT_DIR_NAME/$ONLINEBOUTIQUE_NAMESPACEBind the Artifact Registry reader GSA to the Online Boutique&amp;rsquo;s RepoSync cat &amp;lt;&amp;lt;EOF &amp;gt; ${WORK_DIR}$TENANT_PROJECT_DIR_NAME/$ONLINEBOUTIQUE_NAMESPACE/artifactregistry-charts-reader-workload-identity-user.yaml apiVersion: iam.cnrm.cloud.google.com/v1beta1 kind: IAMPartialPolicy metadata: name: ${HELM_CHARTS_READER_GSA}-${ONLINEBOUTIQUE_NAMESPACE} namespace: ${TENANT_PROJECT_ID} annotations: config.</description>
     </item>
     <item>
       <title>Configure Config Sync</title>
@@ -55,7 +55,7 @@ WORK_DIR=~/ source ${WORK_DIR}acm-workshop-variables.sh echo &amp;#34;export ONL
       <description>Duration: 10 min | Persona: Platform Admin
 In this section, you will set up a dedicated GitHub repository which will contain all the Kubernetes manifests of the Bank of Anthos apps. You will also have the opportunity to catch a policies violation.
 Initialize variables:
-WORK_DIR=~/ source ${WORK_DIR}acm-workshop-variables.sh echo &amp;#34;export BANKOFANTHOS_NAMESPACE=bankofanthos&amp;#34; &amp;gt;&amp;gt; ${WORK_DIR}acm-workshop-variables.sh echo &amp;#34;export BANK_OF_ANTHOS_DIR_NAME=acm-workshop-bankofanthos-repo&amp;#34; &amp;gt;&amp;gt; ${WORK_DIR}acm-workshop-variables.sh source ${WORK_DIR}acm-workshop-variables.sh mkdir -p ${WORK_DIR}$GKE_CONFIGS_DIR_NAME/repo-syncs mkdir ${WORK_DIR}$GKE_CONFIGS_DIR_NAME/repo-syncs/$BANKOFANTHOS_NAMESPACE Define Namespace Define a dedicated Namespace for the Bank of Anthos apps:</description>
+WORK_DIR=~/ source ${WORK_DIR}acm-workshop-variables.sh echo &amp;#34;export BANKOFANTHOS_NAMESPACE=bankofanthos&amp;#34; &amp;gt;&amp;gt; ${WORK_DIR}acm-workshop-variables.sh echo &amp;#34;export BANK_OF_ANTHOS_DIR_NAME=acm-workshop-bankofanthos-repo&amp;#34; &amp;gt;&amp;gt; ${WORK_DIR}acm-workshop-variables.sh source ${WORK_DIR}acm-workshop-variables.shmkdir -p ${WORK_DIR}$GKE_CONFIGS_DIR_NAME/repo-syncs mkdir ${WORK_DIR}$GKE_CONFIGS_DIR_NAME/repo-syncs/$BANKOFANTHOS_NAMESPACEDefine Namespace Define a dedicated Namespace for the Bank of Anthos apps:</description>
     </item>
     <item>
       <title>Configure Config Sync</title>
@@ -65,7 +65,7 @@ WORK_DIR=~/ source ${WORK_DIR}acm-workshop-variables.sh echo &amp;#34;export BAN
       <description>Duration: 10 min | Persona: Platform Admin
 In this section, you will configure Config Sync to sync the resources in the Whereami Namespace via its associated RepoSync and RoleBinding.
 Initialize variables:
-WORK_DIR=~/ source ${WORK_DIR}acm-workshop-variables.sh echo &amp;#34;export WHEREAMI_NAMESPACE=whereami&amp;#34; &amp;gt;&amp;gt; ${WORK_DIR}acm-workshop-variables.sh echo &amp;#34;export WHERE_AMI_DIR_NAME=acm-workshop-whereami-repo&amp;#34; &amp;gt;&amp;gt; ${WORK_DIR}acm-workshop-variables.sh source ${WORK_DIR}acm-workshop-variables.sh mkdir -p ${WORK_DIR}$GKE_CONFIGS_DIR_NAME/repo-syncs mkdir ${WORK_DIR}$GKE_CONFIGS_DIR_NAME/repo-syncs/$WHEREAMI_NAMESPACE Create Namespace Define a dedicated Namespace for the Whereami app:
+WORK_DIR=~/ source ${WORK_DIR}acm-workshop-variables.sh echo &amp;#34;export WHEREAMI_NAMESPACE=whereami&amp;#34; &amp;gt;&amp;gt; ${WORK_DIR}acm-workshop-variables.sh echo &amp;#34;export WHERE_AMI_DIR_NAME=acm-workshop-whereami-repo&amp;#34; &amp;gt;&amp;gt; ${WORK_DIR}acm-workshop-variables.sh source ${WORK_DIR}acm-workshop-variables.shmkdir -p ${WORK_DIR}$GKE_CONFIGS_DIR_NAME/repo-syncs mkdir ${WORK_DIR}$GKE_CONFIGS_DIR_NAME/repo-syncs/$WHEREAMI_NAMESPACECreate Namespace Define a dedicated Namespace for the Whereami app:
 cat &amp;lt;&amp;lt;EOF &amp;gt; ${WORK_DIR}$GKE_CONFIGS_DIR_NAME/repo-syncs/$WHEREAMI_NAMESPACE/namespace.yaml apiVersion: v1 kind: Namespace metadata: labels: istio-injection: enabled pod-security.</description>
     </item>
     <item>
@@ -95,7 +95,7 @@ In this section, you will set up the primary Git repository of the Config Contro
       <description>Duration: 5 min | Persona: Platform Admin
 In this section, you will configure Config Sync to sync the resources in the Online Boutique Namespace via its associated RoleBinding.
 Initialize variables:
-WORK_DIR=~/ source ${WORK_DIR}acm-workshop-variables.sh mkdir -p ${WORK_DIR}$GKE_CONFIGS_DIR_NAME/repo-syncs mkdir ${WORK_DIR}$GKE_CONFIGS_DIR_NAME/repo-syncs/$ONLINEBOUTIQUE_NAMESPACE Define Namespace Define a dedicated Namespace for the Online Boutique apps:
+WORK_DIR=~/ source ${WORK_DIR}acm-workshop-variables.shmkdir -p ${WORK_DIR}$GKE_CONFIGS_DIR_NAME/repo-syncs mkdir ${WORK_DIR}$GKE_CONFIGS_DIR_NAME/repo-syncs/$ONLINEBOUTIQUE_NAMESPACEDefine Namespace Define a dedicated Namespace for the Online Boutique apps:
 cat &amp;lt;&amp;lt;EOF &amp;gt; ${WORK_DIR}$GKE_CONFIGS_DIR_NAME/repo-syncs/$ONLINEBOUTIQUE_NAMESPACE/namespace.yaml apiVersion: v1 kind: Namespace metadata: labels: istio-injection: enabled pod-security.kubernetes.io/enforce: restricted name: ${ONLINEBOUTIQUE_NAMESPACE} EOF Note In addition to the istio-injection to include this Namespace into our Service Mesh, we are also adding the pod-security.</description>
     </item>
     <item>
@@ -106,7 +106,7 @@ cat &amp;lt;&amp;lt;EOF &amp;gt; ${WORK_DIR}$GKE_CONFIGS_DIR_NAME/repo-syncs/$ON
       <description>Duration: 10 min | Persona: Platform Admin
 In this section, you will set up Config Sync and Policy Controller for the GKE cluster. You will also configure a main/root GitHub repository for this GKE cluster.
 Define variables:
-WORK_DIR=~/ source ${WORK_DIR}acm-workshop-variables.sh echo &amp;#34;export GKE_CONFIGS_DIR_NAME=acm-workshop-gke-configs-repo&amp;#34; &amp;gt;&amp;gt; ${WORK_DIR}acm-workshop-variables.sh source ${WORK_DIR}acm-workshop-variables.sh Define ACM GKEHubFeature Define the ACM GKEHubFeature resource:
+WORK_DIR=~/ source ${WORK_DIR}acm-workshop-variables.sh echo &amp;#34;export GKE_CONFIGS_DIR_NAME=acm-workshop-gke-configs-repo&amp;#34; &amp;gt;&amp;gt; ${WORK_DIR}acm-workshop-variables.sh source ${WORK_DIR}acm-workshop-variables.shDefine ACM GKEHubFeature Define the ACM GKEHubFeature resource:
 cat &amp;lt;&amp;lt;EOF &amp;gt; ${WORK_DIR}$TENANT_PROJECT_DIR_NAME/gke-hub-feature-acm.yaml apiVersion: gkehub.cnrm.cloud.google.com/v1beta1 kind: GKEHubFeature metadata: name: configmanagement namespace: ${TENANT_PROJECT_ID} spec: projectRef: name: ${TENANT_PROJECT_ID} location: global resourceID: configmanagement EOF Note The resourceID must be configmanagement if you want to use Anthos Config Management feature.</description>
     </item>
     <item>
@@ -117,7 +117,7 @@ cat &amp;lt;&amp;lt;EOF &amp;gt; ${WORK_DIR}$TENANT_PROJECT_DIR_NAME/gke-hub-fea
       <description>Duration: 5 min | Persona: Apps Operator
 In this section, in the Google Cloud Console you will monitor the resources synced by Config Sync for both the Config Controller instance in the Host project and the GKE cluster in the Tenant project.
 Initialize variables:
-WORK_DIR=~/ source ${WORK_DIR}acm-workshop-variables.sh Monitor the resources synced by Config Sync in the Config Controller instance in the Host project Click on the link displayed by the command below:</description>
+WORK_DIR=~/ source ${WORK_DIR}acm-workshop-variables.shMonitor the resources synced by Config Sync in the Config Controller instance in the Host project Click on the link displayed by the command below:</description>
     </item>
   </channel>
 </rss>

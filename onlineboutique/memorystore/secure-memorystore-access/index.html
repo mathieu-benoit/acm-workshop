@@ -4,24 +4,24 @@
     <meta charset="utf-8">
     <meta name="viewport" content="height=device-height, width=device-width, initial-scale=1.0, minimum-scale=1.0">
     <meta name="generator" content="Hugo 0.109.0">
-    <meta name="generator" content="Relearn 5.16.2+tip">
+    <meta name="generator" content="Relearn 5.17.1+tip">
     <meta name="description" content="Duration: 10 min | Persona: Apps Operator">
     <meta name="author" content="Mathieu Benoit">
     <title>Secure Memorystore access</title>
-    <link href="/acm-workshop/images/favicon.png?1687278376" rel="icon" type="image/png">
+    <link href="/acm-workshop/images/favicon.png?1689352019" rel="icon" type="image/png">
     <!-- https://github.com/filamentgroup/loadCSS/blob/master/README.md#how-to-use -->
-    <link href="/acm-workshop/css/fontawesome-all.min.css?1687278376" rel="stylesheet" media="print" onload="this.media='all';this.onload=null;"><noscript><link href="/acm-workshop/css/fontawesome-all.min.css?1687278376" rel="stylesheet"></noscript>
-    <link href="/acm-workshop/css/nucleus.css?1687278376" rel="stylesheet">
-    <link href="/acm-workshop/css/auto-complete.css?1687278376" rel="stylesheet" media="print" onload="this.media='all';this.onload=null;"><noscript><link href="/acm-workshop/css/auto-complete.css?1687278376" rel="stylesheet"></noscript>
-    <link href="/acm-workshop/css/perfect-scrollbar.min.css?1687278376" rel="stylesheet">
-    <link href="/acm-workshop/css/fonts.css?1687278376" rel="stylesheet" media="print" onload="this.media='all';this.onload=null;"><noscript><link href="/acm-workshop/css/fonts.css?1687278376" rel="stylesheet"></noscript>
-    <link href="/acm-workshop/css/theme.css?1687278376" rel="stylesheet">
-    <link href="/acm-workshop/css/theme-mine.css?1687278376" rel="stylesheet" id="variant-style">
-    <link href="/acm-workshop/css/variant.css?1687278376" rel="stylesheet">
-    <link href="/acm-workshop/css/print.css?1687278376" rel="stylesheet" media="print">
-    <link href="/acm-workshop/css/ie.css?1687278376" rel="stylesheet">
-    <script src="/acm-workshop/js/url.js?1687278376"></script>
-    <script src="/acm-workshop/js/variant.js?1687278376"></script>
+    <link href="/acm-workshop/css/fontawesome-all.min.css?1689352019" rel="stylesheet" media="print" onload="this.media='all';this.onload=null;"><noscript><link href="/acm-workshop/css/fontawesome-all.min.css?1689352019" rel="stylesheet"></noscript>
+    <link href="/acm-workshop/css/nucleus.css?1689352019" rel="stylesheet">
+    <link href="/acm-workshop/css/auto-complete.css?1689352019" rel="stylesheet" media="print" onload="this.media='all';this.onload=null;"><noscript><link href="/acm-workshop/css/auto-complete.css?1689352019" rel="stylesheet"></noscript>
+    <link href="/acm-workshop/css/perfect-scrollbar.min.css?1689352019" rel="stylesheet">
+    <link href="/acm-workshop/css/fonts.css?1689352019" rel="stylesheet" media="print" onload="this.media='all';this.onload=null;"><noscript><link href="/acm-workshop/css/fonts.css?1689352019" rel="stylesheet"></noscript>
+    <link href="/acm-workshop/css/theme.css?1689352019" rel="stylesheet">
+    <link href="/acm-workshop/css/theme-mine.css?1689352019" rel="stylesheet" id="variant-style">
+    <link href="/acm-workshop/css/variant.css?1689352019" rel="stylesheet">
+    <link href="/acm-workshop/css/print.css?1689352019" rel="stylesheet" media="print">
+    <link href="/acm-workshop/css/ie.css?1689352019" rel="stylesheet">
+    <script src="/acm-workshop/js/url.js?1689352019"></script>
+    <script src="/acm-workshop/js/variant.js?1689352019"></script>
     <script>
       // hack to let hugo tell us how to get to the root when using relativeURLs, it needs to be called *url= for it to do its magic:
       // https://github.com/gohugoio/hugo/blob/145b3fcce35fbac25c7033c91c1b7ae6d1179da8/transform/urlreplacers/absurlreplacer.go#L72""
@@ -107,20 +107,19 @@ if (!doNotTrack) {
 <h1 id="secure-memorystore-access">Secure Memorystore access</h1>
 
 <p>
-<a href="#image-cbf60514d9f5141dfc1b1c300ddc8a60" class="lightbox-link">
+<a href="#image-6f388b08d1509525e44057e3b8d8624e" class="lightbox-link">
 <img src="https://github.com/mathieu-benoit/my-images/raw/main/acm-workshop/apps-operator.png" alt="Apps Operator" style="height: auto; width: auto;" loading="lazy">
 </a>
-<a href="javascript:history.back();" class="lightbox" id="image-cbf60514d9f5141dfc1b1c300ddc8a60">
+<a href="javascript:history.back();" class="lightbox" id="image-6f388b08d1509525e44057e3b8d8624e">
 <img src="https://github.com/mathieu-benoit/my-images/raw/main/acm-workshop/apps-operator.png" alt="Apps Operator" class="lightbox-image" loading="lazy">
 </a>
 <em>Duration: 10 min | Persona: Apps Operator</em></p>
 <p>In this section, you will <a href="https://medium.com/google-cloud/64b71969318d" target="_blank">secure the access by TLS to the Memorystore (Redis) instance from the OnlineBoutique&rsquo;s <code>cartservice</code> app</a>, without updating the source code of the app, just with Istio&rsquo;s capabilities.</p>
 <p>Initialize variables:</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-Bash" data-lang="Bash"><span style="display:flex;"><span>WORK_DIR<span style="color:#f92672">=</span>~/
+<div class="wrap-code highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-Bash" data-lang="Bash"><span style="display:flex;"><span>WORK_DIR<span style="color:#f92672">=</span>~/
 </span></span><span style="display:flex;"><span>source <span style="color:#e6db74">${</span>WORK_DIR<span style="color:#e6db74">}</span>acm-workshop-variables.sh
 </span></span><span style="display:flex;"><span>echo <span style="color:#e6db74">&#34;export CART_MEMORYSTORE_HOST=</span><span style="color:#e6db74">${</span>REDIS_NAME<span style="color:#e6db74">}</span><span style="color:#e6db74">.memorystore-redis.</span><span style="color:#e6db74">${</span>ONLINEBOUTIQUE_NAMESPACE<span style="color:#e6db74">}</span><span style="color:#e6db74">&#34;</span> &gt;&gt; <span style="color:#e6db74">${</span>WORK_DIR<span style="color:#e6db74">}</span>acm-workshop-variables.sh
-</span></span><span style="display:flex;"><span>source <span style="color:#e6db74">${</span>WORK_DIR<span style="color:#e6db74">}</span>acm-workshop-variables.sh
-</span></span></code></pre></div>
+</span></span><span style="display:flex;"><span>source <span style="color:#e6db74">${</span>WORK_DIR<span style="color:#e6db74">}</span>acm-workshop-variables.sh</span></span></code></pre></div>
 <div class="box notices cstyle info">
   <div class="box-label"><i class="fa-fw fas fa-info-circle"></i> Info</div>
   <div class="box-content">
@@ -130,11 +129,10 @@ if (!doNotTrack) {
 </div>
 <h2 id="update-reposync-to-deploy-the-online-boutiques-helm-chart">Update <code>RepoSync</code> to deploy the Online Boutique&rsquo;s Helm chart</h2>
 <p>Get Memorystore (Redis) connection information:</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-Bash" data-lang="Bash"><span style="display:flex;"><span>export REDIS_TLS_IP<span style="color:#f92672">=</span><span style="color:#66d9ef">$(</span>gcloud redis instances describe $REDIS_TLS_NAME --region $GKE_LOCATION --project $TENANT_PROJECT_ID --format<span style="color:#f92672">=</span><span style="color:#e6db74">&#39;get(host)&#39;</span><span style="color:#66d9ef">)</span>
+<div class="wrap-code highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-Bash" data-lang="Bash"><span style="display:flex;"><span>export REDIS_TLS_IP<span style="color:#f92672">=</span><span style="color:#66d9ef">$(</span>gcloud redis instances describe $REDIS_TLS_NAME --region $GKE_LOCATION --project $TENANT_PROJECT_ID --format<span style="color:#f92672">=</span><span style="color:#e6db74">&#39;get(host)&#39;</span><span style="color:#66d9ef">)</span>
 </span></span><span style="display:flex;"><span>export REDIS_TLS_PORT<span style="color:#f92672">=</span><span style="color:#66d9ef">$(</span>gcloud redis instances describe $REDIS_TLS_NAME --region $GKE_LOCATION --project $TENANT_PROJECT_ID --format<span style="color:#f92672">=</span><span style="color:#e6db74">&#39;get(port)&#39;</span><span style="color:#66d9ef">)</span>
-</span></span><span style="display:flex;"><span>export REDIS_TLS_CERT<span style="color:#f92672">=</span><span style="color:#66d9ef">$(</span>gcloud redis instances describe $REDIS_TLS_NAME --region $GKE_LOCATION --project $TENANT_PROJECT_ID --format <span style="color:#e6db74">&#39;get(serverCaCerts[0].cert)&#39;</span><span style="color:#66d9ef">)</span>
-</span></span></code></pre></div><p>Define the <code>RepoSync</code> to deploy the Online Boutique&rsquo;s Helm chart with the <code>cartservice</code> pointing to the Memorystore (Redis) database:</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-Bash" data-lang="Bash"><span style="display:flex;"><span>cat <span style="color:#e6db74">&lt;&lt;EOF &gt; ${WORK_DIR}$GKE_CONFIGS_DIR_NAME/repo-syncs/$ONLINEBOUTIQUE_NAMESPACE/repo-sync.yaml
+</span></span><span style="display:flex;"><span>export REDIS_TLS_CERT<span style="color:#f92672">=</span><span style="color:#66d9ef">$(</span>gcloud redis instances describe $REDIS_TLS_NAME --region $GKE_LOCATION --project $TENANT_PROJECT_ID --format <span style="color:#e6db74">&#39;get(serverCaCerts[0].cert)&#39;</span><span style="color:#66d9ef">)</span></span></span></code></pre></div><p>Define the <code>RepoSync</code> to deploy the Online Boutique&rsquo;s Helm chart with the <code>cartservice</code> pointing to the Memorystore (Redis) database:</p>
+<div class="wrap-code highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-Bash" data-lang="Bash"><span style="display:flex;"><span>cat <span style="color:#e6db74">&lt;&lt;EOF &gt; ${WORK_DIR}$GKE_CONFIGS_DIR_NAME/repo-syncs/$ONLINEBOUTIQUE_NAMESPACE/repo-sync.yaml
 </span></span></span><span style="display:flex;"><span><span style="color:#e6db74">apiVersion: configsync.gke.io/v1beta1
 </span></span></span><span style="display:flex;"><span><span style="color:#e6db74">kind: RepoSync
 </span></span></span><span style="display:flex;"><span><span style="color:#e6db74">metadata:
@@ -188,8 +186,7 @@ if (!doNotTrack) {
 </span></span></span><span style="display:flex;"><span><span style="color:#e6db74">        create: true
 </span></span></span><span style="display:flex;"><span><span style="color:#e6db74">      sidecars:
 </span></span></span><span style="display:flex;"><span><span style="color:#e6db74">        create: true
-</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">EOF</span>
-</span></span></code></pre></div>
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">EOF</span></span></span></code></pre></div>
 <div class="box notices cstyle info">
   <div class="box-label"><i class="fa-fw fas fa-info-circle"></i> Info</div>
   <div class="box-content">
@@ -206,18 +203,17 @@ if (!doNotTrack) {
 </div>
 </div>
 <h2 id="deploy-kubernetes-manifests">Deploy Kubernetes manifests</h2>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-Bash" data-lang="Bash"><span style="display:flex;"><span>cd <span style="color:#e6db74">${</span>WORK_DIR<span style="color:#e6db74">}</span>$GKE_CONFIGS_DIR_NAME/
-</span></span><span style="display:flex;"><span>git add . <span style="color:#f92672">&amp;&amp;</span> git commit -m <span style="color:#e6db74">&#34;Secure Memorystore (Redis) access&#34;</span> <span style="color:#f92672">&amp;&amp;</span> git push origin main
-</span></span></code></pre></div><h2 id="check-deployments">Check deployments</h2>
+<div class="wrap-code highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-Bash" data-lang="Bash"><span style="display:flex;"><span>cd <span style="color:#e6db74">${</span>WORK_DIR<span style="color:#e6db74">}</span>$GKE_CONFIGS_DIR_NAME/
+</span></span><span style="display:flex;"><span>git add . <span style="color:#f92672">&amp;&amp;</span> git commit -m <span style="color:#e6db74">&#34;Secure Memorystore (Redis) access&#34;</span> <span style="color:#f92672">&amp;&amp;</span> git push origin main</span></span></code></pre></div><h2 id="check-deployments">Check deployments</h2>
 <p>List the Kubernetes resources managed by Config Sync in <strong>GKE cluster</strong> for the <strong>Online Boutique apps</strong> repository:
 
-<div class="tab-panel" data-tab-group="dbdb0bf838e584895155d47c90b46779">
+<div class="tab-panel" data-tab-group="3f20a9e514201e05d221c31576831779">
   <div class="tab-nav">
     <div class="tab-nav-title">&#8203;</div>
     <button
       data-tab-item="UI"
       class="tab-nav-button tab-panel-style cstyle initial active"
-      onclick="switchTab('dbdb0bf838e584895155d47c90b46779','UI')"
+      onclick="switchTab('3f20a9e514201e05d221c31576831779','UI')"
     >
       <div>
         <div class="tab-nav-hidden">UI</div>
@@ -227,7 +223,7 @@ if (!doNotTrack) {
     <button
       data-tab-item="gcloud"
       class="tab-nav-button tab-panel-style cstyle initial"
-      onclick="switchTab('dbdb0bf838e584895155d47c90b46779','gcloud')"
+      onclick="switchTab('3f20a9e514201e05d221c31576831779','gcloud')"
     >
       <div>
         <div class="tab-nav-hidden">gcloud</div>
@@ -242,8 +238,7 @@ if (!doNotTrack) {
       <div class="tab-content-text">
 
 <p>Run this command and click on this link:</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-Bash" data-lang="Bash"><span style="display:flex;"><span>echo -e <span style="color:#e6db74">&#34;https://console.cloud.google.com/kubernetes/config_management/packages?project=</span><span style="color:#e6db74">${</span>TENANT_PROJECT_ID<span style="color:#e6db74">}</span><span style="color:#e6db74">&#34;</span>
-</span></span></code></pre></div><p>Wait until you see the <code>Sync status</code> column as <code>Synced</code> and the <code>Reconcile status</code> column as <code>Current</code>.</p>
+<div class="wrap-code highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-Bash" data-lang="Bash"><span style="display:flex;"><span>echo -e <span style="color:#e6db74">&#34;https://console.cloud.google.com/kubernetes/config_management/packages?project=</span><span style="color:#e6db74">${</span>TENANT_PROJECT_ID<span style="color:#e6db74">}</span><span style="color:#e6db74">&#34;</span></span></span></code></pre></div><p>Wait until you see the <code>Sync status</code> column as <code>Synced</code> and the <code>Reconcile status</code> column as <code>Current</code>.</p>
 </div>
     </div>
     <div
@@ -252,22 +247,19 @@ if (!doNotTrack) {
       <div class="tab-content-text">
 
 <p>Run this command:</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-Bash" data-lang="Bash"><span style="display:flex;"><span>gcloud alpha anthos config sync repo describe <span style="color:#ae81ff">\
+<div class="wrap-code highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-Bash" data-lang="Bash"><span style="display:flex;"><span>gcloud alpha anthos config sync repo describe <span style="color:#ae81ff">\
 </span></span></span><span style="display:flex;"><span><span style="color:#ae81ff"></span>    --project $TENANT_PROJECT_ID <span style="color:#ae81ff">\
 </span></span></span><span style="display:flex;"><span><span style="color:#ae81ff"></span>    --managed-resources all <span style="color:#ae81ff">\
 </span></span></span><span style="display:flex;"><span><span style="color:#ae81ff"></span>    --sync-name repo-sync <span style="color:#ae81ff">\
-</span></span></span><span style="display:flex;"><span><span style="color:#ae81ff"></span>    --sync-namespace $ONLINEBOUTIQUE_NAMESPACE
-</span></span></code></pre></div><p>Wait and re-run this command above until you see <code>&quot;status&quot;: &quot;SYNCED&quot;</code>.</p>
+</span></span></span><span style="display:flex;"><span><span style="color:#ae81ff"></span>    --sync-namespace $ONLINEBOUTIQUE_NAMESPACE</span></span></code></pre></div><p>Wait and re-run this command above until you see <code>&quot;status&quot;: &quot;SYNCED&quot;</code>.</p>
 </div>
     </div>
   </div>
 </div></p>
 <p>List the GitHub runs for the <strong>GKE cluster configs</strong> repository:</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-Bash" data-lang="Bash"><span style="display:flex;"><span>cd <span style="color:#e6db74">${</span>WORK_DIR<span style="color:#e6db74">}</span>$GKE_CONFIGS_DIR_NAME <span style="color:#f92672">&amp;&amp;</span> gh run list
-</span></span></code></pre></div><h2 id="check-the-online-boutique-website">Check the Online Boutique website</h2>
+<div class="wrap-code highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-Bash" data-lang="Bash"><span style="display:flex;"><span>cd <span style="color:#e6db74">${</span>WORK_DIR<span style="color:#e6db74">}</span>$GKE_CONFIGS_DIR_NAME <span style="color:#f92672">&amp;&amp;</span> gh run list</span></span></code></pre></div><h2 id="check-the-online-boutique-website">Check the Online Boutique website</h2>
 <p>Navigate to the Online Boutique website, click on the link displayed by the command below:</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-Bash" data-lang="Bash"><span style="display:flex;"><span>echo -e <span style="color:#e6db74">&#34;https://</span><span style="color:#e6db74">${</span>ONLINE_BOUTIQUE_INGRESS_GATEWAY_HOST_NAME<span style="color:#e6db74">}</span><span style="color:#e6db74">&#34;</span>
-</span></span></code></pre></div><p>You should still have the Online Boutique website working successfully, but now linked to an external redis database with encryption in-transit between this Memorystore (Redis) database and the <code>cartservice</code>.</p>
+<div class="wrap-code highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-Bash" data-lang="Bash"><span style="display:flex;"><span>echo -e <span style="color:#e6db74">&#34;https://</span><span style="color:#e6db74">${</span>ONLINE_BOUTIQUE_INGRESS_GATEWAY_HOST_NAME<span style="color:#e6db74">}</span><span style="color:#e6db74">&#34;</span></span></span></code></pre></div><p>You should still have the Online Boutique website working successfully, but now linked to an external redis database with encryption in-transit between this Memorystore (Redis) database and the <code>cartservice</code>.</p>
 
             <footer class="footline">
 
@@ -454,8 +446,8 @@ if (!doNotTrack) {
         </div>
       </div>
     </aside>
-    <script src="/acm-workshop/js/clipboard.min.js?1687278378" defer></script>
-    <script src="/acm-workshop/js/perfect-scrollbar.min.js?1687278378" defer></script>
-    <script src="/acm-workshop/js/theme.js?1687278378" defer></script>
+    <script src="/acm-workshop/js/clipboard.min.js?1689352021" defer></script>
+    <script src="/acm-workshop/js/perfect-scrollbar.min.js?1689352021" defer></script>
+    <script src="/acm-workshop/js/theme.js?1689352021" defer></script>
   </body>
 </html>

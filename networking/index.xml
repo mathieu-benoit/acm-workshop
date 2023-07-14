@@ -14,8 +14,8 @@
       <description>Duration: 2 min | Persona: Org Admin
 In this section, you will enable and grant the appropriate APIs in the Tenant project and the IAM role for the Tenant project&amp;rsquo;s service account. This will allow later this service account to provision the networking services.
 Initialize variables:
-WORK_DIR=~/ source ${WORK_DIR}acm-workshop-variables.sh Define role Define the compute.networkAdmin role with an IAMPolicyMember for the Tenant project&amp;rsquo;s service account:
-cat &amp;lt;&amp;lt;EOF &amp;gt; ${WORK_DIR}$HOST_PROJECT_DIR_NAME/projects/$TENANT_PROJECT_ID/network-admin.yaml apiVersion: iam.</description>
+WORK_DIR=~/ source ${WORK_DIR}acm-workshop-variables.shDefine role Define the compute.networkAdmin role with an IAMPolicyMember for the Tenant project&amp;rsquo;s service account:
+cat &amp;lt;&amp;lt;EOF &amp;gt; ${WORK_DIR}$HOST_PROJECT_DIR_NAME/projects/$TENANT_PROJECT_ID/network-admin.yaml apiVersion: iam.cnrm.cloud.google.com/v1beta1 kind: IAMPolicyMember metadata: name: network-admin-${TENANT_PROJECT_ID} namespace: config-control annotations: config.</description>
     </item>
     <item>
       <title>Set up Network</title>
@@ -25,8 +25,8 @@ cat &amp;lt;&amp;lt;EOF &amp;gt; ${WORK_DIR}$HOST_PROJECT_DIR_NAME/projects/$TEN
       <description>Duration: 5 min | Persona: Platform Admin
 In this section, you will set up the VPC, subnet and Cloud NAT which will be used by the GKE cluster later.
 Initialize variables:
-WORK_DIR=~/ source ${WORK_DIR}acm-workshop-variables.sh echo &amp;#34;export GKE_NAME=gke&amp;#34; &amp;gt;&amp;gt; ${WORK_DIR}acm-workshop-variables.sh source ${WORK_DIR}acm-workshop-variables.sh Define VPC and Subnet Define the VPC:
-cat &amp;lt;&amp;lt;EOF &amp;gt; ${WORK_DIR}$TENANT_PROJECT_DIR_NAME/vpc.yaml apiVersion: compute.cnrm.cloud.google.com/v1beta1 kind: ComputeNetwork metadata: annotations: cnrm.cloud.google.com/project-id: ${TENANT_PROJECT_ID} name: ${GKE_NAME} namespace: ${TENANT_PROJECT_ID} spec: routingMode: REGIONAL autoCreateSubnetworks: false EOF Define the Subnet:</description>
+WORK_DIR=~/ source ${WORK_DIR}acm-workshop-variables.sh echo &amp;#34;export GKE_NAME=gke&amp;#34; &amp;gt;&amp;gt; ${WORK_DIR}acm-workshop-variables.sh source ${WORK_DIR}acm-workshop-variables.shDefine VPC and Subnet Define the VPC:
+cat &amp;lt;&amp;lt;EOF &amp;gt; ${WORK_DIR}$TENANT_PROJECT_DIR_NAME/vpc.yaml apiVersion: compute.cnrm.cloud.google.com/v1beta1 kind: ComputeNetwork metadata: annotations: cnrm.cloud.google.com/project-id: ${TENANT_PROJECT_ID} name: ${GKE_NAME} namespace: ${TENANT_PROJECT_ID} spec: routingMode: REGIONAL autoCreateSubnetworks: false EOFDefine the Subnet:</description>
     </item>
   </channel>
 </rss>

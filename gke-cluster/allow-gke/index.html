@@ -4,24 +4,24 @@
     <meta charset="utf-8">
     <meta name="viewport" content="height=device-height, width=device-width, initial-scale=1.0, minimum-scale=1.0">
     <meta name="generator" content="Hugo 0.109.0">
-    <meta name="generator" content="Relearn 5.16.2+tip">
+    <meta name="generator" content="Relearn 5.17.1+tip">
     <meta name="description" content="Duration: 5 min | Persona: Org Admin">
     <meta name="author" content="Mathieu Benoit">
     <title>Allow GKE</title>
-    <link href="/acm-workshop/images/favicon.png?1687278376" rel="icon" type="image/png">
+    <link href="/acm-workshop/images/favicon.png?1689352019" rel="icon" type="image/png">
     <!-- https://github.com/filamentgroup/loadCSS/blob/master/README.md#how-to-use -->
-    <link href="/acm-workshop/css/fontawesome-all.min.css?1687278376" rel="stylesheet" media="print" onload="this.media='all';this.onload=null;"><noscript><link href="/acm-workshop/css/fontawesome-all.min.css?1687278376" rel="stylesheet"></noscript>
-    <link href="/acm-workshop/css/nucleus.css?1687278376" rel="stylesheet">
-    <link href="/acm-workshop/css/auto-complete.css?1687278376" rel="stylesheet" media="print" onload="this.media='all';this.onload=null;"><noscript><link href="/acm-workshop/css/auto-complete.css?1687278376" rel="stylesheet"></noscript>
-    <link href="/acm-workshop/css/perfect-scrollbar.min.css?1687278376" rel="stylesheet">
-    <link href="/acm-workshop/css/fonts.css?1687278376" rel="stylesheet" media="print" onload="this.media='all';this.onload=null;"><noscript><link href="/acm-workshop/css/fonts.css?1687278376" rel="stylesheet"></noscript>
-    <link href="/acm-workshop/css/theme.css?1687278376" rel="stylesheet">
-    <link href="/acm-workshop/css/theme-mine.css?1687278376" rel="stylesheet" id="variant-style">
-    <link href="/acm-workshop/css/variant.css?1687278376" rel="stylesheet">
-    <link href="/acm-workshop/css/print.css?1687278376" rel="stylesheet" media="print">
-    <link href="/acm-workshop/css/ie.css?1687278376" rel="stylesheet">
-    <script src="/acm-workshop/js/url.js?1687278376"></script>
-    <script src="/acm-workshop/js/variant.js?1687278376"></script>
+    <link href="/acm-workshop/css/fontawesome-all.min.css?1689352019" rel="stylesheet" media="print" onload="this.media='all';this.onload=null;"><noscript><link href="/acm-workshop/css/fontawesome-all.min.css?1689352019" rel="stylesheet"></noscript>
+    <link href="/acm-workshop/css/nucleus.css?1689352019" rel="stylesheet">
+    <link href="/acm-workshop/css/auto-complete.css?1689352019" rel="stylesheet" media="print" onload="this.media='all';this.onload=null;"><noscript><link href="/acm-workshop/css/auto-complete.css?1689352019" rel="stylesheet"></noscript>
+    <link href="/acm-workshop/css/perfect-scrollbar.min.css?1689352019" rel="stylesheet">
+    <link href="/acm-workshop/css/fonts.css?1689352019" rel="stylesheet" media="print" onload="this.media='all';this.onload=null;"><noscript><link href="/acm-workshop/css/fonts.css?1689352019" rel="stylesheet"></noscript>
+    <link href="/acm-workshop/css/theme.css?1689352019" rel="stylesheet">
+    <link href="/acm-workshop/css/theme-mine.css?1689352019" rel="stylesheet" id="variant-style">
+    <link href="/acm-workshop/css/variant.css?1689352019" rel="stylesheet">
+    <link href="/acm-workshop/css/print.css?1689352019" rel="stylesheet" media="print">
+    <link href="/acm-workshop/css/ie.css?1689352019" rel="stylesheet">
+    <script src="/acm-workshop/js/url.js?1689352019"></script>
+    <script src="/acm-workshop/js/variant.js?1689352019"></script>
     <script>
       // hack to let hugo tell us how to get to the root when using relativeURLs, it needs to be called *url= for it to do its magic:
       // https://github.com/gohugoio/hugo/blob/145b3fcce35fbac25c7033c91c1b7ae6d1179da8/transform/urlreplacers/absurlreplacer.go#L72""
@@ -105,20 +105,19 @@ if (!doNotTrack) {
 <h1 id="allow-gke">Allow GKE</h1>
 
 <p>
-<a href="#image-2f7eb17f113fbff65395a44ea61f3ff8" class="lightbox-link">
+<a href="#image-388b6a3ea16efe26da76022fb3e1dc16" class="lightbox-link">
 <img src="https://github.com/mathieu-benoit/my-images/raw/main/acm-workshop/org-admin.png" alt="Org Admin" style="height: auto; width: auto;" loading="lazy">
 </a>
-<a href="javascript:history.back();" class="lightbox" id="image-2f7eb17f113fbff65395a44ea61f3ff8">
+<a href="javascript:history.back();" class="lightbox" id="image-388b6a3ea16efe26da76022fb3e1dc16">
 <img src="https://github.com/mathieu-benoit/my-images/raw/main/acm-workshop/org-admin.png" alt="Org Admin" class="lightbox-image" loading="lazy">
 </a>
 <em>Duration: 5 min | Persona: Org Admin</em></p>
 <p>In this section, you will enable and grant the appropriate APIs in the Tenant project and the IAM role for the Tenant project&rsquo;s service account. This will allow later this service account to provision the GKE cluster.</p>
 <p>Define variables:</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-Bash" data-lang="Bash"><span style="display:flex;"><span>WORK_DIR<span style="color:#f92672">=</span>~/
-</span></span><span style="display:flex;"><span>source <span style="color:#e6db74">${</span>WORK_DIR<span style="color:#e6db74">}</span>acm-workshop-variables.sh
-</span></span></code></pre></div><h2 id="define-roles">Define roles</h2>
+<div class="wrap-code highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-Bash" data-lang="Bash"><span style="display:flex;"><span>WORK_DIR<span style="color:#f92672">=</span>~/
+</span></span><span style="display:flex;"><span>source <span style="color:#e6db74">${</span>WORK_DIR<span style="color:#e6db74">}</span>acm-workshop-variables.sh</span></span></code></pre></div><h2 id="define-roles">Define roles</h2>
 <p>Define the <code>container.admin</code>, <code>iam.serviceAccountAdmin</code>, <code>resourcemanager.projectIamAdmin</code>, <code>iam.serviceAccountUser</code> and <code>serviceusage.serviceUsageConsumer</code> roles with an <a href="https://cloud.google.com/config-connector/docs/reference/resource-docs/iam/iampolicymember" target="_blank"><code>IAMPolicyMember</code></a> resource for the Tenant project&rsquo;s service account:</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-Bash" data-lang="Bash"><span style="display:flex;"><span>cat <span style="color:#e6db74">&lt;&lt;EOF &gt; ${WORK_DIR}$HOST_PROJECT_DIR_NAME/projects/$TENANT_PROJECT_ID/container-admin.yaml
+<div class="wrap-code highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-Bash" data-lang="Bash"><span style="display:flex;"><span>cat <span style="color:#e6db74">&lt;&lt;EOF &gt; ${WORK_DIR}$HOST_PROJECT_DIR_NAME/projects/$TENANT_PROJECT_ID/container-admin.yaml
 </span></span></span><span style="display:flex;"><span><span style="color:#e6db74">apiVersion: iam.cnrm.cloud.google.com/v1beta1
 </span></span></span><span style="display:flex;"><span><span style="color:#e6db74">kind: IAMPolicyMember
 </span></span></span><span style="display:flex;"><span><span style="color:#e6db74">metadata:
@@ -202,10 +201,9 @@ if (!doNotTrack) {
 </span></span></span><span style="display:flex;"><span><span style="color:#e6db74">  resourceRef:
 </span></span></span><span style="display:flex;"><span><span style="color:#e6db74">    kind: Project
 </span></span></span><span style="display:flex;"><span><span style="color:#e6db74">    external: projects/${TENANT_PROJECT_ID}
-</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">EOF</span>
-</span></span></code></pre></div><h2 id="define-apis">Define APIs</h2>
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">EOF</span></span></span></code></pre></div><h2 id="define-apis">Define APIs</h2>
 <p>Define the Cloud Resources Manager API <a href="https://cloud.google.com/config-connector/docs/reference/resource-docs/serviceusage/service" target="_blank"><code>Service</code></a> resource for the Tenant project:</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-Bash" data-lang="Bash"><span style="display:flex;"><span>cat <span style="color:#e6db74">&lt;&lt;EOF &gt; ${WORK_DIR}$HOST_PROJECT_DIR_NAME/projects/$TENANT_PROJECT_ID/cloudresourcemanager-service.yaml
+<div class="wrap-code highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-Bash" data-lang="Bash"><span style="display:flex;"><span>cat <span style="color:#e6db74">&lt;&lt;EOF &gt; ${WORK_DIR}$HOST_PROJECT_DIR_NAME/projects/$TENANT_PROJECT_ID/cloudresourcemanager-service.yaml
 </span></span></span><span style="display:flex;"><span><span style="color:#e6db74">apiVersion: serviceusage.cnrm.cloud.google.com/v1beta1
 </span></span></span><span style="display:flex;"><span><span style="color:#e6db74">kind: Service
 </span></span></span><span style="display:flex;"><span><span style="color:#e6db74">metadata:
@@ -219,9 +217,8 @@ if (!doNotTrack) {
 </span></span></span><span style="display:flex;"><span><span style="color:#e6db74">  projectRef:
 </span></span></span><span style="display:flex;"><span><span style="color:#e6db74">    name: ${TENANT_PROJECT_ID}
 </span></span></span><span style="display:flex;"><span><span style="color:#e6db74">  resourceID: cloudresourcemanager.googleapis.com
-</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">EOF</span>
-</span></span></code></pre></div><p>Define the GKE API <a href="https://cloud.google.com/config-connector/docs/reference/resource-docs/serviceusage/service" target="_blank"><code>Service</code></a> resource for the Tenant project:</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-Bash" data-lang="Bash"><span style="display:flex;"><span>cat <span style="color:#e6db74">&lt;&lt;EOF &gt; ${WORK_DIR}$HOST_PROJECT_DIR_NAME/projects/$TENANT_PROJECT_ID/container-service.yaml
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">EOF</span></span></span></code></pre></div><p>Define the GKE API <a href="https://cloud.google.com/config-connector/docs/reference/resource-docs/serviceusage/service" target="_blank"><code>Service</code></a> resource for the Tenant project:</p>
+<div class="wrap-code highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-Bash" data-lang="Bash"><span style="display:flex;"><span>cat <span style="color:#e6db74">&lt;&lt;EOF &gt; ${WORK_DIR}$HOST_PROJECT_DIR_NAME/projects/$TENANT_PROJECT_ID/container-service.yaml
 </span></span></span><span style="display:flex;"><span><span style="color:#e6db74">apiVersion: serviceusage.cnrm.cloud.google.com/v1beta1
 </span></span></span><span style="display:flex;"><span><span style="color:#e6db74">kind: Service
 </span></span></span><span style="display:flex;"><span><span style="color:#e6db74">metadata:
@@ -235,9 +232,8 @@ if (!doNotTrack) {
 </span></span></span><span style="display:flex;"><span><span style="color:#e6db74">  projectRef:
 </span></span></span><span style="display:flex;"><span><span style="color:#e6db74">    name: ${TENANT_PROJECT_ID}
 </span></span></span><span style="display:flex;"><span><span style="color:#e6db74">  resourceID: container.googleapis.com
-</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">EOF</span>
-</span></span></code></pre></div><p>Define the DNS API <a href="https://cloud.google.com/config-connector/docs/reference/resource-docs/serviceusage/service" target="_blank"><code>Service</code></a> resource for the Tenant project in order to leverage the <a href="https://cloud.google.com/kubernetes-engine/docs/how-to/cloud-dns" target="_blank">Cloud DNS feature of GKE</a>:</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-Bash" data-lang="Bash"><span style="display:flex;"><span>cat <span style="color:#e6db74">&lt;&lt;EOF &gt; ${WORK_DIR}$HOST_PROJECT_DIR_NAME/projects/$TENANT_PROJECT_ID/dns-service.yaml
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">EOF</span></span></span></code></pre></div><p>Define the DNS API <a href="https://cloud.google.com/config-connector/docs/reference/resource-docs/serviceusage/service" target="_blank"><code>Service</code></a> resource for the Tenant project in order to leverage the <a href="https://cloud.google.com/kubernetes-engine/docs/how-to/cloud-dns" target="_blank">Cloud DNS feature of GKE</a>:</p>
+<div class="wrap-code highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-Bash" data-lang="Bash"><span style="display:flex;"><span>cat <span style="color:#e6db74">&lt;&lt;EOF &gt; ${WORK_DIR}$HOST_PROJECT_DIR_NAME/projects/$TENANT_PROJECT_ID/dns-service.yaml
 </span></span></span><span style="display:flex;"><span><span style="color:#e6db74">apiVersion: serviceusage.cnrm.cloud.google.com/v1beta1
 </span></span></span><span style="display:flex;"><span><span style="color:#e6db74">kind: Service
 </span></span></span><span style="display:flex;"><span><span style="color:#e6db74">metadata:
@@ -251,9 +247,8 @@ if (!doNotTrack) {
 </span></span></span><span style="display:flex;"><span><span style="color:#e6db74">  projectRef:
 </span></span></span><span style="display:flex;"><span><span style="color:#e6db74">    name: ${TENANT_PROJECT_ID}
 </span></span></span><span style="display:flex;"><span><span style="color:#e6db74">  resourceID: dns.googleapis.com
-</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">EOF</span>
-</span></span></code></pre></div><p>Later in the workshop, you can optionally leverage the GKE Security Posture features (<a href="https://cloud.google.com/kubernetes-engine/docs/how-to/protect-workload-configuration" target="_blank">Scan workloads configurations</a> and <a href="https://cloud.google.com/kubernetes-engine/docs/how-to/security-posture-vulnerability-scanning" target="_blank">Scan container images for known vulnerabilities</a>) in order to scan the configurations of your GKE workloads. Define the GKE Security Posture API <a href="https://cloud.google.com/config-connector/docs/reference/resource-docs/serviceusage/service" target="_blank"><code>Service</code></a> resource for the Tenant project:</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-Bash" data-lang="Bash"><span style="display:flex;"><span>cat <span style="color:#e6db74">&lt;&lt;EOF &gt; ${WORK_DIR}$HOST_PROJECT_DIR_NAME/projects/$TENANT_PROJECT_ID/containersecurity-service.yaml
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">EOF</span></span></span></code></pre></div><p>Later in the workshop, you can optionally leverage the GKE Security Posture features (<a href="https://cloud.google.com/kubernetes-engine/docs/how-to/protect-workload-configuration" target="_blank">Scan workloads configurations</a> and <a href="https://cloud.google.com/kubernetes-engine/docs/how-to/security-posture-vulnerability-scanning" target="_blank">Scan container images for known vulnerabilities</a>) in order to scan the configurations of your GKE workloads. Define the GKE Security Posture API <a href="https://cloud.google.com/config-connector/docs/reference/resource-docs/serviceusage/service" target="_blank"><code>Service</code></a> resource for the Tenant project:</p>
+<div class="wrap-code highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-Bash" data-lang="Bash"><span style="display:flex;"><span>cat <span style="color:#e6db74">&lt;&lt;EOF &gt; ${WORK_DIR}$HOST_PROJECT_DIR_NAME/projects/$TENANT_PROJECT_ID/containersecurity-service.yaml
 </span></span></span><span style="display:flex;"><span><span style="color:#e6db74">apiVersion: serviceusage.cnrm.cloud.google.com/v1beta1
 </span></span></span><span style="display:flex;"><span><span style="color:#e6db74">kind: Service
 </span></span></span><span style="display:flex;"><span><span style="color:#e6db74">metadata:
@@ -267,11 +262,9 @@ if (!doNotTrack) {
 </span></span></span><span style="display:flex;"><span><span style="color:#e6db74">  projectRef:
 </span></span></span><span style="display:flex;"><span><span style="color:#e6db74">    name: ${TENANT_PROJECT_ID}
 </span></span></span><span style="display:flex;"><span><span style="color:#e6db74">  resourceID: containersecurity.googleapis.com
-</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">EOF</span>
-</span></span></code></pre></div><h2 id="deploy-kubernetes-manifests">Deploy Kubernetes manifests</h2>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-Bash" data-lang="Bash"><span style="display:flex;"><span>cd <span style="color:#e6db74">${</span>WORK_DIR<span style="color:#e6db74">}</span>$HOST_PROJECT_DIR_NAME/
-</span></span><span style="display:flex;"><span>git add . <span style="color:#f92672">&amp;&amp;</span> git commit -m <span style="color:#e6db74">&#34;Allow GKE and GKE Security Posture for Tenant project&#34;</span> <span style="color:#f92672">&amp;&amp;</span> git push origin main
-</span></span></code></pre></div><h2 id="check-deployments">Check deployments</h2>
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">EOF</span></span></span></code></pre></div><h2 id="deploy-kubernetes-manifests">Deploy Kubernetes manifests</h2>
+<div class="wrap-code highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-Bash" data-lang="Bash"><span style="display:flex;"><span>cd <span style="color:#e6db74">${</span>WORK_DIR<span style="color:#e6db74">}</span>$HOST_PROJECT_DIR_NAME/
+</span></span><span style="display:flex;"><span>git add . <span style="color:#f92672">&amp;&amp;</span> git commit -m <span style="color:#e6db74">&#34;Allow GKE and GKE Security Posture for Tenant project&#34;</span> <span style="color:#f92672">&amp;&amp;</span> git push origin main</span></span></code></pre></div><h2 id="check-deployments">Check deployments</h2>
 
 <div class="mermaid align-center">
 graph TD;
@@ -291,13 +284,13 @@ graph TD;
 </div>
 <p>List the Kubernetes resources managed by Config Sync in <strong>Config Controller</strong> for the <strong>Host project configs</strong> repository:
 
-<div class="tab-panel" data-tab-group="2713efc9a05183e0cbdf02821c3e42ce">
+<div class="tab-panel" data-tab-group="296f26c14d6bdf4b20a9b24d3f817646">
   <div class="tab-nav">
     <div class="tab-nav-title">&#8203;</div>
     <button
       data-tab-item="UI"
       class="tab-nav-button tab-panel-style cstyle initial active"
-      onclick="switchTab('2713efc9a05183e0cbdf02821c3e42ce','UI')"
+      onclick="switchTab('296f26c14d6bdf4b20a9b24d3f817646','UI')"
     >
       <div>
         <div class="tab-nav-hidden">UI</div>
@@ -307,7 +300,7 @@ graph TD;
     <button
       data-tab-item="gcloud"
       class="tab-nav-button tab-panel-style cstyle initial"
-      onclick="switchTab('2713efc9a05183e0cbdf02821c3e42ce','gcloud')"
+      onclick="switchTab('296f26c14d6bdf4b20a9b24d3f817646','gcloud')"
     >
       <div>
         <div class="tab-nav-hidden">gcloud</div>
@@ -322,8 +315,7 @@ graph TD;
       <div class="tab-content-text">
 
 <p>Run this command and click on this link:</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-Bash" data-lang="Bash"><span style="display:flex;"><span>echo -e <span style="color:#e6db74">&#34;https://console.cloud.google.com/kubernetes/config_management/packages?project=</span><span style="color:#e6db74">${</span>HOST_PROJECT_ID<span style="color:#e6db74">}</span><span style="color:#e6db74">&#34;</span>
-</span></span></code></pre></div><p>Wait until you see the <code>Sync status</code> column as <code>Synced</code> and the <code>Reconcile status</code> column as <code>Current</code>.</p>
+<div class="wrap-code highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-Bash" data-lang="Bash"><span style="display:flex;"><span>echo -e <span style="color:#e6db74">&#34;https://console.cloud.google.com/kubernetes/config_management/packages?project=</span><span style="color:#e6db74">${</span>HOST_PROJECT_ID<span style="color:#e6db74">}</span><span style="color:#e6db74">&#34;</span></span></span></code></pre></div><p>Wait until you see the <code>Sync status</code> column as <code>Synced</code> and the <code>Reconcile status</code> column as <code>Current</code>.</p>
 </div>
     </div>
     <div
@@ -332,28 +324,25 @@ graph TD;
       <div class="tab-content-text">
 
 <p>Run this command:</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-Bash" data-lang="Bash"><span style="display:flex;"><span>gcloud alpha anthos config sync repo describe <span style="color:#ae81ff">\
+<div class="wrap-code highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-Bash" data-lang="Bash"><span style="display:flex;"><span>gcloud alpha anthos config sync repo describe <span style="color:#ae81ff">\
 </span></span></span><span style="display:flex;"><span><span style="color:#ae81ff"></span>    --project $HOST_PROJECT_ID <span style="color:#ae81ff">\
 </span></span></span><span style="display:flex;"><span><span style="color:#ae81ff"></span>    --managed-resources all <span style="color:#ae81ff">\
 </span></span></span><span style="display:flex;"><span><span style="color:#ae81ff"></span>    --sync-name root-sync <span style="color:#ae81ff">\
-</span></span></span><span style="display:flex;"><span><span style="color:#ae81ff"></span>    --sync-namespace config-management-system
-</span></span></code></pre></div><p>Wait and re-run this command above until you see <code>&quot;status&quot;: &quot;SYNCED&quot;</code>. All the <code>managed_resources</code> listed should have <code>STATUS: Current</code> too.</p>
+</span></span></span><span style="display:flex;"><span><span style="color:#ae81ff"></span>    --sync-namespace config-management-system</span></span></code></pre></div><p>Wait and re-run this command above until you see <code>&quot;status&quot;: &quot;SYNCED&quot;</code>. All the <code>managed_resources</code> listed should have <code>STATUS: Current</code> too.</p>
 </div>
     </div>
   </div>
 </div></p>
 <p>List the GitHub runs for the <strong>Host project configs</strong> repository:</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-Bash" data-lang="Bash"><span style="display:flex;"><span>cd <span style="color:#e6db74">${</span>WORK_DIR<span style="color:#e6db74">}</span>$HOST_PROJECT_DIR_NAME <span style="color:#f92672">&amp;&amp;</span> gh run list
-</span></span></code></pre></div><p>List the Google Cloud resources created:</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-Bash" data-lang="Bash"><span style="display:flex;"><span>gcloud services list <span style="color:#ae81ff">\
+<div class="wrap-code highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-Bash" data-lang="Bash"><span style="display:flex;"><span>cd <span style="color:#e6db74">${</span>WORK_DIR<span style="color:#e6db74">}</span>$HOST_PROJECT_DIR_NAME <span style="color:#f92672">&amp;&amp;</span> gh run list</span></span></code></pre></div><p>List the Google Cloud resources created:</p>
+<div class="wrap-code highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-Bash" data-lang="Bash"><span style="display:flex;"><span>gcloud services list <span style="color:#ae81ff">\
 </span></span></span><span style="display:flex;"><span><span style="color:#ae81ff"></span>    --enabled <span style="color:#ae81ff">\
 </span></span></span><span style="display:flex;"><span><span style="color:#ae81ff"></span>    --project <span style="color:#e6db74">${</span>TENANT_PROJECT_ID<span style="color:#e6db74">}</span> <span style="color:#ae81ff">\
 </span></span></span><span style="display:flex;"><span><span style="color:#ae81ff"></span>    | grep -E <span style="color:#e6db74">&#39;container&#39;</span>
 </span></span><span style="display:flex;"><span>gcloud projects get-iam-policy $TENANT_PROJECT_ID <span style="color:#ae81ff">\
 </span></span></span><span style="display:flex;"><span><span style="color:#ae81ff"></span>    --filter<span style="color:#f92672">=</span><span style="color:#e6db74">&#34;bindings.members:</span><span style="color:#e6db74">${</span>TENANT_PROJECT_SA_EMAIL<span style="color:#e6db74">}</span><span style="color:#e6db74">&#34;</span> <span style="color:#ae81ff">\
 </span></span></span><span style="display:flex;"><span><span style="color:#ae81ff"></span>    --flatten<span style="color:#f92672">=</span><span style="color:#e6db74">&#34;bindings[].members&#34;</span> <span style="color:#ae81ff">\
-</span></span></span><span style="display:flex;"><span><span style="color:#ae81ff"></span>    --format<span style="color:#f92672">=</span><span style="color:#e6db74">&#34;table(bindings.role)&#34;</span>
-</span></span></code></pre></div><p>Wait and re-run this command above until you see the resources created.</p>
+</span></span></span><span style="display:flex;"><span><span style="color:#ae81ff"></span>    --format<span style="color:#f92672">=</span><span style="color:#e6db74">&#34;table(bindings.role)&#34;</span></span></span></code></pre></div><p>Wait and re-run this command above until you see the resources created.</p>
 
             <footer class="footline">
 
@@ -540,21 +529,21 @@ graph TD;
         </div>
       </div>
     </aside>
-    <script src="/acm-workshop/js/clipboard.min.js?1687278377" defer></script>
-    <script src="/acm-workshop/js/perfect-scrollbar.min.js?1687278377" defer></script>
-    <script src="/acm-workshop/js/d3/d3-color.min.js?1687278377" defer></script>
-    <script src="/acm-workshop/js/d3/d3-dispatch.min.js?1687278377" defer></script>
-    <script src="/acm-workshop/js/d3/d3-drag.min.js?1687278377" defer></script>
-    <script src="/acm-workshop/js/d3/d3-ease.min.js?1687278377" defer></script>
-    <script src="/acm-workshop/js/d3/d3-interpolate.min.js?1687278377" defer></script>
-    <script src="/acm-workshop/js/d3/d3-selection.min.js?1687278377" defer></script>
-    <script src="/acm-workshop/js/d3/d3-timer.min.js?1687278377" defer></script>
-    <script src="/acm-workshop/js/d3/d3-transition.min.js?1687278377" defer></script>
-    <script src="/acm-workshop/js/d3/d3-zoom.min.js?1687278377" defer></script>
-    <script src="/acm-workshop/js/mermaid.min.js?1687278377" defer></script>
+    <script src="/acm-workshop/js/clipboard.min.js?1689352019" defer></script>
+    <script src="/acm-workshop/js/perfect-scrollbar.min.js?1689352019" defer></script>
+    <script src="/acm-workshop/js/d3/d3-color.min.js?1689352019" defer></script>
+    <script src="/acm-workshop/js/d3/d3-dispatch.min.js?1689352019" defer></script>
+    <script src="/acm-workshop/js/d3/d3-drag.min.js?1689352019" defer></script>
+    <script src="/acm-workshop/js/d3/d3-ease.min.js?1689352019" defer></script>
+    <script src="/acm-workshop/js/d3/d3-interpolate.min.js?1689352019" defer></script>
+    <script src="/acm-workshop/js/d3/d3-selection.min.js?1689352019" defer></script>
+    <script src="/acm-workshop/js/d3/d3-timer.min.js?1689352019" defer></script>
+    <script src="/acm-workshop/js/d3/d3-transition.min.js?1689352019" defer></script>
+    <script src="/acm-workshop/js/d3/d3-zoom.min.js?1689352019" defer></script>
+    <script src="/acm-workshop/js/mermaid.min.js?1689352019" defer></script>
     <script>
       window.themeUseMermaid = JSON.parse("{}");
     </script>
-    <script src="/acm-workshop/js/theme.js?1687278377" defer></script>
+    <script src="/acm-workshop/js/theme.js?1689352019" defer></script>
   </body>
 </html>

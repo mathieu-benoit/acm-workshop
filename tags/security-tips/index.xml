@@ -14,7 +14,7 @@
       <description>Duration: 5 min | Persona: Org Admin
 In this section, you will enable and grant the appropriate APIs in the Tenant project and the IAM role for the Tenant project&amp;rsquo;s service account. This will allow later this service account to provision the Artifact Registry to have your private container images. You will also the containers analysis and scanning features of Artifact Registry.
 Initialize variables:
-WORK_DIR=~/ source ${WORK_DIR}acm-workshop-variables.sh Define role Define the artifactregistry.</description>
+WORK_DIR=~/ source ${WORK_DIR}acm-workshop-variables.shDefine role Define the artifactregistry.</description>
     </item>
     <item>
       <title>Enforce GKE policies</title>
@@ -24,7 +24,7 @@ WORK_DIR=~/ source ${WORK_DIR}acm-workshop-variables.sh Define role Define the a
       <description>Duration: 5 min | Persona: Org Admin
 In this section, you will set up policies in order to enforce governance against the Kubernetes manifests defining your GKE cluster. This will guarantee that the best practices in term of security are respected.
 Define variables:
-WORK_DIR=~/ source ${WORK_DIR}acm-workshop-variables.sh Enforce GKE clusters policies Define the ConstraintTemplate:
+WORK_DIR=~/ source ${WORK_DIR}acm-workshop-variables.shEnforce GKE clusters policies Define the ConstraintTemplate:
 cat &amp;lt;&amp;lt;EOF &amp;gt; ${WORK_DIR}$HOST_PROJECT_DIR_NAME/policies/templates/gkeclusterrequirement.yaml apiVersion: templates.gatekeeper.sh/v1 kind: ConstraintTemplate metadata: name: gkeclusterrequirement annotations: description: &amp;#34;Requirements for any GKE cluster.</description>
     </item>
     <item>
@@ -35,8 +35,8 @@ cat &amp;lt;&amp;lt;EOF &amp;gt; ${WORK_DIR}$HOST_PROJECT_DIR_NAME/policies/temp
       <description>Duration: 5 min | Persona: Org Admin
 In this section, you will set up policies in order to enforce governance against the Kubernetes manifests defining your Memorystore (Redis) instances.
 Initialize variables:
-WORK_DIR=~/ source ${WORK_DIR}acm-workshop-variables.sh Enforce Memorystore policies Define the ConstraintTemplate resource:
-cat &amp;lt;&amp;lt;EOF &amp;gt; ${WORK_DIR}$HOST_PROJECT_DIR_NAME/policies/templates/limitmemorystoreredis.yaml apiVersion: templates.gatekeeper.sh/v1 kind: ConstraintTemplate metadata: name: limitmemorystoreredis annotations: description: &amp;#34;Requirements for any Memorystore (Redis) instance.&amp;#34; spec: crd: spec: names: kind: LimitMemorystoreRedis targets: - target: admission.</description>
+WORK_DIR=~/ source ${WORK_DIR}acm-workshop-variables.shEnforce Memorystore policies Define the ConstraintTemplate resource:
+cat &amp;lt;&amp;lt;EOF &amp;gt; ${WORK_DIR}$HOST_PROJECT_DIR_NAME/policies/templates/limitmemorystoreredis.yaml apiVersion: templates.gatekeeper.sh/v1 kind: ConstraintTemplate metadata: name: limitmemorystoreredis annotations: description: &amp;#34;Requirements for any Memorystore (Redis) instance.&amp;#34; spec: crd: spec: names: kind: LimitMemorystoreRedis targets: - target: admission.k8s.gatekeeper.sh rego: |- package limitmemorystoreredis violation[{&amp;#34;msg&amp;#34;:msg}] { input.</description>
     </item>
     <item>
       <title>Install ASM</title>
@@ -46,7 +46,7 @@ cat &amp;lt;&amp;lt;EOF &amp;gt; ${WORK_DIR}$HOST_PROJECT_DIR_NAME/policies/temp
       <description>Duration: 15 min | Persona: Platform Admin
 In this section, you will install a Managed Service Mesh for your GKE cluster. This will opt your cluster in a specific channel in order to get the upgrades handled by Google for the managed control plane and managed data plane.
 Initialize variables:
-WORK_DIR=~/ source ${WORK_DIR}acm-workshop-variables.sh Define ASM feature for the tenant project Define the ASM GKEHubFeature resource:
+WORK_DIR=~/ source ${WORK_DIR}acm-workshop-variables.shDefine ASM feature for the tenant project Define the ASM GKEHubFeature resource:
 cat &amp;lt;&amp;lt;EOF &amp;gt; ${WORK_DIR}$TENANT_PROJECT_DIR_NAME/gke-hub-feature-asm.yaml apiVersion: gkehub.</description>
     </item>
     <item>
@@ -57,7 +57,7 @@ cat &amp;lt;&amp;lt;EOF &amp;gt; ${WORK_DIR}$TENANT_PROJECT_DIR_NAME/gke-hub-fea
       <description>Duration: 5 min | Persona: Apps Operator
 In this section, you will monitor security features such as Network Policies and Service requests of your apps in the Google Cloud console.
 Initialize variables:
-WORK_DIR=~/ source ${WORK_DIR}acm-workshop-variables.sh In the Google Cloud console, navigate to Anthos &amp;gt; Security &amp;gt; Policy Audit and filter for example by onlineboutique Namespace to see that the 3 security features Kubernetes Network policy, Service access control and mTLS status are enabled in green:</description>
+WORK_DIR=~/ source ${WORK_DIR}acm-workshop-variables.shIn the Google Cloud console, navigate to Anthos &amp;gt; Security &amp;gt; Policy Audit and filter for example by onlineboutique Namespace to see that the 3 security features Kubernetes Network policy, Service access control and mTLS status are enabled in green:</description>
     </item>
     <item>
       <title>Set up Tenant project&#39;s Git repo</title>
@@ -67,7 +67,7 @@ WORK_DIR=~/ source ${WORK_DIR}acm-workshop-variables.sh In the Google Cloud cons
       <description>Duration: 5 min | Persona: Org Admin
 In this section, you will set up a dedicated GitHub repository containing all the Kubernetes manifests which will be deployed by Config Sync and Config Connector in order to provision the Google Cloud services in the Tenant project.
 Define variables:
-WORK_DIR=~/ source ${WORK_DIR}acm-workshop-variables.sh echo &amp;#34;export TENANT_PROJECT_DIR_NAME=acm-workshop-tenant-project-repo&amp;#34; &amp;gt;&amp;gt; ${WORK_DIR}acm-workshop-variables.sh source ${WORK_DIR}acm-workshop-variables.sh Create GitHub repository Create a dedicated GitHub repository to store any Kubernetes manifests associated to the Tenant project:</description>
+WORK_DIR=~/ source ${WORK_DIR}acm-workshop-variables.sh echo &amp;#34;export TENANT_PROJECT_DIR_NAME=acm-workshop-tenant-project-repo&amp;#34; &amp;gt;&amp;gt; ${WORK_DIR}acm-workshop-variables.sh source ${WORK_DIR}acm-workshop-variables.shCreate GitHub repository Create a dedicated GitHub repository to store any Kubernetes manifests associated to the Tenant project:</description>
     </item>
     <item>
       <title>Configure Config Sync</title>
@@ -77,7 +77,7 @@ WORK_DIR=~/ source ${WORK_DIR}acm-workshop-variables.sh echo &amp;#34;export TEN
       <description>Duration: 10 min | Persona: Platform Admin
 In this section, you will set up a dedicated GitHub repository which will contain all the Kubernetes manifests of the Bank of Anthos apps. You will also have the opportunity to catch a policies violation.
 Initialize variables:
-WORK_DIR=~/ source ${WORK_DIR}acm-workshop-variables.sh echo &amp;#34;export BANKOFANTHOS_NAMESPACE=bankofanthos&amp;#34; &amp;gt;&amp;gt; ${WORK_DIR}acm-workshop-variables.sh echo &amp;#34;export BANK_OF_ANTHOS_DIR_NAME=acm-workshop-bankofanthos-repo&amp;#34; &amp;gt;&amp;gt; ${WORK_DIR}acm-workshop-variables.sh source ${WORK_DIR}acm-workshop-variables.sh mkdir -p ${WORK_DIR}$GKE_CONFIGS_DIR_NAME/repo-syncs mkdir ${WORK_DIR}$GKE_CONFIGS_DIR_NAME/repo-syncs/$BANKOFANTHOS_NAMESPACE Define Namespace Define a dedicated Namespace for the Bank of Anthos apps:</description>
+WORK_DIR=~/ source ${WORK_DIR}acm-workshop-variables.sh echo &amp;#34;export BANKOFANTHOS_NAMESPACE=bankofanthos&amp;#34; &amp;gt;&amp;gt; ${WORK_DIR}acm-workshop-variables.sh echo &amp;#34;export BANK_OF_ANTHOS_DIR_NAME=acm-workshop-bankofanthos-repo&amp;#34; &amp;gt;&amp;gt; ${WORK_DIR}acm-workshop-variables.sh source ${WORK_DIR}acm-workshop-variables.shmkdir -p ${WORK_DIR}$GKE_CONFIGS_DIR_NAME/repo-syncs mkdir ${WORK_DIR}$GKE_CONFIGS_DIR_NAME/repo-syncs/$BANKOFANTHOS_NAMESPACEDefine Namespace Define a dedicated Namespace for the Bank of Anthos apps:</description>
     </item>
     <item>
       <title>Configure Config Sync</title>
@@ -87,7 +87,7 @@ WORK_DIR=~/ source ${WORK_DIR}acm-workshop-variables.sh echo &amp;#34;export BAN
       <description>Duration: 10 min | Persona: Platform Admin
 In this section, you will configure Config Sync to sync the resources in the Whereami Namespace via its associated RepoSync and RoleBinding.
 Initialize variables:
-WORK_DIR=~/ source ${WORK_DIR}acm-workshop-variables.sh echo &amp;#34;export WHEREAMI_NAMESPACE=whereami&amp;#34; &amp;gt;&amp;gt; ${WORK_DIR}acm-workshop-variables.sh echo &amp;#34;export WHERE_AMI_DIR_NAME=acm-workshop-whereami-repo&amp;#34; &amp;gt;&amp;gt; ${WORK_DIR}acm-workshop-variables.sh source ${WORK_DIR}acm-workshop-variables.sh mkdir -p ${WORK_DIR}$GKE_CONFIGS_DIR_NAME/repo-syncs mkdir ${WORK_DIR}$GKE_CONFIGS_DIR_NAME/repo-syncs/$WHEREAMI_NAMESPACE Create Namespace Define a dedicated Namespace for the Whereami app:
+WORK_DIR=~/ source ${WORK_DIR}acm-workshop-variables.sh echo &amp;#34;export WHEREAMI_NAMESPACE=whereami&amp;#34; &amp;gt;&amp;gt; ${WORK_DIR}acm-workshop-variables.sh echo &amp;#34;export WHERE_AMI_DIR_NAME=acm-workshop-whereami-repo&amp;#34; &amp;gt;&amp;gt; ${WORK_DIR}acm-workshop-variables.sh source ${WORK_DIR}acm-workshop-variables.shmkdir -p ${WORK_DIR}$GKE_CONFIGS_DIR_NAME/repo-syncs mkdir ${WORK_DIR}$GKE_CONFIGS_DIR_NAME/repo-syncs/$WHEREAMI_NAMESPACECreate Namespace Define a dedicated Namespace for the Whereami app:
 cat &amp;lt;&amp;lt;EOF &amp;gt; ${WORK_DIR}$GKE_CONFIGS_DIR_NAME/repo-syncs/$WHEREAMI_NAMESPACE/namespace.yaml apiVersion: v1 kind: Namespace metadata: labels: istio-injection: enabled pod-security.</description>
     </item>
     <item>
@@ -98,7 +98,7 @@ cat &amp;lt;&amp;lt;EOF &amp;gt; ${WORK_DIR}$GKE_CONFIGS_DIR_NAME/repo-syncs/$WH
       <description>Duration: 20 min | Persona: Platform Admin
 In this section, you will set up a secured GKE cluster including features like: workload identity, least privilege service account for the nodes, Dataplane V2, private nodes, confidential and shielded nodes, etc.
 Initialize variables:
-WORK_DIR=~/ source ${WORK_DIR}acm-workshop-variables.sh echo &amp;#34;export TENANT_PROJECT_NUMBER=$(gcloud projects describe $TENANT_PROJECT_ID --format=&amp;#39;get(projectNumber)&amp;#39;)&amp;#34; &amp;gt;&amp;gt; ${WORK_DIR}acm-workshop-variables.sh echo &amp;#34;export GKE_SA=gke-primary-pool&amp;#34; &amp;gt;&amp;gt; ${WORK_DIR}acm-workshop-variables.sh source ${WORK_DIR}acm-workshop-variables.sh Define GKE cluster Define the GKE cluster with empty node pool:</description>
+WORK_DIR=~/ source ${WORK_DIR}acm-workshop-variables.sh echo &amp;#34;export TENANT_PROJECT_NUMBER=$(gcloud projects describe $TENANT_PROJECT_ID --format=&amp;#39;get(projectNumber)&amp;#39;)&amp;#34; &amp;gt;&amp;gt; ${WORK_DIR}acm-workshop-variables.sh echo &amp;#34;export GKE_SA=gke-primary-pool&amp;#34; &amp;gt;&amp;gt; ${WORK_DIR}acm-workshop-variables.sh source ${WORK_DIR}acm-workshop-variables.shDefine GKE cluster Define the GKE cluster with empty node pool:</description>
     </item>
     <item>
       <title>Enforce Artifact Registry policies</title>
@@ -108,7 +108,7 @@ WORK_DIR=~/ source ${WORK_DIR}acm-workshop-variables.sh echo &amp;#34;export TEN
       <description>Duration: 10 min | Persona: Platform Admin
 In this section, you will enforce policies in order to make sure that the containers in your clusters are coming from a restricted list of container registries.
 Initialize variables:
-WORK_DIR=~/ source ${WORK_DIR}acm-workshop-variables.sh Define &amp;ldquo;Allowed container registries&amp;rdquo; policy Define the Constraint based on the K8sAllowedRepos ConstraintTemplate for Pods:
+WORK_DIR=~/ source ${WORK_DIR}acm-workshop-variables.shDefine &amp;ldquo;Allowed container registries&amp;rdquo; policy Define the Constraint based on the K8sAllowedRepos ConstraintTemplate for Pods:
 cat &amp;lt;&amp;lt;EOF &amp;gt; ${WORK_DIR}$GKE_CONFIGS_DIR_NAME/policies/constraints/pod-allowed-container-registries.yaml apiVersion: constraints.gatekeeper.sh/v1beta1 kind: K8sAllowedRepos metadata: name: pod-allowed-container-registries annotations: policycontroller.gke.io/constraintData: | &amp;#34;{ description: &amp;#39;Requires container images to begin with a string from the specified list.</description>
     </item>
     <item>
@@ -129,7 +129,8 @@ WORK_DIR=~/ source ${WORK_DIR}acm-workshop-variables.sh echo &amp;#34;export GKE
       <description>Duration: 5 min | Persona: Apps Operator
 In this section, you will navigate to the topology of your Service Mesh as well as monitor your apps in terms of security, health and performance.
 Initialize variables:
-WORK_DIR=~/ source ${WORK_DIR}acm-workshop-variables.sh In the Google Cloud console, navigate to Anthos &amp;gt; Service Mesh &amp;gt; Topology to see the topology graph of your Service Mesh: Click on the link displayed by the command below:</description>
+WORK_DIR=~/ source ${WORK_DIR}acm-workshop-variables.shIn the Google Cloud console, navigate to Anthos &amp;gt; Service Mesh &amp;gt; Topology to see the topology graph of your Service Mesh: Click on the link displayed by the command below:
+echo -e &amp;#34;https://console.</description>
     </item>
     <item>
       <title>Set up ASM configs</title>
@@ -150,7 +151,7 @@ Create a dedicated istio-system folder in the GKE configs&amp;rsquo;s Git repo:<
       <description>Duration: 10 min | Persona: Platform Admin
 In this section, you will set up Cloud Armor preconfigured WAF rules such as: SQL injection, local/remote file inclusion, etc.
 Initialize variables:
-WORK_DIR=~/ source ${WORK_DIR}acm-workshop-variables.sh SECURITY_POLICY_NAME=$GKE_NAME-asm-ingressgateway echo &amp;#34;export SECURITY_POLICY_NAME=${SECURITY_POLICY_NAME}&amp;#34; &amp;gt;&amp;gt; ${WORK_DIR}acm-workshop-variables.sh echo &amp;#34;export SSL_POLICY_NAME=${SECURITY_POLICY_NAME}&amp;#34; &amp;gt;&amp;gt; ${WORK_DIR}acm-workshop-variables.sh source ${WORK_DIR}acm-workshop-variables.sh Define Cloud Armor rules Define the Ingress Gateway&amp;rsquo;s Cloud Armor rules:
+WORK_DIR=~/ source ${WORK_DIR}acm-workshop-variables.sh SECURITY_POLICY_NAME=$GKE_NAME-asm-ingressgateway echo &amp;#34;export SECURITY_POLICY_NAME=${SECURITY_POLICY_NAME}&amp;#34; &amp;gt;&amp;gt; ${WORK_DIR}acm-workshop-variables.sh echo &amp;#34;export SSL_POLICY_NAME=${SECURITY_POLICY_NAME}&amp;#34; &amp;gt;&amp;gt; ${WORK_DIR}acm-workshop-variables.sh source ${WORK_DIR}acm-workshop-variables.shDefine Cloud Armor rules Define the Ingress Gateway&amp;rsquo;s Cloud Armor rules:
 cat &amp;lt;&amp;lt;EOF &amp;gt; ${WORK_DIR}$TENANT_PROJECT_DIR_NAME/cloud-armor.yaml apiVersion: compute.cnrm.cloud.google.com/v1beta1 kind: ComputeSecurityPolicy metadata: annotations: cnrm.cloud.google.com/project-id: ${TENANT_PROJECT_ID} name: ${SECURITY_POLICY_NAME} namespace: ${TENANT_PROJECT_ID} spec: adaptiveProtectionConfig: layer7DdosDefenseConfig: enable: true advancedOptionsConfig: logLevel: VERBOSE rule: - action: allow description: &amp;#34;Default rule&amp;#34; match: versionedExpr: SRC_IPS_V1 config: srcIpRanges: - &amp;#34;*&amp;#34; priority: 2147483647 - action: deny(403) description: &amp;#34;XSS&amp;#34; match: expr: expression: &amp;#34;evaluatePreconfiguredExpr(&amp;#39;xss-v33-canary&amp;#39;)&amp;#34; priority: 1000 - action: deny(403) description: &amp;#34;SQL injection level 2&amp;#34; match: expr: expression: &amp;#34;evaluatePreconfiguredWaf(&amp;#39;sqli-v33-canary&amp;#39;, {&amp;#39;sensitivity&amp;#39;: 2, &amp;#39;opt_out_rule_ids&amp;#39;: [&amp;#39;owasp-crs-v030301-id942200-sqli&amp;#39;, &amp;#39;owasp-crs-v030301-id942260-sqli&amp;#39;, &amp;#39;owasp-crs-v030301-id942430-sqli&amp;#39;]})&amp;#34; priority: 2000 - action: deny(403) description: &amp;#34;Local file inclusion&amp;#34; match: expr: expression: &amp;#34;evaluatePreconfiguredExpr(&amp;#39;lfi-v33-canary&amp;#39;)&amp;#34; priority: 3000 - action: deny(403) description: &amp;#34;Remote file inclusion&amp;#34; match: expr: expression: &amp;#34;evaluatePreconfiguredExpr(&amp;#39;rfi-v33-canary&amp;#39;)&amp;#34; priority: 4000 - action: deny(403) description: &amp;#34;CVE-2021-44228 and CVE-2021-45046&amp;#34; match: expr: expression: &amp;#34;evaluatePreconfiguredExpr(&amp;#39;cve-canary&amp;#39;)&amp;#34; priority: 12345 - action: deny(403) description: &amp;#34;Remote code execution&amp;#34; match: expr: expression: &amp;#34;evaluatePreconfiguredExpr(&amp;#39;rce-v33-canary&amp;#39;)&amp;#34; priority: 5000 - action: deny(403) description: &amp;#34;Method enforcement&amp;#34; match: expr: expression: &amp;#34;evaluatePreconfiguredExpr(&amp;#39;methodenforcement-v33-canary&amp;#39;)&amp;#34; priority: 6000 - action: deny(403) description: &amp;#34;Scanner detection&amp;#34; match: expr: expression: &amp;#34;evaluatePreconfiguredExpr(&amp;#39;scannerdetection-v33-canary&amp;#39;)&amp;#34; priority: 7000 - action: deny(403) description: &amp;#34;Protocol attack&amp;#34; match: expr: expression: &amp;#34;evaluatePreconfiguredExpr(&amp;#39;protocolattack-v33-canary&amp;#39;)&amp;#34; priority: 8000 - action: deny(403) description: &amp;#34;PHP injection attack&amp;#34; match: expr: expression: &amp;#34;evaluatePreconfiguredExpr(&amp;#39;php-v33-canary&amp;#39;)&amp;#34; priority: 9000 - action: deny(403) description: &amp;#34;Session fixation attack&amp;#34; match: expr: expression: &amp;#34;evaluatePreconfiguredExpr(&amp;#39;sessionfixation-v33-canary&amp;#39;)&amp;#34; priority: 10000 - action: deny(403) description: &amp;#34;Java attack&amp;#34; match: expr: expression: &amp;#34;evaluatePreconfiguredExpr(&amp;#39;java-v33-canary&amp;#39;)&amp;#34; priority: 11000 - action: deny(403) description: &amp;#34;NodeJS attack&amp;#34; match: expr: expression: &amp;#34;evaluatePreconfiguredExpr(&amp;#39;nodejs-v33-canary&amp;#39;)&amp;#34; priority: 12000 EOF Info Here we are leveraging the Cloud Armor preconfigured WAF rules: xss, sqli, lfi, rfi, cve, rce, methodenforcement, scannerdetection, protocolattack, php, sessionfixation, java and nodejs.</description>
     </item>
     <item>
@@ -169,7 +170,7 @@ In this section, you will set up the primary Git repository of the Config Contro
       <description>Duration: 5 min | Persona: Platform Admin
 In this section, you will configure Config Sync to sync the resources in the Online Boutique Namespace via its associated RoleBinding.
 Initialize variables:
-WORK_DIR=~/ source ${WORK_DIR}acm-workshop-variables.sh mkdir -p ${WORK_DIR}$GKE_CONFIGS_DIR_NAME/repo-syncs mkdir ${WORK_DIR}$GKE_CONFIGS_DIR_NAME/repo-syncs/$ONLINEBOUTIQUE_NAMESPACE Define Namespace Define a dedicated Namespace for the Online Boutique apps:
+WORK_DIR=~/ source ${WORK_DIR}acm-workshop-variables.shmkdir -p ${WORK_DIR}$GKE_CONFIGS_DIR_NAME/repo-syncs mkdir ${WORK_DIR}$GKE_CONFIGS_DIR_NAME/repo-syncs/$ONLINEBOUTIQUE_NAMESPACEDefine Namespace Define a dedicated Namespace for the Online Boutique apps:
 cat &amp;lt;&amp;lt;EOF &amp;gt; ${WORK_DIR}$GKE_CONFIGS_DIR_NAME/repo-syncs/$ONLINEBOUTIQUE_NAMESPACE/namespace.yaml apiVersion: v1 kind: Namespace metadata: labels: istio-injection: enabled pod-security.kubernetes.io/enforce: restricted name: ${ONLINEBOUTIQUE_NAMESPACE} EOF Note In addition to the istio-injection to include this Namespace into our Service Mesh, we are also adding the pod-security.</description>
     </item>
     <item>
@@ -180,8 +181,8 @@ cat &amp;lt;&amp;lt;EOF &amp;gt; ${WORK_DIR}$GKE_CONFIGS_DIR_NAME/repo-syncs/$ON
       <description>Duration: 15 min | Persona: Platform Admin
 In this section, you will deploy a secured Ingress Gateway (unprivileged container, managed certificates, Cloud Armor, etc.) in its dedicated namespace in the GKE cluster.
 Initialize variables:
-WORK_DIR=~/ source ${WORK_DIR}acm-workshop-variables.sh echo &amp;#34;export INGRESS_GATEWAY_NAME=asm-ingressgateway&amp;#34; &amp;gt;&amp;gt; ${WORK_DIR}acm-workshop-variables.sh echo &amp;#34;export INGRESS_GATEWAY_LABEL=&amp;#39;asm: ingressgateway&amp;#39;&amp;#34; &amp;gt;&amp;gt; ${WORK_DIR}acm-workshop-variables.sh source ${WORK_DIR}acm-workshop-variables.sh Create a dedicated folder for the ASM Ingress Gateway in the GKE configs&amp;rsquo;s Git repo:
-mkdir ${WORK_DIR}$GKE_CONFIGS_DIR_NAME/$INGRESS_GATEWAY_NAMESPACE Define Namespace cat &amp;lt;&amp;lt;EOF &amp;gt; ${WORK_DIR}$GKE_CONFIGS_DIR_NAME/$INGRESS_GATEWAY_NAMESPACE/namespace.</description>
+WORK_DIR=~/ source ${WORK_DIR}acm-workshop-variables.sh echo &amp;#34;export INGRESS_GATEWAY_NAME=asm-ingressgateway&amp;#34; &amp;gt;&amp;gt; ${WORK_DIR}acm-workshop-variables.sh echo &amp;#34;export INGRESS_GATEWAY_LABEL=&amp;#39;asm: ingressgateway&amp;#39;&amp;#34; &amp;gt;&amp;gt; ${WORK_DIR}acm-workshop-variables.sh source ${WORK_DIR}acm-workshop-variables.shCreate a dedicated folder for the ASM Ingress Gateway in the GKE configs&amp;rsquo;s Git repo:
+mkdir ${WORK_DIR}$GKE_CONFIGS_DIR_NAME/$INGRESS_GATEWAY_NAMESPACEDefine Namespace cat &amp;lt;&amp;lt;EOF &amp;gt; ${WORK_DIR}$GKE_CONFIGS_DIR_NAME/$INGRESS_GATEWAY_NAMESPACE/namespace.</description>
     </item>
     <item>
       <title>Enforce Service Mesh policies</title>
@@ -191,7 +192,7 @@ mkdir ${WORK_DIR}$GKE_CONFIGS_DIR_NAME/$INGRESS_GATEWAY_NAMESPACE Define Namespa
       <description>Duration: 10 min | Persona: Platform Admin
 In this section, you will enforce policies in order to make sure that your clusters, namespaces and apps are well configured to be secured by your Service Mesh.
 Initialize variables:
-WORK_DIR=~/ source ${WORK_DIR}acm-workshop-variables.sh echo &amp;#34;export INGRESS_GATEWAY_NAMESPACE=asm-ingress&amp;#34; &amp;gt;&amp;gt; ${WORK_DIR}acm-workshop-variables.sh source ${WORK_DIR}acm-workshop-variables.sh Define &amp;ldquo;Automatic sidecar proxy injection&amp;rdquo; policies https://cloud.google.com/service-mesh/docs/anthos-service-mesh-proxy-injection
+WORK_DIR=~/ source ${WORK_DIR}acm-workshop-variables.sh echo &amp;#34;export INGRESS_GATEWAY_NAMESPACE=asm-ingress&amp;#34; &amp;gt;&amp;gt; ${WORK_DIR}acm-workshop-variables.sh source ${WORK_DIR}acm-workshop-variables.shDefine &amp;ldquo;Automatic sidecar proxy injection&amp;rdquo; policies https://cloud.google.com/service-mesh/docs/anthos-service-mesh-proxy-injection
 Define the namespaces-automatic-sidecar-injection-label Constraint based on the K8sRequiredLabels ConstraintTemplate for Namespaces:
 cat &amp;lt;&amp;lt;EOF &amp;gt; ${WORK_DIR}$GKE_CONFIGS_DIR_NAME/policies/constraints/namespaces-automatic-sidecar-injection-label.yaml apiVersion: constraints.</description>
     </item>
@@ -203,7 +204,7 @@ cat &amp;lt;&amp;lt;EOF &amp;gt; ${WORK_DIR}$GKE_CONFIGS_DIR_NAME/policies/const
       <description>Duration: 5 min | Persona: Org Admin
 In this section you will enforce policies to guarantee that any Namespaces in the ConfigController instance defining any Tenant project should contain its own ConfigConnectorContext object in order to leverage the namespaced mode of Config Connector.
 Initialize variables:
-WORK_DIR=~/ source ${WORK_DIR}acm-workshop-variables.sh Define the &amp;ldquo;Require ConfigConnectorContext for Namespaces&amp;rdquo; policies Define the ConstraintTemplate making sure that any Namespaces has a ConfigConnectorContext in it:
+WORK_DIR=~/ source ${WORK_DIR}acm-workshop-variables.shDefine the &amp;ldquo;Require ConfigConnectorContext for Namespaces&amp;rdquo; policies Define the ConstraintTemplate making sure that any Namespaces has a ConfigConnectorContext in it:
 cat &amp;lt;&amp;lt;EOF &amp;gt; ${WORK_DIR}$HOST_PROJECT_DIR_NAME/policies/templates/requirenamespaceconfigconnectorcontext.</description>
     </item>
     <item>
@@ -214,8 +215,9 @@ cat &amp;lt;&amp;lt;EOF &amp;gt; ${WORK_DIR}$HOST_PROJECT_DIR_NAME/policies/temp
       <description>Duration: 5 min | Persona: Apps Operator
 In this section, you will copy the Whereami app container in your private Artifact Registry. You will also scan this container image.
 Initialize variables:
-WORK_DIR=~/ source ${WORK_DIR}acm-workshop-variables.sh WHEREAMI_VERSION=v1.2.14 PRIVATE_WHEREAMI_IMAGE_NAME=$CONTAINER_REGISTRY_REPOSITORY/whereami:$WHEREAMI_VERSION echo &amp;#34;export PRIVATE_WHEREAMI_IMAGE_NAME=${PRIVATE_WHEREAMI_IMAGE_NAME}&amp;#34; &amp;gt;&amp;gt; ${WORK_DIR}acm-workshop-variables.sh source ${WORK_DIR}acm-workshop-variables.sh Copy the public container image to your private registry:
-UPSTREAM_WHEREAMI_IMAGE_NAME=us-docker.pkg.dev/google-samples/containers/gke/whereami:$WHEREAMI_VERSION gcloud auth configure-docker $CONTAINER_REGISTRY_HOST_NAME --quiet crane copy $UPSTREAM_WHEREAMI_IMAGE_NAME $PRIVATE_WHEREAMI_IMAGE_NAME List the container images in your private registry:</description>
+WORK_DIR=~/ source ${WORK_DIR}acm-workshop-variables.sh WHEREAMI_VERSION=v1.2.14 PRIVATE_WHEREAMI_IMAGE_NAME=$CONTAINER_REGISTRY_REPOSITORY/whereami:$WHEREAMI_VERSION echo &amp;#34;export PRIVATE_WHEREAMI_IMAGE_NAME=${PRIVATE_WHEREAMI_IMAGE_NAME}&amp;#34; &amp;gt;&amp;gt; ${WORK_DIR}acm-workshop-variables.sh source ${WORK_DIR}acm-workshop-variables.shCopy the public container image to your private registry:
+UPSTREAM_WHEREAMI_IMAGE_NAME=us-docker.pkg.dev/google-samples/containers/gke/whereami:$WHEREAMI_VERSION gcloud auth configure-docker $CONTAINER_REGISTRY_HOST_NAME --quiet crane copy $UPSTREAM_WHEREAMI_IMAGE_NAME $PRIVATE_WHEREAMI_IMAGE_NAMEList the container images in your private registry:
+gcloud artifacts docker images list $CONTAINER_REGISTRY_REPOSITORY \ --include-tagsScan the whereami container image:</description>
     </item>
     <item>
       <title>Prepare containers</title>
@@ -225,8 +227,8 @@ UPSTREAM_WHEREAMI_IMAGE_NAME=us-docker.pkg.dev/google-samples/containers/gke/whe
       <description>Duration: 5 min | Persona: Apps Operator
 In this section, you will copy the Bank of Anthos apps containers in your private Artifact Registry. You will also scan one container image.
 Initialize variables:
-WORK_DIR=~/ source ${WORK_DIR}acm-workshop-variables.sh BANK_OF_ANTHOS_VERSION=v0.5.10 echo &amp;#34;export BANK_OF_ANTHOS_VERSION=${BANK_OF_ANTHOS_VERSION}&amp;#34; &amp;gt;&amp;gt; ${WORK_DIR}acm-workshop-variables.sh PRIVATE_BANK_OF_ANTHOS_REGISTRY=$CONTAINER_REGISTRY_REPOSITORY/bankofanthos echo &amp;#34;export PRIVATE_BANK_OF_ANTHOS_REGISTRY=${PRIVATE_BANK_OF_ANTHOS_REGISTRY}&amp;#34; &amp;gt;&amp;gt; ${WORK_DIR}acm-workshop-variables.sh source ${WORK_DIR}acm-workshop-variables.sh Copy the public container images to your private registry:
-UPSTREAM_BANK_OF_ANTHOS_REGISTRY=gcr.io/bank-of-anthos-ci SERVICES=&amp;#34;accounts-db balancereader contacts frontend ledger-db ledgerwriter loadgenerator transactionhistory userservice&amp;#34; for s in $SERVICES; do crane copy $UPSTREAM_BANK_OF_ANTHOS_REGISTRY/$s:$BANK_OF_ANTHOS_VERSION $PRIVATE_BANK_OF_ANTHOS_REGISTRY/$s:$BANK_OF_ANTHOS_VERSION; done List the container images in your private registry:</description>
+WORK_DIR=~/ source ${WORK_DIR}acm-workshop-variables.sh BANK_OF_ANTHOS_VERSION=v0.5.10 echo &amp;#34;export BANK_OF_ANTHOS_VERSION=${BANK_OF_ANTHOS_VERSION}&amp;#34; &amp;gt;&amp;gt; ${WORK_DIR}acm-workshop-variables.sh PRIVATE_BANK_OF_ANTHOS_REGISTRY=$CONTAINER_REGISTRY_REPOSITORY/bankofanthos echo &amp;#34;export PRIVATE_BANK_OF_ANTHOS_REGISTRY=${PRIVATE_BANK_OF_ANTHOS_REGISTRY}&amp;#34; &amp;gt;&amp;gt; ${WORK_DIR}acm-workshop-variables.sh source ${WORK_DIR}acm-workshop-variables.shCopy the public container images to your private registry:
+UPSTREAM_BANK_OF_ANTHOS_REGISTRY=gcr.io/bank-of-anthos-ci SERVICES=&amp;#34;accounts-db balancereader contacts frontend ledger-db ledgerwriter loadgenerator transactionhistory userservice&amp;#34; for s in $SERVICES; do crane copy $UPSTREAM_BANK_OF_ANTHOS_REGISTRY/$s:$BANK_OF_ANTHOS_VERSION $PRIVATE_BANK_OF_ANTHOS_REGISTRY/$s:$BANK_OF_ANTHOS_VERSION; doneList the container images in your private registry:</description>
     </item>
     <item>
       <title>Deploy NetworkPolicies</title>
@@ -236,8 +238,8 @@ UPSTREAM_BANK_OF_ANTHOS_REGISTRY=gcr.io/bank-of-anthos-ci SERVICES=&amp;#34;acco
       <description>Duration: 5 min | Persona: Platform Admin
 In this section, you will see the Policy Controller violation regarding to the missing NetworkPolicies in the Ingress Gateway. Finally, you will fix this violation by deploying the associated resources.
 Initialize variables:
-WORK_DIR=~/ source ${WORK_DIR}acm-workshop-variables.sh See the Policy Controller violations See the Policy Controller violations in the GKE cluster, by running this command and click on this link:
-echo -e &amp;#34;https://console.cloud.google.com/kubernetes/policy_controller/dashboard?project=${TENANT_PROJECT_ID}&amp;#34; You will see that the K8sRequireNamespaceNetworkPolicies Constraint has this violation: Namespace &amp;lt;asm-ingress&amp;gt; does not have a NetworkPolicy.</description>
+WORK_DIR=~/ source ${WORK_DIR}acm-workshop-variables.shSee the Policy Controller violations See the Policy Controller violations in the GKE cluster, by running this command and click on this link:
+echo -e &amp;#34;https://console.cloud.google.com/kubernetes/policy_controller/dashboard?project=${TENANT_PROJECT_ID}&amp;#34;You will see that the K8sRequireNamespaceNetworkPolicies Constraint has this violation: Namespace &amp;lt;asm-ingress&amp;gt; does not have a NetworkPolicy.</description>
     </item>
     <item>
       <title>Monitor WAF rules</title>
@@ -247,7 +249,7 @@ echo -e &amp;#34;https://console.cloud.google.com/kubernetes/policy_controller/d
       <description>Duration: 5 min | Persona: Platform Admin
 In this section, you will monitor Cloud Armor security policies logs (WAF rules).
 Initialize variables:
-WORK_DIR=~/ source ${WORK_DIR}acm-workshop-variables.sh In the Google Cloud console, navigate to Network Security &amp;gt; Cloud Armor service. Click on the link displayed by the command below:
+WORK_DIR=~/ source ${WORK_DIR}acm-workshop-variables.shIn the Google Cloud console, navigate to Network Security &amp;gt; Cloud Armor service. Click on the link displayed by the command below:
 echo -e &amp;#34;https://console.cloud.google.com/net-security/securitypolicies/details/${SECURITY_POLICY_NAME}?project=${TENANT_PROJECT_ID}&amp;#34; Using Cloud Logging, you can view every request evaluated by a Google Cloud Armor security policy and the outcome or action taken.</description>
     </item>
     <item>
@@ -258,7 +260,7 @@ echo -e &amp;#34;https://console.cloud.google.com/net-security/securitypolicies/
       <description>Duration: 5 min | Persona: Apps Operator
 In this section, you will copy the Online Boutique apps container images and the Helm chart in your private Artifact Registry. You will also scan one container image.
 Initialize variables:
-WORK_DIR=~/ source ${WORK_DIR}acm-workshop-variables.sh ONLINE_BOUTIQUE_VERSION=v0.5.0 echo &amp;#34;export ONLINE_BOUTIQUE_VERSION=${ONLINE_BOUTIQUE_VERSION}&amp;#34; &amp;gt;&amp;gt; ${WORK_DIR}acm-workshop-variables.sh PRIVATE_ONLINE_BOUTIQUE_REGISTRY=$CONTAINER_REGISTRY_REPOSITORY/onlineboutique echo &amp;#34;export PRIVATE_ONLINE_BOUTIQUE_REGISTRY=${PRIVATE_ONLINE_BOUTIQUE_REGISTRY}&amp;#34; &amp;gt;&amp;gt; ${WORK_DIR}acm-workshop-variables.sh source ${WORK_DIR}acm-workshop-variables.sh Prepare the container images Copy the public container images to your private registry:
+WORK_DIR=~/ source ${WORK_DIR}acm-workshop-variables.sh ONLINE_BOUTIQUE_VERSION=v0.5.0 echo &amp;#34;export ONLINE_BOUTIQUE_VERSION=${ONLINE_BOUTIQUE_VERSION}&amp;#34; &amp;gt;&amp;gt; ${WORK_DIR}acm-workshop-variables.sh PRIVATE_ONLINE_BOUTIQUE_REGISTRY=$CONTAINER_REGISTRY_REPOSITORY/onlineboutique echo &amp;#34;export PRIVATE_ONLINE_BOUTIQUE_REGISTRY=${PRIVATE_ONLINE_BOUTIQUE_REGISTRY}&amp;#34; &amp;gt;&amp;gt; ${WORK_DIR}acm-workshop-variables.sh source ${WORK_DIR}acm-workshop-variables.shPrepare the container images Copy the public container images to your private registry:
 UPSTREAM_ONLINE_BOUTIQUE_CONTAINER_REGISTRY=gcr.io/google-samples/microservices-demo HTTP_SERVICES=&amp;#34;frontend loadgenerator&amp;#34; TAG=$ONLINE_BOUTIQUE_VERSION for s in $HTTP_SERVICES; do crane copy $UPSTREAM_ONLINE_BOUTIQUE_CONTAINER_REGISTRY/$s:$TAG $PRIVATE_ONLINE_BOUTIQUE_REGISTRY/$s:$TAG; done GRPC_SERVICES=&amp;#34;adservice cartservice checkoutservice currencyservice emailservice paymentservice productcatalogservice recommendationservice shippingservice&amp;#34; TAG=$ONLINE_BOUTIQUE_VERSION-native-grpc-probes for s in $GRPC_SERVICES; do crane copy $UPSTREAM_ONLINE_BOUTIQUE_CONTAINER_REGISTRY/$s:$TAG $PRIVATE_ONLINE_BOUTIQUE_REGISTRY/$s:$TAG; done crane copy redis:alpine $PRIVATE_ONLINE_BOUTIQUE_REGISTRY/redis:alpine Tip We are making the copy of the gRPC services supporting the native Kubernetes health probes in order to get the associated optimized images, learn more about this here.</description>
     </item>
     <item>
@@ -279,7 +281,7 @@ WORK_DIR=~/ source ${WORK_DIR}acm-workshop-variables.sh echo &amp;#34;export CAR
       <description>Duration: 5 min | Persona: Apps Operator
 In this section, you will see how to track the AuthorizationPolicies issue and then you will deploy granular and specific ServiceAccounts and AuthorizationPolicies for the Bank of Anthos namespace to fix this issue.
 Initialize variables:
-WORK_DIR=~/ source ${WORK_DIR}acm-workshop-variables.sh See the AuthorizationPolicies issue See the AuthorizationPolicies issue in the GKE cluster for the Bank of Anthos namespace, by running this command and click on this link:</description>
+WORK_DIR=~/ source ${WORK_DIR}acm-workshop-variables.shSee the AuthorizationPolicies issue See the AuthorizationPolicies issue in the GKE cluster for the Bank of Anthos namespace, by running this command and click on this link:</description>
     </item>
     <item>
       <title>Deploy AuthorizationPolicies</title>
@@ -289,7 +291,7 @@ WORK_DIR=~/ source ${WORK_DIR}acm-workshop-variables.sh See the AuthorizationPol
       <description>Duration: 5 min | Persona: Platform Admin
 In this section, you will deploy granular and specific AuthorizationPolicies for the Ingress Gateway namespace.
 Initialize variables:
-WORK_DIR=~/ source ${WORK_DIR}acm-workshop-variables.sh Define AuthorizationPolicy cat &amp;lt;&amp;lt;EOF &amp;gt; ${WORK_DIR}$GKE_CONFIGS_DIR_NAME/$INGRESS_GATEWAY_NAMESPACE/authorizationpolicy_ingress-gateway.yaml apiVersion: security.istio.io/v1beta1 kind: AuthorizationPolicy metadata: name: ${INGRESS_GATEWAY_NAME} namespace: ${INGRESS_GATEWAY_NAMESPACE} spec: selector: matchLabels: app: ${INGRESS_GATEWAY_NAME} rules: - to: - operation: ports: - &amp;#34;8080&amp;#34; EOF Deploy Kubernetes manifests cd ${WORK_DIR}$GKE_CONFIGS_DIR_NAME/ git add . &amp;amp;&amp;amp; git commit -m &amp;#34;Ingress Gateway AuthorizationPolicy&amp;#34; &amp;amp;&amp;amp; git push origin main Check deployments List the Kubernetes resources managed by Config Sync in GKE cluster for the GKE cluster configs repository: &amp;#8203; UI UI gcloud gcloud Run this command and click on this link:</description>
+WORK_DIR=~/ source ${WORK_DIR}acm-workshop-variables.shDefine AuthorizationPolicy cat &amp;lt;&amp;lt;EOF &amp;gt; ${WORK_DIR}$GKE_CONFIGS_DIR_NAME/$INGRESS_GATEWAY_NAMESPACE/authorizationpolicy_ingress-gateway.yaml apiVersion: security.istio.io/v1beta1 kind: AuthorizationPolicy metadata: name: ${INGRESS_GATEWAY_NAME} namespace: ${INGRESS_GATEWAY_NAMESPACE} spec: selector: matchLabels: app: ${INGRESS_GATEWAY_NAME} rules: - to: - operation: ports: - &amp;#34;8080&amp;#34; EOFDeploy Kubernetes manifests cd ${WORK_DIR}$GKE_CONFIGS_DIR_NAME/ git add . &amp;amp;&amp;amp; git commit -m &amp;#34;Ingress Gateway AuthorizationPolicy&amp;#34; &amp;amp;&amp;amp; git push origin mainCheck deployments List the Kubernetes resources managed by Config Sync in GKE cluster for the GKE cluster configs repository: &amp;#8203; UI UI gcloud gcloud Run this command and click on this link:</description>
     </item>
     <item>
       <title>Deploy AuthorizationPolicy</title>
@@ -299,8 +301,8 @@ WORK_DIR=~/ source ${WORK_DIR}acm-workshop-variables.sh Define AuthorizationPoli
       <description>Duration: 5 min | Persona: Apps Operator
 In this section, you will see how to track the AuthorizationPolicies issue and then you will deploy granular and specific AuthorizationPolicies for the Whereami namespace to fix this issue.
 Initialize variables:
-WORK_DIR=~/ source ${WORK_DIR}acm-workshop-variables.sh See the AuthorizationPolicies issue See the AuthorizationPolicies issue in the GKE cluster for the Whereami app, by running this command and click on this link:
-echo -e &amp;#34;https://console.cloud.google.com/anthos/security/workload-view/Deployment/${GKE_LOCATION}/${GKE_NAME}/${WHEREAMI_NAMESPACE}/whereami?project=${TENANT_PROJECT_ID}&amp;#34; Under the Service requests section on this page, you will see some Inbound denials depending on how many times you tried to refresh the Whereami app endpoint.</description>
+WORK_DIR=~/ source ${WORK_DIR}acm-workshop-variables.shSee the AuthorizationPolicies issue See the AuthorizationPolicies issue in the GKE cluster for the Whereami app, by running this command and click on this link:
+echo -e &amp;#34;https://console.cloud.google.com/anthos/security/workload-view/Deployment/${GKE_LOCATION}/${GKE_NAME}/${WHEREAMI_NAMESPACE}/whereami?project=${TENANT_PROJECT_ID}&amp;#34;Under the Service requests section on this page, you will see some Inbound denials depending on how many times you tried to refresh the Whereami app endpoint.</description>
     </item>
     <item>
       <title>Enforce Kubernetes policies</title>
@@ -310,7 +312,7 @@ echo -e &amp;#34;https://console.cloud.google.com/anthos/security/workload-view/
       <description>Duration: 5 min | Persona: Platform Admin
 In this section, you will enforce Kubernetes policies for Pod Security Admission (PSA) and NetworkPolicies.
 Define variables:
-WORK_DIR=~/ source ${WORK_DIR}acm-workshop-variables.sh Enforce Pod Security Admission (PSA) policies As best practice we will ensure that any Namespaces enables the Pod Security Admission (PSA) feature.
+WORK_DIR=~/ source ${WORK_DIR}acm-workshop-variables.shEnforce Pod Security Admission (PSA) policies As best practice we will ensure that any Namespaces enables the Pod Security Admission (PSA) feature.
 Define the namespaces-required-psa-label Constraint based on the K8sRequiredLabels ConstraintTemplate for Namespaces:
 cat &amp;lt;&amp;lt;EOF &amp;gt; ${WORK_DIR}$GKE_CONFIGS_DIR_NAME/policies/constraints/namespaces-required-psa-label.yaml apiVersion: constraints.gatekeeper.sh/v1beta1 kind: K8sRequiredLabels metadata: name: namespaces-required-psa-label annotations: policycontroller.</description>
     </item>
@@ -322,7 +324,8 @@ cat &amp;lt;&amp;lt;EOF &amp;gt; ${WORK_DIR}$GKE_CONFIGS_DIR_NAME/policies/const
       <description>Duration: 5 min | Persona: Apps Operator
 In this section, you will monitor security scanning of your GKE workloads configurations in the Google Cloud console in order to leverage these two features:
 Scan workloads for configuration issues Scan container images for known vulnerabilities Initialize variables:
-WORK_DIR=~/ source ${WORK_DIR}acm-workshop-variables.sh In the Google Cloud console, navigate to Kubernetes Engine &amp;gt; Security Posture, click on the link displayed by the command below:</description>
+WORK_DIR=~/ source ${WORK_DIR}acm-workshop-variables.shIn the Google Cloud console, navigate to Kubernetes Engine &amp;gt; Security Posture, click on the link displayed by the command below:
+echo -e &amp;#34;https://console.</description>
     </item>
     <item>
       <title>Deploy AuthorizationPolicies</title>
@@ -332,7 +335,7 @@ WORK_DIR=~/ source ${WORK_DIR}acm-workshop-variables.sh In the Google Cloud cons
       <description>Duration: 5 min | Persona: Apps Operator
 In this section, you will see how to track the AuthorizationPolicies issue and then you will deploy granular and specific AuthorizationPolicies for the Online Boutique namespace to fix this issue.
 Initialize variables:
-WORK_DIR=~/ source ${WORK_DIR}acm-workshop-variables.sh See the AuthorizationPolicies issue See the AuthorizationPolicies issue in the GKE cluster for the Online Boutique apps, by running this command and click on this link:
+WORK_DIR=~/ source ${WORK_DIR}acm-workshop-variables.shSee the AuthorizationPolicies issue See the AuthorizationPolicies issue in the GKE cluster for the Online Boutique apps, by running this command and click on this link:
 echo -e &amp;#34;https://console.</description>
     </item>
     <item>
@@ -343,8 +346,8 @@ echo -e &amp;#34;https://console.</description>
       <description>Duration: 5 min | Persona: Apps Operator
 In this section, you will see the Policy Controller violation regarding to the missing NetworkPolicies in the Bank of Anthos namespace. Then, you will fix this violation by deploying the associated resources.
 Initialize variables:
-WORK_DIR=~/ source ${WORK_DIR}acm-workshop-variables.sh See the Policy Controller violations See the Policy Controller violations in the GKE cluster, by running this command and click on this link:
-echo -e &amp;#34;https://console.</description>
+WORK_DIR=~/ source ${WORK_DIR}acm-workshop-variables.shSee the Policy Controller violations See the Policy Controller violations in the GKE cluster, by running this command and click on this link:
+echo -e &amp;#34;https://console.cloud.google.com/kubernetes/policy_controller/dashboard?project=${TENANT_PROJECT_ID}&amp;#34;You will see that the K8sRequireNamespaceNetworkPolicies Constraint has this violation: Namespace &amp;lt;bankofanthos&amp;gt; does not have a NetworkPolicy.</description>
     </item>
     <item>
       <title>Deploy NetworkPolicies</title>
@@ -354,8 +357,8 @@ echo -e &amp;#34;https://console.</description>
       <description>Duration: 5 min | Persona: Apps Operator
 In this section, you will see the Policy Controller violation regarding to the missing NetworkPolicies in the Whereami namespace. Then, you will fix this violation by deploying the associated resources.
 Initialize variables:
-WORK_DIR=~/ source ${WORK_DIR}acm-workshop-variables.sh See the Policy Controller violations See the Policy Controller violations in the GKE cluster, by running this command and click on this link:
-echo -e &amp;#34;https://console.cloud.google.com/kubernetes/policy_controller/dashboard?project=${TENANT_PROJECT_ID}&amp;#34; You will see that the K8sRequireNamespaceNetworkPolicies Constraint has this violation: Namespace &amp;lt;whereami&amp;gt; does not have a NetworkPolicy.</description>
+WORK_DIR=~/ source ${WORK_DIR}acm-workshop-variables.shSee the Policy Controller violations See the Policy Controller violations in the GKE cluster, by running this command and click on this link:
+echo -e &amp;#34;https://console.cloud.google.com/kubernetes/policy_controller/dashboard?project=${TENANT_PROJECT_ID}&amp;#34;You will see that the K8sRequireNamespaceNetworkPolicies Constraint has this violation: Namespace &amp;lt;whereami&amp;gt; does not have a NetworkPolicy.</description>
     </item>
     <item>
       <title>Set up NetworkPolicies logging</title>
@@ -365,7 +368,7 @@ echo -e &amp;#34;https://console.cloud.google.com/kubernetes/policy_controller/d
       <description>Duration: 5 min | Persona: Platform Admin
 In this section, you will set up the NetworkPolicies logging in order to get more insights about the logs generated by the denied or allowed requests controlled by NetworkPolicies thanks to the GKE Dataplane V2 feature.
 Define variables:
-WORK_DIR=~/ source ${WORK_DIR}acm-workshop-variables.sh Define Network Policy logging cat &amp;lt;&amp;lt;EOF &amp;gt; ${WORK_DIR}$GKE_CONFIGS_DIR_NAME/networkpolicies-logging.yaml kind: NetworkLogging apiVersion: networking.gke.io/v1alpha1 metadata: name: default spec: cluster: allow: log: false delegate: false deny: log: true delegate: false EOF Deploy Kubernetes manifests cd ${WORK_DIR}$GKE_CONFIGS_DIR_NAME/ git add .</description>
+WORK_DIR=~/ source ${WORK_DIR}acm-workshop-variables.shDefine Network Policy logging cat &amp;lt;&amp;lt;EOF &amp;gt; ${WORK_DIR}$GKE_CONFIGS_DIR_NAME/networkpolicies-logging.yaml kind: NetworkLogging apiVersion: networking.gke.io/v1alpha1 metadata: name: default spec: cluster: allow: log: false delegate: false deny: log: true delegate: false EOFDeploy Kubernetes manifests cd ${WORK_DIR}$GKE_CONFIGS_DIR_NAME/ git add .</description>
     </item>
     <item>
       <title>Deploy NetworkPolicies</title>
@@ -375,8 +378,8 @@ WORK_DIR=~/ source ${WORK_DIR}acm-workshop-variables.sh Define Network Policy lo
       <description>Duration: 5 min | Persona: Apps Operator
 In this section, you will see the Policy Controller violation regarding to the missing NetworkPolicies in the Online Boutique namespace. Then, you will fix this violation by deploying the associated resources.
 Initialize variables:
-WORK_DIR=~/ source ${WORK_DIR}acm-workshop-variables.sh See the Policy Controller violations See the Policy Controller violations in the GKE cluster, by running this command and click on this link:
-echo -e &amp;#34;https://console.cloud.google.com/kubernetes/policy_controller/dashboard?project=${TENANT_PROJECT_ID}&amp;#34; You will see that the K8sRequireNamespaceNetworkPolicies Constraint has this violation: Namespace &amp;lt;onlineboutique&amp;gt; does not have a NetworkPolicy.</description>
+WORK_DIR=~/ source ${WORK_DIR}acm-workshop-variables.shSee the Policy Controller violations See the Policy Controller violations in the GKE cluster, by running this command and click on this link:
+echo -e &amp;#34;https://console.cloud.google.com/kubernetes/policy_controller/dashboard?project=${TENANT_PROJECT_ID}&amp;#34;You will see that the K8sRequireNamespaceNetworkPolicies Constraint has this violation: Namespace &amp;lt;onlineboutique&amp;gt; does not have a NetworkPolicy.</description>
     </item>
     <item>
       <title>Monitor policies violations</title>
@@ -386,8 +389,8 @@ echo -e &amp;#34;https://console.cloud.google.com/kubernetes/policy_controller/d
       <description>Duration: 5 min | Persona: Apps Operator
 In this section, in the Google Cloud Console you will monitor the Policy Controller&amp;rsquo;s policies violations for the GKE cluster in the Tenant project.
 Initialize variables:
-WORK_DIR=~/ source ${WORK_DIR}acm-workshop-variables.sh Click on the link displayed by the command below:
-echo -e &amp;#34;https://console.cloud.google.com/kubernetes/policy_controller/dashboard?project=${TENANT_PROJECT_ID}&amp;#34; On the default Dashboard tab, you will find something similar to:
+WORK_DIR=~/ source ${WORK_DIR}acm-workshop-variables.shClick on the link displayed by the command below:
+echo -e &amp;#34;https://console.cloud.google.com/kubernetes/policy_controller/dashboard?project=${TENANT_PROJECT_ID}&amp;#34;On the default Dashboard tab, you will find something similar to:
 Then if you go on the Violations tab, you will find something similar to:</description>
     </item>
   </channel>

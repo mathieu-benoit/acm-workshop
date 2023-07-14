@@ -23,7 +23,7 @@ Initialize variables:</description>
       <description>Duration: 5 min | Persona: Platform Admin
 In this section, you will verify in the Google Cloud console the versions of both: the control plane and data plane of ASM.
 Initialize variables:
-WORK_DIR=~/ source ${WORK_DIR}acm-workshop-variables.sh Managed Anthos Service Mesh is a Google-managed control plane and data plane that you simply configure. Google handles their reliability, upgrades, scaling and security for you.
+WORK_DIR=~/ source ${WORK_DIR}acm-workshop-variables.shManaged Anthos Service Mesh is a Google-managed control plane and data plane that you simply configure. Google handles their reliability, upgrades, scaling and security for you.
 You can view the versions of the control plane (revision column below) and data plane (proxy-version column below) in Monitoring &amp;gt; Metrics Explorer.</description>
     </item>
     <item>
@@ -34,7 +34,7 @@ You can view the versions of the control plane (revision column below) and data 
       <description>Duration: 5 min | Persona: Org Admin
 In this section, you will set up policies in order to enforce governance against the Kubernetes manifests defining your GKE cluster. This will guarantee that the best practices in term of security are respected.
 Define variables:
-WORK_DIR=~/ source ${WORK_DIR}acm-workshop-variables.sh Enforce GKE clusters policies Define the ConstraintTemplate:
+WORK_DIR=~/ source ${WORK_DIR}acm-workshop-variables.shEnforce GKE clusters policies Define the ConstraintTemplate:
 cat &amp;lt;&amp;lt;EOF &amp;gt; ${WORK_DIR}$HOST_PROJECT_DIR_NAME/policies/templates/gkeclusterrequirement.yaml apiVersion: templates.gatekeeper.sh/v1 kind: ConstraintTemplate metadata: name: gkeclusterrequirement annotations: description: &amp;#34;Requirements for any GKE cluster.</description>
     </item>
     <item>
@@ -45,7 +45,7 @@ cat &amp;lt;&amp;lt;EOF &amp;gt; ${WORK_DIR}$HOST_PROJECT_DIR_NAME/policies/temp
       <description>Duration: 15 min | Persona: Platform Admin
 In this section, you will install a Managed Service Mesh for your GKE cluster. This will opt your cluster in a specific channel in order to get the upgrades handled by Google for the managed control plane and managed data plane.
 Initialize variables:
-WORK_DIR=~/ source ${WORK_DIR}acm-workshop-variables.sh Define ASM feature for the tenant project Define the ASM GKEHubFeature resource:
+WORK_DIR=~/ source ${WORK_DIR}acm-workshop-variables.shDefine ASM feature for the tenant project Define the ASM GKEHubFeature resource:
 cat &amp;lt;&amp;lt;EOF &amp;gt; ${WORK_DIR}$TENANT_PROJECT_DIR_NAME/gke-hub-feature-asm.yaml apiVersion: gkehub.</description>
     </item>
     <item>
@@ -56,7 +56,7 @@ cat &amp;lt;&amp;lt;EOF &amp;gt; ${WORK_DIR}$TENANT_PROJECT_DIR_NAME/gke-hub-fea
       <description>Duration: 5 min | Persona: Apps Operator
 In this section, you will monitor security features such as Network Policies and Service requests of your apps in the Google Cloud console.
 Initialize variables:
-WORK_DIR=~/ source ${WORK_DIR}acm-workshop-variables.sh In the Google Cloud console, navigate to Anthos &amp;gt; Security &amp;gt; Policy Audit and filter for example by onlineboutique Namespace to see that the 3 security features Kubernetes Network policy, Service access control and mTLS status are enabled in green:</description>
+WORK_DIR=~/ source ${WORK_DIR}acm-workshop-variables.shIn the Google Cloud console, navigate to Anthos &amp;gt; Security &amp;gt; Policy Audit and filter for example by onlineboutique Namespace to see that the 3 security features Kubernetes Network policy, Service access control and mTLS status are enabled in green:</description>
     </item>
     <item>
       <title>Configure Config Sync</title>
@@ -66,7 +66,7 @@ WORK_DIR=~/ source ${WORK_DIR}acm-workshop-variables.sh In the Google Cloud cons
       <description>Duration: 10 min | Persona: Platform Admin
 In this section, you will set up a dedicated GitHub repository which will contain all the Kubernetes manifests of the Bank of Anthos apps. You will also have the opportunity to catch a policies violation.
 Initialize variables:
-WORK_DIR=~/ source ${WORK_DIR}acm-workshop-variables.sh echo &amp;#34;export BANKOFANTHOS_NAMESPACE=bankofanthos&amp;#34; &amp;gt;&amp;gt; ${WORK_DIR}acm-workshop-variables.sh echo &amp;#34;export BANK_OF_ANTHOS_DIR_NAME=acm-workshop-bankofanthos-repo&amp;#34; &amp;gt;&amp;gt; ${WORK_DIR}acm-workshop-variables.sh source ${WORK_DIR}acm-workshop-variables.sh mkdir -p ${WORK_DIR}$GKE_CONFIGS_DIR_NAME/repo-syncs mkdir ${WORK_DIR}$GKE_CONFIGS_DIR_NAME/repo-syncs/$BANKOFANTHOS_NAMESPACE Define Namespace Define a dedicated Namespace for the Bank of Anthos apps:</description>
+WORK_DIR=~/ source ${WORK_DIR}acm-workshop-variables.sh echo &amp;#34;export BANKOFANTHOS_NAMESPACE=bankofanthos&amp;#34; &amp;gt;&amp;gt; ${WORK_DIR}acm-workshop-variables.sh echo &amp;#34;export BANK_OF_ANTHOS_DIR_NAME=acm-workshop-bankofanthos-repo&amp;#34; &amp;gt;&amp;gt; ${WORK_DIR}acm-workshop-variables.sh source ${WORK_DIR}acm-workshop-variables.shmkdir -p ${WORK_DIR}$GKE_CONFIGS_DIR_NAME/repo-syncs mkdir ${WORK_DIR}$GKE_CONFIGS_DIR_NAME/repo-syncs/$BANKOFANTHOS_NAMESPACEDefine Namespace Define a dedicated Namespace for the Bank of Anthos apps:</description>
     </item>
     <item>
       <title>Configure Config Sync</title>
@@ -76,7 +76,7 @@ WORK_DIR=~/ source ${WORK_DIR}acm-workshop-variables.sh echo &amp;#34;export BAN
       <description>Duration: 10 min | Persona: Platform Admin
 In this section, you will configure Config Sync to sync the resources in the Whereami Namespace via its associated RepoSync and RoleBinding.
 Initialize variables:
-WORK_DIR=~/ source ${WORK_DIR}acm-workshop-variables.sh echo &amp;#34;export WHEREAMI_NAMESPACE=whereami&amp;#34; &amp;gt;&amp;gt; ${WORK_DIR}acm-workshop-variables.sh echo &amp;#34;export WHERE_AMI_DIR_NAME=acm-workshop-whereami-repo&amp;#34; &amp;gt;&amp;gt; ${WORK_DIR}acm-workshop-variables.sh source ${WORK_DIR}acm-workshop-variables.sh mkdir -p ${WORK_DIR}$GKE_CONFIGS_DIR_NAME/repo-syncs mkdir ${WORK_DIR}$GKE_CONFIGS_DIR_NAME/repo-syncs/$WHEREAMI_NAMESPACE Create Namespace Define a dedicated Namespace for the Whereami app:
+WORK_DIR=~/ source ${WORK_DIR}acm-workshop-variables.sh echo &amp;#34;export WHEREAMI_NAMESPACE=whereami&amp;#34; &amp;gt;&amp;gt; ${WORK_DIR}acm-workshop-variables.sh echo &amp;#34;export WHERE_AMI_DIR_NAME=acm-workshop-whereami-repo&amp;#34; &amp;gt;&amp;gt; ${WORK_DIR}acm-workshop-variables.sh source ${WORK_DIR}acm-workshop-variables.shmkdir -p ${WORK_DIR}$GKE_CONFIGS_DIR_NAME/repo-syncs mkdir ${WORK_DIR}$GKE_CONFIGS_DIR_NAME/repo-syncs/$WHEREAMI_NAMESPACECreate Namespace Define a dedicated Namespace for the Whereami app:
 cat &amp;lt;&amp;lt;EOF &amp;gt; ${WORK_DIR}$GKE_CONFIGS_DIR_NAME/repo-syncs/$WHEREAMI_NAMESPACE/namespace.yaml apiVersion: v1 kind: Namespace metadata: labels: istio-injection: enabled pod-security.</description>
     </item>
     <item>
@@ -87,7 +87,8 @@ cat &amp;lt;&amp;lt;EOF &amp;gt; ${WORK_DIR}$GKE_CONFIGS_DIR_NAME/repo-syncs/$WH
       <description>Duration: 5 min | Persona: Apps Operator
 In this section, you will navigate to the topology of your Service Mesh as well as monitor your apps in terms of security, health and performance.
 Initialize variables:
-WORK_DIR=~/ source ${WORK_DIR}acm-workshop-variables.sh In the Google Cloud console, navigate to Anthos &amp;gt; Service Mesh &amp;gt; Topology to see the topology graph of your Service Mesh: Click on the link displayed by the command below:</description>
+WORK_DIR=~/ source ${WORK_DIR}acm-workshop-variables.shIn the Google Cloud console, navigate to Anthos &amp;gt; Service Mesh &amp;gt; Topology to see the topology graph of your Service Mesh: Click on the link displayed by the command below:
+echo -e &amp;#34;https://console.</description>
     </item>
     <item>
       <title>Set up ASM configs</title>
@@ -108,7 +109,7 @@ Create a dedicated istio-system folder in the GKE configs&amp;rsquo;s Git repo:<
       <description>Duration: 5 min | Persona: Platform Admin
 In this section, you will configure Config Sync to sync the resources in the Online Boutique Namespace via its associated RoleBinding.
 Initialize variables:
-WORK_DIR=~/ source ${WORK_DIR}acm-workshop-variables.sh mkdir -p ${WORK_DIR}$GKE_CONFIGS_DIR_NAME/repo-syncs mkdir ${WORK_DIR}$GKE_CONFIGS_DIR_NAME/repo-syncs/$ONLINEBOUTIQUE_NAMESPACE Define Namespace Define a dedicated Namespace for the Online Boutique apps:
+WORK_DIR=~/ source ${WORK_DIR}acm-workshop-variables.shmkdir -p ${WORK_DIR}$GKE_CONFIGS_DIR_NAME/repo-syncs mkdir ${WORK_DIR}$GKE_CONFIGS_DIR_NAME/repo-syncs/$ONLINEBOUTIQUE_NAMESPACEDefine Namespace Define a dedicated Namespace for the Online Boutique apps:
 cat &amp;lt;&amp;lt;EOF &amp;gt; ${WORK_DIR}$GKE_CONFIGS_DIR_NAME/repo-syncs/$ONLINEBOUTIQUE_NAMESPACE/namespace.yaml apiVersion: v1 kind: Namespace metadata: labels: istio-injection: enabled pod-security.kubernetes.io/enforce: restricted name: ${ONLINEBOUTIQUE_NAMESPACE} EOF Note In addition to the istio-injection to include this Namespace into our Service Mesh, we are also adding the pod-security.</description>
     </item>
     <item>
@@ -119,8 +120,8 @@ cat &amp;lt;&amp;lt;EOF &amp;gt; ${WORK_DIR}$GKE_CONFIGS_DIR_NAME/repo-syncs/$ON
       <description>Duration: 15 min | Persona: Platform Admin
 In this section, you will deploy a secured Ingress Gateway (unprivileged container, managed certificates, Cloud Armor, etc.) in its dedicated namespace in the GKE cluster.
 Initialize variables:
-WORK_DIR=~/ source ${WORK_DIR}acm-workshop-variables.sh echo &amp;#34;export INGRESS_GATEWAY_NAME=asm-ingressgateway&amp;#34; &amp;gt;&amp;gt; ${WORK_DIR}acm-workshop-variables.sh echo &amp;#34;export INGRESS_GATEWAY_LABEL=&amp;#39;asm: ingressgateway&amp;#39;&amp;#34; &amp;gt;&amp;gt; ${WORK_DIR}acm-workshop-variables.sh source ${WORK_DIR}acm-workshop-variables.sh Create a dedicated folder for the ASM Ingress Gateway in the GKE configs&amp;rsquo;s Git repo:
-mkdir ${WORK_DIR}$GKE_CONFIGS_DIR_NAME/$INGRESS_GATEWAY_NAMESPACE Define Namespace cat &amp;lt;&amp;lt;EOF &amp;gt; ${WORK_DIR}$GKE_CONFIGS_DIR_NAME/$INGRESS_GATEWAY_NAMESPACE/namespace.</description>
+WORK_DIR=~/ source ${WORK_DIR}acm-workshop-variables.sh echo &amp;#34;export INGRESS_GATEWAY_NAME=asm-ingressgateway&amp;#34; &amp;gt;&amp;gt; ${WORK_DIR}acm-workshop-variables.sh echo &amp;#34;export INGRESS_GATEWAY_LABEL=&amp;#39;asm: ingressgateway&amp;#39;&amp;#34; &amp;gt;&amp;gt; ${WORK_DIR}acm-workshop-variables.sh source ${WORK_DIR}acm-workshop-variables.shCreate a dedicated folder for the ASM Ingress Gateway in the GKE configs&amp;rsquo;s Git repo:
+mkdir ${WORK_DIR}$GKE_CONFIGS_DIR_NAME/$INGRESS_GATEWAY_NAMESPACEDefine Namespace cat &amp;lt;&amp;lt;EOF &amp;gt; ${WORK_DIR}$GKE_CONFIGS_DIR_NAME/$INGRESS_GATEWAY_NAMESPACE/namespace.</description>
     </item>
     <item>
       <title>Enforce Service Mesh policies</title>
@@ -130,7 +131,7 @@ mkdir ${WORK_DIR}$GKE_CONFIGS_DIR_NAME/$INGRESS_GATEWAY_NAMESPACE Define Namespa
       <description>Duration: 10 min | Persona: Platform Admin
 In this section, you will enforce policies in order to make sure that your clusters, namespaces and apps are well configured to be secured by your Service Mesh.
 Initialize variables:
-WORK_DIR=~/ source ${WORK_DIR}acm-workshop-variables.sh echo &amp;#34;export INGRESS_GATEWAY_NAMESPACE=asm-ingress&amp;#34; &amp;gt;&amp;gt; ${WORK_DIR}acm-workshop-variables.sh source ${WORK_DIR}acm-workshop-variables.sh Define &amp;ldquo;Automatic sidecar proxy injection&amp;rdquo; policies https://cloud.google.com/service-mesh/docs/anthos-service-mesh-proxy-injection
+WORK_DIR=~/ source ${WORK_DIR}acm-workshop-variables.sh echo &amp;#34;export INGRESS_GATEWAY_NAMESPACE=asm-ingress&amp;#34; &amp;gt;&amp;gt; ${WORK_DIR}acm-workshop-variables.sh source ${WORK_DIR}acm-workshop-variables.shDefine &amp;ldquo;Automatic sidecar proxy injection&amp;rdquo; policies https://cloud.google.com/service-mesh/docs/anthos-service-mesh-proxy-injection
 Define the namespaces-automatic-sidecar-injection-label Constraint based on the K8sRequiredLabels ConstraintTemplate for Namespaces:
 cat &amp;lt;&amp;lt;EOF &amp;gt; ${WORK_DIR}$GKE_CONFIGS_DIR_NAME/policies/constraints/namespaces-automatic-sidecar-injection-label.yaml apiVersion: constraints.</description>
     </item>
@@ -142,8 +143,8 @@ cat &amp;lt;&amp;lt;EOF &amp;gt; ${WORK_DIR}$GKE_CONFIGS_DIR_NAME/policies/const
       <description>Duration: 5 min | Persona: Apps Operator
 In this section, you will trace your apps in order to follow a request through your Service Mesh, observe the network calls and profile your system end to end.
 Initialize variables:
-WORK_DIR=~/ source ${WORK_DIR}acm-workshop-variables.sh In the Google Cloud console, navigate to Trace service. Click on the link displayed by the command below:
-echo -e &amp;#34;https://console.cloud.google.com/traces/list?project=${TENANT_PROJECT_ID}&amp;#34; Select one of the Online Boutique&amp;rsquo;s frontend app&amp;rsquo;s requests: From there you will have access to a lot more details about the different calls, trace logs, etc.</description>
+WORK_DIR=~/ source ${WORK_DIR}acm-workshop-variables.shIn the Google Cloud console, navigate to Trace service. Click on the link displayed by the command below:
+echo -e &amp;#34;https://console.cloud.google.com/traces/list?project=${TENANT_PROJECT_ID}&amp;#34;Select one of the Online Boutique&amp;rsquo;s frontend app&amp;rsquo;s requests: From there you will have access to a lot more details about the different calls, trace logs, etc.</description>
     </item>
     <item>
       <title>Deploy app</title>
@@ -153,8 +154,8 @@ echo -e &amp;#34;https://console.cloud.google.com/traces/list?project=${TENANT_P
       <description>Duration: 10 min | Persona: Apps Operator
 In this section, you will deploy the Whereami app.
 Initialize variables:
-WORK_DIR=~/ source ${WORK_DIR}acm-workshop-variables.sh Get upstream Kubernetes manifests Get the upstream Kubernetes manifests:
-cd ${WORK_DIR}$WHERE_AMI_DIR_NAME kpt pkg get https://github.com/GoogleCloudPlatform/kubernetes-engine-samples/whereami/k8s rm k8s/Kptfile mv k8s upstream Create base overlay Create Kustomize base overlay files:
+WORK_DIR=~/ source ${WORK_DIR}acm-workshop-variables.shGet upstream Kubernetes manifests Get the upstream Kubernetes manifests:
+cd ${WORK_DIR}$WHERE_AMI_DIR_NAME kpt pkg get https://github.com/GoogleCloudPlatform/kubernetes-engine-samples/whereami/k8s rm k8s/Kptfile mv k8s upstreamCreate base overlay Create Kustomize base overlay files:
 mkdir ${WORK_DIR}$WHERE_AMI_DIR_NAME/base cd ${WORK_DIR}$WHERE_AMI_DIR_NAME/base kustomize create kustomize edit add resource ../upstream cat &amp;lt;&amp;lt;EOF &amp;gt;&amp;gt; ${WORK_DIR}$WHERE_AMI_DIR_NAME/base/kustomization.yaml patchesJson6902: - target: kind: Service name: whereami patch: |- - op: replace path: /spec/type value: ClusterIP EOF Info Here we are changing the Service type to ClusterIP because the Whereami app will be exposed by the Ingress Gateway.</description>
     </item>
     <item>
@@ -165,8 +166,8 @@ mkdir ${WORK_DIR}$WHERE_AMI_DIR_NAME/base cd ${WORK_DIR}$WHERE_AMI_DIR_NAME/base
       <description>Duration: 5 min | Persona: Apps Operator
 In this section, you will deploy the Bank of Anthos apps.
 Initialize variables:
-WORK_DIR=~/ source ${WORK_DIR}acm-workshop-variables.sh Get upstream Kubernetes manifests Get the upstream Kubernetes manifests:
-cd ${WORK_DIR}$BANK_OF_ANTHOS_DIR_NAME kpt pkg get https://github.com/GoogleCloudPlatform/bank-of-anthos/kubernetes-manifests mv kubernetes-manifests upstream cd upstream rm Kptfile curl -L https://raw.githubusercontent.com/GoogleCloudPlatform/bank-of-anthos/main/extras/jwt/jwt-secret.yaml &amp;gt; jwt-secret.yaml kustomize create --autodetect Create base overlay Create Kustomize base overlay files:
+WORK_DIR=~/ source ${WORK_DIR}acm-workshop-variables.shGet upstream Kubernetes manifests Get the upstream Kubernetes manifests:
+cd ${WORK_DIR}$BANK_OF_ANTHOS_DIR_NAME kpt pkg get https://github.com/GoogleCloudPlatform/bank-of-anthos/kubernetes-manifests mv kubernetes-manifests upstream cd upstream rm Kptfile curl -L https://raw.githubusercontent.com/GoogleCloudPlatform/bank-of-anthos/main/extras/jwt/jwt-secret.yaml &amp;gt; jwt-secret.yaml kustomize create --autodetectCreate base overlay Create Kustomize base overlay files:
 mkdir ${WORK_DIR}$BANK_OF_ANTHOS_DIR_NAME/base cd ${WORK_DIR}$BANK_OF_ANTHOS_DIR_NAME/base kustomize create kustomize edit add resource .</description>
     </item>
     <item>
@@ -187,7 +188,7 @@ WORK_DIR=~/ source ${WORK_DIR}acm-workshop-variables.sh echo &amp;#34;export CAR
       <description>Duration: 5 min | Persona: Apps Operator
 In this section, you will deploy the Online Boutique apps, via Config Sync and its Helm chart.
 Initialize variables:
-WORK_DIR=~/ source ${WORK_DIR}acm-workshop-variables.sh Define RepoSync to deploy the Online Boutique&amp;rsquo;s Helm chart Define the RepoSync to deploy the Online Boutique&amp;rsquo;s Helm chart:
+WORK_DIR=~/ source ${WORK_DIR}acm-workshop-variables.shDefine RepoSync to deploy the Online Boutique&amp;rsquo;s Helm chart Define the RepoSync to deploy the Online Boutique&amp;rsquo;s Helm chart:
 cat &amp;lt;&amp;lt;EOF &amp;gt; ${WORK_DIR}$GKE_CONFIGS_DIR_NAME/repo-syncs/$ONLINEBOUTIQUE_NAMESPACE/repo-sync.yaml apiVersion: configsync.gke.io/v1beta1 kind: RepoSync metadata: name: repo-sync namespace: ${ONLINEBOUTIQUE_NAMESPACE} spec: sourceFormat: unstructured sourceType: helm helm: repo: oci://${CHART_REGISTRY_REPOSITORY} chart: ${ONLINEBOUTIQUE_NAMESPACE} version: ${ONLINE_BOUTIQUE_VERSION:1} releaseName: ${ONLINEBOUTIQUE_NAMESPACE} auth: gcpserviceaccount gcpServiceAccountEmail: ${HELM_CHARTS_READER_GSA}@${TENANT_PROJECT_ID}.</description>
     </item>
     <item>
@@ -198,7 +199,7 @@ cat &amp;lt;&amp;lt;EOF &amp;gt; ${WORK_DIR}$GKE_CONFIGS_DIR_NAME/repo-syncs/$ON
       <description>Duration: 5 min | Persona: Apps Operator
 In this section, you will see how to track the AuthorizationPolicies issue and then you will deploy granular and specific ServiceAccounts and AuthorizationPolicies for the Bank of Anthos namespace to fix this issue.
 Initialize variables:
-WORK_DIR=~/ source ${WORK_DIR}acm-workshop-variables.sh See the AuthorizationPolicies issue See the AuthorizationPolicies issue in the GKE cluster for the Bank of Anthos namespace, by running this command and click on this link:</description>
+WORK_DIR=~/ source ${WORK_DIR}acm-workshop-variables.shSee the AuthorizationPolicies issue See the AuthorizationPolicies issue in the GKE cluster for the Bank of Anthos namespace, by running this command and click on this link:</description>
     </item>
     <item>
       <title>Deploy AuthorizationPolicies</title>
@@ -208,7 +209,7 @@ WORK_DIR=~/ source ${WORK_DIR}acm-workshop-variables.sh See the AuthorizationPol
       <description>Duration: 5 min | Persona: Platform Admin
 In this section, you will deploy granular and specific AuthorizationPolicies for the Ingress Gateway namespace.
 Initialize variables:
-WORK_DIR=~/ source ${WORK_DIR}acm-workshop-variables.sh Define AuthorizationPolicy cat &amp;lt;&amp;lt;EOF &amp;gt; ${WORK_DIR}$GKE_CONFIGS_DIR_NAME/$INGRESS_GATEWAY_NAMESPACE/authorizationpolicy_ingress-gateway.yaml apiVersion: security.istio.io/v1beta1 kind: AuthorizationPolicy metadata: name: ${INGRESS_GATEWAY_NAME} namespace: ${INGRESS_GATEWAY_NAMESPACE} spec: selector: matchLabels: app: ${INGRESS_GATEWAY_NAME} rules: - to: - operation: ports: - &amp;#34;8080&amp;#34; EOF Deploy Kubernetes manifests cd ${WORK_DIR}$GKE_CONFIGS_DIR_NAME/ git add . &amp;amp;&amp;amp; git commit -m &amp;#34;Ingress Gateway AuthorizationPolicy&amp;#34; &amp;amp;&amp;amp; git push origin main Check deployments List the Kubernetes resources managed by Config Sync in GKE cluster for the GKE cluster configs repository: &amp;#8203; UI UI gcloud gcloud Run this command and click on this link:</description>
+WORK_DIR=~/ source ${WORK_DIR}acm-workshop-variables.shDefine AuthorizationPolicy cat &amp;lt;&amp;lt;EOF &amp;gt; ${WORK_DIR}$GKE_CONFIGS_DIR_NAME/$INGRESS_GATEWAY_NAMESPACE/authorizationpolicy_ingress-gateway.yaml apiVersion: security.istio.io/v1beta1 kind: AuthorizationPolicy metadata: name: ${INGRESS_GATEWAY_NAME} namespace: ${INGRESS_GATEWAY_NAMESPACE} spec: selector: matchLabels: app: ${INGRESS_GATEWAY_NAME} rules: - to: - operation: ports: - &amp;#34;8080&amp;#34; EOFDeploy Kubernetes manifests cd ${WORK_DIR}$GKE_CONFIGS_DIR_NAME/ git add . &amp;amp;&amp;amp; git commit -m &amp;#34;Ingress Gateway AuthorizationPolicy&amp;#34; &amp;amp;&amp;amp; git push origin mainCheck deployments List the Kubernetes resources managed by Config Sync in GKE cluster for the GKE cluster configs repository: &amp;#8203; UI UI gcloud gcloud Run this command and click on this link:</description>
     </item>
     <item>
       <title>Deploy AuthorizationPolicy</title>
@@ -218,8 +219,8 @@ WORK_DIR=~/ source ${WORK_DIR}acm-workshop-variables.sh Define AuthorizationPoli
       <description>Duration: 5 min | Persona: Apps Operator
 In this section, you will see how to track the AuthorizationPolicies issue and then you will deploy granular and specific AuthorizationPolicies for the Whereami namespace to fix this issue.
 Initialize variables:
-WORK_DIR=~/ source ${WORK_DIR}acm-workshop-variables.sh See the AuthorizationPolicies issue See the AuthorizationPolicies issue in the GKE cluster for the Whereami app, by running this command and click on this link:
-echo -e &amp;#34;https://console.cloud.google.com/anthos/security/workload-view/Deployment/${GKE_LOCATION}/${GKE_NAME}/${WHEREAMI_NAMESPACE}/whereami?project=${TENANT_PROJECT_ID}&amp;#34; Under the Service requests section on this page, you will see some Inbound denials depending on how many times you tried to refresh the Whereami app endpoint.</description>
+WORK_DIR=~/ source ${WORK_DIR}acm-workshop-variables.shSee the AuthorizationPolicies issue See the AuthorizationPolicies issue in the GKE cluster for the Whereami app, by running this command and click on this link:
+echo -e &amp;#34;https://console.cloud.google.com/anthos/security/workload-view/Deployment/${GKE_LOCATION}/${GKE_NAME}/${WHEREAMI_NAMESPACE}/whereami?project=${TENANT_PROJECT_ID}&amp;#34;Under the Service requests section on this page, you will see some Inbound denials depending on how many times you tried to refresh the Whereami app endpoint.</description>
     </item>
     <item>
       <title>Deploy AuthorizationPolicies</title>
@@ -229,7 +230,7 @@ echo -e &amp;#34;https://console.cloud.google.com/anthos/security/workload-view/
       <description>Duration: 5 min | Persona: Apps Operator
 In this section, you will see how to track the AuthorizationPolicies issue and then you will deploy granular and specific AuthorizationPolicies for the Online Boutique namespace to fix this issue.
 Initialize variables:
-WORK_DIR=~/ source ${WORK_DIR}acm-workshop-variables.sh See the AuthorizationPolicies issue See the AuthorizationPolicies issue in the GKE cluster for the Online Boutique apps, by running this command and click on this link:
+WORK_DIR=~/ source ${WORK_DIR}acm-workshop-variables.shSee the AuthorizationPolicies issue See the AuthorizationPolicies issue in the GKE cluster for the Online Boutique apps, by running this command and click on this link:
 echo -e &amp;#34;https://console.</description>
     </item>
     <item>

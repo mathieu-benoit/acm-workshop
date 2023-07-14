@@ -4,24 +4,24 @@
     <meta charset="utf-8">
     <meta name="viewport" content="height=device-height, width=device-width, initial-scale=1.0, minimum-scale=1.0">
     <meta name="generator" content="Hugo 0.109.0">
-    <meta name="generator" content="Relearn 5.16.2+tip">
+    <meta name="generator" content="Relearn 5.17.1+tip">
     <meta name="description" content="Duration: 10 min | Persona: Org Admin">
     <meta name="author" content="Mathieu Benoit">
     <title>Create Tenant project</title>
-    <link href="/acm-workshop/images/favicon.png?1687278376" rel="icon" type="image/png">
+    <link href="/acm-workshop/images/favicon.png?1689352019" rel="icon" type="image/png">
     <!-- https://github.com/filamentgroup/loadCSS/blob/master/README.md#how-to-use -->
-    <link href="/acm-workshop/css/fontawesome-all.min.css?1687278376" rel="stylesheet" media="print" onload="this.media='all';this.onload=null;"><noscript><link href="/acm-workshop/css/fontawesome-all.min.css?1687278376" rel="stylesheet"></noscript>
-    <link href="/acm-workshop/css/nucleus.css?1687278376" rel="stylesheet">
-    <link href="/acm-workshop/css/auto-complete.css?1687278376" rel="stylesheet" media="print" onload="this.media='all';this.onload=null;"><noscript><link href="/acm-workshop/css/auto-complete.css?1687278376" rel="stylesheet"></noscript>
-    <link href="/acm-workshop/css/perfect-scrollbar.min.css?1687278376" rel="stylesheet">
-    <link href="/acm-workshop/css/fonts.css?1687278376" rel="stylesheet" media="print" onload="this.media='all';this.onload=null;"><noscript><link href="/acm-workshop/css/fonts.css?1687278376" rel="stylesheet"></noscript>
-    <link href="/acm-workshop/css/theme.css?1687278376" rel="stylesheet">
-    <link href="/acm-workshop/css/theme-mine.css?1687278376" rel="stylesheet" id="variant-style">
-    <link href="/acm-workshop/css/variant.css?1687278376" rel="stylesheet">
-    <link href="/acm-workshop/css/print.css?1687278376" rel="stylesheet" media="print">
-    <link href="/acm-workshop/css/ie.css?1687278376" rel="stylesheet">
-    <script src="/acm-workshop/js/url.js?1687278376"></script>
-    <script src="/acm-workshop/js/variant.js?1687278376"></script>
+    <link href="/acm-workshop/css/fontawesome-all.min.css?1689352019" rel="stylesheet" media="print" onload="this.media='all';this.onload=null;"><noscript><link href="/acm-workshop/css/fontawesome-all.min.css?1689352019" rel="stylesheet"></noscript>
+    <link href="/acm-workshop/css/nucleus.css?1689352019" rel="stylesheet">
+    <link href="/acm-workshop/css/auto-complete.css?1689352019" rel="stylesheet" media="print" onload="this.media='all';this.onload=null;"><noscript><link href="/acm-workshop/css/auto-complete.css?1689352019" rel="stylesheet"></noscript>
+    <link href="/acm-workshop/css/perfect-scrollbar.min.css?1689352019" rel="stylesheet">
+    <link href="/acm-workshop/css/fonts.css?1689352019" rel="stylesheet" media="print" onload="this.media='all';this.onload=null;"><noscript><link href="/acm-workshop/css/fonts.css?1689352019" rel="stylesheet"></noscript>
+    <link href="/acm-workshop/css/theme.css?1689352019" rel="stylesheet">
+    <link href="/acm-workshop/css/theme-mine.css?1689352019" rel="stylesheet" id="variant-style">
+    <link href="/acm-workshop/css/variant.css?1689352019" rel="stylesheet">
+    <link href="/acm-workshop/css/print.css?1689352019" rel="stylesheet" media="print">
+    <link href="/acm-workshop/css/ie.css?1689352019" rel="stylesheet">
+    <script src="/acm-workshop/js/url.js?1689352019"></script>
+    <script src="/acm-workshop/js/variant.js?1689352019"></script>
     <script>
       // hack to let hugo tell us how to get to the root when using relativeURLs, it needs to be called *url= for it to do its magic:
       // https://github.com/gohugoio/hugo/blob/145b3fcce35fbac25c7033c91c1b7ae6d1179da8/transform/urlreplacers/absurlreplacer.go#L72""
@@ -106,34 +106,32 @@ if (!doNotTrack) {
 <h1 id="create-tenant-project">Create Tenant project</h1>
 
 <p>
-<a href="#image-fa17c7f03bb9be999a67d252a3059de7" class="lightbox-link">
+<a href="#image-c12236a5a767bb5859db145b5436ed26" class="lightbox-link">
 <img src="https://github.com/mathieu-benoit/my-images/raw/main/acm-workshop/org-admin.png" alt="Org Admin" style="height: auto; width: auto;" loading="lazy">
 </a>
-<a href="javascript:history.back();" class="lightbox" id="image-fa17c7f03bb9be999a67d252a3059de7">
+<a href="javascript:history.back();" class="lightbox" id="image-c12236a5a767bb5859db145b5436ed26">
 <img src="https://github.com/mathieu-benoit/my-images/raw/main/acm-workshop/org-admin.png" alt="Org Admin" class="lightbox-image" loading="lazy">
 </a>
 <em>Duration: 10 min | Persona: Org Admin</em></p>
 <p>In this section, you will create the Tenant project. The Tenant project will contain all the Google Cloud resources needed in this workshop.</p>
 <p>Define variables:</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-Bash" data-lang="Bash"><span style="display:flex;"><span>WORK_DIR<span style="color:#f92672">=</span>~/
+<div class="wrap-code highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-Bash" data-lang="Bash"><span style="display:flex;"><span>WORK_DIR<span style="color:#f92672">=</span>~/
 </span></span><span style="display:flex;"><span>source <span style="color:#e6db74">${</span>WORK_DIR<span style="color:#e6db74">}</span>acm-workshop-variables.sh
 </span></span><span style="display:flex;"><span>TENANT_PROJECT_ID<span style="color:#f92672">=</span>acm-workshop-<span style="color:#e6db74">${</span>RANDOM_SUFFIX<span style="color:#e6db74">}</span>-tenant
 </span></span><span style="display:flex;"><span>echo <span style="color:#e6db74">&#34;export TENANT_PROJECT_ID=</span><span style="color:#e6db74">${</span>TENANT_PROJECT_ID<span style="color:#e6db74">}</span><span style="color:#e6db74">&#34;</span> &gt;&gt; <span style="color:#e6db74">${</span>WORK_DIR<span style="color:#e6db74">}</span>acm-workshop-variables.sh
 </span></span><span style="display:flex;"><span>echo <span style="color:#e6db74">&#34;export TENANT_PROJECT_SA_EMAIL=</span><span style="color:#e6db74">${</span>TENANT_PROJECT_ID<span style="color:#e6db74">}</span><span style="color:#e6db74">@</span><span style="color:#e6db74">${</span>HOST_PROJECT_ID<span style="color:#e6db74">}</span><span style="color:#e6db74">.iam.gserviceaccount.com&#34;</span> &gt;&gt; <span style="color:#e6db74">${</span>WORK_DIR<span style="color:#e6db74">}</span>acm-workshop-variables.sh
-</span></span><span style="display:flex;"><span>source <span style="color:#e6db74">${</span>WORK_DIR<span style="color:#e6db74">}</span>acm-workshop-variables.sh
-</span></span></code></pre></div><p>Create a dedicated folder for this Tenant project resources:</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-Bash" data-lang="Bash"><span style="display:flex;"><span>mkdir <span style="color:#e6db74">${</span>WORK_DIR<span style="color:#e6db74">}</span>$HOST_PROJECT_DIR_NAME/projects
-</span></span><span style="display:flex;"><span>mkdir <span style="color:#e6db74">${</span>WORK_DIR<span style="color:#e6db74">}</span>$HOST_PROJECT_DIR_NAME/projects/$TENANT_PROJECT_ID
-</span></span></code></pre></div><h2 id="define-gcp-project">Define GCP project</h2>
+</span></span><span style="display:flex;"><span>source <span style="color:#e6db74">${</span>WORK_DIR<span style="color:#e6db74">}</span>acm-workshop-variables.sh</span></span></code></pre></div><p>Create a dedicated folder for this Tenant project resources:</p>
+<div class="wrap-code highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-Bash" data-lang="Bash"><span style="display:flex;"><span>mkdir <span style="color:#e6db74">${</span>WORK_DIR<span style="color:#e6db74">}</span>$HOST_PROJECT_DIR_NAME/projects
+</span></span><span style="display:flex;"><span>mkdir <span style="color:#e6db74">${</span>WORK_DIR<span style="color:#e6db74">}</span>$HOST_PROJECT_DIR_NAME/projects/$TENANT_PROJECT_ID</span></span></code></pre></div><h2 id="define-gcp-project">Define GCP project</h2>
 <p>Define the GCP project either at the Folder level or the Organization level:
 
-<div class="tab-panel" data-tab-group="0c8095091823757cac9875479b86d07b">
+<div class="tab-panel" data-tab-group="c3827cc3d883bfeb36912c25b6968fd0">
   <div class="tab-nav">
     <div class="tab-nav-title">&#8203;</div>
     <button
       data-tab-item="Folder level"
       class="tab-nav-button tab-panel-style cstyle initial active"
-      onclick="switchTab('0c8095091823757cac9875479b86d07b','Folder level')"
+      onclick="switchTab('c3827cc3d883bfeb36912c25b6968fd0','Folder level')"
     >
       <div>
         <div class="tab-nav-hidden">Folder level</div>
@@ -143,7 +141,7 @@ if (!doNotTrack) {
     <button
       data-tab-item="Org level"
       class="tab-nav-button tab-panel-style cstyle initial"
-      onclick="switchTab('0c8095091823757cac9875479b86d07b','Org level')"
+      onclick="switchTab('c3827cc3d883bfeb36912c25b6968fd0','Org level')"
     >
       <div>
         <div class="tab-nav-hidden">Org level</div>
@@ -158,7 +156,7 @@ if (!doNotTrack) {
       <div class="tab-content-text">
 
 <p>At the Folder level:</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-Bash" data-lang="Bash"><span style="display:flex;"><span>cat <span style="color:#e6db74">&lt;&lt;EOF &gt; ${WORK_DIR}$HOST_PROJECT_DIR_NAME/projects/$TENANT_PROJECT_ID/project.yaml
+<div class="wrap-code highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-Bash" data-lang="Bash"><span style="display:flex;"><span>cat <span style="color:#e6db74">&lt;&lt;EOF &gt; ${WORK_DIR}$HOST_PROJECT_DIR_NAME/projects/$TENANT_PROJECT_ID/project.yaml
 </span></span></span><span style="display:flex;"><span><span style="color:#e6db74">apiVersion: resourcemanager.cnrm.cloud.google.com/v1beta1
 </span></span></span><span style="display:flex;"><span><span style="color:#e6db74">kind: Project
 </span></span></span><span style="display:flex;"><span><span style="color:#e6db74">metadata:
@@ -173,8 +171,7 @@ if (!doNotTrack) {
 </span></span></span><span style="display:flex;"><span><span style="color:#e6db74">  folderRef:
 </span></span></span><span style="display:flex;"><span><span style="color:#e6db74">    external: &#34;${FOLDER_OR_ORG_ID}&#34;
 </span></span></span><span style="display:flex;"><span><span style="color:#e6db74">  resourceID: ${TENANT_PROJECT_ID}
-</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">EOF</span>
-</span></span></code></pre></div></div>
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">EOF</span></span></span></code></pre></div></div>
     </div>
     <div
       data-tab-item="Org level"
@@ -182,7 +179,7 @@ if (!doNotTrack) {
       <div class="tab-content-text">
 
 <p>At the Organization level:</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-Bash" data-lang="Bash"><span style="display:flex;"><span>cat <span style="color:#e6db74">&lt;&lt;EOF &gt; ${WORK_DIR}$HOST_PROJECT_DIR_NAME/projects/$TENANT_PROJECT_ID/project.yaml
+<div class="wrap-code highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-Bash" data-lang="Bash"><span style="display:flex;"><span>cat <span style="color:#e6db74">&lt;&lt;EOF &gt; ${WORK_DIR}$HOST_PROJECT_DIR_NAME/projects/$TENANT_PROJECT_ID/project.yaml
 </span></span></span><span style="display:flex;"><span><span style="color:#e6db74">apiVersion: resourcemanager.cnrm.cloud.google.com/v1beta1
 </span></span></span><span style="display:flex;"><span><span style="color:#e6db74">kind: Project
 </span></span></span><span style="display:flex;"><span><span style="color:#e6db74">metadata:
@@ -197,13 +194,12 @@ if (!doNotTrack) {
 </span></span></span><span style="display:flex;"><span><span style="color:#e6db74">  organizationRef:
 </span></span></span><span style="display:flex;"><span><span style="color:#e6db74">    external: &#34;${FOLDER_OR_ORG_ID}&#34;
 </span></span></span><span style="display:flex;"><span><span style="color:#e6db74">  resourceID: ${TENANT_PROJECT_ID}
-</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">EOF</span>
-</span></span></code></pre></div></div>
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">EOF</span></span></span></code></pre></div></div>
     </div>
   </div>
 </div></p>
 <h2 id="define-tenant-project-service-account">Define Tenant project service account</h2>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-Bash" data-lang="Bash"><span style="display:flex;"><span>cat <span style="color:#e6db74">&lt;&lt;EOF &gt; ${WORK_DIR}$HOST_PROJECT_DIR_NAME/projects/$TENANT_PROJECT_ID/service-account.yaml
+<div class="wrap-code highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-Bash" data-lang="Bash"><span style="display:flex;"><span>cat <span style="color:#e6db74">&lt;&lt;EOF &gt; ${WORK_DIR}$HOST_PROJECT_DIR_NAME/projects/$TENANT_PROJECT_ID/service-account.yaml
 </span></span></span><span style="display:flex;"><span><span style="color:#e6db74">apiVersion: iam.cnrm.cloud.google.com/v1beta1
 </span></span></span><span style="display:flex;"><span><span style="color:#e6db74">kind: IAMServiceAccount
 </span></span></span><span style="display:flex;"><span><span style="color:#e6db74">metadata:
@@ -213,8 +209,7 @@ if (!doNotTrack) {
 </span></span></span><span style="display:flex;"><span><span style="color:#e6db74">    config.kubernetes.io/depends-on: resourcemanager.cnrm.cloud.google.com/namespaces/config-control/Project/${TENANT_PROJECT_ID}
 </span></span></span><span style="display:flex;"><span><span style="color:#e6db74">spec:
 </span></span></span><span style="display:flex;"><span><span style="color:#e6db74">  displayName: ${TENANT_PROJECT_ID}
-</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">EOF</span>
-</span></span></code></pre></div><div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-Bash" data-lang="Bash"><span style="display:flex;"><span>cat <span style="color:#e6db74">&lt;&lt;EOF &gt; ${WORK_DIR}$HOST_PROJECT_DIR_NAME/projects/$TENANT_PROJECT_ID/workload-identity-user.yaml
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">EOF</span></span></span></code></pre></div><div class="wrap-code highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-Bash" data-lang="Bash"><span style="display:flex;"><span>cat <span style="color:#e6db74">&lt;&lt;EOF &gt; ${WORK_DIR}$HOST_PROJECT_DIR_NAME/projects/$TENANT_PROJECT_ID/workload-identity-user.yaml
 </span></span></span><span style="display:flex;"><span><span style="color:#e6db74">apiVersion: iam.cnrm.cloud.google.com/v1beta1
 </span></span></span><span style="display:flex;"><span><span style="color:#e6db74">kind: IAMPartialPolicy
 </span></span></span><span style="display:flex;"><span><span style="color:#e6db74">metadata:
@@ -230,8 +225,7 @@ if (!doNotTrack) {
 </span></span></span><span style="display:flex;"><span><span style="color:#e6db74">    - role: roles/iam.workloadIdentityUser
 </span></span></span><span style="display:flex;"><span><span style="color:#e6db74">      members:
 </span></span></span><span style="display:flex;"><span><span style="color:#e6db74">        - member: serviceAccount:${HOST_PROJECT_ID}.svc.id.goog[cnrm-system/cnrm-controller-manager-${TENANT_PROJECT_ID}]
-</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">EOF</span>
-</span></span></code></pre></div>
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">EOF</span></span></span></code></pre></div>
 <div class="box notices cstyle tip">
   <div class="box-label"><i class="fa-fw fas fa-lightbulb"></i> Tip</div>
   <div class="box-content">
@@ -240,13 +234,12 @@ if (!doNotTrack) {
 </div>
 </div>
 <h2 id="define-tenant-project-namespace-and-configconnectorcontext">Define Tenant project namespace and ConfigConnectorContext</h2>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-Bash" data-lang="Bash"><span style="display:flex;"><span>cat <span style="color:#e6db74">&lt;&lt;EOF &gt; ${WORK_DIR}$HOST_PROJECT_DIR_NAME/projects/$TENANT_PROJECT_ID/namespace.yaml
+<div class="wrap-code highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-Bash" data-lang="Bash"><span style="display:flex;"><span>cat <span style="color:#e6db74">&lt;&lt;EOF &gt; ${WORK_DIR}$HOST_PROJECT_DIR_NAME/projects/$TENANT_PROJECT_ID/namespace.yaml
 </span></span></span><span style="display:flex;"><span><span style="color:#e6db74">apiVersion: v1
 </span></span></span><span style="display:flex;"><span><span style="color:#e6db74">kind: Namespace
 </span></span></span><span style="display:flex;"><span><span style="color:#e6db74">metadata:
 </span></span></span><span style="display:flex;"><span><span style="color:#e6db74">  name: ${TENANT_PROJECT_ID}
-</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">EOF</span>
-</span></span></code></pre></div><div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-Bash" data-lang="Bash"><span style="display:flex;"><span>cat <span style="color:#e6db74">&lt;&lt;EOF &gt; ${WORK_DIR}$HOST_PROJECT_DIR_NAME/projects/$TENANT_PROJECT_ID/config-connector-context.yaml
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">EOF</span></span></span></code></pre></div><div class="wrap-code highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-Bash" data-lang="Bash"><span style="display:flex;"><span>cat <span style="color:#e6db74">&lt;&lt;EOF &gt; ${WORK_DIR}$HOST_PROJECT_DIR_NAME/projects/$TENANT_PROJECT_ID/config-connector-context.yaml
 </span></span></span><span style="display:flex;"><span><span style="color:#e6db74">apiVersion: core.cnrm.cloud.google.com/v1beta1
 </span></span></span><span style="display:flex;"><span><span style="color:#e6db74">kind: ConfigConnectorContext
 </span></span></span><span style="display:flex;"><span><span style="color:#e6db74">metadata:
@@ -258,11 +251,9 @@ if (!doNotTrack) {
 </span></span></span><span style="display:flex;"><span><span style="color:#e6db74">  billingProject: ${TENANT_PROJECT_ID}
 </span></span></span><span style="display:flex;"><span><span style="color:#e6db74">  googleServiceAccount: ${TENANT_PROJECT_SA_EMAIL}
 </span></span></span><span style="display:flex;"><span><span style="color:#e6db74">  requestProjectPolicy: BILLING_PROJECT
-</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">EOF</span>
-</span></span></code></pre></div><h2 id="deploy-kubernetes-manifests">Deploy Kubernetes manifests</h2>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-Bash" data-lang="Bash"><span style="display:flex;"><span>cd <span style="color:#e6db74">${</span>WORK_DIR<span style="color:#e6db74">}</span>$HOST_PROJECT_DIR_NAME/
-</span></span><span style="display:flex;"><span>git add . <span style="color:#f92672">&amp;&amp;</span> git commit -m <span style="color:#e6db74">&#34;Setting up Tenant namespace/project&#34;</span> <span style="color:#f92672">&amp;&amp;</span> git push origin main
-</span></span></code></pre></div><h2 id="check-deployments">Check deployments</h2>
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">EOF</span></span></span></code></pre></div><h2 id="deploy-kubernetes-manifests">Deploy Kubernetes manifests</h2>
+<div class="wrap-code highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-Bash" data-lang="Bash"><span style="display:flex;"><span>cd <span style="color:#e6db74">${</span>WORK_DIR<span style="color:#e6db74">}</span>$HOST_PROJECT_DIR_NAME/
+</span></span><span style="display:flex;"><span>git add . <span style="color:#f92672">&amp;&amp;</span> git commit -m <span style="color:#e6db74">&#34;Setting up Tenant namespace/project&#34;</span> <span style="color:#f92672">&amp;&amp;</span> git push origin main</span></span></code></pre></div><h2 id="check-deployments">Check deployments</h2>
 
 <div class="mermaid align-center">
 graph TD;
@@ -272,13 +263,13 @@ graph TD;
 </div>
 <p>List the Kubernetes resources managed by Config Sync in <strong>Config Controller</strong> for the <strong>Host project configs</strong> repository:
 
-<div class="tab-panel" data-tab-group="1ee9240723f15fbf87c27ef60db753d9">
+<div class="tab-panel" data-tab-group="aefe08200103e1141bb24b9b17dc5bfb">
   <div class="tab-nav">
     <div class="tab-nav-title">&#8203;</div>
     <button
       data-tab-item="UI"
       class="tab-nav-button tab-panel-style cstyle initial active"
-      onclick="switchTab('1ee9240723f15fbf87c27ef60db753d9','UI')"
+      onclick="switchTab('aefe08200103e1141bb24b9b17dc5bfb','UI')"
     >
       <div>
         <div class="tab-nav-hidden">UI</div>
@@ -288,7 +279,7 @@ graph TD;
     <button
       data-tab-item="gcloud"
       class="tab-nav-button tab-panel-style cstyle initial"
-      onclick="switchTab('1ee9240723f15fbf87c27ef60db753d9','gcloud')"
+      onclick="switchTab('aefe08200103e1141bb24b9b17dc5bfb','gcloud')"
     >
       <div>
         <div class="tab-nav-hidden">gcloud</div>
@@ -303,8 +294,7 @@ graph TD;
       <div class="tab-content-text">
 
 <p>Run this command and click on this link:</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-Bash" data-lang="Bash"><span style="display:flex;"><span>echo -e <span style="color:#e6db74">&#34;https://console.cloud.google.com/kubernetes/config_management/packages?project=</span><span style="color:#e6db74">${</span>HOST_PROJECT_ID<span style="color:#e6db74">}</span><span style="color:#e6db74">&#34;</span>
-</span></span></code></pre></div><p>Wait until you see the <code>Sync status</code> column as <code>Synced</code> and the <code>Reconcile status</code> column as <code>Current</code>.</p>
+<div class="wrap-code highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-Bash" data-lang="Bash"><span style="display:flex;"><span>echo -e <span style="color:#e6db74">&#34;https://console.cloud.google.com/kubernetes/config_management/packages?project=</span><span style="color:#e6db74">${</span>HOST_PROJECT_ID<span style="color:#e6db74">}</span><span style="color:#e6db74">&#34;</span></span></span></code></pre></div><p>Wait until you see the <code>Sync status</code> column as <code>Synced</code> and the <code>Reconcile status</code> column as <code>Current</code>.</p>
 </div>
     </div>
     <div
@@ -313,46 +303,38 @@ graph TD;
       <div class="tab-content-text">
 
 <p>Run this command:</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-Bash" data-lang="Bash"><span style="display:flex;"><span>gcloud alpha anthos config sync repo describe <span style="color:#ae81ff">\
+<div class="wrap-code highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-Bash" data-lang="Bash"><span style="display:flex;"><span>gcloud alpha anthos config sync repo describe <span style="color:#ae81ff">\
 </span></span></span><span style="display:flex;"><span><span style="color:#ae81ff"></span>    --project $HOST_PROJECT_ID <span style="color:#ae81ff">\
 </span></span></span><span style="display:flex;"><span><span style="color:#ae81ff"></span>    --managed-resources all <span style="color:#ae81ff">\
 </span></span></span><span style="display:flex;"><span><span style="color:#ae81ff"></span>    --sync-name root-sync <span style="color:#ae81ff">\
-</span></span></span><span style="display:flex;"><span><span style="color:#ae81ff"></span>    --sync-namespace config-management-system
-</span></span></code></pre></div><p>Wait and re-run this command above until you see <code>&quot;status&quot;: &quot;SYNCED&quot;</code>. All the <code>managed_resources</code> listed should have <code>STATUS: Current</code> too.</p>
+</span></span></span><span style="display:flex;"><span><span style="color:#ae81ff"></span>    --sync-namespace config-management-system</span></span></code></pre></div><p>Wait and re-run this command above until you see <code>&quot;status&quot;: &quot;SYNCED&quot;</code>. All the <code>managed_resources</code> listed should have <code>STATUS: Current</code> too.</p>
 </div>
     </div>
   </div>
 </div></p>
 <p>List the GitHub runs for the <strong>Host project configs</strong> repository:</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-Bash" data-lang="Bash"><span style="display:flex;"><span>cd <span style="color:#e6db74">${</span>WORK_DIR<span style="color:#e6db74">}</span>$HOST_PROJECT_DIR_NAME <span style="color:#f92672">&amp;&amp;</span> gh run list
-</span></span></code></pre></div><p>List the Google Cloud resources created:</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-Bash" data-lang="Bash"><span style="display:flex;"><span>gcloud projects describe $TENANT_PROJECT_ID
+<div class="wrap-code highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-Bash" data-lang="Bash"><span style="display:flex;"><span>cd <span style="color:#e6db74">${</span>WORK_DIR<span style="color:#e6db74">}</span>$HOST_PROJECT_DIR_NAME <span style="color:#f92672">&amp;&amp;</span> gh run list</span></span></code></pre></div><p>List the Google Cloud resources created:</p>
+<div class="wrap-code highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-Bash" data-lang="Bash"><span style="display:flex;"><span>gcloud projects describe $TENANT_PROJECT_ID
 </span></span><span style="display:flex;"><span>gcloud iam service-accounts describe $TENANT_PROJECT_SA_EMAIL <span style="color:#ae81ff">\
-</span></span></span><span style="display:flex;"><span><span style="color:#ae81ff"></span>    --project $HOST_PROJECT_ID
-</span></span></code></pre></div><h2 id="resolve-tenant-project-creation-issue">Resolve Tenant project creation issue</h2>
+</span></span></span><span style="display:flex;"><span><span style="color:#ae81ff"></span>    --project $HOST_PROJECT_ID</span></span></code></pre></div><h2 id="resolve-tenant-project-creation-issue">Resolve Tenant project creation issue</h2>
 <p>Let&rsquo;s make sure that the Tenant project has been successfully created.</p>
 <p>Run this command below:</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-Bash" data-lang="Bash"><span style="display:flex;"><span>kubectl get gcpproject -n config-control
-</span></span></code></pre></div><p>If the output is similar to this below (<code>STATUS</code> <code>UpToDate</code>), you are good and you could move forward to the next page:</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-Plaintext" data-lang="Plaintext"><span style="display:flex;"><span>NAME                      AGE   READY   STATUS     STATUS AGE
-</span></span><span style="display:flex;"><span>acm-workshop-742-tenant   50m   True    UpToDate   47m
-</span></span></code></pre></div><p>But if you have this output below (<code>STATUS</code> <code>UpdateFailed</code>), that&rsquo;s where you will need to take actions:</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-Plaintext" data-lang="Plaintext"><span style="display:flex;"><span>NAME                      AGE   READY   STATUS        STATUS AGE
-</span></span><span style="display:flex;"><span>acm-workshop-742-tenant   50m   True    UpdateFailed  47m
-</span></span></code></pre></div><p>Run this command below to have a closer look at the details of the error:</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-Bash" data-lang="Bash"><span style="display:flex;"><span>kubectl describe gcpproject -n config-control
-</span></span></code></pre></div><p>The error you may have could be similar to:</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-Plaintext" data-lang="Plaintext"><span style="display:flex;"><span>Update call failed: error applying desired state: summary: failed pre-requisites: missing permission on &#34;billingAccounts/XXX&#34;: billing.resourceAssociations.create
-</span></span></code></pre></div><p>We will resolve this issue by redeploying the <code>Project</code> resource by removing the <code>billingAccountRef</code> part.</p>
+<div class="wrap-code highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-Bash" data-lang="Bash"><span style="display:flex;"><span>kubectl get gcpproject -n config-control</span></span></code></pre></div><p>If the output is similar to this below (<code>STATUS</code> <code>UpToDate</code>), you are good and you could move forward to the next page:</p>
+<div class="wrap-code highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-Plaintext" data-lang="Plaintext"><span style="display:flex;"><span>NAME                      AGE   READY   STATUS     STATUS AGE
+</span></span><span style="display:flex;"><span>acm-workshop-742-tenant   50m   True    UpToDate   47m</span></span></code></pre></div><p>But if you have this output below (<code>STATUS</code> <code>UpdateFailed</code>), that&rsquo;s where you will need to take actions:</p>
+<div class="wrap-code highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-Plaintext" data-lang="Plaintext"><span style="display:flex;"><span>NAME                      AGE   READY   STATUS        STATUS AGE
+</span></span><span style="display:flex;"><span>acm-workshop-742-tenant   50m   True    UpdateFailed  47m</span></span></code></pre></div><p>Run this command below to have a closer look at the details of the error:</p>
+<div class="wrap-code highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-Bash" data-lang="Bash"><span style="display:flex;"><span>kubectl describe gcpproject -n config-control</span></span></code></pre></div><p>The error you may have could be similar to:</p>
+<div class="wrap-code highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-Plaintext" data-lang="Plaintext"><span style="display:flex;"><span>Update call failed: error applying desired state: summary: failed pre-requisites: missing permission on &#34;billingAccounts/XXX&#34;: billing.resourceAssociations.create</span></span></code></pre></div><p>We will resolve this issue by redeploying the <code>Project</code> resource by removing the <code>billingAccountRef</code> part.</p>
 <p>Update the GCP project either at the Folder level or the Organization level:
 
-<div class="tab-panel" data-tab-group="f1db93a3791a2cf21ad8c5df82b09757">
+<div class="tab-panel" data-tab-group="10df4687e2cbd528604c38746f04b902">
   <div class="tab-nav">
     <div class="tab-nav-title">&#8203;</div>
     <button
       data-tab-item="Folder level"
       class="tab-nav-button tab-panel-style cstyle initial active"
-      onclick="switchTab('f1db93a3791a2cf21ad8c5df82b09757','Folder level')"
+      onclick="switchTab('10df4687e2cbd528604c38746f04b902','Folder level')"
     >
       <div>
         <div class="tab-nav-hidden">Folder level</div>
@@ -362,7 +344,7 @@ graph TD;
     <button
       data-tab-item="Org level"
       class="tab-nav-button tab-panel-style cstyle initial"
-      onclick="switchTab('f1db93a3791a2cf21ad8c5df82b09757','Org level')"
+      onclick="switchTab('10df4687e2cbd528604c38746f04b902','Org level')"
     >
       <div>
         <div class="tab-nav-hidden">Org level</div>
@@ -377,7 +359,7 @@ graph TD;
       <div class="tab-content-text">
 
 <p>At the Folder level:</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-Bash" data-lang="Bash"><span style="display:flex;"><span>cat <span style="color:#e6db74">&lt;&lt;EOF &gt; ${WORK_DIR}$HOST_PROJECT_DIR_NAME/projects/$TENANT_PROJECT_ID/project.yaml
+<div class="wrap-code highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-Bash" data-lang="Bash"><span style="display:flex;"><span>cat <span style="color:#e6db74">&lt;&lt;EOF &gt; ${WORK_DIR}$HOST_PROJECT_DIR_NAME/projects/$TENANT_PROJECT_ID/project.yaml
 </span></span></span><span style="display:flex;"><span><span style="color:#e6db74">apiVersion: resourcemanager.cnrm.cloud.google.com/v1beta1
 </span></span></span><span style="display:flex;"><span><span style="color:#e6db74">kind: Project
 </span></span></span><span style="display:flex;"><span><span style="color:#e6db74">metadata:
@@ -390,8 +372,7 @@ graph TD;
 </span></span></span><span style="display:flex;"><span><span style="color:#e6db74">  folderRef:
 </span></span></span><span style="display:flex;"><span><span style="color:#e6db74">    external: &#34;${FOLDER_OR_ORG_ID}&#34;
 </span></span></span><span style="display:flex;"><span><span style="color:#e6db74">  resourceID: ${TENANT_PROJECT_ID}
-</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">EOF</span>
-</span></span></code></pre></div></div>
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">EOF</span></span></span></code></pre></div></div>
     </div>
     <div
       data-tab-item="Org level"
@@ -399,7 +380,7 @@ graph TD;
       <div class="tab-content-text">
 
 <p>At the Organization level:</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-Bash" data-lang="Bash"><span style="display:flex;"><span>cat <span style="color:#e6db74">&lt;&lt;EOF &gt; ${WORK_DIR}$HOST_PROJECT_DIR_NAME/projects/$TENANT_PROJECT_ID/project.yaml
+<div class="wrap-code highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-Bash" data-lang="Bash"><span style="display:flex;"><span>cat <span style="color:#e6db74">&lt;&lt;EOF &gt; ${WORK_DIR}$HOST_PROJECT_DIR_NAME/projects/$TENANT_PROJECT_ID/project.yaml
 </span></span></span><span style="display:flex;"><span><span style="color:#e6db74">apiVersion: resourcemanager.cnrm.cloud.google.com/v1beta1
 </span></span></span><span style="display:flex;"><span><span style="color:#e6db74">kind: Project
 </span></span></span><span style="display:flex;"><span><span style="color:#e6db74">metadata:
@@ -412,26 +393,21 @@ graph TD;
 </span></span></span><span style="display:flex;"><span><span style="color:#e6db74">  organizationRef:
 </span></span></span><span style="display:flex;"><span><span style="color:#e6db74">    external: &#34;${FOLDER_OR_ORG_ID}&#34;
 </span></span></span><span style="display:flex;"><span><span style="color:#e6db74">  resourceID: ${TENANT_PROJECT_ID}
-</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">EOF</span>
-</span></span></code></pre></div></div>
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">EOF</span></span></span></code></pre></div></div>
     </div>
   </div>
 </div></p>
 <p>Re-deploy the <code>Project</code> resource:</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-Bash" data-lang="Bash"><span style="display:flex;"><span>cd <span style="color:#e6db74">${</span>WORK_DIR<span style="color:#e6db74">}</span>$HOST_PROJECT_DIR_NAME/
-</span></span><span style="display:flex;"><span>git add . <span style="color:#f92672">&amp;&amp;</span> git commit -m <span style="color:#e6db74">&#34;Remove the billingAccountRef in order to create Tenant Project&#34;</span> <span style="color:#f92672">&amp;&amp;</span> git push origin main
-</span></span></code></pre></div><p>Wait for <code>status</code> <code>SYNCED</code> with this command:</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-Bash" data-lang="Bash"><span style="display:flex;"><span>gcloud alpha anthos config sync repo describe <span style="color:#ae81ff">\
+<div class="wrap-code highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-Bash" data-lang="Bash"><span style="display:flex;"><span>cd <span style="color:#e6db74">${</span>WORK_DIR<span style="color:#e6db74">}</span>$HOST_PROJECT_DIR_NAME/
+</span></span><span style="display:flex;"><span>git add . <span style="color:#f92672">&amp;&amp;</span> git commit -m <span style="color:#e6db74">&#34;Remove the billingAccountRef in order to create Tenant Project&#34;</span> <span style="color:#f92672">&amp;&amp;</span> git push origin main</span></span></code></pre></div><p>Wait for <code>status</code> <code>SYNCED</code> with this command:</p>
+<div class="wrap-code highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-Bash" data-lang="Bash"><span style="display:flex;"><span>gcloud alpha anthos config sync repo describe <span style="color:#ae81ff">\
 </span></span></span><span style="display:flex;"><span><span style="color:#ae81ff"></span>    --project $HOST_PROJECT_ID <span style="color:#ae81ff">\
 </span></span></span><span style="display:flex;"><span><span style="color:#ae81ff"></span>    --managed-resources all <span style="color:#ae81ff">\
 </span></span></span><span style="display:flex;"><span><span style="color:#ae81ff"></span>    --sync-name root-sync <span style="color:#ae81ff">\
-</span></span></span><span style="display:flex;"><span><span style="color:#ae81ff"></span>    --sync-namespace config-management-system
-</span></span></code></pre></div><p>And then, check that the Google Cloud project is created:</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-Bash" data-lang="Bash"><span style="display:flex;"><span>gcloud projects describe $TENANT_PROJECT_ID
-</span></span></code></pre></div><p>Then what you have to do is to manually assign the Billing Account to this project by running by yourself this command below:</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-Bash" data-lang="Bash"><span style="display:flex;"><span>gcloud beta billing projects link $TENANT_PROJECT_ID <span style="color:#ae81ff">\
-</span></span></span><span style="display:flex;"><span><span style="color:#ae81ff"></span>    --billing-account $BILLING_ACCOUNT_ID
-</span></span></code></pre></div><p>If you can&rsquo;t run the command above, the alternative is having someone in your organization (Billing Account or Organization admins) running it for you.</p>
+</span></span></span><span style="display:flex;"><span><span style="color:#ae81ff"></span>    --sync-namespace config-management-system</span></span></code></pre></div><p>And then, check that the Google Cloud project is created:</p>
+<div class="wrap-code highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-Bash" data-lang="Bash"><span style="display:flex;"><span>gcloud projects describe $TENANT_PROJECT_ID</span></span></code></pre></div><p>Then what you have to do is to manually assign the Billing Account to this project by running by yourself this command below:</p>
+<div class="wrap-code highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-Bash" data-lang="Bash"><span style="display:flex;"><span>gcloud beta billing projects link $TENANT_PROJECT_ID <span style="color:#ae81ff">\
+</span></span></span><span style="display:flex;"><span><span style="color:#ae81ff"></span>    --billing-account $BILLING_ACCOUNT_ID</span></span></code></pre></div><p>If you can&rsquo;t run the command above, the alternative is having someone in your organization (Billing Account or Organization admins) running it for you.</p>
 
             <footer class="footline">
 
@@ -618,21 +594,21 @@ graph TD;
         </div>
       </div>
     </aside>
-    <script src="/acm-workshop/js/clipboard.min.js?1687278378" defer></script>
-    <script src="/acm-workshop/js/perfect-scrollbar.min.js?1687278378" defer></script>
-    <script src="/acm-workshop/js/d3/d3-color.min.js?1687278378" defer></script>
-    <script src="/acm-workshop/js/d3/d3-dispatch.min.js?1687278378" defer></script>
-    <script src="/acm-workshop/js/d3/d3-drag.min.js?1687278378" defer></script>
-    <script src="/acm-workshop/js/d3/d3-ease.min.js?1687278378" defer></script>
-    <script src="/acm-workshop/js/d3/d3-interpolate.min.js?1687278378" defer></script>
-    <script src="/acm-workshop/js/d3/d3-selection.min.js?1687278378" defer></script>
-    <script src="/acm-workshop/js/d3/d3-timer.min.js?1687278378" defer></script>
-    <script src="/acm-workshop/js/d3/d3-transition.min.js?1687278378" defer></script>
-    <script src="/acm-workshop/js/d3/d3-zoom.min.js?1687278378" defer></script>
-    <script src="/acm-workshop/js/mermaid.min.js?1687278378" defer></script>
+    <script src="/acm-workshop/js/clipboard.min.js?1689352021" defer></script>
+    <script src="/acm-workshop/js/perfect-scrollbar.min.js?1689352021" defer></script>
+    <script src="/acm-workshop/js/d3/d3-color.min.js?1689352021" defer></script>
+    <script src="/acm-workshop/js/d3/d3-dispatch.min.js?1689352021" defer></script>
+    <script src="/acm-workshop/js/d3/d3-drag.min.js?1689352021" defer></script>
+    <script src="/acm-workshop/js/d3/d3-ease.min.js?1689352021" defer></script>
+    <script src="/acm-workshop/js/d3/d3-interpolate.min.js?1689352021" defer></script>
+    <script src="/acm-workshop/js/d3/d3-selection.min.js?1689352021" defer></script>
+    <script src="/acm-workshop/js/d3/d3-timer.min.js?1689352021" defer></script>
+    <script src="/acm-workshop/js/d3/d3-transition.min.js?1689352021" defer></script>
+    <script src="/acm-workshop/js/d3/d3-zoom.min.js?1689352021" defer></script>
+    <script src="/acm-workshop/js/mermaid.min.js?1689352021" defer></script>
     <script>
       window.themeUseMermaid = JSON.parse("{}");
     </script>
-    <script src="/acm-workshop/js/theme.js?1687278378" defer></script>
+    <script src="/acm-workshop/js/theme.js?1689352021" defer></script>
   </body>
 </html>

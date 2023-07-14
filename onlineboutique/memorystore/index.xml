@@ -14,7 +14,7 @@
       <description>Duration: 5 min | Persona: Org Admin
 In this section, you will enable and grant the appropriate APIs in the Tenant project and the IAM role for the Tenant project&amp;rsquo;s service account. This will allow later this service account to provision Memorystore (Redis) instances.
 Initialize variables:
-WORK_DIR=~/ source ${WORK_DIR}acm-workshop-variables.sh Define API Define the Memorystore (Redis) API Service resource for the Tenant project:
+WORK_DIR=~/ source ${WORK_DIR}acm-workshop-variables.shDefine API Define the Memorystore (Redis) API Service resource for the Tenant project:
 cat &amp;lt;&amp;lt;EOF &amp;gt; ${WORK_DIR}$HOST_PROJECT_DIR_NAME/projects/$TENANT_PROJECT_ID/redis-service.yaml apiVersion: serviceusage.cnrm.cloud.google.com/v1beta1 kind: Service metadata: annotations: cnrm.</description>
     </item>
     <item>
@@ -25,8 +25,8 @@ cat &amp;lt;&amp;lt;EOF &amp;gt; ${WORK_DIR}$HOST_PROJECT_DIR_NAME/projects/$TEN
       <description>Duration: 5 min | Persona: Org Admin
 In this section, you will set up policies in order to enforce governance against the Kubernetes manifests defining your Memorystore (Redis) instances.
 Initialize variables:
-WORK_DIR=~/ source ${WORK_DIR}acm-workshop-variables.sh Enforce Memorystore policies Define the ConstraintTemplate resource:
-cat &amp;lt;&amp;lt;EOF &amp;gt; ${WORK_DIR}$HOST_PROJECT_DIR_NAME/policies/templates/limitmemorystoreredis.yaml apiVersion: templates.gatekeeper.sh/v1 kind: ConstraintTemplate metadata: name: limitmemorystoreredis annotations: description: &amp;#34;Requirements for any Memorystore (Redis) instance.&amp;#34; spec: crd: spec: names: kind: LimitMemorystoreRedis targets: - target: admission.</description>
+WORK_DIR=~/ source ${WORK_DIR}acm-workshop-variables.shEnforce Memorystore policies Define the ConstraintTemplate resource:
+cat &amp;lt;&amp;lt;EOF &amp;gt; ${WORK_DIR}$HOST_PROJECT_DIR_NAME/policies/templates/limitmemorystoreredis.yaml apiVersion: templates.gatekeeper.sh/v1 kind: ConstraintTemplate metadata: name: limitmemorystoreredis annotations: description: &amp;#34;Requirements for any Memorystore (Redis) instance.&amp;#34; spec: crd: spec: names: kind: LimitMemorystoreRedis targets: - target: admission.k8s.gatekeeper.sh rego: |- package limitmemorystoreredis violation[{&amp;#34;msg&amp;#34;:msg}] { input.</description>
     </item>
     <item>
       <title>Create Memorystore</title>
@@ -36,7 +36,8 @@ cat &amp;lt;&amp;lt;EOF &amp;gt; ${WORK_DIR}$HOST_PROJECT_DIR_NAME/policies/temp
       <description>Duration: 10 min | Persona: Platform Admin
 In this section, you will create a Memorystore (Redis) instance for the Online Boutique&amp;rsquo;s cartservice app to connect to. We will also create a second Memorystore (Redis) with TLS enabled which will be leveraged in another section.
 Initialize variables:
-WORK_DIR=~/ source ${WORK_DIR}acm-workshop-variables.sh echo &amp;#34;export REDIS_NAME=cart&amp;#34; &amp;gt;&amp;gt; ${WORK_DIR}acm-workshop-variables.sh echo &amp;#34;export REDIS_TLS_NAME=cart-tls&amp;#34; &amp;gt;&amp;gt; ${WORK_DIR}acm-workshop-variables.sh source ${WORK_DIR}acm-workshop-variables.sh Define Memorystore (Redis) Define the Memorystore (Redis) resource:</description>
+WORK_DIR=~/ source ${WORK_DIR}acm-workshop-variables.sh echo &amp;#34;export REDIS_NAME=cart&amp;#34; &amp;gt;&amp;gt; ${WORK_DIR}acm-workshop-variables.sh echo &amp;#34;export REDIS_TLS_NAME=cart-tls&amp;#34; &amp;gt;&amp;gt; ${WORK_DIR}acm-workshop-variables.sh source ${WORK_DIR}acm-workshop-variables.shDefine Memorystore (Redis) Define the Memorystore (Redis) resource:
+cat &amp;lt;&amp;lt;EOF &amp;gt; ${WORK_DIR}$TENANT_PROJECT_DIR_NAME/$ONLINEBOUTIQUE_NAMESPACE/memorystore.</description>
     </item>
     <item>
       <title>Use Memorystore</title>
@@ -46,8 +47,8 @@ WORK_DIR=~/ source ${WORK_DIR}acm-workshop-variables.sh echo &amp;#34;export RED
       <description>Duration: 10 min | Persona: Apps Operator
 In this section, you will update the OnlineBoutique&amp;rsquo;s cartservice app in order to point to the Memorystore (Redis) instance previously created.
 Initialize variables:
-WORK_DIR=~/ source ${WORK_DIR}acm-workshop-variables.sh Update RepoSync to deploy the Online Boutique&amp;rsquo;s Helm chart Get Memorystore (Redis) connection information:
-export REDIS_IP=$(gcloud redis instances describe $REDIS_NAME --region $GKE_LOCATION --project $TENANT_PROJECT_ID --format=&amp;#39;get(host)&amp;#39;) export REDIS_PORT=$(gcloud redis instances describe $REDIS_NAME --region $GKE_LOCATION --project $TENANT_PROJECT_ID --format=&amp;#39;get(port)&amp;#39;) Define the RepoSync to deploy the Online Boutique&amp;rsquo;s Helm chart with the cartservice pointing to the Memorystore (Redis) database:</description>
+WORK_DIR=~/ source ${WORK_DIR}acm-workshop-variables.shUpdate RepoSync to deploy the Online Boutique&amp;rsquo;s Helm chart Get Memorystore (Redis) connection information:
+export REDIS_IP=$(gcloud redis instances describe $REDIS_NAME --region $GKE_LOCATION --project $TENANT_PROJECT_ID --format=&amp;#39;get(host)&amp;#39;) export REDIS_PORT=$(gcloud redis instances describe $REDIS_NAME --region $GKE_LOCATION --project $TENANT_PROJECT_ID --format=&amp;#39;get(port)&amp;#39;)Define the RepoSync to deploy the Online Boutique&amp;rsquo;s Helm chart with the cartservice pointing to the Memorystore (Redis) database:</description>
     </item>
     <item>
       <title>Secure Memorystore access</title>

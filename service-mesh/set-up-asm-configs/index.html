@@ -4,24 +4,24 @@
     <meta charset="utf-8">
     <meta name="viewport" content="height=device-height, width=device-width, initial-scale=1.0, minimum-scale=1.0">
     <meta name="generator" content="Hugo 0.109.0">
-    <meta name="generator" content="Relearn 5.16.2+tip">
+    <meta name="generator" content="Relearn 5.17.1+tip">
     <meta name="description" content="Duration: 5 min | Persona: Platform Admin">
     <meta name="author" content="Mathieu Benoit">
     <title>Set up ASM configs</title>
-    <link href="/acm-workshop/images/favicon.png?1687278376" rel="icon" type="image/png">
+    <link href="/acm-workshop/images/favicon.png?1689352019" rel="icon" type="image/png">
     <!-- https://github.com/filamentgroup/loadCSS/blob/master/README.md#how-to-use -->
-    <link href="/acm-workshop/css/fontawesome-all.min.css?1687278376" rel="stylesheet" media="print" onload="this.media='all';this.onload=null;"><noscript><link href="/acm-workshop/css/fontawesome-all.min.css?1687278376" rel="stylesheet"></noscript>
-    <link href="/acm-workshop/css/nucleus.css?1687278376" rel="stylesheet">
-    <link href="/acm-workshop/css/auto-complete.css?1687278376" rel="stylesheet" media="print" onload="this.media='all';this.onload=null;"><noscript><link href="/acm-workshop/css/auto-complete.css?1687278376" rel="stylesheet"></noscript>
-    <link href="/acm-workshop/css/perfect-scrollbar.min.css?1687278376" rel="stylesheet">
-    <link href="/acm-workshop/css/fonts.css?1687278376" rel="stylesheet" media="print" onload="this.media='all';this.onload=null;"><noscript><link href="/acm-workshop/css/fonts.css?1687278376" rel="stylesheet"></noscript>
-    <link href="/acm-workshop/css/theme.css?1687278376" rel="stylesheet">
-    <link href="/acm-workshop/css/theme-mine.css?1687278376" rel="stylesheet" id="variant-style">
-    <link href="/acm-workshop/css/variant.css?1687278376" rel="stylesheet">
-    <link href="/acm-workshop/css/print.css?1687278376" rel="stylesheet" media="print">
-    <link href="/acm-workshop/css/ie.css?1687278376" rel="stylesheet">
-    <script src="/acm-workshop/js/url.js?1687278376"></script>
-    <script src="/acm-workshop/js/variant.js?1687278376"></script>
+    <link href="/acm-workshop/css/fontawesome-all.min.css?1689352019" rel="stylesheet" media="print" onload="this.media='all';this.onload=null;"><noscript><link href="/acm-workshop/css/fontawesome-all.min.css?1689352019" rel="stylesheet"></noscript>
+    <link href="/acm-workshop/css/nucleus.css?1689352019" rel="stylesheet">
+    <link href="/acm-workshop/css/auto-complete.css?1689352019" rel="stylesheet" media="print" onload="this.media='all';this.onload=null;"><noscript><link href="/acm-workshop/css/auto-complete.css?1689352019" rel="stylesheet"></noscript>
+    <link href="/acm-workshop/css/perfect-scrollbar.min.css?1689352019" rel="stylesheet">
+    <link href="/acm-workshop/css/fonts.css?1689352019" rel="stylesheet" media="print" onload="this.media='all';this.onload=null;"><noscript><link href="/acm-workshop/css/fonts.css?1689352019" rel="stylesheet"></noscript>
+    <link href="/acm-workshop/css/theme.css?1689352019" rel="stylesheet">
+    <link href="/acm-workshop/css/theme-mine.css?1689352019" rel="stylesheet" id="variant-style">
+    <link href="/acm-workshop/css/variant.css?1689352019" rel="stylesheet">
+    <link href="/acm-workshop/css/print.css?1689352019" rel="stylesheet" media="print">
+    <link href="/acm-workshop/css/ie.css?1689352019" rel="stylesheet">
+    <script src="/acm-workshop/js/url.js?1689352019"></script>
+    <script src="/acm-workshop/js/variant.js?1689352019"></script>
     <script>
       // hack to let hugo tell us how to get to the root when using relativeURLs, it needs to be called *url= for it to do its magic:
       // https://github.com/gohugoio/hugo/blob/145b3fcce35fbac25c7033c91c1b7ae6d1179da8/transform/urlreplacers/absurlreplacer.go#L72""
@@ -109,21 +109,20 @@ if (!doNotTrack) {
 <h1 id="set-up-asm-configs">Set up ASM configs</h1>
 
 <p>
-<a href="#image-03307380b437a864d26c44c53659d08a" class="lightbox-link">
+<a href="#image-b36dbb3b2790b7cbc169525c05fa086a" class="lightbox-link">
 <img src="https://github.com/mathieu-benoit/my-images/raw/main/acm-workshop/platform-admin.png" alt="Platform Admin" style="height: auto; width: auto;" loading="lazy">
 </a>
-<a href="javascript:history.back();" class="lightbox" id="image-03307380b437a864d26c44c53659d08a">
+<a href="javascript:history.back();" class="lightbox" id="image-b36dbb3b2790b7cbc169525c05fa086a">
 <img src="https://github.com/mathieu-benoit/my-images/raw/main/acm-workshop/platform-admin.png" alt="Platform Admin" class="lightbox-image" loading="lazy">
 </a>
 <em>Duration: 5 min | Persona: Platform Admin</em></p>
 <p>In this section, you will set up some configurations in order to get more insights with Cloud Trace and use the <code>distroless</code> image for your sidecar proxies.</p>
 <p>Initialize variables:</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-Bash" data-lang="Bash"><span style="display:flex;"><span>WORK_DIR<span style="color:#f92672">=</span>~/
+<div class="wrap-code highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-Bash" data-lang="Bash"><span style="display:flex;"><span>WORK_DIR<span style="color:#f92672">=</span>~/
 </span></span><span style="display:flex;"><span>source <span style="color:#e6db74">${</span>WORK_DIR<span style="color:#e6db74">}</span>acm-workshop-variables.sh
 </span></span><span style="display:flex;"><span>ASM_VERSION<span style="color:#f92672">=</span>asm-managed-rapid
 </span></span><span style="display:flex;"><span>echo <span style="color:#e6db74">&#34;export ASM_VERSION=</span><span style="color:#e6db74">${</span>ASM_VERSION<span style="color:#e6db74">}</span><span style="color:#e6db74">&#34;</span> &gt;&gt; <span style="color:#e6db74">${</span>WORK_DIR<span style="color:#e6db74">}</span>acm-workshop-variables.sh
-</span></span><span style="display:flex;"><span>source <span style="color:#e6db74">${</span>WORK_DIR<span style="color:#e6db74">}</span>acm-workshop-variables.sh
-</span></span></code></pre></div>
+</span></span><span style="display:flex;"><span>source <span style="color:#e6db74">${</span>WORK_DIR<span style="color:#e6db74">}</span>acm-workshop-variables.sh</span></span></code></pre></div>
 <div class="box notices cstyle info">
   <div class="box-label"><i class="fa-fw fas fa-info-circle"></i> Info</div>
   <div class="box-content">
@@ -132,10 +131,9 @@ if (!doNotTrack) {
 </div>
 </div>
 <p>Create a dedicated <code>istio-system</code> folder in the GKE configs&rsquo;s Git repo:</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-Bash" data-lang="Bash"><span style="display:flex;"><span>mkdir <span style="color:#e6db74">${</span>WORK_DIR<span style="color:#e6db74">}</span>$GKE_CONFIGS_DIR_NAME/istio-system
-</span></span></code></pre></div><h2 id="define-asm-configs-mesh-wide">Define ASM configs Mesh-wide</h2>
+<div class="wrap-code highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-Bash" data-lang="Bash"><span style="display:flex;"><span>mkdir <span style="color:#e6db74">${</span>WORK_DIR<span style="color:#e6db74">}</span>$GKE_CONFIGS_DIR_NAME/istio-system</span></span></code></pre></div><h2 id="define-asm-configs-mesh-wide">Define ASM configs Mesh-wide</h2>
 <p>Define the optional Mesh configs:</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-Bash" data-lang="Bash"><span style="display:flex;"><span>cat <span style="color:#e6db74">&lt;&lt;EOF &gt; ${WORK_DIR}$GKE_CONFIGS_DIR_NAME/istio-system/mesh-configs.yaml
+<div class="wrap-code highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-Bash" data-lang="Bash"><span style="display:flex;"><span>cat <span style="color:#e6db74">&lt;&lt;EOF &gt; ${WORK_DIR}$GKE_CONFIGS_DIR_NAME/istio-system/mesh-configs.yaml
 </span></span></span><span style="display:flex;"><span><span style="color:#e6db74">apiVersion: v1
 </span></span></span><span style="display:flex;"><span><span style="color:#e6db74">data:
 </span></span></span><span style="display:flex;"><span><span style="color:#e6db74">  mesh: |-
@@ -151,8 +149,7 @@ if (!doNotTrack) {
 </span></span></span><span style="display:flex;"><span><span style="color:#e6db74">metadata:
 </span></span></span><span style="display:flex;"><span><span style="color:#e6db74">  name: istio-${ASM_VERSION}
 </span></span></span><span style="display:flex;"><span><span style="color:#e6db74">  namespace: istio-system
-</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">EOF</span>
-</span></span></code></pre></div><p>
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">EOF</span></span></span></code></pre></div><p>
 <div class="box notices cstyle tip">
   <div class="box-label"><i class="fa-fw fas fa-lightbulb"></i> Tip</div>
   <div class="box-content">
@@ -170,7 +167,7 @@ if (!doNotTrack) {
 </div></p>
 <h2 id="define-mtls-strict-mesh-wide">Define mTLS STRICT Mesh-wide</h2>
 <p>Define the mTLS <code>STRICT</code> policy Mesh-wide:</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-Bash" data-lang="Bash"><span style="display:flex;"><span>cat <span style="color:#e6db74">&lt;&lt;EOF &gt; ${WORK_DIR}$GKE_CONFIGS_DIR_NAME/istio-system/mesh-mtls.yaml
+<div class="wrap-code highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-Bash" data-lang="Bash"><span style="display:flex;"><span>cat <span style="color:#e6db74">&lt;&lt;EOF &gt; ${WORK_DIR}$GKE_CONFIGS_DIR_NAME/istio-system/mesh-mtls.yaml
 </span></span></span><span style="display:flex;"><span><span style="color:#e6db74">apiVersion: security.istio.io/v1beta1
 </span></span></span><span style="display:flex;"><span><span style="color:#e6db74">kind: PeerAuthentication
 </span></span></span><span style="display:flex;"><span><span style="color:#e6db74">metadata:
@@ -179,8 +176,7 @@ if (!doNotTrack) {
 </span></span></span><span style="display:flex;"><span><span style="color:#e6db74">spec:
 </span></span></span><span style="display:flex;"><span><span style="color:#e6db74">  mtls:
 </span></span></span><span style="display:flex;"><span><span style="color:#e6db74">    mode: STRICT
-</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">EOF</span>
-</span></span></code></pre></div>
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">EOF</span></span></span></code></pre></div>
 <div class="box notices cstyle tip">
   <div class="box-label"><i class="fa-fw fas fa-lightbulb"></i> Tip</div>
   <div class="box-content">
@@ -190,7 +186,7 @@ if (!doNotTrack) {
 </div>
 <h2 id="define-sidecar-mesh-wide">Define Sidecar Mesh-wide</h2>
 <p>Define the default <code>Sidecar</code> in the <code>istio-system</code> <code>Namespace</code>:</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-Bash" data-lang="Bash"><span style="display:flex;"><span>cat <span style="color:#e6db74">&lt;&lt;EOF &gt; ${WORK_DIR}$GKE_CONFIGS_DIR_NAME/istio-system/sidecar.yaml
+<div class="wrap-code highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-Bash" data-lang="Bash"><span style="display:flex;"><span>cat <span style="color:#e6db74">&lt;&lt;EOF &gt; ${WORK_DIR}$GKE_CONFIGS_DIR_NAME/istio-system/sidecar.yaml
 </span></span></span><span style="display:flex;"><span><span style="color:#e6db74">apiVersion: networking.istio.io/v1alpha3
 </span></span></span><span style="display:flex;"><span><span style="color:#e6db74">kind: Sidecar
 </span></span></span><span style="display:flex;"><span><span style="color:#e6db74">metadata:
@@ -201,8 +197,7 @@ if (!doNotTrack) {
 </span></span></span><span style="display:flex;"><span><span style="color:#e6db74">  - hosts:
 </span></span></span><span style="display:flex;"><span><span style="color:#e6db74">    - ./*
 </span></span></span><span style="display:flex;"><span><span style="color:#e6db74">    - istio-system/*
-</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">EOF</span>
-</span></span></code></pre></div>
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">EOF</span></span></span></code></pre></div>
 <div class="box notices cstyle tip">
   <div class="box-label"><i class="fa-fw fas fa-lightbulb"></i> Tip</div>
   <div class="box-content">
@@ -212,17 +207,16 @@ if (!doNotTrack) {
 </div>
 <h2 id="define-default-deny-all-authorizationpolicy-mesh-wide">Define default deny-all AuthorizationPolicy Mesh-wide</h2>
 <p>Define the default <code>deny-all</code> <code>AuthorizationPolicy</code> in the <code>istio-system</code> <code>Namespace</code>:</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-Bash" data-lang="Bash"><span style="display:flex;"><span>cat <span style="color:#e6db74">&lt;&lt;EOF &gt; ${WORK_DIR}$GKE_CONFIGS_DIR_NAME/istio-system/authorizationpolicy_denyall.yaml
+<div class="wrap-code highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-Bash" data-lang="Bash"><span style="display:flex;"><span>cat <span style="color:#e6db74">&lt;&lt;EOF &gt; ${WORK_DIR}$GKE_CONFIGS_DIR_NAME/istio-system/authorizationpolicy_denyall.yaml
 </span></span></span><span style="display:flex;"><span><span style="color:#e6db74">apiVersion: security.istio.io/v1beta1
 </span></span></span><span style="display:flex;"><span><span style="color:#e6db74">kind: AuthorizationPolicy
 </span></span></span><span style="display:flex;"><span><span style="color:#e6db74">metadata:
 </span></span></span><span style="display:flex;"><span><span style="color:#e6db74">  name: deny-all
 </span></span></span><span style="display:flex;"><span><span style="color:#e6db74">  namespace: istio-system
 </span></span></span><span style="display:flex;"><span><span style="color:#e6db74">spec: {}
-</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">EOF</span>
-</span></span></code></pre></div><h2 id="define-new-clusterrole-with-istio-capabilities-for-config-sync">Define new ClusterRole with Istio capabilities for Config Sync</h2>
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">EOF</span></span></span></code></pre></div><h2 id="define-new-clusterrole-with-istio-capabilities-for-config-sync">Define new ClusterRole with Istio capabilities for Config Sync</h2>
 <p>Define the extended <a href="https://kubernetes.io/docs/reference/access-authn-authz/rbac/#user-facing-roles" target="_blank"><code>edit</code> user-facing role</a> with more Istio resources capabilities:</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-Bash" data-lang="Bash"><span style="display:flex;"><span>cat <span style="color:#e6db74">&lt;&lt;EOF &gt; ${WORK_DIR}$GKE_CONFIGS_DIR_NAME/custom-edit-clusterrole-istio.yaml
+<div class="wrap-code highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-Bash" data-lang="Bash"><span style="display:flex;"><span>cat <span style="color:#e6db74">&lt;&lt;EOF &gt; ${WORK_DIR}$GKE_CONFIGS_DIR_NAME/custom-edit-clusterrole-istio.yaml
 </span></span></span><span style="display:flex;"><span><span style="color:#e6db74">apiVersion: rbac.authorization.k8s.io/v1
 </span></span></span><span style="display:flex;"><span><span style="color:#e6db74">kind: ClusterRole
 </span></span></span><span style="display:flex;"><span><span style="color:#e6db74">metadata:
@@ -241,8 +235,7 @@ if (!doNotTrack) {
 </span></span></span><span style="display:flex;"><span><span style="color:#e6db74">  - &#34;destinationrules&#34;
 </span></span></span><span style="display:flex;"><span><span style="color:#e6db74">  verbs:
 </span></span></span><span style="display:flex;"><span><span style="color:#e6db74">  - &#34;*&#34;
-</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">EOF</span>
-</span></span></code></pre></div>
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">EOF</span></span></span></code></pre></div>
 <div class="box notices cstyle tip">
   <div class="box-label"><i class="fa-fw fas fa-lightbulb"></i> Tip</div>
   <div class="box-content">
@@ -251,18 +244,17 @@ if (!doNotTrack) {
 </div>
 </div>
 <h2 id="deploy-kubernetes-manifests">Deploy Kubernetes manifests</h2>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-Bash" data-lang="Bash"><span style="display:flex;"><span>cd <span style="color:#e6db74">${</span>WORK_DIR<span style="color:#e6db74">}</span>$GKE_CONFIGS_DIR_NAME/
-</span></span><span style="display:flex;"><span>git add . <span style="color:#f92672">&amp;&amp;</span> git commit -m <span style="color:#e6db74">&#34;ASM Mesh configs in GKE cluster&#34;</span> <span style="color:#f92672">&amp;&amp;</span> git push origin main
-</span></span></code></pre></div><h2 id="check-deployments">Check deployments</h2>
+<div class="wrap-code highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-Bash" data-lang="Bash"><span style="display:flex;"><span>cd <span style="color:#e6db74">${</span>WORK_DIR<span style="color:#e6db74">}</span>$GKE_CONFIGS_DIR_NAME/
+</span></span><span style="display:flex;"><span>git add . <span style="color:#f92672">&amp;&amp;</span> git commit -m <span style="color:#e6db74">&#34;ASM Mesh configs in GKE cluster&#34;</span> <span style="color:#f92672">&amp;&amp;</span> git push origin main</span></span></code></pre></div><h2 id="check-deployments">Check deployments</h2>
 <p>List the Kubernetes resources managed by Config Sync in <strong>GKE cluster</strong> for the <strong>GKE cluster configs</strong> repository:
 
-<div class="tab-panel" data-tab-group="d5cf608b8775cd88ea01c7441c584c03">
+<div class="tab-panel" data-tab-group="1f0e7b408d0a8678defa5e9e794337bb">
   <div class="tab-nav">
     <div class="tab-nav-title">&#8203;</div>
     <button
       data-tab-item="UI"
       class="tab-nav-button tab-panel-style cstyle initial active"
-      onclick="switchTab('d5cf608b8775cd88ea01c7441c584c03','UI')"
+      onclick="switchTab('1f0e7b408d0a8678defa5e9e794337bb','UI')"
     >
       <div>
         <div class="tab-nav-hidden">UI</div>
@@ -272,7 +264,7 @@ if (!doNotTrack) {
     <button
       data-tab-item="gcloud"
       class="tab-nav-button tab-panel-style cstyle initial"
-      onclick="switchTab('d5cf608b8775cd88ea01c7441c584c03','gcloud')"
+      onclick="switchTab('1f0e7b408d0a8678defa5e9e794337bb','gcloud')"
     >
       <div>
         <div class="tab-nav-hidden">gcloud</div>
@@ -287,8 +279,7 @@ if (!doNotTrack) {
       <div class="tab-content-text">
 
 <p>Run this command and click on this link:</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-Bash" data-lang="Bash"><span style="display:flex;"><span>echo -e <span style="color:#e6db74">&#34;https://console.cloud.google.com/kubernetes/config_management/packages?project=</span><span style="color:#e6db74">${</span>TENANT_PROJECT_ID<span style="color:#e6db74">}</span><span style="color:#e6db74">&#34;</span>
-</span></span></code></pre></div><p>Wait until you see the <code>Sync status</code> column as <code>Synced</code> and the <code>Reconcile status</code> column as <code>Current</code>.</p>
+<div class="wrap-code highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-Bash" data-lang="Bash"><span style="display:flex;"><span>echo -e <span style="color:#e6db74">&#34;https://console.cloud.google.com/kubernetes/config_management/packages?project=</span><span style="color:#e6db74">${</span>TENANT_PROJECT_ID<span style="color:#e6db74">}</span><span style="color:#e6db74">&#34;</span></span></span></code></pre></div><p>Wait until you see the <code>Sync status</code> column as <code>Synced</code> and the <code>Reconcile status</code> column as <code>Current</code>.</p>
 </div>
     </div>
     <div
@@ -297,19 +288,17 @@ if (!doNotTrack) {
       <div class="tab-content-text">
 
 <p>Run this command:</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-Bash" data-lang="Bash"><span style="display:flex;"><span>gcloud alpha anthos config sync repo describe <span style="color:#ae81ff">\
+<div class="wrap-code highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-Bash" data-lang="Bash"><span style="display:flex;"><span>gcloud alpha anthos config sync repo describe <span style="color:#ae81ff">\
 </span></span></span><span style="display:flex;"><span><span style="color:#ae81ff"></span>    --project $TENANT_PROJECT_ID <span style="color:#ae81ff">\
 </span></span></span><span style="display:flex;"><span><span style="color:#ae81ff"></span>    --managed-resources all <span style="color:#ae81ff">\
 </span></span></span><span style="display:flex;"><span><span style="color:#ae81ff"></span>    --sync-name root-sync <span style="color:#ae81ff">\
-</span></span></span><span style="display:flex;"><span><span style="color:#ae81ff"></span>    --sync-namespace config-management-system
-</span></span></code></pre></div><p>Wait and re-run this command above until you see <code>&quot;status&quot;: &quot;SYNCED&quot;</code>.</p>
+</span></span></span><span style="display:flex;"><span><span style="color:#ae81ff"></span>    --sync-namespace config-management-system</span></span></code></pre></div><p>Wait and re-run this command above until you see <code>&quot;status&quot;: &quot;SYNCED&quot;</code>.</p>
 </div>
     </div>
   </div>
 </div></p>
 <p>List the GitHub runs for the <strong>GKE cluster configs</strong> repository:</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-Bash" data-lang="Bash"><span style="display:flex;"><span>cd <span style="color:#e6db74">${</span>WORK_DIR<span style="color:#e6db74">}</span>$GKE_CONFIGS_DIR_NAME <span style="color:#f92672">&amp;&amp;</span> gh run list
-</span></span></code></pre></div>
+<div class="wrap-code highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-Bash" data-lang="Bash"><span style="display:flex;"><span>cd <span style="color:#e6db74">${</span>WORK_DIR<span style="color:#e6db74">}</span>$GKE_CONFIGS_DIR_NAME <span style="color:#f92672">&amp;&amp;</span> gh run list</span></span></code></pre></div>
             <footer class="footline">
 
             </footer>
@@ -495,8 +484,8 @@ if (!doNotTrack) {
         </div>
       </div>
     </aside>
-    <script src="/acm-workshop/js/clipboard.min.js?1687278378" defer></script>
-    <script src="/acm-workshop/js/perfect-scrollbar.min.js?1687278378" defer></script>
-    <script src="/acm-workshop/js/theme.js?1687278378" defer></script>
+    <script src="/acm-workshop/js/clipboard.min.js?1689352021" defer></script>
+    <script src="/acm-workshop/js/perfect-scrollbar.min.js?1689352021" defer></script>
+    <script src="/acm-workshop/js/theme.js?1689352021" defer></script>
   </body>
 </html>

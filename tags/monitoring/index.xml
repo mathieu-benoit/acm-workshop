@@ -14,7 +14,7 @@
       <description>Duration: 5 min | Persona: Platform Admin
 In this section, you will verify in the Google Cloud console the versions of both: the control plane and data plane of ASM.
 Initialize variables:
-WORK_DIR=~/ source ${WORK_DIR}acm-workshop-variables.sh Managed Anthos Service Mesh is a Google-managed control plane and data plane that you simply configure. Google handles their reliability, upgrades, scaling and security for you.
+WORK_DIR=~/ source ${WORK_DIR}acm-workshop-variables.shManaged Anthos Service Mesh is a Google-managed control plane and data plane that you simply configure. Google handles their reliability, upgrades, scaling and security for you.
 You can view the versions of the control plane (revision column below) and data plane (proxy-version column below) in Monitoring &amp;gt; Metrics Explorer.</description>
     </item>
     <item>
@@ -25,7 +25,7 @@ You can view the versions of the control plane (revision column below) and data 
       <description>Duration: 5 min | Persona: Apps Operator
 In this section, you will monitor security features such as Network Policies and Service requests of your apps in the Google Cloud console.
 Initialize variables:
-WORK_DIR=~/ source ${WORK_DIR}acm-workshop-variables.sh In the Google Cloud console, navigate to Anthos &amp;gt; Security &amp;gt; Policy Audit and filter for example by onlineboutique Namespace to see that the 3 security features Kubernetes Network policy, Service access control and mTLS status are enabled in green:</description>
+WORK_DIR=~/ source ${WORK_DIR}acm-workshop-variables.shIn the Google Cloud console, navigate to Anthos &amp;gt; Security &amp;gt; Policy Audit and filter for example by onlineboutique Namespace to see that the 3 security features Kubernetes Network policy, Service access control and mTLS status are enabled in green:</description>
     </item>
     <item>
       <title>Set up URL uptime check</title>
@@ -35,8 +35,8 @@ WORK_DIR=~/ source ${WORK_DIR}acm-workshop-variables.sh In the Google Cloud cons
       <description>Duration: 10 min | Persona: Platform Admin
 In this section, you will set up an uptime check on the Bank of Anthos website URL.
 Initialize variables:
-WORK_DIR=~/ source ${WORK_DIR}acm-workshop-variables.sh mkdir ${WORK_DIR}$TENANT_PROJECT_DIR_NAME/$BANKOFANTHOS_NAMESPACE Define Uptime check config Define the MonitoringUptimeCheckConfig:
-cat &amp;lt;&amp;lt;EOF &amp;gt; ${WORK_DIR}$TENANT_PROJECT_DIR_NAME/$BANKOFANTHOS_NAMESPACE/uptime-check-config.yaml apiVersion: monitoring.cnrm.cloud.google.com/v1beta1 kind: MonitoringUptimeCheckConfig metadata: name: uptimecheckconfig-${BANKOFANTHOS_NAMESPACE} spec: projectRef: name: ${TENANT_PROJECT_ID} displayName: ${BANKOFANTHOS_NAMESPACE} period: 900s timeout: 5s monitoredResource: type: &amp;#34;uptime_url&amp;#34; filterLabels: host: ${BANK_OF_ANTHOS_INGRESS_GATEWAY_HOST_NAME} project_id: ${TENANT_PROJECT_ID} httpCheck: port: 443 requestMethod: GET useSsl: true validateSsl: true EOF Deploy Kubernetes manifests cd ${WORK_DIR}$TENANT_PROJECT_DIR_NAME/ git add .</description>
+WORK_DIR=~/ source ${WORK_DIR}acm-workshop-variables.shmkdir ${WORK_DIR}$TENANT_PROJECT_DIR_NAME/$BANKOFANTHOS_NAMESPACEDefine Uptime check config Define the MonitoringUptimeCheckConfig:
+cat &amp;lt;&amp;lt;EOF &amp;gt; ${WORK_DIR}$TENANT_PROJECT_DIR_NAME/$BANKOFANTHOS_NAMESPACE/uptime-check-config.yaml apiVersion: monitoring.cnrm.cloud.google.com/v1beta1 kind: MonitoringUptimeCheckConfig metadata: name: uptimecheckconfig-${BANKOFANTHOS_NAMESPACE} spec: projectRef: name: ${TENANT_PROJECT_ID} displayName: ${BANKOFANTHOS_NAMESPACE} period: 900s timeout: 5s monitoredResource: type: &amp;#34;uptime_url&amp;#34; filterLabels: host: ${BANK_OF_ANTHOS_INGRESS_GATEWAY_HOST_NAME} project_id: ${TENANT_PROJECT_ID} httpCheck: port: 443 requestMethod: GET useSsl: true validateSsl: true EOFDeploy Kubernetes manifests cd ${WORK_DIR}$TENANT_PROJECT_DIR_NAME/ git add .</description>
     </item>
     <item>
       <title>Set up URL uptime check</title>
@@ -46,8 +46,8 @@ cat &amp;lt;&amp;lt;EOF &amp;gt; ${WORK_DIR}$TENANT_PROJECT_DIR_NAME/$BANKOFANTH
       <description>Duration: 10 min | Persona: Platform Admin
 In this section, you will set up an uptime check on the Online Boutique website URL.
 Initialize variables:
-WORK_DIR=~/ source ${WORK_DIR}acm-workshop-variables.sh mkdir -p ${WORK_DIR}$TENANT_PROJECT_DIR_NAME/$ONLINEBOUTIQUE_NAMESPACE Define Uptime check config Define the MonitoringUptimeCheckConfig:
-cat &amp;lt;&amp;lt;EOF &amp;gt; ${WORK_DIR}$TENANT_PROJECT_DIR_NAME/$ONLINEBOUTIQUE_NAMESPACE/uptime-check-config.yaml apiVersion: monitoring.cnrm.cloud.google.com/v1beta1 kind: MonitoringUptimeCheckConfig metadata: name: uptimecheckconfig-${ONLINEBOUTIQUE_NAMESPACE} spec: projectRef: name: ${TENANT_PROJECT_ID} displayName: ${ONLINEBOUTIQUE_NAMESPACE} period: 900s timeout: 5s monitoredResource: type: &amp;#34;uptime_url&amp;#34; filterLabels: host: ${ONLINE_BOUTIQUE_INGRESS_GATEWAY_HOST_NAME} project_id: ${TENANT_PROJECT_ID} httpCheck: port: 443 requestMethod: GET useSsl: true validateSsl: true EOF Deploy Kubernetes manifests cd ${WORK_DIR}$TENANT_PROJECT_DIR_NAME/ git add .</description>
+WORK_DIR=~/ source ${WORK_DIR}acm-workshop-variables.shmkdir -p ${WORK_DIR}$TENANT_PROJECT_DIR_NAME/$ONLINEBOUTIQUE_NAMESPACEDefine Uptime check config Define the MonitoringUptimeCheckConfig:
+cat &amp;lt;&amp;lt;EOF &amp;gt; ${WORK_DIR}$TENANT_PROJECT_DIR_NAME/$ONLINEBOUTIQUE_NAMESPACE/uptime-check-config.yaml apiVersion: monitoring.cnrm.cloud.google.com/v1beta1 kind: MonitoringUptimeCheckConfig metadata: name: uptimecheckconfig-${ONLINEBOUTIQUE_NAMESPACE} spec: projectRef: name: ${TENANT_PROJECT_ID} displayName: ${ONLINEBOUTIQUE_NAMESPACE} period: 900s timeout: 5s monitoredResource: type: &amp;#34;uptime_url&amp;#34; filterLabels: host: ${ONLINE_BOUTIQUE_INGRESS_GATEWAY_HOST_NAME} project_id: ${TENANT_PROJECT_ID} httpCheck: port: 443 requestMethod: GET useSsl: true validateSsl: true EOFDeploy Kubernetes manifests cd ${WORK_DIR}$TENANT_PROJECT_DIR_NAME/ git add .</description>
     </item>
     <item>
       <title>Set up URL uptime check</title>
@@ -57,8 +57,8 @@ cat &amp;lt;&amp;lt;EOF &amp;gt; ${WORK_DIR}$TENANT_PROJECT_DIR_NAME/$ONLINEBOUT
       <description>Duration: 10 min | Persona: Platform Admin
 In this section, you will set up an uptime check on the Whereami URL.
 Initialize variables:
-WORK_DIR=~/ source ${WORK_DIR}acm-workshop-variables.sh mkdir ${WORK_DIR}$TENANT_PROJECT_DIR_NAME/$WHEREAMI_NAMESPACE Define Uptime check config Define the MonitoringUptimeCheckConfig:
-cat &amp;lt;&amp;lt;EOF &amp;gt; ${WORK_DIR}$TENANT_PROJECT_DIR_NAME/$WHEREAMI_NAMESPACE/uptime-check-config.yaml apiVersion: monitoring.cnrm.cloud.google.com/v1beta1 kind: MonitoringUptimeCheckConfig metadata: name: uptimecheckconfig-${WHEREAMI_NAMESPACE} spec: projectRef: name: ${TENANT_PROJECT_ID} displayName: ${WHEREAMI_NAMESPACE} period: 900s timeout: 5s monitoredResource: type: &amp;#34;uptime_url&amp;#34; filterLabels: host: ${WHERE_AMI_INGRESS_GATEWAY_HOST_NAME} project_id: ${TENANT_PROJECT_ID} httpCheck: port: 443 requestMethod: GET useSsl: true validateSsl: true EOF Deploy Kubernetes manifests cd ${WORK_DIR}$TENANT_PROJECT_DIR_NAME/ git add .</description>
+WORK_DIR=~/ source ${WORK_DIR}acm-workshop-variables.shmkdir ${WORK_DIR}$TENANT_PROJECT_DIR_NAME/$WHEREAMI_NAMESPACEDefine Uptime check config Define the MonitoringUptimeCheckConfig:
+cat &amp;lt;&amp;lt;EOF &amp;gt; ${WORK_DIR}$TENANT_PROJECT_DIR_NAME/$WHEREAMI_NAMESPACE/uptime-check-config.yaml apiVersion: monitoring.cnrm.cloud.google.com/v1beta1 kind: MonitoringUptimeCheckConfig metadata: name: uptimecheckconfig-${WHEREAMI_NAMESPACE} spec: projectRef: name: ${TENANT_PROJECT_ID} displayName: ${WHEREAMI_NAMESPACE} period: 900s timeout: 5s monitoredResource: type: &amp;#34;uptime_url&amp;#34; filterLabels: host: ${WHERE_AMI_INGRESS_GATEWAY_HOST_NAME} project_id: ${TENANT_PROJECT_ID} httpCheck: port: 443 requestMethod: GET useSsl: true validateSsl: true EOFDeploy Kubernetes manifests cd ${WORK_DIR}$TENANT_PROJECT_DIR_NAME/ git add .</description>
     </item>
     <item>
       <title>Monitor apps health</title>
@@ -68,7 +68,8 @@ cat &amp;lt;&amp;lt;EOF &amp;gt; ${WORK_DIR}$TENANT_PROJECT_DIR_NAME/$WHEREAMI_N
       <description>Duration: 5 min | Persona: Apps Operator
 In this section, you will navigate to the topology of your Service Mesh as well as monitor your apps in terms of security, health and performance.
 Initialize variables:
-WORK_DIR=~/ source ${WORK_DIR}acm-workshop-variables.sh In the Google Cloud console, navigate to Anthos &amp;gt; Service Mesh &amp;gt; Topology to see the topology graph of your Service Mesh: Click on the link displayed by the command below:</description>
+WORK_DIR=~/ source ${WORK_DIR}acm-workshop-variables.shIn the Google Cloud console, navigate to Anthos &amp;gt; Service Mesh &amp;gt; Topology to see the topology graph of your Service Mesh: Click on the link displayed by the command below:
+echo -e &amp;#34;https://console.</description>
     </item>
     <item>
       <title>Allow Monitoring</title>
@@ -78,7 +79,7 @@ WORK_DIR=~/ source ${WORK_DIR}acm-workshop-variables.sh In the Google Cloud cons
       <description>Duration: 2 min | Persona: Org Admin
 In this section, you will grant the appropriate the IAM roles for the Tenant project&amp;rsquo;s service account. This will allow later this service account to provision some monitoring features.
 Initialize variables:
-WORK_DIR=~/ source ${WORK_DIR}acm-workshop-variables.sh Define roles Define the monitoring.uptimeCheckConfigEditor role with an IAMPolicyMember for the Tenant project&amp;rsquo;s service account:
+WORK_DIR=~/ source ${WORK_DIR}acm-workshop-variables.shDefine roles Define the monitoring.uptimeCheckConfigEditor role with an IAMPolicyMember for the Tenant project&amp;rsquo;s service account:
 cat &amp;lt;&amp;lt;EOF &amp;gt; ${WORK_DIR}$HOST_PROJECT_DIR_NAME/projects/$TENANT_PROJECT_ID/uptime-check-config-editor.yaml apiVersion: iam.cnrm.cloud.google.com/v1beta1 kind: IAMPolicyMember metadata: name: uptime-check-config-editor-${TENANT_PROJECT_ID} namespace: config-control annotations: config.</description>
     </item>
     <item>
@@ -89,8 +90,8 @@ cat &amp;lt;&amp;lt;EOF &amp;gt; ${WORK_DIR}$HOST_PROJECT_DIR_NAME/projects/$TEN
       <description>Duration: 5 min | Persona: Apps Operator
 In this section, you will trace your apps in order to follow a request through your Service Mesh, observe the network calls and profile your system end to end.
 Initialize variables:
-WORK_DIR=~/ source ${WORK_DIR}acm-workshop-variables.sh In the Google Cloud console, navigate to Trace service. Click on the link displayed by the command below:
-echo -e &amp;#34;https://console.cloud.google.com/traces/list?project=${TENANT_PROJECT_ID}&amp;#34; Select one of the Online Boutique&amp;rsquo;s frontend app&amp;rsquo;s requests: From there you will have access to a lot more details about the different calls, trace logs, etc.</description>
+WORK_DIR=~/ source ${WORK_DIR}acm-workshop-variables.shIn the Google Cloud console, navigate to Trace service. Click on the link displayed by the command below:
+echo -e &amp;#34;https://console.cloud.google.com/traces/list?project=${TENANT_PROJECT_ID}&amp;#34;Select one of the Online Boutique&amp;rsquo;s frontend app&amp;rsquo;s requests: From there you will have access to a lot more details about the different calls, trace logs, etc.</description>
     </item>
     <item>
       <title>Monitor WAF rules</title>
@@ -100,7 +101,7 @@ echo -e &amp;#34;https://console.cloud.google.com/traces/list?project=${TENANT_P
       <description>Duration: 5 min | Persona: Platform Admin
 In this section, you will monitor Cloud Armor security policies logs (WAF rules).
 Initialize variables:
-WORK_DIR=~/ source ${WORK_DIR}acm-workshop-variables.sh In the Google Cloud console, navigate to Network Security &amp;gt; Cloud Armor service. Click on the link displayed by the command below:
+WORK_DIR=~/ source ${WORK_DIR}acm-workshop-variables.shIn the Google Cloud console, navigate to Network Security &amp;gt; Cloud Armor service. Click on the link displayed by the command below:
 echo -e &amp;#34;https://console.cloud.google.com/net-security/securitypolicies/details/${SECURITY_POLICY_NAME}?project=${TENANT_PROJECT_ID}&amp;#34; Using Cloud Logging, you can view every request evaluated by a Google Cloud Armor security policy and the outcome or action taken.</description>
     </item>
     <item>
@@ -111,8 +112,9 @@ echo -e &amp;#34;https://console.cloud.google.com/net-security/securitypolicies/
       <description>Duration: 5 min | Persona: Platform Admin
 In this section, you will set up an monitoring notification channel with you email and a generic alert policy on URLs uptime checks for the Tenant project.
 Initialize variables:
-WORK_DIR=~/ source ${WORK_DIR}acm-workshop-variables.sh Define variables for this page:
-export NOTIFICATION_CHANNEL_EMAIL_ADDRESS=FIXME export NOTIFICATION_CHANNEL_NAME=monitoringnotificationchannel-email Tip Set your own email address for the NOTIFICATION_CHANNEL_EMAIL_ADDRESS variable, this will be used when defining the monitoring notification channel below.</description>
+WORK_DIR=~/ source ${WORK_DIR}acm-workshop-variables.shDefine variables for this page:
+export NOTIFICATION_CHANNEL_EMAIL_ADDRESS=FIXME export NOTIFICATION_CHANNEL_NAME=monitoringnotificationchannel-email Tip Set your own email address for the NOTIFICATION_CHANNEL_EMAIL_ADDRESS variable, this will be used when defining the monitoring notification channel below.
+Define the monitoring notification channel with your email Define the VPC:</description>
     </item>
     <item>
       <title>Scan workloads</title>
@@ -122,7 +124,8 @@ export NOTIFICATION_CHANNEL_EMAIL_ADDRESS=FIXME export NOTIFICATION_CHANNEL_NAME
       <description>Duration: 5 min | Persona: Apps Operator
 In this section, you will monitor security scanning of your GKE workloads configurations in the Google Cloud console in order to leverage these two features:
 Scan workloads for configuration issues Scan container images for known vulnerabilities Initialize variables:
-WORK_DIR=~/ source ${WORK_DIR}acm-workshop-variables.sh In the Google Cloud console, navigate to Kubernetes Engine &amp;gt; Security Posture, click on the link displayed by the command below:</description>
+WORK_DIR=~/ source ${WORK_DIR}acm-workshop-variables.shIn the Google Cloud console, navigate to Kubernetes Engine &amp;gt; Security Posture, click on the link displayed by the command below:
+echo -e &amp;#34;https://console.</description>
     </item>
     <item>
       <title>Monitor resources synced</title>
@@ -132,7 +135,7 @@ WORK_DIR=~/ source ${WORK_DIR}acm-workshop-variables.sh In the Google Cloud cons
       <description>Duration: 5 min | Persona: Apps Operator
 In this section, in the Google Cloud Console you will monitor the resources synced by Config Sync for both the Config Controller instance in the Host project and the GKE cluster in the Tenant project.
 Initialize variables:
-WORK_DIR=~/ source ${WORK_DIR}acm-workshop-variables.sh Monitor the resources synced by Config Sync in the Config Controller instance in the Host project Click on the link displayed by the command below:</description>
+WORK_DIR=~/ source ${WORK_DIR}acm-workshop-variables.shMonitor the resources synced by Config Sync in the Config Controller instance in the Host project Click on the link displayed by the command below:</description>
     </item>
     <item>
       <title>Monitor policies violations</title>
@@ -142,8 +145,8 @@ WORK_DIR=~/ source ${WORK_DIR}acm-workshop-variables.sh Monitor the resources sy
       <description>Duration: 5 min | Persona: Apps Operator
 In this section, in the Google Cloud Console you will monitor the Policy Controller&amp;rsquo;s policies violations for the GKE cluster in the Tenant project.
 Initialize variables:
-WORK_DIR=~/ source ${WORK_DIR}acm-workshop-variables.sh Click on the link displayed by the command below:
-echo -e &amp;#34;https://console.cloud.google.com/kubernetes/policy_controller/dashboard?project=${TENANT_PROJECT_ID}&amp;#34; On the default Dashboard tab, you will find something similar to:
+WORK_DIR=~/ source ${WORK_DIR}acm-workshop-variables.shClick on the link displayed by the command below:
+echo -e &amp;#34;https://console.cloud.google.com/kubernetes/policy_controller/dashboard?project=${TENANT_PROJECT_ID}&amp;#34;On the default Dashboard tab, you will find something similar to:
 Then if you go on the Violations tab, you will find something similar to:</description>
     </item>
     <item>
@@ -154,7 +157,7 @@ Then if you go on the Violations tab, you will find something similar to:</descr
       <description>Duration: 5 min | Persona: Platform Admin
 In this section, you will monitor the uptime checks defined earlier in this workshop.
 Initialize variables:
-WORK_DIR=~/ source ${WORK_DIR}acm-workshop-variables.sh In the Google Cloud console, navigate to Monitoring &amp;gt; Uptime checks service. Click on the link displayed by the command below:
+WORK_DIR=~/ source ${WORK_DIR}acm-workshop-variables.shIn the Google Cloud console, navigate to Monitoring &amp;gt; Uptime checks service. Click on the link displayed by the command below:
 echo -e &amp;#34;https://console.cloud.google.com/monitoring/uptime?project=${TENANT_PROJECT_ID}&amp;#34; Then, you could select one of the uptime checks config to get more insights:
 With the email notification on the uptime checks alerting we set earlier in this workshop, if there is any alert you will receive an email similar to this:</description>
     </item>
